@@ -1,0 +1,3 @@
+By the moment, is not necesary to directly build the source code, as long as lluvia is javascript interpreted code. By the way, getting a working application may require downloading from multiple lluvia servers. 
+
+At developing time, we will be interested in making ruby-like code to lluvia translator. Nothing written by the moment.

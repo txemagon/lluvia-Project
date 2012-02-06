@@ -1,0 +1,153 @@
+Pruebas 01: function Vector()
+
+Prueba 1: Generar vector enviando 3 coordenadas sueltas.
+v1 = new Vector(1,2,3)
+Debe generar un vector con coordenadas x,y,z = 1,2,3 y modulo = 3,7416.
+OK
+
+Resultados consola:
+>>> v1 = new Vector(1,2,3)
+Object { Coord=, _module=3.7416573867739413, uVector=}
+
+--------------------------------------------
+Prueba 2: Generar vector enviando 1 array de coordenadas.
+v1 = new Vector([1,2,3])
+Debe generar un vector con coordenadas x,y,z = 1,2,3 y modulo = 3,7416.
+OK
+
+Resultados consola:
+>>> v1 = new Vector(1,2,3)
+Object { Coord=, _module=3.7416573867739413, uVector=}
+-------------------------------------------------
+Prueba 3: Generar un vector enviando 1 vector.
+v1 = new Vector(v2)
+v2 = new Vector(1,2,3)
+Debe generar un vector con coordenadas x,y,z = 1,2,3 y modulo = 3,7416.
+OK
+
+Resultados consola:
+>>> v1 = new Vector(v2) v2 = new Vector(1,2,3)
+Object { Coord=, _module=3.7416573867739413, uVector=}
+------------------------------
+Prueba 4: Generar vector enviando 2 coordenadas sueltas.
+v1 = new Vector(1,2)
+Debe generar un vector con coordenadas x,y = 1,2 y módulo = 2,2360
+OK
+
+Resultados consola:
+>>> v1 = new Vector(1,2)
+Object { Coord=, _module=2.23606797749979, uVector=}
+---------------------------------
+Prueba 5: Generar vector enviando 1 array de 2 coordenadas.
+v1 = new Vector([1,2])
+Debe generar un vector con coordenadas x,y = 1,2 y módulo = 2,2360
+OK
+
+Resultados consola:	 
+>>> v1 = new Vector([1,2])
+Object { Coord=, _module=2.23606797749979, uVector=}
+----------------------------------
+Prueba 6: Generar vector enviando 1 vector de dos coordenadas.
+v1 = new Vector(v2)
+v2 = new Vector(1,2)
+Debe generar un vector con coordenadas x,y = 1,2 y módulo = 2,2360
+OK
+
+Resultados consola: 
+>>> v1 = new Vector(v2) v2 = new Vector(1,2)
+Object { Coord=, _module=2.23606797749979, uVector=}
+------------------------------------
+Prueba 7: Generar vector enviando string
+v1=new Vector("prueba")
+Debe generar un vector de coordenas = 0,0,0 y modulo=0
+OK
+
+Resultados consola:
+>>> v1=new Vector("prueba")
+Object { Coord=, _module=0, uVector=}
+--------------------------
+Prueba 8: Generar vector enviando 7 coordenadas sueltas.
+v1 = new Vector(1,2,3,4,5,6,7)
+Debe generar un vector n coordenadas(tantas como introducidas)
+OK
+
+Resultados consola:
+>>> v1 = new Vector(1,2,3,4,5,6,7)
+Object { Coord=, _module=11.832159566199232, uVector=}
+---------------------------
+Prueba 9: Generar vector con coordenadas cilindricas
+v2=new Vector(1,2,3,"cyl")
+alert(v2.coordinate_system)
+Deberia generar un vector transformando de coordenadas cilindricas a cartesianas y
+mostrar mensaje de alerta con el contenido de coordinate_system.
+
+*Problema*: 	Parece que una vez creado el vector su propiedad coordinate_system
+				pierde su contenido(Desconocido el porqué).
+
+*Seguimiento*:	Una vez asignado el tipo de coordenadas al pasar por transformCoordinates()
+				coordinate_system pasa a ser = "cart",una vez fuera de function Vector se 
+				pierde su contenido.
+
+Resultado:		*Parece que las coordenadas si las convierte.(falta comprobacion)*
+				
+Resultado de consola:
+>>> v2 = new Vector(1,2,3) alert(v2.coordinate_system)
+undefined
+---------------------------------------------
+Prueba 10: Generar vector enviando array de coordenadas cilindricas
+v2 = new Vector([1,2,3,"cyl"])
+Se esperaba que generara un vector transformando las coordenadas de cilindricas
+a cartesianas.
+
+*Problema*:		Toma el string destinado a  definir el tipo de coordenadas y opera
+				con el como si fuera un numero*IMPORTANTE: De lo que se deduce que 
+				cuando function Vector() recibe un array da por hecho que son coordenadas
+				cartesianas*.
+
+Resultado:		Se obtiene un vector invalido,con modulo = NaN.		
+
+Resultado consola:
+>>> v2 = new Vector([1,2,3,"cyl"])
+Object { Coord=, _module=NaN, uVector=}
+----------------------------------------------
+Prueba 11: Generar un vector de una sola coordenada
+v1 = new Vector(1)
+Deberia generar un vector de una sola coordenada y modulo = 1
+OK
+
+Resultados consola:
+>>> v1 = new Vector(1)
+Object { Coord=, _module=1, uVector=}
+-----------------------------------------------
+
+Prueba 12: Calcular en ángulo de un vector sobre otro con tres dimensiones.
+v2 = new Vector(1,0,0)
+alert(v2.angle(0,1,0))
+Debería de devolver pi/2
+OK
+
+Resultados consola:
+1.5707963267948966
+--------------------------------------
+Prueba 13: Calcular el ángulo de un vector sobre otro.
+
+v2 = new Vector(1,0,0)
+alert(v2.angle(0,1,0))
+
+Resultado:1.5707963267948966
+
+v2 = new Vector(1,0)
+alert(v2.angle(0,1))
+
+Resultado: 1.5707963267948966
+
+v2 = new Vector(-1,2)
+alert(v2.angle(2,1))
+
+Resultado: -1.5707963267948966
+
+v2 = new Vector(0,1,0)
+alert(v2.angle(0,0,1))
+
+Resultado: 1.5707963267948966
+--------------------------------------------

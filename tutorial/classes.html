@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+		 
+        <script type="text/javascript" src="../src/lluvia.js">
+        </script>
+		
+		<script id="testScript" type="text/javascript">
+                    	
+          	function ll_test(){
+				alert("Testing your project with \n\n\tDebug Level: " + $K_debug_level)
+				
+				Class(function Clase1(){
+             		this.method1 = function(){this.b = 5;}
+
+             		this.r_method7(2)
+					
+             		s_method2 = function(param){
+                		this.a = "something"
+						alert(param)
+                	}
+            
+             		s_var1 = "julian"
+            
+              		this.method3 = function(param){
+            			this.a = "something"
+						alert("I have a " + param)
+                	}
+					
+					bi_method2 = function(){
+						this.a = "Hello"
+					}
+            
+              		var s = 'francisco';
+					
+              		s_method4 = function() {
+                
+					var s_m3 = 5	
+					
+					var bi_miNombre = "Txema"
+					
+					s_var8 = "Pedro"
+					
+					return function(){
+                  		this.b = 7;
+                	}
+					
+					
+              	}
+            		var s_m3 = 5
+					
+					var s_3 = 5 	// Is not a lluvia variable
+            })
+			
+			obj = new Clase1()
+		}
+                                    		
+                    
+        </script>
+		
+        <title>Debugging Canvas</title>
+        
+    </head>
+    <body onload="alert('1');bringLLuvia(200);alert('2')>
+    </body>
+</html>

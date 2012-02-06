@@ -1,0 +1,29 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Boids</title>
+    <script type="text/javascript" src="javascript/dependencies.js" ></script>
+    <script type="text/javascript" src="../../src/lluvia.js" ></script>
+    <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
+  </head>
+  <body onload="bringLLuvia();">
+    <h1>BOIDS</h1>
+    <div id="application">
+      <div id="canvas">
+        <canvas id="screener" width="400" height="400"> </canvas>
+      </div>
+      <div id="panels">
+        <div id="boid_list">
+          <h2>Current Boids</h2>
+          <div id="boid_list_content" class="Panel">
+          </div>
+          <div id="boid_properties" class="Panel">
+          </div>          
+        </div>
+      </div>
+    </div>
+    <div id="logger"></div>
+  </body>
+</html>

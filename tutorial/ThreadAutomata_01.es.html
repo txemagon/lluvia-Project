@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="../src/lluvia.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_load.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_interface.js">
+        </script>
+        <script id="testScript" type="text/javascript">
+        </script>
+        <title>Debugging Canvas</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">April 7, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Hilos autómatas</h2>
+                    <div id="paragraph">
+                        <p>
+                            Con lluvia podemos crear hilos con funciones de autómatas. La diferencia de este tipo de objetos con los autómatas naturales es que estos son gestionados por processor. Cuando ejecutemos el método run de processor ejecturá el método run del objeto ThreadAutomata intanciado que podría ser simplemente una función que haga cambiar el estado de ese objeto. 
+                            <br/>
+                        </p>
+                    </div>
+                </div>
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:
+                        <br/>
+                        <pre class="javascript" lang="javascript" name="runnable">
+function log(msg){
+ var book = document.getElementById("debug")
+ book.innerHTML = msg + "<br>\n" + book.innerHTML
+}
+
+solicitor = [
+// State 0
+[
+  function(){ // none up
+    log("I'm going to lay down")
+},
+  function(){ // none steady
+    log("ZZZ")
+},
+  function(){ //none down
+   log("I'm getting up")
+}
+],
+// State 1
+[
+  function(){ // Walking.up
+    log("I'm going to put my shoes on.")
+},
+function(){ // I'm walking
+  log("1 step")
+},
+function(){ // Stop walking
+  log("I take my shoes off.")
+}
+],
+// State 2
+[
+  function(){ // Running.up
+    log("I'm going to put my sneakers on.")
+},
+function(){ // I'm walking
+  log("10 steps")
+},
+function(){ // Stop walking
+  log("I take my sneakers off.")
+}
+],
+// State 3
+[
+  function(){ // Swimming.up
+    log("I'm going to put my swimming trunk on.")
+},
+function(){ // I'm swimming
+  log("Now swimming.")
+},
+function(){ // Stop swimming
+  log("I take my trunk off.")
+}
+]
+]
+
+processor = new Processor()
+
+david = new ThreadAutomata( {none:0, walking:1, running:2, swimming:3 }, solicitor)
+processor.run()
+
+function change_state(){
+   david.currentState.requested = (david.currentState.current + 1 ) % 3 + 1
+}
+
+setInterval(change_state, 2000)
+			</pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+
+                        <a href="#html_out" onclick="run('reset');clear();">stop</a>
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug" style="height: 50ex; overflow: auto;">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+                    <p>
+                        Aquí vemos cómo el estado de "David" cambia según la gestión de processor cada n milisegundos automáticamente como si de un hilo simple se tratase.
+                        <br/>
+                    </p>
+					<p>
+						Para que esta clase funcione perfectamente DEBE realizar operaciones lo más atómicas posibles.
+						<br/>
+					</p>
+
+                </div>
+                <div style="clear: both;">
+                </div>
+				<div id="diagram">
+					<h2>Diagrama</h2>
+					<img src="images/ThreadAutomata_class_diagram00.png" alt="ClassDiagramImage">
+					<p>
+						Como podemos ver, la clase autómata hereda de la interfaz Thread y de la clase Automata. El método run ejecutará su función predefinida, y ,a petición (como en Automata), variará su estado.
+					</p>
+					</div>					
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>

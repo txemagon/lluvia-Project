@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="lluvia.js">
+        </script>
+        <script type="text/javascript" src="classes/log_module_load.js">
+        </script>
+        <script type="text/javascript" src="classes/log_module_interface.js">
+        </script>
+        <script id="testScript" type="text/javascript">            
+        </script>
+        <title>Debugging Canvas</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">March 30, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Cómo Se Procesa Un Hilo</h2>
+                    <div id="paragraph">
+                        <p>
+                            El entorno de lluvia tiene una variable <i>processor</i>
+                            inicializada a null. Si queremos habilitar el multiproceso hay que referenciar un new Processor por esta variable general. La variable processor maneja una lista de hilos. Los hilos serán registrados en processor mediante el método register, propio de la clase Processor, y serán albergados en un array de objetos llamado threads. processor irá ejecutando las funciones propias de cada uno de los hilos contenidos una vez se llame a su método run y lo seguirá haciendo, a partir de ahí, cada n milisegundos de manera automática. Este método llamará a los métodos run contenidos en los hilos almacenados en el array consecutivamente.
+                            <br/>
+                            <p>
+                                También podemos eliminar hilos contenidos en el array threads de processor llamando a su método kill.
+                                <br/>
+                            </p>
+                        </p>
+                        <p>
+                            Veámos un ejemplo por pasos:
+                            <br/>
+                        </p>
+                        <ol>
+                            <li>
+                                Creamos un objeto (my_thread), de la clase SampleThread, con dos atributos y un método run.
+                                <br/>
+                            </li>
+                            <div class="liteCode">
+                                <pre class="javascript" lang="javascript" name="new_thread">
+									my_thread = new SampleThread()
+								</pre>
+                            </div>
+                            <li>
+                                Instanciamos la variable processor (processor = new Proccesor).
+                                <br/>
+                            </li>
+                            <div class="liteCode">
+                                <pre class="javascript" lang="javascript" name="new_processor">
+						    processor = new Processor()	
+						    </pre>
+                            </div>
+                            <li>
+                                Llamamos al método processor.register pasando como párametros el hilo creado (my_thread) y el puntero al método run del hilo creado (my_thread.run).
+                                <br/>
+                            </li>
+                            <div class="liteCode">
+                                <pre class="javascript" lang="javascript" name="processor_register">
+									processor.register(my_thread, my_thread.run)
+								</pre>
+                            </div>
+                            <li>
+                                Ejecutamos el método run de processor.
+                            </li>
+                            <div class="liteCode">
+                                <pre class="javascript" lang="javascript" name="processor_run">
+									processor.run()
+								</pre>
+                            </div>
+                        </ol>
+                    </div>
+                
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:
+                        <br/>
+                        <pre class="javascript" lang="javascript" name="runnable">
+		     function SampleThread(){
+			this.output = document.getElementById("debug")
+			this.now = new Date()
+		     }
+
+		     SampleThread.prototype.run = function(){
+			this.now = new Date()
+			this.output.innerHTML = this.now.toString()
+		     }
+
+		     my_thread = new SampleThread()
+
+		     processor = new Processor()
+		     processor.register(my_thread, my_thread.run)
+		     processor.run()
+		   </pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+                        <pre class="javascript" lang="javascript" name="reset">                        	
+			     if(processor)
+				         processor.kill(my_thread, my_thread.run)
+			</pre>
+                        <a href="#html_out" onclick="run('reset');clear();">stop</a>
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+                    <p>
+                        El atributo now del objeto my_thread obtiene al crearse el valor de la fecha y hora actual del sistema. Internamente, después de albergarse my_thread en el array threads del objeto processor, y ejecutarse el método run de processor, este llamará al método run del objeto my_thread almacenado. El método run de my_threads obtiene denuevo el valor de la fecha y hora del sistema y lo muestra por pantalla. Pasado un intervalo de tiempo de n milisegundos, el método run de processor es llamado automáticamente, de manera que, al llamar este a su vez al método run de my_thread, el atributo now de my_thread obtiene otra vez el valor de la fecha y hora actual mostrándolo por pantalla. Pasado otra vez este intervalo de tiempo se repetirá este proceso. Así observamos como la hora que puede verse en la ventana OUTPUT CONSOLE varía automáticamente con el paso de los segundos. 
+                    </p>
+                    <p>
+                        Si llamamos al método processor.kill y le pasamos como parámetros el objeto my_thread y el puntero al método run de este, eliminaremos la ejecución de ese proceso, ya que, internamente, eliminamos el objeto my_thread del array threads de processor. Es lo que ocurre cuando pulsamos el botón stop situado debajo del ejemplo.
+                    </p>
+                </div>
+                <div style="clear: both;">
+                </div>
+                <div id="diagram">
+                    <h2>Diagrama</h2>
+                    <img src="images/Processor_class_diagram00.png" alt="ClassDiagramSample00">
+					<!---->
+					<p>
+						Tenemos una clase Processor con dos atributos (threads y now) y tres métodos (register, run y kill).
+						<br/>
+					</p>
+					<p>
+						El atributo threads del tipo array contendrá cada uno de los hilos que se creen y que se registren en processor para su posterior procesamiento.
+						<br/>
+					</p>
+					<p>
+						El atributo now contendrá la fecha y hora actual del sistema. 
+						<br/>
+					</p>
+					<p>
+						El método register registra cada hilo empujándolo al array threads a través de un método push interno. Se le envía como parámetros el objeto del tipo hilo creado y el puntero a su método run.
+						<br/> 
+					</p>
+					<p>
+						El método run ejecuta los métodos run de cada uno de los hilos almacenados en su array threads. El método run se llamará así mismo cada n milisegundos de manera automática a partir de que lo llamemos por primera vez, repitiendo las sucesivas llamadas a los métodos de sus hilos contenidos.
+						<br/>
+					</p>
+					<p>
+						El método kill elimina uno de los hilos almacenados en el array del objetos threads, de esta forma, en caso de que se estuviera ejecutando un hilo, dejaría de hacerlo. Recibe como parámetros el nombre del hilo que se quiera detener y el puntero al método a detener.
+						<br/>
+					</p>
+					<p>
+						La clase SampleThread se ha utilizado para el ejemplo. Usando lluvia podremos crear objetos del tipo Thread con métodos run que ejecutaran diferentes tareas al gusto (como hemos visto, estos run se ejecutarán desde el run de processor). Los atributos derivarán del tipo de tareas que vayan a realizar los hilos creados. 
+					</p>
+					<!---->
+                </div>
+                </div>
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>

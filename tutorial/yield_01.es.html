@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="../src/lluvia.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_load.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_interface.js">
+        </script>
+        <script id="testScript" type="text/javascript">            
+        </script>
+        <title>Debugging Canvas</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">April 30, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Método Yield</h2>
+                    <div id="paragraph">
+				<p>
+				   Yield es un método que contienen todas las funciones en lluvia. 
+				   Lo que hace Yield es ejecutar el último argumento recibido en una función 
+				   sólo en caso de que este sea, a su vez, otra función.
+				</p>
+                    </div>
+                
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:                        
+                        <br/>
+                        <pre class="javascript" lang="javascript" name="runnable">
+function f_example(a, b, c){
+     
+     return a + b + c + f_example.yield(3)
+} 
+
+alert( 
+ f_example(1, 2, 3, function(e){ return e + 2 })
+)
+		   </pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+                    <div id="paragraph">
+                     <p> 
+                      En el ejemplo declaramos la función f_example. Cuando llamamos a la función creada pasamos los valores 1,2,3 y, como último parámetro, la dirección de memoria de una nueva función declarada ahí mismo.
+                      Cuando se ejecuta f_example se devuelve el valor de la suma de los tres primeros parámetros más el resultado que nos devuelva la ejecución del último parámetro de f_example que es una función (el método yield de f_example es quien ejecuta dicha función).
+                      Podemos ver cuando invocamos esta función, con yield, que enviamos como parámetro el valor 3 y que en la declaración de esta función se le suma 2 al parámetro recibido. Finalmente alert nos muestra por pantalla el resultado de todo este proceso.
+                     </p>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+                <div id="diagram">
+                </div>
+                </div>
+                </div>
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>

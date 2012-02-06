@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# While in the src directory
+mkdir ../src/$1                       # Create a directory whit the new module
+cd ../src/$1/
+mkdir tests
+cd tests
+ln -s ../../../test/test.html test.html # Links whit the test page
+ln -s ../../../test/common common       # Links whit the test page
+echo "var _test_index = [ /* Write your test files */]" > index.js

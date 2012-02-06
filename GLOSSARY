@@ -1,0 +1,32 @@
+Stratus is the version 1.0.0 of the lluvia Project. It is the low level cloud type. Future versions might be:
+
+Low clouds
+Up to 2 km
+    * Stratus (St)
+    * Stratocumulus (Sc)
+    * Cúmulus (Cu)
+    * Cumulonimbus (Cb)
+    * Cumulus fractus (Cu fr)
+
+
+Medium
+From 2 to 5 km
+
+    * Nimbostratus
+    * Altostratus (As)
+    * Altostratus undulatus
+    * Altocúmulus (Ac)
+    * Altocumulus undulatus
+    * Altocumulus caballa
+    * Altocúmulus castellanus
+    * Altocumulus lenticularis
+
+High
+5 km and ahead
+
+    * Cirrus (Ci)
+    * Cirrus uncinus
+    * Cirrus Kelvin-Helmholtz
+    * Cirrostratus (Cs)
+    * Cirrocumulus (Cc)
+    * Pileus

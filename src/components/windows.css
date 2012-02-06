@@ -1,0 +1,36 @@
+/*** Necessary styles ***/
+
+.Window{
+	
+}
+
+.Effect{
+	
+}
+
+.Component{
+	
+}
+
+.DynamicWindow{
+
+}
+
+.MobileWindows{
+	position: absolute;
+}
+
+
+/*** Styles defined by the user ***/
+.XP{
+	background-color: #F6F6FF;
+	border-color: #333366;
+	border-width: 1px;
+	border-style: solid;
+	padding: 1em 1em 1em 1em;
+}
+
+#Data{
+	display: none;
+}
+

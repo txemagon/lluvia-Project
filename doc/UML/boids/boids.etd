@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE XMI SYSTEM "C:\Documents and Settings\Administrador\.netbeans\6.1\.uml\config\UML_2.0EMBT.dtd"> --><XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0"> <XMI.header> <XMI.metamodel xmi.name="UML" xmi.version="1.4"/> <XMI.documentation> <XMI.exporter> Embarcadero's Describe </XMI.exporter> <XMI.exporterVersion> 6.0 </XMI.exporterVersion> </XMI.documentation> </XMI.header> <XMI.content> <UML:Project xmi.id="DCE.2442254C-898A-7CEA-0BCE-E610EF8D03F4" mode="Design" defaultLanguage="UML" projVersion="6.1.4.837" name="boids"><UML:Element.ownedElement>
+<UML:Class xmi.id="DCE.D11616DD-0E57-9A3D-5321-466278200283" name="Boid" owner="DCE.2442254C-898A-7CEA-0BCE-E610EF8D03F4"><UML:Element.presentation>
+</UML:Element.presentation><UML:Element.ownedElement>
+<UML:Attribute xmi.id="DCE.015B5611-B57E-FC2F-5023-F170DB958ED4" visibility="private" name="position" type="DCE.647CA64E-3ACA-D82E-E075-ACEDC231E6C7" owner="DCE.D11616DD-0E57-9A3D-5321-466278200283"><UML:TypedElement.multiplicity>
+<UML:Multiplicity xmi.id="DCE.B2D289A0-0C4E-7130-BE01-52F83C817086"/></UML:TypedElement.multiplicity><UML:Attribute.default>
+<UML:Expression xmi.id="DCE.2377EB0A-F475-9E44-7CB9-4F70555087FC"/></UML:Attribute.default></UML:Attribute></UML:Element.ownedElement></UML:Class>
+<UML:DataType xmi.id="DCE.ADACAA30-736A-194B-92AE-7DCB15B751F0" name="int" owner="DCE.2442254C-898A-7CEA-0BCE-E610EF8D03F4"/>
+<UML:DataType xmi.id="DCE.647CA64E-3ACA-D82E-E075-ACEDC231E6C7" name="Vector" owner="DCE.2442254C-898A-7CEA-0BCE-E610EF8D03F4"/>
+<UML:Class xmi.id="DCE.7A6C9784-FF04-6089-C79D-186DD95232A5" name="Kinematics" owner="DCE.2442254C-898A-7CEA-0BCE-E610EF8D03F4"><UML:Element.presentation>
+</UML:Element.presentation></UML:Class></UML:Element.ownedElement></UML:Project></XMI.content> </XMI>

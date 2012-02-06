@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="../src/lluvia.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_load.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_interface.js">
+        </script>
+        <script id="testScript" type="text/javascript">
+        </script>
+        <title>Debugging Canvas</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">April 7, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Funcionamiento del autómata</h2>
+                    <div id="paragraph">
+                        <p>
+                            El framework de lluvia dispone de una clase automata. Un objeto de esta puede tener estados variables. Al invocar el método run de un objeto de este tipo se ejecutara el estado inicial. Según le indiquemos, el estado del objeto podrá variar a alguno de los estados disponibles que albergue. En el ejemplo veremos como David dormido se pone unos zapatos para caminar y posteriormente los cambiará por unas deportivas para correr (correr con deportivas es notablemente más cómodo). OJO: nunca se podrá volver al estado inicial del objeto declarado aquí por defecto como none (sería como invocar un estado vacío).      
+                            <br/>
+                        </p>
+                    </div>
+                
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:
+                        <br/>
+	                    <pre class="javascript" lang="javascript" name="runnable">	                    	
+function log(msg){
+ var book = document.getElementById("debug")
+ book.innerHTML += msg + "<br/>\n"
+}
+solicitor = [
+// State 0
+[
+  function(){ // none up
+    log("I'm going to lay down")
+},
+  function(){ // none steady
+    log("ZZZ")
+},
+  function(){ //none down
+   log("I'm getting up")
+}
+],
+// State 1
+[
+  function(){ // Walking.up
+    log("I'm going to put my shoes on.")
+},
+function(){ // I'm walking
+  log("1 step")
+},
+function(){ // Stop walking
+  log("I take my shoes off.")
+}
+],
+// State 2
+[
+  function(){ // Running.up
+    log("I'm going to put my sneakers on.")
+},
+function(){ // I'm walking
+  log("10 steps")
+},
+function(){ // Stop walking
+  log("I take my sneakers off.")
+}
+]
+]
+
+david = new Automata( {none:0, walking:1, running:2}, solicitor)
+
+for(var i=0; i>3; i++)
+  david.run()
+
+david.currentState.requested = david.state.walking
+
+for(var i=0; i<3; i++)
+  david.run()
+
+david.currentState.requested = david.state.running
+
+for(var i=0; i<3; i++)
+  david.run()
+
+david.currentState.requested = david.state.walking
+david.run()
+			</pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+                    <p>
+                        Al intanciar a David (...) le pasamos como parámetros, al constructor de su clase , los diferentes estados de los que se dispondrá. Como se puede observar, David pasa de estar dormido a ponerse unos zapatos y después se pone a caminar, después se quita los zapatos, se pone unas deportivas y hecha a correr. Un objeto de este tipo puede albergar tantos estados como se quiera y esos estados, a su vez, poseen subestados (up, steady y down) con lo que podemos ser mucho más concretos y claros a la hora de establecer cambios ya que, quedará registrado lo que "estaba haciendo","lo que hizo" y lo que "hará después". 
+                        <br/>
+                    </p>
+                </div>
+                <div style="clear: both;">
+                </div>
+				<div ="diagram">
+					<h2>Diagrama</h2>
+					<img src="images/Automata_class_diagram00.png" alt="ClassDiagramImage">	
+					<p>
+						La clase automata tiene cuatro atributos y un método run.
+						<br/>
+					</p>	
+					<p>
+						El atributo state contiene un enumerador con los diferentes estados que se hayan definido para el objeto que se utilice.
+						<br/>
+					</p>	
+					<p>
+						stateChange contiene los subestados comunes a cada uno de los estados definidos y almacenados en state. Por defecto siempre son up, steady y down.
+						<br/>
+					</p>
+					<p>
+						currentState nos dice el estado actual del objeto en cuestión; por defecto siempre son previous, current y requested.
+						<br/>						
+					</p>
+					<p>
+						 El atributo solicitor es un array con las funciones posibles a ejecutar según el estado del objeto.
+						 <br/>
+					</p>	
+					<p>
+						El método run ejecutará la función run, según el estado, del hilo en cuestión.
+					</p>
+					</div>
+					</div>
+					</div>
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>

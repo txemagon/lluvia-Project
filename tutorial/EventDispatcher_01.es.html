@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, kernel" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="../src/lluvia.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_load.js">
+        </script>
+        <script type="text/javascript" src="../test/classes/log_module_interface.js">
+        </script>
+        <script id="testScript" type="text/javascript">
+        </script>
+        <title>Debugging Canvas</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">April 13, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Controlador de eventos</h2>
+                    <div id="paragraph">
+                        <p>
+                        	En lluvia tenemos una clase controladora de eventos, EventDispatcher. Los métodos de esta clase se encargan de almacenenar hilos, mensajes de petición que se reciban de otra aplicación, de contestar, de abrir puertos donde guardar eventos y los punteros a funciones de otras aplicaciones, elminar eventos y puertos y ejecutar métodos run de los hilos almacenados. 
+                        </p>
+                    </div>
+                </div>
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:
+                        <br/>
+                        <pre class="javascript" lang="javascript" name="runnable">
+)
+		   </pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+                        <pre class="javascript" lang="javascript" name="reset">                        	
+
+			</pre>
+                        <a href="#html_out" onclick="run('reset');clear();">stop</a>
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+					<p>
+						nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+					</p>
+                </div>
+                <div style="clear: both;">
+                </div>
+                <div id="diagram">
+                    <h2>Diagrama</h2>
+                    <img src="images/EventDispatcher_class_diagram00.png" alt="ClassDiagramSample00"><!---->
+					<p>
+						La clase EventDispatcher contiene cinco atributos:
+						<br/>
+					</p>
+					<p>
+						El atributo ids contiene el número de mensajes almacenados en inqueue.
+						<br/>
+					</p>
+					<p>
+						El atributo ports contiene un hush con todos los eventos almacenados que a su vez contienen las referencias a los métodos de otras aplicaciones. 
+						<br/>
+					</p>
+					<p>
+						inqueue contiene los mensajes recibidos de la aplicación en cuestión.
+						<br/>
+					</p>
+					<p>
+						clss es la referencia del objeto que se está creando de esta clase.
+						<br/>
+					</p>
+					<p>
+						El atributo getId contiene la referencia a una función que incrementa el atributo ids (se usa cuando almacenamos un mensaje nuevo de tal manera que el número total de mensajes, atributo ids, se incrementa en uno).
+						<br/>
+					</p>
+					<p>
+						En esta clase también disponemos de siete métodos.
+						<br/>
+					</p>
+					<p>
+						.enqueue almacena los mensajes recibidos en un array. También devuelve el número identificador del mensaje recibido.
+						<br/> 
+					</p>
+					<p>
+						.addPorts recibe el nombre de un evento y un puntero a un método. Cuando está aplicación ejecute uno de sus eventos almacendos llamará, a través de las referencias almacenadas, a métodos de otras clases para que se ejecuten simultáneamente. 
+						<br/>
+					</p>			
+					<p>
+						.joinPorts añade los eventos al array ports.
+						<br/>
+					</p>
+					<p>
+						.delPort elimina alguna o varias referencias a los objetos que haya almacenados en un puerto especificado. 
+						<br/>
+					</p>
+					<p>
+						fireEvent coge el elemento e y llama a todos los métodos referenciados en tal evento.
+						<br/>
+					</p>
+					<p>
+						.shift busca en la sala de mensajes la siguiente petición "activa" y lo envía a device para ser atendido.
+						<br/>
+					</p>
+					<p>
+						.run básicamente llama al método shift para ejecutar una petición recibida. 
+						<br/>
+					</p>
+                    <!---->
+                </div>
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>
