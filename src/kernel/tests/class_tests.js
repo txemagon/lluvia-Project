@@ -1,4 +1,4 @@
-/*
+
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -37,12 +37,12 @@ assert("Whenever function initialize is present from second place onwards it is 
        "Class_Person(function(){this.name = 'juan' }, \
                      function initialize(name){ this.name = 'pepe' }, \
                      function(){this.name = 'luis'}); \
-        obj = new Person('pepe')")
+        obj = new Person()")
 
 assert("Object initializer accepts parameters.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
-                     function initialize(name){ this.name = 'pepe' }, \
+                     function initialize(name){ this.name = name }, \
                      function(){this.name = 'luis'}); \
         obj = new Person('pepe')")        
         
@@ -50,14 +50,14 @@ assert("The object initializer is valid even in the third position.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function(){this.name = 'luis'}, \
-                     function initialize(name){ this.name = 'pepe' });\
+                     function initialize(name){ this.name = name });\
         obj = new Person('pepe')")                
         
 assert("Anonymous functions don't cause any problems.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function(){this.name = 'luis'}, \
-                     function initialize(name){ this.name = 'pepe' });\
+                     function initialize(name){ this.name = name });\
         obj = new Person('pepe')")                
                 
 
@@ -65,13 +65,13 @@ assert("Extra params are considered as object instance methods.",
        "obj.greet()", "'hello. I am pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function greet(){ return 'hello. I am ' + this.name }, \
-                     function initialize(name){ this.name = 'pepe' });\
+                     function initialize(name){ this.name = name });\
         obj = new Person('pepe');")        
         
 
-assert("self_initialize is a convenience for initializing class variables.",
+assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
-       "Class_Person(function(name){this.name = 'juan'}, \
+       "Class_Person(function(name){this.name = name}, \
                      function self_number(){ return self.people }, \
                      function self_initialize(){self.people = 0 }, \
                      function initialize(){ self.people++ });\
@@ -79,10 +79,10 @@ assert("self_initialize is a convenience for initializing class variables.",
  
 
 assert("Whenever a function name starts with self_ is considered as a class method.",
-       "Person.number()", "1",
-       "Class_Person(function(name){this.name = 'juan'}, \
+       "Person.number()", "11",
+       "Class_Person(function(name){this.name = name}, \
                      function self_number(){ return self.people }, \
-                     function self_initialize(){self.people = 0 }, \
+                     function self_initialize(){self.people = 10 }, \
                      function initialize(){ self.people++ });\
          new Person('juan')")
 
@@ -137,9 +137,9 @@ assert("Inheritance is possible at class level.",
         "Class_Animal(function(){;}, function self_initialize(){ this.lives = true });\
          Class_Cow$$Animal(function(){ }, function self_initialize(){ self.superclass().initialize.call(this) });\
          ") 
-*/
-assert("Object#Self always refers to the class being executed.",
-       "a", "'Bee'",man
+
+assert("Object#Self always refers to the class being executed (from the object point of view).",
+       "a", "'Bee'",
        "Class_Bee(function(){;}, function buzz(){ a = Self.name});\
         (new Bee()).buzz()")
 
@@ -147,7 +147,7 @@ assert("Object#Self always refers to the class being executed.",
        "a", "'Yellow'",
        "Class_Bee(function(){;}, function buzz(){ a = Self.name});\
         Class_Yellow$$Bee(function(){;}, function say(){ Bee.prototype.buzz.call(this) } );\
-        (new Yellow()).buzz()")
+        (new Yellow()).say()")
 
 assert("Inheritance accepts methods from the outside.",
        "a", "'Yellow'",
