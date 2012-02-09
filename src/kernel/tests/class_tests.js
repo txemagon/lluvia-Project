@@ -153,20 +153,19 @@ assert("Inheritance accepts methods from the outside.",
        "a", "'Yellow'",
        "Class_Bee(function(){;}, function buzz(){ a = Self.name});\
         Class_Yellow$$Bee(function(){;}, function say(){ alert(this.toSource()) } );\
-        (new Yellow()).buzz()")
+        (new Yellow()).buzz();")
 
 assert("Inheritance accepts methods from the inside.",
        "a", "'Yellow'",
-       "Class_Bee(function(){;}, function buzz(){ a = Self.name});\
-        Class_Yellow$$Bee(function(){;}, function say(){ this.buzz() ) } );\
-        (new Yellow()).say()")
-      
+       "Class_Bee( function(){;}, function buzz(){ a = Self.name} );\
+        Class_Yellow$$Bee(function(){;}, function say(){ this.buzz() } );\
+        (new Yellow()).say();")      
 
 assert("Object#Self always refers to the class being executed.",
        "a", "'Yellow'",
-       "Class_Bee(function(){;}, function buzz(){ a = Self.name});\
+       "Class_Bee(function(){;}, function buzz(){ a = Self.name} );\
         Class_Yellow$$Bee(function(){;} );\
-        (new Yellow()).buzz()")
+        b = new Yellow(); b.buzz()")
 
 assert("Capitalized Self supports apply calls (has different meaning depending on the scope) inside method calls.",
         "Cow.lives", "true",

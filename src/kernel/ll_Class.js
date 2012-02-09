@@ -16,6 +16,10 @@ Class.prototype.get_this   = function() { return this }
 Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }
 
 function _ClassFactory(class_name, initial_functions){
+
+function testA(){
+  alert(class_name + " < " + parent_class + ": " + eval("new " + class_name + "() instanceof " + parent_class));
+}
   
   var whole_class_name = class_name
   class_name           = whole_class_name.split(/\$\$/)[0] 
@@ -78,44 +82,49 @@ function _ClassFactory(class_name, initial_functions){
         }\n\
         else if (this instanceof " + class_name + " && this.inheritance_level == 0 )\n\
          try{this.initialize.apply(this, arguments)}catch(err){;} \n\
-        } \n\
+        }; \n\
       ")
-
-  eval(class_name + "= new Function()")
-  eval.call(null, class_name + ".prototype = new " + parent_class )
-  eval.call(null, class_name + ".prototype.constructor = " + class_name )      
-  eval.call(null, class_name + ".prototype.super_class = " + parent_class )
-  
+   eval(class_name + "= new Function();")
+	function basic_proto(){
+	 
+	  eval.call(null, class_name + ".prototype = new " + parent_class + ";")
+	  eval.call(null, class_name + ".prototype.constructor = " + class_name +";" )      
+	  eval.call(null, class_name + ".prototype.super_class = " + parent_class + ";")
+	}
+  basic_proto()
   var initialize = eval.call(null, "$$NeWCLaSs = " + initializer  )  
+
   var new_class = $global_space[class_name] = initialize
+basic_proto()
+
   parse_arguments()
 
-  eval.call(null, class_name + ".prototype.class = " + class_name)
-  eval.call(null, class_name + ".superclass = function (){ return " + parent_class + "}")
+  eval.call(null, class_name + ".prototype.class = " + class_name + ";")
+  eval.call(null, class_name + ".superclass = function (){ return " + parent_class + "};")
   eval.call(null, class_name + ".ancestors = function (){ \n\
     var ancestor  = " + class_name + "\n\
     var ancestors = [] \n\
     while( (ancestor = ancestor.superclass()) )\n\
       ancestors.push(ancestor);\n\
     return ancestors\n\
-    }")
+    };")
+
   eval.call(null, class_name + ".Self = function (){ \n\
-     return this.prototype.constructor }")
-eval.call(null, class_name + ".prototype.Self = function (){ \n\
-     return this.constructor }")
+     return this.prototype.constructor };")
+  eval.call(null, class_name + ".prototype.Self = function (){ \n\
+     return this.constructor };")
   eval.call(null, class_name + ".method_missing = function(method, object, argument){ \n\
                                                      var ancestors = this.ancestors();\n\
                                                      for (var i=0; i< ancestors.length; i++)\n\
                                                        try{ return ancestors[i][method].apply(object, argument) } catch(err){;}\n\
                                                        throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
                                                      return " + parent_class + "[method].apply(object, argument) \n\
-                                                  } ")
+                                                  }; ")
+
   $global_space[class_name].call(eval(class_name + "({initialize: true})")) // Execute as a function (class initialization)
   $classes.push(new_class)
   return new_class
 }
-
-
 
 
 /*
