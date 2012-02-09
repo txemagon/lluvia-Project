@@ -30,7 +30,8 @@ function testA(){
       initial_functions[i].match(/function\s*([^(]*)\(/)
       if (RegExp.$1 != ""){
         var fn_name = RegExp.$1
-        initial_functions[i] = initial_functions[i].replace(/super\(/, parent_class + ".prototype." + fn_name + "( ")
+        initial_functions[i] = initial_functions[i].replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)")
+        initial_functions[i] = initial_functions[i].replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ")
         var class_method = /^self_/.test(fn_name)
         if (class_method)
           initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")          

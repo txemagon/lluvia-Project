@@ -178,7 +178,7 @@ assert("Inheritance is possible at class level.",
         "Class_Animal(function(){ this.lives = true });\
          Class_Cow$$Animal(function(){ }, function self_initialize(){ self.superclass().call(this) });\
          ") 
-/* 
+ 
 assert("Every single class has a name property, which answers the name of the class as a String.",
        "OneAnimal.name", "'OneAnimal'",
        "Class_OneAnimal(function(){ self.lives = true })")       
@@ -219,32 +219,33 @@ assert( "Class level method inheritance.",
                       );\
          Class_Ruminant$$Animal(function(){;} ), \
          Class_Cow$$Ruminant(function(){;} )" )
- 
-assert("super calls a method of the parent class named in the same as way as the caller",
+
+assert("Super calls a method of the parent class named in the same as way as the caller",
        "cow.legs()", "4",
        "Class_Animal(function(){;}, function legs(){ return 4 } ); \
         Class_Cow$$Animal(function(){;}, function legs(){ return 4 } );\
         cow = new Cow();" )
        
-assert("super calls a method of the parent class named in the same as way as the caller",
+assert("Super calls a method of the parent class named in the same as way as the caller",
        "cow.legs()", "4",
        "Class_Animal(function(){}, function legs(){ return 4 }); \
-        Class_Ruminant$$Animal(function(){}, function legs(){ return super() });\
-        Class_Cow$$Ruminant(function(){;}, function legs(){ return this.super() });\
+        Class_Ruminant$$Animal(function(){}, function legs(){ return Super() });\
+        Class_Cow$$Ruminant(function(){;}, function legs(){ return Super() });\
         cow = new Cow()" )
         
 assert("Super pass all the parameters through by default.",
        "person.greet('coder')", "'Hello coder'",
        "Class_Creature( function(){}, function greet(name){ return 'Hello ' + name} );\
-        Class_Person$$Creature( function(){}, function greet(){ return this.super() });\
+        Class_Person$$Creature( function(){}, function greet(){ return Super() });\
         person = new Person();") 
         
 assert("Super doesn't pass the arguments if we override the behavior.",
        "person.greet('coder')", "'Hello girlfriend'",
        "Class_Creature( function(){}, function greet(name){ return 'Hello ' + name} );\
-        Class_Person$$Creature( function(){}, function greet(){ return this.super('girlfriend') });\
+        Class_Person$$Creature( function(){}, function greet(){ return Super('girlfriend') });\
         person = new Person();")         
-             
+   
+          
 /*
  * todo: provide an especific extend and include
        */
