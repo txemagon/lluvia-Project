@@ -56,7 +56,7 @@ function _make_test(kind){
 	   try{
 	     return eval.call(null, sanitize(testing)) 
 	   } catch(err){ 
-             if (Exception.is$U(err, "method call"))
+             if (Exception.is$U(err, "method call") || Exception.is$U(err, "singleton method"))
                return Exception.parse(err, "method call")
 	     if (Exception.is$U(err, "function call"))
 	       if (depth >= 10 ) 

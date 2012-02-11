@@ -245,7 +245,37 @@ assert("Super doesn't pass the arguments if we override the behavior.",
         Class_Person$$Creature( function(){}, function greet(){ return Super('girlfriend') });\
         person = new Person();")         
    
+assert("Super works at class level.",
+       "Person.greet('coder')", "'Hello coder'",
+       "Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
+        Class_Person$$Creature( function(){}, function self_greet(){ return Super() });") 
+    
+assert("Super works at class level.",
+       "Person.greet('coder')", "'Hello coder'",
+       "Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
+        Class_Human$$Creature( function(){;} );\
+        Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
           
 /*
- * todo: provide an especific extend and include
+ * todo: provide an especific include
+ *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.
+ *  A module can not be instantiated.
+ *  A module is a transparent class
+ *  To include class methods we usually define a submodule call ClassMethods and we define self.included(receiver) in the module.
+ *  module MyLib
+ *   def self.included(receiver)
+ *      receiver.extend(ClassMethods)
+ *   end
+ *   module ClassMethods
+ *    def class_method
+ *      puts "smthg"
+ *    end
+ *  end
+ * end
+ * todo: provide especific extend
+ *  An object (a class is an object too) can be extended.
+ *  extend == self.extend
+ * todo: define before_filter and after_filter
+ * todo: define alias: Copies one method with a new name. (They are different copies)
+ * todo: Provide a require
        */
