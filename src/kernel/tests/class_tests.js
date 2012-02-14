@@ -1,4 +1,4 @@
-
+/*
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -255,7 +255,16 @@ assert("Super works at class level.",
        "Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
         Class_Human$$Creature( function(){;} );\
         Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
-          
+*/
+
+assert("Before filters are singleton facilities.",
+       "me.greet()", "true",
+       "a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_before_filter('greet', change);\
+        me.greet();")
+
 /*
  * todo: provide an especific include
  *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.
