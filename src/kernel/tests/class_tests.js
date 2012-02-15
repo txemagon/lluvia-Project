@@ -258,7 +258,7 @@ assert("Super works at class level.",
 */
 
 assert("Before filters are singleton facilities.",
-       "me.greet()", "true",
+       "a", "true",
        "a = false; function change(){ a = true; }\
         Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
         me = new Person('Txema');\

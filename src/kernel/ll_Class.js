@@ -20,7 +20,6 @@ Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
 Class.prototype.add_before_filter   = function(observed_function, filters) {
-
    if (typeof(this.before_filters[observed_function] == "undefined"))
       this.before_filters[observed_function] = []
    for (var i=1; i<arguments.length; i++)
@@ -72,7 +71,7 @@ function _ClassFactory(class_name, initial_functions){
             eval(class_name)[f.name] = ( function(){ 
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name);  
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before(" + f.name + ");\n " + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this'))").replace(/Super\(\s*\)/, parent_class + "." + f.name + ".apply(this, arguments)").replace(/Super\(/, parent_class + "." + f.name + "( ") + ";\nthis.call_after(" + f.name + ");\n}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n " + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this'))").replace(/Super\(\s*\)/, parent_class + "." + f.name + ".apply(this, arguments)").replace(/Super\(/, parent_class + "." + f.name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
           } catch (err) {
             alert("Impossible to create the function.\n" + err + "\n" + fun)
@@ -82,7 +81,7 @@ function _ClassFactory(class_name, initial_functions){
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name); 
                                                    var Self =  function(){ return "hello" }
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before(" + f.name + ");\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after(" + f.name + ");\n}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
        }
      }
