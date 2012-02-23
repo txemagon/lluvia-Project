@@ -261,6 +261,15 @@ assert("Before filters are available.",
        "a = false; Class_Person( function(name){ this.name }, function greet(){ return 'Hi, ' + this.name; } );\
         me = new Person('Txema');");
           
+
+assert("Before filters are singleton facilities.",
+       "a", "true",
+       "a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_before_filter('greet', change);\
+        me.greet();")
+
 /*
  * todo: provide an especific include
  *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.

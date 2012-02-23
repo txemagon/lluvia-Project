@@ -5,16 +5,45 @@ Class.prototype.constructor = Class
 function Class(){
   var self = this instanceof Function ? this : eval(this.constructor.name)
   var that = this
+  this.before_filters = {}
+  this.after_filters  = {}
+}
 
+function _$_add_filter(where, single_param){
+  if (!(single_param instanceof Array))
+    single_param = [single_param]
+  for (var i=0; i<single_param.length; i++)
+    where.push(single_param[i])
 }
 
 Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
-Class.before_filter = Class.prototype.before = function(before_fn, observed_fn){
   
+Class.prototype.add_before_filter   = function(observed_function, filters) {
+   if (typeof(this.before_filters[observed_function] == "undefined"))
+      this.before_filters[observed_function] = []
+   for (var i=1; i<arguments.length; i++)
+      _$_add_filter(this.before_filters[observed_function], arguments[i])
 }
 
+Class.prototype.add_after_filter   = function(observed_function, filters) {
+
+   if (typeof(this.before_filters[observed_function] == "undefined"))
+      this.after_filters[observed_function] = []
+   for (var i=1; i<arguments.length; i++)
+      _$_add_filter(this.after_filters[observed_function], filter[i])
+}
+
+Class.prototype.call_before = function(fn_name){
+  for (var i=0; i<this.before_filters[fn_name].length; i++)
+    this.before_filters[fn_name][i]();
+}
+
+Class.prototype.call_after = function(fn_name){
+    for (var i=0; i<this.after_filters[fn_name].length; i++)
+       this.after_filters[fn_name][i]();
+}
 
 Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }
 
@@ -43,7 +72,7 @@ function _ClassFactory(class_name, initial_functions){
             eval(class_name)[f.name] = ( function(){ 
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name);  
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ " + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this'))").replace(/Super\(\s*\)/, parent_class + "." + f.name + ".apply(this, arguments)").replace(/Super\(/, parent_class + "." + f.name + "( ") + ";}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n " + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this'))").replace(/Super\(\s*\)/, parent_class + "." + f.name + ".apply(this, arguments)").replace(/Super\(/, parent_class + "." + f.name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
           } catch (err) {
             alert("Impossible to create the function.\n" + err + "\n" + fun)
@@ -53,7 +82,7 @@ function _ClassFactory(class_name, initial_functions){
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name); 
                                                    var Self =  function(){ return "hello" }
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
        }
      }
