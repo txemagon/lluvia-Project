@@ -11,6 +11,9 @@ function Class(){
 Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
+Class.before_filter = Class.prototype.before = function(before_fn, observed_fn){
+  
+}
 
 
 Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }

@@ -1,4 +1,4 @@
-
+/*
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -255,6 +255,11 @@ assert("Super works at class level.",
        "Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
         Class_Human$$Creature( function(){;} );\
         Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
+*/
+assert("Before filters are available.",
+       "a", "true",
+       "a = false; Class_Person( function(name){ this.name }, function greet(){ return 'Hi, ' + this.name; } );\
+        me = new Person('Txema');");
           
 /*
  * todo: provide an especific include
