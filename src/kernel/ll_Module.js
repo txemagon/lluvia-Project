@@ -9,3 +9,7 @@ function Module(){
     try {this.initialize.apply(this, arguments)}catch(err){;}
   }
 }
+
+funtion require(){
+  //todo: define require to require another libraries not included in the index.js
+}

@@ -1,10 +1,16 @@
-// This is more an expectation than real software
+/**
+ * @classDescription Creates a World
+ *
+ * @param  {canvas}  A string or HTMLNode with a canvas element.
+ * @return {World}
+ * @constructor
+ */
 
-function World3D(){
+function World(canvas){
+  this.origin = new ReferenceFrame() /* the origin has not to be 0,0,0 
   this.dpi = parseInt(document.getElementById('ppitest').offsetWidth) // todo: Use vertical and horizontal dpi
   this.current_unit = "mm"
-  this.unit = { mm: 25.4, cm: 2.54, dm: 0.254, m:0.0254, km: 0.0000254 }  //todo: provide a whole list of units.
-                                                                          //todo: avoid creating the units in each instance
+  this.unit = { mm: 25.4, cm: 2.54, dm: 0.254, m:0.0254, km: 0.0000254 }  //todo: provide a whole list of units in the units package.
 
   this.point_of_view = new Vector(0,0,1000)
   this.canvas = document.getElementById("worldCanvas")
@@ -15,8 +21,8 @@ function World3D(){
   this.view_scale = this.dpi / this.unit[this.current_unit] 
 }
 
-World3D.initialize = function(){
-  Vector.prototype.world  = new World3D()
+World.initialize = function(){ // World Factory
+  return Vector.prototype.world  = new World()
 }
 
 World3D.prototype.draw_line = function(coord3D){
@@ -24,7 +30,7 @@ World3D.prototype.draw_line = function(coord3D){
     function wp(coord){  // stands for world projection
       return that.view_scale * coord
     }
-  var XS = this.view.main.width / 2 //todo: change the variable names to smthing more verbose.
+  var XS = this.view.main.width / 2 // todo: change the variable names to smthing more verbose.
   var YS = this.view.main.height / 2
   var factor = this.point_of_view.Coord[2] / (this.point_of_view.Coord[2] - coord3D[2] )
     var x =  wp(factor * coord3D[0]) + XS

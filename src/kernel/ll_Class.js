@@ -154,3 +154,5 @@ basic_proto()
 }
 
 
+// todo: copy argument into arguments = [] to support inner functions
+
