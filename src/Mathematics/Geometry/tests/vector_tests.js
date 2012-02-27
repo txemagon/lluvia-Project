@@ -36,8 +36,8 @@ assert( "Vector 9. Generates vector sending cylindrical coordinates",
         'v = new Vector(1,2,3, "cyl")')
 
 assert( "Vector 10. Generate vector sending array  of cylindrical coordinates.",
-        "v2._module","NaN",
-        'v2 = new Vector([1,2,3,"cyl"])')//SALE FAILED PERO LOS RESULTADOS SON IGUALES
+        "(new Vector(1,2,3, 'cyl'))._module","v2._module",
+        'v2 = new Vector([1,2,3], "cyl")')
 
 assert( "Vector 11. Generate vector with one coordinate only.",
         "v._module","1",
@@ -79,4 +79,6 @@ assert( "Vector coordinates",
 assert( "Vector coordinates",
         "v.get_coord(0)", "'2*t'",
         "v = new Vector('2*t', '3*t', '-5*t + 1') ")
+
+
 

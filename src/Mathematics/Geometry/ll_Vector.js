@@ -849,9 +849,9 @@ Vector.prototype.toCylindrical = function(){
     return coords
 }
 
-//toSpherical
+// todo: toSpherical
 
-// toPolar
+// todo: toPolar
 
 /**
  * This function calculates the torque of two vectors.
