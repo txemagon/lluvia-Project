@@ -7,6 +7,8 @@ function Class(){
   var that = this
   this.before_filters = {}
   this.after_filters  = {}
+  this.attr_readers = {}
+  this.attr_writers = {}
 }
 
 function _$_add_filter(where, single_param){
@@ -20,8 +22,9 @@ Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
   
+//todo: accept strings as argument names. Accept blocks, too.
 Class.prototype.add_before_filter   = function(observed_function, filters) {
-   if (typeof(this.before_filters[observed_function] == "undefined"))
+   if (typeof(this.before_filters[observed_function]) == "undefined")
       this.before_filters[observed_function] = []
    for (var i=1; i<arguments.length; i++)
       _$_add_filter(this.before_filters[observed_function], arguments[i])
@@ -29,10 +32,10 @@ Class.prototype.add_before_filter   = function(observed_function, filters) {
 
 Class.prototype.add_after_filter   = function(observed_function, filters) {
 
-   if (typeof(this.before_filters[observed_function] == "undefined"))
+   if (typeof(this.after_filters[observed_function]) == "undefined")
       this.after_filters[observed_function] = []
    for (var i=1; i<arguments.length; i++)
-      _$_add_filter(this.after_filters[observed_function], filter[i])
+      _$_add_filter(this.after_filters[observed_function], arguments[i])
 }
 
 Class.prototype.call_before = function(fn_name){
@@ -41,6 +44,7 @@ Class.prototype.call_before = function(fn_name){
 }
 
 Class.prototype.call_after = function(fn_name){
+   alert("hello")
     for (var i=0; i<this.after_filters[fn_name].length; i++)
        this.after_filters[fn_name][i]();
 }

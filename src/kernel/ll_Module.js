@@ -10,6 +10,6 @@ function Module(){
   }
 }
 
-funtion require(){
+function require(){
   //todo: define require to require another libraries not included in the index.js
 }
