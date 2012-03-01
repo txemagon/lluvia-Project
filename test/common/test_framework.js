@@ -1,14 +1,6 @@
 var _test_panel_name = '_testResults'
 var $LLGvn // It's necessary to hold the evaluation in a globlal variable to keep garbage collector's hands out of the code
 
-function _make_test(kind){
-        var res = ["Ok", "Failed"]
-        var test_text = "Testing: "
-        var test_res = "\n<br/>\n"
-	var sep = ": "
-        var test_panel = document.getElementById(_test_panel_name)
-        
-        
         function _test_equals(value1, value2){
            var ERROR = 0.00001
 
@@ -67,6 +59,16 @@ function _make_test(kind){
 	   }
 	}
       
+
+function _make_test(kind){
+        var res = ["Ok", "Failed"]
+        var test_text = "Testing: "
+        var test_res = "\n<br/>\n"
+	var sep = ": "
+        var test_panel = document.getElementById(_test_panel_name)
+        
+        
+///
       if (kind == "assert")
 	  return function (sentence, testing, waited, before_test, post_condition){
 	     

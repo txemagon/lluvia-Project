@@ -256,11 +256,6 @@ assert("Super works at class level.",
         Class_Human$$Creature( function(){;} );\
         Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
 */
-assert("Before filters are available.",
-       "a", "true",
-       "a = false; Class_Person( function(name){ this.name }, function greet(){ return 'Hi, ' + this.name; } );\
-        me = new Person('Txema');");
-          
 
 assert("Before filters are singleton facilities.",
        "a", "true",
@@ -270,6 +265,14 @@ assert("Before filters are singleton facilities.",
         me.add_before_filter('greet', change);\
         me.greet();")
 
+
+assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
+       "a", "true",
+       "a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_after_filter('greet', change);\
+        me.greet();" )
 /*
  * todo: provide an especific include
  *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.
@@ -289,7 +292,6 @@ assert("Before filters are singleton facilities.",
  * todo: provide especific extend
  *  An object (a class is an object too) can be extended.
  *  extend == self.extend
- * todo: define before_filter and after_filter
  * todo: define alias: Copies one method with a new name. (They are different copies)
  * todo: Provide a require
        */

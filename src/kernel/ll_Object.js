@@ -230,5 +230,27 @@ Object.prototype.instance_of$U = function (clss){
 Object.prototype.method_missing = function (method, obj, params){
   obj = obj || ""
   params = params || []
+  // todo: metadefine getters and setters.
   throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
+}
+
+Object.prototype.attr_reader = function (name){
+   try{
+     this.attr_readers.push(name) 
+   }catch(err){
+      //todo: Warn something on upper debug levels if attr_reader is not supported.
+   }
+}
+
+Object.prototype.attr_writer = function (name){
+   try{
+     this.attr_writers.push(name) 
+   }catch(err){
+      //todo: Warn something on upper debug levels if attr_writer is not supported.
+   }
+}
+
+Object.prototype.attr_accessor = function(name){
+     attr_reader(name) 
+     attr_writer(name) 
 }

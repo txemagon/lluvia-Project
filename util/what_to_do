@@ -1,0 +1,5 @@
+#!/bin/bash
+# Finds todo comments
+
+grep -Ri todo: *
+
