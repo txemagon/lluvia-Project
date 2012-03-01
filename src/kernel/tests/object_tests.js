@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 assert("Object#attr_reader creates the getter function.",
        "me.get_name()" , "'Txema'",
        "Class_Person(function(name){ this.name = name; this.attr_reader('name');  }); me = new Person('Txema')")
@@ -10,15 +9,4 @@ assert("Object#attr_writer creates the setter function.",
 assert("Object#attr_accessor creates the setter and the getter functions.",
        "me.get_name()" , "'Juan'",
        "Class_Person(function(name){ this.name = name; this.attr_accessor('name');  }); me = new Person('Txema'); me.set_name('Juan')")
-=======
-given("Given Two classes.",
-      $LLGvn = "Class_Person(function(name){ attr_reader('name'); this.name; });\
-        ;" )
-eval($LLGvn)
-
-assert("Object#attr_reader creates the getter function.",
-       "", "",
-       "")
->>>>>>> origin
-
 
