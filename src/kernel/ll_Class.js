@@ -7,8 +7,8 @@ function Class(){
   var that = this
   this.before_filters = {}
   this.after_filters  = {}
-  this.attr_readers = {}
-  this.attr_writers = {}
+  this.attr_readers = []
+  this.attr_writers = []
 }
 
 function _$_add_filter(where, single_param){

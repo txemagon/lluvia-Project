@@ -108,7 +108,6 @@ Exception.parse = function(err){
        return obj.method_missing(m[2], m[1],  actual_parameters)
      }
 
-      
      throw(err)
 }
 

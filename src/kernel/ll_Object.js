@@ -228,10 +228,40 @@ Object.prototype.instance_of$U = function (clss){
 }
 
 Object.prototype.method_missing = function (method, obj, params){
+
+  var that = this
+  function bad_function(){
+    throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') )) 
+  }
+
+  function is_in(list, word){
+     var is = false
+     for (var i=0; i<list.length; i++)
+	if (list[i] == word)
+	   is = true
+     return is
+   }
+
   obj = obj || ""
   params = params || []
-  // todo: metadefine getters and setters.
-  throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
+
+  if (/get_/.test(method)){
+	var attr = method.match(/get_(\w*)/)[1]
+	if (!is_in(eval("" + obj + ".attr_readers"), attr))
+	   bad_function()
+	return eval("" + obj + "." + attr)
+  }
+
+  if (/set_/.test(method)){
+	var attr  = method.match(/set_(\w*)/)[1]
+	if (!is_in(eval("" + obj + ".attr_writers"), attr))
+	   bad_function()
+	var ob = eval("" + obj )
+        ob[attr] = params[0]
+	return ob[attr]
+  }
+  //todo: Provide camel case getter and setters
+  bad_function()
 }
 
 Object.prototype.attr_reader = function (name){
@@ -251,6 +281,6 @@ Object.prototype.attr_writer = function (name){
 }
 
 Object.prototype.attr_accessor = function(name){
-     attr_reader(name) 
-     attr_writer(name) 
+     this.attr_reader(name) 
+     this.attr_writer(name) 
 }
