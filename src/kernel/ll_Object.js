@@ -284,3 +284,24 @@ Object.prototype.attr_accessor = function(name){
      this.attr_reader(name) 
      this.attr_writer(name) 
 }
+
+Object.prototype.attr_reader = function (name){
+   try{
+     this.attr_readers.push(name) 
+   }catch(err){
+      //todo: Warn something on upper debug levels if attr_reader is not supported.
+   }
+}
+
+Object.prototype.attr_writer = function (name){
+   try{
+     this.attr_writers.push(name) 
+   }catch(err){
+      //todo: Warn something on upper debug levels if attr_writer is not supported.
+   }
+}
+
+Object.prototype.attr_accessor = function(name){
+     attr_reader(name) 
+     attr_writer(name) 
+}
