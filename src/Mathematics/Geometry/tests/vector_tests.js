@@ -80,5 +80,8 @@ assert( "Vector coordinates",
         "v.get_coord(0)", "'2*t'",
         "v = new Vector('2*t', '3*t', '-5*t + 1') ")
 
+assert( "Transform Cartesian coordinates in spherical coordinates",
+        "v.toSpherical()[1]", "Math.PI/3",
+        "v = new Vector(1,Math.PI/3, Math.PI/4, 'sph');")
 
 

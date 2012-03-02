@@ -52,7 +52,7 @@ function Vector(){
         if (coordinate_system == "sph") {
             that.Coord[0] = coord_temp[0] * Math.sin(coord_temp[1]) * Math.cos(coord_temp[2])
             that.Coord[1] = coord_temp[0] * Math.sin(coord_temp[1]) * Math.sin(coord_temp[2])
-            that.Coord[2] = coord_temp[0] * Math.sin(coord_temp[1])
+            that.Coord[2] = coord_temp[0] * Math.cos(coord_temp[1])
         }
         
         if (coordinate_system == "cart") {
@@ -788,7 +788,7 @@ Vector.prototype.angle = function(){
 	  } else
 	     return Math.acos( this.dot(v1) / this.module() / v1.module() )
 	else 
-		throw "Invalid Input, angle() method needs/recives a vector"
+		throw "Invalid Input, angle() method needs/recives a vector of dimension " + this.Coord.length + "." 
 }
 
 /**
@@ -843,13 +843,23 @@ Vector.prototype.module = function(){
 Vector.prototype.toCylindrical = function(){
     coords=[]
     v2 = new Vector(this.Coord[0],this.Coord[1])
-    coords[0] = v2.module()
-    coords[1] = v2.angle(1,0)
+    coords[0] = Math.sqrt(pow(this.Coord[0],2)+Math.pow(this.Coord[1],2)) 
+    coords[1] = Math.atan2(this.Coord[1]/this.Coord[0])
     coords[2] = this.Coord[2] 
     return coords
+       
 }
 
 // todo: toSpherical
+
+Vector.prototype.toSpherical = function(){
+    coords=[]
+    v2 = new Vector(this.Coord[0],this.Coord[1],this.Coord[2])
+    coords[0] = Math.sqrt(Math.pow(this.Coord[0],2)+Math.pow(this.Coord[1],2)+Math.pow(this.Coord[2],2))
+    coords[1] = Math.acos(this.Coord[2]/coords[0])
+    coords[2] = Math.acos(this.Coord[0]/(coords[0]*Math.sin(coords[1])))
+    return coords
+}
 
 // todo: toPolar
 

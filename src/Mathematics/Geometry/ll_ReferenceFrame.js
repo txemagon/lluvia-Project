@@ -7,17 +7,13 @@ require("vector")
  * @return {ReferenceFrame}
  * @constructor
  */
-function ReferenceFrame(){
-   this.data = []
-   var j=0
+function ReferenceFrame(drift, trihedron_components){
+   this.drift = drift
+   this.transformation_matrix = trihedron_components
+}
 
-   for (var i=0; i< arguments.length; i++)
-      if (argument[i] instanceof Vector){
-	 data[j] = argument[j]
-	 j++
-      }
-   // todo: provide a sweeter input parser.
-
+ReferenceFrame.prototype.coord_of = function (point){
+  
 }
 
 //todo: provide coordinates transformations between reference frames.
