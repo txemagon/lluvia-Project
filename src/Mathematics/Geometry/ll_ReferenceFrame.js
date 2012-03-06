@@ -8,47 +8,65 @@ require("vector")
  * @constructor
  */
 function ReferenceFrame(drift, trihedron_components){
-   this.drift = drift
-   this.transformation_matrix = trihedron_components
+
+   var drift_coords = [] 
+   for (var i=0; i<arguments.length; i++)
+      if (i != arguments.length - 1)
+	 drift_coords.push(arguments[i])
+      else
+	 if (  (arguments[i] instanceof Array) && 
+	        ( ( arguments[i][0] instanceof Array) || (arguments[i][0] instanceof Vector) )
+	    )
+	    this.transformation_matrix = ReferenceFrame.normalize(arguments[i])
+	 else
+	    drift_coords.push(arguments[i])
+
+     if (drift_coords.length == 0)
+	drift_coords = [0,0,0]
+
+     this.drift = new Vector(drift_coords)
+
+   this.default_transformation_matrix = [ [1, 0, 0], 
+                                          [0, 1, 1], 
+					  [0, 0, 1] ]
+   // todo: raise an error with no normalized trihedrons
+}
+
+ReferenceFrame.prototype.get_transformation_matrix = function(){
+   return this.transformation_matrix || this.default_transformation_matrix
 }
 
 ReferenceFrame.prototype.coord_of = function (point){
-  
+   var args = Function.args(arguments) 
+
+   if (!(point instanceof Vector))
+      point = eval("new Vector(" + args.join(", ") +")")
+
+   var ro = new Vector(point).subs(this.drift)
+   if (!this.transformation_matrix)
+      return ro
+
+   return ro.transform(this.transformation_matrix)
 }
 
-//todo: provide coordinates transformations between reference frames.
-//todo: Store the parent referenceFrame if any to provide traceability. Thus, reference systems
-//      are homegenous transformation matrices that map displacement, rotation and scaling.
-//todo: Provide a getter for the transformation matrix.
+ReferenceFrame.normalize = function(matrix){
+   if (matrix.frozen$U())
+      return matrix
 
-//todo: provide a way to normalize the trihedron
+  for (var i=0; i<matrix.length; i++)
+     matrix[i] = (new Vector(matrix[i])).uVector
 
-/*
- * todo: provide a sweeter input parser.
- *
- * Some use cases:
- * new ReferenceFrame()
- * new ReferenceFrame(1,2) => We provide a position 2D
- * new ReferenceFrame(1,2,3) => 3D Position provided.
- * new ReferenceFrame(1,2,3,4) => 4D Position provided
- *
- * new ReferenceFrame([1,2]) => We provide a position 2D
- * new ReferenceFrame([1,2,3]) => 3D Position provided.
- * new ReferenceFrame([1,2,3,4]) => 4D Position provided
- *
- * new ReferenceFrame(r:Vector) => One vector sets position
- *
- * Given one of the following positions or none at all, se state the axis in coordinates realtive to another frame.
- *
- * new ReferenceFrame([1,2], [3,4]) => 2 vectors. It normalizes the trihedron by default
- * new ReferenceFrame([1,2], [3,4], "!n") => 2 vectors. Do not normalize the trihedron.
- * valid synonums for "!n": "not normalize", "do not normalize", "don't normalize", "quiet", "be quiet", "leave alone" and "leave it alone". Case is not relevant.
- * new ReferenceFrame([1,2], [2,4]) shall raise an exception since they're linearly dependent.
- * new ReferenceFrame([1,2]) collide with of the cases above, but if it were one of the vectors the other one should be calculated to be perpendicualar. Note that it only collides with dimension 2 vectors.
- * new ReferenceFrame([1,2], [2,4], [5,6]) shall raise an error.
- * new ReferenceFrame([1,2], [2,4,5], [5,6]) v1 and v3 shall be padded with zeros.
- * Vector can be passed instead of arrays.
- * 
- * new ReferenceFrame([1,2], [3,4]) => Collides as a two axes collides against position + axis.
- * new ReferenceFrame([1,2], [[3,4]]) or new ReferenceFrame([[1,2], [3,4]]) wrapping the vector system inside an array resolves the ambiguity.
- */
+  if (matrix.length < matrix[0].length-1)
+     throw "Incomplete Reference Frame"
+
+//todo: Provide versor completion for other dimensions different from 3.
+  if (matrix.length == matrix[0].length-1)
+     matrix.push( (new Vector(matrix[0])).cross(new Vector(matrix[1])).get_coord() )
+
+  return matrix
+}
+
+//todo: provide two predicates indicating if the trihedron is right-handed (dextrogiro) or left-handed (levogiro)
+//todo: provide a method that checks linear independence in the reference frame.
+//todo: provide another reference frame to establish a chain of matrix transformations.
+//todo: implement a mechanism to calculate final transformation chains within the reference chain

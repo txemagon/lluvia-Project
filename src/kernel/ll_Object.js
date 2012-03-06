@@ -141,10 +141,12 @@ Object.prototype._FROZEN = false
 
 Object.prototype.taint  = function (){
   this.tainted = true  
+  return this
 }
 
 Object.prototype.untaint  = function (){
   this.tainted = false  
+  return this
 }
 
 Object.prototype.tainted$U  = function (){
@@ -153,10 +155,12 @@ Object.prototype.tainted$U  = function (){
 
 Object.prototype.trust  = function (){
   this._trust = true  
+  return this
 }
 
 Object.prototype.untrust  = function (){
   this._trust = false  
+  return this
 }
 
 Object.prototype.untrusted$U = function (){
@@ -169,6 +173,7 @@ Object.prototype.trusted$U = function (){
 
 Object.prototype.freeze = function (){
   this._FROZEN = true
+  return this
 }
 
 Object.prototype.frozen$U  = function(){

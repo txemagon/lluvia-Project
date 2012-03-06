@@ -30,7 +30,7 @@ function FormBuilder(config, fields){
   
   function normalize(key){
     if (typeof(key) === "string")
-      return key.replace(/\s/g , "").toLowerCase()
+      return key.replace(/\s+/g , "_").toLowerCase()
     return key
   }
   

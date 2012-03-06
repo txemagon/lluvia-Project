@@ -23,7 +23,13 @@ function Vector(){
     // arguments is not array, just array-like
     for (var i = 0; i < arguments.length; i++) 
         argument[i] = arguments[i]
-    
+
+    if (arguments[0] instanceof Array)
+       for (var i = 0; i < arguments[0].length; i++) 
+         argument[i] = arguments[0][i]
+
+
+    // support new Vector([])
     //moves the coordinate system string (if exists) to the last position
     for (var i = 0; i < argument.length; i++) 
         if (Vector.is_valid_cs$U(arguments[i]) )
@@ -364,10 +370,10 @@ Vector.prototype.dot = function(vectors){
 function _simple_cross(vector1, vectorArray){
 	    var vector2 = vectorArray.shift()
 		var vectAux = new Vector( vector1.Coord[1] * vector2.Coord[2] - vector1.Coord[2] * vector2.Coord[1], 
-							      vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2], 
-							      vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0] )
+							     vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2], 
+							     vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0] )
 								   
-		if (vectorArray.lenth == 0)
+		if (vectorArray.length == 0)
 		  return vectAux
 							 
 		return _simple_cross( vectAux, vectorArray) 
@@ -380,7 +386,6 @@ function _simple_cross(vector1, vectorArray){
  * @method 		cross        returns a vector which is the result of 2 vector product
  * @param {Object} vectors
  *
- * coded by Antonio Carhuatocto
  */
 Vector.prototype.cross = function(vectors){
 
@@ -939,6 +944,19 @@ Vector.prototype.get_coord = function(){
 Vector.prototype.eql$U = function(model){
   model = new Vector(model)
   return model.Coord.eql$U(this.Coord)
+}
+
+//Applies a transformation matrix
+// todo: Test cases pending. What about homegeneous cordinates?: Looks like working.
+Vector.prototype.transform = function (transformation_matrix){
+   var coords = []
+   for (var row=0; row< transformation_matrix.length; row++){
+      coords[row] = 0
+     for (var col=0; col<transformation_matrix[row].length; col++) 
+	coords[row] += (transformation_matrix[row][col] )  * this.Coord[col]
+   }
+   
+   return new Vector(coords)
 }
 
 /* Class Variables and Methods */

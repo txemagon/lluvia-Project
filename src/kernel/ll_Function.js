@@ -218,3 +218,10 @@ Function.prototype.extend = function(superclass, args){
     this.super.Class.after_extended(this)
 		
 }
+
+Function.prototype.args = function (the_arguments){
+   var args = []
+   for (var i=0; i<the_arguments.length; i++)
+      args.push(the_arguments[i])
+   return args
+}
