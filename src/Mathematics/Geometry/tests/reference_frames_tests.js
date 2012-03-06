@@ -3,7 +3,7 @@ assert( "A simple coordinate transformation (Vector).",
         "rf = new ReferenceFrame(1, 0, 0); v = new Vector(1,1,1);"
 )
 
-assert( "A simple coordinate transformation (Anoteher case).",
+assert( "A simple coordinate transformation (Another case).",
         "rf.coord_of(v)", "[1,1,1]",
         "rf = new ReferenceFrame(1, 0, 0); v = new Vector(2,1,1);"
 )
@@ -67,4 +67,23 @@ assert( "The trihedron is self autocompleted.",
         "rf = new ReferenceFrame(1, 0, 0, [[1, 1, 0], [-1, 1, 0]] ) "
 )
 
+assert("ReferenceFrame provides a copy constructor",
+       "rf.drift", "nrf.drift",
+       "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); nrf = new ReferenceFrame(rf);")
 
+assert("ReferenceFrame provides a copy constructor",
+       "rf.get_transformation_matrix()", "nrf.get_transformation_matrix()",
+       "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); nrf = new ReferenceFrame(rf);")
+
+assert("ReferenceFrame a copy constructor really copies de values (do not reference them)",
+       "nrf.drift", "[1, 0, 0]",
+       "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); nrf = new ReferenceFrame(rf); rf.drift = [1, 1, 1]")
+
+assert("ReferenceFrame a copy constructor really copies de values (do not reference them)",
+       "nrf.get_transformation_matrix()", "[[0, 1, 0], [0, 0, 1], [1, 0, 0]]",
+       "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); nrf = new ReferenceFrame(rf); rf.transformation_matrix = [[1, 1, 0], [0, 0, 1], [1, -1, 0]]")
+/*
+assert("When the transformation is linearly dependent an error is thrown",
+       "a", "true",
+       "a=false; try{rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [1, 0, 0], [1, 1, 0]]);} catch(e) { if /dependent/.test(e) a = true; }; ")
+       */

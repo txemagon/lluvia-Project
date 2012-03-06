@@ -651,7 +651,8 @@ Vector.prototype.projection$B = function(vector1){
  *Comments:   This function works creating a vector from the length of the biggest vector to substract,
  *			  witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
  */
-Vector.prototype.linearCombination$U = function(vectorSet){
+//todo: get this working. There isn't any Matrix class at all.
+Vector.linearCombination$U = function(vectorSet){
 
     /**
      *	VALID INPUT!
@@ -679,7 +680,7 @@ Vector.prototype.linearCombination$U = function(vectorSet){
         if (nz == norm[i].length) 
             li = false
     }
-    return li;
+    return !li;
 }
 
 /**
