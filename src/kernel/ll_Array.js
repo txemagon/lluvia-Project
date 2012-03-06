@@ -58,10 +58,14 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
 	return i
 }
 
+//todo: test clone against different kind of objects
 Array.prototype.clone = function(){
    var ary = []
    for (var i=0; i<this.length; i++)
-      ary[i] = this[i]
+      if ( this[i] instanceof Array )
+	 ary[i] = this[i].clone()
+      else
+	 ary[i] = this[i]
    return ary
 }
 

@@ -85,6 +85,7 @@ Object.prototype.plain = function(){
   return this
 }
 
+// todo: check deep clones.
 Object.prototype.clone = function(){
     var the_clone = {}
     for (var i in this)

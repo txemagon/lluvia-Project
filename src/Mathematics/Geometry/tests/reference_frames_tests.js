@@ -82,8 +82,21 @@ assert("ReferenceFrame a copy constructor really copies de values (do not refere
 assert("ReferenceFrame a copy constructor really copies de values (do not reference them)",
        "nrf.get_transformation_matrix()", "[[0, 1, 0], [0, 0, 1], [1, 0, 0]]",
        "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); nrf = new ReferenceFrame(rf); rf.transformation_matrix = [[1, 1, 0], [0, 0, 1], [1, -1, 0]]")
-/*
+
+assert("ReferenceFrame a copy constructor really copies de values (do not reference them)",
+       "nrf.get_transformation_matrix()", "[[0, 1, 0], [0, 0, 1], [1, 0, 0]]",
+       "rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [0, 0, 1], [1, 0, 0]]); \
+        nrf = new ReferenceFrame(rf); \
+	rf.transformation_matrix[0][2]	= 2")
+
+
 assert("When the transformation is linearly dependent an error is thrown",
        "a", "true",
-       "a=false; try{rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [1, 0, 0], [1, 1, 0]]);} catch(e) { if /dependent/.test(e) a = true; }; ")
-       */
+       "a=false; \
+         try{ \
+           rf = new ReferenceFrame(1, 0, 0, [[0, 1, 0], [1, 0, 0], [1, 1, 0]]); \
+	 } catch(e) {\
+	   if (/dependent/.test(e)) \
+	     a = true; \
+	 }; ")
+       

@@ -14,8 +14,8 @@ function ReferenceFrame(drift, trihedron_components){
 					  [0, 0, 1] ]
 
    if (arguments[0] instanceof ReferenceFrame){
-      this.drift = arguments[0].drift
-      this.transformation_matrix = arguments[0].transformation_matrix
+      this.drift = arguments[0].drift.clone()
+      this.transformation_matrix = arguments[0].transformation_matrix.clone()
       return
    }
 
@@ -36,7 +36,7 @@ function ReferenceFrame(drift, trihedron_components){
 
      this.drift = new Vector(drift_coords)
 
-     if ( this.transformation_matrix && ReferenceFrame.linearlyIndependent$U(this.transformation_matrix))
+     if ( this.transformation_matrix && !ReferenceFrame.linearlyIndependent$U(this.transformation_matrix))
 	   throw("The Reference Frame is linearly dependent")
 }
 
@@ -79,7 +79,7 @@ ReferenceFrame.linearlyIndependent$U = function(matrix){
    return !!ReferenceFrame.det(matrix)
 }
 
-ReferenceFrame.dtm = function(matrix){
+ReferenceFrame.det = function(matrix){
    var det = 0
       for (dir=0; dir<2; dir++)
        for (var diag=0; diag<3; diag++){
