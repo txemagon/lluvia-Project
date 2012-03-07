@@ -7,7 +7,7 @@
  * @constructor
  */
 
-function Canvas(canvas){
+function Canvas(canvas, world){
  /**
   * valid input: canvas:[HTMLNode | StringId] | (width: Number, height:Number)
   *  Numbers inside a string are valid numbers.
@@ -29,7 +29,7 @@ function Canvas(canvas){
       var default_height = 300
   
       if (argument.length == 2)
-	 if ( !(isNaN(argument[0]) || isNaN(argument[1]) ){
+	 if ( !(isNaN(argument[0]) || isNaN(argument[1]) )){
 	    default_width  = argument[0]
 	    default_height = argument[1]
 	 }
@@ -57,6 +57,10 @@ function Canvas(canvas){
      if (argument.length != 1)
 	createCanvas() // This can bring some problems in the future with canvas inheritance, because will be called twice 
 	               // Once with the <Class>.prototype = new Canvas, and the second with the object instantiation itself.
+     that.world = world
+     that.viewport = [new ViewPort(new ReferenceFrame(1,1,1, [ [1, Math.PI * 3 / 4, 0, "cyl"], 
+		                                             [0.41562693777745346, 0.4156269377774534, -0.8090169943749475], 
+							     [1, 54 / 180 * Math.PI, Math.PI / 4, "sph" ]]) , 1000)]
    }
 
    initialize();

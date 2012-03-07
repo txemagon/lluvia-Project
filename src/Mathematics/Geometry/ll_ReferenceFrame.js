@@ -44,6 +44,7 @@ ReferenceFrame.prototype.get_transformation_matrix = function(){
    return this.transformation_matrix || this.default_transformation_matrix
 }
 
+ReferenceFrame.prototype.coords_of = 
 ReferenceFrame.prototype.coord_of = function (point){
    var args = Function.args(arguments) 
 

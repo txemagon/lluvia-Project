@@ -7,7 +7,7 @@
  */
 
 function World(canvas){
-  this.origin = new ReferenceFrame() /* the origin has not to be 0,0,0 
+  this.origin = new ReferenceFrame() /* the origin has not to be 0,0,0 */
   this.dpi = parseInt(document.getElementById('ppitest').offsetWidth) // todo: Use vertical and horizontal dpi
   this.current_unit = "mm"
   this.unit = { mm: 25.4, cm: 2.54, dm: 0.254, m:0.0254, km: 0.0000254 }  //todo: provide a whole list of units in the units package.
@@ -25,7 +25,7 @@ World.initialize = function(){ // World Factory
   return Vector.prototype.world  = new World()
 }
 
-World3D.prototype.draw_line = function(coord3D){
+World.prototype.draw_line = function(coord3D){
     var that = this
     function wp(coord){  // stands for world projection
       return that.view_scale * coord
