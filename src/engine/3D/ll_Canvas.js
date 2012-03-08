@@ -38,11 +38,12 @@ function Canvas(canvas, world){
       canvas.setAttribute("height", default_height)
       canvas.setAttribute("style", "border:1px solid #c3c3c3;")
       document.body.appendChild(canvas)
+      return canvas
    }
 
    function getScreenScale(){
       var id = "$ppi$test" + Canvas.number
-      var div = doucment.createElement("div")
+      var div = document.createElement("div")
       div.setAttribute("id", id)
       div.setAttribute("style", "width:1in; height: 1in; visibility: hidden; padding: 0px;")
       document.body.appendChild(div)
@@ -53,14 +54,20 @@ function Canvas(canvas, world){
    }
   
    function initialize(){
+     that.world = world
      getScreenScale()
      if (argument.length != 1)
-	createCanvas() // This can bring some problems in the future with canvas inheritance, because will be called twice 
+	that.canvasNode = createCanvas() // This can bring some problems in the future with canvas inheritance, because will be called twice 
 	               // Once with the <Class>.prototype = new Canvas, and the second with the object instantiation itself.
-     that.world = world
-     that.viewport = [new ViewPort(new ReferenceFrame(1,1,1, [ [1, Math.PI * 3 / 4, 0, "cyl"], 
+     else
+	 if (typeof(canvas) == "string")
+	   that.canvasNode = document.getElementById(canvas)
+	 else
+	     that.canvasNode = canvas
+     that.cxt = that.canvasNode.getContext("2d")
+     that.viewport = [new ViewPort(new ReferenceFrame(100,1,10, [ [1, Math.PI * 3 / 4, 0, "cyl"], 
 		                                             [0.41562693777745346, 0.4156269377774534, -0.8090169943749475], 
-							     [1, 54 / 180 * Math.PI, Math.PI / 4, "sph" ]]) , 1000)]
+							     [1, 10 / 180 * Math.PI, Math.PI / 4, "sph" ]]) , 1000, that)]
    }
 
    initialize();
@@ -71,3 +78,14 @@ Canvas.number = 0;
 Canvas.prototype.get_dpi = function(){ return this.dpi }
 Canvas.prototype.get_DPI = function(){ return this.DPI }
 
+
+Canvas.prototype.repaint = function(){
+    for (var i=0; i<this.viewport.length; i++)
+	this.viewport[i].repaint()
+}
+
+
+Canvas.prototype.update = function(gr_element){
+    for (var i=0; i<this.viewport.length; i++)
+	this.viewport[i].update(gr_element)
+}
