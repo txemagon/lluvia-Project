@@ -72,7 +72,7 @@ function Canvas(world, canvas){
      var y = z.cross(x)
      that.viewport = [ new ViewPort(new ReferenceFrame(10,00,00, [ [0,1,0], [0,0,1], [1, 0, 0] ])  , 1000, that, {x:0, y:0, width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Front" } ),
                        new ViewPort(new ReferenceFrame(0,-10,00, [ [1,0,0], [0,0,1], [0, -1, 0] ]) , 1000, that, {x: Math.floor(that.width / 2), y: 0  , width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Left" } ), 
-                       new ViewPort(new ReferenceFrame(00,00,10, [ [1,0,0], [0,1,0], [0, 0, 1] ])  , 1000, that, {x:0, y: Math.floor(that.height / 2), width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Up" } ), 
+                       new ViewPort(new ReferenceFrame(00,00,10, [ [0,1,0], [1,0,0], [0, 0, 1] ])  , 1000, that, {x:0, y: Math.floor(that.height / 2), width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Up" } ), 
                        new ViewPort(new ReferenceFrame(10,10,10, [ x, y, z])                       , 1000, that, {x:Math.floor(that.width / 2), y: Math.floor(that.height / 2), width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Perspective" } ), 
                      ]
    }

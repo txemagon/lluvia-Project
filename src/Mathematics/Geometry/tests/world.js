@@ -36,5 +36,5 @@ ShadowedVector.prototype.update = function(viewport, cxt){
    cxt.stroke()
    Vector.prototype.update.apply(this, arguments)
    }
-v4 = new ShadowedVector(5,15,5)
+v4 = new ShadowedVector(5,20,10)
 v4.draw()
