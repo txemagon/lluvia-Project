@@ -367,8 +367,8 @@ Vector.prototype.dot = function(vectors){
     return dt
 }
 
-function _simple_cross(vector1, vectorArray){
-	    var vector2 = vectorArray.shift()
+function _simple_cross(vector2, vectorArray){
+	    var vector1 = vectorArray.shift()
 		var vectAux = new Vector( vector1.Coord[1] * vector2.Coord[2] - vector1.Coord[2] * vector2.Coord[1], 
 							     vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2], 
 							     vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0] )

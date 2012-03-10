@@ -7,7 +7,7 @@
  * @constructor
  */
 
-function Canvas(canvas, world){
+function Canvas(world, canvas){
  /**
   * valid input: canvas:[HTMLNode | StringId] | (width: Number, height:Number)
   *  Numbers inside a string are valid numbers.
@@ -56,7 +56,7 @@ function Canvas(canvas, world){
    function initialize(){
      that.world = world
      getScreenScale()
-     if (argument.length != 1)
+     if (typeof(canvas) == "undefined" )
 	that.canvasNode = createCanvas() // This can bring some problems in the future with canvas inheritance, because will be called twice 
 	               // Once with the <Class>.prototype = new Canvas, and the second with the object instantiation itself.
      else
@@ -64,13 +64,21 @@ function Canvas(canvas, world){
 	   that.canvasNode = document.getElementById(canvas)
 	 else
 	     that.canvasNode = canvas
+     that.width  = that.canvasNode.width
+     that.height = that.canvasNode.height
      that.cxt = that.canvasNode.getContext("2d")
-     that.viewport = [new ViewPort(new ReferenceFrame(100,1,10, [ [1, Math.PI * 3 / 4, 0, "cyl"], 
-		                                             [0.41562693777745346, 0.4156269377774534, -0.8090169943749475], 
-							     [1, 10 / 180 * Math.PI, Math.PI / 4, "sph" ]]) , 1000, that)]
+     var x = new Vector(1, Math.PI * 3 / 4, 0, "cyl")
+     var z = new Vector(1, 80 / 180 * Math.PI, Math.PI / 4, "sph" ) 
+     var y = z.cross(x)
+     that.viewport = [ new ViewPort(new ReferenceFrame(10,00,00, [ [0,1,0], [0,0,1], [1, 0, 0] ])  , 1000, that, {x:0, y:0, width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Front" } ),
+                       new ViewPort(new ReferenceFrame(0,-10,00, [ [1,0,0], [0,0,1], [0, -1, 0] ]) , 1000, that, {x: Math.floor(that.width / 2), y: 0  , width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Left" } ), 
+                       new ViewPort(new ReferenceFrame(00,00,10, [ [1,0,0], [0,1,0], [0, 0, 1] ])  , 1000, that, {x:0, y: Math.floor(that.height / 2), width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Up" } ), 
+                       new ViewPort(new ReferenceFrame(10,10,10, [ x, y, z])                       , 1000, that, {x:Math.floor(that.width / 2), y: Math.floor(that.height / 2), width: Math.floor(that.width / 2), height: Math.floor(that.height / 2 ), title: "Perspective" } ), 
+                     ]
    }
 
-   initialize();
+   if (arguments.length)
+      initialize();
 }
 
 Canvas.number = 0;
@@ -89,3 +97,6 @@ Canvas.prototype.update = function(gr_element){
     for (var i=0; i<this.viewport.length; i++)
 	this.viewport[i].update(gr_element)
 }
+
+Canvas.prototype.get_width  = function(){ return this.width  }
+Canvas.prototype.get_height = function(){ return this.height }

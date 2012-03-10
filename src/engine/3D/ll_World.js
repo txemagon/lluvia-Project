@@ -8,13 +8,14 @@
 
 function World(canvas){
   this.origin = new ReferenceFrame() /* the origin has not to be 0,0,0 */
-  this.canvas = new Canvas(canvas || null, this)
   this.elements = []
+  this.current_unit = "mm"
+  this.unit = { mm: 25.4, cm: 2.54, dm: 0.254, m:0.0254, km: 0.0000254 }
+  this.canvas = new Canvas(this, canvas || null)
 }
 
 World.initialize = function(canvas){ // World Factory
-    var world = new World()
-    var cnvs = new Canvas(canvas, world)
+    var world = new World(canvas)
     Vector.prototype.world = world
   return world 
 }
@@ -28,9 +29,10 @@ Vector.prototype.draw = function(){
   this.world.attach(this)
 }
 
-Vector.prototype.update = function(cxt){
-  // Despite you can use the context to directly draw in, please do not use it. 
-  // Return the drawing instruction instead.
-  // todo: use trust property to avoid this function call. In other words, do caching of this return
-   return "moveTo(0,0,0); lineTo(" + this.Coord.join(", ") + ");"
+Vector.prototype.update = function(viewport, cxt){
+   cxt.beginPath()
+   cxt.strokeStyle = "#333399"
+   cxt.lineWidth = 3
+   cxt.moveTo.apply(cxt, viewport.screen_coord([0,0,0])); 
+   cxt.lineTo.apply(cxt, viewport.screen_coord(this.Coord))
 }
