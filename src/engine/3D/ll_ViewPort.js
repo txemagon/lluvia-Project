@@ -19,7 +19,7 @@ function ViewPort(reference_frame, view_distance, canvas, config){
     that.YCENTER = Math.floor(that.canvas.get_height() / 2)
     that.cxt = that.canvas.cxt
     that.world = that.canvas.world
-    that.unit_factor = that.canvas.DPI[0] / that.world.unit[that.world.current_unit]
+    that.unit_factor = that.canvas.DPI[0] / that.world.unit[that.world.current_unit] * that.world.scale
 
     if (config){
        if (config.x)
@@ -62,8 +62,8 @@ ViewPort.prototype.coords_of = function(vector){
 
 ViewPort.prototype.project = function(vector){
   var v = this.coords_of(vector).get_coord()
-  var f = this.zv/(this.zv - v[2]) 
-  return [v[0] * f, v[1] * f]
+  var f = this.zv/(this.zv - v[2])
+  return [ v[0] * f, v[1] * f]
 }
 
 ViewPort.prototype.screen_coord = function(vector){
