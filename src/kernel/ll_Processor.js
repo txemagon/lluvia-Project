@@ -44,6 +44,7 @@ Processor.prototype.register = function(cObject, solicitorF){
 	}
 	
 	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
+	alert(this.threads.length)
 	
 }
 
@@ -68,7 +69,7 @@ Processor.prototype.kill = function(rObject, solicitorF){
  * @method 		run
  */
 Processor.prototype.step = function (date){
-	
+	document.getElementById("debug").innerHTML += this.threads.length + " "
 	this.now = date || new Date();
 	try {
 	  for (var i=0; i<this.threads.length; i++)
@@ -111,7 +112,7 @@ Processor.prototype.newThread = function(){
 }
 
 // Global Application Processor creation
-$Processor = new Processor().start()
+$processor = new Processor().start()
 
 Thread.prototype.constructor = Thread;
 
@@ -123,11 +124,13 @@ Thread.prototype.constructor = Thread;
  * @constructor
  */
 function Thread(solicitor, processor){
+        processor = processor || $processor
 	this.before = new Date()
 	this.now = processor? processor.now: new Date();
+        
 	if (!solicitor) 
 		solicitor = this.run;
-	
+
 	if (processor && processor instanceof Processor) 
 		processor.register(this, solicitor); 
 }

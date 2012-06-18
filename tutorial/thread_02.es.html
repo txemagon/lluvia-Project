@@ -16,12 +16,9 @@
         </script>
         <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
         </script>
-        <script type="text/javascript" src="../src/lluvia.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_load.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_interface.js">
-        </script>
+        <script type="text/javascript" src="lluvia.js"></script>
+        <script type="text/javascript" src="classes/log_module_load.js"></script>
+        <script type="text/javascript" src="classes/log_module_interface.js"></script>
         <script id="testScript" type="text/javascript">
         </script>
         <title>Debugging Canvas</title>
@@ -63,14 +60,14 @@
 			  clock.innerHTML = processor_time.toString()
 			}
 
-   my_Thread = new Thread(my_solicitor)
+                        my_Thread = new Thread(my_solicitor)
 			processor.run()
 			</pre>
 			<a href="#html_out" onclick="run('runnable');">run</a>
 			
 			<pre class='javascript' lang='javascript' name="reset">
 			     if(processor)
-			                 processor.kill(my_Thread, my_Thread.run)
+			        processor.kill(my_Thread, my_Thread.run)
 			</pre>
 			<a href="#html_out" onclick="run('reset');clear();">stop</a>
 			
