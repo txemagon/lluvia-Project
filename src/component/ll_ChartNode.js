@@ -14,17 +14,37 @@ ChartNode.is_parent$U = function(node){  return node instanceof Array }
  
 ChartNode.prototype.insert_children = function (child){
     this.children.push(child = ChartNode.to(child))  
-    return child
+        return child
 }
 
-ChartNode.prototype.first = function (){
-    return this.children[0]
-}
+ChartNode.prototype.first = function (child){
+    if(!child)    
+        return this.children[0]
+
+    new_first = this.detach(child)
+    this.children.unshift(child)
+ }
 
 ChartNode.prototype.last = function (){
     return this.children[this.children.length - 1]
 }
 
+ChartNode.prototype.find = function(child){
+    var pos = this.children.indexOf(child)
+    return this.children[pos]
+}
+
+ChartNode.prototype.has$U = function (child, recursive){  
+      
+    return (this.children.indexOf(child) != null) || 
+          (recursive == true && this.children.inject(false, function(memo, elem){
+             return memo || ( (elem instanceof ChartNode) && elem.has$U(child))
+          }))
+}
+ChartNode.prototype.detach = function(child){
+   var pos = this.children.indexOf(child)
+   this.children.splice(pos, 1)
+}
 
 ChartNode.prototype.append = function(child){
 

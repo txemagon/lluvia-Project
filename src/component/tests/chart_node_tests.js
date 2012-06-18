@@ -92,23 +92,33 @@ assert("ChartNode#last",
        "last.object.name", "'Padre2'",
        "last = a.last()" )
 
-assert("ChartNode#find"
-       "child", "b"
+assert("ChartNode#find",
+       "child", "b",
        "child = a.find(b)")
 
-assert("ChartNode#has$U"
-       "a.has$U(e)", "false"
+assert("ChartNode#has$U",
+       "a.has$U(b)", "true",
        ";")
 
-assert("ChartNode#has$U"
-       "a.has$U(e, true)", "true"
+
+assert("ChartNode#has$U",
+       "a.has$U(e)", "false",
        ";")
 
-assert("ChartNode#detach"
-       "a.has$U(b)", "false"
+
+assert("ChartNode#has$U",
+       "a.has$U(e, true)", "true",
+       ";")
+
+assert("ChartNode#has$U Are there any false positives?",
+       "b.has$U(f, true)", "false",
+       ";")
+
+assert("ChartNode#detach",
+       "a.has$U(b)", "false",
        "a.detach(b)")
 
 assert("ChartNode#first and ChartNode#last",
-       "a.first.object.name", "'Padre2'",
+       "a.first().object.name", "'Padre2'",
        "a.first(a.last())" )
 

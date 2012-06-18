@@ -56,9 +56,9 @@ Processor.prototype.register = function(cObject, solicitorF){
  * @param 		{Function}  	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
  */
 Processor.prototype.kill = function(rObject, solicitorF){
-	for (var i in this.threads)
-		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
-			this.threads.slice(i,i+1);
+	for (var i=0; i<this.threads.length; i++)
+		if (this.threads[i].object == rObject && this.threads[i].solicitor == solicitorF )
+			this.threads.splice(i,1);
 }
 
 /**

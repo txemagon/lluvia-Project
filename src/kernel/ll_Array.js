@@ -618,7 +618,7 @@ Array.prototype.eql$U = function(model){
 
 Array.prototype.inject = function(init_value){
   for (var i=0; i<this.length; i++)
-    init_value = Array.prototype.inject.yield(this[i], init_value)
+    init_value = Array.prototype.inject.yield(init_value, this[i])
   return init_value
 }
 

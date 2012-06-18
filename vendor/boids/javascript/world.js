@@ -98,6 +98,7 @@ World.prototype.screen_height = function(screen){
   throw "Screen not found"
 }
 
+//registers new born boids and associates them to the world.
 World.prototype.has_born = function (){
   for (var i=0; i<arguments.length; i++){
     arguments[i].my_world = this
@@ -107,6 +108,7 @@ World.prototype.has_born = function (){
    }
 }
 
+//if the element passed is a boid the function saves it into an array and keeps the object part disregarding the solicitor part. 
 World.prototype.get_boids = function(){
   var boids = []
   boids = this.threads.select_if( function(el){
@@ -114,6 +116,7 @@ World.prototype.get_boids = function(){
                                 })
   return boids.collect( function(el){ return el.object; })
 }
+
 
 World.prototype.each_boid = function(){
   var that = this
