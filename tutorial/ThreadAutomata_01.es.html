@@ -16,12 +16,9 @@
         </script>
         <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
         </script>
-        <script type="text/javascript" src="../src/lluvia.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_load.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_interface.js">
-        </script>
+        <script type="text/javascript" src="lluvia.js"></script>
+        <script type="text/javascript" src="classes/log_module_load.js"></script>
+        <script type="text/javascript" src="classes/log_module_interface.js"></script>
         <script id="testScript" type="text/javascript">
         </script>
         <title>Debugging Canvas</title>
@@ -115,7 +112,7 @@ function(){ // Stop swimming
 
 processor = new Processor()
 
-david = new ThreadAutomata( {none:0, walking:1, running:2, swimming:3 }, solicitor)
+david = new ThreadAutomata( {none:0, walking:1, running:2, swimming:3 }, solicitor, processor)
 processor.run()
 
 function change_state(){
