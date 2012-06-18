@@ -161,7 +161,7 @@ Automata.prototype.constructor = Automata;
  * @return {Automata} 				 New created state machine automata..
  * @constructor
  */
-function Automata(states, initialState, solicitor){
+function Automata(states, solicitor, initialState ){
 	
 	this.state = states == null? {none: -1}: states;
 	

@@ -41,7 +41,7 @@ function ll_start(){
 }
 
 function sanitize(code){
-    return code.replace("&lt;", "<")
+    return code.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
 }
 
 function run(code_fragment){
