@@ -59,15 +59,17 @@
 			  var clock = document.getElementById('debug')
 			  clock.innerHTML = processor_time.toString()
 			}
+			sol = my_solicitor
 
-                        my_Thread = new Thread(my_solicitor)
+			my_thread = new Thread(my_solicitor, processor)
 			processor.run()
 			</pre>
 			<a href="#html_out" onclick="run('runnable');">run</a>
 			
 			<pre class='javascript' lang='javascript' name="reset">
-			     if(processor)
-			        processor.kill(my_Thread, my_Thread.run)
+                          
+                          if(processor)
+                             processor.kill(my_thread, sol)
 			</pre>
 			<a href="#html_out" onclick="run('reset');clear();">stop</a>
 			

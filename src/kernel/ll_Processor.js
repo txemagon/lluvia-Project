@@ -44,7 +44,6 @@ Processor.prototype.register = function(cObject, solicitorF){
 	}
 	
 	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
-	alert(this.threads.length)
 	
 }
 
@@ -57,6 +56,7 @@ Processor.prototype.register = function(cObject, solicitorF){
  * @param 		{Function}  	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
  */
 Processor.prototype.kill = function(rObject, solicitorF){
+
 	for (var i=0; i<this.threads.length; i++)
 		if (this.threads[i].object == rObject && this.threads[i].solicitor == solicitorF )
 			this.threads.splice(i,1);
@@ -69,7 +69,6 @@ Processor.prototype.kill = function(rObject, solicitorF){
  * @method 		run
  */
 Processor.prototype.step = function (date){
-	document.getElementById("debug").innerHTML += this.threads.length + " "
 	this.now = date || new Date();
 	try {
 	  for (var i=0; i<this.threads.length; i++)
@@ -112,7 +111,7 @@ Processor.prototype.newThread = function(){
 }
 
 // Global Application Processor creation
-$processor = new Processor().start()
+$processor = null // new Processor().start()
 
 Thread.prototype.constructor = Thread;
 
@@ -124,7 +123,7 @@ Thread.prototype.constructor = Thread;
  * @constructor
  */
 function Thread(solicitor, processor){
-        processor = processor || $processor
+        // processor = processor || $processor
 	this.before = new Date()
 	this.now = processor? processor.now: new Date();
         

@@ -46,10 +46,11 @@ function sanitize(code){
     return code.replace("&lt;", "<")
 }
 
+
 function run(code_fragment){
     var snippets = document.getElementsByName(code_fragment)	
     for (var i = 0; i < snippets.length; i++) 	    
-        eval(sanitize(snippets[i].innerHTML))
+        eval.call(null, "$$G$$_$ = " + sanitize(snippets[i].innerHTML))
 }
 
 function clear(div){
