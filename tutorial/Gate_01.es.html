@@ -16,12 +16,9 @@
         </script>
         <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
         </script>
-        <script type="text/javascript" src="../src/lluvia.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_load.js">
-        </script>
-        <script type="text/javascript" src="../test/classes/log_module_interface.js">
-        </script>
+        <script type="text/javascript" src="lluvia.js"></script>
+        <script type="text/javascript" src="classes/log_module_load.js"></script>
+        <script type="text/javascript" src="classes/log_module_interface.js"></script>
         <script id="testScript" type="text/javascript">            
         </script>
         <title>Debugging Canvas</title>
@@ -76,6 +73,7 @@ function Button(element){
 Button.prototype.do_onclick   = function(event, element){
 	alert("You have made click.")
 }
+a = new Button("debug")
 		   </pre>
                         <a href="#html_out" onclick="run('runnable');">run</a>
                     </div>
@@ -83,6 +81,7 @@ Button.prototype.do_onclick   = function(event, element){
                         <h3>OUTPUT CONSOLE </h3>
                         #debug 
                         <div id="debug">
+Click here after running the script, please.
                         </div>
                     </div>
                 </div>
@@ -98,7 +97,7 @@ Button.prototype.do_onclick   = function(event, element){
                 </div>
                 <div id="diagram">
                  <h2>Diagrama</h2>
-                 <img = src="Gate_class_diagram00.png" alt="ClassDiagramSample00">
+                 <img = src="images/Gate_class_diagram00.png" alt="ClassDiagramSample00">
                 </div>
                 </div>
                 </div>
