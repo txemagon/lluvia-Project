@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+        
+	<meta charset="UTF-8">
+	<title></title>
+        <script type="text/javascript" src="javascript/dependencies.js" ></script>
+        <script type="text/javascript" src="../../src/lluvia.js" ></script>
+        <link type="text/css" rel="stylesheet" href="css/general.css" ></link>
+        <script>
+           
+        </script>
+</head>
+<body onload="bringLLuvia()" onkeypress="return send_input(event)">
+   <h1>My Chat</h1>	
+<div class="Console">
+        <h2>Chat#1</h2>
+	<div class="Output" id="output1"><br/></div>
+	<p class="Gate">
+		<div class="Text" id="text1" onkeypress="alert('gotcha')">Your new text</div>
+		<span class="Send" id="sender1">Send</span>
+	</p>
+</div>
+<div class="Console">
+        <h2>Chat#2</h2>
+	<div class="Output" id="output2"><br/></div>
+	<p class="Gate">
+		<div class="Text" id="text2">Your new text</div>
+		<span class="Send" id="sender2">Send</span>
+	</p>
+</div>
+</body>
+</html>

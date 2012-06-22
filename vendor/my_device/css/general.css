@@ -1,0 +1,21 @@
+body{
+  font-family: Arial, Sans;
+}
+
+.Console{
+   display: inline-block;
+   border: 1px solid black;
+   padding: 1ex;
+}
+
+.Text{
+  border: 1px solid black;
+  padding: 1ex;
+  display: inline-block;
+  width: 40ex;
+}
+
+.Send{
+    padding: 1ex;
+    background-color: #CCC;    
+}

@@ -144,6 +144,7 @@ Device.prototype.newGate = function(el, ClassCons){
 		var Cons = this.openDevice(ClassCons)
 		var view = this.view || null
 		var ob = new Cons(el, view)
+                ob.device = this
 		this.gates.push( ob )
 		return ob
 	} catch (e) {
