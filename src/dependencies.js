@@ -47,6 +47,16 @@ $K_dependencies = [
 			{name: "ll_MessageEvent.js", description: "Message generator."}
 		]
 	},
+	{   module: "component",
+		description: "Components.",
+		path: "component/",
+		files: [
+			{name: "ll_ChartNode.js", description: "The Model for a Node"},
+			{name: "ll_NodeGate.js", description: "The input part (the view)."},
+			{name: "ll_NodeManager.js", description: "The Controller."}
+		]
+	},
+
         {	module: "Mathematics", 
 		description: "Mathematics Types.", 
 		path: "Mathematics/", 

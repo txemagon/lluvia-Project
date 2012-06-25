@@ -72,6 +72,11 @@ assert("ChartNode appends an Array of whatever",
         a.append([[{name:'Padre1'}, [{name:'Hijo1-P1'}, {name:'Hijo2-P1'}]], [{name:'Padre2'}, [{name:'Hijo1-P2'}]]]);"
       )
 
+assert("ChartNode creates and appends at the same time",
+       "a.children[0].children[1].object.name", "'Hijo2-P1'",
+       "a = new ChartNode([{name:'Abuelo'}, [[{name:'Padre1'}, [{name:'Hijo1-P1'}, {name:'Hijo2-P1'}]], [{name:'Padre2'}, [{name:'Hijo1-P2'}]]]]);"
+      )
+
 given("Given a bunch of branches.",
       $LLGvn = "a = new ChartNode({name:'Abuelo'});\
         b = new ChartNode({name:'Padre1'});\

@@ -17,7 +17,7 @@ function _stitchWorlds(gate, solicitor){
 	}
 }
 
-function Gate(element, parent){
+function Gate(element, parent, device, visitor){
 	var that = this
 	function initialize(){
 		if (element) 
@@ -34,6 +34,7 @@ function Gate(element, parent){
 			     if (parent) parent.appendChild(element)
 			     }
 			 }
+		   
 		that.panel = element 
 		that.keys(/do_.*/).each(function(handler){ 
 				handler.match( /do_(.*)/ )
@@ -47,6 +48,10 @@ function Gate(element, parent){
 		}	
 		
 		that.threads = []
+		if (device)
+		   that.device = device
+		if (visitor)
+		   that.source = visitor
 	}
 	
 	if (arguments.length)

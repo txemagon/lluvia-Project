@@ -109,7 +109,7 @@ function Device(view, state, currentState, parent){
 		if (that.self_events)
 			that.eventDispatcher.joinPorts(that.self_events)
 		that.currentState.requested = state.running
-		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
+		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent);
 	}
 
 	if (arguments.length)	// Avoid registering during prototype copy while inheritance process
@@ -139,12 +139,13 @@ Device.prototype.childRunner = function(){
 
 }
 
-Device.prototype.newGate = function(el, ClassCons){
+Device.prototype.newGate = function(ClassCons, HTMLElement, HTMLParent, extra_data ){
 	try {
 		var Cons = this.openDevice(ClassCons)
 		var view = this.view || null
-		var ob = new Cons(el, view)
+		var ob = new Cons(HTMLElement, HTMLParent, this, extra_data)
 		this.gates.push( ob )
+		Device.prototype.newGate.yield(ob)
 		return ob
 	} catch (e) {
 		if ($K_debug_level >= $KC_dl.DEVELOPER)

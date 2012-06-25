@@ -1,7 +1,14 @@
 function ChartNode(object){
-
-  this.object = object
-  this.children = []
+   
+   var more_children = false
+   if (object instanceof Array){
+     more_children = object[1] 
+     object = object[0]
+   }
+   this.object = object
+   this.children = []
+   if (more_children)
+     this.append(more_children)
 }
 
 ChartNode.to = function(object){
