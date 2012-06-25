@@ -25,8 +25,12 @@ NodeGate.createDOMNode = function(content, HTMLElementType, HTMLAttributes, pare
    if (content)
       element.appendChild(content)
 
-   if (HTMLAttributes && HTMLAttributes instanceof Array)
-     HTMLAttributes.each( function(key_value){ element.setAttribute(key_value[0], key_value[1]) } )
+   if (HTMLAttributes)
+     if(HTMLAttributes instanceof Array)
+        HTMLAttributes.each( function(key_value){ element.setAttribute(key_value[0], key_value[1]) } )
+     else if (typeof(HTMLAttributes) === "object")
+        HTMLAttributes.self_keys().each( function(key){ element.setAttribute(key, HTMLAttributes[key]) } )
+
    
    if (parent)
       parent.appendChild(element)
@@ -37,11 +41,12 @@ NodeGate.createDOMNode = function(content, HTMLElementType, HTMLAttributes, pare
 NodeGate.prototype.spawn = function(){
    var data = this.source
    var content_frame = NodeGate.createDOMNode(data.object, "div", [["class", "Frame"]])
-   var container = NodeGate.createDOMNode(content_frame, "div", [["class", "NodeContainer"]])
-   this.panel.appendChild(container)
+   this.panel.appendChild(content_frame)
+   var children = NodeGate.createDOMNode("", "div", {class: "ChildrenNodes"}, this.panel)
+   this.panel.className = "NodeContainer"
 
    if (data.children && data.children.length)
 	for(var i=0; i<data.children.length; i++)
-	   this.device.newGate(NodeGate, "node_" + NodeManager.fetch_id(), container, data.children[i] )
+	   var ng = this.device.newGate(NodeGate, "node_" + NodeManager.fetch_id(), children, data.children[i] )
 
 }
