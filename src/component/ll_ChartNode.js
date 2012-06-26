@@ -1,14 +1,23 @@
-function ChartNode(object){
+function ChartNode(object, parent){
+   var that = this
+   var args = arguments
    
-   var more_children = false
-   if (object instanceof Array){
-     more_children = object[1] 
-     object = object[0]
+   function initialize(){
+     var more_children = false
+     if (object instanceof Array){
+       more_children = object[1] 
+       object = object[0]
+     }
+     that.object = object
+     that.parent = parent || null
+     that.children = []
+
+     if (more_children)
+       that.append(more_children)
    }
-   this.object = object
-   this.children = []
-   if (more_children)
-     this.append(more_children)
+
+  if (arguments.length)
+    initialize()
 }
 
 ChartNode.to = function(object){
@@ -19,8 +28,12 @@ ChartNode.to = function(object){
 
 ChartNode.is_parent$U = function(node){  return node instanceof Array }
  
+ChartNode.prototype.is_root$U  = function(){ return this.parent == null  }
+ChartNode.prototype.is_leaf$U  = function(){ return !this.children.length  }
+
 ChartNode.prototype.insert_children = function (child){
     this.children.push(child = ChartNode.to(child))  
+    child.parent = this
         return child
 }
 
