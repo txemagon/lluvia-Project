@@ -42,12 +42,12 @@ NodeGate.prototype.spawn = function(){
    var data = this.source
    if ( !data.is_root$U() ){
      var top_frame = NodeGate.createDOMNode( "", "div", {class: "TopFrame"}, this.panel)  
-     NodeGate.createDOMNode( "espacio", 
+     NodeGate.createDOMNode( "espa", 
 	                     "div", 
 			     {class: "FramePart Left" + 
 			             (data.is_first$U() ? "" : " Upper" )}, 
 			     top_frame)  
-     NodeGate.createDOMNode( "espacio", 
+     NodeGate.createDOMNode( "espa", 
 	                     "div", 
 			     {class: "FramePart Right" +
 			     (data.is_last$U() ? "" : " Upper" )}, 
@@ -56,8 +56,8 @@ NodeGate.prototype.spawn = function(){
    var content_frame = NodeGate.createDOMNode(data.object, "div", [["class", "Frame"]], this.panel)
    if ( !data.is_leaf$U() ){
      var bottom_frame = NodeGate.createDOMNode( "", "div", {class: "BottomFrame"}, this.panel) 
-     NodeGate.createDOMNode( "espacio", "div", {class: "FramePart Left Lower"}, bottom_frame)  
-     NodeGate.createDOMNode( "espacio", "div", {class: "FramePart Right Lower"}, bottom_frame)
+     NodeGate.createDOMNode( "espa", "div", {class: "FramePart Left Lower"}, bottom_frame)  
+     NodeGate.createDOMNode( "espa", "div", {class: "FramePart Right Lower"}, bottom_frame)
    }
    
    var children = NodeGate.createDOMNode("", "div", {class: "ChildrenNodes"}, this.panel)

@@ -41,27 +41,33 @@ body{
 
 .ChildrenNodes{
 /*  border: 1px solid blue; */
+  padding-right: 1ex;
+  padding-left: 1ex;
 }
 
 .TopFrame {
- 
+  overflow: hidden;
 }
 
 .FramePart {
   display: inline-block;
   border-width: 1px;
   border-color: black;
-  width: 49%;
   color: white;
   border-style: none;
+  margin: 0px;
+  padding: 0px;
+  width: 49%;
 }
 
 .Left{
   border-right-style: solid; 
+  float: left; 
 }
 
 .Right{
 /*  border-left-style: solid;   */
+  
 }
 
 .Upper{
