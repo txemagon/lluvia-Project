@@ -30,6 +30,9 @@ ChartNode.is_parent$U = function(node){  return node instanceof Array }
  
 ChartNode.prototype.is_root$U  = function(){ return this.parent == null  }
 ChartNode.prototype.is_leaf$U  = function(){ return !this.children.length  }
+ChartNode.prototype.is_first$U  = function(){ return this.parent.children[0] == this  }
+ChartNode.prototype.is_last$U  = function(){ return this.parent.children[this.parent.children.length - 1] == this  }
+
 
 ChartNode.prototype.insert_children = function (child){
     this.children.push(child = ChartNode.to(child))  
