@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+        <meta name="MSSmartTagsPreventParsing" content="true" />
+        <meta http-equiv="expires" content="-1" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta name="robots" content="all" />
+        <meta name="description" content="Canvas : lluvia debug page" />
+        <meta name="keywords" content="lluvia Project, engine" />
+        <link type="text/css" rel="stylesheet" href="styles/SyntaxHighlighter.css">
+        </link>
+        <link href="styles/log_load.css" rel="stylesheet" type="text/css">
+        </link>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shCore.js">
+        </script>
+        <script language="javascript" src="vendor/SyntaxHighlighter/Scripts/shBrushJScript.js">
+        </script>
+        <script type="text/javascript" src="lluvia.js"></script>
+        <script type="text/javascript" src="classes/log_module_load.js"></script>
+        <script type="text/javascript" src="classes/log_module_interface.js"></script>
+        <script id="testScript" type="text/javascript">            
+        </script>
+        <title>Device Running</title>
+        </head>
+        <body onload="bringLLuvia(200);">
+            <div id="layout">
+                <div id="header">
+                    <div id="logoLLuvia">
+                        <img src="images/lluviaLogo.jpg" alt="lluvia logo" width="300" />
+                    </div><h1>lluvia Project lesson </h1>
+                    <!--
+                    <div class="DateLesson">April 30, 2011</div>
+                    <div style="clear: both;"/>
+                    -->
+                </div>
+                <div id="left_panel">
+                    <div id="lluvia_load">
+                        <h2>lluvia load log</h2>
+                    </div>
+                </div>
+                <div id="lesson">
+                    <h2>Los Devices</h2>
+                    <div id="paragraph">
+				<p>
+				   Cada Device es un procesador y un hilo a la vez. Es decir, tiene un método run y llama 
+				   al método run de sus hilos hijo. 
+				</p>
+				<p>
+				  El constructor de Device espera los siguientes parámetros:
+				</p>
+				<div>
+                         <pre class="javascript" lang="javascript" name="a">
+                          Device(view, state, currentState, parent)
+                        </pre>                
+                        </div>
+                        <ul>
+                          <li>El parámetro <em>view</em>, si se da, puede ser el id de un elemento HTML o un HTMLNode</li>
+                          <li>El valor state por defecto es <br/>
+                     <pre class="javascript" lang="javascript" name="b">
+ if (!state)
+   state = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+   </pre></li>
+                          <li>Processor es el encargado de correr este hilo.</li>
+                          <li>Y solicitor toma este valor defecto (tres funciones por cada estado (up, steady, down):</li>
+                        <pre class="javascript" lang="javascript" name="c">  		
+	this.solicitors = [
+		/* suspended */	[
+			function(){
+				;	
+			},
+			function(){
+				;	
+			},
+			function(){
+				;	
+			}
+		],
+		/* running */ 	[
+			function(){
+				;	
+			},
+			function (){
+				/* TO DO */ ;	
+				this.gateRunner(this.now)
+				this.childRunner(this.now);
+				this.running_steady(this.now)
+			},
+			function(){
+				;	
+			}
+		],
+		/* suspending */[
+			function(){
+				;	
+			},
+			function(){
+				/* TO DO */ ;	
+				this.childRunner(this.now);	
+			},
+			function(){
+				;	
+			}
+		],
+		/* killing */ 	[
+			function(){
+				;	
+			},
+			function(){
+				/* TO DO */ ;	
+				this.gateRunner(this.now)
+			},
+			function(){
+				;	
+			}
+		],
+		/* killed */ 	[
+			function(){
+				;	
+			},
+			function(){
+				;	
+			},
+			function(){
+				;	
+			}
+		]
+	]
+</pre>
+                        </ul>
+                    </div>
+
+                <div id="code_example">
+                    <div id="tested_code">
+                        <h3>INPUT TERMINAL </h3>
+                        Your code:                        
+                        <br/>
+                        <pre class="javascript" lang="javascript" name="runnable">
+	var processor = new Processor()
+	var boss = new Device(null, null, null, processor)
+	boss.running_steady = function(now){
+	  document.getElementById("debug").innerHTML = now
+	}
+	processor.start()
+		   </pre>
+                        <a href="#html_out" onclick="run('runnable');">run</a>
+                    </div>
+                    <div id="html_out">
+                        <h3>OUTPUT CONSOLE </h3>
+                        #debug 
+                        <div id="debug">
+                        </div>
+                    </div>
+                </div>
+                <div id="conclusion">
+                    <h2>Conclusión</h2>
+                    <div id="paragraph">
+                     <p> 
+                       En el estado normal de un device (estado: running, subestado: steady) se llama a la 
+                       función running_steady que hemos sobrescrito en este ejemplo, con objeto de poner la hora.
+                     </p>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+                <div id="diagram">
+                </div>
+                </div>
+                </div>
+                <div id="footer">
+                    lluvia Project, 2011 nova Web Studio 
+                </div>
+            </div>
+        </body>
+    </html>

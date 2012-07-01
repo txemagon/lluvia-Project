@@ -205,7 +205,7 @@ ThreadAutomata.prototype.constructor = ThreadAutomata;
  * @return {ThreadAutomata}			Newly created automata.
  * @constructor
  */
-function ThreadAutomata(state, solicitor, processor, currentState){
+function ThreadAutomata(state, currentState, solicitor, processor){
 	if (arguments.length){
 		Automata.call(this, state, solicitor, currentState);
 		Thread.call(this, ThreadAutomata.prototype.run, processor);
