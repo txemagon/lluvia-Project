@@ -11,6 +11,10 @@ assert("Array#uniq 3. Integers",
       "a", '[2, 1, 3] ',  
       'a = [2, 1, 2, 1, 2, 2, 3, 1, 1].uniq()' )
 
+assert("Array#uniq 4. A Block is Given.",
+	"a.uniq( function(element){ return element[0] })", "[['male', 'john'], ['female', 'deborah']]",
+	"a = [['male', 'john'], ['male', 'paul'], ['female', 'deborah']]")
+
 assert("Array#uniq$B. With changes.", 
       "a", "[1, 2, 3]", 
       "a = [ 1, 2, 1, 2, 2, 3, 1, 2, 3]; a.uniq$B()")

@@ -88,9 +88,16 @@ Array.prototype.equals$U = function(other){
 
 Array.prototype.uniq = function(){
   var uniq = []
-  for (var i=0; i<this.length; i++)
-     if (!includes(this[i], uniq))
+  var comparable = []
+  var block = arguments.length && typeof(arguments[0]) == "function"
+  var element = null
+
+  for (var i=0; i<this.length; i++){
+      element = block ? arguments[0](this[i]) : this[i]
+     if (!includes(element, comparable))
         uniq.push(this[i])
+	comparable.push(element)
+  }
   return uniq
 }
 
