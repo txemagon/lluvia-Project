@@ -1,0 +1,4 @@
+#!/bin/bash
+# makedoc
+
+jsduck -o doc/apidoc/v1.0.0/ src/kernel/
