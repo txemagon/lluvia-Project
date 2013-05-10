@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*
+assert(&quot;There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /&quot;,
+       &quot;MyClass instanceof Function&quot;, &quot;true&quot;,
+       &quot;Class_MyClass()&quot;)
+       
+assert(&quot;The framework should track new generated classes.&quot;,
+       &quot;$classes.include$U(MyClass)&quot;, &quot;true&quot;,
+       &quot;Class_MyClass()&quot;)
+
+assert(&quot;The Class factory generates a truly usable class.&quot;,
+       &quot;return_value.name&quot;, &quot;'q'&quot;,
+       &quot;Class_MyClass(function() {this.name ='q'}); \
+        return_value = new MyClass()&quot;)
+
+
+assert(&quot;The Class factory returns the new created class.&quot;,
+       &quot;return_value.name&quot;, &quot;'q'&quot;,
+       &quot;return_value = new Class_MyClass(function() {this.name ='q'})();&quot;)
+      
+
+assert(&quot;The returned class contains the appropriate code.&quot;,
+       &quot;MyClass.toSource()&quot;, &quot;return_value.toSource()&quot;,
+       &quot;return_value = Class_MyClass()&quot;)
+
+assert(&quot;New classes accept parameters in the initializer.&quot;,
+       &quot;return_value.name&quot;, &quot;'pepe'&quot;,
+       &quot;return_value = new Class_MyClass(function(name) {this.name = name})('pepe');&quot;)
+
+assert(&quot;The self keyword references the class.&quot;,
+       &quot;MyClass.data&quot;, &quot;'class data'&quot;,
+       &quot;Class_MyClass(function(){;\
+           self.data = 'class data';\
+       });&quot; );
+
+assert(&quot;Whenever function initialize is present from second place onwards it is automatically called as an object instance initializer.&quot;,
+       &quot;obj.name&quot;, &quot;'pepe'&quot;,
+       &quot;Class_Person(function(){this.name = 'juan' }, \
+                     function initialize(name){ this.name = 'pepe' }, \
+                     function(){this.name = 'luis'}); \
+        obj = new Person()&quot;)
+
+assert(&quot;Object initializer accepts parameters.&quot;,
+       &quot;obj.name&quot;, &quot;'pepe'&quot;,
+       &quot;Class_Person(function(name){this.name = 'juan'}, \
+                     function initialize(name){ this.name = name }, \
+                     function(){this.name = 'luis'}); \
+        obj = new Person('pepe')&quot;)        
+        
+assert(&quot;The object initializer is valid even in the third position.&quot;,
+       &quot;obj.name&quot;, &quot;'pepe'&quot;,
+       &quot;Class_Person(function(name){this.name = 'juan'}, \
+                     function(){this.name = 'luis'}, \
+                     function initialize(name){ this.name = name });\
+        obj = new Person('pepe')&quot;)                
+        
+assert(&quot;Anonymous functions don't cause any problems.&quot;,
+       &quot;obj.name&quot;, &quot;'pepe'&quot;,
+       &quot;Class_Person(function(name){this.name = 'juan'}, \
+                     function(){this.name = 'luis'}, \
+                     function initialize(name){ this.name = name });\
+        obj = new Person('pepe')&quot;)                
+                
+
+assert(&quot;Extra params are considered as object instance methods.&quot;,
+       &quot;obj.greet()&quot;, &quot;'hello. I am pepe'&quot;,
+       &quot;Class_Person(function(name){this.name = 'juan'}, \
+                     function greet(){ return 'hello. I am ' + this.name }, \
+                     function initialize(name){ this.name = name });\
+        obj = new Person('pepe');&quot;)        
+        
+
+assert(&quot;self_initialize is a convenience method for initializing class variables.&quot;,
+       &quot;Person.people&quot;, &quot;2&quot;,
+       &quot;Class_Person(function(name){this.name = name}, \
+                     function self_number(){ return self.people }, \
+                     function self_initialize(){self.people = 0 }, \
+                     function initialize(){ self.people++ });\
+        new Person('pepe'); new Person('juan');&quot;)                
+ 
+
+assert(&quot;Whenever a function name starts with self_ is considered as a class method.&quot;,
+       &quot;Person.number()&quot;, &quot;11&quot;,
+       &quot;Class_Person(function(name){this.name = name}, \
+                     function self_number(){ return self.people }, \
+                     function self_initialize(){self.people = 10 }, \
+                     function initialize(){ self.people++ });\
+         new Person('juan')&quot;)
+
+assert(&quot;self_initialize doesn't run on parent class as a default.&quot;,
+       &quot;Freaky.number()&quot;, &quot;1&quot;,
+       &quot;Class_Person(function(name){this.name = 'person'}, \
+                     function self_number(){ return self.people }, \
+                     function self_initialize(){self.people = 5 }, \
+                     function initialize(){ self.people++ });\
+         Class_Freaky$$Person(function(name){this.name = 'surperson'}, \
+                     function self_number(){ return self.people }, \
+                     function self_initialize(){self.people = 0 }, \
+                     function initialize(){ self.people++} );\
+         new Freaky('juan');&quot;)        
+
+ assert(&quot;The word after two dollars is considered the parent class.&quot;,
+        &quot;cow.lives&quot;, &quot;true&quot;,
+        &quot;Class_Animal(function(){ this.lives = true });\
+         Class_Cow$$Animal(function(){ });\
+         cow = new Cow();\
+         &quot;)
+
+assert( &quot;Each function has a legacy scope (self means different things depending on the environment).&quot;,
+          &quot;a&quot;, &quot;'Animal'&quot;,
+          &quot;Class_Animal( function(){ a = self.name } ) &quot; )
+
+assert( &quot;Each function has a legacy scope (self doesn't mean different things depending on the environment).&quot;,
+          &quot;a&quot;, &quot;'Animala'&quot;,
+          &quot;Class_Animala( function(){}, function greet(){ a = self.name} ); (new Animala()).greet() &quot;)
+
+assert( &quot;Each function has a legacy scope (self doesn't mean different things depending on the environment).&quot;,
+          &quot;a&quot;, &quot;'Animalb'&quot;,
+          &quot;Class_Animalb( function(){}, function self_greet(){ a = self.name} ); Animalb.greet() &quot;)
+
+assert( &quot;Each function has a legacy scope(self doesn't mean different things depending on the environment).&quot;,
+          &quot;a&quot;, &quot;'Animal'&quot;,
+          &quot;Class_Animal( function(){;}, function self_initialize(){ a = self.name } ) &quot; )
+
+assert( &quot;Each function has a legacy scope(Self means different things depending on the environment).&quot;,
+          &quot;a&quot;, &quot;'Cow'&quot;,
+          &quot;Class_Animal( function(){;}, function self_initialize(){ a = this.Self().name });\
+           Class_Cow$$Animal(function(){;}, function self_initialize(){ self.superclass().initialize.apply(this) } ) &quot; )
+
+assert( &quot;Each function has a legacy scope(Self means different things depending on the environment).&quot;,
+          &quot;cow.a&quot;, &quot;'Cow'&quot;,
+          &quot;Class_Animalc( function(){;}, function self_initialize(){ a = this.Self().name });\
+           Class_Cow$$Animalc(function(){;}, function peep(){this.a = this.Self().name} );\
+           cow = new Cow(); cow.peep() &quot; )
+
+assert(&quot;Inheritance is possible at class level.&quot;,
+        &quot;Cow.lives&quot;, &quot;true&quot;,
+        &quot;Class_Animal(function(){;}, function self_initialize(){ this.lives = true });\
+         Class_Cow$$Animal(function(){ }, function self_initialize(){ self.superclass().initialize.call(this) });\
+         &quot;) 
+
+assert(&quot;Object#Self always refers to the class being executed (from the object point of view).&quot;,
+       &quot;a&quot;, &quot;'Bee'&quot;,
+       &quot;Class_Bee(function(){;}, function buzz(){ a = Self.name});\
+        (new Bee()).buzz()&quot;)
+
+assert(&quot;Object#Self always refers to the class being executed.&quot;,
+       &quot;a&quot;, &quot;'Yellow'&quot;,
+       &quot;Class_Bee(function(){;}, function buzz(){ a = Self.name});\
+        Class_Yellow$$Bee(function(){;}, function say(){ Bee.prototype.buzz.call(this) } );\
+        (new Yellow()).say()&quot;)
+
+assert(&quot;Inheritance accepts methods from the outside.&quot;,
+       &quot;a&quot;, &quot;'Yellow'&quot;,
+       &quot;Class_Bee(function(){;}, function buzz(){ a = Self.name});\
+        Class_Yellow$$Bee(function(){;}, function say(){ alert(this.toSource()) } );\
+        (new Yellow()).buzz();&quot;)
+
+assert(&quot;Inheritance accepts methods from the inside.&quot;,
+       &quot;a&quot;, &quot;'Yellow'&quot;,
+       &quot;Class_Bee( function(){;}, function buzz(){ a = Self.name} );\
+        Class_Yellow$$Bee(function(){;}, function say(){ this.buzz() } );\
+        (new Yellow()).say();&quot;)      
+
+assert(&quot;Object#Self always refers to the class being executed.&quot;,
+       &quot;a&quot;, &quot;'Yellow'&quot;,
+       &quot;Class_Bee(function(){;}, function buzz(){ a = Self.name} );\
+        Class_Yellow$$Bee(function(){;} );\
+        b = new Yellow(); b.buzz()&quot;)
+
+assert(&quot;Capitalized Self supports apply calls (has different meaning depending on the scope) inside method calls.&quot;,
+        &quot;Cow.lives&quot;, &quot;true&quot;,
+        &quot;Class_Animal(function(){;}, function self_initialize(){ Self.lives = true });\
+         Class_Cow$$Animal(function(){ }, function self_initialize(){ Self.superclass().initialize.call(this) });\
+         &quot;) 
+
+assert(&quot;Inheritance is possible at class level.&quot;,
+        &quot;Cow.lives&quot;, &quot;true&quot;,
+        &quot;Class_Animal(function(){ this.lives = true });\
+         Class_Cow$$Animal(function(){ }, function self_initialize(){ self.superclass().call(this) });\
+         &quot;) 
+ 
+assert(&quot;Every single class has a name property, which answers the name of the class as a String.&quot;,
+       &quot;OneAnimal.name&quot;, &quot;'OneAnimal'&quot;,
+       &quot;Class_OneAnimal(function(){ self.lives = true })&quot;)       
+
+assert(&quot;An object knows its class. (test 1)&quot;,
+       &quot;cow.class instanceof Function&quot;, &quot;true&quot;,
+       &quot;Class_Animal(function(){ self.lives = true }); cow = new Animal();&quot;)
+
+assert(&quot;An object knows its class. (test 2)&quot;,
+       &quot;cow.class.name &quot;, &quot;'Animal'&quot;,
+       &quot;Class_Animal(function(){ self.lives = true }); cow = new Animal();&quot;)
+            
+assert(&quot;Object#superclass (test 1)&quot;,
+       &quot;Cow.superclass()&quot;, &quot;Animal&quot;,
+       &quot;Class_Animal(function(){ }); Class_Cow$$Animal(function(){ })&quot; )
+
+assert(&quot;Object#superclass (test 2)&quot;,
+       &quot;Animalade.superclass()&quot;, &quot;Class&quot;,
+       &quot;Class_Animalade(function(){ });&quot; )
+
+assert(&quot;Class#ancestors&quot;,
+       &quot;Cow.ancestors()&quot;, &quot;[Animal, Class]&quot;,
+       &quot;Class_Animal(function(){;}); \
+        Class_Cow$$Animal(function(){;})&quot;)
+
+
+assert( &quot;Class level method inheritance.&quot;,
+        &quot;Cow.greet('pepe', 'juan')&quot;, &quot;'hello pepe juan'&quot;,
+        &quot;Class_Animal(function(){}, \
+                      function self_greet(){ return 'hello ' + arguments[0] + ' ' + arguments[1] }\
+                      );\
+         Class_Cow$$Animal(function(){;} )&quot; )
+
+assert( &quot;Class level method inheritance.&quot;,
+        &quot;Cow.greet('pepe', 'juan')&quot;, &quot;'hello pepe juan'&quot;,
+        &quot;Class_Animal(function(){;}, \
+                      function self_greet(){ return 'hello ' + arguments[0] + ' ' + arguments[1] }\
+                      );\
+         Class_Ruminant$$Animal(function(){;} ), \
+         Class_Cow$$Ruminant(function(){;} )&quot; )
+
+assert(&quot;Super calls a method of the parent class named in the same as way as the caller&quot;,
+       &quot;cow.legs()&quot;, &quot;4&quot;,
+       &quot;Class_Animal(function(){;}, function legs(){ return 4 } ); \
+        Class_Cow$$Animal(function(){;}, function legs(){ return 4 } );\
+        cow = new Cow();&quot; )
+       
+assert(&quot;Super calls a method of the parent class named in the same as way as the caller&quot;,
+       &quot;cow.legs()&quot;, &quot;4&quot;,
+       &quot;Class_Animal(function(){}, function legs(){ return 4 }); \
+        Class_Ruminant$$Animal(function(){}, function legs(){ return Super() });\
+        Class_Cow$$Ruminant(function(){;}, function legs(){ return Super() });\
+        cow = new Cow()&quot; )
+        
+assert(&quot;Super pass all the parameters through by default.&quot;,
+       &quot;person.greet('coder')&quot;, &quot;'Hello coder'&quot;,
+       &quot;Class_Creature( function(){}, function greet(name){ return 'Hello ' + name} );\
+        Class_Person$$Creature( function(){}, function greet(){ return Super() });\
+        person = new Person();&quot;) 
+        
+assert(&quot;Super doesn't pass the arguments if we override the behavior.&quot;,
+       &quot;person.greet('coder')&quot;, &quot;'Hello girlfriend'&quot;,
+       &quot;Class_Creature( function(){}, function greet(name){ return 'Hello ' + name} );\
+        Class_Person$$Creature( function(){}, function greet(){ return Super('girlfriend') });\
+        person = new Person();&quot;)         
+   
+assert(&quot;Super works at class level.&quot;,
+       &quot;Person.greet('coder')&quot;, &quot;'Hello coder'&quot;,
+       &quot;Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
+        Class_Person$$Creature( function(){}, function self_greet(){ return Super() });&quot;) 
+    
+assert(&quot;Super works at class level.&quot;,
+       &quot;Person.greet('coder')&quot;, &quot;'Hello coder'&quot;,
+       &quot;Class_Creature( function(){}, function self_greet(name){ return 'Hello ' + name} );\
+        Class_Human$$Creature( function(){;} );\
+        Class_Person$$Human( function(){}, function self_greet(){ return Super() });&quot;) 
+*/
+
+assert(&quot;Before filters are singleton facilities.&quot;,
+       &quot;a&quot;, &quot;true&quot;,
+       &quot;a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_before_filter('greet', change);\
+        me.greet();&quot;)
+
+
+assert(&quot;After filters are singleton facilities. (Currently is failing because call_after is after the return statement).&quot;,
+       &quot;a&quot;, &quot;true&quot;,
+       &quot;a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_after_filter('greet', change);\
+        me.greet();&quot; )
+/*
+assert(&quot;After filters are singleton facilities. (Currently is failing because call_after is after the return statement).&quot;,
+       &quot;a&quot;, &quot;true&quot;,
+       &quot;a = false; function change(){ a = true; }\
+        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        me = new Person('Txema');\
+        me.add_after_filter('greet', change);\
+        me.greet();&quot; )
+/*
+ * todo: provide an especific include
+ *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.
+ *  A module can not be instantiated.
+ *  A module is a transparent class
+ *  To include class methods we usually define a submodule call ClassMethods and we define self.included(receiver) in the module.
+ *  module MyLib
+ *   def self.included(receiver)
+ *      receiver.extend(ClassMethods)
+ *   end
+ *   module ClassMethods
+ *    def class_method
+ *      puts &quot;smthg&quot;
+ *    end
+ *  end
+ * end
+ * todo: provide especific extend
+ *  An object (a class is an object too) can be extended.
+ *  extend == self.extend
+ * todo: define alias: Copies one method with a new name. (They are different copies)
+ * todo: Provide a require
+       */
+</pre>
+</body>
+</html>
