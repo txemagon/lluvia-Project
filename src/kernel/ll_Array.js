@@ -61,13 +61,6 @@ Array.prototype.count = function(obj){
 }
 
 
-  var count = 0
-  for (var i=0; i<this.length; i++) 
-     if ( (typeof(obj) === "function" ? Array.prototype.count.yield(this[i]) : this[i] == obj) )
-       count++
-
-  return count
-}
 
 Array.prototype.each_reverse = function(){// Problemas en el test. Muestra failed pero valor esperado == valor recibido.
 	var l = this.length - 1
