@@ -1,25 +1,65 @@
 /*
  * When module will be defined, module enumerable shall replace method each.
  */
-
+/**
+ * @method  each 
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array item
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = ["Peter","John","David"]
+ *     names.each(function (arrayItem){ alert(arrayItem)})
+ * These code show an alert for each array item, with the content of array item 
+ */
 Array.prototype.each = function(){
-	for (var i = 0; i < this.length; i++) 
-		Array.prototype.each.yield(this[i])	
+  for (var i = 0; i < this.length; i++) 
+    Array.prototype.each.yield(this[i]) 
 }
-
+/**
+ * @method  each_index  
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array index
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = ["Peter","John","David"]
+ *     names.each(function (arrayIndex){ alert(arrayIndex)})
+ * These code show an alert for each array item, with the array index number
+ */
 Array.prototype.each_index = function(){
-	for (var i = 0; i < this.length; i++) 
-		Array.prototype.each_index.yield(i)	
+  for (var i = 0; i < this.length; i++) 
+    Array.prototype.each_index.yield(i) 
 }
-
+/**
+ * @method  each_with_index 
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array index and the array block of the index
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = ["Peter","John","David"]
+ *     names.each(function (arrayItem, arrayIndex){ alert(arrayItem + " " + arrayIndex)})
+ * These code show an alert for each array item, with the array index number and the content of these index
+ */
 Array.prototype.each_with_index = function(){
-	for (var i = 0; i < this.length; i++) 
-		Array.prototype.each_with_index.yield(this[i], i)	
+  for (var i = 0; i < this.length; i++) 
+    Array.prototype.each_with_index.yield(this[i], i) 
 }
-
+/**
+ * @return  {Integer} Sum of all array index
+ * @method  count  
+ * The method count all array elements 
+ * ###Example
+ *     var names = ["Peter","John","David"]
+ *     var namesCount = names.count()
+ */
 Array.prototype.count = function(obj){
   if (typeof(obj) === "undefined" )
     return this.length
+
+  var count = 0
+  for (var i=0; i<this.length; i++) 
+     if ( (typeof(obj) === "function" ? Array.prototype.count.yield(this[i]) : this[i] == obj) )
+       count++
+
+  return count
+}
+
 
   var count = 0
   for (var i=0; i<this.length; i++) 

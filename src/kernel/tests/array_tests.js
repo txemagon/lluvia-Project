@@ -298,6 +298,32 @@ assert("Array#values_at 3. With positive and negative params",
 assert("Array#values_at 4. With over length of Array index",
        'a.values_at(1,2,-8)','["b","c",null]',
        'a = ["a","b","c","d"]')
+
+assert("Array#each 1. Without code inside",
+       'a.each(function(obj){ /*Executes some code for every array element parsing the array index content as parameter*/ })','undefined',
+       'a = [1]')
+
+assert("Array#each_index 1. Without code inside",
+       'a.each_index(function(obj){ /*Executes some code for every array element parsing the array index  as parameter*/ })','undefined',
+       'a = [1]')
+
+assert("Array#each_with_index 1. Without code inside",
+       'a.each_index(function(obj){ /*Executes some code for every array element parsing the array index content and the array index  as parameter*/ })','undefined',
+       'a = [1]')
+
+assert("Array#each_with_index 1. Without code inside",
+       'a.each_index(function(obj){ /*Executes some code for every array element parsing the array index content and the array index  as parameter*/ })','undefined',
+       'a = [1]')
+
+assert("Array#clone 2. With sample array",
+       'b = a.clone()',
+       'a',
+       'a = ["John","David","Peter"]')
+
+assert("Array#clone 2. With more arrays",
+       'c = a.clone() + new Array() + b.clone()',
+       '["John","David","Peter","John","David","Peter"]',
+       'a = ["John","David","Peter"]; b = ["John","David","Peter"]')
 /*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
