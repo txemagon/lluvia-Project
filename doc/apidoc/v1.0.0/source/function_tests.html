@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">given(&quot;Given Two classes.&quot;,
+      $LLGvn = &quot;Father.prototype.constructor = Father; \
+        function Father(){ ;\
+          this.a = 2; \
+        }; \
+        ; \
+        Child.prototype = new Father; \
+        Child.prototype.constructor = Child; \
+        function Child(){ ;\
+          this.b=3; \
+          this.a=1; \
+        }; \
+        ;&quot; )
+eval($LLGvn)
+
+assert(&quot;A class extends another in the old way&quot;, 
+       &quot;c instanceof Father&quot;, &quot;true&quot;,
+        &quot;c = new Child();&quot;)
+        
+
+given(&quot;Given Two separate classes.&quot;,
+      $LLGvn = &quot;Father.prototype.constructor = Father; \
+        function Father(){ ;\
+          this.a = 2; \
+          this.b = 3; \
+        }; \
+        ; \
+        Child.prototype.constructor = Child; \
+        function Child(){ ;\
+          this.b=1; \
+          this.c=1; \
+        }; \
+        ;&quot; )
+eval($LLGvn)
+
+assert( &quot;A class can be extended.&quot;,
+        &quot;c.a&quot;, &quot;2&quot;,
+        &quot;Child.extend(Father); c = new Child()&quot; )
+        
+assert( &quot;A class shall be extended with love.&quot;,
+        &quot;c.b&quot;, &quot;1&quot;,
+        &quot;Child.extend(Father); c = new Child()&quot; )
+
+
+given(&quot;Given Two separate classes.&quot;,
+      $LLGvn = &quot;Fa.prototype.constructor = Fa; \
+        function Fa(){ ;\
+          this.a = 2; \
+          this.b = 3; \
+        }; \
+        ; \
+        Ch.prototype.constructor = Ch; \
+        function Ch(){ ;\
+          this.b=1; \
+          this.c=1; \
+        }; \
+        ;&quot; )
+
+eval($LLGvn)
+        
+assert( &quot;A class shall be extended with backpropagation.&quot;,
+        &quot;c.a&quot;, &quot;2&quot;,
+        &quot;c = new Ch(); Ch.extend(Fa)&quot; )
+        
+
+
+given(&quot;Given Two separate classes.&quot;,
+      $LLGvn = &quot;Father.prototype.constructor = Father; \
+      Father.prototype.Class = {};\
+        function Father(){ ;\
+          this.a = 2; \
+          this.b = 3; \
+        }; \
+        ; \
+        Father.prototype.Class.before_extend = function(){; \
+          alert('Preparing to extend'); \
+          }; \
+        Father.prototype.Class.after_extend = function(){; \
+          alert('Extension Finish'); \
+          }; \
+        Child.prototype.constructor = Child; \
+        function Child(){ ;\
+          this.b=1; \
+          this.c=1; \
+        }; \
+        ;&quot; )
+eval($LLGvn)                
+        
+/*
+assert(&quot;A class can include another class or module&quot;, 
+       &quot;c instanceof Father&quot;, &quot;true&quot;,
+        &quot;Child.include(Father); c = new Child();&quot;)
+
+given(&quot;Given Two separate classes.&quot;,
+      $LLGvn = &quot;Father1.prototype.constructor = Father1; \
+        function Father1(){ ;\
+          this.a = 2; \
+        }; \
+        ; \
+        Child1.prototype = new Father1; \
+        Child1.prototype.super = Father1; \
+        Child1.prototype.constructor = Child1; \
+        function Child1(){ ;\
+          this.b=3; \
+          this.a=1; \
+        }; \
+        ;\
+        Father2.prototype.constructor = Father2; \
+        function Father2(){ ;\
+          this.a = 2; \
+        }; \
+        ; \
+        Child2.prototype = new Father2; \
+        Child2.prototype.super = Father2; \
+        Child2.prototype.constructor = Child2; \
+        function Child2(){ ;\
+          this.b=3; \
+          this.a=1; \
+        }; \
+        ; \
+        WhiteClass.prototype = new Child2; \
+        WhiteClass.prototype.super = Child2; \
+        WhiteClass.prototype.constructor = WhiteClass; \
+        function WhiteClass(){;\
+          this.a = 3; \
+        }; \
+        ;\
+        WhiteClass.include(Child1); \
+        ;&quot; )
+eval($LLGvn)
+
+               
+assert(&quot;Including takes the prototype chain into account.&quot;, 
+       &quot;w instanceof Father1&quot;, &quot;true&quot;,
+       &quot;w = new WhiteClass();&quot;)       
+               
+assert(&quot;Including takes the prototype chain into account.&quot;, 
+       &quot;w instanceof Child1&quot;, &quot;true&quot;,
+       &quot;w = new WhiteClass();&quot;)       
+
+assert(&quot;Including takes the prototype chain into account.&quot;, 
+       &quot;w instanceof Father2&quot;, &quot;true&quot;,
+       &quot;w = new WhiteClass();&quot;)
+*/               
+</pre>
+</body>
+</html>
