@@ -1,4 +1,5 @@
-/*
+/**
+ * @class Array
  * When module will be defined, module enumerable shall replace method each.
  */
 /**

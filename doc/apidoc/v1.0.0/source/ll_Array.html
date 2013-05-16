@@ -15,25 +15,57 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">/*
+  <pre class="prettyprint lang-js"><span id='Array'>/**
+</span> * @class Array
  * When module will be defined, module enumerable shall replace method each.
  */
-
+<span id='Array-method-each'>/**
+</span> * @method  each 
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array item
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = [&quot;Peter&quot;,&quot;John&quot;,&quot;David&quot;]
+ *     names.each(function (arrayItem){ alert(arrayItem)})
+ * These code show an alert for each array item, with the content of array item 
+ */
 Array.prototype.each = function(){
-	for (var i = 0; i &lt; this.length; i++) 
-		Array.prototype.each.yield(this[i])	
+  for (var i = 0; i &lt; this.length; i++) 
+    Array.prototype.each.yield(this[i]) 
 }
-
+<span id='Array-method-each_index'>/**
+</span> * @method  each_index  
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array index
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = [&quot;Peter&quot;,&quot;John&quot;,&quot;David&quot;]
+ *     names.each(function (arrayIndex){ alert(arrayIndex)})
+ * These code show an alert for each array item, with the array index number
+ */
 Array.prototype.each_index = function(){
-	for (var i = 0; i &lt; this.length; i++) 
-		Array.prototype.each_index.yield(i)	
+  for (var i = 0; i &lt; this.length; i++) 
+    Array.prototype.each_index.yield(i) 
 }
-
+<span id='Array-method-each_with_index'>/**
+</span> * @method  each_with_index 
+ * Executes a function parsed as parameter by each item of the array parsing as parameter the array index and the array block of the index
+ * @param  {function}  Need to parse a function that recieves the items of the array one by one
+ * ###Example
+ *     var names = [&quot;Peter&quot;,&quot;John&quot;,&quot;David&quot;]
+ *     names.each(function (arrayItem, arrayIndex){ alert(arrayItem + &quot; &quot; + arrayIndex)})
+ * These code show an alert for each array item, with the array index number and the content of these index
+ */
 Array.prototype.each_with_index = function(){
-	for (var i = 0; i &lt; this.length; i++) 
-		Array.prototype.each_with_index.yield(this[i], i)	
+  for (var i = 0; i &lt; this.length; i++) 
+    Array.prototype.each_with_index.yield(this[i], i) 
 }
-
+<span id='Array-method-count'>/**
+</span> * @return  {Integer} Sum of all array index
+ * @method  count  
+ * The method count all array elements 
+ * ###Example
+ *     var names = [&quot;Peter&quot;,&quot;John&quot;,&quot;David&quot;]
+ *     var namesCount = names.count()
+ */
 Array.prototype.count = function(obj){
   if (typeof(obj) === &quot;undefined&quot; )
     return this.length
@@ -45,6 +77,8 @@ Array.prototype.count = function(obj){
 
   return count
 }
+
+
 
 Array.prototype.each_reverse = function(){// Problemas en el test. Muestra failed pero valor esperado == valor recibido.
 	var l = this.length - 1
@@ -174,7 +208,7 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
   return this
 }
 
-<span id='global-method-erase_if'>/**
+<span id='Array-method-erase_if'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	erase_if    
@@ -185,7 +219,7 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
  * Comments: Deletes every element of self for which block evaluates to true.
  */
 Array.prototype.erase_if = function(){
-<span id='global-property-'>    /**
+<span id='Array-property-'>    /**
 </span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -300,7 +334,7 @@ Array.prototype.drop = function(){
 }
 
 Array.prototype.drop_while = function(){
-<span id='global-property-'>    /**
+<span id='Array-property-'>    /**
 </span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -326,7 +360,7 @@ Array.prototype.drop_while = function(){
   
   return ary.compact()
 }
-<span id='global-method-drop_while'>/**
+<span id='Array-method-drop_while'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	drop_while       
@@ -460,7 +494,7 @@ Array.prototype.take_while = function(){
 
 
 
-<span id='global-method-'>/**
+<span id='Array-method-'>/**
 </span> * This function shuffles an array
  *
  * @memberOf     {Array}
@@ -506,7 +540,7 @@ Array.prototype.collect = function(){
 
 
 
-<span id='global-method-transpose'>/**
+<span id='Array-method-transpose'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 		transpose        
@@ -517,7 +551,7 @@ Array.prototype.collect = function(){
  * Comments:   Assumes that self is an array of arrays and transposes the rows and columns. 
  */
 Array.prototype.transpose = function(){
-<span id='global-property-'>    /**
+<span id='Array-property-'>    /**
 </span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -579,7 +613,7 @@ Array.prototype.zip = function(){
 
 
 
-<span id='global-method-emptyS-U'>/**
+<span id='Array-method-emptyS-U'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	empty$U       
@@ -598,7 +632,7 @@ Array.prototype.empty$U = function(){
 
 
 
-<span id='global-method-eqlS-U'>/**
+<span id='Array-method-eqlS-U'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	eql$U       
@@ -609,7 +643,7 @@ Array.prototype.empty$U = function(){
  * Comments: Returns true if self and other are the same object, or are both arrays with the same content
  */
 Array.prototype.eql$U = function(model){
-<span id='global-property-'>    /**
+<span id='Array-property-'>    /**
 </span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -656,7 +690,7 @@ Array.prototype.inject_with_index = function(init_value){
 
 
 
-<span id='global-method-reverse'>/**
+<span id='Array-method-reverse'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	reverse       
@@ -678,7 +712,7 @@ Array.prototype.reverse = function(){
 
 
 
-<span id='global-method-values_at'>/**
+<span id='Array-method-values_at'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	values_at       
@@ -689,7 +723,7 @@ Array.prototype.reverse = function(){
  * Comments: Returns an array containing the elements in self corresponding to the given selector(s). The selectors may be either integer indices or ranges.
  */
 Array.prototype.values_at = function(){
-<span id='global-property-'>    /**
+<span id='Array-property-'>    /**
 </span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -728,7 +762,7 @@ Array.prototype.values_at = function(){
 
 
 
-<span id='global-method-to_a'>/**
+<span id='Array-method-to_a'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	to_a      
@@ -742,7 +776,7 @@ Array.prototype.to_a = function(){
   return this
 }
 
-<span id='global-method-Cycle'>/**
+<span id='Array-method-Cycle'>/**
 </span> * 
  * @memberOf 	{Array}
  * @method 	    Cycle      
@@ -756,7 +790,7 @@ Array.prototype.cycle = function(){
 
 }
 
-<span id='global-method-strip_all'>/**
+<span id='Array-method-strip_all'>/**
 </span> * 
  * @memberOf    {Array}
  * @method 	    strip_all     
