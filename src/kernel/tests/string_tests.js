@@ -38,19 +38,19 @@ assert("String#insert 2. Insert string",
        '"hello".insert(-3,"XY")', '"helXYlo"',
        '"hello".insert(-3,"XY")')
 
-assert("String#ljust 1. Whitout letters.",
+assert("String#ljust 1. Without letters.",
        '"hello".ljust(10)', '"hello     "',
        '"hello".ljust(10)')
 
-assert("String#ljust 2. Whith one letter.",
+assert("String#ljust 2. With one letter.",
        '"hello".ljust(10,"p")', '"helloppppp"',
        '"hello".ljust(10,"p")')
 
-assert("String#ljust 3. Whith string.",
+assert("String#ljust 3. with string.",
        '"hello".ljust(10,"pe")', '"hellopepep"',
        '"hello".ljust(10,"pe")')
 
-assert("String#ljust 4. Whith blanks.",
+assert("String#ljust 4. with blanks.",
        'a.ljust(10)', '"hello     "',
        'a = "hello"')
 
@@ -70,11 +70,11 @@ assert("String#empty$U 2. Stream empty",
       'a.empty$U()', "true",
       'a = ""')
 
-assert("String#lstrip 1. Whith spaces.",
+assert("String#lstrip 1. with spaces.",
        '"    hello    ".lstrip()', '"hello    "',
        '"    hello    ".lstrip()')
 
-assert("String#lstrip 2. Whithout spaces.",
+assert("String#lstrip 2. without spaces.",
        '"hello".lstrip()', '"hello"',
        '"hello".lstrip()')
 
