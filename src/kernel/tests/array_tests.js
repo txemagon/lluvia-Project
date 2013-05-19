@@ -329,6 +329,28 @@ assert("Array#collect 2. Calculate discount",
        'number.collect(function(obj){ return obj-(obj*0.25)})',
        '[187.5,375,857.25]',
        'var number = [250,500,1143]')
+
+assert("Array#select_if 1. Sample condition",
+       'number.select_if(function(obj){if(obj > 300){ return true }else{ return false}})',
+       '[500,1143]',
+       'var number = [250,500,1143]')
+
+assert("Array#indexOf 1. Search an string",
+       'number.indexOf("David", 0)',
+       '0',
+       'var number = ["David", "Rachel"]')
+
+assert("Array#indexOf 2. Search an integer",
+       'number.indexOf(56, 0)',
+       '1',
+       'var number = [34,56,78,98]')
+
+assert("Array#indexOf 3. Search an integer that does not exist ",
+       'number.indexOf(36, 0)',
+       'null',
+       'var number = [34,56,78,98]')
+
+
 /*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",

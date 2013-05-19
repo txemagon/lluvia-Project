@@ -70,8 +70,8 @@ Array.prototype.each_reverse = function(){// Problemas en el test. Muestra faile
 }
 /**
  * @method  collect 
- * The method group all items returned by the function passed as parameter
- * @return  {Integer} Sum of all array index 
+ * The method sellect object of an array that match with a condition parsed as parameter
+ * @return  {Array} Return an Array with all items returned by the function parsed as parameter
  * @param  {function} These function will be executed for every object in the array, these function will recieve a parameter that is each element of the original array and need to return some data that is collected in the array returned by the function 'collect'
  * ###Example
  *     var number = [250,500,1143]
@@ -84,7 +84,16 @@ Array.prototype.collect = function(){
 		collectable.push(Array.prototype.collect.yield(this[i]))
         return collectable
 }
-
+/**
+ * @method  select_if 
+ * The method check if every item of the array pass a condition
+ * @return  {Array} All items that pass the condition,if not, it will be deleted
+ * @param  {function} These function must return a boolean, if that return true, the array item will be included in the final array, if not , it will be deleted
+ * ###Example
+ *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
+ *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
+ *     //The result will be = [187.5,375,857.25]
+ */
 Array.prototype.select_if = function(){
        var collectable = []
 	for (var i = 0; i < this.length; i++) 
@@ -93,14 +102,32 @@ Array.prototype.select_if = function(){
         return collectable
 }
 
-
+/**
+ * @method  indexOf 
+ * The method search a object in all positions of the array, from the possition parsed as parameter
+ * @return  {Integer} The position of the searched element, if the element does not exist, return null
+ * @param  {Object} Object that will be searched
+ * @param  {Integer} Position to start search
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers.indexOf(56, 0)
+ *     //The result will be = 1
+ */
 Array.prototype.indexOf = function(searchElement, fromIndex){
 	var i
 	for (i = fromIndex || 0; i <this.length && this[i] !== searchElement; i++);
 	i = i>=this.length? null: i
 	return i
 }
-
+/**
+ * @method  indexOf 
+ * The method simply clone an array
+ * @return  {Array} Cloned array
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers2 = numbers.clone
+ *     //numbers2 is a copy of numbers
+ */
 Array.prototype.clone = function(){
    var ary = []
    for (var i=0; i<this.length; i++)
@@ -113,12 +140,28 @@ Array.prototype.clone$B = function(model){
    for(var i=0; i<model.length; i++)
       this[i] = model[i]
 }
-
+/**
+ * @method  clear
+ * The method clear an Array
+ * @return  {Array} A Empty array
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers.clear()
+ */
 Array.prototype.clear = function(){
  while( this.length > 0)
        this.pop()
 }
- 
+/**
+ * @method  equals$U
+ * RThe method compare two arrays
+ * @return  {Boolean} If the arrays match , true , if not, false
+ * @param  {Array} Array to compare
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers.indexOf(56, 0)
+ *     //The result will be = 1
+ */
 Array.prototype.equals$U = function(other){
 	var same = true
 	 if(this.length != other.length)
@@ -128,7 +171,14 @@ Array.prototype.equals$U = function(other){
                   same = false
               return same
 }
-
+/**
+ * @method  uniq
+ * The method search the repeated items of an array and delete it from the returned array
+ * @return  {Array} The array with the repeated items deleted
+ * ###Example
+ *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1].uniq()
+ *     //The result will be = [2, 1, 3]
+ */
 Array.prototype.uniq = function(){
   var uniq = []
   var comparable = []
@@ -143,7 +193,14 @@ Array.prototype.uniq = function(){
   }
   return uniq
 }
-
+/**
+ * @method  uniq$B
+ * The method search the repeated items of an array and delete it from the original array
+ * ###Example
+ *     var numbers = [1, 2, 1, 2, 2, 3, 1, 2, 3]
+ *     numbers.uniq$B()
+ *     //The result will be = [1,2,3]
+ */
 Array.prototype.uniq$B = function(){
    var uniq = this.uniq()
     if (uniq.equals$U(this))
@@ -154,6 +211,16 @@ Array.prototype.uniq$B = function(){
     return this
  }
 
+/**
+ * @method  first 
+ * The method return the first element or elements of an array (depends if pass parameters or not)
+ * @return  {Array} The first elements of the array
+ * @param  {Integer} Position to end including elements in the returned array
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     filterNumbers = numbers.first(3)
+ *     //The result will be = [1,2,3]
+ */
 Array.prototype.first = function(){
    if (this.length == 0)
       return null
@@ -164,7 +231,16 @@ Array.prototype.first = function(){
       ary[i] = this[i]
    return ary
 }
-
+/**
+ * @method  last
+ * The method return the last element or lastest elements of an array (depends if pass parameters or not)
+ * @return  {Array} The last or lastest elements of the array
+ * @param  {Integer} Position to start including elements in the returned array
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     filterNumbers = numbers.last(6)
+ *     //The result will be = [8,9]
+ */
 Array.prototype.last = function(){
    if (this.length == 0)
       return null
