@@ -59,9 +59,9 @@ Array.prototype.each_with_index = function(){
     Array.prototype.each_with_index.yield(this[i], i) 
 }
 <span id='Array-method-count'>/**
-</span> * @return  {Integer} Sum of all array index
- * @method  count  
+</span> * @method  count 
  * The method count all array elements 
+ * @return  {Integer} Sum of all array index 
  * ###Example
  *     var names = [&quot;Peter&quot;,&quot;John&quot;,&quot;David&quot;]
  *     var namesCount = names.count()
@@ -85,7 +85,16 @@ Array.prototype.each_reverse = function(){// Problemas en el test. Muestra faile
 	for (var i = l; i &gt;= 0; i--) 
 		Array.prototype.each.yield(this[i])	
 }
-
+<span id='Array-method-collect'>/**
+</span> * @method  collect 
+ * The method group all items returned by the function passed as parameter
+ * @return  {Integer} Sum of all array index 
+ * @param  {function} These function will be executed for every object in the array, these function will recieve a parameter that is each element of the original array and need to return some data that is collected in the array returned by the function 'collect'
+ * ###Example
+ *     var number = [250,500,1143]
+ *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
+ *     //The result will be = [187.5,375,857.25]
+ */
 Array.prototype.collect = function(){
         var collectable = []
 	for (var i = 0; i &lt; this.length; i++) 
@@ -206,10 +215,10 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
     return null
   this.splice(arguments[0],1)
   return this
-}
-
-<span id='Array-method-erase_if'>/**
-</span> * 
+<span id='Array-method-erase_if'>}
+</span>
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	erase_if    
  * @param       (function (object, object){ |condition| )
@@ -359,9 +368,9 @@ Array.prototype.drop_while = function(){
     ary.push(Array.prototype.drop_while.yield(i,this[i])) 
   
   return ary.compact()
-}
-<span id='Array-method-drop_while'>/**
-</span> * 
+<span id='Array-method-drop_while'>}
+</span>/**
+ * 
  * @memberOf 	{Array}
  * @method 	drop_while       
  * @param       (function (object, object){ |condition| ).
@@ -492,10 +501,10 @@ Array.prototype.take_while = function(){
   return ary.compact()
 }
 
-
-
-<span id='Array-method-'>/**
-</span> * This function shuffles an array
+<span id='Array-method-'>
+</span>
+/**
+ * This function shuffles an array
  *
  * @memberOf     {Array}
  * @return      (Array)
@@ -538,10 +547,10 @@ Array.prototype.collect = function(){
   return ary
 }
 
-
-
-<span id='Array-method-transpose'>/**
-</span> * 
+<span id='Array-method-transpose'>
+</span>
+/**
+ * 
  * @memberOf 	{Array}
  * @method 		transpose        
  * @param       (Array of Arrays).
@@ -611,10 +620,10 @@ Array.prototype.zip = function(){
    return ary;
 }
 
-
-
-<span id='Array-method-emptyS-U'>/**
-</span> * 
+<span id='Array-method-emptyS-U'>
+</span>
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	empty$U       
  * @param       (no param)
@@ -630,10 +639,10 @@ Array.prototype.empty$U = function(){
   return this.length==0? true: false
 }
 
-
-
-<span id='Array-method-eqlS-U'>/**
-</span> * 
+<span id='Array-method-eqlS-U'>
+</span>
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	eql$U       
  * @param       (Any).
@@ -688,10 +697,10 @@ Array.prototype.inject_with_index = function(init_value){
   return init_value
 }
 
-
-
-<span id='Array-method-reverse'>/**
-</span> * 
+<span id='Array-method-reverse'>
+</span>
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	reverse       
  * @param       (Any).
@@ -708,12 +717,12 @@ Array.prototype.reverse = function(){
     pos++
   }
   return ary
-}
+<span id='Array-method-values_at'>}
+</span>
 
 
-
-<span id='Array-method-values_at'>/**
-</span> * 
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	values_at       
  * @param       (Integer/Index).
@@ -758,12 +767,12 @@ Array.prototype.values_at = function(){
       ary.push(this[arguments[i]])              
   }
   return ary  
-}
+<span id='Array-method-to_a'>}
+</span>
 
 
-
-<span id='Array-method-to_a'>/**
-</span> * 
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	to_a      
  * @param       (any).
@@ -773,11 +782,11 @@ Array.prototype.values_at = function(){
  * Comments: Returns self. If called on a subclass of Array, converts the receiver to an Array object. 
  */
 Array.prototype.to_a = function(){
-  return this
-}
+<span id='Array-method-Cycle'>  return this
+</span>}
 
-<span id='Array-method-Cycle'>/**
-</span> * 
+/**
+ * 
  * @memberOf 	{Array}
  * @method 	    Cycle      
  * @param       (function {}).
@@ -787,11 +796,11 @@ Array.prototype.to_a = function(){
  * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
  */
 Array.prototype.cycle = function(){
+<span id='Array-method-strip_all'>
+</span>}
 
-}
-
-<span id='Array-method-strip_all'>/**
-</span> * 
+/**
+ * 
  * @memberOf    {Array}
  * @method 	    strip_all     
  * @param       (function {}).

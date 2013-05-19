@@ -42,9 +42,9 @@ Array.prototype.each_with_index = function(){
     Array.prototype.each_with_index.yield(this[i], i) 
 }
 /**
- * @return  {Integer} Sum of all array index
- * @method  count  
+ * @method  count 
  * The method count all array elements 
+ * @return  {Integer} Sum of all array index 
  * ###Example
  *     var names = ["Peter","John","David"]
  *     var namesCount = names.count()
@@ -68,7 +68,16 @@ Array.prototype.each_reverse = function(){// Problemas en el test. Muestra faile
 	for (var i = l; i >= 0; i--) 
 		Array.prototype.each.yield(this[i])	
 }
-
+/**
+ * @method  collect 
+ * The method group all items returned by the function passed as parameter
+ * @return  {Integer} Sum of all array index 
+ * @param  {function} These function will be executed for every object in the array, these function will recieve a parameter that is each element of the original array and need to return some data that is collected in the array returned by the function 'collect'
+ * ###Example
+ *     var number = [250,500,1143]
+ *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
+ *     //The result will be = [187.5,375,857.25]
+ */
 Array.prototype.collect = function(){
         var collectable = []
 	for (var i = 0; i < this.length; i++) 

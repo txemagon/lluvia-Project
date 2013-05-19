@@ -320,10 +320,15 @@ assert("Array#clone 2. With sample array",
        'a',
        'a = ["John","David","Peter"]')
 
-assert("Array#clone 2. With more arrays",
-       'c = a.clone() + new Array() + b.clone()',
-       '["John","David","Peter","John","David","Peter"]',
-       'a = ["John","David","Peter"]; b = ["John","David","Peter"]')
+assert("Array#collect 1. Names with dot",
+       'names.collect(function(obj){ return obj+"."})',
+       '["Peter.","John.","David."]',
+       'var names = ["Peter","John","David"]')
+
+assert("Array#collect 2. Calculate discount",
+       'number.collect(function(obj){ return obj-(obj*0.25)})',
+       '[187.5,375,857.25]',
+       'var number = [250,500,1143]')
 /*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
