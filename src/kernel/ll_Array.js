@@ -252,7 +252,15 @@ Array.prototype.last = function(){
       ary[i] = this[ this.length - Math.min(arguments[0], this.length) +i ]
    return ary
 }
-
+/**
+ * @method  erase$B
+ * Delete a concrete position(parsed as parameter) of the original array
+ * @param  {Integer} Position of the array item to delete
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     numbers.delete(3)
+ *     //The result will be = [1,2,3,5,6,7,8,9]
+ */
 Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
   if(arguments.length > 1)
      return null
@@ -265,7 +273,15 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
     }
   return find? this: null
 }  
-
+/**
+ * @method  erase_at$B
+ * Delete a concrete position(parsed as parameter) of the original array
+ * @param  {Integer} Position of the array item to delete
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     numbers.delete(3)
+ *     //The result will be = [1,2,3,5,6,7,8,9]
+ */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
   if(arguments.length > 1)
     return null
@@ -276,18 +292,17 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
   return this
 }
 
-/**
- * 
- * @memberOf 	{Array}
- * @method 	erase_if    
- * @param       (function (object, object){ |condition| )
- *
- * Coded by: David
- *
- * Comments: Deletes every element of self for which block evaluates to true.
+ /**
+ * @method  erase_if
+ * Deletes every element of the array which block parsed as parameter evaluates to true
+ * @param  {function} Block that must contain a condition to erase or not the element(return true or false)
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     numbers.erase_if(function(obj){ return obj > 2? obj: null})
+ *     //The result will be = [1,2]
  */
 Array.prototype.erase_if = function(){
-    /**
+    /*
      *	VALID INPUT!
      *
      *  PARAMETER TYPES
@@ -308,7 +323,15 @@ Array.prototype.erase_if = function(){
          ary.push(this[i])
      return ary.compact()
 }
-
+ /**
+ * @method  replace
+ * Replaces the array content with the array parsed as parameter, if these array was empty, the returned array will be null
+ * @param  {Array} These array will replace the original
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.replace(["a","b","c"])
+ *     //The result will be = ["a","b","c"]
+ */
 
 Array.prototype.replace = function(){
   if(arguments.length == 0)
@@ -324,7 +347,11 @@ Array.prototype.replace = function(){
      this[i] = arguments[0][i]
   return this
 }
-
+/**
+*
+* PREGUNTAR A TXEMA FUNCIONAMIENTO
+*
+*/
 Array.prototype.delete$B = function(obj){
   var position = this.indexOf(obj)
   if ( position == -1)
@@ -332,7 +359,16 @@ Array.prototype.delete$B = function(obj){
   
   return this.splice(position, 1)[0]
 }
-
+ /**
+ * @method  include$U
+ * Goes through every item of the  array searching if the integer parses as parameter is inside the array, if yes, return true, if not, false.
+ * @param  {Object} Object that the method will search for
+ * @return {Boolean} Result of the sarch, if included true, if not false 
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.include$U(3)
+ *     //The result will be = true
+ */
 Array.prototype.include$U = function(){
   if(arguments.length != 1)
     //throw "wrong number of arguments (it needs one arguments)"
@@ -343,6 +379,18 @@ Array.prototype.include$U = function(){
       find = true
   return find
 }
+ /**
+ * @method  assoc
+ * Search a object of an array from an array index and return the array where the method find the object passed as parameter
+ * @param  {Object} Array that contains the index of an arrays where the method will search
+ * @return {Array} Array that will be selected if the object parsed as parameter is found
+ * ###Example
+ *     var coupleOne = ["David", "Homer"]
+ *     var coupleTwo = ["John", "Steve"]
+ *     var index = [a,b]
+ *     var winnerCouple = index.assoc("John")
+ *     //The result will be = ["John", "Steve"]
+ */
 
 Array.prototype.assoc = function(){
   if(arguments.length > 1)
@@ -353,6 +401,16 @@ Array.prototype.assoc = function(){
       return this[i]
   return null
 }
+ /**
+ * @method  at
+ * returns the element corresponding to the index passed as parameter
+ * @param  {Integer} Array index position
+ * @return {Object} The selected element by index passed as parameter 
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.at(3)
+ *     //The result will be = 4
+ */
 
 Array.prototype.at = function(){
    if(arguments.length > 1)
@@ -367,6 +425,16 @@ Array.prototype.at = function(){
    return arguments[0]>=0? this[arguments[0]] : this[this.length+(arguments[0])]
 }
 
+ /**
+ * @method  compact
+ * Delete the null elements of an array
+ * @returns {Array} Clean array without null elements
+ * ###Example
+ *     var numbers = [1,null,2,null,3,null,4,5,6,7,8,9]
+ *     newNumbers = numbers.compact()
+ *     //The result will be = [1,2,3,4,5,6,7,8,9]
+ */
+
 Array.prototype.compact = function(){
   var ary = []
   for(var i = 0; i < this.length; i++)
@@ -375,15 +443,25 @@ Array.prototype.compact = function(){
   return ary      
 }
 
-
 Array.prototype.merge = function(ary2){
-  var ary = []
+  var ary = []// PROBLEMAS CON EL TEST,LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
   for(var i = 0; i < this.length; i++)
       ary.push(this[i])
   for(var i = 0; i < ary2.length; i++)
       ary.push(ary2[i])
   return ary      
 }
+
+ /**
+ * @method  drop
+ * Delete elements from position 0 of the array to the possition passed as parameter
+ * @param {Integer} Position to stop deleting data of the array
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop(3)
+ *     //The result will be = [5,6,7,8,9]
+ */
+
 
 Array.prototype.drop = function(){
   if(arguments.length > 1 || arguments.length < 1)
@@ -400,6 +478,17 @@ Array.prototype.drop = function(){
      ary.splice(0,1)
   return ary
 }
+
+ /**
+ * @method  drop_while
+ * Executes a block passed as parameter that return an object, or null, if return null, thses position will be deleted
+ * @param {Function} Function that must return a object, or null
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
+ *     //The result will be = [6,7,8,9]
+ */
+
 
 Array.prototype.drop_while = function(){
     /**
@@ -428,15 +517,9 @@ Array.prototype.drop_while = function(){
   
   return ary.compact()
 }
-/**
- * 
- * @memberOf 	{Array}
- * @method 	drop_while       
- * @param       (function (object, object){ |condition| ).
- *
- * Coded by: David
- *
- * Comments: Drops elements up to, but not including, the first element for which the block returns nil or false and returns an array containing the remaining elements. 
+
+ /**
+ * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????????
  */
 
 Array.prototype.flatten = function(level){
@@ -445,13 +528,26 @@ Array.prototype.flatten = function(level){
   level = level || 1000
   return unpack(this, [], level)
 }
-
+ /**
+ * @method  index
+ * Search throught an array to find the element passed as parameter and return the position of these element
+ * @param {Object} Object that the method will search for
+ * @return {Integer} Position of the element we are searching for, if not find it will be null
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.index(3)
+ *     //The result will be = 4
+ */
 Array.prototype.index = function(){
   for(var i = 0; i < this.length; i++)
     if(this[i] == arguments[0])
       return i
   return null
 }
+
+ /**
+ * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
+ */
 
 Array.prototype.product = function(){
   var ary = []
@@ -470,7 +566,9 @@ Array.prototype.product = function(){
       return aproduct(this,arguments[0])///////////////TO DO
   }    
 }
-
+/**
+* ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????
+*/
 Array.prototype.rassoc = function(){
   if(arguments.length > 1 || arguments.length < 1)
     //throw ("wrong number of arguments")

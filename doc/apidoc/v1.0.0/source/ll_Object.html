@@ -15,7 +15,7 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">if (typeof Object.extend !== 'function') {
+  <pre class="prettyprint lang-js">if (typeof Object.extend !== &#39;function&#39;) {
     Object.extend = function (o) {
         function $F() {}
         $F.prototype = o;
@@ -39,7 +39,7 @@
  * CONCLUSIONS
  * 
  * As long as the constructor $F is an inner function each time we extend/create an object 
- * we get a different object, and, thus, a different prototype. In this way we don't share the
+ * we get a different object, and, thus, a different prototype. In this way we don&#39;t share the
  * prototipical attribute a and b.
  */
 
@@ -248,7 +248,7 @@ Object.prototype.method_missing = function (method, obj, params){
 
   var that = this
   function bad_function(){
-    throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(', ') )) 
+    throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(&#39;, &#39;) )) 
   }
 
   function is_in(list, word){
