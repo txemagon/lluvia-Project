@@ -588,6 +588,17 @@ Array.prototype.rassoc = function(){
   return null
 }
 
+ /**
+ * @method  rindex
+ * Search throught an array to find the element passed as parameter and return the position of these element, but starting to search from the final position of the array
+ * @param {Object} Object that the method will search for
+ * @return {Integer} Position of the element we are searching for, if not find it will be null
+ * ###Example
+ *     var numbers = [1,2,3,4,5,4,3,2,1]
+ *     newNumbers = numbers.rindex(3)
+ *     //The result will be = 6
+ */
+
 Array.prototype.rindex = function(){
   if(arguments.length != 1)
     //throw ("Wrong number of arguments")
@@ -598,7 +609,15 @@ Array.prototype.rindex = function(){
       return i
   return null
 }
-
+ /**
+ * @method  rotate
+ * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
+ * @param {Integer} Stablish the center of the array rotation 
+ * ###Example
+ *     var characters = ["a","b","c","d"]
+ *     characters.rotate(2)
+ *     //The result will be = ["c","d","a","b"]
+ */
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === "undefined"){
     var ary = this.clone()
@@ -634,6 +653,16 @@ Array.prototype.rotate = function(obj){
   return _rotate(this.length-1, this, ary)
 }
 
+ /**
+ * @method  take
+ * Take the elements of an array from the first position to the position passed as parameter
+ * @param {Integer} Position of the element to stop taking elements
+ * ###Example
+ *     var numbers = [1,2,3,4,5,4,3,2,1]
+ *     newNumbers = numbers.take(3)
+ *     //The result will be = [1,2,3,4]
+ */
+
 Array.prototype.take = function(){
   if(!(arguments[0]) || arguments.length > 1)
     //throw ("Wrong number of parameters")
@@ -651,6 +680,19 @@ Array.prototype.take = function(){
   return ary
 }
 
+ /**
+ * @method  take_while
+ * Method that needs a function poassed as parameter, the function will reciebe every item of the array 
+ * and an array with all the returned elements of these function will be returned by take_while method
+ * @param {Function} Function that will be executed
+ * @return {Array} Array with all elements returned by the function passed as parameter
+ * ###Example
+ *     var numbers = [1,2,3,4,5,4,3,2,1]
+ *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
+ *     //The result will be = [1,2]
+ */
+
+
 Array.prototype.take_while = function(){
   var ary = []
   for(var i = 0; i < this.length; i++)
@@ -658,18 +700,16 @@ Array.prototype.take_while = function(){
   return ary.compact()
 }
 
-
-
 /**
- * This function shuffles an array
- *
- * @memberOf     {Array}
- * @return      (Array)
- * 
- * Coded by: Guille
- *
- * Comments: This method convert any arguments to arrays, then merges elements of self with corresponding elements from each argument. 
+ * @method  shuffle
+ * This method shuffle the array items aleatory
+ * @return {Array} Array that was shuffled
+ * ###Example
+ *     var numbers = [1,2,3,4]
+ *     numbers.shuffle()
+ *     //The result will be = [1,2]
  */
+
 Array.prototype.shuffle = function()
 {
     if(arguments.length > 0)
@@ -704,8 +744,6 @@ Array.prototype.collect = function(){
   return ary
 }
 
-
-
 /**
  * 
  * @memberOf 	{Array}
@@ -715,6 +753,18 @@ Array.prototype.collect = function(){
  * Coded by: David
  *
  * Comments:   Assumes that self is an array of arrays and transposes the rows and columns. 
+ */
+
+  /**
+ * @method  take_while
+ * Method that needs a function poassed as parameter, the function will reciebe every item of the array 
+ * and an array with all the returned elements of these function will be returned by take_while method
+ * @param {Function} Function that will be executed
+ * @return {Array} Array with all elements returned by the function passed as parameter
+ * ###Example
+ *     var numbers = [1,2,3,4,5,4,3,2,1]
+ *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
+ *     //The result will be = [1,2]
  */
 Array.prototype.transpose = function(){
     /**
