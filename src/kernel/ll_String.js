@@ -1,13 +1,19 @@
 /**
+ * @method      capitalize
  * Returns a copy of str with the first character converted to uppercase and the 
  * remainder to lowercase. 
  * 
- * @memberOf    {String}
- * @method      capitalize
- * @param       (string) str 
- * @return      (String) str
- * Comments:    Case conversion is effective only in ASCII region.
- *
+ * @member String
+ * @method capitalize
+ * @param {String} String 
+ * Any string
+ * @return {String} String 
+ * The string with his first letter in uppercase. 
+ * ###Comments:    Case conversion is effective only in ASCII region.
+ * See example
+ *      @example
+ *      var text = "hello"   // giving a value to text
+ *      text.capitalize()    // value of text now is "Hello"
  **/
 
 String.prototype.capitalize = function(){
