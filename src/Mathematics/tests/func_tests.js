@@ -70,13 +70,26 @@ assert("Func#div$B. Divides functions.",
 assert("Func#cos. Functions shall answer to all the Math methods.",
        "f.cos()", "'cos(2*x)'",
        "f = new Func('2*x')")       
-       
+    
 assert("Func#sin.",
        "f.sin()", "'sin(2*x)'",
        "f = new Func('2*x')")
 
+
+assert("Func#A. Functions not defined in Math are not allowed",
+       "a", "1",
+       "a = 0; f = new Func('2*x'); try {; f.A(); } catch(err) {; a++ }")
+
+assert("Func#E. Only Math functions are allowed",
+       "a", "1",
+       "a = 0; f = new Func('2*x'); try {; f.E(); } catch(err) {; a++ }")
+
 assert("Func#max. When more than one param is given they are appended as explicit arguments of the Func call.",
-       "f.max(g, '2-z')", "'max(2*x, 3*x*x*y, 2-z)'",
+       "f.max(g)", "'max(2*x, 3*x*x*y)'",
        "f = new Func('2*x'); g = new Func('3*x*x*y');" );
        
 
+assert("Func#max. When more than one param is given they are appended as explicit arguments of the Func call.",
+       "f.max(g, h)", "'max(2*x, 3*x*x*y, y*z)'",
+       "f = new Func('2*x'); g = new Func('3*x*x*y'); h = new Func('y*z')" );
+       

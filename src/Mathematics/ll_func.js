@@ -123,10 +123,14 @@ Func.prototype.method_missing = function (method, obj, params){
 
     if (params && params[0] == "")
       params.shift()
-    if ( Expression.math.functions.include$U(method) )
+    if ( Math[method] === "undefinded" || !( Math[method] instanceof Function ))
+      throw "TypeError: " + obj + "." + method + "is not a function."
     if (params && (params instanceof Array) )
       for(var i=0; i<params.length; i++)
         params[i] = (eval(params[i]) instanceof Object)? eval(params[i]).value_of() : eval(params[i])
+      
     params.unshift(this.formula.toString())
+    while (params[params.length-1] == null)
+       params.pop()
     return new Func(method + "(" + params.join(',') + ")")
 }
