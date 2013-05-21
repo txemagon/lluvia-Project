@@ -94,4 +94,4 @@ assert("Func#max. When more than one param is given they are appended as explici
        
 assert("Delegated functions are also evaluable.",
        "f.value_in({x:2, y:3, z:4})", "f",
-       "f = new Func('2*{x}'); g = new Func('3*{x}*{x}*{y}'); h = new Func('{y}*{z}');")
+       "f = new Func('2*{x}'); g = new Func('3*{x}*{x}*{y}'); h = new Func('{y}*{z}'); alert(f.max(g,h))")
