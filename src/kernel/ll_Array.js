@@ -519,9 +519,17 @@ Array.prototype.drop_while = function(){
 }
 
  /**
- * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????????
+ * @method  flatten
+ * This method transform an array that contains more arrays inside, in a single array with the data of the arrays
+ * @param {Integer} The level to stop flatting objects
+ * ###Example
+ *     var numbers = [[1,2],[3,4],[5,6]]
+ *     numbers.flatten()
+ *     //The result will be = [1,2,3,4,5,6]
+ *     var numbers = [[1,2,[3,4,5,6]]]
+ *     numbers.flatten(1)
+ *     //The result will be = [1,2,[3,4,5,6]]
  */
-
 Array.prototype.flatten = function(level){
   if(level == 0)
     return this
@@ -755,17 +763,7 @@ Array.prototype.collect = function(){
  * Comments:   Assumes that self is an array of arrays and transposes the rows and columns. 
  */
 
-  /**
- * @method  take_while
- * Method that needs a function poassed as parameter, the function will reciebe every item of the array 
- * and an array with all the returned elements of these function will be returned by take_while method
- * @param {Function} Function that will be executed
- * @return {Array} Array with all elements returned by the function passed as parameter
- * ###Example
- *     var numbers = [1,2,3,4,5,4,3,2,1]
- *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
- *     //The result will be = [1,2]
- */
+
 Array.prototype.transpose = function(){
     /**
      *	VALID INPUT!
@@ -811,7 +809,17 @@ Array.prototype.transpose = function(){
    return ary
 }
 
-
+/**
+ * @method  zip
+ * Takes the element for two or more arrays passed as parameter and copy their content in a single array
+ * @param {Array} Arrays to be zipped
+ * @return {Array} Array with all elements of the other arrays
+ * ###Example
+ *     var a = [1,2]
+ *     var b = [3,4]
+ *     a.zip(b)
+ *     //The result will be = [1,2,3,4]
+ */
 
 Array.prototype.zip = function(){
    var ary = []
@@ -828,16 +836,14 @@ Array.prototype.zip = function(){
 }
 
 
-
 /**
- * 
- * @memberOf 	{Array}
- * @method 	empty$U       
- * @param       (no param)
- *
- * Coded by: David
- *
- * Comments: Returns true if self contains no elements.  
+ * @method  empty$U
+ * Check if the array is emprty
+ * @return {Boolean} if is empty tue, if not, false
+ * ###Example
+ *     var a = []
+ *     a.empty$U()
+ *     //The result will be = true
  */
 Array.prototype.empty$U = function(){
   if(arguments.length > 0)
@@ -847,16 +853,15 @@ Array.prototype.empty$U = function(){
 }
 
 
-
-/**
- * 
- * @memberOf 	{Array}
- * @method 	eql$U       
- * @param       (Any).
- *
- * Coded by: txemagon, imasen
- *
- * Comments: Returns true if self and other are the same object, or are both arrays with the same content
+ /**
+ * @method  eql$U
+ * Check if the arrays are equals
+ * @return {Boolean} if is equals tue, if not, false
+ * ###Example
+ *     var a = [1,2]
+ *     var b = [1,2]
+ *     a.eql$U(b)
+ *     //The result will be = true
  */
 Array.prototype.eql$U = function(model){
     /**
@@ -889,7 +894,9 @@ Array.prototype.eql$U = function(model){
 }
 
 
-
+ /*
+¿??????????
+ */
 Array.prototype.inject = function(init_value){
   for (var i=0; i<this.length; i++)
     init_value = Array.prototype.inject.yield(this[i], init_value)
@@ -905,16 +912,14 @@ Array.prototype.inject_with_index = function(init_value){
 }
 
 
-
 /**
- * 
- * @memberOf 	{Array}
- * @method 	reverse       
- * @param       (Any).
- *
- * Coded by: David
- *
- * Comments: Returns a new array containing self‘s elements in reverse order. 
+ * @method  reverse
+ * Reverse all array elements
+ * @return {Array} New array with elements reversed
+ * ###Example
+ *     var a = [1,2,3,4]
+ *     a.reverse()
+ *     //The result will be = [4,3,2,1]
  */
 Array.prototype.reverse = function(){
   var ary = []
@@ -927,16 +932,15 @@ Array.prototype.reverse = function(){
 }
 
 
-
-/**
- * 
- * @memberOf 	{Array}
- * @method 	values_at       
- * @param       (Integer/Index).
- *
- * Coded by: David
- *
- * Comments: Returns an array containing the elements in self corresponding to the given selector(s). The selectors may be either integer indices or ranges.
+ /**
+ * @method  values_at
+ * Return the values of a concrete index passed as parameter
+ * @return {Array} New array with values of index selected
+ * @param {Integer} The index to be selected
+ * ###Example
+ *     var a = [1,2,3,4]
+ *     a.values_at(1,2)
+ *     //The result will be = [1,2]
  */
 Array.prototype.values_at = function(){
     /**
@@ -988,6 +992,8 @@ Array.prototype.values_at = function(){
  *
  * Comments: Returns self. If called on a subclass of Array, converts the receiver to an Array object. 
  */
+
+
 Array.prototype.to_a = function(){
   return this
 }
@@ -1015,6 +1021,17 @@ Array.prototype.cycle = function(){
  * Coded by: imasen
  *
  * Comments: strips each of the string elements of an array
+ */
+
+ /**
+ * @method  strip_all
+ * Return all values of the content of an array, including bidimensional array
+ * @return {Array} New array with values of index selected
+ * @param {Integer} The index to be selected
+ * ###Example
+ *     var a = [[1,2],[3,4]]
+ *     a.strip_all()
+ *     //The result will be = [1,2,3,4]
  */
 Array.prototype.strip_all = function(){
   return this.collect(function(el){

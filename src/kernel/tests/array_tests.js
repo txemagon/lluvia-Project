@@ -350,10 +350,16 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'null',
        'var number = [34,56,78,98]')
 
-assert("Array#merge 1. Sample testing ",
-       'var num3 = number.merge(num2)',
+/*assert("Array#strip_all 1. Sample testing ",
+       'number.strip_all()',
+       '[1,2,3,4]',
+       'var number = [[1,2],[3,4]]')*/
+/*
+assert("Array#inject 1. Sample testing ",
+       'number.inject(1)',
        'null',
        'var number = [1,2,3,4]; var num2 = [1,2,3,4]')
+*/
 
 
 /*
