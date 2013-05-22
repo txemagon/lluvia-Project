@@ -274,7 +274,12 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
   return find? this: null
 }  
 /**
- * @method  erase_at$B
+ *e@/origin/HEAD -> origin/master
+  remotes/origin/chart_node
+  remotes/origin/dev
+  remotes/origin/engine3d
+  remotes/origin/master
+ethod  erase_at$B
  * Delete a concrete position(parsed as parameter) of the original array
  * @param  {Integer} Position of the array item to delete
  * ###Example
@@ -910,6 +915,11 @@ Array.prototype.inject_with_index = function(init_value){
     init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
   return init_value
 }
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/chart_node
+  remotes/origin/dev
+  remotes/origin/engine3d
+  remotes/origin/master
 
 
 /**
@@ -1014,7 +1024,7 @@ Array.prototype.cycle = function(){
 
 /**
  * 
- * @memberOf    {Array}
+ * @member    {Array}
  * @method 	    strip_all     
  * @param       (function {}).
  *
