@@ -15,7 +15,6 @@ function Func(formula, param){
    
    if (typeof(formula) != "string")
      return null;
-   //todo: Change function formula to generate a syntactic tree
    this.formula = formula.replace( /\s+/g, "")
    this.param = this.sanitize_params(param)
 }
