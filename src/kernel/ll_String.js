@@ -1,4 +1,8 @@
 /**
+ * @class String
+ * Define method for string
+**/
+/**
  * @method      capitalize
  * Returns a copy of str with the first character converted to uppercase and the 
  * remainder to lowercase. 
