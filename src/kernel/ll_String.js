@@ -299,7 +299,7 @@ String.prototype.empty$U = function(){
  *
  * @member     String
  * @method     downcase
- * @param      {Arguments} This 
+ * @param      {Arguments} This
  * @return     {string} String Return this modificed with character Ascii of this downcase
  * 
  * ###Comments:    
@@ -320,20 +320,20 @@ String.prototype.downcase = function(){
  * If the second string (this) is different returns -1. 
  *
  *
- * @member     String
- * @method     casecmp 
- * @param      {String} string 
- * @return     {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
- * ###Comments: 
+ * @ member   {String}
+ * @ method     casecmp 
+ * @ param      (void)
+ * @ return     (Number) Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * Comments: 
  * Case-insensitive version of ruby String#<=>.
- * 
- *      "abcdef".casecmp("abcde")     #=> 1
- *      "aBcDeF".casecmp("abcdef")    #=> 0
- *      "abcdef".casecmp("abcdefg")   #=> -1
- *      "abcdef".casecmp("ABCDEF")    #=> 0
+ *
+ *    "abcdef".casecmp("abcde")     #=> 1
+ *    "aBcDeF".casecmp("abcdef")    #=> 0
+ *    "abcdef".casecmp("abcdefg")   #=> -1
+ *    "abcdef".casecmp("ABCDEF")    #=> 0
  *
  *
- */
+ **/
 
 String.prototype.casecmp = function(){
   
@@ -897,13 +897,12 @@ String.prototype.sum = function(){
 /**
  * Returns a string where runs of the same character that occur in this set are replaced by a single character.
  *
- * @ member {String}
- * @ method   squeeze
- * @ param    () 
- * @ param    (String) Remove only the repeated characters in the string contents.
+ * @member   String
+ * @method   squeeze
+ * @param    {String} Remove only the repeated characters in the string contents.
  *Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
  * 
- * @ return  String Returns a copy  where runs of the same character that occur in this set are replaced by a single character.
+ * @return  {String} Returns a copy  where runs of the same character that occur in this set are replaced by a single character.
  *
  *
  **/
@@ -941,10 +940,10 @@ String.prototype.squeeze = function(){
 /**
  * Returns a string containing common letters in the parameter strings
  * 
- * @member    {String}
- * @method	String#intersection
- * @param	(String) character_list List of characters to be deleted
- * @return      (String)
+ * @member    String
+ * @method    String#intersection
+ * @param     {String} character_list List of characters to be deleted
+ * @return    {String}
  
  * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed  by the given characterhey're firstly intersected.
  * 	       Otherways the first param is returned.
@@ -963,10 +962,10 @@ String.prototype.intersection = function(){
 /**
  * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
  * 
- * @member    {String}
+ * @member      String
  * @method	sub
- * @param	(RegEx,string) 
- * @return      (String)
+ * @param 	{RegEx,string} 
+ * @return      {String}
  * Comments:    Find the letters that match the first parameter given, y these are changed by the given parameter.
  *
  **/
@@ -978,11 +977,10 @@ String.prototype.sub= function(){
 /**   
  * Passes each byte in str to the given block, or returns an enumerator if no block is given.
  * 
- * @ member {String}
- * @ method   bytes
- * @ param    ()
- *
- * @return 
+ * @member  String
+ * @method  bytes
+ * @param   {String} 
+ * @return  {number} Return an enumerator black or //nose continuar en ingles
  * 
  **/
 String.prototype.bytes = function(){
@@ -993,11 +991,10 @@ String.prototype.bytes = function(){
 /**
  * Returns true for a string which has only ASCII characters. 
  *
- * @ member {String}
- * @ method   ascii_only$U
- * @ param    (void)
- *
- * @return true or false
+ * @member  String
+ * @method  ascii_only$U
+ * @param   {this}
+ * @return  {this}true or false
  * 
  **/
 
@@ -1007,15 +1004,14 @@ String.prototype.ascii_only$U = function(){
 
 /**
  * Splits str using the supplied parameter as the record separator.
- * passing each substring in turn to the supplied block. 
+ * Passing each substring in turn to the supplied block. 
  * If a zero-length record separator is supplied, the string is split 
  * into paragraphs delimited by multiple successive newlines. 
  *
- * @ member {String}
- * @ method   each_line
- * @ param    ([ string | number ],function { } ) 
- *
- * @return str split by separator
+ * @member   String
+ * @method   each_line
+ * @param    {[ string | number ],function { } } 
+ * @return   {this} str split by separator
  *
  * "Hello\nworld".each_line(function(obj){return "" + obj + ""})            => "Hello\n","world"
  * "Hello\n world".each_line("l",function(obj){return "" + obj + ""}))      => "Hel", "l", "o \\n worl", "d"
@@ -1062,11 +1058,10 @@ return this
  *
  * If no block is given, an enumerator is returned instead.  
  *
- * @ member {String}
- * @ method   each_codepoint
- * @ param    (function)
- *
- * @return return a string according function. 
+ * @member   String 
+ * @method   each_codepoint
+ * @param    {function}
+ * @return   {string} return a string according function. 
  *
  * : 
  *
@@ -1087,9 +1082,10 @@ String.prototype.each_codepoint = function(){
 /**
  *  Alias of the function each_codepoint.
  * 
- * @member     {String}     
- * @method       codepoint     
- * @return       (String) str of digits ASCII     
+ * @member      String     
+ * @method      codepoint     
+ * @param       {string} String
+ * @return      {String} str of digits ASCII     
  *
  **/ 
 String.prototype.codepoint = function(){
@@ -1098,9 +1094,10 @@ String.prototype.codepoint = function(){
 /**
  * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str. 
  * 
- * @member     {String}     
- * @method       rpartition     
- * @return       (Array) ary
+ * @member     String    
+ * @method     rpartition
+ * @param      {string} String
+ * @return     {Array} ary
  *
  * Comments:
 
@@ -1131,13 +1128,13 @@ String.prototype.rpartition = function(){
 /**
  *
  * The match() method searches for a match between a regular expression and a string, and returns the matches.
- * This method returns an array of matches, or null if no match is found.Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
+ * This method returns an array of matches, or null if no match is found. Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
  *
- * @ member {String}
- * @ method scan  
- * @ param   string 
+ * @member String
+ * @method scan  
+ * @param  {string} String
  *
- * @return string
+ * @return {string}
  * 
  **/
 
@@ -1167,10 +1164,10 @@ String.prototype.scan = function(){
 /**
  *  Returns a new string with erased letters.
  *
- * @member    {String}
+ * @member     String
  * @method      erase
- * @param       (string) str
- * @return      (String)
+ * @param       {string} String
+ * @return      {String}
  * Comments:    Erases the arguments matched in a string.
  *
  **/
@@ -1186,10 +1183,10 @@ String.prototype.erase = function(){
 /**
  *  Returns true or false by comparing  object and the argument from the end.
  * 
- * @member    {String}
+ * @member     String
  * @method      end_With$U
- * @param       (string) str
- * @return      (String)  true or false
+ * @param       {string} String
+ * @return      {String} true or false
  * Comments:    Compares the object with argument.
  *
  **/
@@ -1200,10 +1197,10 @@ String.prototype.end_With$U = function(str){
 /**
  * Returns true or false by comparing  object and the argument.
  * 
- * @member    {String}
+ * @member      String
  * @method      eql$U
- * @param       (string)
- * @return      (String)  true or false
+ * @param       {string}
+ * @return      {String}  true or false
  * Comments:    Compares the object with argument.
  *
  **/
@@ -1214,10 +1211,10 @@ String.prototype.eql$U = function() {
 /**
  * Returns the indexth byte as an integer. 
  * 
- * @member    {String}
+ * @member      String
  * @method      getbyte
- * @param       (string)   
- * @return      (String)  a interger.
+ * @param       {string}   
+ * @return      {String}  a interger.
  * 
  * Comments:    Using charCodeAt from a javaScript function.
  **/
@@ -1238,11 +1235,10 @@ String.prototype.to_str = function(){
  * Any digit sequences can be separated by an underscore. 
  * Returns zero for null or garbage string. 
  *
- * @ member   { String }
- * @ method	to_r
- * @ param	(string)
- *  
- * @ return     (string)  Return a rational
+ * @member     String 
+ * @method     to_r
+ * @param      {string}
+ * @return     {string}  Return a rational
  *			 If the arguments is invalid return "0/1" 
  *                       Returns a copy of str with uppercase alphabetic characters 
  *                       converted to lowercase and lowercase characters converted to uppercase.
@@ -1306,9 +1302,9 @@ return op1/mcd + "/" + op2/mcd
 /** Esta funcion devuelve la cantidad de decimales que tiene un numero 
  * 
  * @member *****
- * @ methof  decimal
- * @ param ( number | string )   
- * @ return (integer)  number of decimal.
+ * @methof  decimal
+ * @param  {number | string }   
+ * @return {integer}  Number of decimal.
  *	If the arguments is invalid return 0
  **/
 
@@ -1337,11 +1333,11 @@ return parseInt(decUno)>=decDos? 0 : (decUno - decDos) * -1
 
 /** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
  * 
- * @ member ******
- * @ method   intMdc
- * @ param    ( interger, integer )  
+ * @member ******
+ * @method   intMdc
+ * @param    {interger, integer}  
  *
- * @ return   (integer) Return the maximo comun divisor of 2 integers
+ * @return   {integer} Return the maximo comun divisor of 2 integers
  *                      If the arguments are invalids, return  null
  **/
  	
@@ -1375,10 +1371,10 @@ return null
 /**
  * Returns the length of string in bytes.
  * 
- * @member    {String}
+ * @member      String
  * @method      bytesize
- * @param       ()   
- * @return      the length of string in bytes.
+ * @param       {Arguments} This   
+ * @return      {number} the length of string in bytes.
  * 
  **/
 
