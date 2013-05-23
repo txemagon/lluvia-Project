@@ -299,7 +299,7 @@ String.prototype.empty$U = function(){
  *
  * @member     String
  * @method     downcase
- * @param      {Arguments} This
+ * @param      {Arguments} This 
  * @return     {string} String Return this modificed with character Ascii of this downcase
  * 
  * ###Comments:    
@@ -320,20 +320,20 @@ String.prototype.downcase = function(){
  * If the second string (this) is different returns -1. 
  *
  *
- * @ member   {String}
- * @ method     casecmp 
- * @ param      (void)
- * @ return     (Number) Returns -1 (lower than), 0 (equals), 1 (greater than)
- * Comments: 
+ * @member     String
+ * @method     casecmp 
+ * @param      {String} string 
+ * @return     {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * ###Comments: 
  * Case-insensitive version of ruby String#<=>.
+ * 
+ *      "abcdef".casecmp("abcde")     #=> 1
+ *      "aBcDeF".casecmp("abcdef")    #=> 0
+ *      "abcdef".casecmp("abcdefg")   #=> -1
+ *      "abcdef".casecmp("ABCDEF")    #=> 0
  *
- *    "abcdef".casecmp("abcde")     #=> 1
- *    "aBcDeF".casecmp("abcdef")    #=> 0
- *    "abcdef".casecmp("abcdefg")   #=> -1
- *    "abcdef".casecmp("ABCDEF")    #=> 0
  *
- *
- **/
+ */
 
 String.prototype.casecmp = function(){
   

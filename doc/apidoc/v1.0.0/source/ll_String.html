@@ -316,7 +316,7 @@ String.prototype.empty$U = function(){
  *
  * @member     String
  * @method     downcase
- * @param      {Arguments} This
+ * @param      {Arguments} This 
  * @return     {string} String Return this modificed with character Ascii of this downcase
  * 
  * ###Comments:    
@@ -331,26 +331,26 @@ String.prototype.downcase = function(){
    return this.toLowerCase() == this? null : this.toLowerCase() 
 }
 
-<span id='String-property-'>/**
+<span id='String-method-casecmp'>/**
 </span> * Compares two strings and returns 0 if the two strings are equals.
  * If the first string (argument) is different returns 1.
  * If the second string (this) is different returns -1. 
  *
  *
- * @ member   {String}
- * @ method     casecmp 
- * @ param      (void)
- * @ return     (Number) Returns -1 (lower than), 0 (equals), 1 (greater than)
- * Comments: 
+ * @member     String
+ * @method     casecmp 
+ * @param      {String} string 
+ * @return     {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * ###Comments: 
  * Case-insensitive version of ruby String#&lt;=&gt;.
+ * 
+ *      &quot;abcdef&quot;.casecmp(&quot;abcde&quot;)     #=&gt; 1
+ *      &quot;aBcDeF&quot;.casecmp(&quot;abcdef&quot;)    #=&gt; 0
+ *      &quot;abcdef&quot;.casecmp(&quot;abcdefg&quot;)   #=&gt; -1
+ *      &quot;abcdef&quot;.casecmp(&quot;ABCDEF&quot;)    #=&gt; 0
  *
- *    &quot;abcdef&quot;.casecmp(&quot;abcde&quot;)     #=&gt; 1
- *    &quot;aBcDeF&quot;.casecmp(&quot;abcdef&quot;)    #=&gt; 0
- *    &quot;abcdef&quot;.casecmp(&quot;abcdefg&quot;)   #=&gt; -1
- *    &quot;abcdef&quot;.casecmp(&quot;ABCDEF&quot;)    #=&gt; 0
  *
- *
- **/
+ */
 
 String.prototype.casecmp = function(){
   
