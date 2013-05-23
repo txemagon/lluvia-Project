@@ -222,36 +222,37 @@ String.prototype.ljust = function(){
 }
 
 /**
- * Returns a copy of str with leading whitespace removed. See also String#rstrip
- * and String#strip. 
+ * Returns a copy of string with leading whitespace removed. See also 'String#rstrip'
+ * and 'String#strip'. 
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      lstrip 
- * @param       (string) str
- * @return      (String) str
- * :    
+ * @param       {string} string
+ * @return      {String} string
+ *     
  *   
  *
- **/
+ */
 
 String.prototype.lstrip = function(){
   return this.replace(/^\s+/g,"")
 }
 
 /**
- * Returns a copy of str with uppercase alphabetic characters converted to lowercase
+ * Returns a copy of string with uppercase alphabetic characters converted to lowercase
  * and lowercase characters converted to uppercase.
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      swapcase 
- * @param       (string) str
- * @return      (String) 
- * Comments:    Case conversion is effective only in ASCII region.   
+ * @param       {string} string
+ * @return      {String} string
+ * ###Comments:    
+ * Case conversion is effective only in ASCII region.   
  *   "Hello".swapcase() -> hELLO
  *
- **/
+ */
 
 String.prototype.swapcase= function(){
   var str = []
@@ -271,16 +272,18 @@ String.prototype.swapcase= function(){
  * Returns true if self contains no elements
  *
  *
- * @ member   { String }
+ * @ member     String 
  * @ method     empty$ return a boolean true if this is empty 
- * @ param      {String}
- * @ return     (bool)  true = this is empty  false = this is not empty
+ * @ param      {String}string
+ * @ return     {Boolean} Boolean 
+ * true = this is empty  
+ * false = this is not empty
  * Comments:     asks if the variable contains values
+ * See example:
+ *      "hello".empty$U()   #=> false
+ *      "".empty$U()        #=> true
  *
- * "hello".empty$U()   #=> false
- * "".empty$U()        #=> true
- *
- **/
+ */
 String.prototype.empty$U = function(){
    if(arguments.length > 0)	
       //throw ("wrong number of arguments. This function not needs arguments")
@@ -289,22 +292,23 @@ String.prototype.empty$U = function(){
 }
 
 /**
- * Returns a copy of str with all uppercase letters replaced with their lowercase counterparts.
+ * Returns a copy of string with all uppercase letters replaced with their lowercase counterparts.
  * The operation is locale insensitive—only characters "A" to "Z" are affected. 
  * Note: case replacement is effective only in ASCII region
  * Ths method use a "toLowerCase()" function
  *
- * @ member   {String}
- * @ method     downcase
- * @ param      {String}
- * @ return     Return this modificed with character Ascii of this downcase
+ * @member     String
+ * @method     downcase
+ * @param      {Arguments} This
+ * @return     {string} String Return this modificed with character Ascii of this downcase
  * 
- * Comments:    turns everything to downcase.
- *  : "hEllO".downcase()   #=> "hello"
- *           "hello".downcase()   #=>  null
+ * ###Comments:    
+ * turns everything to downcase.
+ *     "hEllO".downcase() = "hello"
+ *     "hello".downcase() =  null
  *
  *
- **/
+ */
 
 String.prototype.downcase = function(){
    return this.toLowerCase() == this? null : this.toLowerCase() 
