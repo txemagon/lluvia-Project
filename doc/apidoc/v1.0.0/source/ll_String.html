@@ -15,16 +15,22 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-method-capitalize'>/**
-</span> * Returns a copy of str with the first character converted to uppercase and the 
+  <pre class="prettyprint lang-js"><span id='String-method-capitalize'>/**
+</span> * @method      capitalize
+ * Returns a copy of str with the first character converted to uppercase and the 
  * remainder to lowercase. 
  * 
- * @memberOf    {String}
- * @method      capitalize
- * @param       (string) str 
- * @return      (String) str
- * Comments:    Case conversion is effective only in ASCII region.
- *
+ * @member String
+ * @method capitalize
+ * @param {String} String 
+ * Any string
+ * @return {String} String 
+ * The string with his first letter in uppercase. 
+ * ###Comments:    Case conversion is effective only in ASCII region.
+ * See example
+ *      @example
+ *      var text = &quot;hello&quot;   // giving a value to text
+ *      text.capitalize()    // value of text now is &quot;Hello&quot;
  **/
 
 String.prototype.capitalize = function(){
