@@ -915,12 +915,12 @@ Array.prototype.inject_with_index = function(init_value){
     init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
   return init_value
 }
-  remotes/origin/HEAD -> origin/master
+/*  remotes/origin/HEAD -> origin/master
   remotes/origin/chart_node
   remotes/origin/dev
   remotes/origin/engine3d
   remotes/origin/master
-
+*/
 
 /**
  * @method  reverse
