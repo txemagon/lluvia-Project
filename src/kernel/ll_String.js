@@ -1,5 +1,5 @@
 /**
- * @class String
+ * @class       String
  * Define method for string
  * @method      capitalize
  * Returns a copy of str with the first character converted to uppercase and the 
@@ -16,7 +16,7 @@
  *       
  *      var text = "hello"   // giving a value to text
  *      text.capitalize()    // value of text now is "Hello"
- **/
+ */
 
 String.prototype.capitalize = function(){
   word = this.toLowerCase()
@@ -26,9 +26,8 @@ String.prototype.capitalize = function(){
  * @method   humanize
  * This method changes the underscore or camelCase string and returns a string which has each word separated with one space
  * @member   String
- * @param    {String} String
- * Any string
- *
+ * @param    {String} String Any string
+ * ###See example
  *       
  *      "TheRollingsStone".humanize()="the rollings stone"
  *       
@@ -54,10 +53,12 @@ String.prototype.underscore = function(){
 /**
  * Returns the same string in camel case form.
  * 
- * @member    {String}
+ * @member      String
  * @method      camel_case
- * @return      {String} string
- * Comments:    "seek_case"
+ * @return      {String} String
+ *
+ * ###Comments:    
+ * "seek_case"
  *
  **/
 
@@ -85,18 +86,21 @@ String.prototype.class_name = function(){
 
 /**
  * Returns the index of the first occurrence of the given substring or pattern 
- * (regexp) in str. Returns null if not found. If the second parameter is 
+ * 'regexp' in str. Returns null if not found. If the second parameter is 
  * present, it specifies the position in the string to begin the search.
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      index 
- * @param       (string) str or regex
- * @return      (Number) Index of char
- * :    Returns null if not found
- * :     "hello".index("e") = 1 using given the parameter "e" the function search in the string for the first coincidence and returns its position.	    
+ * @param       {string} string/regex
+ * @return      {Number} Index of char
+ *      "hello".index("e") = 1 //using given the parameter "e" the function search in the 
+ *                             //string for the first coincidence and returns its position.	    
+ * 
+ * Returns null if not found
+ * 
  *
- **/
+ */
 
 String.prototype.index = function(){
   if (arguments.length == 0 || arguments.length > 2)
@@ -129,13 +133,14 @@ String.prototype.index = function(){
  * Returns a index of the string 
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      normalize_index
- * @param       (Number) 
- * @return      (Number) 
- * Comments:    In case of abs of number more than this.length, return null else return index
+ * @param       {Number} number 
+ * @return      {Number} number
+ * ###Comments:    
+ * In case of abs of number more than this.length, return null else return index
  *
- **/
+ */
 
 
 String.prototype.normalize_index = function(){
@@ -146,19 +151,21 @@ String.prototype.normalize_index = function(){
 }
 
 /**
- * Inserts other_str before the character at the given index, modifying str.
+ * Inserts other string before the character at the given index, modifying str.
  * Negative indices count from the end of the string, and insert after the 
  * given character. The intent is insert aString so that it starts at the given index.
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      insert 
- * @param       (string) str
- * @return      (String) str
- * Comments:    giving the position and a new string the function will insert the new string next to the given position.
- *  :  "hello".insert(2, "jaja") -> hejajallo 
+ * @param       {number} index
+ * @param       {string} string
+ * ###Comments:    
+ * giving the position and a new string the function will insert the new string next to the given position.
+ *     "hello".insert(2, "haha") = hehahallo 
  * 
- **/
+ * @return      {String} A string that insert 
+ */
 
 String.prototype.insert = function(){
   if (arguments.length == 0 || arguments.length > 2)
@@ -186,17 +193,20 @@ String.prototype.insert = function(){
 }
 
 /**
- * If integer is greater than the length of str, returns a new String of length 
- * integer with str left justified and padded with padstr; otherwise, returns str.
+ * This method fill the string until complete de number or character passed as parameter
+ * If integer is greater than the length of string, returns a new String of length 
+ * integer with str left justified and padded with padstr; otherwise, returns string.
  * 
  * 
- * @member    {String}
+ * @member      String
  * @method      ljust
- * @param       (string) str
- * @return      (String) str
- * Comments:    Adjust the posision of the parameter extending it to the max position
- *  : "hello".ljust(10,"p") -> helloppppp
- **/
+ * @param       {Number} number
+ * @param       {string} string
+ * ###Comments:    
+ * Adjust the posision of the parameter extending it to the max position
+ *      "hello".ljust(10,"p") = helloppppp
+ * @return      {String} string
+ */
 
 String.prototype.ljust = function(){
   var str = this
@@ -613,15 +623,16 @@ String.prototype.rjust = function(){
  * @method       succ     
  * @return       (String) str
  *
- * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. This process repeats until there is no carry, adding an additional character if necessary.
+ * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. 
+ * This process repeats until there is no carry, adding an additional character if necessary.
 
-   "abcd".succ()        #=> "abce"
-   "THX1138".succ()     #=> "THX1139"
-   "<<koala>>".succ()   #=> "<<koalb>>"
-   "1999zzz".succ()     #=> "2000aaa"
-   "ZZZ9999".succ()     #=> "AAAA0000"
-   "***".succ()         #=> "**+"
- 
+ *  "abcd".succ()        #=> "abce"
+ *  "THX1138".succ()     #=> "THX1139"
+ *  "<<koala>>".succ()   #=> "<<koalb>>"
+ *  "1999zzz".succ()     #=> "2000aaa"
+ *  "ZZZ9999".succ()     #=> "AAAA0000"
+ *  "***".succ()         #=> "**+"
+ *
  **/
 
 String.prototype.succ = function(){
@@ -729,9 +740,9 @@ String.prototype.to_f = function() {
 /**
  * Returns a copy of str with leading and trailing whitespace removed. 
  *
- * @ member {String}
+ * @ member   {String}
  * @ method   strip
- * @ param    (void)
+ * @ param    {void}
  *
  * @return  String -> Return a copy of str with leading and trailing whitespace removed
  *
@@ -764,12 +775,12 @@ String.prototype.setbyte = function(){
  * @method       partition     
  * @return       (Array) ary
  *
- * Comments: 
-
-   "hello".partition("l")         #=> ["he", "l", "lo"]
-   "hello".partition("x")         #=> ["hello", "", ""]
-   "hello".partition(/.l/)        #=> ["h", "el", "lo"]
-
+ * 
+ *
+ *  "hello".partition("l")         #=> ["he", "l", "lo"]
+ *  "hello".partition("x")         #=> ["hello", "", ""]
+ *  "hello".partition(/.l/)        #=> ["h", "el", "lo"]
+ *
  **/
 
 
@@ -800,16 +811,17 @@ String.prototype.rstrip = function(){
   return this.replace(/\s+$/g,'')
 }
 /**
- * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. The String#succ method is used to generate each value. If optional second argument exclusive is omitted or is false, the last value will be included; otherwise it will be excluded.                  
+*
  *
- *
- * @ member {String}
+ * @ member   {String}
  * @ method   upto
- * @ param    (String, function)
+ * @ param    {String, function}
+ * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. 
+ * The String#succ method is used to generate each value. 
+ * If optional second argument exclusive is omitted or is false, the last value will be included; otherwise it will be excluded.
  *
- * @return    return string with succ of this to arguments[0], according to parameter function
  *
- * : 
+ * 
  *
  * If no block is given, an enumerator is returned instead.
  *
@@ -820,7 +832,8 @@ String.prototype.rstrip = function(){
  *          a8 a9 b0 b1 b2 b3 b4 b5 b6
  *          a8 a9 b0 b1 b2 b3 b4 b5 b6 
  *
- **/
+ * @return    {String} return string with succ of this to arguments[0], according to parameter function
+ */
 String.prototype.upto = function(){ 
    var num = this
    var str = ""
