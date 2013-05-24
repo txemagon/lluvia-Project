@@ -320,10 +320,10 @@ String.prototype.downcase = function(){
  * If the second string (this) is different returns -1. 
  *
  *
- * @ member   {String}
- * @ method     casecmp 
- * @ param      (void)
- * @ return     (Number) Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * @member   String
+ * @method     casecmp 
+ * @param     {this}
+ * @return    {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
  * Comments: 
  * Case-insensitive version of ruby String#<=>.
  *
@@ -348,10 +348,10 @@ String.prototype.casecmp = function(){
 /**
  * This function return the integer ordinal of a one-character string.
  *
- * @member     {String}   
+ * @member     String   
  * @method       ord        
- * @param        (String)  One letter only from ASCII code. 
- * @return       (String)     
+ * @param       {String}  One letter only from ASCII code. 
+ * @return      {String}     
  *
  * Comments:   This function works using a javascript function(.charCodeAt).
  **/
@@ -363,10 +363,10 @@ String.prototype.ord = function(){
 /**
  * This function make an octal value from a number.
  *
- * @member     {String}   
+ * @member       String   
  * @method       oct        
- * @param        (String)     Number between -7 and 7 and discard the rest.
- * @return       (String)     Return an octal value .
+ * @param        {String}     Number between -7 and 7 and discard the rest.
+ * @return       {String}     Return an octal value .
  *
  * Comments: This function works using a javascript function(parseInt).Returns
  * a copy of str with uppercase alphabetic characters converted to lowercase and
@@ -386,9 +386,10 @@ String.prototype.oct = function(){
 /**
  * This function returns a reverse from an introduced string
  *
- * @member     {String}     
+ * @member      String     
  * @method       reverse      
- * @return       (String)     Return the reverse from a string.
+ * @param        {String}    
+ * @return       {String}     Return the reverse from a string.
  *
  * Comments: This function use a ".reverse" from array class.
  **/
@@ -400,9 +401,10 @@ String.prototype.reverse = function(){
 /**
  * Returns true if str contains the given string or character.
  *
- * @member     {String}     
+ * @member       String      
  * @method       include     
- * @return       True o false
+ * @param        {String} 
+ * @return       {True o false}
  *
  * Comments:     respond if the atribute given is contained in the variable
  **/
@@ -426,9 +428,10 @@ String.prototype.include_some_of$U = function(){
 /**
  * This function returns a center word in the string
  *
- * @member     {String}     
+ * @member      String     
  * @method       center      
- * @return       (String)     Return the a string with a word center.
+ * @param        {String} 
+ * @return       {String}     Return the a string with a word center.
  *
  * Comments: 
  *
@@ -443,9 +446,10 @@ String.prototype.rindex = function(){
 /**
  * This function returns a center word in the string
  *
- * @member     {String}     
+ * @member       String     
  * @method       center      
- * @return       (String)     Return the a string with a word center.
+ * @param        {String} 
+ * @return       {String}     Return the a string with a word center.
  *
  * Comments: If integer is greater than the length of str, returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
 
@@ -483,9 +487,10 @@ String.prototype.center = function(){
 /**
  * This function return a string without \n or \r or \r\n of the end.
  *
- * @member     {String}     
+ * @member     String     
  * @method       chomp     
- * @return       (String)
+ * @param        {String} 
+ * @return       {String}
  *
  * Comments: Returns a new String with the given record separator removed from the end of str (if present). If $/ has not been changed from the default Ruby record separator, then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
 
@@ -516,9 +521,10 @@ String.prototype.chomp = function(){
 /**
  * This function return a string without \n or \r or \r\n or char of the end the String.
  *
- * @member     {String}     
+ * @member       String     
  * @method       chop     
- * @return       (String)
+ * @param        {String} 
+ * @return       {String}
  *
  * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed. Applying chop to an empty string returns an empty string. String#chomp is often a safer alternative, as it leaves the string unchanged if it doesn‘t end in a record separator.
 
@@ -545,9 +551,10 @@ String.prototype.chop = function(){
 /**
  * This function return a number hexadecimal convert to decimal.
  *
- * @member     {String}     
+ * @member       String     
  * @method       hex     
- * @return       (Number)
+ * @param        {Number} 
+ * @return       {Number}
  *
  * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x) and returns the corresponding number. Zero is returned on error.
 
@@ -568,9 +575,10 @@ String.prototype.hex = function(){
 /**
  * This function return first char of the string.
  *
- * @member     {String}     
+ * @member       String     
  * @method       chr     
- * @return       (Char)
+ * @param        {Char} 
+ * @return       {Char}
  *
  * Comments: Returns a one-character string at the beginning of the string.
 
@@ -592,9 +600,10 @@ String.prototype.chr = function(){
 /**
  * If integer is greater than the length of str, returns a new String of length integer with str right justified and padded with padstr; otherwise, returns str.  
  *
- * @member     {String}     
+ * @member       String   
  * @method       rjust     
- * @return       (String) str
+ * @param        {String} Str
+ * @return       {String} Str
  *
  * Comments: 
 
@@ -623,9 +632,10 @@ String.prototype.rjust = function(){
 /**
  * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the string. Incrementing a digit always results in another digit, and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character set‘s collating sequence.  
  *
- * @member     {String}     
+ * @member       String     
  * @method       succ     
- * @return       (String) str
+ * @param        {String} Str
+ * @return       {String} Str
  *
  * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. 
  * This process repeats until there is no carry, adding an additional character if necessary.
@@ -663,9 +673,10 @@ String.prototype.succ = function(){
 /**
  *  Alias of the function succ.
  * 
- * @member     {String}     
+ * @member       String     
  * @method       next     
- * @return       (String) str      
+ * @param        {String} Str
+ * @return       {String} Str      
  *
  **/ 
 String.prototype.next = function(){
@@ -678,11 +689,10 @@ String.prototype.next = function(){
  * If there is not a valid number at the start of str, 0 is returned. 
  * This method never raises an exception when base is valid. 
  *
- * @ member   {String}
+ * @ member   String
  * @ method   to_i
- * @ param    (int) -> is a base (2 - 36), or 0 who is the same that 10
- *
- * @ return    Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
+ * @ param    {int} -> is a base (2 - 36), or 0 who is the same that 10
+ * @ return   {Integret} Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
  * 
  * "12345".to_i()             #=> 12345
  * "99 red balloons".to_i()   #=> 99
@@ -717,15 +727,14 @@ return isNaN( parseInt(this,base) )? 0 : parseInt(this,base)
 /**
  * Returns the result of interpreting leading characters in str as a floating point number
  *
- * @ member {String}String.prototype.prueba = function(){
+ * @member String  String.prototype.prueba = function(){
  * return this.replace(arguments[0], arguments[1]) 
  * }
  * var i="hello"
  * i.prueba(/[aeio]/,"+")
- * @ method   to_f	//Returns the result of interpreting leading characters in str as a floating point number
- * @ param    (void)    //No parameters
- *
- * @ return   Float ->  //Returns a float numbers if string is a number. Return 0.0 if a string is not a number
+ * @method   to_f	//Returns the result of interpreting leading characters in str as a floating point number
+ * @param    {void}    //No parameters
+ * @return   {Float}    //Returns a float numbers if string is a number. Return 0.0 if a string is not a number
  *
  * "123.45e1".to_f()        #=> 1234.5
  * "45.67 degrees".to_f()   #=> 45.67
@@ -744,11 +753,10 @@ String.prototype.to_f = function() {
 /**
  * Returns a copy of str with leading and trailing whitespace removed. 
  *
- * @ member   {String}
- * @ method   strip
- * @ param    {void}
- *
- * @return  String -> Return a copy of str with leading and trailing whitespace removed
+ * @member   String
+ * @method   strip
+ * @param    {void}
+ * @return  {String} // Return a copy of str with leading and trailing whitespace removed
  *
  * "    hello    ".strip()   #=> "hello"
  * "\t goodbye\r\n".strip()   #=> "goodbye"
@@ -775,9 +783,9 @@ String.prototype.setbyte = function(){
 /**
  * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
  * 
- * @member     {String}     
+ * @member     String     
  * @method       partition     
- * @return       (Array) ary
+ * @return       {Array} ary
  *
  * 
  *
@@ -804,11 +812,10 @@ String.prototype.partition = function(){
 /**
  * Returns a copy of str with trailing whitespace removed. 
  *
- * @ member {String}
- * @ method   rstrip
- * @ param    (void)
- *
- * @return  String Return a copy of str with trailing whitespace removed
+ * @member  String
+ * @method   rstrip
+ * @param   {void}
+ * @return  {String} Return a copy of str with trailing whitespace removed
  *
  **/
 String.prototype.rstrip = function(){
@@ -817,9 +824,9 @@ String.prototype.rstrip = function(){
 /**
 *
  *
- * @ member   {String}
- * @ method   upto
- * @ param    {String, function}
+ * @member   String
+ * @method   upto
+ * @param    {String, function}
  * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. 
  * The String#succ method is used to generate each value. 
  * If optional second argument exclusive is omitted or is false, the last value will be included; otherwise it will be excluded.
@@ -853,11 +860,10 @@ String.prototype.upto = function(){
 /**
  * Passes each character in str to the given block, or returns an enumerator if no block is given.  
  *
- * @ member {String}
- * @ method   each_char
- * @ param    (function)
- *
- * @return   return a string according function
+ * @member  String
+ * @method   each_char
+ * @param    {function}
+ * @return   {String} return a string according function
  *
  * : 
  *
@@ -878,10 +884,10 @@ String.prototype.each_char = function(){
 /**
  *  Alias of the function each_char.
  * 
- * @member     {String}     
+ * @member     String     
  * @method       chars     
- * @return       (String) str      
- *
+ * @return      {String} str      
+ *d
  **/ 
 String.prototype.chars = function(){
    return this.each_char.apply(this, arguments)
