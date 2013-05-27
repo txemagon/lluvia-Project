@@ -291,9 +291,9 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
       find = true;
     }
   return find? this: null
-<span id='Array-method-erase_atS-B'>}  
-</span>/**
- * @method  erase_at$B
+}  
+<span id='Array-method-erase_atS-B'>/**
+</span> * @method  erase_at$B
  * Deletes the element on an specific position (parsed as parameter) of the original array
  * @param  {Integer} Position of the array item to be deleted
  * ###Example
@@ -310,9 +310,9 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
   this.splice(arguments[0],1)
   return this
 }
-<span id='Array-method-erase_if'>
-</span> /**
- * @method  erase_if
+
+<span id='Array-method-erase_if'> /**
+</span> * @method  erase_if
  * Deletes every element of the array which block parsed as parameter evaluates to true
  * @param  {function} Block that must contain a condition to erase or not the element (returns true or false)
  * ###Example
@@ -341,9 +341,9 @@ Array.prototype.erase_if = function(){
        if ( !Array.prototype.erase_if.yield(this[i]) )
          ary.push(this[i])
      return ary.compact()
-<span id='Array-method-replace'>}
-</span> /**
- * @method  replace
+}
+<span id='Array-method-replace'> /**
+</span> * @method  replace
  * Replaces the array content with the array parsed as parameter. If the array is empty, the returned array will be null
  * @param  {Array} Theis array will replace the original array
  * ###Example
@@ -365,9 +365,9 @@ Array.prototype.replace = function(){
   for(var i = 0; i &lt; arguments[0].length; i++)
      this[i] = arguments[0][i]
   return this
-<span id='Array-property-'>}
-</span>/**
-*
+}
+<span id='Array-property-'>/**
+</span>*
 * PREGUNTAR A TXEMA FUNCIONAMIENTO
 *
 */
@@ -377,9 +377,9 @@ Array.prototype.delete$B = function(obj){
     return Array.prototype.delete$B.yield()
   
   return this.splice(position, 1)[0]
-<span id='Array-method-includeS-U'>}
-</span> /**
- * @method  include$U
+}
+<span id='Array-method-includeS-U'> /**
+</span> * @method  include$U
  * Goes through every item of the array searching if the integer parsed as parameter is in the array. If so, it returns true. If not, false.
  * @param  {Object} Object that the method will search for
  * @return {Boolean} Returns the result of the search. if item is included, returns true. If not, false 
@@ -397,9 +397,9 @@ Array.prototype.include$U = function(){
     if( arguments[0] == this[i])
       find = true
   return find
-<span id='Array-method-assoc'>}
-</span> /**
- * @method  assoc
+}
+<span id='Array-method-assoc'> /**
+</span> * @method  assoc
  * Searches for an object of an array from an array index and returns the array where the method finds the object passed as a parameter
  * @param  {Object} Array that contains the index of an array from where the method searches
  * @return {Array} Array that will be selected if the object parsed as parameter is found
@@ -419,9 +419,9 @@ Array.prototype.assoc = function(){
     if(arguments[0] == this[i][0])
       return this[i]
   return null
-<span id='Array-method-at'>}
-</span> /**
- * @method  at
+}
+<span id='Array-method-at'> /**
+</span> * @method  at
  * returns the element corresponding to the index passed as parameter
  * @param  {Integer} Array index position
  * @return {Object} The selected element by index passed as parameter 
@@ -443,9 +443,9 @@ Array.prototype.at = function(){
        return null
    return arguments[0]&gt;=0? this[arguments[0]] : this[this.length+(arguments[0])]
 }
-<span id='Array-method-compact'>
-</span> /**
- * @method  compact
+
+<span id='Array-method-compact'> /**
+</span> * @method  compact
  * Deletes the null elements of an array
  * @returns {Array} Returns clean array without null elements
  * ###Example
@@ -470,9 +470,9 @@ Array.prototype.merge = function(ary2){
       ary.push(ary2[i])
   return ary      
 }
-<span id='Array-method-drop'>
-</span> /**
- * @method  drop
+
+<span id='Array-method-drop'> /**
+</span> * @method  drop
  * Deletes elements from position 0 of the array to the possition passed as parameter
  * @param {Integer} Position to stop deleting data of the array
  * ###Example
@@ -497,9 +497,9 @@ Array.prototype.drop = function(){
      ary.splice(0,1)
   return ary
 }
-<span id='Array-method-drop_while'>
-</span> /**
- * @method  drop_while
+
+<span id='Array-method-drop_while'> /**
+</span> * @method  drop_while
  * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted
  * @param {Function} Function that must return either an object or null
  * ###Example
@@ -536,9 +536,9 @@ Array.prototype.drop_while = function(){
   
   return ary.compact()
 }
-<span id='Array-method-flatten'>
-</span> /**
- * @method  flatten
+
+<span id='Array-method-flatten'> /**
+</span> * @method  flatten
  * This method transforms an array that contains other arrays inside in a single array with the data of all the arrays
  * @param {Integer} The level to stop flatting objects
  * ###Example
@@ -554,9 +554,9 @@ Array.prototype.flatten = function(level){
     return this
   level = level || 1000
   return unpack(this, [], level)
-<span id='Array-method-index'>}
-</span> /**
- * @method  index
+}
+<span id='Array-method-index'> /**
+</span> * @method  index
  * Search throught an array to find the element passed as parameter and return the position of these element
  * @param {Object} Object that the method will search for
  * @return {Integer} Position of the element we are searching for, if not find it will be null
@@ -571,9 +571,9 @@ Array.prototype.index = function(){
       return i
   return null
 }
-<span id='Array-property-'>
-</span> /**
- * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
+
+<span id='Array-property-'> /**
+</span> * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
  */
 
 Array.prototype.product = function(){
@@ -590,11 +590,11 @@ Array.prototype.product = function(){
 
   if(arguments.length &gt;= 1){     
     if(arguments.length == 1)   
-<span id='Array-property-'>      return aproduct(this,arguments[0])///////////////TO DO
-</span>  }    
+      return aproduct(this,arguments[0])///////////////TO DO
+  }    
 }
-/**
-* ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????
+<span id='Array-property-'>/**
+</span>* ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????
 */
 Array.prototype.rassoc = function(){
   if(arguments.length &gt; 1 || arguments.length &lt; 1)
@@ -609,14 +609,14 @@ Array.prototype.rassoc = function(){
   if(existingArray){    
     for(var i = 0; i &lt; this.length; i++)
       if(this[i] instanceof Array)
-<span id='Array-method-rindex'>        if(this[i][1] == arguments[0])
-</span>          return this[i]
+        if(this[i][1] == arguments[0])
+          return this[i]
   }
   return null
 }
 
- /**
- * @method  rindex
+<span id='Array-method-rindex'> /**
+</span> * @method  rindex
  * Search throught an array to find the element passed as parameter and return the position of these element, but starting to search from the final position of the array
  * @param {Object} Object that the method will search for
  * @return {Integer} Position of the element we are searching for, if not find it will be null
@@ -632,12 +632,12 @@ Array.prototype.rindex = function(){
     return null
   
   for(var i = this.length-1; i &gt;= 0; i--)
-<span id='Array-method-rotate'>    if(this[i] == arguments[0])
-</span>      return i
+    if(this[i] == arguments[0])
+      return i
   return null
 }
- /**
- * @method  rotate
+<span id='Array-method-rotate'> /**
+</span> * @method  rotate
  * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
  * @param {Integer} Stablish the center of the array rotation 
  * ###Example
@@ -676,12 +676,12 @@ Array.prototype.rotate = function(obj){
          arguments[0] = 0
     }
     return ary
-<span id='Array-method-take'>  }  
-</span>  return _rotate(this.length-1, this, ary)
+  }  
+  return _rotate(this.length-1, this, ary)
 }
 
- /**
- * @method  take
+<span id='Array-method-take'> /**
+</span> * @method  take
  * Take the elements of an array from the first position to the position passed as parameter
  * @param {Integer} Position of the element to stop taking elements
  * ###Example
@@ -702,13 +702,13 @@ Array.prototype.take = function(){
   var ary = []
   if(arguments[0] &gt; this.length)
     arguments[0] = this.length
-<span id='Array-method-take_while'>  for(var i = 0; i &lt; arguments[0]; i++)
-</span>    ary[i] = this[i]
+  for(var i = 0; i &lt; arguments[0]; i++)
+    ary[i] = this[i]
   return ary
 }
 
- /**
- * @method  take_while
+<span id='Array-method-take_while'> /**
+</span> * @method  take_while
  * Method that needs a function poassed as parameter, the function will reciebe every item of the array 
  * and an array with all the returned elements of these function will be returned by take_while method
  * @param {Function} Function that will be executed
@@ -723,12 +723,12 @@ Array.prototype.take = function(){
 Array.prototype.take_while = function(){
   var ary = []
   for(var i = 0; i &lt; this.length; i++)
-<span id='Array-method-shuffle'>    ary.push( Array.prototype.take_while.yield(this[i]))  
-</span>  return ary.compact()
+    ary.push( Array.prototype.take_while.yield(this[i]))  
+  return ary.compact()
 }
 
-/**
- * @method  shuffle
+<span id='Array-method-shuffle'>/**
+</span> * @method  shuffle
  * This method shuffle the array items aleatory
  * @return {Array} Array that was shuffled
  * ###Example
@@ -767,25 +767,25 @@ Array.prototype.shuffle = function()
 Array.prototype.collect = function(){
    var ary = []
   for (var i=0; i&lt;this.length; i++)
-<span id='Array-method-transpose'>     ary.push( Array.prototype.collect.yield(this[i]) )
-</span>  return ary
+     ary.push( Array.prototype.collect.yield(this[i]) )
+  return ary
 }
 
-/**
- * 
+<span id='Array-method-transpose'>/**
+</span> * 
  * @memberOf 	{Array}
  * @method 		transpose        
  * @param       (Array of Arrays).
  *
  * Coded by: David
  *
-<span id='Array-property-'> * Comments:   Assumes that self is an array of arrays and transposes the rows and columns. 
-</span> */
+ * Comments:   Assumes that self is an array of arrays and transposes the rows and columns. 
+ */
 
 
 Array.prototype.transpose = function(){
-    /**
-     *	VALID INPUT!
+<span id='Array-property-'>    /**
+</span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
      *  (Array of Arrays)
@@ -823,13 +823,13 @@ Array.prototype.transpose = function(){
    //Non-square matrices
 
    for(var i = 0; i &lt; this[0].length;i++)
-<span id='Array-method-zip'>     ary.push(_transpose(i,this))
-</span>
+     ary.push(_transpose(i,this))
+
    return ary
 }
 
-/**
- * @method  zip
+<span id='Array-method-zip'>/**
+</span> * @method  zip
  * Takes the element for two or more arrays passed as parameter and copy their content in a single array
  * @param {Array} Arrays to be zipped
  * @return {Array} Array with all elements of the other arrays
@@ -849,14 +849,14 @@ Array.prototype.zip = function(){
          if(arguments[j][i] == (void 0))
 	    ary[i][j+1]=null
 	 else
-<span id='Array-method-emptyS-U'>	    ary[i][j+1]=arguments[j][i]
-</span>   }
+	    ary[i][j+1]=arguments[j][i]
+   }
    return ary;
 }
 
 
-/**
- * @method  empty$U
+<span id='Array-method-emptyS-U'>/**
+</span> * @method  empty$U
  * Check if the array is emprty
  * @return {Boolean} if is empty tue, if not, false
  * ###Example
@@ -867,24 +867,24 @@ Array.prototype.zip = function(){
 Array.prototype.empty$U = function(){
   if(arguments.length &gt; 0)
     //throw(&quot;Wrong number of parameters&quot;)
-<span id='Array-method-eqlS-U'>    return null
-</span>  return this.length==0? true: false
+    return null
+  return this.length==0? true: false
 }
 
 
- /**
- * @method  eql$U
+<span id='Array-method-eqlS-U'> /**
+</span> * @method  eql$U
  * Check if the arrays are equals
  * @return {Boolean} if is equals tue, if not, false
  * ###Example
  *     var a = [1,2]
  *     var b = [1,2]
  *     a.eql$U(b)
-<span id='Array-property-'> *     //The result will be = true
-</span> */
+ *     //The result will be = true
+ */
 Array.prototype.eql$U = function(model){
-    /**
-     *	VALID INPUT!
+<span id='Array-property-'>    /**
+</span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
      *  (All types)
@@ -926,13 +926,13 @@ Array.prototype.inject = function(init_value){
 
 Array.prototype.inject_with_index = function(init_value){
   for (var i=0; i&lt;this.length; i++)
-<span id='Array-method-reverse'>    init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
-</span>  return init_value
+    init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
+  return init_value
 }
 
 
-/**
- * @method  reverse
+<span id='Array-method-reverse'>/**
+</span> * @method  reverse
  * Reverse all array elements
  * @return {Array} New array with elements reversed
  * ###Example
@@ -944,26 +944,26 @@ Array.prototype.reverse = function(){
   var ary = []
   pos = 0
   for(var i = this.length-1; i &gt;= 0; i--){
-<span id='Array-method-values_at'>    ary[pos] = this[i]
-</span>    pos++
+    ary[pos] = this[i]
+    pos++
   }
   return ary
 }
 
 
- /**
- * @method  values_at
+<span id='Array-method-values_at'> /**
+</span> * @method  values_at
  * Return the values of a concrete index passed as parameter
  * @return {Array} New array with values of index selected
  * @param {Integer} The index to be selected
  * ###Example
  *     var a = [1,2,3,4]
  *     a.values_at(1,2)
-<span id='Array-property-'> *     //The result will be = [1,2]
-</span> */
+ *     //The result will be = [1,2]
+ */
 Array.prototype.values_at = function(){
-    /**
-     *	VALID INPUT!
+<span id='Array-property-'>    /**
+</span>     *	VALID INPUT!
      *
      *  PARAMETER TYPES
      *  (Integer indices or ranges)
@@ -994,15 +994,15 @@ Array.prototype.values_at = function(){
     }
 
     else   
-<span id='Array-method-to_a'>      ary.push(this[arguments[i]])              
-</span>  }
+      ary.push(this[arguments[i]])              
+  }
   return ary  
 }
 
 
 
-/**
- * 
+<span id='Array-method-to_a'>/**
+</span> * 
  * @memberOf 	{Array}
  * @method 	to_a      
  * @param       (any).
@@ -1013,37 +1013,37 @@ Array.prototype.values_at = function(){
  */
 
 
-<span id='Array-method-Cycle'>Array.prototype.to_a = function(){
-</span>  return this
+Array.prototype.to_a = function(){
+  return this
 }
 
-/**
- * 
+<span id='Array-method-Cycle'>/**
+</span> * 
  * @memberOf 	{Array}
  * @method 	    Cycle      
  * @param       (function {}).
  *
  * Coded by: David
  *
-<span id='Array-method-strip_all'> * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
-</span> */
+ * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
+ */
 Array.prototype.cycle = function(){
 
 }
 
-/**
- * 
+<span id='Array-method-strip_all'>/**
+</span> * 
  * @memberOf    {Array}
  * @method 	    strip_all     
  * @param       (function {}).
  *
  * Coded by: imasen
  *
-<span id='Array-method-strip_all'> * Comments: strips each of the string elements of an array
-</span> */
+ * Comments: strips each of the string elements of an array
+ */
 
- /**
- * @method  strip_all
+<span id='Array-method-strip_all'> /**
+</span> * @method  strip_all
  * Return all values of the content of an array, including bidimensional array
  * @return {Array} New array with values of index selected
  * @param {Integer} The index to be selected

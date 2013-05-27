@@ -248,7 +248,9 @@ String.prototype.lstrip = function(){
  * @method      swapcase 
  * @param       {string} string
  * @return      {String} string
- * ###Comments:    
+ * ###Comments: 
+ * 
+ *
  * Case conversion is effective only in ASCII region.   
  *   "Hello".swapcase() -> hELLO
  *
@@ -278,10 +280,10 @@ String.prototype.swapcase= function(){
  * @ return     {Boolean} Boolean 
  * true = this is empty  
  * false = this is not empty
- * Comments:     asks if the variable contains values
+ * ###Comments:     asks if the variable contains values
  * See example:
- *      "hello".empty$U()   #=> false
- *      "".empty$U()        #=> true
+ *      "hello".empty$U()   // false
+ *      "".empty$U()        // true
  *
  */
 String.prototype.empty$U = function(){
@@ -322,18 +324,19 @@ String.prototype.downcase = function(){
  *
  * @member   String
  * @method     casecmp 
- * @param     {this}
- * @return    {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
- * Comments: 
- * Case-insensitive version of ruby String#<=>.
+ * @param     {String} String
+ * @return    {Number} 
+ * Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * ###Comments: 
+ * Case-insensitive version of ruby String.
  *
- *    "abcdef".casecmp("abcde")     #=> 1
- *    "aBcDeF".casecmp("abcdef")    #=> 0
- *    "abcdef".casecmp("abcdefg")   #=> -1
- *    "abcdef".casecmp("ABCDEF")    #=> 0
+ *     "abcdef".casecmp("abcde")     #=> 1
+ *     "aBcDeF".casecmp("abcdef")    #=> 0
+ *     "abcdef".casecmp("abcdefg")   #=> -1
+ *     "abcdef".casecmp("ABCDEF")    #=> 0
  *
  *
- **/
+ */
 
 String.prototype.casecmp = function(){
   
@@ -348,13 +351,13 @@ String.prototype.casecmp = function(){
 /**
  * This function return the integer ordinal of a one-character string.
  *
- * @member     String   
- * @method       ord        
+ * @member      String   
+ * @method      ord        
  * @param       {String}  One letter only from ASCII code. 
  * @return      {String}     
  *
- * Comments:   This function works using a javascript function(.charCodeAt).
- **/
+ * ###Comments:   This function works using a javascript function(.charCodeAt).
+ */
 
 String.prototype.ord = function(){
    return this.charCodeAt(0)
@@ -368,14 +371,14 @@ String.prototype.ord = function(){
  * @param        {String}     Number between -7 and 7 and discard the rest.
  * @return       {String}     Return an octal value .
  *
- * Comments: This function works using a javascript function(parseInt).Returns
+ * ###Comments: This function works using a javascript function(parseInt).Returns
  * a copy of str with uppercase alphabetic characters converted to lowercase and
  * lowercase characters converted to uppercase. Note: case conversion is effective
  * only in ASCII region.
  *
  *        
  *  
- **/
+ */
 
 String.prototype.oct = function(){
   oct = this.match( /^[(-7)-7]+/)
@@ -391,8 +394,8 @@ String.prototype.oct = function(){
  * @param        {String}    
  * @return       {String}     Return the reverse from a string.
  *
- * Comments: This function use a ".reverse" from array class.
- **/
+ * ###Comments: This function use a ".reverse" from array class.
+ */
 
 String.prototype.reverse = function(){
    return this.split("").reverse().join("")
@@ -406,7 +409,7 @@ String.prototype.reverse = function(){
  * @param        {String} 
  * @return       {True o false}
  *
- * Comments:     respond if the atribute given is contained in the variable
+ * ###Comments:     respond if the atribute given is contained in the variable
  **/
 
 String.prototype.include$U = function(){
@@ -433,9 +436,9 @@ String.prototype.include_some_of$U = function(){
  * @param        {String} 
  * @return       {String}     Return the a string with a word center.
  *
- * Comments: 
+ * ###Comments: 
  *
- **/
+ */
 
 String.prototype.rindex = function(){
    if (arguments.length == 0)
@@ -451,14 +454,15 @@ String.prototype.rindex = function(){
  * @param        {String} 
  * @return       {String}     Return the a string with a word center.
  *
- * Comments: If integer is greater than the length of str, returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
-
-    :
-
-   "hello".center(4)         #=> "hello"
-   "hello".center(20)        #=> "       hello        "
-   "hello".center(20, '123') #=> "1231231hello12312312"
- **/
+ * ###Comments: If integer is greater than the length of str, 
+ * returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
+ * 
+ *  
+ * 
+ *    "hello".center(4)           //"hello"
+ *    "hello".center(20)           //"       hello        "
+ *    "hello".center(20, '123')    //"1231231hello12312312"
+ */
 
 String.prototype.center = function(){
  if (arguments.length == 0 || arguments.length > 2)
@@ -489,21 +493,23 @@ String.prototype.center = function(){
  *
  * @member     String     
  * @method       chomp     
- * @param        {String} 
+ * @param        {String} This
  * @return       {String}
  *
- * Comments: Returns a new String with the given record separator removed from the end of str (if present). If $/ has not been changed from the default Ruby record separator, then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
-
-   "hello".chomp()            #=> "hello"
-   "hello\n".chomp()          #=> "hello"
-   "hello\r\n".chomp()        #=> "hello"
-   "hello\n\r".chomp()        #=> "hello\n"
-   "hello\r".chomp()          #=> "hello"
-   "hello \n there".chomp()   #=> "hello \n there"
-   "hello".chomp("llo")       #=> "he"
-
-
- **/
+ * ###Comments: Returns a new String with the given record separator removed from the end of str (if present). 
+ * If $/ has not been changed from the default Ruby record separator, 
+ * then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
+ *
+ *     "hello".chomp()            #=> "hello"
+ *     "hello\n".chomp()          #=> "hello"
+ *     "hello\r\n".chomp()        #=> "hello"
+ *     "hello\n\r".chomp()        #=> "hello\n"
+ *     "hello\r".chomp()          #=> "hello"
+ *     "hello \n there".chomp()   #=> "hello \n there"
+ *     "hello".chomp("llo")       #=> "he"
+ *
+ *
+ */
 
 
 String.prototype.chomp = function(){
