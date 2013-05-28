@@ -1,4 +1,6 @@
 /**
+ * @class       String
+ * Define method for string
  * @method      capitalize
  * Returns a copy of str with the first character converted to uppercase and the 
  * remainder to lowercase. 
@@ -11,15 +13,30 @@
  * The string with his first letter in uppercase. 
  * ###Comments:    Case conversion is effective only in ASCII region.
  * See example
- *      @example
+ *       
  *      var text = "hello"   // giving a value to text
  *      text.capitalize()    // value of text now is "Hello"
- **/
+ */
 
 String.prototype.capitalize = function(){
   word = this.toLowerCase()
   return word.replace(word[0], word[0].toUpperCase())
 }
+/**
+ * @method   humanize
+ * This method changes the underscore or camelCase string and returns a string which has each word separated with one space
+ * @member   String
+ * @param    {String} String Any string
+ * ###See example
+ *       
+ *      "TheRollingsStone".humanize()="the rollings stone"
+ *       
+ *      "the_rollings_stone".humanize()="the rollings stone"
+ *           
+ *      "theRollings_stone".humanize()="the rollings stone"
+ *      
+ * @return   {String} String
+**/
 
 String.prototype.humanize = function(){
   var word = this.strip()
@@ -36,10 +53,12 @@ String.prototype.underscore = function(){
 /**
  * Returns the same string in camel case form.
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      camel_case
- * @return      (String) str
- * Comments:    "seek_case"
+ * @return      {String} String
+ *
+ * ###Comments:    
+ * "seek_case"
  *
  **/
 
@@ -67,18 +86,21 @@ String.prototype.class_name = function(){
 
 /**
  * Returns the index of the first occurrence of the given substring or pattern 
- * (regexp) in str. Returns null if not found. If the second parameter is 
+ * 'regexp' in str. Returns null if not found. If the second parameter is 
  * present, it specifies the position in the string to begin the search.
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      index 
- * @param       (string) str or regex
- * @return      (Number) Index of char
- * @Comments:    Returns null if not found
- * @Example:     "hello".index("e") = 1 using given the parameter "e" the function search in the string for the first coincidence and returns its position.	    
+ * @param       {string} string/regex
+ * @return      {Number} Index of char
+ *      "hello".index("e") = 1 //using given the parameter "e" the function search in the 
+ *                             //string for the first coincidence and returns its position.	    
+ * 
+ * Returns null if not found
+ * 
  *
- **/
+ */
 
 String.prototype.index = function(){
   if (arguments.length == 0 || arguments.length > 2)
@@ -111,13 +133,14 @@ String.prototype.index = function(){
  * Returns a index of the string 
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      normalize_index
- * @param       (Number) 
- * @return      (Number) 
- * Comments:    In case of abs of number more than this.length, return null else return index
+ * @param       {Number} number 
+ * @return      {Number} number
+ * ###Comments:    
+ * In case of abs of number more than this.length, return null else return index
  *
- **/
+ */
 
 
 String.prototype.normalize_index = function(){
@@ -128,19 +151,21 @@ String.prototype.normalize_index = function(){
 }
 
 /**
- * Inserts other_str before the character at the given index, modifying str.
+ * Inserts other string before the character at the given index, modifying str.
  * Negative indices count from the end of the string, and insert after the 
  * given character. The intent is insert aString so that it starts at the given index.
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      insert 
- * @param       (string) str
- * @return      (String) str
- * Comments:    giving the position and a new string the function will insert the new string next to the given position.
- * @example:  "hello".insert(2, "jaja") -> hejajallo 
+ * @param       {number} index
+ * @param       {string} string
+ * ###Comments:    
+ * giving the position and a new string the function will insert the new string next to the given position.
+ *     "hello".insert(2, "haha") = hehahallo 
  * 
- **/
+ * @return      {String} A string that insert 
+ */
 
 String.prototype.insert = function(){
   if (arguments.length == 0 || arguments.length > 2)
@@ -168,17 +193,20 @@ String.prototype.insert = function(){
 }
 
 /**
- * If integer is greater than the length of str, returns a new String of length 
- * integer with str left justified and padded with padstr; otherwise, returns str.
+ * This method fill the string until complete de number or character passed as parameter
+ * If integer is greater than the length of string, returns a new String of length 
+ * integer with str left justified and padded with padstr; otherwise, returns string.
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      ljust
- * @param       (string) str
- * @return      (String) str
- * Comments:    Adjust the posision of the parameter extending it to the max position
- * @example: "hello".ljust(10,"p") -> helloppppp
- **/
+ * @param       {Number} number
+ * @param       {string} string
+ * ###Comments:    
+ * Adjust the posision of the parameter extending it to the max position
+ *      "hello".ljust(10,"p") = helloppppp
+ * @return      {String} string
+ */
 
 String.prototype.ljust = function(){
   var str = this
@@ -194,36 +222,39 @@ String.prototype.ljust = function(){
 }
 
 /**
- * Returns a copy of str with leading whitespace removed. See also String#rstrip
- * and String#strip. 
+ * Returns a copy of string with leading whitespace removed. See also 'String#rstrip'
+ * and 'String#strip'. 
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      lstrip 
- * @param       (string) str
- * @return      (String) str
- * @Comments:    
- * @example 
+ * @param       {string} string
+ * @return      {String} string
+ *     
+ *   
  *
- **/
+ */
 
 String.prototype.lstrip = function(){
   return this.replace(/^\s+/g,"")
 }
 
 /**
- * Returns a copy of str with uppercase alphabetic characters converted to lowercase
+ * Returns a copy of string with uppercase alphabetic characters converted to lowercase
  * and lowercase characters converted to uppercase.
  * 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      swapcase 
- * @param       (string) str
- * @return      (String) 
- * Comments:    Case conversion is effective only in ASCII region.   
- * @example "Hello".swapcase() -> hELLO
+ * @param       {string} string
+ * @return      {String} string
+ * ###Comments: 
+ * 
  *
- **/
+ * Case conversion is effective only in ASCII region.   
+ *   "Hello".swapcase() -> hELLO
+ *
+ */
 
 String.prototype.swapcase= function(){
   var str = []
@@ -243,16 +274,18 @@ String.prototype.swapcase= function(){
  * Returns true if self contains no elements
  *
  *
- * @ memberOf   { String }
+ * @ member     String 
  * @ method     empty$ return a boolean true if this is empty 
- * @ param      {String}
- * @ return     (bool)  true = this is empty  false = this is not empty
- * Comments:     asks if the variable contains values
+ * @ param      {String}string
+ * @ return     {Boolean} Boolean 
+ * true = this is empty  
+ * false = this is not empty
+ * ###Comments:     asks if the variable contains values
+ * See example:
+ *      "hello".empty$U()   // false
+ *      "".empty$U()        // true
  *
- * "hello".empty$U()   #=> false
- * "".empty$U()        #=> true
- *
- **/
+ */
 String.prototype.empty$U = function(){
    if(arguments.length > 0)	
       //throw ("wrong number of arguments. This function not needs arguments")
@@ -261,22 +294,23 @@ String.prototype.empty$U = function(){
 }
 
 /**
- * Returns a copy of str with all uppercase letters replaced with their lowercase counterparts.
+ * Returns a copy of string with all uppercase letters replaced with their lowercase counterparts.
  * The operation is locale insensitive—only characters "A" to "Z" are affected. 
  * Note: case replacement is effective only in ASCII region
  * Ths method use a "toLowerCase()" function
  *
- * @ memberOf   {String}
- * @ method     downcase
- * @ param      {String}
- * @ return     Return this modificed with character Ascii of this downcase
+ * @member     String
+ * @method     downcase
+ * @param      {Arguments} This
+ * @return     {string} String Return this modificed with character Ascii of this downcase
  * 
- * Comments:    turns everything to downcase.
- * @example: "hEllO".downcase()   #=> "hello"
- *           "hello".downcase()   #=>  null
+ * ###Comments:    
+ * turns everything to downcase.
+ *     "hEllO".downcase() = "hello"
+ *     "hello".downcase() =  null
  *
  *
- **/
+ */
 
 String.prototype.downcase = function(){
    return this.toLowerCase() == this? null : this.toLowerCase() 
@@ -288,20 +322,21 @@ String.prototype.downcase = function(){
  * If the second string (this) is different returns -1. 
  *
  *
- * @ memberOf   {String}
- * @ method     casecmp 
- * @ param      (void)
- * @ return     (Number) Returns -1 (lower than), 0 (equals), 1 (greater than)
- * Comments: 
- * Case-insensitive version of ruby String#<=>.
+ * @member   String
+ * @method     casecmp 
+ * @param     {String} String
+ * @return    {Number} 
+ * Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * ###Comments: 
+ * Case-insensitive version of ruby String.
  *
- *    "abcdef".casecmp("abcde")     #=> 1
- *    "aBcDeF".casecmp("abcdef")    #=> 0
- *    "abcdef".casecmp("abcdefg")   #=> -1
- *    "abcdef".casecmp("ABCDEF")    #=> 0
+ *     "abcdef".casecmp("abcde")     #=> 1
+ *     "aBcDeF".casecmp("abcdef")    #=> 0
+ *     "abcdef".casecmp("abcdefg")   #=> -1
+ *     "abcdef".casecmp("ABCDEF")    #=> 0
  *
  *
- **/
+ */
 
 String.prototype.casecmp = function(){
   
@@ -316,13 +351,13 @@ String.prototype.casecmp = function(){
 /**
  * This function return the integer ordinal of a one-character string.
  *
- * @memberOf     {String}   
- * @method       ord        
- * @param        (String)  One letter only from ASCII code. 
- * @return       (String)     
+ * @member      String   
+ * @method      ord        
+ * @param       {String}  One letter only from ASCII code. 
+ * @return      {String}     
  *
- * Comments:   This function works using a javascript function(.charCodeAt).
- **/
+ * ###Comments:   This function works using a javascript function(.charCodeAt).
+ */
 
 String.prototype.ord = function(){
    return this.charCodeAt(0)
@@ -331,19 +366,19 @@ String.prototype.ord = function(){
 /**
  * This function make an octal value from a number.
  *
- * @memberOf     {String}   
+ * @member       String   
  * @method       oct        
- * @param        (String)     Number between -7 and 7 and discard the rest.
- * @return       (String)     Return an octal value .
+ * @param        {String}     Number between -7 and 7 and discard the rest.
+ * @return       {String}     Return an octal value .
  *
- * Comments: This function works using a javascript function(parseInt).Returns
+ * ###Comments: This function works using a javascript function(parseInt).Returns
  * a copy of str with uppercase alphabetic characters converted to lowercase and
  * lowercase characters converted to uppercase. Note: case conversion is effective
  * only in ASCII region.
  *
- * @example      
+ *        
  *  
- **/
+ */
 
 String.prototype.oct = function(){
   oct = this.match( /^[(-7)-7]+/)
@@ -354,12 +389,13 @@ String.prototype.oct = function(){
 /**
  * This function returns a reverse from an introduced string
  *
- * @memberOf     {String}     
+ * @member      String     
  * @method       reverse      
- * @return       (String)     Return the reverse from a string.
+ * @param        {String}    
+ * @return       {String}     Return the reverse from a string.
  *
- * Comments: This function use a ".reverse" from array class.
- **/
+ * ###Comments: This function use a ".reverse" from array class.
+ */
 
 String.prototype.reverse = function(){
    return this.split("").reverse().join("")
@@ -368,11 +404,12 @@ String.prototype.reverse = function(){
 /**
  * Returns true if str contains the given string or character.
  *
- * @memberOf     {String}     
+ * @member       String      
  * @method       include     
- * @return       True o false
+ * @param        {String} 
+ * @return       {True o false}
  *
- * Comments:     respond if the atribute given is contained in the variable
+ * ###Comments:     respond if the atribute given is contained in the variable
  **/
 
 String.prototype.include$U = function(){
@@ -394,13 +431,14 @@ String.prototype.include_some_of$U = function(){
 /**
  * This function returns a center word in the string
  *
- * @memberOf     {String}     
+ * @member      String     
  * @method       center      
- * @return       (String)     Return the a string with a word center.
+ * @param        {String} 
+ * @return       {String}     Return the a string with a word center.
  *
- * Comments: 
+ * ###Comments: 
  *
- **/
+ */
 
 String.prototype.rindex = function(){
    if (arguments.length == 0)
@@ -411,18 +449,20 @@ String.prototype.rindex = function(){
 /**
  * This function returns a center word in the string
  *
- * @memberOf     {String}     
+ * @member       String     
  * @method       center      
- * @return       (String)     Return the a string with a word center.
+ * @param        {String} 
+ * @return       {String}     Return the a string with a word center.
  *
- * Comments: If integer is greater than the length of str, returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
-
-   @example:
-
-   "hello".center(4)         #=> "hello"
-   "hello".center(20)        #=> "       hello        "
-   "hello".center(20, '123') #=> "1231231hello12312312"
- **/
+ * ###Comments: If integer is greater than the length of str, 
+ * returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
+ * 
+ *  
+ * 
+ *    "hello".center(4)           //"hello"
+ *    "hello".center(20)           //"       hello        "
+ *    "hello".center(20, '123')    //"1231231hello12312312"
+ */
 
 String.prototype.center = function(){
  if (arguments.length == 0 || arguments.length > 2)
@@ -451,22 +491,25 @@ String.prototype.center = function(){
 /**
  * This function return a string without \n or \r or \r\n of the end.
  *
- * @memberOf     {String}     
+ * @member     String     
  * @method       chomp     
- * @return       (String)
+ * @param        {String} This
+ * @return       {String}
  *
- * Comments: Returns a new String with the given record separator removed from the end of str (if present). If $/ has not been changed from the default Ruby record separator, then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
-
-   "hello".chomp()            #=> "hello"
-   "hello\n".chomp()          #=> "hello"
-   "hello\r\n".chomp()        #=> "hello"
-   "hello\n\r".chomp()        #=> "hello\n"
-   "hello\r".chomp()          #=> "hello"
-   "hello \n there".chomp()   #=> "hello \n there"
-   "hello".chomp("llo")       #=> "he"
-
-
- **/
+ * ###Comments: Returns a new String with the given record separator removed from the end of str (if present). 
+ * If $/ has not been changed from the default Ruby record separator, 
+ * then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
+ *
+ *     "hello".chomp()            #=> "hello"
+ *     "hello\n".chomp()          #=> "hello"
+ *     "hello\r\n".chomp()        #=> "hello"
+ *     "hello\n\r".chomp()        #=> "hello\n"
+ *     "hello\r".chomp()          #=> "hello"
+ *     "hello \n there".chomp()   #=> "hello \n there"
+ *     "hello".chomp("llo")       #=> "he"
+ *
+ *
+ */
 
 
 String.prototype.chomp = function(){
@@ -484,13 +527,14 @@ String.prototype.chomp = function(){
 /**
  * This function return a string without \n or \r or \r\n or char of the end the String.
  *
- * @memberOf     {String}     
+ * @member       String     
  * @method       chop     
- * @return       (String)
+ * @param        {String} 
+ * @return       {String}
  *
  * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed. Applying chop to an empty string returns an empty string. String#chomp is often a safer alternative, as it leaves the string unchanged if it doesn‘t end in a record separator.
 
- @example
+  
    "string\r\n".chop()   #=> "string"
    "string\n\r".chop()   #=> "string\n"
    "string\n".chop()     #=> "string"
@@ -513,9 +557,10 @@ String.prototype.chop = function(){
 /**
  * This function return a number hexadecimal convert to decimal.
  *
- * @memberOf     {String}     
+ * @member       String     
  * @method       hex     
- * @return       (Number)
+ * @param        {Number} 
+ * @return       {Number}
  *
  * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x) and returns the corresponding number. Zero is returned on error.
 
@@ -536,9 +581,10 @@ String.prototype.hex = function(){
 /**
  * This function return first char of the string.
  *
- * @memberOf     {String}     
+ * @member       String     
  * @method       chr     
- * @return       (Char)
+ * @param        {Char} 
+ * @return       {Char}
  *
  * Comments: Returns a one-character string at the beginning of the string.
 
@@ -560,9 +606,10 @@ String.prototype.chr = function(){
 /**
  * If integer is greater than the length of str, returns a new String of length integer with str right justified and padded with padstr; otherwise, returns str.  
  *
- * @memberOf     {String}     
+ * @member       String   
  * @method       rjust     
- * @return       (String) str
+ * @param        {String} Str
+ * @return       {String} Str
  *
  * Comments: 
 
@@ -591,19 +638,21 @@ String.prototype.rjust = function(){
 /**
  * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the string. Incrementing a digit always results in another digit, and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character set‘s collating sequence.  
  *
- * @memberOf     {String}     
+ * @member       String     
  * @method       succ     
- * @return       (String) str
+ * @param        {String} Str
+ * @return       {String} Str
  *
- * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. This process repeats until there is no carry, adding an additional character if necessary.
+ * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. 
+ * This process repeats until there is no carry, adding an additional character if necessary.
 
-   "abcd".succ()        #=> "abce"
-   "THX1138".succ()     #=> "THX1139"
-   "<<koala>>".succ()   #=> "<<koalb>>"
-   "1999zzz".succ()     #=> "2000aaa"
-   "ZZZ9999".succ()     #=> "AAAA0000"
-   "***".succ()         #=> "**+"
- 
+ *  "abcd".succ()        #=> "abce"
+ *  "THX1138".succ()     #=> "THX1139"
+ *  "<<koala>>".succ()   #=> "<<koalb>>"
+ *  "1999zzz".succ()     #=> "2000aaa"
+ *  "ZZZ9999".succ()     #=> "AAAA0000"
+ *  "***".succ()         #=> "**+"
+ *
  **/
 
 String.prototype.succ = function(){
@@ -630,9 +679,10 @@ String.prototype.succ = function(){
 /**
  *  Alias of the function succ.
  * 
- * @memberOf     {String}     
+ * @member       String     
  * @method       next     
- * @return       (String) str      
+ * @param        {String} Str
+ * @return       {String} Str      
  *
  **/ 
 String.prototype.next = function(){
@@ -645,11 +695,10 @@ String.prototype.next = function(){
  * If there is not a valid number at the start of str, 0 is returned. 
  * This method never raises an exception when base is valid. 
  *
- * @ member   {String}
+ * @ member   String
  * @ method   to_i
- * @ param    (int) -> is a base (2 - 36), or 0 who is the same that 10
- *
- * @ return    Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
+ * @ param    {int} -> is a base (2 - 36), or 0 who is the same that 10
+ * @ return   {Integret} Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
  * 
  * "12345".to_i()             #=> 12345
  * "99 red balloons".to_i()   #=> 99
@@ -684,15 +733,14 @@ return isNaN( parseInt(this,base) )? 0 : parseInt(this,base)
 /**
  * Returns the result of interpreting leading characters in str as a floating point number
  *
- * @ memberOf {String}String.prototype.prueba = function(){
+ * @member String  String.prototype.prueba = function(){
  * return this.replace(arguments[0], arguments[1]) 
  * }
  * var i="hello"
  * i.prueba(/[aeio]/,"+")
- * @ method   to_f	//Returns the result of interpreting leading characters in str as a floating point number
- * @ param    (void)    //No parameters
- *
- * @ return   Float ->  //Returns a float numbers if string is a number. Return 0.0 if a string is not a number
+ * @method   to_f	//Returns the result of interpreting leading characters in str as a floating point number
+ * @param    {void}    //No parameters
+ * @return   {Float}    //Returns a float numbers if string is a number. Return 0.0 if a string is not a number
  *
  * "123.45e1".to_f()        #=> 1234.5
  * "45.67 degrees".to_f()   #=> 45.67
@@ -711,11 +759,10 @@ String.prototype.to_f = function() {
 /**
  * Returns a copy of str with leading and trailing whitespace removed. 
  *
- * @ memberOf {String}
- * @ method   strip
- * @ param    (void)
- *
- * @return  String -> Return a copy of str with leading and trailing whitespace removed
+ * @member   String
+ * @method   strip
+ * @param    {void}
+ * @return  {String} // Return a copy of str with leading and trailing whitespace removed
  *
  * "    hello    ".strip()   #=> "hello"
  * "\t goodbye\r\n".strip()   #=> "goodbye"
@@ -742,16 +789,16 @@ String.prototype.setbyte = function(){
 /**
  * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
  * 
- * @memberOf     {String}     
+ * @member     String     
  * @method       partition     
- * @return       (Array) ary
+ * @return       {Array} ary
  *
- * Comments: 
-
-   "hello".partition("l")         #=> ["he", "l", "lo"]
-   "hello".partition("x")         #=> ["hello", "", ""]
-   "hello".partition(/.l/)        #=> ["h", "el", "lo"]
-
+ * 
+ *
+ *  "hello".partition("l")         #=> ["he", "l", "lo"]
+ *  "hello".partition("x")         #=> ["hello", "", ""]
+ *  "hello".partition(/.l/)        #=> ["h", "el", "lo"]
+ *
  **/
 
 
@@ -771,27 +818,27 @@ String.prototype.partition = function(){
 /**
  * Returns a copy of str with trailing whitespace removed. 
  *
- * @ memberOf {String}
- * @ method   rstrip
- * @ param    (void)
- *
- * @return  String Return a copy of str with trailing whitespace removed
+ * @member  String
+ * @method   rstrip
+ * @param   {void}
+ * @return  {String} Return a copy of str with trailing whitespace removed
  *
  **/
 String.prototype.rstrip = function(){
   return this.replace(/\s+$/g,'')
 }
 /**
- * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. The String#succ method is used to generate each value. If optional second argument exclusive is omitted or is false, the last value will be included; otherwise it will be excluded.                  
+*
+ *
+ * @member   String
+ * @method   upto
+ * @param    {String, function}
+ * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. 
+ * The String#succ method is used to generate each value. 
+ * If optional second argument exclusive is omitted or is false, the last value will be included; otherwise it will be excluded.
  *
  *
- * @ memberOf {String}
- * @ method   upto
- * @ param    (String, function)
- *
- * @return    return string with succ of this to arguments[0], according to parameter function
- *
- * @Comments: 
+ * 
  *
  * If no block is given, an enumerator is returned instead.
  *
@@ -802,7 +849,8 @@ String.prototype.rstrip = function(){
  *          a8 a9 b0 b1 b2 b3 b4 b5 b6
  *          a8 a9 b0 b1 b2 b3 b4 b5 b6 
  *
- **/
+ * @return    {String} return string with succ of this to arguments[0], according to parameter function
+ */
 String.prototype.upto = function(){ 
    var num = this
    var str = ""
@@ -818,13 +866,12 @@ String.prototype.upto = function(){
 /**
  * Passes each character in str to the given block, or returns an enumerator if no block is given.  
  *
- * @ memberOf {String}
- * @ method   each_char
- * @ param    (function)
+ * @member  String
+ * @method   each_char
+ * @param    {function}
+ * @return   {String} return a string according function
  *
- * @return   return a string according function
- *
- * @Comments: 
+ * : 
  *
  *    "hello".each_char(function(){return obj + ' '})
  *
@@ -843,10 +890,10 @@ String.prototype.each_char = function(){
 /**
  *  Alias of the function each_char.
  * 
- * @memberOf     {String}     
+ * @member     String     
  * @method       chars     
- * @return       (String) str      
- *
+ * @return      {String} str      
+ *d
  **/ 
 String.prototype.chars = function(){
    return this.each_char.apply(this, arguments)
@@ -862,13 +909,12 @@ String.prototype.sum = function(){
 /**
  * Returns a string where runs of the same character that occur in this set are replaced by a single character.
  *
- * @ memberOf {String}
- * @ method   squeeze
- * @ param    () 
- * @ param    (String) Remove only the repeated characters in the string contents.
+ * @member   String
+ * @method   squeeze
+ * @param    {String} Remove only the repeated characters in the string contents.
  *Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
  * 
- * @ return  String Returns a copy  where runs of the same character that occur in this set are replaced by a single character.
+ * @return  {String} Returns a copy  where runs of the same character that occur in this set are replaced by a single character.
  *
  *
  **/
@@ -906,10 +952,10 @@ String.prototype.squeeze = function(){
 /**
  * Returns a string containing common letters in the parameter strings
  * 
- * @memberOf    {String}
- * @method	String#intersection
- * @param	(String) character_list List of characters to be deleted
- * @return      (String)
+ * @member    String
+ * @method    String#intersection
+ * @param     {String} character_list List of characters to be deleted
+ * @return    {String}
  
  * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed  by the given characterhey're firstly intersected.
  * 	       Otherways the first param is returned.
@@ -928,10 +974,10 @@ String.prototype.intersection = function(){
 /**
  * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
  * 
- * @memberOf    {String}
+ * @member      String
  * @method	sub
- * @param	(RegEx,string) 
- * @return      (String)
+ * @param 	{RegEx,string} 
+ * @return      {String}
  * Comments:    Find the letters that match the first parameter given, y these are changed by the given parameter.
  *
  **/
@@ -943,11 +989,10 @@ String.prototype.sub= function(){
 /**   
  * Passes each byte in str to the given block, or returns an enumerator if no block is given.
  * 
- * @ memberOf {String}
- * @ method   bytes
- * @ param    ()
- *
- * @return 
+ * @member  String
+ * @method  bytes
+ * @param   {String} 
+ * @return  {number} Return an enumerator black or //nose continuar en ingles
  * 
  **/
 String.prototype.bytes = function(){
@@ -958,11 +1003,10 @@ String.prototype.bytes = function(){
 /**
  * Returns true for a string which has only ASCII characters. 
  *
- * @ memberOf {String}
- * @ method   ascii_only$U
- * @ param    (void)
- *
- * @return true or false
+ * @member  String
+ * @method  ascii_only$U
+ * @param   {this}
+ * @return  {this}true or false
  * 
  **/
 
@@ -972,15 +1016,14 @@ String.prototype.ascii_only$U = function(){
 
 /**
  * Splits str using the supplied parameter as the record separator.
- * passing each substring in turn to the supplied block. 
+ * Passing each substring in turn to the supplied block. 
  * If a zero-length record separator is supplied, the string is split 
  * into paragraphs delimited by multiple successive newlines. 
  *
- * @ memberOf {String}
- * @ method   each_line
- * @ param    ([ string | number ],function { } ) 
- *
- * @return str split by separator
+ * @member   String
+ * @method   each_line
+ * @param    {[ string | number ],function { } } 
+ * @return   {this} str split by separator
  *
  * "Hello\nworld".each_line(function(obj){return "" + obj + ""})            => "Hello\n","world"
  * "Hello\n world".each_line("l",function(obj){return "" + obj + ""}))      => "Hel", "l", "o \\n worl", "d"
@@ -1027,13 +1070,12 @@ return this
  *
  * If no block is given, an enumerator is returned instead.  
  *
- * @ memberOf {String}
- * @ method   each_codepoint
- * @ param    (function)
+ * @member   String 
+ * @method   each_codepoint
+ * @param    {function}
+ * @return   {string} return a string according function. 
  *
- * @return return a string according function. 
- *
- * @Comments: 
+ * : 
  *
  *    "hello\u0639".each_codepoint(function(){return obj + ' '})
  *
@@ -1052,9 +1094,10 @@ String.prototype.each_codepoint = function(){
 /**
  *  Alias of the function each_codepoint.
  * 
- * @memberOf     {String}     
- * @method       codepoint     
- * @return       (String) str of digits ASCII     
+ * @member      String     
+ * @method      codepoint     
+ * @param       {string} String
+ * @return      {String} str of digits ASCII     
  *
  **/ 
 String.prototype.codepoint = function(){
@@ -1063,9 +1106,10 @@ String.prototype.codepoint = function(){
 /**
  * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str. 
  * 
- * @memberOf     {String}     
- * @method       rpartition     
- * @return       (Array) ary
+ * @member     String    
+ * @method     rpartition
+ * @param      {string} String
+ * @return     {Array} ary
  *
  * Comments:
 
@@ -1096,13 +1140,13 @@ String.prototype.rpartition = function(){
 /**
  *
  * The match() method searches for a match between a regular expression and a string, and returns the matches.
- * This method returns an array of matches, or null if no match is found.Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
+ * This method returns an array of matches, or null if no match is found. Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
  *
- * @ memberOf {String}
- * @ method scan  
- * @ param   string 
+ * @member String
+ * @method scan  
+ * @param  {string} String
  *
- * @return string
+ * @return {string}
  * 
  **/
 
@@ -1132,10 +1176,10 @@ String.prototype.scan = function(){
 /**
  *  Returns a new string with erased letters.
  *
- * @memberOf    {String}
+ * @member     String
  * @method      erase
- * @param       (string) str
- * @return      (String)
+ * @param       {string} String
+ * @return      {String}
  * Comments:    Erases the arguments matched in a string.
  *
  **/
@@ -1151,10 +1195,10 @@ String.prototype.erase = function(){
 /**
  *  Returns true or false by comparing  object and the argument from the end.
  * 
- * @memberOf    {String}
+ * @member     String
  * @method      end_With$U
- * @param       (string) str
- * @return      (String)  true or false
+ * @param       {string} String
+ * @return      {String} true or false
  * Comments:    Compares the object with argument.
  *
  **/
@@ -1165,10 +1209,10 @@ String.prototype.end_With$U = function(str){
 /**
  * Returns true or false by comparing  object and the argument.
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      eql$U
- * @param       (string)
- * @return      (String)  true or false
+ * @param       {string}
+ * @return      {String}  true or false
  * Comments:    Compares the object with argument.
  *
  **/
@@ -1179,10 +1223,10 @@ String.prototype.eql$U = function() {
 /**
  * Returns the indexth byte as an integer. 
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      getbyte
- * @param       (string)   
- * @return      (String)  a interger.
+ * @param       {string}   
+ * @return      {String}  a interger.
  * 
  * Comments:    Using charCodeAt from a javaScript function.
  **/
@@ -1203,11 +1247,10 @@ String.prototype.to_str = function(){
  * Any digit sequences can be separated by an underscore. 
  * Returns zero for null or garbage string. 
  *
- * @ memberOf   { String }
- * @ method	to_r
- * @ param	(string)
- *  
- * @ return     (string)  Return a rational
+ * @member     String 
+ * @method     to_r
+ * @param      {string}
+ * @return     {string}  Return a rational
  *			 If the arguments is invalid return "0/1" 
  *                       Returns a copy of str with uppercase alphabetic characters 
  *                       converted to lowercase and lowercase characters converted to uppercase.
@@ -1270,10 +1313,10 @@ return op1/mcd + "/" + op2/mcd
 
 /** Esta funcion devuelve la cantidad de decimales que tiene un numero 
  * 
- * @memberOf *****
- * @ methof  decimal
- * @ param ( number | string )   
- * @ return (integer)  number of decimal.
+ * @member *****
+ * @methof  decimal
+ * @param  {number | string }   
+ * @return {integer}  Number of decimal.
  *	If the arguments is invalid return 0
  **/
 
@@ -1302,11 +1345,11 @@ return parseInt(decUno)>=decDos? 0 : (decUno - decDos) * -1
 
 /** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
  * 
- * @ memberOf ******
- * @ method   intMdc
- * @ param    ( interger, integer )  
+ * @member ******
+ * @method   intMdc
+ * @param    {interger, integer}  
  *
- * @ return   (integer) Return the maximo comun divisor of 2 integers
+ * @return   {integer} Return the maximo comun divisor of 2 integers
  *                      If the arguments are invalids, return  null
  **/
  	
@@ -1340,10 +1383,10 @@ return null
 /**
  * Returns the length of string in bytes.
  * 
- * @memberOf    {String}
+ * @member      String
  * @method      bytesize
- * @param       ()   
- * @return      the length of string in bytes.
+ * @param       {Arguments} This   
+ * @return      {number} the length of string in bytes.
  * 
  **/
 
