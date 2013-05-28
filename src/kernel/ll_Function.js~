@@ -20,7 +20,7 @@ Function.prototype.block_given$U = function(){
      for (var i=this.arguments.length-1; i>=0; i--)               
         if (typeof(this.arguments[i]) === "function")         
            given = true
-     return given
+     return false
 }
 
 /** Takes a function and prepare it to clone with the Function constructor.

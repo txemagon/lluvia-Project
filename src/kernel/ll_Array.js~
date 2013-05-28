@@ -1041,15 +1041,6 @@ Array.prototype.strip_all = function(){
       })
 }
 
-/**
- * @method sort_by
- * Returns a sorted array using the mapped value returned by the block.
- * When no block is given then acts a Array#sort alias. 
- * If Number and no Number objects are handled then it splits the Array into
- * two subarrays.
- * //todo: Keep commenting
- * a[0].toString().toLocaleCompare(b[0].toString())
- */
 Array.prototype.sort_by = function(){
      var indexed = []
      if (Array.prototype.sort_by.block_given$U()) {

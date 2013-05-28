@@ -360,7 +360,7 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
        "var cities = ['Madrid', 'Barcelona', 'Valencia']")
 
 assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements with the block return value.",
-       "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
+       "cities.sort_by(function(el){ return el.toLowerCase() })", "['Madrid', 'Valencia', 'Barcelona']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
 
 /*assert("Array#strip_all 1. Sample testing ",
