@@ -4,6 +4,21 @@
  */
 
 /**
+ *
+ */
+Array.reflect = function(original_method){
+  Array.prototype[original_method + "$B"] = function(){
+    var substitute = Array.prototype[original_method].apply(this, arguments)
+
+    this.clear()
+    for (var i=0; i<substitute.length; i++)
+      this[i] = substitute[i]
+
+    return this
+  }
+}
+
+/**
  * @method  each 
  * 
  * Calls the block once for each element of the Array.
@@ -170,31 +185,36 @@ Array.prototype.collect = function(){
 }
 
 /**
+ * @method  collect$B 
+ * @chainable
+ * 
+ * Bang methods ...$B operates in `this` object
+ * (see Array#collect)
+ */
+Array.reflect("collect")
+
+/**
  * @method  map 
  *
  * Alias of {@link Array#collect Array#collect}
  *
- * Maps array elements using a block for the transfomation.
- *
- * @param  {Function} block Transforming function
- *
- * @return  {Array} Returns the trasformed image of self.
- *
- * ###Example
- *     var number     = [250, 500, 1143]
- *     var discount   = 0.25
- *     var discounted = number.collect(function(obj){ 
- *                                  return obj * (1 - discount) 
- *                               })
- *     // =>  [187.5, 375, 857.25]
  */
-Array.prototype.map = function(){
-  return this.collect.apply(this, arguments)
-}
+Array.prototype.alias("map", "collect")
+
+/**
+ * @method  map$B 
+ * @chainable
+ * 
+ * Bang methods ...$B operates in `this` object
+ * (see Array#collect)
+ */
+Array.reflect("map")
 
 /**
  * @method  select_if 
- * The method checks if every item of the array can pass a condition
+ *
+ * Collects those elements passing a given condition.
+ *
  * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted
  * ###Example

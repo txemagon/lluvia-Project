@@ -1,5 +1,3 @@
-
-/*
 assert("Array#uniq 1. Ordered elements", 
       "a", '["a", "b", "c"] ',  
       'a = ["a", "a", "b", "b", "c"].uniq()' )
@@ -206,7 +204,7 @@ assert("Array#rotate 3. Whithout argument", //Problemas con la comprobación. El
 assert("Array#rotate 4. Whith positive arguments", 
        "a.rotate(2)", '["c","d","a","b"]',
        'a = ["a","b","c","d"]')
-*/ 
+
 assert("Array#count 1. Without parameters.",
        "a.count()",'3',
        'a = ["a","b","c"]')
@@ -222,7 +220,7 @@ assert("Array#count 2a. With paremeter.",
 assert("Array#count 3. With condition.",
        "a.count(function(obj){ return obj > 'a' })",'2',
        'a = ["a","b","c"]')
-/*       
+      
 assert("Array#take 1.",
        "a.take(3)","[1,2,3]",
        "a = [1,2,3,4,5,6]") 
@@ -238,7 +236,19 @@ assert("Array#shuffle",
 assert("Array#collect.",
        'a.collect(function(obj){ return obj + "!" })','["a!","b!","c!"]',
        'a = ["a","b","c"]')
+
+assert("Array#map. Array#collect alias",
+       'a.map(function(obj){ return obj + "!" })','["a!","b!","c!"]',
+       'a = ["a","b","c"]')
+
+assert("Array#collect$B.",
+       'a','["a!","b!","c!"]',
+       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
        
+assert("Array#map$B.",
+       'a','["a!","b!","c!"]',
+       'a = ["a","b","c"]; a.map$B(function(obj){ return obj + "!" })')
+
 assert("Array#transpose 1. With non-square matrices",//problemas con los assert
        "a.transpose()","[[1,3,5],[2,4,6]]",
        "a = [[1,2],[3,4],[5,6]]") 
@@ -354,7 +364,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'number.indexOf(36, 0)',
        'null',
        'var number = [34,56,78,98]')
-*/
+
 /*
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
@@ -368,23 +378,21 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
        "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
 */
-/*assert("Array#strip_all 1. Sample testing ",
+
+assert("Array#strip_all 1. Sample testing ",
        'number.strip_all()',
        '[1,2,3,4]',
-       'var number = [[1,2],[3,4]]')*/
-/*
+       'var number = [[1,2],[3,4]]')
+
 assert("Array#inject 1. Sample testing ",
        'number.inject(1)',
        'null',
        'var number = [1,2,3,4]; var num2 = [1,2,3,4]')
-*/
 
-
-/*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
-       "a = [1,2,3,4]")*/
-/*
+       "a = [1,2,3,4]")
+
 assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
        'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" }')
@@ -413,11 +421,6 @@ assert("Array#combination(5).to_a 6.",
        "a.combination(5).to_a","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 
-assert"Array#compact$B.",
+assert("Array#compact$B.",
       "a","[1,2,3,4]",
       "a = [1, null, 2, 3, null, 4]; a.compact$B()")
-
-*/
-
-
-

@@ -6,7 +6,11 @@ if (typeof Object.extend !== 'function') {
     };
 }
 
-
+Object.prototype.alias = function(alias_name, original_method){
+  this[alias_name] = function(){
+    return this[original_method].apply(this, arguments)
+  }
+}
 /*
  * 
  * a = {a: 2, b:3}
