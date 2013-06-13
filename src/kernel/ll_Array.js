@@ -1,20 +1,24 @@
 /**
  * @class Array
- * When the module is being defined, the module enumerable should replace the method each.
+ * 
  */
+
 /**
  * @method  each 
- * Executes a function parsed as a parameter by each item of the array, parsing the array item as a parameter
- * @param  {function}  Needs to parse a function that receives the items of the array one by one
+ * 
+ * Calls the block once for each element of the Array.
+ * 
  * ###Example
  *     var names = ["Peter","John","David"]
- *     names.each(function (arrayItem){ alert(arrayItem)})
- * This method throws an alert for each array item showing the content of that array item 
+ *     names.each(function (arrayItem){ alert(arrayItem) })
+ *
+ * This method shows an alert for item.
  */
 Array.prototype.each = function(){
   for (var i = 0; i < this.length; i++) 
     Array.prototype.each.yield(this[i]) 
 }
+
 /**
  * @method  each_index  
  * Executes a function parsed as a parameter by each item of the array, parsing the array index as a parameter 
@@ -28,6 +32,7 @@ Array.prototype.each_index = function(){
   for (var i = 0; i < this.length; i++) 
     Array.prototype.each_index.yield(i) 
 }
+
 /**
  * @method  each_with_index 
  * Executes a function parsed as a parameter by each item of the array, parsing as a parameter the array index and the array block of the index
