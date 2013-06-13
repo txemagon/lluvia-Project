@@ -733,17 +733,24 @@ Array.prototype.flatten = function(level){
 }
 <span id='Array-method-index'>/**
 </span> * @method  index
- * Search throught an array to find the element passed as parameter and return the position of these element
- * @param {Object} Object that the method will search for
- * @return {Integer} Position of the element we are searching for, if not find it will be null
+ * 
+ * Finds the first position of a given object or the position of the first matching
+ * a given criteria.
+ * 
+ * @param {Object | function(Object): boolean} Object that the method will search for, or matching criteria.
+ * 
+ * @return {number} Position of the element we are looking for. null if not found.
+ * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     newNumbers = numbers.index(3)
- *     //The result will be = 4
+ *     numbers.index(3)
+ *     //=&gt; 2
  */
 Array.prototype.index = function(){
   for(var i = 0; i &lt; this.length; i++)
-    if(this[i] == arguments[0])
+    if ( typeof(arguments[0]) === &quot;function&quot; ?
+          Array.prototype.index.yield( this[i]) :
+          this[i] == arguments[0] )
       return i
 	return null
 }

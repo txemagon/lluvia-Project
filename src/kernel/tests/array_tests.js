@@ -69,7 +69,6 @@ assert("Array.reflect 5. Array argument",
         Array.reflect(['oneize', 'twoize']); \
         a = [1, 2, 3]; a.oneize$B()" )
 
-
 assert("Array#uniq 1. Ordered elements", 
       "a", '["a", "b", "c"] ',  
       'a = ["a", "a", "b", "b", "c"].uniq()' )
@@ -240,6 +239,10 @@ assert("Array#index 1. with a existing object",
 assert("Array#index 2. with a unexisting object",
        'a.index("z")',"null",
        'a = ["a","b","c"]')
+
+assert("Array#index 3. Criteria",
+       "a.index( function(element){ return element > 6 ? true : false })", "3",
+       "a = [4, 5, 2, 8, 7, 1]")
        
 assert("Array#product.",
       "a.product([4,5])","[[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]]",
