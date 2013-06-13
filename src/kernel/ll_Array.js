@@ -8,51 +8,97 @@
  * 
  * Calls the block once for each element of the Array.
  * 
+ * @param  {Function}  block\(element\) Argument processor
+ * 
+ * @return {Array} Returns self
+ *
  * ###Example
- *     var names = ["Peter","John","David"]
- *     names.each(function (arrayItem){ alert(arrayItem) })
+ *     var names = ["Peter", "John", "David"]
+ *     names.each(function (arrayItem){ alert(arrayItem) })        
+ *     // => ["Peter", "John", "David"]
  *
  * This method shows an alert for item.
  */
 Array.prototype.each = function(){
   for (var i = 0; i < this.length; i++) 
     Array.prototype.each.yield(this[i]) 
+  return this
 }
 
 /**
  * @method  each_index  
- * Executes a function parsed as a parameter by each item of the array, parsing the array index as a parameter 
- * @param  {function}  Needs to parse a function that receives the items of the array one by one
+ *
+ * Calls the block once for each item with the element and its index.
+ * 
+ * @param  {Function}  block \(index\) Called once with every index.
+ *
+ * @return {Array} this
+ *
  * ###Example
- *     var names = ["Peter","John","David"]
+ *     var names = ["Peter", "Johnnie", "Walker"]
  *     names.each(function (arrayIndex){ alert(arrayIndex)})
+ *     // => ["Peter", "Johnnie", "Walker"]
+ *
  * This code throws an alert for each array item showing the array index number
  */
 Array.prototype.each_index = function(){
   for (var i = 0; i < this.length; i++) 
     Array.prototype.each_index.yield(i) 
+  return this
 }
 
 /**
  * @method  each_with_index 
- * Executes a function parsed as a parameter by each item of the array, parsing as a parameter the array index and the array block of the index
- * @param  {function}  Needs to parse a function that receives the items of the array one by one
+ *
+ * Calls the block with the element and its index. 
+ *
+ * @param  {Function}  block \(element, index\) Called once with every element and index.
+ *
+ * @return {Array} this
+ *
  * ###Example
- *     var names = ["Peter","John","David"]
- *     names.each(function (arrayItem, arrayIndex){ alert(arrayItem + " " + arrayIndex)})
+ *     var list  = ""
+ *     var names = ["Peter", "John", "David"]
+ *     names.each_with_index( 
+ *       function(arrayItem, arrayIndex){ 
+ *                     list += "\t" + arrayIndex + ".- " + arrayItem + "\n"
+ *       })
+ *     list
+ *     // => "  0.- Peter
+ *     // =>    1.- John 
+ *     // =>    2.- David "
+ *
  * This code throws an alert for each array item showing the array index number and the content of the index
  */
 Array.prototype.each_with_index = function(){
   for (var i = 0; i < this.length; i++) 
     Array.prototype.each_with_index.yield(this[i], i) 
 }
+
 /**
  * @method  count 
- * The method counts all the elements in the array
- * @return  {Integer} Sum of all the array indexes 
+ *
+ * Counts all the elements of the array matching a particular criteria, if given.
+ *
+ * @param {Object}   [to_find] Count occurences of *to_find*
+ * @param {Function} [block]
+ *
+ * @return  {Number} Number of  matches. 
+ *
  * ###Example
- *     var names = ["Peter","John","David"]
- *     var namesCount = names.count()
+ *     var names = ["Peter", "John", "David"]
+ *     names.count()
+ *     // => 3
+ *     
+ *     var names = ["Peter", "John", "Peter", "David"]
+ *     names.count("Peter")
+ *     // => 2
+ *     
+ *     var names = ["Peter", "John", "David"]
+ *     names.count(function(element){
+ *                    return element.length == 5
+ *                 })
+ *     // => 2
  */
 Array.prototype.count = function(obj){
   if (typeof(obj) === "undefined" )
@@ -60,36 +106,92 @@ Array.prototype.count = function(obj){
 
   var count = 0
   for (var i=0; i<this.length; i++) 
-     if ( (typeof(obj) === "function" ? Array.prototype.count.yield(this[i]) : this[i] == obj) )
+     if ( 
+          ( typeof(obj) === "function" ? 
+            Array.prototype.count.yield(this[i]) : 
+            this[i] == obj
+          ) 
+        )
        count++
 
   return count
 }
 
+/**
+ * @method reverse_each 
+ * 
+ * Traverse every element of the array through the block in reverse order.
+ *
+ * @param  {Function}  block \(element\) Called once with every element.
+ *
+ * @return {Array} this
+ * 
+ * ###Example
+ *     var sentence   = ""
+ *     var to_my_boss = ["job", "this", "like", "don\'t", "I"]
+ *     to_my_boss.reverse_each(function(element){
+ *                                sentence += (element + " ").toUpperCase()
+ *                             })
+ *     sentence
+ *     // => "I DON'T LIKE THIS JOB "
+ * 
+ */
 
-
-Array.prototype.each_reverse = function(){// Problemas en el test. Muestra failed pero valor esperado == valor recibido.
+Array.prototype.reverse_each = function(){
 	var l = this.length - 1
-	for (var i = l; i >= 0; i--) 
-		Array.prototype.each.yield(this[i])	
+	for (var i=l; i>=0; i--) 
+		Array.prototype.reverse_each.yield(this[i])	
 }
+
 /**
  * @method  collect 
- * The method selects an object in an array that matches the condition parsed as parameter
- * @return  {Array} Returns an array with the items previously parsed by the function as a parameter
- * @param  {function} This function will be executed for every object of the array. This function will receive as a parameter each element of the original array, 
-and returns data that will be stored in the array returned by the function 'collect'
+ *
+ * Maps array elements using a block for the transfomation.
+ *
+ * @param  {Function} block Transforming function
+ *
+ * @return  {Array} Returns the trasformed image of self.
+ *
  * ###Example
- *     var number = [250,500,1143]
- *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
- *     //The result will be = [187.5,375,857.25]
+ *     var number     = [250, 500, 1143]
+ *     var discount   = 0.25
+ *     var discounted = number.collect(function(obj){ 
+ *                                  return obj * (1 - discount) 
+ *                               })
+ *     // =>  [187.5, 375, 857.25]
  */
 Array.prototype.collect = function(){
-        var collectable = []
-	for (var i = 0; i < this.length; i++) 
+  var collectable = []
+	
+  for (var i = 0; i < this.length; i++) 
 		collectable.push(Array.prototype.collect.yield(this[i]))
-        return collectable
+
+  return collectable
 }
+
+/**
+ * @method  map 
+ *
+ * Alias of {@link Array#collect Array#collect}
+ *
+ * Maps array elements using a block for the transfomation.
+ *
+ * @param  {Function} block Transforming function
+ *
+ * @return  {Array} Returns the trasformed image of self.
+ *
+ * ###Example
+ *     var number     = [250, 500, 1143]
+ *     var discount   = 0.25
+ *     var discounted = number.collect(function(obj){ 
+ *                                  return obj * (1 - discount) 
+ *                               })
+ *     // =>  [187.5, 375, 857.25]
+ */
+Array.prototype.map = function(){
+  return this.collect.apply(this, arguments)
+}
+
 /**
  * @method  select_if 
  * The method checks if every item of the array can pass a condition

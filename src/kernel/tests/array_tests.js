@@ -1,3 +1,4 @@
+
 /*
 assert("Array#uniq 1. Ordered elements", 
       "a", '["a", "b", "c"] ',  
@@ -205,19 +206,23 @@ assert("Array#rotate 3. Whithout argument", //Problemas con la comprobación. El
 assert("Array#rotate 4. Whith positive arguments", 
        "a.rotate(2)", '["c","d","a","b"]',
        'a = ["a","b","c","d"]')
-
+*/ 
 assert("Array#count 1. Without parameters.",
        "a.count()",'3',
        'a = ["a","b","c"]')
-       
+      
 assert("Array#count 2. With paremeter.",
        "a.count('a')",'1',
        'a = ["a","b","c"]')
+
+assert("Array#count 2a. With paremeter.",
+       "a.count('a')",'2',
+       'a = ["a","b","a"]')
        
 assert("Array#count 3. With condition.",
        "a.count(function(obj){ return obj > 'a' })",'2',
        'a = ["a","b","c"]')
-       
+/*       
 assert("Array#take 1.",
        "a.take(3)","[1,2,3]",
        "a = [1,2,3,4,5,6]") 
@@ -350,7 +355,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'null',
        'var number = [34,56,78,98]')
 */
-
+/*
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
@@ -362,7 +367,7 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
 assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements with the block return value.",
        "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
-
+*/
 /*assert("Array#strip_all 1. Sample testing ",
        'number.strip_all()',
        '[1,2,3,4]',

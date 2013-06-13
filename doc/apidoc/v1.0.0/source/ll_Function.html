@@ -30,7 +30,15 @@ Function.prototype.yield = function(){
      for (var i=this.arguments.length-1; i&gt;=0; i--)               
         if (typeof(this.arguments[i]) === &quot;function&quot;)         
             return this.arguments[i].apply(this, arguments)   
-}    
+}
+
+Function.prototype.block_given$U = function(){
+     var given = false
+     for (var i=this.arguments.length-1; i&gt;=0; i--)               
+        if (typeof(this.arguments[i]) === &quot;function&quot;)         
+           given = true
+     return given
+}
 
 <span id='global-property-'>/** Takes a function and prepare it to clone with the Function constructor.
 </span>*/
