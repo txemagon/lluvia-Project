@@ -1,3 +1,75 @@
+assert("Array.reflect 1. Single argument",
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.reflect('oneize'); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
+assert("Array.reflect 2. Single argument",
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect('oneize', 'twoize'); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
+
+assert("Array.reflect 3. List of arguments",
+       "a", "[2, 2, 2]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect('oneize', 'twoize'); \
+        a = [1, 2, 3]; a.twoize$B()" )
+
+assert("Array.reflect 4. Array argument",
+       "a", "[2, 2, 2]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect(['oneize', 'twoize']); \
+        a = [1, 2, 3]; a.twoize$B()" )
+
+assert("Array.reflect 5. Array argument",
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect(['oneize', 'twoize']); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
+
 assert("Array#uniq 1. Ordered elements", 
       "a", '["a", "b", "c"] ',  
       'a = ["a", "a", "b", "b", "c"].uniq()' )
