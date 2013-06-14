@@ -220,10 +220,14 @@ assert("Array#at 3. with a negative index.",
        'a.at(-7)','null',
        'a = ["dog", "cat", "hamster","fish"]')
 
-assert("Array#compact.",
+assert("Array#compact 1. with any null elements",
        'a.compact()','[1,2,3]',
        'a = [1,null,2,3,null]')
        
+assert("Array#compact 2. with only null elements",
+       'a.compact()','[]',
+       'a = [null,null,null]')
+
 assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       

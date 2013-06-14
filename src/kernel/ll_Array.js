@@ -348,9 +348,9 @@ Array.prototype.equals$U = function(other){
  *
  * Searches repeated items of an array and deletes them.
  *
- * @param  {function(object)}  block Indicates the position of the element to compare.
+ * @param  {function(object)}  Block Indicates the position of the element to compare.
  *
- * @return  {Array} Returns an array without repeated items.
+ * @return  {Array} Return Returns an array without repeated items.
  * 
  * ###Example
  *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
@@ -631,12 +631,16 @@ Array.prototype.at = function(){
  * 
  * Deletes the null elements of an array
  * 
- * @returns {Array} Returns clean array without null elements
+ * @returns {Array} Returns the array clean and null elements.
  * 
  * ###Example
  *     var numbers = [1,null,2,null,3,null,4,5,6,7,8,9]
  *     newNumbers = numbers.compact()
  *     // => [1,2,3,4,5,6,7,8,9]
+ *
+ *     var numbers = [null,null,null]
+ *     newNumbers = numbers.compact()
+ *     // => []
  */
 
 Array.prototype.compact = function(){

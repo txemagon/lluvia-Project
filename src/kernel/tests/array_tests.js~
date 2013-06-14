@@ -1,4 +1,4 @@
-assert("Array.reflect 1. Single argument",
+/*assert("Array.reflect 1. Single argument",
        "a", "[1, 1, 1]",
        "Array.prototype.oneize = function(){;\
             var result = []; \
@@ -189,8 +189,8 @@ assert("Array#erase$B 2. Delete array's elements with parameter and not found",
       "a = [1, 2, 2, 2, 3]")
 
 assert("Array#erase$B 3. Delete array's elements with parameter and not found",
-      "a.erase$B(0)", "[1, 2, 2, 2, 3]",
-      "a = [0, 1, 2, 2, 2, 3, 0]")
+      "a", "[1, 2, 2, 2, 3]",
+      "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
 
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
       "a", '[ "ant", "bat", "dog"]',
@@ -219,11 +219,15 @@ assert("Array#at 2. with a negative index.",
 assert("Array#at 3. with a negative index.",
        'a.at(-7)','null',
        'a = ["dog", "cat", "hamster","fish"]')
-
-assert("Array#compact.",
+*/
+assert("Array#compact 1. with any null elements",
        'a.compact()','[1,2,3]',
        'a = [1,null,2,3,null]')
        
+assert("Array#compact 2. with only null elements",
+       'a.compact()','[]',
+       'a = [null,null,null]')
+/*
 assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       
@@ -443,7 +447,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'number.indexOf(36, 0)',
        'null',
        'var number = [34,56,78,98]')
-
+*/
 /*
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
@@ -458,7 +462,7 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
 */
 
-assert("Array#strip_all 1. Sample testing ",
+/*assert("Array#strip_all 1. Sample testing ",
        'number.strip_all()',
        '[1,2,3,4]',
        'var number = [[1,2],[3,4]]')
@@ -502,4 +506,4 @@ assert("Array#combination(5).to_a 6.",
 
 assert("Array#compact$B.",
       "a","[1,2,3,4]",
-      "a = [1, null, 2, 3, null, 4]; a.compact$B()")
+      "a = [1, null, 2, 3, null, 4]; a.compact$B()")*/
