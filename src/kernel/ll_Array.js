@@ -302,11 +302,23 @@ Array.prototype.equals$U = function(other){
 }
 /**
  * @method  uniq
- * The method searches the repeated items of an array and deletes them from the returned array
- * @return  {Array} Returns an array with the repeated items deleted
+ *
+ * Searches repeated items of an array and deletes them.
+ *
+ * @param  {Function}  block \(element\) Indicates the position of the element to compare.
+ *
+ * @return  {Array} Returns an array without repeated items.
+ * 
  * ###Example
- *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1].uniq()
- *     //The result will be = [2, 1, 3]
+ *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
+ *     a.uniq()
+ *     // => [2, 1, 3]
+ *
+ *     a = [[2, 1], [2, 1, 2], [2, 3], [1, 1]]
+ *     a.uniq(function(element){ 
+ *              return element[0]
+ *            })
+ *     // => [[2, 1], [1, 1]]
  */
 Array.prototype.uniq = function(){
   var uniq = []
