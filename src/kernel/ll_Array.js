@@ -345,11 +345,23 @@ Array.prototype.equals$U = function(other){
 }
 /**
  * @method  uniq
- * The method searches the repeated items of an array and deletes them from the returned array
- * @return  {Array} Returns an array with the repeated items deleted
+ *
+ * Searches repeated items of an array and deletes them.
+ *
+ * @param  {function(object)}  Block Indicates the position of the element to compare.
+ *
+ * @return  {Array} Return Returns an array without repeated items.
+ * 
  * ###Example
- *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1].uniq()
- *     //The result will be = [2, 1, 3]
+ *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
+ *     a.uniq()
+ *     // => [2, 1, 3]
+ *
+ *     a = [[2, 1], [2, 1, 2], [2, 3], [1, 1]]
+ *     a.uniq(function(element){ 
+ *              return element[0]
+ *            })
+ *     // => [[2, 1], [1, 1]]
  */
 Array.prototype.uniq = function(){
   var uniq = []
@@ -616,12 +628,19 @@ Array.prototype.at = function(){
 
 /**
  * @method  compact
+ * 
  * Deletes the null elements of an array
- * @returns {Array} Returns clean array without null elements
+ * 
+ * @returns {Array} Returns the array clean and null elements.
+ * 
  * ###Example
  *     var numbers = [1,null,2,null,3,null,4,5,6,7,8,9]
  *     newNumbers = numbers.compact()
- *     //The result will be = [1,2,3,4,5,6,7,8,9]
+ *     // => [1,2,3,4,5,6,7,8,9]
+ *
+ *     var numbers = [null,null,null]
+ *     newNumbers = numbers.compact()
+ *     // => []
  */
 
 Array.prototype.compact = function(){
