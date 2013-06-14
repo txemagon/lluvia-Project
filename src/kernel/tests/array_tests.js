@@ -1,3 +1,23 @@
+assert("Array.isArray 1. With argument", 
+	"b", 'true',  
+      'a = [1,2,3,4,5]; b=Array.isArray(a)' )
+
+assert("Array.isArray 1. No argument", 
+	"b", 'false',  
+      'a = [1,2,3,4,5]; b=Array.isArray()' )
+
+assert("Array#take 1. Single numeric argument", 
+	"b", '[1,2,3]',  
+      'a = [1,2,3,4,5]; b = a.take(3)' )
+
+assert("Array#take 2. No argument", 
+	"b", 'null',  
+      'a = [1,2,3,4,5]; b = a.take()' )
+
+assert("Array#take 3. Single numeric negative argument", 
+	"b", '[]',  
+      'a = [1,2,3,4,5]; b = a.take(-3)' )
+
 assert("Array.reflect 1. Single argument",
        "a", "[1, 1, 1]",
        "Array.prototype.oneize = function(){;\
