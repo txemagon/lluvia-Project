@@ -481,7 +481,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  *     numbers.delete(3)
  *     //=> [1,2,3,5,6,7,8,9]
  */
-Array.prototype.erastxemae_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
+Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
   if(arguments.length > 1)
     return null
       //throw ("Wrong number of parameters")
@@ -583,14 +583,17 @@ Array.prototype.include$U = function(){
  * 
  * Searchs on an array the passed parameter and returns de array contains it.
  * 
- * @param  {String} Stgring searched parameter
+ * @param  {Object} object searched parameter.
+ * 
  * @return {Array} Array 
+ * 
  * ###Example
  *     var coupleOne = ["David", "Homer"]
  *     var coupleTwo = ["John", "Steve"]
- *     var index = [a,b]
- *     var winnerCouple = index.assoc("John")
- *     //=> ["John", "Steve"]
+ *     var index = [coupleOne, coupleTwo]
+ *     var winnerCouple = index.assoc("John")     //=> ["John","Steve"]
+ *     var winnerCouple = index.assoc(["John"])   //=> ["John","Steve"]
+ *     var winnerCouple = index.assoc("Homer")    //=> nil
  */
 
 Array.prototype.assoc = function(){
