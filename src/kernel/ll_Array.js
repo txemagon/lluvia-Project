@@ -476,23 +476,31 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 /**
  * @method  erase_at$B
  * 
- * Deletes the element on an specific position (parsed as parameter) of the original array
+ * Deletes the element on an specific position 
  * 
  * @param  {Number} Position of the array item to be deleted
+ *
+ * @return {Array} this
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.delete(3)
- *     //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(3)          //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(-1)         //=> [1,2,3,4,5,6,7,8]
+ *     numbers.erase_at$B()           //=> [2,3,4,5,6,7,8,9]
+ *     numbers.erase_at$B()   //=> [1,2,3,4,5,6,7,8]
+ * 
+ *    
  */
-Array.prototype.erastxemae_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
-  if(arguments.length > 1)
-    return null
-      //throw ("Wrong number of parameters")
-      if(arguments[0] > this.length)
-	return null
-	  this.splice(arguments[0],1)
-	  return this
+Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
+  if(arguments[0] != Number)
+    return null 
+    if(arguments.length > 1)
+      return null
+        //throw ("Wrong number of parameters")
+        if(arguments[0] > this.length)
+  	  return null
+  	    this.splice(arguments[0],1)
+  return this
 }
 
 /**
@@ -587,14 +595,17 @@ Array.prototype.include$U = function(){
  * 
  * Searchs on an array the passed parameter and returns de array contains it.
  * 
- * @param  {String} Stgring searched parameter
+ * @param  {Object} object searched parameter.
+ * 
  * @return {Array} Array 
+ * 
  * ###Example
  *     var coupleOne = ["David", "Homer"]
  *     var coupleTwo = ["John", "Steve"]
- *     var index = [a,b]
- *     var winnerCouple = index.assoc("John")
- *     //=> ["John", "Steve"]
+ *     var index = [coupleOne, coupleTwo]
+ *     var winnerCouple = index.assoc("John")     //=> ["John","Steve"]
+ *     var winnerCouple = index.assoc(["John"])   //=> ["John","Steve"]
+ *     var winnerCouple = index.assoc("Homer")    //=> nil
  */
 
 Array.prototype.assoc = function(){
@@ -1203,9 +1214,9 @@ Array.prototype.values_at = function(){
 
 /**
  *
- * @memberOf   {Array}
- * @method   to_a
- * @param       (any).
+ * @member     {Array}
+ * @method      to_a
+ * @param       {Object} this
  *
  * Coded by: David
  *
@@ -1219,35 +1230,33 @@ Array.prototype.to_a = function(){
 
 /**
  *
- * @memberOf   {Array}
+ * @member       {Array}
  * @method       Cycle
- * @param       (function {}).
+ * @param        {function {}}
  *
- * Coded by: David
  *
  * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
  */
 Array.prototype.cycle = function(){
-
+  
+   return this 
 }
 
 /**
  *
- * @memberOf    {Array}
+ * @member       {Array}
+ * 
+ * search strings into array
+ * 
  * @method       strip_all
- * @param       (function {}).
  *
- * Coded by: imasen
+ * @param        {Object} this
  *
- * Comments: strips each of the string elements of an array
- */
-
-/**
- * @method  strip_all
- * Return all values of the content of an array, including bidimensional array
- * @return {Array} New array with values of index selected
- * @param {Integer} The index to be selected
- * ###Example
+ * @return       {Object} this
+ *
+ *
+ * Comments: strips each of the string elements of an array 
+ * 
  *     var a = [[1,2],[3,4]]
  *     a.strip_all()
  *     //The result will be = [1,2,3,4]
