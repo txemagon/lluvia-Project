@@ -1,4 +1,98 @@
-/*
+<<<<<<< HEAD
+assert("Array.isArray 1. With argument", 
+	"b", 'true',  
+      'a = [1,2,3,4,5]; b=Array.isArray(a)' )
+
+assert("Array.isArray 1. No argument", 
+	"b", 'false',  
+      'a = [1,2,3,4,5]; b=Array.isArray()' )
+
+assert("Array#take 1. Single numeric argument", 
+	"b", '[1,2,3]',  
+      'a = [1,2,3,4,5]; b = a.take(3)' )
+
+assert("Array#take 2. No argument", 
+	"b", 'null',  
+      'a = [1,2,3,4,5]; b = a.take()' )
+
+assert("Array#take 3. Single numeric negative argument", 
+	"b", '[]',  
+      'a = [1,2,3,4,5]; b = a.take(-3)' )
+
+assert("Array.reflect 1. Single argument",
+=======
+/*assert("Array.reflect 1. Single argument",
+>>>>>>> ca6460e45eef3efee5000c54e10c841ead01a98e
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.reflect('oneize'); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
+assert("Array.reflect 2. Single argument",
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect('oneize', 'twoize'); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
+
+assert("Array.reflect 3. List of arguments",
+       "a", "[2, 2, 2]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect('oneize', 'twoize'); \
+        a = [1, 2, 3]; a.twoize$B()" )
+
+assert("Array.reflect 4. Array argument",
+       "a", "[2, 2, 2]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect(['oneize', 'twoize']); \
+        a = [1, 2, 3]; a.twoize$B()" )
+
+assert("Array.reflect 5. Array argument",
+       "a", "[1, 1, 1]",
+       "Array.prototype.oneize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 1;\
+            return result; \
+        }; \
+        Array.prototype.twoize = function(){;\
+            var result = []; \
+            for (var i=0; i<this.length; i++) result[i] = 2;\
+            return result; \
+        }; \
+        Array.reflect(['oneize', 'twoize']); \
+        a = [1, 2, 3]; a.oneize$B()" )
+
 assert("Array#uniq 1. Ordered elements", 
       "a", '["a", "b", "c"] ',  
       'a = ["a", "a", "b", "b", "c"].uniq()' )
@@ -118,6 +212,10 @@ assert("Array#erase$B 2. Delete array's elements with parameter and not found",
       "a.erase$B(4)", "null",
       "a = [1, 2, 2, 2, 3]")
 
+assert("Array#erase$B 3. Delete array's elements with parameter and not found",
+      "a", "[1, 2, 2, 2, 3]",
+      "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
+
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
       "a", '[ "ant", "bat", "dog"]',
       'a = [ "ant", "bat", "cat", "dog"]; a.erase_at$B(2)')
@@ -145,11 +243,15 @@ assert("Array#at 2. with a negative index.",
 assert("Array#at 3. with a negative index.",
        'a.at(-7)','null',
        'a = ["dog", "cat", "hamster","fish"]')
-
-assert("Array#compact.",
+*/
+assert("Array#compact 1. with any null elements",
        'a.compact()','[1,2,3]',
        'a = [1,null,2,3,null]')
        
+assert("Array#compact 2. with only null elements",
+       'a.compact()','[]',
+       'a = [null,null,null]')
+/*
 assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       
@@ -169,6 +271,10 @@ assert("Array#index 1. with a existing object",
 assert("Array#index 2. with a unexisting object",
        'a.index("z")',"null",
        'a = ["a","b","c"]')
+
+assert("Array#index 3. Criteria",
+       "a.index( function(element){ return element > 6 ? true : false })", "3",
+       "a = [4, 5, 2, 8, 7, 1]")
        
 assert("Array#product.",
       "a.product([4,5])","[[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]]",
@@ -209,15 +315,19 @@ assert("Array#rotate 4. Whith positive arguments",
 assert("Array#count 1. Without parameters.",
        "a.count()",'3',
        'a = ["a","b","c"]')
-       
+      
 assert("Array#count 2. With paremeter.",
        "a.count('a')",'1',
        'a = ["a","b","c"]')
+
+assert("Array#count 2a. With paremeter.",
+       "a.count('a')",'2',
+       'a = ["a","b","a"]')
        
 assert("Array#count 3. With condition.",
        "a.count(function(obj){ return obj > 'a' })",'2',
        'a = ["a","b","c"]')
-       
+      
 assert("Array#take 1.",
        "a.take(3)","[1,2,3]",
        "a = [1,2,3,4,5,6]") 
@@ -233,7 +343,19 @@ assert("Array#shuffle",
 assert("Array#collect.",
        'a.collect(function(obj){ return obj + "!" })','["a!","b!","c!"]',
        'a = ["a","b","c"]')
+
+assert("Array#map. Array#collect alias",
+       'a.map(function(obj){ return obj + "!" })','["a!","b!","c!"]',
+       'a = ["a","b","c"]')
+
+assert("Array#collect$B.",
+       'a','["a!","b!","c!"]',
+       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
        
+assert("Array#map$B.",
+       'a','["a!","b!","c!"]',
+       'a = ["a","b","c"]; a.map$B(function(obj){ return obj + "!" })')
+
 assert("Array#transpose 1. With non-square matrices",//problemas con los assert
        "a.transpose()","[[1,3,5],[2,4,6]]",
        "a = [[1,2],[3,4],[5,6]]") 
@@ -350,7 +472,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'null',
        'var number = [34,56,78,98]')
 */
-
+/*
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
@@ -360,26 +482,24 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
        "var cities = ['Madrid', 'Barcelona', 'Valencia']")
 
 assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements with the block return value.",
-       "cities.sort_by(function(el){ return el.toLowerCase() })", "['Madrid', 'Valencia', 'Barcelona']",
+       "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
+*/
 
 /*assert("Array#strip_all 1. Sample testing ",
        'number.strip_all()',
        '[1,2,3,4]',
-       'var number = [[1,2],[3,4]]')*/
-/*
+       'var number = [[1,2],[3,4]]')
+
 assert("Array#inject 1. Sample testing ",
        'number.inject(1)',
        'null',
        'var number = [1,2,3,4]; var num2 = [1,2,3,4]')
-*/
 
-
-/*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
-       "a = [1,2,3,4]")*/
-/*
+       "a = [1,2,3,4]")
+
 assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
        'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" }')
@@ -408,11 +528,6 @@ assert("Array#combination(5).to_a 6.",
        "a.combination(5).to_a","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 
-assert"Array#compact$B.",
+assert("Array#compact$B.",
       "a","[1,2,3,4]",
-      "a = [1, null, 2, 3, null, 4]; a.compact$B()")
-
-*/
-
-
-
+      "a = [1, null, 2, 3, null, 4]; a.compact$B()")*/

@@ -1,3 +1,23 @@
+assert("Array.isArray 1. With argument", 
+	"b", 'true',  
+      'a = [1,2,3,4,5]; b=Array.isArray(a)' )
+
+assert("Array.isArray 1. No argument", 
+	"b", 'false',  
+      'a = [1,2,3,4,5]; b=Array.isArray()' )
+
+assert("Array#take 1. Single numeric argument", 
+	"b", '[1,2,3]',  
+      'a = [1,2,3,4,5]; b = a.take(3)' )
+
+assert("Array#take 2. No argument", 
+	"b", 'null',  
+      'a = [1,2,3,4,5]; b = a.take()' )
+
+assert("Array#take 3. Single numeric negative argument", 
+	"b", '[]',  
+      'a = [1,2,3,4,5]; b = a.take(-3)' )
+
 assert("Array.reflect 1. Single argument",
        "a", "[1, 1, 1]",
        "Array.prototype.oneize = function(){;\
@@ -188,6 +208,10 @@ assert("Array#erase$B 2. Delete array's elements with parameter and not found",
       "a.erase$B(4)", "null",
       "a = [1, 2, 2, 2, 3]")
 
+assert("Array#erase$B 3. Delete array's elements with parameter and not found",
+      "a", "[1, 2, 2, 2, 3]",
+      "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
+
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
       "a", '[ "ant", "bat", "dog"]',
       'a = [ "ant", "bat", "cat", "dog"]; a.erase_at$B(2)')
@@ -216,10 +240,14 @@ assert("Array#at 3. with a negative index.",
        'a.at(-7)','null',
        'a = ["dog", "cat", "hamster","fish"]')
 
-assert("Array#compact.",
+assert("Array#compact 1. with any null elements",
        'a.compact()','[1,2,3]',
        'a = [1,null,2,3,null]')
        
+assert("Array#compact 2. with only null elements",
+       'a.compact()','[]',
+       'a = [null,null,null]')
+
 assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       

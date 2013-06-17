@@ -82,7 +82,6 @@ Array.prototype.each = function(){
     Array.prototype.each.yield(this[i])
       return this
 }
-
 /**
  * @method  each_index
  *
@@ -106,7 +105,7 @@ Array.prototype.each_index = function(){
 }
 
 /**
- * @method  each_with_index
+ * @method  each_with_indextxema
  *
  * Calls the block with the element and its index.
  *
@@ -346,11 +345,23 @@ Array.prototype.equals$U = function(other){
 }
 /**
  * @method  uniq
- * The method searches the repeated items of an array and deletes them from the returned array
- * @return  {Array} Returns an array with the repeated items deleted
+ *
+ * Searches repeated items of an array and deletes them.
+ *
+ * @param  {function(object)}  Block Indicates the position of the element to compare.
+ *
+ * @return  {Array} Return Returns an array without repeated items.
+ * 
  * ###Example
- *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1].uniq()
- *     //The result will be = [2, 1, 3]
+ *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
+ *     a.uniq()
+ *     // => [2, 1, 3]
+ *
+ *     a = [[2, 1], [2, 1, 2], [2, 3], [1, 1]]
+ *     a.uniq(function(element){ 
+ *              return element[0]
+ *            })
+ *     // => [[2, 1], [1, 1]]
  */
 Array.prototype.uniq = function(){
   var uniq = []
@@ -401,7 +412,7 @@ Array.prototype.uniq$B = function(){
  */
 Array.prototype.first = function(){
   if (this.length == 0)
-    return null
+   return null
       if (arguments.length == 0)
 	return this[0]
 	  var ary = []
@@ -432,19 +443,26 @@ Array.prototype.last = function(){
 }
 /**
  * @method  erase$B
- * Deletes the element on an specific position (parsed as parameter) of the original array
- * @param  {Integer} Position of the array item to be deleted
+ * 
+ * Deletes the element on an specific index 
+ * 
+ * @param  {Number} Index 
+ * 
+ * @returns {Object} This
+ * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.delete(3)
  *     //The result will be = [1,2,3,5,6,7,8,9]
  */
+
 Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
+  //todo: error on erase$B
   if(arguments.length > 1)
     return null
       //throw ("Wrong number of parameters")
       var find = false
-      for(var i = this.length-1; i>0; i--)
+      for(var i = this.length-1; i>=0; i--)
 	if(this[i] == arguments[0]){
 	  this.splice(i,1)
 	    find = true;
@@ -453,14 +471,17 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 }
 /**
  * @method  erase_at$B
+ * 
  * Deletes the element on an specific position (parsed as parameter) of the original array
- * @param  {Integer} Position of the array item to be deleted
+ * 
+ * @param  {Number} Position of the array item to be deleted
+ * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.delete(3)
- *     //The result will be = [1,2,3,5,6,7,8,9]
+ *     //=> [1,2,3,5,6,7,8,9]
  */
-Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
+Array.prototype.erastxemae_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
   if(arguments.length > 1)
     return null
       //throw ("Wrong number of parameters")
@@ -559,15 +580,17 @@ Array.prototype.include$U = function(){
 }
 /**
  * @method  assoc
- * Searches for an object of an array from an array index and returns the array where the method finds the object passed as a parameter
- * @param  {Object} Array that contains the index of an array from where the method searches
- * @return {Array} Array that will be selected if the object parsed as parameter is found
+ * 
+ * Searchs on an array the passed parameter and returns de array contains it.
+ * 
+ * @param  {String} Stgring searched parameter
+ * @return {Array} Array 
  * ###Example
  *     var coupleOne = ["David", "Homer"]
  *     var coupleTwo = ["John", "Steve"]
  *     var index = [a,b]
  *     var winnerCouple = index.assoc("John")
- *     //The result will be = ["John", "Steve"]
+ *     //=> ["John", "Steve"]
  */
 
 Array.prototype.assoc = function(){
@@ -605,12 +628,19 @@ Array.prototype.at = function(){
 
 /**
  * @method  compact
+ * 
  * Deletes the null elements of an array
- * @returns {Array} Returns clean array without null elements
+ * 
+ * @returns {Array} Returns the array clean and null elements.
+ * 
  * ###Example
  *     var numbers = [1,null,2,null,3,null,4,5,6,7,8,9]
  *     newNumbers = numbers.compact()
- *     //The result will be = [1,2,3,4,5,6,7,8,9]
+ *     // => [1,2,3,4,5,6,7,8,9]
+ *
+ *     var numbers = [null,null,null]
+ *     newNumbers = numbers.compact()
+ *     // => []
  */
 
 Array.prototype.compact = function(){
@@ -1315,4 +1345,8 @@ function _transpose(pos, nary){
 	return array
 }
 
+<<<<<<< HEAD
 Array.reflect(Array.bang_methods)
+=======
+Array.reflect(bang_methods)
+>>>>>>> 8009354a666bc4a0ebacd15821f5a704f0a76a2d
