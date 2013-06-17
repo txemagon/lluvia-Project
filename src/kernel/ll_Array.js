@@ -3,7 +3,7 @@
  *
  */
 
- var bang_methods = [ 
+ Array.bang_methods = [ 
                       "collect",
                       "map",
                       "clone"
@@ -1315,4 +1315,4 @@ function _transpose(pos, nary){
 	return array
 }
 
-Array.reflect(bang_methods)
+Array.reflect(Array.bang_methods)
