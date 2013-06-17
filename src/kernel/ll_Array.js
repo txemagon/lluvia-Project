@@ -3,6 +3,7 @@
  *
  */
 
+
  Array.bang_methods = [ 
                       "collect",
                       "map",
@@ -272,8 +273,11 @@ Array.prototype.select_if = function(){
 
 /**
  * @method  indexOf
- * The method searches for an object in every position of the array, starting at position parsed as parameter
- * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null
+ * 
+ * The method searches for an object in every position of the array, 
+ * starting at position passed as parameter.
+ * 
+ * @return  {Number} Returns the position of the searched element. If the element does not exist, it returns null
  /bin/bash: Applications: command not found
  * @param  {Object} The object that will be searched
  * @param  {Integer} Position to start search
@@ -1345,8 +1349,5 @@ function _transpose(pos, nary){
 	return array
 }
 
-<<<<<<< HEAD
 Array.reflect(Array.bang_methods)
-=======
-Array.reflect(bang_methods)
->>>>>>> 8009354a666bc4a0ebacd15821f5a704f0a76a2d
+

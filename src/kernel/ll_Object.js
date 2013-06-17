@@ -268,39 +268,5 @@ Object.prototype.method_missing = function (method, obj, params){
   bad_function()
 }
 
-Object.prototype.create_attr = function(attr){
-   if (typeof(this[attr]) == "undefined")
-	this[attr] = null
-}
 
-Object.prototype.attr_reader = function (names){
-   for (var i=0; i<arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_readers.push(name) 
-        this["get" + name.replace(name[0], name[0].toUpperCase())] = this["get_" + name] = function(){ return eval("this." + name) }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_reader is not supported.
-      }
-   }
-}
-
-Object.prototype.attr_writer = function (names){
-for (var i=0; i<arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_writers.push(name) 
-        this["set" + name.replace(name[0], name[0].toUpperCase())] = this["set_" + name] = function(value){ this[name] = value }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_writer is not supported.
-      }
-  }
-}
-
-Object.prototype.attr_accessor = function(name){
-     this.attr_reader(name) 
-     this.attr_writer(name) 
-}
 
