@@ -277,7 +277,6 @@ Array.prototype.select_if = function(){
  *
  * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null
  /bin/bash: Applications: command not found
- *
  * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
  *
  * ###Example
