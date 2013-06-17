@@ -3,13 +3,17 @@ __Module.prototype.constructor = Module
 function __Module(){ ; }
 
 Module.prototype.constructor = Module
+Module._constants = new Hash()
+
 function Module(module_name, block){
   
   var module = new __Module
+  Module._constants = Module._constants || new Hash()
 
   if (typeof(block) !== "undefined")
      block.call(module)
   
+  Module._constants[module_name] = module
   $global_space["$constants"][module_name] = module
   
   eval.call( null, 
@@ -20,6 +24,13 @@ function Module(module_name, block){
 
 }
 
+Module.constant_names = function(){ 
+    return Module._constants.self_keys()
+  }
+
+Module.constants = function(){ 
+    return Module._constants.values()
+}
 
 function require(){
   //todo: define require to require another libraries not included in the index.js
