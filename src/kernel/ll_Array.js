@@ -472,23 +472,31 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 /**
  * @method  erase_at$B
  * 
- * Deletes the element on an specific position (parsed as parameter) of the original array
+ * Deletes the element on an specific position 
  * 
  * @param  {Number} Position of the array item to be deleted
+ *
+ * @return {Array} this
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.delete(3)
- *     //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(3)          //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(-1)         //=> [1,2,3,4,5,6,7,8]
+ *     numbers.erase_at$B()           //=> [2,3,4,5,6,7,8,9]
+ *     numbers.erase_at$B()   //=> [1,2,3,4,5,6,7,8]
+ * 
+ *    
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
-  if(arguments.length > 1)
-    return null
-      //throw ("Wrong number of parameters")
-      if(arguments[0] > this.length)
-	return null
-	  this.splice(arguments[0],1)
-	  return this
+  if(arguments[0] != Number)
+    return null 
+    if(arguments.length > 1)
+      return null
+        //throw ("Wrong number of parameters")
+        if(arguments[0] > this.length)
+  	  return null
+  	    this.splice(arguments[0],1)
+  return this
 }
 
 /**
