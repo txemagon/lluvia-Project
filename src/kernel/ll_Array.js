@@ -191,7 +191,6 @@ Array.prototype.count = function(obj){
  *                             })
  *     sentence
  *     //=> "I DON'T LIKE THIS JOB "
- *
  */
 
 Array.prototype.reverse_each = function(){
@@ -255,12 +254,14 @@ Array.prototype.alias("map", "collect")
  *
  * Collects those elements passing a given condition.
  *
- * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted
- * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted
+ * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted.
+ *
+ * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ *
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
  *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
- *     //The result will be = [187.5,375,857.25]
+ *     // => [187.5,375,857.25]
  */
 Array.prototype.select_if = function(){
   var collectable = []
@@ -273,9 +274,9 @@ Array.prototype.select_if = function(){
 /**
  * @method  indexOf
  *
- * Searches for an object in every position of the array, starting at position parsed as parameter
+ * Searches for an object in every position of the array, starting at position parsed as parameter.
  *
- * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null
+ * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
  /bin/bash: Applications: command not found
  *
  * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
