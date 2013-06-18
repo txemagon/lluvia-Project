@@ -1438,10 +1438,10 @@ Array.prototype.__secure_combination = function(number, base, initial){
   if (number <= 0)
     return base
   for (var i=initial; i<this.length-number; i++){
-      base.push( base.empty$U() ? [this[i]].clone() : base.push(this[i]) )
+      base.push( base.empty$U() ? [this[i]] : base.push(this[i]) )
       base.push( 
         this.__secure_combination( number-1, 
-                                   base, 
+                                   base.clone(), 
                                   i+1 )
         )
   }        
