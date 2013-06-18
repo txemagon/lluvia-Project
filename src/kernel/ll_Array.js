@@ -556,9 +556,10 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
 /**
  * @method  erase_if
  *
- * Deletes every element of the array which block passed as parameter evaluates to true.
+ * Deletes all the array elements that meet the condition specified by the block..
  *
- * @param  {function} Block that must contain a condition by which the element will be erased or not. Returns true or false
+ * @param  {function} Block that must contain a condition by which the element will be erased or not. 
+ * @returns {array} Returns those elements that satisfy the condition.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if(function(obj){ return obj > 2? obj: null})
@@ -698,8 +699,8 @@ Array.prototype.assoc = function(){
 }
 /**
  * @method  at
- * returns the element corresponding to the index passed as parameter
- * @param  {Integer} Array index position
+ * Extracts array element using its position as index to find it.
+ * @param  {NUmber} Array index position
  * @return {Object} The selected element by index passed as parameter
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
