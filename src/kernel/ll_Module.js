@@ -39,12 +39,13 @@ function require(){
 /**
  * @method alias_method
  *
- * Creates a compu of the old name function.
+ * Creates a copy of the old name function with the new name.
  * 
- * @param  {string} new_name 
+ * @param  {string | Function} new_name 
  * @param  {string} old_name
  * @return {Function}  returns a reference to the newly created function.
  */
 Module.prototype.alias_method = function(new_name, old_name){
-
+  if (String.is_string$U(new_name)
+  
 }

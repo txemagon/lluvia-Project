@@ -6,6 +6,15 @@ if (typeof Object.extend !== 'function') {
     };
 }
 
+/**
+ * @method alias
+ *
+ * Creates a reference to an original method. Changing 
+ * the original one behavior, the alias is also changing.
+ *  
+ * @param  {string} alias_name      Name of the new method.
+ * @param  {string} original_method Name of the original method.
+ */
 Object.prototype.alias = function(alias_name, original_method){
   this[alias_name] = function(){
     return this[original_method].apply(this, arguments)
