@@ -515,11 +515,11 @@ assert("Array#inject 1. Sample testing ",
 
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
-       "a = [1,2,3,4]")
+       "a = [O(1), 2, 3, 4]")
 
 assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
-       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" }')
+       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
 
 assert("Array#combination.to_a 1.",
        'a.combination(1).to_a',"[[1],[2],[3],[4]",
