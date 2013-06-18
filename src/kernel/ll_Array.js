@@ -615,7 +615,7 @@ Array.prototype.assoc = function(){
 }
 /**
  * @method  at
- * returns the element corresponding to the index passed as parameter
+ * Extracts array element using its position as index to find it.
  * @param  {Integer} Array index position
  * @return {Object} The selected element by index passed as parameter
  * ###Example
