@@ -956,12 +956,26 @@ Array.prototype.rindex = function(){
 /**
  * @method  rotate
  * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
- * @param {Integer} Stablish the center of the array rotation
+ * @param {Number} 
+ * Stablish the center of the array rotation.
+ * @return {Array} Items ordered.
  * ###Example
  *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
  *     characters.rotate(2)
  *     //The result will be = [&quot;c&quot;,&quot;d&quot;,&quot;a&quot;,&quot;b&quot;]
+ *
+ * ###Example
+ *     var characters = []
+ *     characters.rotate(2)
+ *     //The result will be = null
+ *
+ * ###Example
+ *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
+ *     characters.rotate(3)
+ *     //The result will be = [&quot;d&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
  */
+
+
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === &quot;undefined&quot;){
     var ary = this.clone()

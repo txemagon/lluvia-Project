@@ -939,7 +939,8 @@ Array.prototype.rindex = function(){
 /**
  * @method  rotate
  * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
- * @param {Number} Stablish the center of the array rotation.
+ * @param {Number} 
+ * Stablish the center of the array rotation.
  * @return {Array} Items ordered.
  * ###Example
  *     var characters = ["a","b","c","d"]
