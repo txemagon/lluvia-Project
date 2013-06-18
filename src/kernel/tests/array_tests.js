@@ -545,28 +545,28 @@ assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
        'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
 
-assert("Array#combination.to_a 1.",
-       'a.combination(1).to_a',"[[1],[2],[3],[4]",
+assert("Array#combination 1.",
+       'a.combination(1)',"[[1],[2],[3],[4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 2. Other example",
-       "a.combination(2).to_a","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
+assert("Array#combination 2. Other example",
+       "a.combination(2)","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 3.",
-        "a.combination(3).to_a","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
+assert("Array#combination 3.",
+        "a.combination(3)","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
         "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 4.",
-       "a.combination(4).to_a","[[1,2,3,4]]",
+assert("Array#combination 4.",
+       "a.combination(4)","[[1,2,3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 5.",
-       "a.combination(0).to_a","[[]]",
+assert("Array#combination 5.",
+       "a.combination(0)","[[]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination(5).to_a 6.",
-       "a.combination(5).to_a","[]", //no combinations of length 5
+assert("Array#combination(5) 6.",
+       "a.combination(5)","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 
 assert("Array#compact$B.",

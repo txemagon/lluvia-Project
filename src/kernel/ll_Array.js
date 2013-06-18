@@ -1369,12 +1369,11 @@ Array.prototype.cycle = function(){
 }
 
 /**
- * @method       strip_all
+ * @method strip_all
  * 
  * strips each of the string elements of an array 
  *
- * @param        {Object} this
- * @return       {Object} this
+ * @return  {Array} A new array with stripped elements.
  *
  *
  * ###Example
@@ -1387,6 +1386,66 @@ Array.prototype.strip_all = function(){
   return this.collect(function(el){
     return el.respond_to("strip") ? el.strip() : el
   })
+}
+
+/**
+ * @method combination
+ *
+ * Generates all the possible combinations grouped by *number*.
+ *  
+ * @param  {number} number Grouping amount
+ * @return {Array}         All the combinations.
+ *
+ * ###Example
+ *      a = [1, 2, 3, 4]
+ *      a.combination(1)  //=> [[1], [2], [3], [4]]
+ *      a.combination(2)  //=> [[1,2], [1,3], [1,4], [2, 3], [2, 4], [3, 4]]
+ *      a.combination(3)  //=> [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
+ *      a.combination(4)  //=> [[1, 2, 3, 4]]
+ *      a.combination(0)  //=> [[]]
+ *      a.combination(5)  //=> []
+ *
+ * ###Diagram
+ *
+ * For pairs of 3
+ * 
+ *      1    2 
+ *     / \   |
+ *    2   3  3
+ *   / \  |  |
+ *  3   4 4  4
+ */
+Array.prototype.combination = function(number){
+  if (! is_a_number(number) )
+    throw "Array#combination. Parameter must be a number."
+  if (number == 0)
+    return [[]]
+  if (number > this.length)
+    return []
+  var result = []
+  if (number == this.length)
+    return [this.clone()]
+  if (number == 1)
+    return this.collect(function(el){ return [el] })
+  return this.__secure_combination(number, [], 0)
+
+}
+
+Array.prototype.__secure_combination = function(number, base, initial){
+  alert( "Number: " + number + "\n" +
+         "Base: " + base.toSource() + "\n" +
+         "Initial: " + initial )
+  if (number <= 0)
+    return base
+  for (var i=initial; i<this.length-number; i++){
+      base.push( base.empty$U() ? [this[i]].clone() : base.push(this[i]) )
+      base.push( 
+        this.__secure_combination( number-1, 
+                                   base, 
+                                  i+1 )
+        )
+  }        
+  return base
 }
 
 /**
