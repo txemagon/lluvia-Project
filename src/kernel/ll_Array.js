@@ -644,14 +644,20 @@ Array.prototype.delete$B = function(obj){
 /**
  * @method include$U
  * 
- * Searches every item of the array for the number passed as parameter. If it is found, it returns true. If not, false.
+ * Searches every item of the array for the object passed as parameter.
  * 
  * @param  {Object} Object that the method will search for.
- * @return {Boolean} Returns the result of the search. if item is included, returns true. If not, false
+ *
+ * @return {Boolean} Returns the result of the search. If item is included, returns true. If not, false.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.include$U(3)
- *     //=> true
+ *     // => true
+ *
+ *     var names = ["carlos","jordan","david","susan"]
+ *     newName = names.include$U('susan')
+ *     // => true
  */
 Array.prototype.include$U = function(){
   if(arguments.length != 1)
