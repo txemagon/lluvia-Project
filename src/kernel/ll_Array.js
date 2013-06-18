@@ -558,6 +558,7 @@ Array.prototype.replace = function(){
 		this[i] = arguments[0][i]
 		  return this
 }
+
 /**
  *
  * PREGUNTAR A TXEMA FUNCIONAMIENTO
@@ -570,6 +571,7 @@ Array.prototype.delete$B = function(obj){
 
 	return this.splice(position, 1)[0]
 }
+
 /**
  * @method  include$U
  * Goes through every item of the array searching if the integer parsed as parameter is in the array. If so, it returns true. If not, false.
