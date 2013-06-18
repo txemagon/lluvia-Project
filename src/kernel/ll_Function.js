@@ -1,3 +1,4 @@
+
 Function.prototype.bind = function(object){
 	var f = this
 	return function(){ f.apply(object, arguments) }
