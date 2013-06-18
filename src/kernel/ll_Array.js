@@ -475,14 +475,23 @@ Array.prototype.first = function(){
 /**
  * @method  last
  *
- * Returns the last element or elements of an array -it will depend on the number of elements meeting the parameters.
+ * Returns the element or elements of an array starting from the end. It will depend on the number of elements meeting the parameters.
  *
  * @return  {Array} Returns the last element or elements of the array
  * @param  {Number} Position to start including the elements in the returned array
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
+ *     //The result will be = [,5,6,7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     filterNumbers = numbers.last(2)
  *     //The result will be = [8,9]
+* ###Example
+ *     var numbers = []
+ *     filterNumbers = numbers.last(2)
+ *     //The result will be = null
  */
 Array.prototype.last = function(){
   if (this.length == 0)

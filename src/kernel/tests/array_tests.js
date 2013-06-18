@@ -164,6 +164,14 @@ assert("Array#last 4. Empty array without parameters",
       "a.last()", "null",
       "a = []")
 
+assert("Array#last 5. with parametres",
+      "a.last(4)", "[3,4,5,6]",
+      "a = [1,2,3,4,5,6]")
+
+assert("Array#last 6. with parametres",
+      "a.last(2)", "[5,6]",
+      "a = [1,2,3,4,5,6]")
+
 assert("Array#include$U 1. Search a item in array with parameter",
       "a.include$U(2)", "true",
       "a = [1, 2, 3, 4, 5]")
