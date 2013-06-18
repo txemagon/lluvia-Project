@@ -1067,15 +1067,27 @@ Array.prototype.collect = function(){
 
 /**
  *
- * @memberOf   {Array}
- * @method     transpose
- * @param       (Array of Arrays).
- *
- * Coded by: David
- *
+ * @method   transpose
+ * //Por verificar: Agrupa en diferentes matrizes o bien... nose exactamento lo que hace.
+ * Los ejemplos o bien le das una serie de numeros y te los subdivie por pares o impares o.. 
+ * te los agrupa el numero de numeros que hay
+ * @param   {Array}
+ * @return  {Array}
+ * 
  * Comments:   Assumes that self is an array of arrays and transposes the rows and columns.
+ * 
+ * ###Example
+ *     var numbers = [[1,2],[3,4],[5,6]]
+ *     numbers.transpose()
+ *     //The result will be = [[1,3,5],[2,4,6]]
+ * 
+ * ###Example
+ *     var numbers = [[1,2,3],[1,2,3],[1,2,3]]
+ *     numbers.transpose()
+ *     //The result will be = [[1,1,1],[2,2,2],[3,3,3]]
  */
-
+ 
+ //¿¿Esto esta bien??
 
 Array.prototype.transpose = function(){
   /**

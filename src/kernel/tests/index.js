@@ -12,11 +12,11 @@ var _test_index = [ /* We first bring lluvia */
                     /* And we then bring asserts */
                     //"object_tests.js",
                     //"function_tests.js",
-                    //"array_tests.js"
+                    "array_tests.js"
                     //"string_tests.js"
                     //"object_tests.js",
                     //"class_tests.js"
-                    "basic_object_tests.js",
-                    "module_tests.js"
+                    //"basic_object_tests.js",
+                    //"module_tests.js"
                   ]
 
