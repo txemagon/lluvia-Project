@@ -1394,4 +1394,14 @@ String.prototype.bytesize = function(){
     return this.length
 }
 
+/**
+ * @method is_string$U
+ *
+ * @param  {string | String} name 
+ * @return {boolean}      true if name is any kind of string
+ */
+String.is_string$U = function(name){
+  return typeof(name) === "string" || name instanceof String
+}
+
 

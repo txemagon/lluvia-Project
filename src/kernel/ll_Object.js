@@ -6,6 +6,15 @@ if (typeof Object.extend !== 'function') {
     };
 }
 
+/**
+ * @method alias
+ *
+ * Creates a reference to an original method. Changing 
+ * the original one behavior, the alias is also changing.
+ *  
+ * @param  {string} alias_name      Name of the new method.
+ * @param  {string} original_method Name of the original method.
+ */
 Object.prototype.alias = function(alias_name, original_method){
   this[alias_name] = function(){
     return this[original_method].apply(this, arguments)
@@ -268,39 +277,5 @@ Object.prototype.method_missing = function (method, obj, params){
   bad_function()
 }
 
-Object.prototype.create_attr = function(attr){
-   if (typeof(this[attr]) == "undefined")
-	this[attr] = null
-}
 
-Object.prototype.attr_reader = function (names){
-   for (var i=0; i<arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_readers.push(name) 
-        this["get" + name.replace(name[0], name[0].toUpperCase())] = this["get_" + name] = function(){ return eval("this." + name) }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_reader is not supported.
-      }
-   }
-}
-
-Object.prototype.attr_writer = function (names){
-for (var i=0; i<arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_writers.push(name) 
-        this["set" + name.replace(name[0], name[0].toUpperCase())] = this["set_" + name] = function(value){ this[name] = value }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_writer is not supported.
-      }
-  }
-}
-
-Object.prototype.attr_accessor = function(name){
-     this.attr_reader(name) 
-     this.attr_writer(name) 
-}
 

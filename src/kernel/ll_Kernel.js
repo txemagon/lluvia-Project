@@ -14,6 +14,7 @@ catch (e) {
 }	
 
 $global_space = (function(){return this;}).call(null) 
+$global_space["$constants"] = {}
 
 function method_missing(error, method, params){
   if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))

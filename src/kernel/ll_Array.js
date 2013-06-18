@@ -3,7 +3,8 @@
  *
  */
 
- var bang_methods = [ 
+
+ Array.bang_methods = [ 
                       "collect",
                       "map",
                       "clone"
@@ -273,10 +274,18 @@ Array.prototype.select_if = function(){
 
 /**
  * @method  indexOf
+<<<<<<< HEAD
  *
  * Searches for an object in every position of the array, starting at position parsed as parameter.
  *
  * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
+=======
+ * 
+ * The method searches for an object in every position of the array, 
+ * starting at position passed as parameter.
+ * 
+ * @return  {Number} Returns the position of the searched element. If the element does not exist, it returns null
+>>>>>>> 9014597f37654a91465b70efe827d3b461c51ef6
  /bin/bash: Applications: command not found
  *
  * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
@@ -923,14 +932,17 @@ Array.prototype.take = function(){
 
 /**
  * @method  take_while
- * Method that needs a function poassed as parameter, the function will reciebe every item of the array
- * and an array with all the returned elements of these function will be returned by take_while method
+ *
+ * Iterate over each element of the array until the result returned by the block is false or null.
+ *
  * @param {Function} Function that will be executed
+ *
  * @return {Array} Array with all elements returned by the function passed as parameter
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
- *     //The result will be = [1,2]
+ *     // => [1,2]
  */
 
 
@@ -1220,9 +1232,9 @@ Array.prototype.values_at = function(){
 
 /**
  *
- * @memberOf   {Array}
- * @method   to_a
- * @param       (any).
+ * @member     {Array}
+ * @method      to_a
+ * @param       {Object} this
  *
  * Coded by: David
  *
@@ -1236,35 +1248,33 @@ Array.prototype.to_a = function(){
 
 /**
  *
- * @memberOf   {Array}
+ * @member       {Array}
  * @method       Cycle
- * @param       (function {}).
+ * @param        {function {}}
  *
- * Coded by: David
  *
  * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
  */
 Array.prototype.cycle = function(){
-
+  
+   return this 
 }
 
 /**
  *
- * @memberOf    {Array}
+ * @member       {Array}
+ * 
+ * search strings into array
+ * 
  * @method       strip_all
- * @param       (function {}).
  *
- * Coded by: imasen
+ * @param        {Object} this
  *
- * Comments: strips each of the string elements of an array
- */
-
-/**
- * @method  strip_all
- * Return all values of the content of an array, including bidimensional array
- * @return {Array} New array with values of index selected
- * @param {Integer} The index to be selected
- * ###Example
+ * @return       {Object} this
+ *
+ *
+ * Comments: strips each of the string elements of an array 
+ * 
  *     var a = [[1,2],[3,4]]
  *     a.strip_all()
  *     //The result will be = [1,2,3,4]
@@ -1366,4 +1376,5 @@ function _transpose(pos, nary){
 	return array
 }
 
-Array.reflect(bang_methods)
+Array.reflect(Array.bang_methods)
+
