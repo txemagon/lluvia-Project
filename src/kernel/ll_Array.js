@@ -994,11 +994,11 @@ Array.prototype.take = function(){
 /**
  * @method  take_while
  *
- * Iterate over each element of the array until the result returned by the block is false or null.
+ * Iterates over each element of the array until the result returned by the block is false or null.
  *
- * @param {Function} Function that will be executed
+ * @param {Function} Function that will be executed.
  *
- * @return {Array} Array with all elements returned by the function passed as parameter
+ * @return {Array} Array with all elements returned by the function passed as parameter.
  *
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
@@ -1162,9 +1162,9 @@ Array.prototype.empty$U = function(){
 /**
  * @method  eql$U
  *
- * Check if the arrays are equals
+ * Check if the arrays are equals.
  *
- * @return {Boolean} if is equals true, if not, false
+ * @return {Boolean} If are equals returns true, if not, false.
  *
  * ###Example
  *     var a = [1,2]
