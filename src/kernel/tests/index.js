@@ -1,5 +1,6 @@
 var _test_index = [ /* We first bring lluvia */
                     "../ll_Kernel.js",
+                    "../ll_Number.js",
                     "../ll_Function.js",
                     "../../Mathematics/ll_Expression.js",
                     "../ll_Exception.js", 

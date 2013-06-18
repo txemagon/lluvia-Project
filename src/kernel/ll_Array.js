@@ -551,7 +551,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  *    
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
-  if(arguments[0] != Number)
+  if( !is_a_number(arguments[0]) )
     return null 
     if(arguments.length > 1)
       return null
@@ -625,7 +625,6 @@ Array.prototype.replace = function(){
 
 /**
  *
- * PREGUNTAR A TXEMA FUNCIONAMIENTO
  * @method delete$B
  * 
  * Eliminates an object from the array that meets the parameter passed as position. 
@@ -645,10 +644,16 @@ Array.prototype.replace = function(){
  */
 Array.prototype.delete$B = function(obj){
   var position = this.indexOf(obj)
-    if ( position == -1)
-      return Array.prototype.delete$B.yield()
+    if ( !position )
+      if (Array.prototype.delete$B.block_given$U())
+        return Array.prototype.delete$B.yield() 
+      else
+        return null
 
-	return this.splice(position, 1)[0]
+  while ( (position = this.indexOf(obj)) )
+      this.splice(position, 1)
+  
+  return obj
 }
 
 /**

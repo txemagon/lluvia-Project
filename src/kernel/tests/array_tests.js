@@ -213,16 +213,41 @@ assert("Array#erase$B 1. Delete array's elements with parameter",// Problemas co
       "a = [1, 2, 2, 2, 3]; a.erase$B(2)")
 
 assert("Array#erase$B 2. Delete array's elements with parameter and not found",
-      "a.erase$B(4)", "null",
-      "a = [1, 2, 2, 2, 3]")
+      "r", "null",
+      "a = [1, 2, 2, 2, 3]; r=a.erase$B(4); ")
 
 assert("Array#erase$B 3. Delete array's elements with parameter and not found",
       "a", "[1, 2, 2, 2, 3]",
       "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
 
+assert( "Array#delete$B #1. Something is found",
+        "a", "[1,3,4]",
+        "a = [1, 2, 2, 3, 2, 4]; a.delete$B(2);"
+      )
+
+assert( "Array#delete$B #2. Something is found",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2)"
+      )
+
+assert( "Array#delete$B #3. Anything found",
+        "a.delete$B(5)", "null",
+        "a = [1, 2, 2, 3, 2, 4];"
+      )
+
+assert( "Array#delete$B #4. Anything found and block given",
+        "r", "'Not found'",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(5, function(){ return 'Not found' })"
+      )
+
+assert( "Array#delete$B #4. Something found and block given",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2, function(){ return 'Not found' })"
+      )
+
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
-      "a", '[ "ant", "bat", "dog"]',
-      'a = [ "ant", "bat", "cat", "dog"]; a.erase_at$B(2)')
+      "a", "['ant', 'bat', 'dog']",
+      "a = [ 'ant', 'bat', 'cat', 'dog']; a.erase_at$B(2)")
 
 assert("Array#erase_at$B 2. Delete array's elements with parameters higher than the array",
       "a", 'a = [ "ant", "bat", "cat", "dog"]',
