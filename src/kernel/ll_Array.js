@@ -650,7 +650,7 @@ Array.prototype.assoc = function(){
 /**
  * @method  at
  * Extracts array element using its position as index to find it.
- * @param  {Integer} Array index position
+ * @param  {NUmber} Array index position
  * @return {Object} The selected element by index passed as parameter
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
