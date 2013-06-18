@@ -1,26 +1,23 @@
-__Module.prototype = new Module
-__Module.prototype.constructor = Module
-function __Module(){ ; }
-
 Module.prototype.constructor = Module
 Module._constants = new Hash()
 
 function Module(module_name, block){
+  if (module_name){
+    var module = new Module
+    Module._constants = Module._constants || new Hash()
   
-  var module = new __Module
-  Module._constants = Module._constants || new Hash()
-
-  if (typeof(block) !== "undefined")
-     block.call(module)
-  
-  Module._constants[module_name] = module
-  $global_space["$constants"][module_name] = module
-  
-  eval.call( null, 
-  	         module_name + 
-  	         " = $global_space['$constants']['" + 
-  	         module_name + "']" )
-  return module
+    if (typeof(block) !== "undefined")
+       block.call(module)
+    
+    Module._constants[module_name] = module
+    $global_space["$constants"][module_name] = module
+    
+    eval.call( null, 
+               module_name + 
+               " = $global_space['$constants']['" + 
+               module_name + "']" )
+    return module
+  }
 
 }
 
@@ -46,6 +43,8 @@ function require(){
  * @return {Function}  returns a reference to the newly created function.
  */
 Module.prototype.alias_method = function(new_name, old_name){
-  if (String.is_string$U(new_name)
-  
+  if (String.is_string$U(old_name))
+    this[new_name] = eval( this[old_name].toSource() )
+
+  return this[new_name]
 }
