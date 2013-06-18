@@ -529,9 +529,8 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
 */
 
 assert("Array#strip_all 1. Sample testing ",
-       'number.strip_all()',
-       '[1,2,3,4]',
-       'var number = [[1,2],[3,4]]')
+       'number.strip_all()', '[1,2,3,"4"]',
+       'var number = [1,2,3,"   4"]')
 
 assert("Array#inject 1. Sample testing ",
        'number.inject(1)',

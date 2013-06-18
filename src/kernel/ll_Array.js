@@ -81,7 +81,6 @@ Array.reflect = function(){
 Array.prototype.each = function(){
   for (var i = 0; i < this.length; i++)
     Array.prototype.each.yield(this[i])
-      return this
 }
 /**
  * @method  each_index
@@ -102,7 +101,6 @@ Array.prototype.each = function(){
 Array.prototype.each_index = function(){
   for (var i = 0; i < this.length; i++)
     Array.prototype.each_index.yield(i)
-      return this
 }
 
 /**
@@ -1371,23 +1369,19 @@ Array.prototype.cycle = function(){
 }
 
 /**
- *
- * @member       {Array}
- * 
- * search strings into array
- * 
  * @method       strip_all
+ * 
+ * strips each of the string elements of an array 
  *
  * @param        {Object} this
- *
  * @return       {Object} this
  *
  *
- * Comments: strips each of the string elements of an array 
+ * ###Example
  * 
- *     var a = [[1,2],[3,4]]
+ *     var a = [1,2,3,"  4"]
  *     a.strip_all()
- *     //The result will be = [1,2,3,4]
+ *     //=> [1,2,3,"4"]
  */
 Array.prototype.strip_all = function(){
   return this.collect(function(el){
