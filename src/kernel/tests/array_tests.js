@@ -341,6 +341,14 @@ assert("Array#rotate 4. Whith positive arguments",
        "a.rotate(2)", '["c","d","a","b"]',
        'a = ["a","b","c","d"]')
 
+assert("Array#rotate 5. Whith positive arguments", 
+       "a.rotate(3)", '["d","a","b","c"]',
+       'a = ["a","b","c","d"]')
+
+assert("Array#rotate 6. Whith null arguments", 
+       "a.rotate(3)", 'null',
+       'a = []')
+
 assert("Array#count 1. Without parameters.",
        "a.count()",'3',
        'a = ["a","b","c"]')

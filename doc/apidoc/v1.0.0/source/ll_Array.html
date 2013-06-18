@@ -492,14 +492,23 @@ Array.prototype.first = function(){
 <span id='Array-method-last'>/**
 </span> * @method  last
  *
- * Returns the last element or elements of an array -it will depend on the number of elements meeting the parameters.
+ * Returns the element or elements of an array starting from the end. It will depend on the number of elements meeting the parameters.
  *
  * @return  {Array} Returns the last element or elements of the array
  * @param  {Number} Position to start including the elements in the returned array
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
+ *     //The result will be = [,5,6,7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     filterNumbers = numbers.last(2)
  *     //The result will be = [8,9]
+* ###Example
+ *     var numbers = []
+ *     filterNumbers = numbers.last(2)
+ *     //The result will be = null
  */
 Array.prototype.last = function(){
   if (this.length == 0)
@@ -947,12 +956,26 @@ Array.prototype.rindex = function(){
 /**
  * @method  rotate
  * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
- * @param {Integer} Stablish the center of the array rotation
+ * @param {Number} 
+ * Stablish the center of the array rotation.
+ * @return {Array} Items ordered.
  * ###Example
  *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
  *     characters.rotate(2)
  *     //The result will be = [&quot;c&quot;,&quot;d&quot;,&quot;a&quot;,&quot;b&quot;]
+ *
+ * ###Example
+ *     var characters = []
+ *     characters.rotate(2)
+ *     //The result will be = null
+ *
+ * ###Example
+ *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
+ *     characters.rotate(3)
+ *     //The result will be = [&quot;d&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
  */
+
+
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === &quot;undefined&quot;){
     var ary = this.clone()
