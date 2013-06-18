@@ -6,6 +6,9 @@ if (typeof Object.extend !== 'function') {
     };
 }
 
+Object.prototype.to_a = function(){
+  return [this]
+}
 /**
  * @method alias
  *
@@ -240,6 +243,26 @@ Object.prototype.instance_of$U = function (clss){
   return this.constructor == clss
 }
 
+/**
+ * @method_missing
+ *
+ * Automatically called whenever a non existing method is called
+ * in an object. Provides boilerplate getter and setters.
+ *
+ * ###Example
+ *      function N(){
+ *         this.a = 2;
+ *      }
+ *      
+ *      n = new N()
+ *      n.set_a(3)
+ *      n.get_a()
+ *      //=> 3     
+ *       
+ * @param  {string} method Method name
+ * @param  {Object} obj   Scope of the method call
+ * @param  {Array} params List of params of the method call
+ */
 Object.prototype.method_missing = function (method, obj, params){
 
   var that = this
