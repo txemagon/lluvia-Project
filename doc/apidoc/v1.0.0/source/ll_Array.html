@@ -208,7 +208,6 @@ Array.prototype.count = function(obj){
  *                             })
  *     sentence
  *     //=&gt; &quot;I DON'T LIKE THIS JOB &quot;
- *
  */
 
 Array.prototype.reverse_each = function(){
@@ -272,12 +271,14 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
  *
  * Collects those elements passing a given condition.
  *
- * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted
- * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted
+ * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted.
+ *
+ * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ *
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
  *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
- *     //The result will be = [187.5,375,857.25]
+ *     // =&gt; [187.5,375,857.25]
  */
 Array.prototype.select_if = function(){
   var collectable = []
@@ -290,12 +291,12 @@ Array.prototype.select_if = function(){
 <span id='Array-method-indexOf'>/**
 </span> * @method  indexOf
  *
- * Searches for an object in every position of the array, starting at position parsed as parameter
-
- * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null
+ * Searches for an object in every position of the array, starting at position parsed as parameter.
+ *
+ * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
  /bin/bash: Applications: command not found
- * @param  {Object} The object that will be searched
- * @param  {Integer} Position to start search
+ *
+ * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
  *
  * ###Example
  *     var numbers = [34,56,78,98]
@@ -308,10 +309,13 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
   i = i&gt;=this.length? null: i
     return i
 }
-<span id='Array-method-indexOf'>/**
-</span> * @method  indexOf
+<span id='Array-method-clone'>/**
+</span> * @method  clone
+ *
  * The method clones an array
+ *
  * @return  {Array} Cloned array
+ *
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers2 = numbers.clone
@@ -492,23 +496,31 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 </span>/**
  * @method  erase_at$B
  * 
- * Deletes the element on an specific position (parsed as parameter) of the original array
+ * Deletes the element on an specific position 
  * 
  * @param  {Number} Position of the array item to be deleted
+ *
+ * @return {Array} this
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.delete(3)
- *     //=&gt; [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(3)          //=&gt; [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(-1)         //=&gt; [1,2,3,4,5,6,7,8]
+ *     numbers.erase_at$B()           //=&gt; [2,3,4,5,6,7,8,9]
+ *     numbers.erase_at$B()   //=&gt; [1,2,3,4,5,6,7,8]
+ * 
+ *    
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
-  if(arguments.length &gt; 1)
-    return null
-      //throw (&quot;Wrong number of parameters&quot;)
-      if(arguments[0] &gt; this.length)
-	return null
-	  this.splice(arguments[0],1)
-	  return this
+  if(arguments[0] != Number)
+    return null 
+    if(arguments.length &gt; 1)
+      return null
+        //throw (&quot;Wrong number of parameters&quot;)
+        if(arguments[0] &gt; this.length)
+  	  return null
+  	    this.splice(arguments[0],1)
+  return this
 <span id='Array-method-erase_if'>}
 </span>
 /**

@@ -1088,13 +1088,16 @@ Array.prototype.empty$U = function(){
 
 /**
  * @method  eql$U
+ *
  * Check if the arrays are equals
- * @return {Boolean} if is equals tue, if not, false
+ *
+ * @return {Boolean} if is equals true, if not, false
+ *
  * ###Example
  *     var a = [1,2]
  *     var b = [1,2]
  *     a.eql$U(b)
- *     //The result will be = true
+ *     // => true
  */
 Array.prototype.eql$U = function(model){
   /**
