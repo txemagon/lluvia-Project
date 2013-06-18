@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+\$B(${1})
+]]></content>
+	<tabTrigger>!</tabTrigger> 
+	<scope>source.js</scope> 
+</snippet>
