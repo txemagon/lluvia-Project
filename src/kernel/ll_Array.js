@@ -192,7 +192,6 @@ Array.prototype.count = function(obj){
  *                             })
  *     sentence
  *     //=> "I DON'T LIKE THIS JOB "
- *
  */
 
 Array.prototype.reverse_each = function(){
@@ -256,12 +255,23 @@ Array.prototype.alias("map", "collect")
  *
  * Collects the element or elements that pass a given condition.
  *
+<<<<<<< HEAD
+ * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted.
+ *
+ * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ *
+ * ###Example
+ *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
+ *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
+ *     // => [187.5,375,857.25]
+=======
  * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
  *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
  *     //=> [187.5,375,857.25]
+>>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.select_if = function(){
   var collectable = []
@@ -273,17 +283,41 @@ Array.prototype.select_if = function(){
 
 /**
  * @method  indexOf
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *
+ * Searches for an object in every position of the array, starting at position parsed as parameter.
+ *
+ * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
+=======
+ * 
+ * The method searches for an object in every position of the array, 
+ * starting at position passed as parameter.
+ * 
+=======
  *
  * Searches for an object in every position of the array, starting at position passed as parameter.
  *
+>>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  * @return  {Number} Returns the position of the searched element. If the element does not exist, it returns null
+>>>>>>> 9014597f37654a91465b70efe827d3b461c51ef6
  /bin/bash: Applications: command not found
+<<<<<<< HEAD
+ *
+ * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
+ *
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers.indexOf(56, 0)
+ *     // => 1
+=======
  * @param  {Object} The object that will be searched
  * @param  {Number} Position to start searching
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers.indexOf(56, 0)
  *     //=> 1
+>>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.indexOf = function(searchElement, fromIndex){
   var i
@@ -292,11 +326,18 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
     return i
 }
 /**
+<<<<<<< HEAD
+ * @method  clone
+ *
+ * The method clones an array
+=======
  * @method  indexOf
  *
  * Clones an array.
+>>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  *
  * @return  {Array} Cloned array
+ *
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers2 = numbers.clone
@@ -515,9 +556,10 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
 /**
  * @method  erase_if
  *
- * Deletes every element of the array which block passed as parameter evaluates to true.
+ * Deletes all the array elements that meet the condition specified by the block..
  *
- * @param  {function} Block that must contain a condition by which the element will be erased or not. Returns true or false
+ * @param  {function} Block that must contain a condition by which the element will be erased or not. 
+ * @returns {array} Returns those elements that satisfy the condition.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if(function(obj){ return obj > 2? obj: null})
@@ -651,8 +693,8 @@ Array.prototype.assoc = function(){
 }
 /**
  * @method  at
- * returns the element corresponding to the index passed as parameter
- * @param  {Integer} Array index position
+ * Extracts array element using its position as index to find it.
+ * @param  {NUmber} Array index position
  * @return {Object} The selected element by index passed as parameter
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
@@ -952,14 +994,17 @@ Array.prototype.take = function(){
 
 /**
  * @method  take_while
- * Method that needs a function poassed as parameter, the function will reciebe every item of the array
- * and an array with all the returned elements of these function will be returned by take_while method
- * @param {Function} Function that will be executed
- * @return {Array} Array with all elements returned by the function passed as parameter
+ *
+ * Iterates over each element of the array until the result returned by the block is false or null.
+ *
+ * @param {Function} Function that will be executed.
+ *
+ * @return {Array} Array with all elements returned by the function passed as parameter.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
- *     //The result will be = [1,2]
+ *     // => [1,2]
  */
 
 
@@ -1117,13 +1162,16 @@ Array.prototype.empty$U = function(){
 
 /**
  * @method  eql$U
- * Check if the arrays are equals
- * @return {Boolean} if is equals tue, if not, false
+ *
+ * Check if the arrays are equals.
+ *
+ * @return {Boolean} If are equals returns true, if not, false.
+ *
  * ###Example
  *     var a = [1,2]
  *     var b = [1,2]
  *     a.eql$U(b)
- *     //The result will be = true
+ *     // => true
  */
 Array.prototype.eql$U = function(model){
   /**
