@@ -20,7 +20,8 @@
  *
  */
 
- var bang_methods = [ 
+
+ Array.bang_methods = [ 
                       &quot;collect&quot;,
                       &quot;map&quot;,
                       &quot;clone&quot;
@@ -30,7 +31,7 @@
 </span> * @method reflect
  * @static
  *
- * Creates a bang method version of the refered one.
+ * Creates a bang method version of the referred one.
  *
  * @param  {(String | String[])...} original_method Name of the original method.
  *
@@ -121,8 +122,8 @@ Array.prototype.each_index = function(){
       return this
 }
 
-<span id='Array-method-each_with_indextxema'>/**
-</span> * @method  each_with_indextxema
+<span id='Array-method-each_with_index'>/**
+</span> * @method  each_with_index
  *
  * Calls the block with the element and its index.
  *
@@ -142,7 +143,7 @@ Array.prototype.each_index = function(){
  *     //=&gt;    1.- John
  *     //=&gt;    2.- David &quot;
  *
- * This code throws an alert for each array item showing the array index number and the content of the index
+ * This code throws an alert for each array item showing the array index number and the content of the index.
  */
 Array.prototype.each_with_index = function(){
   for (var i = 0; i &lt; this.length; i++)
@@ -196,7 +197,7 @@ Array.prototype.count = function(obj){
  *
  * Traverse every element of the array through the block in reverse order.
  *
- * @param  {function(object)}  block Called once with every element.
+ * @param  {function(object)}  block Called once with every element
  *
  * @return {Array} this
  *
@@ -223,7 +224,7 @@ Array.prototype.reverse_each = function(){
  *
  * @param  {function(Object)} block Transforming function
  *
- * @return  {Array} Returns the trasformed image of self.
+ * @return  {Array} Returns the trasformed image of self
  *
  * ###Example
  *     var number     = [250, 500, 1143]
@@ -246,7 +247,7 @@ Array.prototype.collect = function(){
 </span> * @method  collect$B
  * @chainable
  *
- * Bang methods ...$B operates in `this` object
+ * Bang methods ...$B operates in `this` object.
  * (see Array#collect)
  */
 
@@ -262,15 +263,16 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
 </span> * @method  map$B
  * @chainable
  *
- * Bang methods ...$B operates in `this` object
+ * Bang methods ...$B operates in `this` object.
  * (see Array#collect)
  */
 
 <span id='Array-method-select_if'>/**
 </span> * @method  select_if
  *
- * Collects those elements passing a given condition.
+ * Collects the element or elements that pass a given condition.
  *
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
  * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted.
  *
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
@@ -279,6 +281,14 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
  *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
  *     // =&gt; [187.5,375,857.25]
+=======
+ * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
+ * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ * ###Example
+ *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
+ *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
+ *     //=&gt; [187.5,375,857.25]
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.select_if = function(){
   var collectable = []
@@ -290,11 +300,26 @@ Array.prototype.select_if = function(){
 
 <span id='Array-method-indexOf'>/**
 </span> * @method  indexOf
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
  *
  * Searches for an object in every position of the array, starting at position parsed as parameter.
  *
  * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
+=======
+ * 
+ * The method searches for an object in every position of the array, 
+ * starting at position passed as parameter.
+ * 
+=======
+ *
+ * Searches for an object in every position of the array, starting at position passed as parameter.
+ *
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b43e014d585e3f411133ace0446c5e5353a9996
+ * @return  {Number} Returns the position of the searched element. If the element does not exist, it returns null
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 9014597f37654a91465b70efe827d3b461c51ef6
  /bin/bash: Applications: command not found
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
  *
  * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
  *
@@ -302,6 +327,14 @@ Array.prototype.select_if = function(){
  *     var numbers = [34,56,78,98]
  *     numbers.indexOf(56, 0)
  *     // =&gt; 1
+=======
+ * @param  {Object} The object that will be searched
+ * @param  {Number} Position to start searching
+ * ###Example
+ *     var numbers = [34,56,78,98]
+ *     numbers.indexOf(56, 0)
+ *     //=&gt; 1
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.indexOf = function(searchElement, fromIndex){
   var i
@@ -310,16 +343,22 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
     return i
 }
 <span id='Array-method-clone'>/**
-</span> * @method  clone
+</span>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ * @method  clone
  *
  * The method clones an array
+=======
+ * @method  indexOf
+ *
+ * Clones an array.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b43e014d585e3f411133ace0446c5e5353a9996
  *
  * @return  {Array} Cloned array
  *
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers2 = numbers.clone
- *     //numbers2 is a copy of numbers
+ *     //numbers2 = [34,56,78,98]
  */
 Array.prototype.clone = function(){
   var ary = []
@@ -332,17 +371,19 @@ Array.prototype.clone = function(){
 </span> * @method  clone$B
  * @chainable
  *
- * Bang methods ...$B operates in `this` object
+ * Bang methods ...$B operates in `this` object.
  * (see Array#clone)
  */
 
 <span id='Array-method-clear'>/**
 </span> * @method  clear
- * The method clears an Array
- * @return  {Array} An empty array
+ * Clears an Array from the elements that it contains.
+ *
+ * @return  {Array} Empty array
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers.clear()
+ *     //=&gt; numbers = []
  */
 Array.prototype.clear = function(){
   while( this.length &gt; 0)
@@ -350,13 +391,15 @@ Array.prototype.clear = function(){
 }
 <span id='Array-method-equalsS-U'>/**
 </span> * @method  equals$U
- * The method compares two arrays
+ *
+ * Compares two arrays.
+ *
  * @return  {Boolean} If the arrays matches the condition, it returns true. If not, it returns false
  * @param  {Array} Array to compare
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers.indexOf(56, 0)
- *     //The result will be = 1
+ *     //=&gt; 1
  */
 Array.prototype.equals$U = function(other){
   var same = true
@@ -370,11 +413,11 @@ Array.prototype.equals$U = function(other){
 <span id='Array-method-uniq'>/**
 </span> * @method  uniq
  *
- * Searches repeated items of an array and deletes them.
+ * Searches repeated items in an array and deletes them.
  *
- * @param  {function(object)}  Block Indicates the position of the element to compare.
+ * @param  {function(object)}  Block indicates the position of the element to compare
  *
- * @return  {Array} Return Returns an array without repeated items.
+ * @return  {Array} Returns an array without repeated items
  * 
  * ###Example
  *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
@@ -405,9 +448,9 @@ Array.prototype.uniq = function(){
 </span> * @method  uniq$B
  * @chainable
  *
- * Bang methods ...$B operates in `this` object
+ * Bang methods ...$B operates in `this` object.
  *
- * Operates as Array#uniq except when no repetitions are found (returns null)
+ * Operates as Array#uniq except when no repetitions are found (returns null).
  * (see Array#uniq)
  */
 Array.prototype.uniq$B = function(){
@@ -426,9 +469,11 @@ Array.prototype.uniq$B = function(){
 
 <span id='Array-method-first'>/**
 </span> * @method  first
- * The method returns the first element or elements of the array -it will depend on the number of elements meeting the parameters-
+ *
+ * Returns the first element or elements of the array -it will depend on the number of elements meeting the parameters.
+ *
  * @return  {Array} Returns the first element or elements of the array
- * @param  {Integer} Position to end including the elements in the returned array
+ * @param  {Number} Position to end including the elements in the returned array
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.first(3)
@@ -446,9 +491,11 @@ Array.prototype.first = function(){
 }
 <span id='Array-method-last'>/**
 </span> * @method  last
- * The method returns the last element or elements of an array -it will depend on the number of elements meeting the parameters-
+ *
+ * Returns the last element or elements of an array -it will depend on the number of elements meeting the parameters.
+ *
  * @return  {Array} Returns the last element or elements of the array
- * @param  {Integer} Position to start including the elements in the returned array
+ * @param  {Number} Position to start including the elements in the returned array
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
@@ -468,7 +515,7 @@ Array.prototype.last = function(){
 <span id='Array-method-eraseS-B'>/**
 </span> * @method  erase$B
  * 
- * Deletes the element on an specific index 
+ * Deletes the element especify by an index.
  * 
  * @param  {Number} Index 
  * 
@@ -496,7 +543,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 </span>/**
  * @method  erase_at$B
  * 
- * Deletes the element on an specific position 
+ * Deletes the element on an specific position.
  * 
  * @param  {Number} Position of the array item to be deleted
  *
@@ -507,7 +554,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  *     numbers.erase_at$B(3)          //=&gt; [1,2,3,5,6,7,8,9]
  *     numbers.erase_at$B(-1)         //=&gt; [1,2,3,4,5,6,7,8]
  *     numbers.erase_at$B()           //=&gt; [2,3,4,5,6,7,8,9]
- *     numbers.erase_at$B()   //=&gt; [1,2,3,4,5,6,7,8]
+ *     numbers.erase_at$B()           //=&gt; [1,2,3,4,5,6,7,8]
  * 
  *    
  */
@@ -525,12 +572,15 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
 </span>
 /**
  * @method  erase_if
- * Deletes every element of the array which block parsed as parameter evaluates to true
- * @param  {function} Block that must contain a condition to erase or not the element (returns true or false)
+ *
+ * Deletes all the array elements that meet the condition specified by the block..
+ *
+ * @param  {function} Block that must contain a condition by which the element will be erased or not. 
+ * @returns {array} Returns those elements that satisfy the condition.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if(function(obj){ return obj &gt; 2? obj: null})
- *     //The result will be = [1,2]
+ *     //=&gt; numbers = [1,2]
  */
 Array.prototype.erase_if = function(){
   /*
@@ -556,12 +606,14 @@ Array.prototype.erase_if = function(){
 <span id='Array-method-replace'>}
 </span>/**
  * @method  replace
- * Replaces the array content with the array parsed as parameter. If the array is empty, the returned array will be null
- * @param  {Array} Theis array will replace the original array
+ *
+ * Replaces the array content with the array passed as parameter. If the array is empty, the returned array will be null.
+ *
+ * @param  {Array} Array that will replace the original array
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.replace([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])
- *     //The result will be = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
+ *     //newNumbers = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
  */
 
 Array.prototype.replace = function(){
@@ -577,11 +629,27 @@ Array.prototype.replace = function(){
 	      for(var i = 0; i &lt; arguments[0].length; i++)
 		this[i] = arguments[0][i]
 		  return this
-<span id='Array-property-'>}
-</span>/**
+<span id='Array-method-deleteS-B'>}
+</span>
+/**
  *
  * PREGUNTAR A TXEMA FUNCIONAMIENTO
- *
+ * @method delete$B
+ * 
+ * Eliminates an object from the array that meets the parameter passed as position. 
+ * 
+ * @param {Object} Object that is passed to the method as parameter.
+ * @return {Array} A copy of the array without the deleted elements.
+ * 
+ * ###Example
+ *    var numbers = [1, 2, 3, 4, 5]
+ *    number.delete$B(3)
+ *    //=&gt; numbers = [1, 2, 4, 5]
+ * 
+ * ###Example 2
+ *    
+ * 
+ * 
  */
 Array.prototype.delete$B = function(obj){
   var position = this.indexOf(obj)
@@ -590,15 +658,24 @@ Array.prototype.delete$B = function(obj){
 
 	return this.splice(position, 1)[0]
 <span id='Array-method-includeS-U'>}
-</span>/**
- * @method  include$U
- * Goes through every item of the array searching if the integer parsed as parameter is in the array. If so, it returns true. If not, false.
- * @param  {Object} Object that the method will search for
- * @return {Boolean} Returns the result of the search. if item is included, returns true. If not, false
+</span>
+/**
+ * @method include$U
+ * 
+ * Searches every item of the array for the object passed as parameter.
+ * 
+ * @param  {Object} Object that the method will search for.
+ *
+ * @return {Boolean} Returns the result of the search. If item is included, returns true. If not, false.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.include$U(3)
- *     //The result will be = true
+ *     // =&gt; true
+ *
+ *     var names = [&quot;carlos&quot;,&quot;jordan&quot;,&quot;david&quot;,&quot;susan&quot;]
+ *     newName = names.include$U('susan')
+ *     // =&gt; true
  */
 Array.prototype.include$U = function(){
   if(arguments.length != 1)
@@ -639,8 +716,8 @@ Array.prototype.assoc = function(){
 <span id='Array-method-at'>}
 </span>/**
  * @method  at
- * returns the element corresponding to the index passed as parameter
- * @param  {Integer} Array index position
+ * Extracts array element using its position as index to find it.
+ * @param  {NUmber} Array index position
  * @return {Object} The selected element by index passed as parameter
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
@@ -940,14 +1017,17 @@ Array.prototype.take = function(){
 
 /**
  * @method  take_while
- * Method that needs a function poassed as parameter, the function will reciebe every item of the array
- * and an array with all the returned elements of these function will be returned by take_while method
- * @param {Function} Function that will be executed
- * @return {Array} Array with all elements returned by the function passed as parameter
+ *
+ * Iterates over each element of the array until the result returned by the block is false or null.
+ *
+ * @param {Function} Function that will be executed.
+ *
+ * @return {Array} Array with all elements returned by the function passed as parameter.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     numbers = numbers.take_while(function(obj){return obj&lt;3? obj: null})
- *     //The result will be = [1,2]
+ *     // =&gt; [1,2]
  */
 
 
@@ -1004,13 +1084,27 @@ Array.prototype.collect = function(){
 
 /**
  *
- * @memberOf   {Array}
- * @method     transpose
- * @param       (Array of Arrays).
+ * @method   transpose 
+ * Transposes the rows and columns of an array.
+ * @param   {Array} 
+ * Array with elements to transpose.
+ * @return  {String} Returns a string with the union of the columns of different matrices.
+ * 
+ * 
+ * ###Example
+ *     var numbers = [[1,2],[3,4],[5,6]]
+ *     numbers.transpose()
+ *     //The result will be = 1,3,5,2,4,6
+ * 
+ * ###Example
+ *     var numbers = [[1,2,3],[1,2,3],[1,2,3]]
+ *     numbers.transpose()
+ *     //The result will be = 1,1,1,2,2,2,3,3,3
  *
- * Coded by: David
- *
-<span id='Array-property-'> * Comments:   Assumes that self is an array of arrays and transposes the rows and columns.
+* ###Example
+ *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
+ *     words.transpose()
+<span id='Array-property-'> *     //The result will be = hola, adios , pedro , juan , cristobal , colon
 </span> */
 
 
@@ -1061,9 +1155,9 @@ Array.prototype.transpose = function(){
 
 /**
  * @method  zip
- * Takes the element for two or more arrays passed as parameter and copy their content in a single array
- * @param {Array} Arrays to be zipped
- * @return {Array} Array with all elements of the other arrays
+ * Takes the elements of two or more arrays passed as parameter and copies their content in a single array
+ * @param {Array} Arrays to be joined
+ * @return {Array} Array with all elements from the other arrays
  * ###Example
  *     var a = [1,2]
  *     var b = [3,4]
@@ -1088,12 +1182,12 @@ Array.prototype.zip = function(){
 
 /**
  * @method  empty$U
- * Check if the array is emprty
- * @return {Boolean} if is empty tue, if not, false
+ * Checks if the array is empty
+ * @return {Boolean} if empty, returns true. If not, false
  * ###Example
  *     var a = []
  *     a.empty$U()
- *     //The result will be = true
+ *     //=&gt; true
  */
 Array.prototype.empty$U = function(){
   if(arguments.length &gt; 0)
@@ -1105,13 +1199,16 @@ Array.prototype.empty$U = function(){
 
 /**
  * @method  eql$U
- * Check if the arrays are equals
- * @return {Boolean} if is equals tue, if not, false
+ *
+ * Check if the arrays are equals.
+ *
+ * @return {Boolean} If are equals returns true, if not, false.
+ *
  * ###Example
  *     var a = [1,2]
  *     var b = [1,2]
  *     a.eql$U(b)
-<span id='Array-property-'> *     //The result will be = true
+<span id='Array-property-'> *     // =&gt; true
 </span> */
 Array.prototype.eql$U = function(model){
   /**
@@ -1234,9 +1331,9 @@ Array.prototype.values_at = function(){
 
 /**
  *
- * @memberOf   {Array}
- * @method   to_a
- * @param       (any).
+ * @member     {Array}
+ * @method      to_a
+ * @param       {Object} this
  *
  * Coded by: David
  *
@@ -1250,35 +1347,33 @@ Array.prototype.values_at = function(){
 
 /**
  *
- * @memberOf   {Array}
+ * @member       {Array}
  * @method       Cycle
- * @param       (function {}).
+ * @param        {function {}}
  *
- * Coded by: David
  *
-<span id='Array-method-strip_all'> * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
-</span> */
-Array.prototype.cycle = function(){
-
+ * Comments: Calls block for each element repeatedly n times or forever if none or nil is given. If a non-positive number is given or the array is empty, does nothing. Returns nil if the loop has finished without getting interrupted.
+ */
+<span id='Array-method-strip_all'>Array.prototype.cycle = function(){
+</span>  
+   return this 
 }
 
 /**
  *
- * @memberOf    {Array}
+ * @member       {Array}
+ * 
+ * search strings into array
+ * 
  * @method       strip_all
- * @param       (function {}).
  *
- * Coded by: imasen
+ * @param        {Object} this
  *
-<span id='Array-method-strip_all'> * Comments: strips each of the string elements of an array
-</span> */
-
-/**
- * @method  strip_all
- * Return all values of the content of an array, including bidimensional array
- * @return {Array} New array with values of index selected
- * @param {Integer} The index to be selected
- * ###Example
+ * @return       {Object} this
+ *
+ *
+ * Comments: strips each of the string elements of an array 
+ * 
  *     var a = [[1,2],[3,4]]
  *     a.strip_all()
  *     //The result will be = [1,2,3,4]
@@ -1298,12 +1393,12 @@ Array.prototype.strip_all = function(){
  * //todo: Keep commenting
  * a[0].toString().toLocaleCompare(b[0].toString())
  */
-Array.prototype.sort_by = function(){
+/*Array.prototype.sort_by = function(){
   var indexed = []
     if (Array.prototype.sort_by.block_given$U()) {
       var ordered = []
 	for (var i=0; i&lt;this.length; i++)
-	  indexed.push( [ Array.prototype.sort_by.yield(this[i]), this[i] ] )
+	  indexed.push( [ Array.prototype.sort_by.(this[i]), this[i] ] )
 	    indexed.sort( function(a,b){ return a[0] - b[0] } )
 	    for (var i=0; i&lt;this.length; i++)
 	      ordered.push( indexed[i][1] )
@@ -1312,7 +1407,7 @@ Array.prototype.sort_by = function(){
       return this.sort()
 
 }
-
+*/
 //Internal simple functions
 function includes(el, array){
   for (var i=0; i&lt;array.length; i++)
@@ -1380,7 +1475,8 @@ function _transpose(pos, nary){
 	return array
 }
 
-Array.reflect(bang_methods)
+Array.reflect(Array.bang_methods)
+
 </pre>
 </body>
 </html>

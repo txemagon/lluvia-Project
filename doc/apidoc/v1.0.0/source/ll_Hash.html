@@ -15,28 +15,30 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">$KC_dl = {
-    USER: 0,
-    PROGRAMMER: 25,
-    TESTING: 50,
-    DEVELOPER: 100,
-    INNERWORKING: 200
+  <pre class="prettyprint lang-js">Hash.prototype = new BasicObject
+Hash.prototype.constructor = Hash
+
+function Hash(){
+	
 }
 
-try {
-	$K_debug_level
-} 
-catch (e) {
-	$K_debug_level = $KC_dl.USER
-}	
+Hash.prototype.self_keys = function(re){
+	var the_keys = []
+	for (var i in this)
+		if (!re || re.test(i))
+			if (i !== &quot;keys&quot; &amp;&amp; this.hasOwnProperty(i) )
+				the_keys.push(i)
+	return the_keys
+}
 
-$global_space = (function(){return this;}).call(null) 
-$global_space[&quot;$constants&quot;] = {}
 
-function method_missing(error, method, params){
-  if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))
-    return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)
-  throw error
+Hash.prototype.own_keys = function(re){
+  return this.self_keys(re)
+}
+
+Hash.prototype.values = function(){
+	var that = this
+	return this.keys().collect( function(i){ return that[i] } )
 }
 </pre>
 </body>

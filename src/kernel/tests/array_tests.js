@@ -359,7 +359,12 @@ assert("Array#transpose 1. With non-square matrices",//problemas con los assert
 assert("Array#transpose 2. With square matrices",
        "a.transpose()","[[1,1,1],[2,2,2],[3,3,3]]",//problemas con los assert
        "a = [[1,2,3],[1,2,3],[1,2,3]]")
+                        
+assert("Array#transpose 3. With words matrices",
+       "a.transpose()","[['hola', 'adios'],['pedro','juan'],['cristobal','colon']]",//problemas con los assert
+       "a = [['hola','pedro','cristobal'],['adios','juan','colon']]")
                           
+
 assert("Array#zip 1. ",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
        'a.zip(b, c)','[[1, 4, 7], [2, 5, 8], [3, 6, 9]]',
        'a = [1,2,3]; b = [4,5,6]; c = [7,8,9]')

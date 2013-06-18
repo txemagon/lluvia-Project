@@ -1408,7 +1408,17 @@ if( op1 == op2)
  **/
 
 String.prototype.bytesize = function(){
-    return this.length
+<span id='String-method-is_stringS-U'>    return this.length
+</span>}
+
+/**
+ * @method is_string$U
+ *
+ * @param  {string | String} name 
+ * @return {boolean}      true if name is any kind of string
+ */
+String.is_string$U = function(name){
+  return typeof(name) === &quot;string&quot; || name instanceof String
 }
 
 

@@ -15,29 +15,11 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">$KC_dl = {
-    USER: 0,
-    PROGRAMMER: 25,
-    TESTING: 50,
-    DEVELOPER: 100,
-    INNERWORKING: 200
+  <pre class="prettyprint lang-js">function BasicObject(){
+
 }
 
-try {
-	$K_debug_level
-} 
-catch (e) {
-	$K_debug_level = $KC_dl.USER
-}	
-
-$global_space = (function(){return this;}).call(null) 
-$global_space[&quot;$constants&quot;] = {}
-
-function method_missing(error, method, params){
-  if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))
-    return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)
-  throw error
-}
+BasicObject.prototype.alias(&quot;keys&quot;, &quot;self_keys&quot;)
 </pre>
 </body>
 </html>
