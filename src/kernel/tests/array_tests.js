@@ -260,6 +260,10 @@ assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       
 
+assert("Array#drop.",
+       "a.drop(-3)","[1,2,3,4,5]",
+       "a = [1,2,3,4,5]")  
+
 assert("Array#flatten 1. without parameter",
        "a.flatten()","[11,12,21,22,31,32]",
        "a = [11,12,[21,22,[31,32]]]")

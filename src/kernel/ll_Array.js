@@ -766,13 +766,20 @@ Array.prototype.merge = function(ary2){
 
 /**
  * @method  drop
- * Deletes elements from position 0 of the array to the possition passed as parameter
- * @param {Integer} Position to stop deleting data of the array
+ * Deletes elements from position 0 of the array to the possition passed as parameter.
+ * @param {Number} Position to stop deleting data of the array.
+ * @return {Array} Returns the array elements that haven't been deleted.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop(3)
  *     //The result will be = [5,6,7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop(-3)
+ *     //The result will be = [1,2,3,4,5,6,7,8,9]
  */
+
 
 
 Array.prototype.drop = function(){
