@@ -254,8 +254,9 @@ Array.prototype.alias("map", "collect")
  * @method  select_if
  *
  * Collects the element or elements that pass a given condition.
- *
- * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ * 
+ * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. 
+ * If not, it will be deleted.
  * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
  * 
  * ###Example
@@ -626,13 +627,13 @@ Array.prototype.replace = function(){
  * @return {Array} A copy of the array without the deleted elements.
  * 
  * ###Example
- *    var numbers = [1, 2, 3, 4, 5]
- *    numbers.delete$B(3)
- *    //=> numbers = [1, 2, 4, 5]
+ *     var numbers = [1, 2, 3, 4, 5]
+ *     numbers.delete$B(3)
+ *     //=> numbers = [1, 2, 4, 5]
  * 
  * ###Example 2
- *
- * 
+ *     var numbers = [1, 2, 3, 4, 5]
+ *     numbers.delete$B(8, function(){return "Item not found"})
  * 
  */
 Array.prototype.delete$B = function(obj){
