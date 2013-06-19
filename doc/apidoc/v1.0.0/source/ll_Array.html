@@ -877,13 +877,21 @@ Array.prototype.drop_while = function(){
  * @method  flatten
  * This method transforms an array that contains other arrays inside in a single array with the data of all the arrays
  * @param {Integer} The level to stop flatting objects
+ * @return {Array} Returns an array with the elements
  * ###Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.flatten()
  *     //The result will be = [1,2,3,4,5,6]
+ *
+ * ###Example
  *     var numbers = [[1,2,[3,4,5,6]]]
  *     numbers.flatten(1)
  *     //The result will be = [1,2,[3,4,5,6]]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6]
+ *     numbers.flatten(3)
+ *     //The result will be = [1,2,3,4,[5,6]]
  */
 Array.prototype.flatten = function(level){
   if(level == 0)

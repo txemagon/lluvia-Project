@@ -859,7 +859,7 @@ Array.prototype.drop_while = function(){
 /**
  * @method  flatten
  * This method transforms an array that contains other arrays inside in a single array with the data of all the arrays
- * @param {Integer} The level to stop flatting objects
+ * @param {Numeber} The level to stop flatting objects
  * @return {Array} Returns an array with the elements
  * ###Example
  *     var numbers = [[1,2],[3,4],[5,6]]
