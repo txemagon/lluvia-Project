@@ -7,7 +7,8 @@
  Array.bang_methods = [ 
                       "collect",
                       "map",
-                      "clone"
+                      "clone",
+                      "compact"
                     ]
 
 /**
@@ -531,6 +532,7 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
  *
  * @param  {function} Block that must contain a condition by which the element will be erased or not. 
  * @returns {array} Returns those elements that satisfy the condition.
+ * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if(function(obj){ return obj > 2? obj: null})
@@ -731,6 +733,14 @@ Array.prototype.compact = function(){
 	  return ary
 }
 
+/**
+ * @method  compact$B
+ * @chainable
+ *
+ * Bang methods ...$B operates in `this` object.
+ * (see Array#compact)
+ */
+
 Array.prototype.merge = function(ary2){
   var ary = []// PROBLEMAS CON EL TEST,LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
     for(var i = 0; i < this.length; i++)
@@ -773,44 +783,36 @@ Array.prototype.drop = function(){
 
 /**
  * @method  drop_while
- * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted.
- * @param {Function} Function that must return either an object or null.
+ * 
+ * Executes a block passed as parameter that returns either an 
+ * object or null. If it returns null, this position will be deleted.
+ * 
+ * @param {function(Object, Object):(boolean | Object)} Block receivingthat must return either an object or null.
  * @returns {Array} Returns an array of elements that have not been deleted.
+ * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
- *     //The result will be = [7,8,9]
+ *     //=> [7,8,9]
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 7? that: null})
- *     //The result will be = [9]
+ *     //=> [9]
  */
 Array.prototype.drop_while = function(){
-  /**
-   * VALID INPUT!
-   *
-   *  PARAMETER TYPES
-   *  (function (object, object){ |condition| } )
-   *
-   *  DIMENSIONS
-   *  Only one function
-   *
-   */
 
   if(arguments.length > 1)
     //throw("Wrong number of parameters")
     return null
 
-      /*for(var i = 0; i < this.length; i++)
-	if(this[i] instanceof Array)
-      //throw("Invalid this. This contains sub-arrays")
-      return null*/
-
-      var ary = []
-      for(var i = 0; i < this.length; i++)
-	ary.push(Array.prototype.drop_while.yield(i,this[i]))
-
+  var ary = []
+  var eliminating = true
+  for(var i = 0; i < this.length; i++){
+      if (eliminating && !Array.prototype.drop_while.yield(this[i]))
+        eliminating = false
+      if (!eliminating)
+        ary.push( this[i])
+  }
 	  return ary.compact()
 }
 
@@ -1415,7 +1417,7 @@ Array.prototype.combination = function(number){
     for (var j=0; j<r.length; j++)
       combinations.push(r[j])
   }
-  alert("Combinations: " + combinations.toSource())
+
   return combinations
 
 }

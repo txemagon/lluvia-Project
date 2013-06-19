@@ -293,13 +293,13 @@ assert("Array#flatten 1. without parameter",
        "a.flatten()","[11,12,21,22,31,32]",
        "a = [11,12,[21,22,[31,32]]]")
 
-assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+assert("Array#flatten 2. with level",
        "a.flatten(1)","[11,12,21,22,[31,32]]",
        "a = [11,12,[21,22,[31,32]]]")
 
-assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+assert("Array#flatten 3. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
        "a.flatten(3)","[11,12,21,22,[31,32]]",
-       "a = [11,12,21,22,[31,32]]]")
+       "a = [11,12,[21,22,[31,32]]]")
 
 
 assert("Array#index 1. with a existing object",
@@ -445,12 +445,13 @@ assert("Array#eql$U 3. Comparte distinc array of arrays",
        
 
 assert("Array#drop_while",
-       "a.drop_while(function(obj, that){ return obj > 5? that: null})","[7,8,9]",
+       "a.drop_while(function(obj, that){ return obj < 5})",
+       "[5,6,7,8,9]",
        "a = [1,2,3,4,5,6,7,8,9]")
 
 
 assert("Array#drop_while",
-       "a.drop_while(function(obj, that){ return obj > 7? that: null})","[9]",
+       "a.drop_while(function(obj, that){ return obj < 7 })","[7,8,9]",
        "a = [1,2,3,4,5,6,7,8,9]")
 
 assert("Array#erase_if",
