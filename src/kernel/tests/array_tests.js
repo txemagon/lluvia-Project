@@ -492,10 +492,11 @@ assert("Array#inject 1. Sample testing ",
        'null',
        'var number = [1,2,3,4]; var num2 = [1,2,3,4]')
 
+/*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
        "a = [1,2,3,4]")
-
+*/
 assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
        'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" }')
