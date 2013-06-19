@@ -597,13 +597,23 @@ Array.prototype.erase_if = function(){
 /**
  * @method  replace
  *
- * Replaces the array content with the array passed as parameter. If the array is empty, the returned array will be null.
+ * Replaces the array content with the array passed as parameter.
  *
- * @param  {Array} Array that will replace the original array
+ * @param  {Array} Array that will replace the original array. If this array is empty, the returned array will be null.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.replace(["a","b","c"])
- *     //newNumbers = ["a","b","c"]
+ *     // => ["a","b","c"]
+ *
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.replace()
+ *     // => null
+ *
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     var substitute = ["a","b","c"]
+ *     newNumbers = numbers.replace(substitute)
+ *     // => ["a","b","c"]
  */
 
 Array.prototype.replace = function(){
