@@ -813,12 +813,18 @@ Array.prototype.drop = function(){
 
 /**
  * @method  drop_while
- * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted
- * @param {Function} Function that must return either an object or null
+ * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted.
+ * @param {Function} Function that must return either an object or null.
+ * @returns {Array} Returns an array of elements that have not been deleted.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
- *     //The result will be = [6,7,8,9]
+ *     //The result will be = [7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 7? that: null})
+ *     //The result will be = [9]
  */
 
 

@@ -440,8 +440,13 @@ assert("Array#eql$U 3. Comparte distinc array of arrays",
        
 
 assert("Array#drop_while",
-       "a.drop_while(function(obj, that){ return obj > 2? that: null})","[4,5,0]",
-       "a = [1,2,3,4,5,0]")
+       "a.drop_while(function(obj, that){ return obj > 5? that: null})","[7,8,9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
+
+
+assert("Array#drop_while",
+       "a.drop_while(function(obj, that){ return obj > 7? that: null})","[9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
 
 assert("Array#erase_if",
        "a.erase_if(function(obj){ return obj > 2? obj: null})","[1,2]",
