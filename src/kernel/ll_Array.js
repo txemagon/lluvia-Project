@@ -480,13 +480,13 @@ Array.prototype.first = function(){
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
- *     //The result will be = [,5,6,7,8,9]
+ *     //The result will be = [4,5,6,7,8,9]
  *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(2)
  *     //The result will be = [8,9]
-* ###Example
+ * ###Example
  *     var numbers = []
  *     filterNumbers = numbers.last(2)
  *     //The result will be = null
@@ -1059,12 +1059,15 @@ Array.prototype.take_while = function(){
 
 /**
  * @method  shuffle
- * This method shuffle the array items aleatory
- * @return {Array} Array that was shuffled
+ *
+ * This method mixes the elements of an array of randomly.
+ *
+ * @return {Array} Array that was mixed.
+ *
  * ###Example
  *     var numbers = [1,2,3,4]
  *     numbers.shuffle()
- *     //The result will be = [1,2]
+ *     // => The same elements of the array in another order.
  */
 
 Array.prototype.shuffle = function()
