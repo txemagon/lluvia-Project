@@ -511,7 +511,6 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  *     numbers.erase_at$B()           //=> [2,3,4,5,6,7,8,9]
  *     numbers.erase_at$B()           //=> [1,2,3,4,5,6,7,8]
  * 
- *    
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
   if( !is_a_number(arguments[0]) )
@@ -530,35 +529,53 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
  *
  * Deletes all the array elements that meet the condition specified by the block..
  *
- * @param  {function} Block that must contain a condition by which the element will be erased or not. 
+ * @param  {function(object):boolean} Block that must contain a condition by which the element will be erased or not. 
  * @returns {array} Returns those elements that satisfy the condition.
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.erase_if(function(obj){ return obj > 2? obj: null})
- *     //=> numbers = [1,2]
+ *     numbers.erase_if(function(obj){ return obj > 2 })
+ *     //=> [1,2]
  */
 Array.prototype.erase_if = function(){
-  /*
-   * VALID INPUT!
-   *
-   *  PARAMETER TYPES
-   *  (function (object, object){ |condition| } )
-   *
-   *  DIMENSIONS
-   *  Only one function
-   *
-   */
 
   if(arguments.length > 1)
     //throw("Wrong number of arguments")
     return null
 
-      var ary = []
-      for(var i = 0; i < this.length; i++)
-	if ( !Array.prototype.erase_if.yield(this[i]) )
+  var ary = []
+  for(var i = 0; i < this.length; i++)
+	
+  if ( !Array.prototype.erase_if.yield(this[i]) )
 	  ary.push(this[i])
 	    return ary.compact()
+}
+
+/**
+ * @method  erase_if$B
+ *
+ * Deletes all the array elements that meet the condition specified by the block..
+ * Deletion is made in block call. Not at the end 
+ *
+ * @param  {function(object):boolean} Block that must contain a condition by which the element will be erased or not. 
+ * @returns {array} this
+ * 
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     numbers.erase_if$B(function(obj){ return obj > 2 })
+ *     //=> [1,2]
+ */
+Array.prototype.erase_if$B = function(){
+
+  if(arguments.length > 1)
+    //throw("Wrong number of arguments")
+    return null
+
+  for(var i = 0; i < this.length; i++)  
+    if ( !Array.prototype.erase_if.yield(this[i]) )
+      this.splice(i, 1)
+
+  return this
 }
 
 /**
@@ -787,7 +804,7 @@ Array.prototype.drop = function(){
  * Executes a block passed as parameter that returns either an 
  * object or null. If it returns null, this position will be deleted.
  * 
- * @param {function(Object, Object):(boolean | Object)} Block receivingthat must return either an object or null.
+ * @param {function(Object):(boolean | Object)} Block receiving the element.
  * @returns {Array} Returns an array of elements that have not been deleted.
  * 
  * ###Example
