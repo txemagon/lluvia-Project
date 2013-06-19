@@ -81,7 +81,6 @@ Array.reflect = function(){
 Array.prototype.each = function(){
   for (var i = 0; i < this.length; i++)
     Array.prototype.each.yield(this[i])
-      return this
 }
 /**
  * @method  each_index
@@ -102,7 +101,6 @@ Array.prototype.each = function(){
 Array.prototype.each_index = function(){
   for (var i = 0; i < this.length; i++)
     Array.prototype.each_index.yield(i)
-      return this
 }
 
 /**
@@ -482,13 +480,13 @@ Array.prototype.first = function(){
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
- *     //The result will be = [,5,6,7,8,9]
+ *     //The result will be = [4,5,6,7,8,9]
  *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(2)
  *     //The result will be = [8,9]
-* ###Example
+ * ###Example
  *     var numbers = []
  *     filterNumbers = numbers.last(2)
  *     //The result will be = null
@@ -551,7 +549,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  *    
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
-  if(arguments[0] != Number)
+  if( !is_a_number(arguments[0]) )
     return null 
     if(arguments.length > 1)
       return null
@@ -599,13 +597,23 @@ Array.prototype.erase_if = function(){
 /**
  * @method  replace
  *
- * Replaces the array content with the array passed as parameter. If the array is empty, the returned array will be null.
+ * Replaces the array content with the array passed as parameter.
  *
- * @param  {Array} Array that will replace the original array
+ * @param  {Array} Array that will replace the original array. If this array is empty, the returned array will be null.
+ *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.replace(["a","b","c"])
- *     //newNumbers = ["a","b","c"]
+ *     // => ["a","b","c"]
+ *
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.replace()
+ *     // => null
+ *
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     var substitute = ["a","b","c"]
+ *     newNumbers = numbers.replace(substitute)
+ *     // => ["a","b","c"]
  */
 
 Array.prototype.replace = function(){
@@ -625,7 +633,6 @@ Array.prototype.replace = function(){
 
 /**
  *
- * PREGUNTAR A TXEMA FUNCIONAMIENTO
  * @method delete$B
  * 
  * Eliminates an object from the array that meets the parameter passed as position. 
@@ -645,10 +652,16 @@ Array.prototype.replace = function(){
  */
 Array.prototype.delete$B = function(obj){
   var position = this.indexOf(obj)
-    if ( position == -1)
-      return Array.prototype.delete$B.yield()
+    if ( !position )
+      if (Array.prototype.delete$B.block_given$U())
+        return Array.prototype.delete$B.yield() 
+      else
+        return null
 
-	return this.splice(position, 1)[0]
+  while ( (position = this.indexOf(obj)) )
+      this.splice(position, 1)
+  
+  return obj
 }
 
 /**
@@ -1053,12 +1066,15 @@ Array.prototype.take_while = function(){
 
 /**
  * @method  shuffle
- * This method shuffle the array items aleatory
- * @return {Array} Array that was shuffled
+ *
+ * This method mixes the elements of an array of randomly.
+ *
+ * @return {Array} Array that was mixed.
+ *
  * ###Example
  *     var numbers = [1,2,3,4]
  *     numbers.shuffle()
- *     //The result will be = [1,2]
+ *     // => The same elements of the array in another order.
  */
 
 Array.prototype.shuffle = function()
@@ -1373,28 +1389,83 @@ Array.prototype.cycle = function(){
 }
 
 /**
- *
- * @member       {Array}
+ * @method strip_all
  * 
- * search strings into array
+ * strips each of the string elements of an array 
+ *
+ * @return  {Array} A new array with stripped elements.
+ *
+ *
+ * ###Example
  * 
- * @method       strip_all
- *
- * @param        {Object} this
- *
- * @return       {Object} this
- *
- *
- * Comments: strips each of the string elements of an array 
- * 
- *     var a = [[1,2],[3,4]]
+ *     var a = [1,2,3,"  4"]
  *     a.strip_all()
- *     //The result will be = [1,2,3,4]
+ *     //=> [1,2,3,"4"]
  */
 Array.prototype.strip_all = function(){
   return this.collect(function(el){
     return el.respond_to("strip") ? el.strip() : el
   })
+}
+
+/**
+ * @method combination
+ *
+ * Generates all the possible combinations grouped by *number*.
+ *  
+ * @param  {number} number Grouping amount
+ * @return {Array}         All the combinations.
+ *
+ * ###Example
+ *      a = [1, 2, 3, 4]
+ *      a.combination(1)  //=> [[1], [2], [3], [4]]
+ *      a.combination(2)  //=> [[1,2], [1,3], [1,4], [2, 3], [2, 4], [3, 4]]
+ *      a.combination(3)  //=> [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
+ *      a.combination(4)  //=> [[1, 2, 3, 4]]
+ *      a.combination(0)  //=> [[]]
+ *      a.combination(5)  //=> []
+ *
+ * ###Diagram
+ *
+ * For pairs of 3
+ * 
+ *      1    2 
+ *     / \   |
+ *    2   3  3
+ *   / \  |  |
+ *  3   4 4  4
+ */
+Array.prototype.combination = function(number){
+  if (! is_a_number(number) )
+    throw "Array#combination. Parameter must be a number."
+  if (number == 0)
+    return [[]]
+  if (number > this.length)
+    return []
+  var result = []
+  if (number == this.length)
+    return [this.clone()]
+  if (number == 1)
+    return this.collect(function(el){ return [el] })
+  return this.__secure_combination(number, [], 0)
+
+}
+
+Array.prototype.__secure_combination = function(number, base, initial){
+  alert( "Number: " + number + "\n" +
+         "Base: " + base.toSource() + "\n" +
+         "Initial: " + initial )
+  if (number <= 0)
+    return base
+  for (var i=initial; i<this.length-number; i++){
+      base.push( base.empty$U() ? [this[i]] : base.push(this[i]) )
+      base.push( 
+        this.__secure_combination( number-1, 
+                                   base.clone(), 
+                                  i+1 )
+        )
+  }        
+  return base
 }
 
 /**

@@ -213,16 +213,41 @@ assert("Array#erase$B 1. Delete array's elements with parameter",// Problemas co
       "a = [1, 2, 2, 2, 3]; a.erase$B(2)")
 
 assert("Array#erase$B 2. Delete array's elements with parameter and not found",
-      "a.erase$B(4)", "null",
-      "a = [1, 2, 2, 2, 3]")
+      "r", "null",
+      "a = [1, 2, 2, 2, 3]; r=a.erase$B(4); ")
 
 assert("Array#erase$B 3. Delete array's elements with parameter and not found",
       "a", "[1, 2, 2, 2, 3]",
       "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
 
+assert( "Array#delete$B #1. Something is found",
+        "a", "[1,3,4]",
+        "a = [1, 2, 2, 3, 2, 4]; a.delete$B(2);"
+      )
+
+assert( "Array#delete$B #2. Something is found",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2)"
+      )
+
+assert( "Array#delete$B #3. Anything found",
+        "a.delete$B(5)", "null",
+        "a = [1, 2, 2, 3, 2, 4];"
+      )
+
+assert( "Array#delete$B #4. Anything found and block given",
+        "r", "'Not found'",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(5, function(){ return 'Not found' })"
+      )
+
+assert( "Array#delete$B #4. Something found and block given",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2, function(){ return 'Not found' })"
+      )
+
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
-      "a", '[ "ant", "bat", "dog"]',
-      'a = [ "ant", "bat", "cat", "dog"]; a.erase_at$B(2)')
+      "a", "['ant', 'bat', 'dog']",
+      "a = [ 'ant', 'bat', 'cat', 'dog']; a.erase_at$B(2)")
 
 assert("Array#erase_at$B 2. Delete array's elements with parameters higher than the array",
       "a", 'a = [ "ant", "bat", "cat", "dog"]',
@@ -508,9 +533,8 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
 */
 
 assert("Array#strip_all 1. Sample testing ",
-       'number.strip_all()',
-       '[1,2,3,4]',
-       'var number = [[1,2],[3,4]]')
+       'number.strip_all()', '[1,2,3,"4"]',
+       'var number = [1,2,3,"   4"]')
 
 assert("Array#inject 1. Sample testing ",
        'number.inject(1)',
@@ -525,28 +549,28 @@ assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
        'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
 
-assert("Array#combination.to_a 1.",
-       'a.combination(1).to_a',"[[1],[2],[3],[4]",
+assert("Array#combination 1.",
+       'a.combination(1)',"[[1],[2],[3],[4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 2. Other example",
-       "a.combination(2).to_a","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
+assert("Array#combination 2. Other example",
+       "a.combination(2)","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 3.",
-        "a.combination(3).to_a","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
+assert("Array#combination 3.",
+        "a.combination(3)","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
         "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 4.",
-       "a.combination(4).to_a","[[1,2,3,4]]",
+assert("Array#combination 4.",
+       "a.combination(4)","[[1,2,3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 5.",
-       "a.combination(0).to_a","[[]]",
+assert("Array#combination 5.",
+       "a.combination(0)","[[]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination(5).to_a 6.",
-       "a.combination(5).to_a","[]", //no combinations of length 5
+assert("Array#combination(5) 6.",
+       "a.combination(5)","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 
 assert("Array#compact$B.",
