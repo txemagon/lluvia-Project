@@ -297,6 +297,11 @@ assert("Array#flatten 2. with level",//Problemas con la comprobación. El test d
        "a.flatten(1)","[11,12,21,22,[31,32]]",
        "a = [11,12,[21,22,[31,32]]]")
 
+assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+       "a.flatten(3)","[11,12,21,22,[31,32]]",
+       "a = [11,12,21,22,[31,32]]]")
+
+
 assert("Array#index 1. with a existing object",
        'a.index("c")',"2",
        'a = ["a","b","c"]')
