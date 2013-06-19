@@ -105,11 +105,11 @@ assert("Array#uniq 4. A Block is Given.",
 	"a.uniq( function(element){ return element[0] })", "[['male', 'john'], ['female', 'deborah']]",
 	"a = [['male', 'john'], ['male', 'paul'], ['female', 'deborah']]")
 
-assert("Array#uniq$B. With changes.", 
+assert("Array#uniq$B 1. With changes.", 
       "a", "[1, 2, 3]", 
       "a = [ 1, 2, 1, 2, 2, 3, 1, 2, 3]; a.uniq$B()")
 
-assert("Array#uniq$B. With no changes.",
+assert("Array#uniq$B 2. With no changes.",
        "a.uniq$B()", "null", "a = [1, 2, 3]")
 
 assert("Array#clear.",
@@ -285,6 +285,10 @@ assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       
 
+assert("Array#drop.",
+       "a.drop(-3)","[1,2,3,4,5]",
+       "a = [1,2,3,4,5]")  
+
 assert("Array#flatten 1. without parameter",
        "a.flatten()","[11,12,21,22,31,32]",
        "a = [11,12,[21,22,[31,32]]]")
@@ -292,6 +296,11 @@ assert("Array#flatten 1. without parameter",
 assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
        "a.flatten(1)","[11,12,21,22,[31,32]]",
        "a = [11,12,[21,22,[31,32]]]")
+
+assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+       "a.flatten(3)","[11,12,21,22,[31,32]]",
+       "a = [11,12,21,22,[31,32]]]")
+
 
 assert("Array#index 1. with a existing object",
        'a.index("c")',"2",
@@ -436,8 +445,13 @@ assert("Array#eql$U 3. Comparte distinc array of arrays",
        
 
 assert("Array#drop_while",
-       "a.drop_while(function(obj, that){ return obj > 2? that: null})","[4,5,0]",
-       "a = [1,2,3,4,5,0]")
+       "a.drop_while(function(obj, that){ return obj > 5? that: null})","[7,8,9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
+
+
+assert("Array#drop_while",
+       "a.drop_while(function(obj, that){ return obj > 7? that: null})","[9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
 
 assert("Array#erase_if",
        "a.erase_if(function(obj){ return obj > 2? obj: null})","[1,2]",
