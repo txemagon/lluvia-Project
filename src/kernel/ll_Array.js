@@ -779,13 +779,20 @@ Array.prototype.merge = function(ary2){
 
 /**
  * @method  drop
- * Deletes elements from position 0 of the array to the possition passed as parameter
- * @param {Integer} Position to stop deleting data of the array
+ * Deletes elements from position 0 of the array to the possition passed as parameter.
+ * @param {Number} Position to stop deleting data of the array.
+ * @return {Array} Returns the array elements that haven't been deleted.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop(3)
  *     //The result will be = [5,6,7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop(-3)
+ *     //The result will be = [1,2,3,4,5,6,7,8,9]
  */
+
 
 
 Array.prototype.drop = function(){
@@ -806,12 +813,18 @@ Array.prototype.drop = function(){
 
 /**
  * @method  drop_while
- * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted
- * @param {Function} Function that must return either an object or null
+ * Executes a block passed as parameter that returns either an object or null. If it returns null, this position will be deleted.
+ * @param {Function} Function that must return either an object or null.
+ * @returns {Array} Returns an array of elements that have not been deleted.
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
- *     //The result will be = [6,7,8,9]
+ *     //The result will be = [7,8,9]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6,7,8,9]
+ *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 7? that: null})
+ *     //The result will be = [9]
  */
 
 
@@ -846,14 +859,22 @@ Array.prototype.drop_while = function(){
 /**
  * @method  flatten
  * This method transforms an array that contains other arrays inside in a single array with the data of all the arrays
- * @param {Integer} The level to stop flatting objects
+ * @param {Numeber} The level to stop flatting objects
+ * @return {Array} Returns an array with the elements
  * ###Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.flatten()
  *     //The result will be = [1,2,3,4,5,6]
+ *
+ * ###Example
  *     var numbers = [[1,2,[3,4,5,6]]]
  *     numbers.flatten(1)
  *     //The result will be = [1,2,[3,4,5,6]]
+ *
+ * ###Example
+ *     var numbers = [1,2,3,4,5,6]
+ *     numbers.flatten(3)
+ *     //The result will be = [1,2,3,4,[5,6]]
  */
 Array.prototype.flatten = function(level){
   if(level == 0)
