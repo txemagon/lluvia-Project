@@ -550,22 +550,27 @@ assert("Array#combination 1.",
        "a = [1,2,3,4]")
 
 assert("Array#combination 2. Other example",
-       "a.combination(2)","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
-       "a = [1,2,3,4]")
+       "r","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
+       "a = [1,2,3,4]; r=a.combination(2)")
 
 assert("Array#combination 3.",
         "a.combination(3)","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
         "a = [1,2,3,4]")
 
 assert("Array#combination 4.",
+        "a.combination(5)",
+        " [[1,2,3,4,5],[1,2,3,4,6],[1,2,3,4,7],[1,2,3,5,6],[1,2,3,5,7],[1,2,3,6,7],[1,2,4,5,6],[1,2,4,5,7],[1,2,4,6,7],[1,2,5,6,7],[1,3,4,5,6],[1,3,4,5,7],[1,3,4,6,7],[1,3,5,6,7],[1,4,5,6,7],[2,3,4,5,6],[2,3,4,5,7],[2,3,4,6,7],[2,3,5,6,7],[2,4,5,6,7],[3,4,5,6,7]]",
+        "a = [1,2,3,4,5,6,7]")
+
+assert("Array#combination 5.",
        "a.combination(4)","[[1,2,3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination 5.",
+assert("Array#combination 6.",
        "a.combination(0)","[[]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination(5) 6.",
+assert("Array#combination(5) 7.",
        "a.combination(5)","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 

@@ -253,23 +253,13 @@ Array.prototype.alias("map", "collect")
  *
  * Collects the element or elements that pass a given condition.
  *
-<<<<<<< HEAD
- * @return  {Array} Returns all items that have passed the condition. If an item can not pass the condition, it is deleted.
- *
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
- *
- * ###Example
- *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
- *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
- *     // => [187.5,375,857.25]
-=======
  * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
- * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array. If not, it will be deleted.
+ * 
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
  *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
  *     //=> [187.5,375,857.25]
->>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.select_if = function(){
   var collectable = []
@@ -281,41 +271,18 @@ Array.prototype.select_if = function(){
 
 /**
  * @method  indexOf
-<<<<<<< HEAD
-<<<<<<< HEAD
  *
  * Searches for an object in every position of the array, starting at position parsed as parameter.
  *
- * @return  {Integer} Returns the position of the searched element. If the element does not exist, it returns null.
-=======
- * 
  * The method searches for an object in every position of the array, 
  * starting at position passed as parameter.
  * 
-=======
- *
- * Searches for an object in every position of the array, starting at position passed as parameter.
- *
->>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
- * @return  {Number} Returns the position of the searched element. If the element does not exist, it returns null
->>>>>>> 9014597f37654a91465b70efe827d3b461c51ef6
- /bin/bash: Applications: command not found
-<<<<<<< HEAD
- *
- * @param  {Object, Integer} The first param is the object that will be searched and the second param is array position to start to search.
- *
- * ###Example
- *     var numbers = [34,56,78,98]
- *     numbers.indexOf(56, 0)
- *     // => 1
-=======
  * @param  {Object} The object that will be searched
  * @param  {Number} Position to start searching
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers.indexOf(56, 0)
  *     //=> 1
->>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  */
 Array.prototype.indexOf = function(searchElement, fromIndex){
   var i
@@ -324,15 +291,9 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
     return i
 }
 /**
-<<<<<<< HEAD
- * @method  clone
- *
- * The method clones an array
-=======
  * @method  indexOf
  *
  * Clones an array.
->>>>>>> 9b43e014d585e3f411133ace0446c5e5353a9996
  *
  * @return  {Array} Cloned array
  *
@@ -425,6 +386,7 @@ Array.prototype.uniq = function(){
     }
   return uniq
 }
+
 /**
  * @method  uniq$B
  * @chainable
@@ -470,6 +432,7 @@ Array.prototype.first = function(){
 	    ary[i] = this[i]
 	      return ary
 }
+
 /**
  * @method  last
  *
@@ -486,7 +449,7 @@ Array.prototype.first = function(){
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(2)
  *     //The result will be = [8,9]
-* ###Example
+ * ###Example
  *     var numbers = []
  *     filterNumbers = numbers.last(2)
  *     //The result will be = null
@@ -502,6 +465,7 @@ Array.prototype.last = function(){
 	    ary[i] = this[ this.length - Math.min(arguments[0], this.length) +i ]
 	      return ary
 }
+
 /**
  * @method  erase$B
  * 
@@ -516,7 +480,6 @@ Array.prototype.last = function(){
  *     numbers.delete(3)
  *     //The result will be = [1,2,3,5,6,7,8,9]
  */
-
 Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
   //todo: error on erase$B
   if(arguments.length > 1)
@@ -530,6 +493,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
 	}
   return find? this: null
 }
+
 /**
  * @method  erase_at$B
  * 
@@ -594,6 +558,7 @@ Array.prototype.erase_if = function(){
 	  ary.push(this[i])
 	    return ary.compact()
 }
+
 /**
  * @method  replace
  *
@@ -615,7 +580,6 @@ Array.prototype.erase_if = function(){
  *     newNumbers = numbers.replace(substitute)
  *     // => ["a","b","c"]
  */
-
 Array.prototype.replace = function(){
   if(arguments.length == 0)
     return null
@@ -692,6 +656,7 @@ Array.prototype.include$U = function(){
 	  find = true
 	    return find
 }
+
 /**
  * @method  assoc
  * 
@@ -709,7 +674,6 @@ Array.prototype.include$U = function(){
  *     var winnerCouple = index.assoc(["John"])   //=> ["John","Steve"]
  *     var winnerCouple = index.assoc("Homer")    //=> nil
  */
-
 Array.prototype.assoc = function(){
   if(arguments.length > 1)
     //throw "wrong number of arguments"
@@ -719,6 +683,7 @@ Array.prototype.assoc = function(){
 	  return this[i]
 	    return null
 }
+
 /**
  * @method  at
  * Extracts array element using its position as index to find it.
@@ -729,7 +694,6 @@ Array.prototype.assoc = function(){
  *     newNumbers = numbers.at(3)
  *     //The result will be = 4
  */
-
 Array.prototype.at = function(){
   if(arguments.length > 1)
     //throw "wrong number of arguments"
@@ -759,7 +723,6 @@ Array.prototype.at = function(){
  *     newNumbers = numbers.compact()
  *     // => []
  */
-
 Array.prototype.compact = function(){
   var ary = []
     for(var i = 0; i < this.length; i++)
@@ -786,8 +749,6 @@ Array.prototype.merge = function(ary2){
  *     newNumbers = numbers.drop(3)
  *     //The result will be = [5,6,7,8,9]
  */
-
-
 Array.prototype.drop = function(){
   if(arguments.length > 1 || arguments.length < 1)
     //throw "Wrong number of arguments"
@@ -813,8 +774,6 @@ Array.prototype.drop = function(){
  *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
  *     //The result will be = [6,7,8,9]
  */
-
-
 Array.prototype.drop_while = function(){
   /**
    * VALID INPUT!
@@ -861,6 +820,7 @@ Array.prototype.flatten = function(level){
       level = level || 1000
       return unpack(this, [], level)
 }
+
 /**
  * @method  index
  * 
@@ -888,7 +848,6 @@ Array.prototype.index = function(){
 /**
  * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
  */
-
 Array.prototype.product = function(){
   var ary = []
 
@@ -938,7 +897,6 @@ Array.prototype.rassoc = function(){
  *     newNumbers = numbers.rindex(3)
  *     //The result will be = 6
  */
-
 Array.prototype.rindex = function(){
   if(arguments.length != 1)
     //throw ("Wrong number of arguments")
@@ -949,6 +907,7 @@ Array.prototype.rindex = function(){
 	  return i
 	    return null
 }
+
 /**
  * @method  rotate
  * Literally rotate the array elements stablishing as center of rotation an index passed as parameter
@@ -970,8 +929,6 @@ Array.prototype.rindex = function(){
  *     characters.rotate(3)
  *     //The result will be = ["d","a","b","c"]
  */
-
-
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === "undefined"){
     var ary = this.clone()
@@ -1016,7 +973,6 @@ Array.prototype.rotate = function(obj){
  *     newNumbers = numbers.take(3)
  *     //The result will be = [1,2,3,4]
  */
-
 Array.prototype.take = function(){
   if(!(arguments[0]) || arguments.length > 1)
     //throw ("Wrong number of parameters")
@@ -1048,8 +1004,6 @@ Array.prototype.take = function(){
  *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
  *     // => [1,2]
  */
-
-
 Array.prototype.take_while = function(){
   var ary = []
     for(var i = 0; i < this.length; i++)
@@ -1066,7 +1020,6 @@ Array.prototype.take_while = function(){
  *     numbers.shuffle()
  *     //The result will be = [1,2]
  */
-
 Array.prototype.shuffle = function()
 {
   if(arguments.length > 0)
@@ -1120,13 +1073,11 @@ Array.prototype.collect = function(){
  *     numbers.transpose()
  *     //The result will be = 1,1,1,2,2,2,3,3,3
  *
-* ###Example
+ * ###Example
  *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
  *     words.transpose()
  *     //The result will be = hola, adios , pedro , juan , cristobal , colon
  */
-
-
 Array.prototype.transpose = function(){
   /**
    * VALID INPUT!
@@ -1183,7 +1134,6 @@ Array.prototype.transpose = function(){
  *     a.zip(b)
  *     //The result will be = [1,2,3,4]
  */
-
 Array.prototype.zip = function(){
   var ary = []
     for(var i=0;i<this.length;i++){
@@ -1197,7 +1147,6 @@ Array.prototype.zip = function(){
     }
   return ary;
 }
-
 
 /**
  * @method  empty$U
@@ -1214,7 +1163,6 @@ Array.prototype.empty$U = function(){
     return null
       return this.length==0? true: false
 }
-
 
 /**
  * @method  eql$U
@@ -1297,7 +1245,6 @@ Array.prototype.reverse = function(){
   return ary
 }
 
-
 /**
  * @method  values_at
  * Return the values of a concrete index passed as parameter
@@ -1346,8 +1293,6 @@ Array.prototype.values_at = function(){
   return ary
 }
 
-
-
 /**
  *
  * @member     {Array}
@@ -1358,8 +1303,6 @@ Array.prototype.values_at = function(){
  *
  * Comments: Returns self. If called on a subclass of Array, converts the receiver to an Array object.
  */
-
-
 Array.prototype.to_a = function(){
   return this
 }
@@ -1424,6 +1367,10 @@ Array.prototype.strip_all = function(){
  *    2   3  3
  *   / \  |  |
  *  3   4 4  4
+ *
+ * 
+ *  [1]
+ *  [[1,2], [1,3]]
  */
 Array.prototype.combination = function(number){
   if (! is_a_number(number) )
@@ -1437,25 +1384,37 @@ Array.prototype.combination = function(number){
     return [this.clone()]
   if (number == 1)
     return this.collect(function(el){ return [el] })
-  return this.__secure_combination(number, [], 0)
+
+  var combinations = []
+  for (var i=0; i<this.length-number + 1; i++){
+    var r = [this[i]]
+    r = this.__secure_combination(number-1, r, i + 1)
+    for (var j=0; j<r.length; j++)
+      combinations.push(r[j])
+  }
+  alert("Combinations: " + combinations.toSource())
+  return combinations
 
 }
 
 Array.prototype.__secure_combination = function(number, base, initial){
-  alert( "Number: " + number + "\n" +
-         "Base: " + base.toSource() + "\n" +
-         "Initial: " + initial )
+  
   if (number <= 0)
     return base
-  for (var i=initial; i<this.length-number; i++){
-      base.push( base.empty$U() ? [this[i]] : base.push(this[i]) )
-      base.push( 
-        this.__secure_combination( number-1, 
-                                   base.clone(), 
-                                  i+1 )
-        )
-  }        
-  return base
+  var result = []
+  for (var i=initial; i<this.length-number + 1; i++){
+    var r = base.clone()
+    r.push(this[i])
+    r = this.__secure_combination( number-1, r.clone(), i+1 ) 
+    if (number > 1)
+      for (var j=0; j<r.length; j++)
+        result.push(r[j])
+    else
+      result.push(r)
+  
+  }
+  
+  return result.clone()
 }
 
 /**
