@@ -23,6 +23,18 @@
     };
 }
 
+Object.prototype.to_a = function(){
+  return [this]
+}
+<span id='global-method-alias'>/**
+</span> * @method alias
+ *
+ * Creates a reference to an original method. Changing 
+ * the original one behavior, the alias is also changing.
+ *  
+ * @param  {string} alias_name      Name of the new method.
+ * @param  {string} original_method Name of the original method.
+ */
 Object.prototype.alias = function(alias_name, original_method){
   this[alias_name] = function(){
     return this[original_method].apply(this, arguments)
@@ -247,7 +259,27 @@ Object.prototype.kind_of$U = function (clss){
 Object.prototype.instance_of$U = function (clss){
   return this.constructor == clss
 }
-
+<span id='global-method-'>
+</span>/**
+ * @method_missing
+ *
+ * Automatically called whenever a non existing method is called
+ * in an object. Provides boilerplate getter and setters.
+ *
+ * ###Example
+ *      function N(){
+ *         this.a = 2;
+ *      }
+ *      
+ *      n = new N()
+ *      n.set_a(3)
+ *      n.get_a()
+ *      //=&gt; 3     
+ *       
+ * @param  {string} method Method name
+ * @param  {Object} obj   Scope of the method call
+ * @param  {Array} params List of params of the method call
+ */
 Object.prototype.method_missing = function (method, obj, params){
 
   var that = this
@@ -285,41 +317,7 @@ Object.prototype.method_missing = function (method, obj, params){
   bad_function()
 }
 
-Object.prototype.create_attr = function(attr){
-   if (typeof(this[attr]) == &quot;undefined&quot;)
-	this[attr] = null
-}
 
-Object.prototype.attr_reader = function (names){
-   for (var i=0; i&lt;arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_readers.push(name) 
-        this[&quot;get&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;get_&quot; + name] = function(){ return eval(&quot;this.&quot; + name) }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_reader is not supported.
-      }
-   }
-}
-
-Object.prototype.attr_writer = function (names){
-for (var i=0; i&lt;arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_writers.push(name) 
-        this[&quot;set&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;set_&quot; + name] = function(value){ this[name] = value }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_writer is not supported.
-      }
-  }
-}
-
-Object.prototype.attr_accessor = function(name){
-     this.attr_reader(name) 
-     this.attr_writer(name) 
-}
 
 </pre>
 </body>

@@ -15,7 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Function.prototype.bind = function(object){
+  <pre class="prettyprint lang-js">
+Function.prototype.bind = function(object){
 	var f = this
 	return function(){ f.apply(object, arguments) }
 }

@@ -31,6 +31,25 @@ catch (e) {
 }	
 
 $global_space = (function(){return this;}).call(null) 
+$global_space[&quot;$constants&quot;] = {}
+
+
+<span id='global-method-'>/**
+</span> * Creates wrapped objects for simple types.
+ * 
+ * @param {boolean | number | string} variable [description]
+ */
+function O(variable){
+  var t = typeof(variable)
+  if (t === &quot;boolean&quot; || t === &quot;number&quot; || t === &quot;string&quot;){
+    t = t.charAt(0).toUpperCase() + t.slice(1)
+    if (t !== &quot;String&quot;)
+      return eval(&quot;new &quot; + t + &quot;(&quot; + variable + &quot;)&quot;)
+    else
+      return eval(&quot;new &quot; + t + &quot;('&quot; + variable + &quot;')&quot;)
+  }
+  return variable
+}
 
 function method_missing(error, method, params){
   if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Hash.prototype = new BasicObject
+Hash.prototype.constructor = Hash
+
+function Hash(){
+	
+}
+
+Hash.prototype.self_keys = function(re){
+	var the_keys = []
+	for (var i in this)
+		if (!re || re.test(i))
+			if (i !== &quot;keys&quot; &amp;&amp; this.hasOwnProperty(i) )
+				the_keys.push(i)
+	return the_keys
+}
+
+
+Hash.prototype.own_keys = function(re){
+  return this.self_keys(re)
+}
+
+Hash.prototype.values = function(){
+	var that = this
+	return this.keys().collect( function(i){ return that[i] } )
+}
+</pre>
+</body>
+</html>

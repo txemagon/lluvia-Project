@@ -105,11 +105,11 @@ assert("Array#uniq 4. A Block is Given.",
 	"a.uniq( function(element){ return element[0] })", "[['male', 'john'], ['female', 'deborah']]",
 	"a = [['male', 'john'], ['male', 'paul'], ['female', 'deborah']]")
 
-assert("Array#uniq$B. With changes.", 
+assert("Array#uniq$B 1. With changes.", 
       "a", "[1, 2, 3]", 
       "a = [ 1, 2, 1, 2, 2, 3, 1, 2, 3]; a.uniq$B()")
 
-assert("Array#uniq$B. With no changes.",
+assert("Array#uniq$B 2. With no changes.",
        "a.uniq$B()", "null", "a = [1, 2, 3]")
 
 assert("Array#clear.",
@@ -164,6 +164,14 @@ assert("Array#last 4. Empty array without parameters",
       "a.last()", "null",
       "a = []")
 
+assert("Array#last 5. with parametres",
+      "a.last(4)", "[3,4,5,6]",
+      "a = [1,2,3,4,5,6]")
+
+assert("Array#last 6. with parametres",
+      "a.last(2)", "[5,6]",
+      "a = [1,2,3,4,5,6]")
+
 assert("Array#include$U 1. Search a item in array with parameter",
       "a.include$U(2)", "true",
       "a = [1, 2, 3, 4, 5]")
@@ -205,16 +213,41 @@ assert("Array#erase$B 1. Delete array's elements with parameter",// Problemas co
       "a = [1, 2, 2, 2, 3]; a.erase$B(2)")
 
 assert("Array#erase$B 2. Delete array's elements with parameter and not found",
-      "a.erase$B(4)", "null",
-      "a = [1, 2, 2, 2, 3]")
+      "r", "null",
+      "a = [1, 2, 2, 2, 3]; r=a.erase$B(4); ")
 
 assert("Array#erase$B 3. Delete array's elements with parameter and not found",
       "a", "[1, 2, 2, 2, 3]",
       "a = [0, 1, 2, 2, 2, 3, 0]; a.erase$B(0)")
 
+assert( "Array#delete$B #1. Something is found",
+        "a", "[1,3,4]",
+        "a = [1, 2, 2, 3, 2, 4]; a.delete$B(2);"
+      )
+
+assert( "Array#delete$B #2. Something is found",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2)"
+      )
+
+assert( "Array#delete$B #3. Anything found",
+        "a.delete$B(5)", "null",
+        "a = [1, 2, 2, 3, 2, 4];"
+      )
+
+assert( "Array#delete$B #4. Anything found and block given",
+        "r", "'Not found'",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(5, function(){ return 'Not found' })"
+      )
+
+assert( "Array#delete$B #4. Something found and block given",
+        "r", "2",
+        "a = [1, 2, 2, 3, 2, 4]; r = a.delete$B(2, function(){ return 'Not found' })"
+      )
+
 assert("Array#erase_at$B 1. Delete array's elements with parameters",// Problemas con la comprobación. El test da failed cuando debería de dar Ok.
-      "a", '[ "ant", "bat", "dog"]',
-      'a = [ "ant", "bat", "cat", "dog"]; a.erase_at$B(2)')
+      "a", "['ant', 'bat', 'dog']",
+      "a = [ 'ant', 'bat', 'cat', 'dog']; a.erase_at$B(2)")
 
 assert("Array#erase_at$B 2. Delete array's elements with parameters higher than the array",
       "a", 'a = [ "ant", "bat", "cat", "dog"]',
@@ -252,13 +285,22 @@ assert("Array#drop.",
        "a.drop(2)","[3,4,5]",
        "a = [1,2,3,4,5]")       
 
+assert("Array#drop.",
+       "a.drop(-3)","[1,2,3,4,5]",
+       "a = [1,2,3,4,5]")  
+
 assert("Array#flatten 1. without parameter",
        "a.flatten()","[11,12,21,22,31,32]",
        "a = [11,12,[21,22,[31,32]]]")
 
-assert("Array#flatten 2. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+assert("Array#flatten 2. with level",
        "a.flatten(1)","[11,12,21,22,[31,32]]",
        "a = [11,12,[21,22,[31,32]]]")
+
+assert("Array#flatten 3. with level",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
+       "a.flatten(3)","[11,12,21,22,[31,32]]",
+       "a = [11,12,[21,22,[31,32]]]")
+
 
 assert("Array#index 1. with a existing object",
        'a.index("c")',"2",
@@ -307,6 +349,14 @@ assert("Array#rotate 3. Whithout argument", //Problemas con la comprobación. El
 assert("Array#rotate 4. Whith positive arguments", 
        "a.rotate(2)", '["c","d","a","b"]',
        'a = ["a","b","c","d"]')
+
+assert("Array#rotate 5. Whith positive arguments", 
+       "a.rotate(3)", '["d","a","b","c"]',
+       'a = ["a","b","c","d"]')
+
+assert("Array#rotate 6. Whith null arguments", 
+       "a.rotate(3)", 'null',
+       'a = []')
 
 assert("Array#count 1. Without parameters.",
        "a.count()",'3',
@@ -359,7 +409,12 @@ assert("Array#transpose 1. With non-square matrices",//problemas con los assert
 assert("Array#transpose 2. With square matrices",
        "a.transpose()","[[1,1,1],[2,2,2],[3,3,3]]",//problemas con los assert
        "a = [[1,2,3],[1,2,3],[1,2,3]]")
+                        
+assert("Array#transpose 3. With words matrices",
+       "a.transpose()","[['hola', 'adios'],['pedro','juan'],['cristobal','colon']]",//problemas con los assert
+       "a = [['hola','pedro','cristobal'],['adios','juan','colon']]")
                           
+
 assert("Array#zip 1. ",//Problemas con la comprobación. El test da failed cuando debería ser Ok.
        'a.zip(b, c)','[[1, 4, 7], [2, 5, 8], [3, 6, 9]]',
        'a = [1,2,3]; b = [4,5,6]; c = [7,8,9]')
@@ -390,12 +445,22 @@ assert("Array#eql$U 3. Comparte distinc array of arrays",
        
 
 assert("Array#drop_while",
-       "a.drop_while(function(obj, that){ return obj > 2? that: null})","[4,5,0]",
-       "a = [1,2,3,4,5,0]")
+       "a.drop_while(function(obj){ return obj < 5})",
+       "[5,6,7,8,9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
+
+
+assert("Array#drop_while",
+       "a.drop_while(function(obj){ return obj < 7 })","[7,8,9]",
+       "a = [1,2,3,4,5,6,7,8,9]")
 
 assert("Array#erase_if",
-       "a.erase_if(function(obj){ return obj > 2? obj: null})","[1,2]",
+       "a.erase_if(function(obj){ return obj > 2 })","[1,2]",
        "a = [1,2,3,4,5]")
+
+assert("Array#erase_if$B",
+       "a.erase_if(function(obj){ return obj == 2 })","[1,3,4,5]",
+       "a = [1,2,2,3,2,4,5]")
 
 assert("Array#reverse",
        "a.reverse()","[4,3,2,1]",
@@ -468,7 +533,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'null',
        'var number = [34,56,78,98]')
 
-/*
+
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
@@ -480,49 +545,51 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
 assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements with the block return value.",
        "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
-*/
 
 assert("Array#strip_all 1. Sample testing ",
-       'number.strip_all()',
-       '[1,2,3,4]',
-       'var number = [[1,2],[3,4]]')
+       'number.strip_all()', '[1,2,3,"4"]',
+       'var number = [1,2,3,"   4"]')
 
 assert("Array#inject 1. Sample testing ",
        'number.inject(1)',
        'null',
        'var number = [1,2,3,4]; var num2 = [1,2,3,4]')
 
-/*
 assert("Array#to_a.",
        "a[0].to_a()","[1]",
-       "a = [1,2,3,4]")
-*/
+       "a = [O(1), 2, 3, 4]")
+
 assert("Array#collect$B.",
        'a','["a!","b!","c!"]',
-       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" }')
+       'a = ["a","b","c"]; a.collect$B(function(obj){ return obj + "!" })')
 
-assert("Array#combination.to_a 1.",
-       'a.combination(1).to_a',"[[1],[2],[3],[4]",
+assert("Array#combination 1.",
+       'a.combination(1)',"[[1],[2],[3],[4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 2. Other example",
-       "a.combination(2).to_a","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
-       "a = [1,2,3,4]")
+assert("Array#combination 2. Other example",
+       "r","[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]",
+       "a = [1,2,3,4]; r=a.combination(2)")
 
-assert("Array#combination.to_a 3.",
-        "a.combination(3).to_a","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
+assert("Array#combination 3.",
+        "a.combination(3)","[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]",
         "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 4.",
-       "a.combination(4).to_a","[[1,2,3,4]]",
+assert("Array#combination 4.",
+        "a.combination(5)",
+        " [[1,2,3,4,5],[1,2,3,4,6],[1,2,3,4,7],[1,2,3,5,6],[1,2,3,5,7],[1,2,3,6,7],[1,2,4,5,6],[1,2,4,5,7],[1,2,4,6,7],[1,2,5,6,7],[1,3,4,5,6],[1,3,4,5,7],[1,3,4,6,7],[1,3,5,6,7],[1,4,5,6,7],[2,3,4,5,6],[2,3,4,5,7],[2,3,4,6,7],[2,3,5,6,7],[2,4,5,6,7],[3,4,5,6,7]]",
+        "a = [1,2,3,4,5,6,7]")
+
+assert("Array#combination 5.",
+       "a.combination(4)","[[1,2,3,4]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination.to_a 5.",
-       "a.combination(0).to_a","[[]]",
+assert("Array#combination 6.",
+       "a.combination(0)","[[]]",
        "a = [1,2,3,4]")
 
-assert("Array#combination(5).to_a 6.",
-       "a.combination(5).to_a","[]", //no combinations of length 5
+assert("Array#combination(5) 7.",
+       "a.combination(5)","[]", //no combinations of length 5
        "a = [1,2,3,4]")
 
 assert("Array#compact$B.",
