@@ -533,7 +533,7 @@ assert("Array#indexOf 3. Search an integer that does not exist ",
        'null',
        'var number = [34,56,78,98]')
 
-/*
+
 assert("Array#sort_by 1. When no block is given, Array#sort_by acts as Array#sort.",
        "cities.sort_by()", "cities.sort()",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
@@ -545,7 +545,6 @@ assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements 
 assert("Array#sort_by 2. When a block is given, Array#sort_by maps the elements with the block return value.",
        "cities.sort_by(function(el){ return el.toLowerCase() })", "['alicante', 'barcelona', 'Madrid', 'Valencia']",
        "var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']")
-*/
 
 assert("Array#strip_all 1. Sample testing ",
        'number.strip_all()', '[1,2,3,"4"]',

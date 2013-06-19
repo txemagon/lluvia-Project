@@ -1461,28 +1461,37 @@ Array.prototype.__secure_combination = function(number, base, initial){
 
 /**
  * @method sort_by
+ * 
  * Returns a sorted array using the mapped value returned by the block.
  * When no block is given then acts a Array#sort alias.
- * If Number and no Number objects are handled then it splits the Array into
+ * 
+ * //todo: If Number and no Number objects are handled then it splits the Array into
  * two subarrays.
+ * 
  * //todo: Keep commenting
  * a[0].toString().toLocaleCompare(b[0].toString())
  */
-/*Array.prototype.sort_by = function(){
+Array.prototype.sort_by = function(){
   var indexed = []
-    if (Array.prototype.sort_by.block_given$U()) {
-      var ordered = []
-	for (var i=0; i<this.length; i++)
-	  indexed.push( [ Array.prototype.sort_by.(this[i]), this[i] ] )
-	    indexed.sort( function(a,b){ return a[0] - b[0] } )
-	    for (var i=0; i<this.length; i++)
+  if (Array.prototype.sort_by.block_given$U()) {
+     var ordered = []
+	
+     for (var i=0; i<this.length; i++)
+	     indexed.push( [ Array.prototype.sort_by.yield(this[i]), this[i] ] )
+	   if (is_a_number$U( indexed[0][0]) )
+       indexed.sort( function(a,b){ return a[0] - b[0] } )
+     else
+       indexed.sort()
+	   
+     for (var i=0; i<this.length; i++)
 	      ordered.push( indexed[i][1] )
-		return ordered
+		
+    return ordered
     } else
       return this.sort()
 
 }
-*/
+
 //Internal simple functions
 function includes(el, array){
   for (var i=0; i<array.length; i++)
