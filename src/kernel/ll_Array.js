@@ -425,7 +425,7 @@ Array.prototype.uniq$B = function(){
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.first(3)
- *     //The result will be = [1,2,3]
+ *     //=> [1,2,3]
  */
 Array.prototype.first = function(){
   if (this.length == 0)
@@ -448,16 +448,15 @@ Array.prototype.first = function(){
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
- *     //The result will be = [4,5,6,7,8,9]
- *
- * ###Example
+ *     //=> [4,5,6,7,8,9]
+ * 
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(2)
- *     //The result will be = [8,9]
- * ###Example
+ *     //=> [8,9]
+ * 
  *     var numbers = []
  *     filterNumbers = numbers.last(2)
- *     //The result will be = null
+ *     //=> null
  */
 Array.prototype.last = function(){
   if (this.length == 0)
@@ -483,7 +482,7 @@ Array.prototype.last = function(){
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.delete(3)
- *     //The result will be = [1,2,3,5,6,7,8,9]
+ *     //=> [1,2,3,5,6,7,8,9]
  */
 Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
   //todo: error on erase$B
@@ -853,17 +852,15 @@ Array.prototype.drop_while = function(){
  * ###Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.flatten()
- *     //The result will be = [1,2,3,4,5,6]
+ *     //=> [1,2,3,4,5,6]
  *
- * ###Example
  *     var numbers = [[1,2,[3,4,5,6]]]
  *     numbers.flatten(1)
- *     //The result will be = [1,2,[3,4,5,6]]
+ *     //=> [1,2,[3,4,5,6]]
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6]
  *     numbers.flatten(3)
- *     //The result will be = [1,2,3,4,[5,6]]
+ *     //=> [1,2,3,4,[5,6]]
  */
 Array.prototype.flatten = function(level){
   if(level == 0)
@@ -946,11 +943,11 @@ Array.prototype.rassoc = function(){
  * starting the search from the final position of the array.
  * 
  * @param {Object} Object that the method will search for.
- * @return {Integer} Position of the element searched for. If not find, it will be null.
+ * @return {number} Position of the element searched for. If not find, it will be null.
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     newNumbers = numbers.rindex(3)
- *     //The result will be = 6
+ *     //=> 6
  */
 Array.prototype.rindex = function(){
   if(arguments.length != 1)
@@ -974,17 +971,15 @@ Array.prototype.rindex = function(){
  * ###Example
  *     var characters = ["a","b","c","d"]
  *     characters.rotate(2)
- *     //The result will be = ["c","d","a","b"]
+ *     //=> ["c","d","a","b"]
  *
- * ###Example
  *     var characters = []
  *     characters.rotate(2)
- *     //The result will be = null
+ *     //=> null
  *
- * ###Example
  *     var characters = ["a","b","c","d"]
  *     characters.rotate(3)
- *     //The result will be = ["d","a","b","c"]
+ *     //=> ["d","a","b","c"]
  */
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === "undefined"){
@@ -1026,12 +1021,12 @@ Array.prototype.rotate = function(obj){
  * 
  * Takes the elements of an array from the first position to the position passed as parameter.
  * 
- * @param {Integer} Position of the last element to take.
+ * @param {number} Position of the last element to take.
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     newNumbers = numbers.take(3)
- *     //The result will be = [1,2,3,4]
+ *     //=> [1,2,3,4]
  */
 Array.prototype.take = function(){
   if(!(arguments[0]) || arguments.length > 1)
@@ -1130,6 +1125,7 @@ Array.prototype.collect = function(){
 
 /**
  * @method   transpose 
+ * 
  * Assumes that self is an array of arrays and transposes the rows to columns.
  * 
  * @param   {Array} Array with elements to transpose.
@@ -1138,17 +1134,15 @@ Array.prototype.collect = function(){
  * ###Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.transpose()
- *     //The result will be = 1,3,5,2,4,6
+ *     //=> [[1,3,5],[2,4,6]]
  * 
- * ###Example
  *     var numbers = [[1,2,3],[1,2,3],[1,2,3]]
  *     numbers.transpose()
- *     //The result will be = 1,1,1,2,2,2,3,3,3
+ *     //=> [[1,1,1],[2,2,2],[3,3,3]]
  *
- * ###Example
  *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
  *     words.transpose()
- *     //The result will be = hola, adios , pedro , juan , cristobal , colon
+ *     //=> [[hola, adios], [pedro, juan], [cristobal, colon]]
  */
 Array.prototype.transpose = function(){
   /**
@@ -1201,11 +1195,12 @@ Array.prototype.transpose = function(){
  * 
  * @param {Array} Arrays to be joined.
  * @return {Array} Array with all elements from the other arrays.
+ * 
  * ###Example
  *     var a = [1,2]
  *     var b = [3,4]
  *     a.zip(b)
- *     //The result will be = [1,2,3,4]
+ *     //=> [1,2,3,4]
  */
 Array.prototype.zip = function(){
   var ary = []
@@ -1306,10 +1301,11 @@ Array.prototype.inject_with_index = function(init_value){
  * Reverses all array elements.
  * 
  * @return {Array} New array with elements reversed.
+ * 
  * ###Example
  *     var a = [1,2,3,4]
  *     a.reverse()
- *     //The result will be = [4,3,2,1]
+ *     //=> [4,3,2,1]
  */
 Array.prototype.reverse = function(){
   var ary = []
@@ -1326,24 +1322,15 @@ Array.prototype.reverse = function(){
  * 
  * Returns the values of an index passed as parameter.
  * 
+ * @param {number} Index Index to be selected
  * @return {Array} New array with values of index selected.
- * @param {Number} The index to be selected
+ * 
  * ###Example
  *     var a = [1,2,3,4]
  *     a.values_at(1,2)
- *     //The result will be = [1,2]
+ *     //=> [1,2]
  */
 Array.prototype.values_at = function(){
-  /**
-   * VALID INPUT!
-   *
-   *  PARAMETER TYPES
-   *  (Integer indices or ranges)
-   *
-   *  DIMENSIONS
-   *  Any
-   *
-   */
   for(var i = 0; i < arguments.length; i ++)
     if(isNaN(arguments[i]))
       //throw ("Invalid type of paramenter")
@@ -1371,25 +1358,21 @@ Array.prototype.values_at = function(){
 }
 
 /**
- * @member     {Array}
  * @method      to_a
  * 
  * Returns self. If called on a subclass of Array, converts the receiver to an Array object.
  * 
- * @param       {Object} this
- * @return      {}
+ * @return      {Array} this
+ * 
  * ###Example
- * 
- * 
- * 
- * Coded by: David
+ *      [1, 2, 3, 4, 5].to_a()
+ *      //=> [1, 2, 3, 4, 5]
  */
 Array.prototype.to_a = function(){
   return this
 }
 
 /**
- * @member       {Array}
  * @method       Cycle
  * 
  * Calls block for each element repeatedly n times or forever if none or nil is given. 
@@ -1414,7 +1397,6 @@ Array.prototype.cycle = function(){
  * @return  {Array} A new array with stripped elements.
  *
  * ###Example
- * 
  *     var a = [1,2,3,"  4"]
  *     a.strip_all()
  *     //=> [1,2,3,"4"]
@@ -1463,7 +1445,6 @@ Array.prototype.combination = function(number){
     return [[]]
   if (number > this.length)
     return []
-  var result = []
   if (number == this.length)
     return [this.clone()]
   if (number == 1)
@@ -1506,17 +1487,6 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * 
  * Returns a sorted array using the mapped value returned by the block.
  * When no block is given then acts a Array#sort alias.
-<<<<<<< HEAD
- * If Number and no Number objects are handled then it splits the Array into
- * two subarrays.
- * //todo: Keep commenting
- * a[0].toString().toLocaleCompare(b[0].toString())
- * 
- * @param {}
- * @return {}
- * ###Example
- * 
-=======
  *
  * @param {(function(Object):Object)=} Block Maps to provide a comparison item.
  * 
@@ -1537,7 +1507,6 @@ Array.prototype.__secure_combination = function(number, base, initial){
  *                       })
  *      //=> ['Madrid', 'Valencia', 'Barcelona']
  *
->>>>>>> 4834063ced5c17f971e0130c38b5add7775d2420
  */
 Array.prototype.sort_by = function(){
   var indexed = []
