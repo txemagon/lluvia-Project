@@ -8,7 +8,8 @@
                       "collect",
                       "map",
                       "clone",
-                      "compact"
+                      "compact",
+                      "sort_by"
                     ]
 
 /**
@@ -1464,12 +1465,26 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * 
  * Returns a sorted array using the mapped value returned by the block.
  * When no block is given then acts a Array#sort alias.
+ *
+ * @param {(function(Object):Object)=} Block Maps to provide a comparison item.
  * 
- * //todo: If Number and no Number objects are handled then it splits the Array into
- * two subarrays.
+ * @return {Array} Sorted Array
  * 
- * //todo: Keep commenting
- * a[0].toString().toLocaleCompare(b[0].toString())
+ * ###Example
+ *      var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']
+ *      cities.sort_by()
+ *      //=> [Madrid,Valencia,alicante,barcelona]
+ *
+ *      cities.sort_by( function(el){ 
+ *                        return el.toLowerCase() 
+ *                       })
+ *      //=> ['alicante', 'barcelona', 'Madrid', 'Valencia']      
+ *
+ *      cities.sort_by( function(el){ 
+ *                        return el.length 
+ *                       })
+ *      //=> ['Madrid', 'Valencia', 'Barcelona']
+ *
  */
 Array.prototype.sort_by = function(){
   var indexed = []
@@ -1491,6 +1506,14 @@ Array.prototype.sort_by = function(){
       return this.sort()
 
 }
+
+/**
+ * @method  sort_by$B
+ * @chainable
+ *
+ * Bang methods ...$B operates in `this` object.
+ * (see Array#sort_by)
+ */
 
 //Internal simple functions
 function includes(el, array){
