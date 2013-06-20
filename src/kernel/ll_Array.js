@@ -1053,6 +1053,12 @@ Array.prototype.take = function(){
  *  
  * @param  {function(Object):boolean} block 
  * @return {Array}       First elements of an Array
+ *
+ * ###Example
+ *      [1, 2, 2, 3, 2, 4].take_while( function(el){
+ *             return el < 3
+ *           })
+ *      //=> [1, 2, 2]
  */
 Array.prototype.take_while = function(){
   var ary    = []

@@ -331,10 +331,10 @@ String.prototype.empty$U = function(){
 
 String.prototype.downcase = function(){
    return this.toLowerCase() == this? null : this.toLowerCase() 
-<span id='String-method-casecmp'>}
-</span>
-/**
- * Compares two strings and returns 0 if the two strings are equals.
+}
+
+<span id='String-method-casecmp'>/**
+</span> * Compares two strings and returns 0 if the two strings are equals.
  * If the first string (argument) is different returns 1.
  * If the second string (this) is different returns -1. 
  *
@@ -363,10 +363,10 @@ String.prototype.casecmp = function(){
   var str2 = arguments[0].toLowerCase() 
   return ( ( str1 == str2 ) ? 0 : ( ( str1 &gt; str2 ) ? 1 : -1 ) );
 
-<span id='String-method-ord'>}
-</span>
-/**
- * This function return the integer ordinal of a one-character string.
+}
+
+<span id='String-method-ord'>/**
+</span> * This function return the integer ordinal of a one-character string.
  *
  * @member      String   
  * @method      ord        
@@ -378,10 +378,10 @@ String.prototype.casecmp = function(){
 
 String.prototype.ord = function(){
    return this.charCodeAt(0)
-<span id='String-method-oct'>}
-</span>
-/**
- * This function make an octal value from a number.
+}
+
+<span id='String-method-oct'>/**
+</span> * This function make an octal value from a number.
  *
  * @member       String   
  * @method       oct        
@@ -401,10 +401,10 @@ String.prototype.oct = function(){
   oct = this.match( /^[(-7)-7]+/)
   oct= oct || [&quot;0&quot;]
   return parseInt(oct[0], 8)
-<span id='String-method-reverse'>}
-</span>
-/**
- * This function returns a reverse from an introduced string
+}
+
+<span id='String-method-reverse'>/**
+</span> * This function returns a reverse from an introduced string
  *
  * @member      String     
  * @method       reverse      
@@ -416,10 +416,10 @@ String.prototype.oct = function(){
 
 String.prototype.reverse = function(){
    return this.split(&quot;&quot;).reverse().join(&quot;&quot;)
-<span id='String-method-include'>}
-</span>
-/**
- * Returns true if str contains the given string or character.
+}
+
+<span id='String-method-include'>/**
+</span> * Returns true if str contains the given string or character.
  *
  * @member       String      
  * @method       include     
@@ -443,10 +443,10 @@ String.prototype.include_some_of$U = function(){
         included = included || String.prototype.include_some_of$U.apply(this, arguments[i])
    }
    return included
-<span id='String-method-center'>}
-</span>
-/**
- * This function returns a center word in the string
+}
+
+<span id='String-method-center'>/**
+</span> * This function returns a center word in the string
  *
  * @member      String     
  * @method       center      
@@ -461,10 +461,10 @@ String.prototype.rindex = function(){
    if (arguments.length == 0)
       return null
    return (this.lastIndexOf(arguments[0]) &gt; 0)? this.lastIndexOf(arguments[0]) : false
-<span id='String-method-center'>}
-</span>
-/**
- * This function returns a center word in the string
+}
+
+<span id='String-method-center'>/**
+</span> * This function returns a center word in the string
  *
  * @member       String     
  * @method       center      
@@ -503,10 +503,10 @@ String.prototype.center = function(){
       i++
   } 
   return str
-<span id='String-method-chomp'>}
-</span>
-/**
- * This function return a string without \n or \r or \r\n of the end.
+}
+
+<span id='String-method-chomp'>/**
+</span> * This function return a string without \n or \r or \r\n of the end.
  *
  * @member     String     
  * @method       chomp     
@@ -539,10 +539,10 @@ String.prototype.chomp = function(){
     if (this.search(/\n/i) == this.length - 1)
        return this.replace(&quot;\n&quot;, &quot;&quot;)
     return this
-<span id='String-method-chop'>}
-</span>
-/**
- * This function return a string without \n or \r or \r\n or char of the end the String.
+}
+
+<span id='String-method-chop'>/**
+</span> * This function return a string without \n or \r or \r\n or char of the end the String.
  *
  * @member       String     
  * @method       chop     
@@ -568,11 +568,11 @@ String.prototype.chop = function(){
   var str = this.chomp()
   if (str.length == this.length)
     return str.slice(0,this.length-1)
-<span id='String-method-hex'>  return str
-</span>}
+  return str
+}
 
-/**
- * This function return a number hexadecimal convert to decimal.
+<span id='String-method-hex'>/**
+</span> * This function return a number hexadecimal convert to decimal.
  *
  * @member       String     
  * @method       hex     
@@ -592,11 +592,11 @@ String.prototype.chop = function(){
 String.prototype.hex = function(){
    if (this.search(&quot;0x&quot;) == 0) 
      return parseInt(this)
-<span id='String-method-chr'>   return isNaN(parseInt(this,16))? 0 : parseInt(this,16)
-</span>}
+   return isNaN(parseInt(this,16))? 0 : parseInt(this,16)
+}
 
-/**
- * This function return first char of the string.
+<span id='String-method-chr'>/**
+</span> * This function return first char of the string.
  *
  * @member       String     
  * @method       chr     
@@ -617,11 +617,11 @@ String.prototype.chr = function(){
 // solo deja meter strings
   if (this.length &gt; 1)
      return this[0]
-<span id='String-method-rjust'>  return this
-</span>}
+  return this
+}
 
-/**
- * If integer is greater than the length of str, returns a new String of length integer with str right justified and padded with padstr; otherwise, returns str.  
+<span id='String-method-rjust'>/**
+</span> * If integer is greater than the length of str, returns a new String of length integer with str right justified and padded with padstr; otherwise, returns str.  
  *
  * @member       String   
  * @method       rjust     
@@ -649,11 +649,11 @@ String.prototype.rjust = function(){
          str += &quot; &quot;
       i++
   }
-<span id='String-method-succ'>  return str+this
-</span>}
+  return str+this
+}
 
-/**
- * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the string. Incrementing a digit always results in another digit, and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character set‘s collating sequence.  
+<span id='String-method-succ'>/**
+</span> * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the string. Incrementing a digit always results in another digit, and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character set‘s collating sequence.  
  *
  * @member       String     
  * @method       succ     
@@ -691,10 +691,10 @@ String.prototype.succ = function(){
      return &quot;&lt;&lt;&quot; + str[2] + str.substr(2,str.length-2)
   else if (this[0] == '&lt;' &amp;&amp; i &lt; 0 &amp;&amp; this[2] == '9')
      return &quot;&lt;&lt;&quot; + str[2].succ() + str.substr(2,str.length-2)
-<span id='String-method-next'>  return i &lt; 0 &amp;&amp; (this[0]=='z' || this[0]=='Z')? str[0] + str : i &lt; 0 &amp;&amp; this[0] == '9'? str[0].succ() + str : this.substr(0,i+1)+str
-</span>}
-/**
- *  Alias of the function succ.
+  return i &lt; 0 &amp;&amp; (this[0]=='z' || this[0]=='Z')? str[0] + str : i &lt; 0 &amp;&amp; this[0] == '9'? str[0].succ() + str : this.substr(0,i+1)+str
+}
+<span id='String-method-next'>/**
+</span> *  Alias of the function succ.
  * 
  * @member       String     
  * @method       next     
@@ -703,11 +703,11 @@ String.prototype.succ = function(){
  *
  **/ 
 String.prototype.next = function(){
-<span id='String-property-'>   return this.succ.apply(this,arguments)
-</span>}
+   return this.succ.apply(this,arguments)
+}
 
-/**
- * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
+<span id='String-property-'>/**
+</span> * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
  * Extraneous characters past the end of a valid number are ignored. 
  * If there is not a valid number at the start of str, 0 is returned. 
  * This method never raises an exception when base is valid. 
@@ -743,12 +743,12 @@ if(arguments.length != 0)
        return null
     else base = arguments[0]
 
-<span id='String-method-to_f'>return isNaN( parseInt(this,base) )? 0 : parseInt(this,base) 
-</span>}
+return isNaN( parseInt(this,base) )? 0 : parseInt(this,base) 
+}
 
 
-/**
- * Returns the result of interpreting leading characters in str as a floating point number
+<span id='String-method-to_f'>/**
+</span> * Returns the result of interpreting leading characters in str as a floating point number
  *
  * @member String  String.prototype.prueba = function(){
  * return this.replace(arguments[0], arguments[1]) 
@@ -770,11 +770,11 @@ String.prototype.to_f = function() {
     //throw (&quot;This function no needs arguments&quot;)
     return null
 
-<span id='String-method-strip'>  return isNaN(parseFloat(this))? 0.0 : parseFloat(this) ;
-</span>}
+  return isNaN(parseFloat(this))? 0.0 : parseFloat(this) ;
+}
 
-/**
- * Returns a copy of str with leading and trailing whitespace removed. 
+<span id='String-method-strip'>/**
+</span> * Returns a copy of str with leading and trailing whitespace removed. 
  *
  * @member   String
  * @method   strip
@@ -800,11 +800,11 @@ String.prototype.setbyte = function(){
      str = &quot;&quot;
      for(var i = 0; i &lt; that.length; i++)
       str += that[i]    
-<span id='String-method-partition'> return str
-</span>}
+ return str
+}
 
-/**
- * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
+<span id='String-method-partition'>/**
+</span> * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
  * 
  * @member     String     
  * @method       partition     
@@ -829,11 +829,11 @@ String.prototype.partition = function(){
               ary = [this.substr(0, pos), this.substr(pos,str.length-2),this.substr(pos+str.length - 2,this.length-pos)]
           else
               ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
-<span id='String-method-rstrip'>     return ary
-</span>}
+     return ary
+}
 
-/**
- * Returns a copy of str with trailing whitespace removed. 
+<span id='String-method-rstrip'>/**
+</span> * Returns a copy of str with trailing whitespace removed. 
  *
  * @member  String
  * @method   rstrip
@@ -842,10 +842,10 @@ String.prototype.partition = function(){
  *
  **/
 String.prototype.rstrip = function(){
-<span id='String-method-upto'>  return this.replace(/\s+$/g,'')
-</span>}
-/**
-*
+  return this.replace(/\s+$/g,'')
+}
+<span id='String-method-upto'>/**
+</span>*
  *
  * @member   String
  * @method   upto
@@ -877,11 +877,11 @@ String.prototype.upto = function(){
    }
    if( num.length &gt; arguments[0].length )
      return str  
-<span id='String-method-each_char'>   return str + String.prototype.upto.yield(num)
-</span>}
+   return str + String.prototype.upto.yield(num)
+}
 
-/**
- * Passes each character in str to the given block, or returns an enumerator if no block is given.  
+<span id='String-method-each_char'>/**
+</span> * Passes each character in str to the given block, or returns an enumerator if no block is given.  
  *
  * @member  String
  * @method   each_char
@@ -902,10 +902,10 @@ String.prototype.each_char = function(){
    var str = &quot;&quot;
    for (var i = 0; i&lt;this.length;i++)
       str += String.prototype.each_char.yield(this[i]) 
-<span id='String-method-chars'>   return str
-</span>}
-/**
- *  Alias of the function each_char.
+   return str
+}
+<span id='String-method-chars'>/**
+</span> *  Alias of the function each_char.
  * 
  * @member     String     
  * @method       chars     
@@ -920,11 +920,11 @@ String.prototype.sum = function(){
   var suma = 0
   for (var i = 0; i&lt;this.length;i++)
      suma += this.charCodeAt(i)
-<span id='String-method-squeeze'>  return suma
-</span>}
+  return suma
+}
 
-/**
- * Returns a string where runs of the same character that occur in this set are replaced by a single character.
+<span id='String-method-squeeze'>/**
+</span> * Returns a string where runs of the same character that occur in this set are replaced by a single character.
  *
  * @member   String
  * @method   squeeze
@@ -962,12 +962,12 @@ String.prototype.squeeze = function(){
         } 
       }
         
-<span id='String-method-String'>   return strng
-</span>}
+   return strng
+}
 */
 
-/**
- * Returns a string containing common letters in the parameter strings
+<span id='String-method-String'>/**
+</span> * Returns a string containing common letters in the parameter strings
  * 
  * @member    String
  * @method    String#intersection
@@ -985,11 +985,11 @@ String.prototype.intersection = function(){
 	 var regex = &quot;[&quot; + arguments[i] + &quot;]&quot;
 	 str = str.match( new RegExp(regex , &quot;g&quot; )).join(&quot;&quot;)
       }
-<span id='String-method-sub'>      return str
-</span>}
+      return str
+}
 
-/**
- * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
+<span id='String-method-sub'>/**
+</span> * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
  * 
  * @member      String
  * @method	sub
@@ -1000,11 +1000,11 @@ String.prototype.intersection = function(){
  **/
 
 String.prototype.sub= function(){
-<span id='String-method-bytes'>   return this.replace(arguments[0], arguments[1]) 
-</span>}
+   return this.replace(arguments[0], arguments[1]) 
+}
 
-/**   
- * Passes each byte in str to the given block, or returns an enumerator if no block is given.
+<span id='String-method-bytes'>/**   
+</span> * Passes each byte in str to the given block, or returns an enumerator if no block is given.
  * 
  * @member  String
  * @method  bytes
@@ -1014,11 +1014,11 @@ String.prototype.sub= function(){
  **/
 String.prototype.bytes = function(){
   for(var i = 0; i &lt; this.length; i++)
-<span id='String-method-ascii_onlyS-U'>    return this.charCodeAt(i)
-</span>}
+    return this.charCodeAt(i)
+}
 
-/**
- * Returns true for a string which has only ASCII characters. 
+<span id='String-method-ascii_onlyS-U'>/**
+</span> * Returns true for a string which has only ASCII characters. 
  *
  * @member  String
  * @method  ascii_only$U
@@ -1028,11 +1028,11 @@ String.prototype.bytes = function(){
  **/
 
 String.prototype.ascii_only$U = function(){
-<span id='String-method-each_line'>     return isNaN(this)
-</span>}
+     return isNaN(this)
+}
 
-/**
- * Splits str using the supplied parameter as the record separator.
+<span id='String-method-each_line'>/**
+</span> * Splits str using the supplied parameter as the record separator.
  * Passing each substring in turn to the supplied block. 
  * If a zero-length record separator is supplied, the string is split 
  * into paragraphs delimited by multiple successive newlines. 
@@ -1079,11 +1079,11 @@ while( (posEnd &lt; ary.length) &amp;&amp; (posEnd &gt;0) ){
 }
 ary = ary.substring(posEnd)
 ary.each_line.yield(ary) 
-<span id='String-method-each_codepoint'>return this
-</span>}
+return this
+}
 
-/**
- * Passes the Integer ordinal of each character in str, also known as a codepoint when applied to Unicode strings to the given block.
+<span id='String-method-each_codepoint'>/**
+</span> * Passes the Integer ordinal of each character in str, also known as a codepoint when applied to Unicode strings to the given block.
  *
  * If no block is given, an enumerator is returned instead.  
  *
@@ -1106,10 +1106,10 @@ String.prototype.each_codepoint = function(){
   var str = &quot;&quot;
   for (var i=0;i&lt;this.length;i++)
       str += String.prototype.each_codepoint.yield(this[i].charCodeAt(0))
-<span id='String-method-codepoint'>  return str
-</span>}
-/**
- *  Alias of the function each_codepoint.
+  return str
+}
+<span id='String-method-codepoint'>/**
+</span> *  Alias of the function each_codepoint.
  * 
  * @member      String     
  * @method      codepoint     
@@ -1118,10 +1118,10 @@ String.prototype.each_codepoint = function(){
  *
  **/ 
 String.prototype.codepoint = function(){
-<span id='String-method-rpartition'>  return this.each_codepoint.apply(this,arguments)
-</span>}
-/**
- * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str. 
+  return this.each_codepoint.apply(this,arguments)
+}
+<span id='String-method-rpartition'>/**
+</span> * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str. 
  * 
  * @member     String    
  * @method     rpartition
@@ -1151,11 +1151,11 @@ String.prototype.rpartition = function(){
           else
               ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
      }
-<span id='String-method-scan'>     return ary
-</span>}
+     return ary
+}
 
-/**
- *
+<span id='String-method-scan'>/**
+</span> *
  * The match() method searches for a match between a regular expression and a string, and returns the matches.
  * This method returns an array of matches, or null if no match is found. Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
  *
@@ -1187,11 +1187,11 @@ String.prototype.scan = function(){
      }
      return this
    }
-<span id='String-method-erase'>   return ary
-</span>}
+   return ary
+}
 
-/**
- *  Returns a new string with erased letters.
+<span id='String-method-erase'>/**
+</span> *  Returns a new string with erased letters.
  *
  * @member     String
  * @method      erase
@@ -1206,11 +1206,11 @@ String.prototype.erase = function(){
       erase = this.intersection(erase, arguments[i])
    var regex = &quot;[^&quot; + erase + &quot;]&quot;
    erase = this.match(new RegExp(regex, &quot;g&quot;)).join(&quot;&quot;)
-<span id='String-method-end_WithS-U'>   return erase
-</span>}
+   return erase
+}
 
-/**
- *  Returns true or false by comparing  object and the argument from the end.
+<span id='String-method-end_WithS-U'>/**
+</span> *  Returns true or false by comparing  object and the argument from the end.
  * 
  * @member     String
  * @method      end_With$U
@@ -1221,10 +1221,10 @@ String.prototype.erase = function(){
  **/
 
 String.prototype.end_With$U = function(str){
-<span id='String-method-eqlS-U'>    return (this.match(str+&quot;$&quot;)==str)}
-</span>     
-/**
- * Returns true or false by comparing  object and the argument.
+    return (this.match(str+&quot;$&quot;)==str)}
+     
+<span id='String-method-eqlS-U'>/**
+</span> * Returns true or false by comparing  object and the argument.
  * 
  * @member      String
  * @method      eql$U
@@ -1235,10 +1235,10 @@ String.prototype.end_With$U = function(str){
  **/
      
 String.prototype.eql$U = function() {
-<span id='String-method-getbyte'>    return this == arguments[0]}
-</span>
-/**
- * Returns the indexth byte as an integer. 
+    return this == arguments[0]}
+
+<span id='String-method-getbyte'>/**
+</span> * Returns the indexth byte as an integer. 
  * 
  * @member      String
  * @method      getbyte
@@ -1256,11 +1256,11 @@ String.prototype.getbyte = function(){
 
 
 String.prototype.to_str = function(){
-<span id='String-method-to_r'>    return this.toString()
-</span>}
+    return this.toString()
+}
 
-/** Returns a rational which denotes the string form.
- * The parser ignores leading whitespaces and trailing garbage. 
+<span id='String-method-to_r'>/** Returns a rational which denotes the string form.
+</span> * The parser ignores leading whitespaces and trailing garbage. 
  * Any digit sequences can be separated by an underscore. 
  * Returns zero for null or garbage string. 
  *
@@ -1319,17 +1319,17 @@ else
 mcd = intMcd(op1,op2)
 if (mcd == null)
    mcd = 1
-<span id='String-property-'>return op1/mcd + &quot;/&quot; + op2/mcd
-</span>}
+return op1/mcd + &quot;/&quot; + op2/mcd
+}
 
 
-/***************************************************************/
-/* La parte de arriba es para los metodos (prototype) **********
-<span id='String-method-'>/* La parte de abajo esta reservada para añadir funciones ******/
-</span>
+<span id='String-property-'>/***************************************************************/
+</span>/* La parte de arriba es para los metodos (prototype) **********
+/* La parte de abajo esta reservada para añadir funciones ******/
 
-/** Esta funcion devuelve la cantidad de decimales que tiene un numero 
- * 
+
+<span id='String-method-'>/** Esta funcion devuelve la cantidad de decimales que tiene un numero 
+</span> * 
  * @member *****
  * @methof  decimal
  * @param  {number | string }   
@@ -1357,11 +1357,11 @@ if ( ary.search(&quot;[.]&quot;) &gt; 0){
    decDos = trash.substring(trash.search(&quot;[.]&quot;)+1)
    decDos = decDos.length
 }
-<span id='String-method-intMdc'>return parseInt(decUno)&gt;=decDos? 0 : (decUno - decDos) * -1
-</span>}
+return parseInt(decUno)&gt;=decDos? 0 : (decUno - decDos) * -1
+}
 
-/** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
- * 
+<span id='String-method-intMdc'>/** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
+</span> * 
  * @member ******
  * @method   intMdc
  * @param    {interger, integer}  
@@ -1393,12 +1393,12 @@ while ( op1 != op2 || op1 &lt; 0 || op2&lt; 0 ){
 }
 if( op1 == op2)
    return op1
-<span id='String-method-bytesize'>return null 
-</span>}
+return null 
+}
 
 
-/**
- * Returns the length of string in bytes.
+<span id='String-method-bytesize'>/**
+</span> * Returns the length of string in bytes.
  * 
  * @member      String
  * @method      bytesize
@@ -1408,11 +1408,11 @@ if( op1 == op2)
  **/
 
 String.prototype.bytesize = function(){
-<span id='String-method-is_stringS-U'>    return this.length
-</span>}
+    return this.length
+}
 
-/**
- * @method is_string$U
+<span id='String-method-is_stringS-U'>/**
+</span> * @method is_string$U
  *
  * @param  {string | String} name 
  * @return {boolean}      true if name is any kind of string
