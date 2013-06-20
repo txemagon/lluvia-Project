@@ -18,6 +18,12 @@ assert("Array#take 3. Single numeric negative argument",
 	"b", '[]',  
       'a = [1,2,3,4,5]; b = a.take(-3)' )
 
+assert( "Array#take_while #1.",
+        "r", "[1,2,2]",
+        "a = [1,2,2,3,4,2,5]; r = a.take_while( \
+          function(el){ return el < 3 } )"
+      )
+
 assert("Array.reflect 1. Single argument",
        "a", "[1, 1, 1]",
        "Array.prototype.oneize = function(){;\

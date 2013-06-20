@@ -1047,33 +1047,23 @@ Array.prototype.take = function(){
 }
 
 /**
- * @method  take_while
-<<<<<<< HEAD
- * 
- * Needs a function as parameter. The function will receive every item of the array.
- * Returns an array with all the elements returned by this function.
- * 
- * @param {Function} Function that will be executed.
- * @return {Array} Array with all elements returned by the function passed as parameter.
-=======
+ * @method take_while
  *
- * Iterates over each element of the array until the result returned by the block is false or null.
- *
- * @param {Function} Function that will be executed.
- *
- * @return {Array} Array with all elements returned by the function passed as parameter.
- *
->>>>>>> 4834063ced5c17f971e0130c38b5add7775d2420
- * ###Example
- *     var numbers = [1,2,3,4,5,4,3,2,1]
- *     numbers = numbers.take_while(function(obj){return obj<3? obj: null})
- *     // => [1,2]
+ * Takes the first elements of an array while the condition is met.
+ *  
+ * @param  {function(Object):boolean} block 
+ * @return {Array}       First elements of an Array
  */
 Array.prototype.take_while = function(){
-  var ary = []
-    for(var i = 0; i < this.length; i++)
-      ary.push( Array.prototype.take_while.yield(this[i]))
-	return ary.compact()
+  var ary    = []
+  var taking = true
+
+  for (var i=0; taking && i<this.length; i++)
+    if ( Array.prototype.take_while.yield(this[i]) )
+      ary.push(this[i])
+    else
+      taking = false    
+    return ary
 }
 
 /**
