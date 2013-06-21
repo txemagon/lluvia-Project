@@ -1249,16 +1249,6 @@ Array.prototype.empty$U = function(){
  *     // => true
  */
 Array.prototype.eql$U = function(model){
-  /**
-   * VALID INPUT!
-   *
-   *  PARAMETER TYPES
-   *  (All types)
-   *
-   *  DIMENSIONS
-   *  One object
-   *
-   */
   if(arguments.length > 1)
     //throw("Wrong number of arguments")
     return null
