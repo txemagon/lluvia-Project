@@ -1,12 +1,16 @@
 /**
  * @class       String
  * Define method for string
- * 
+ */
+
+
+
+/**
+ * @member String
  * @method  capitalize
  * Returns a copy of string with the first character converted to uppercase and the 
  * remainder to lowercase. 
  * 
- * @param {String} String Any string
  * @return {String} String The string with his first letter in uppercase. 
  * 
  * ###Comments:    Case conversion is effective only in ASCII region.
@@ -14,30 +18,34 @@
  * ###Example
  *       
  *      var text = "hello"   // giving a value to text
- *      text.capitalize()    // value of text now is "Hello"
+ *      text.capitalize()    //=> "Hellow"
  */
+
 String.prototype.capitalize = function(){
   word = this.toLowerCase()
   return word.replace(word[0], word[0].toUpperCase())
 }
 
 /**
- * @method  humanize
+ * @member   String
+ * @method   humanize
  * 
  * Changes the underscore or camelCase string and returns a string which has each word separated with one space
  * 
- * @param    {String} String Any string
  * @return   {String} String
  * 
  * ###Example
  *       
- *      "TheRollingStones".humanize()="the rolling stones"
+ *      "TheRollingStones".humanize()      //=>"the rolling stones"
  *       
- *      "the_rolling_stones".humanize()="the rolling stones"
+ *      "the_rolling_stones".humanize()    //=>"the rolling stones"
  *           
- *      "theRolling_stones".humanize()="the rolling stones"
+ *      "theRolling_stones".humanize()    //=>"the rolling stones"
  *      
-**/	
+ */	
+
+
+
 String.prototype.humanize = function(){
   var word = this.strip()
   var first = word[0]
@@ -46,15 +54,39 @@ String.prototype.humanize = function(){
   return first + (to_lower? to_lower: word)
 }
 
+
+/**
+ * @member   String
+ * @method   underscore
+ *
+ * returns a underscored string
+ *
+ * ###Example:
+ *     
+ *      "TheRollingStone".underscore()   //=> "The rolling stones"
+ *
+ *
+ * @return {String} string
+ *
+ */
+
+
+
 String.prototype.underscore = function(){
+
   return this.humanize().replace(/\s+_*/g, "_")
 }
 
 /**
+ * @member  String
  * @method  camel_case
  * 
  * Returns the same string in camel case form.
  * 
+ *
+ * ###Example
+ *
+ *     "the_rollings stones".camel_case //=> "theRollingStones"
  * @return  {String} String
  *
  * ###Comments:    
