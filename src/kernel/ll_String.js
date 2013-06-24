@@ -106,6 +106,11 @@ String.prototype.camel_case = function(){
 }
 
 /**
+ * @member String
+ * @method class_name
+ * 
+ *  
+ * 
  * 
  */ 
 String.prototype.class_name = function(){
@@ -120,6 +125,7 @@ String.prototype.class_name = function(){
 }
 
 /**
+ * @member   String
  * @method   index 
  * Returns the index of the first occurrence of the given substring or pattern 
  * 'regexp' in str. Returns null if not found. If the second parameter is 
@@ -127,13 +133,13 @@ String.prototype.class_name = function(){
  * 
  * 
  * @param       {string} string/regex
- * @return      {Number} Index of char. Returns null if not found
+ * @return      {Number} Index Index of char
  * 
  * ###Example
- *      "hello".index("e")  
- *       //using given parameter "e" the function searches in the string for the first coincidence and returns its position.	    
- *       //=> 1
+ *      "hello".index("e")  //=> 1
  */
+
+
 String.prototype.index = function(){
   if (arguments.length == 0 || arguments.length > 2)
     //throw ("wrong number of arguments")
@@ -157,17 +163,18 @@ String.prototype.index = function(){
     return min >= 0 && entradoAlMenosUnaVez? min : null
   }
   return this.indexOf(arguments[0]) < 0? null : this.indexOf(arguments[0])
-// Falta que funcione al pasar por parametros
+// todo: Falta que funcione al pasar por parametros
 // ? y una letra, ya que da error de sintaxis
 }
 
 /**
+ * @member   String
  * @method   normalize_index
  * 
- * Returns a index of the string 
+ * converts an negative index passed to positive valid index
  * 
  * @param       {Number} number 
- * @return      {Number} number
+ * @return      {Number} number equivalent positive index
  *  
  * ###Comments:    
  * In case of abs of number more than this.length, returns null, else returns index
@@ -175,7 +182,7 @@ String.prototype.index = function(){
  */
 String.prototype.normalize_index = function(){
   if (typeof(arguments[0]) === "number")
-     if (arguments[0] < 0? Math.abs(arguments[0]) <= this.length:Math.abs(arguments[0]) <= this.length - 1)
+     if (arguments[0] < 0? Math.abs(arguments[0]) <= this.length : Math.abs(arguments[0]) <= this.length - 1)
       return arguments[0] < 0? arguments[0] + this.length : arguments[0]
   return null
 }
