@@ -684,3 +684,15 @@ assert("String#squeeze 3. ",
        'a = "abcdefgghhiijjkkzz"')
 */
 
+
+assert("String#normalize_index 1.",
+       'a.normalize_index(-1)', '4',
+       'a="hello"')
+
+assert("String#normalize_index 2",
+       'a.normalize_index(-6)', 'null',
+       'a="hello"')
+
+assert("String#normalize_index 3",
+       'a.normalize_index(-2,5)', '3',
+       'a="hello"')
