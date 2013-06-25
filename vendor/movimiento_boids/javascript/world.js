@@ -198,7 +198,7 @@ World.prototype.visible_for = function(position, vision){
   return visible
 }
 
-World.prototype.new_boid = function(color, geo_data, BoidType){
+World.prototype.new_boid = function(color, geo_data){
   color = color || "blue"
   if (typeof(geo_data) === "undefined")
     geo_data = { 
@@ -206,8 +206,7 @@ World.prototype.new_boid = function(color, geo_data, BoidType){
           velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)), 
           acceleration: new Vector(0,0)
   }
-  BoidType = BoidType || Boid
-  var b = new BoidType( geo_data, color)
+  var b = new Boid( geo_data, color)
   this.boids++
   b.id = this.boids
   this.has_born(b)

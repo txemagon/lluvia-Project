@@ -131,15 +131,11 @@ Boid.prototype.run = function(current_time){
   this.update_physics(current_time)
 }
 
-
-
 Boid.prototype.draw = function(ctx){
 
   var p = this.geo_data.position;
   var v = this.geo_data.velocity;
   var a = this.geo_data.acceleration;
-
-
 
   ctx.fillStyle = this.colour
   ctx.strokeStyle = "black"
@@ -152,8 +148,6 @@ Boid.prototype.draw = function(ctx){
   ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true); 
   ctx.closePath();
   ctx.stroke()
-
-
 
   if (this.focused){
     ctx.strokeStyle = "red"
