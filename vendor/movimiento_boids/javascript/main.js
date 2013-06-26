@@ -7,14 +7,23 @@ var l = new Vector(20,20);
 var tecla_pulsada = new Array();
 var ultima_pulsacion=null;
 
-function game_loop(){
+var p = 1;
+var r = 5;
+var t = 1;
+var x=10;
+var y= 10;
+
+function game_loop(){ //Elegir tipo de movimiento del Boid principal
 	setTimeout(game_loop,20);
-	direccion();
+	//direccion();
+  recta();
+  //curva();
 }
 
 function sumar_vectores(){
 	b.geo_data.position = new Vector(390, 390)
 }	
+
 
 function direccion(){                
     if(tecla_pulsada[38]) //Arriba
@@ -25,6 +34,25 @@ function direccion(){
    			b.geo_data.position = b.geo_data.position.add(0,2);
   	if(tecla_pulsada[37]) //Izquierda
    			b.geo_data.position = b.geo_data.position.add(-2,0);
+}
+
+
+function recta(){
+  f = new Func('2*{x}') 
+  a = new Vector(f.value_in({x:p}), f.value_in({x:p}))
+
+  b.geo_data.position = a
+  p++;
+}
+
+
+function curva(){ // Mejorar!!
+  x += r*Math.cos(t);
+  y += r*Math.sin(t); 
+  
+  a = new Vector(x, y)
+  b.geo_data.position = a
+t+=0.01;
 }
 
 // Evento pulsar tecla
