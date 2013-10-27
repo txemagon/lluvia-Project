@@ -8,9 +8,14 @@ function start_game(){
 	var start_button = document.getElementById('main_screen');
 	start_button.style.display = 'none';
 	
-	alert("Hola Mundo")
+	//alert("Hola Mundo")
 	
 	w.start()
+	
+	var shepperd = w.new_boid("pink", {position: new Vector(350, 250),
+									   velocity: new Vector(0, 0),
+									   acceleration: new Vector(0, 0) } )
+
 }
 
 function main(){ 
