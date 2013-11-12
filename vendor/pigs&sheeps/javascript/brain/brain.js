@@ -11,28 +11,17 @@ function Brain(body){
    var that = this
    this.behaviors = []
 
-     /* GOAL BEHAVIORS */
+}
+
+Brain.prototype.add_behaviors = function(list_of_behaviors, behavior_type){
+   behavior_type = behavior_type || BehaviorList /* BehaviorSet || BehaviorList */
    this.behaviors.push( 
-     [ "seek>arrival", "flee", "wander", 
-       "wall following", "path following" 
-     ].inject( new BehaviorSet(), function(behavior, set){
+     list_of_behaviors.inject( new behavior_type(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)
            set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return set
-	 })
+     return set
+   })
      )
-// Arrival is a BehaviorModifier (not a Behavior anymore)
-// As long as  "pursue" and "evade" can be got with a BehaviorModifier now are part of named behaviors
-
-     /* SECURITY BEHAVIORS */
-   this.behaviors.push(
-     [ "separation", "alignment", "cohesion", 
-       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){ 
-           var b_name = Behavior.decompose_name(behavior)
-	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return list
-	 })
-       )
 }
 
 Brain.prototype.can$U = function(behavior){

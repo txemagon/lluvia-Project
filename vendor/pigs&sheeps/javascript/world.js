@@ -183,16 +183,18 @@ World.prototype.running_steady = function(processors_time){
   //setTimeout(this.run.bind(this), 100)
 }
 
-World.prototype.visible_for = function(position, vision){
+World.prototype.visible_for = function(position, heading, vision_object){
  var that = this
-  vision = vision * vision
+  var radius = vision_object.radius
+  var vision =  radius * radius
   var visible = []
+  var x1 = position.get_coord(0) 
+  var y1 = position.get_coord(1)
   this.each_boid(function (boid){
-    var x1 = position.get_coord(0) 
-    var y1 = position.get_coord(1)
     var dx = boid.geo_data.position.get_coord(0) - x1
     var dy = boid.geo_data.position.get_coord(1) - y1
-    if (dx * dx + dy * dy < vision )
+    if ( dx * dx + dy * dy < vision && 
+         heading.angle(new Vector(dx, dy) < vision_object.angle ) )
       visible.push(boid)
   })
   return visible

@@ -35,7 +35,7 @@ function Boid(geo_data,colour){
     that.last_time = that.current_time = null
     that.colour = colour || "blue"
     that.mass = 2
-    that.vision = 100
+    that.vision = {radius: 100, angle: 130 * Math.PI / 180}
 
     that.force_limits = {
       thrust: 20,
@@ -301,7 +301,7 @@ Boid.prototype.globalize = function(){
  * @return {boolean}
  */
 Boid.prototype.visible_objects = function(){
-  return this.my_world.visible_for(this.geo_data.position, this.vision)
+  return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
 }
 
 /**
