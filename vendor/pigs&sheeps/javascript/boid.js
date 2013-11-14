@@ -34,7 +34,7 @@ function Boid(geo_data,colour, configuration, brain){
     that.colour = colour || "blue"
 
     /* Overridable configuration */
-    var config = Boid.yield(new Hash())
+    var config = Boid.yield(that, new Hash())
     
     var default_config = {
       brain: new Brain(that),
