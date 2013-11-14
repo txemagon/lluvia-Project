@@ -18,32 +18,39 @@ Boid.prototype.constructor = Boid
  * @param {Object} geo_data.acceleration Initial acceleration
  * @param {String} colour css color to paint it
  */
-function Boid(geo_data,colour){
+function Boid(geo_data,colour, configuration, brain){
 
   var that = this
   
   function initialize(){
-    that.brain = new Brain(that)
     that.last_heading = new Vector(0, 1)
     that.geo_data = geo_data || { 
       position: new Vector(0,0), 
       velocity: new Vector(0,0), 
       acceleration: new Vector(0,0) 
-      }
-    that.vel_max = 50
+    }
     that.my_world = null
     that.last_time = that.current_time = null
     that.colour = colour || "blue"
-    that.mass = 2
-    that.vision = {radius: 100, angle: 130 * Math.PI / 180}
 
-    that.force_limits = {
-      thrust: 20,
-      steering: 50,
-      braking: 70
+    /* Overridable configuration */
+    var config = Boid.yield(new Hash())
+    
+    var default_config = {
+      brain: new Brain(that),
+      vel_max: 50,
+      mass: 2,
+      vision: {radius: 100, angle: 130 * Math.PI / 180},
+
+      force_limits:  {
+        thrust: 20,
+        steering: 50,
+        braking: 70
+      }
     }
-   }
-   
+    that.merge$B(config.soft_merge$B(default_config))
+  }
+
    if (arguments.length)
      initialize()
     

@@ -227,3 +227,55 @@ Function.prototype.extend = function(superclass, args){
     this.super.Class.after_extended(this)
 		
 }
+/**
+ * @method reflect
+ * @static
+ *
+ * Creates a bang method version of the referred one.
+ *
+ * @param  {(String | String[])...} original_method Name of the original method.
+ *
+ * If original method is an Array of Strings then performs reflection
+ * over every mentioned method.
+ *
+ * ###Example
+ *      // Create Array#map$B based on Array#map
+ *      Array.reflect("map")
+ *
+ *      // Create Array#map$B and Array#collect$B
+ *      Array.reflect("map", "collect")
+ *
+ *      // Create Array#map$B and Array#collect$B
+ *      var method_list = ["map", "collect"]
+ *      Array.reflect(method_list)
+ */
+Function.prototype.reflect = function(){
+  var result
+  var return_value = {}
+  var calling_class = eval(this.name)
+
+  function duplicate(original_method){
+    calling_class.prototype[original_method + "$B"] = function(){
+      var substitute = calling_class.prototype[original_method].apply(this, arguments)
+
+  this.clear()
+  for (var i=0; i<substitute.length; i++)
+    this[i] = substitute[i]
+
+      return this
+    }
+    return [ original_method + "$B", calling_class.prototype[original_method + "$B"] ]
+  }
+
+  for(var i=0; i<arguments.length; i++)
+    if (arguments[i] instanceof Array)
+      for(var j=0; j<arguments[i].length; j++){
+  result = duplicate(arguments[i][j])
+    return_value[result[0]] = result[1]
+      }
+    else {
+      result = duplicate(arguments[i])
+  return_value[result[0]] = result[1]
+    }
+  return return_value
+}
