@@ -15,12 +15,19 @@ $K_app_dependencies = [
 			{ name: "world_interface.js",          description: "World Interface." },
 			{ name: "boid_editor.js",              description: "Boid panel editor." },
 			{ name: "world.js",                    description: "The world where all boids live." },
-			{ name: "main.js",                     description: "main function." },
+			{ name: "main.js",                     description: "main function." }
+		]
+	},
+	{	module: "Interface", 
+		description: "Interface tools", 
+		path: "interface/", 
+		files: [ 
+			{ name: "button.js",          description: "Button." }
 		]
 	},
 	{	module: "Species", 
 		description: "Particularization of the main Boid classes", 
-		path: "species", 
+		path: "species/", 
 		files: [ 
 			{ name: "alignment_behavior.js",  description: "Alignment Behavior." },
 			{ name: "sheep.js",               description: "The brain of a sheep." },

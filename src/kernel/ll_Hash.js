@@ -32,7 +32,7 @@ Hash.prototype.self_values = function(){
 Hash.prototype.alias("own_values", "self_values")
 
 Hash.prototype.merge = function(source){
-	if (!source.respondo_to$U("self_keys"))
+	if (!source.respond_to$U("self_keys"))
 		throw "Invalid source. Impossible to merge."
 	var that = this
 	source.self_keys().each(function(key){
@@ -42,7 +42,7 @@ Hash.prototype.merge = function(source){
 }
 
 Hash.prototype.soft_merge = function(source){
-	if (!source.respondo_to$U("self_keys"))
+	if (!source.respond_to$U("self_keys"))
 		throw "Invalid source. Impossible to merge."
 	var that = this
 	source.self_keys().each(function(key){

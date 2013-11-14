@@ -53,7 +53,6 @@ Exception.parse = function(err){
        var actual_parameters = Expression.parse( params.substr(1) )
        for (var i=0; i<actual_parameters.length; i++)
          actual_parameters[i] = eval(actual_parameters[i])
-
        return obj.method_missing(m[2], m[1],  actual_parameters)
      }
 

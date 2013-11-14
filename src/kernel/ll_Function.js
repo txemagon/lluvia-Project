@@ -258,7 +258,7 @@ Function.prototype.reflect = function(){
     calling_class.prototype[original_method + "$B"] = function(){
       var substitute = calling_class.prototype[original_method].apply(this, arguments)
 
-  this.clear()
+  //this.clear()
   for (var i=0; i<substitute.length; i++)
     this[i] = substitute[i]
 

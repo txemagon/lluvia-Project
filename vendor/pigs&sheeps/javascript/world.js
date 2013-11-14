@@ -29,7 +29,7 @@ function World(screen, width, height){
   this.start_time = null
   this.acceleration_max = 30
   this.velocity_max = 200
-  this.boids = 0
+  this.boids = {total: 0}
 
   /* We have a HTMLElement, a string holding the id, or the page has a canvas */
 
@@ -232,3 +232,23 @@ World.prototype.attend_focus_boid = function(date, mssg){
   mssg.current++;
 }
 
+World.prototype.new_boid_of = function(class_name, config){
+  config = World.prototype.new_boid_of.yield(config)
+  var b = new class_name(config)
+  if (this[class_name])
+    this[class_name]++
+  else
+    this[class_name] = 1
+  this.boids.total++
+  this.has_born(b)
+  return b
+}
+
+World.prototype.method_missing= function(method, obj, params){
+  alert(params)
+  if ( /new_boid_as_/.test(method) ){
+    var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
+    return this.new_boid_of(eval("" + subtype), eval(params))
+  }
+  return this.super.method_missing.apply(this, arguments) 
+}

@@ -1,3 +1,6 @@
+/**
+ * @classDescription Creates Alignment Behavior.
+ *
  * @return {AlignmentBehavior}
  * @constructor
 */

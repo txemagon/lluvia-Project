@@ -264,7 +264,6 @@ Object.prototype.instance_of$U = function (clss){
  * @param  {Array} params List of params of the method call
  */
 Object.prototype.method_missing = function (method, obj, params){
-
   var that = this
   function bad_function(){
     throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') )) 

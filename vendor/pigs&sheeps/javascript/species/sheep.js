@@ -9,10 +9,13 @@
  Sheep.super = Boid
 
  function Sheep(){
+ 	for (var i=0; i<arguments.length; i++)
+ 	alert(arguments[i])
  	var that = this
     Sheep.super.apply(this, arguments)
 
  	function initialize(){
+ 		that.colour = "pink"
  		that.vel_max = 50
  		that.mass = 2
  		that.vision = {radius: 100, angle: 130 * Math.PI / 180}
