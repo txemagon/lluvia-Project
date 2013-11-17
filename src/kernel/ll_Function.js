@@ -33,6 +33,12 @@ Function.prototype.deconstruct = function(){
            }
 }
 
+Function.deconstruct = function(src){
+  return { name: src.match(/function\s+([^\(]+)/)[1], 
+           params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+           body: src.match(/{(.*)}/)[1]
+           }
+}
 
 /*
  * yield example

@@ -233,7 +233,6 @@ World.prototype.attend_focus_boid = function(date, mssg){
 }
 
 World.prototype.new_boid_of = function(class_name, config){
-  config = World.prototype.new_boid_of.yield(config)
   var b = new class_name(config)
   if (this[class_name])
     this[class_name]++
@@ -245,10 +244,11 @@ World.prototype.new_boid_of = function(class_name, config){
 }
 
 World.prototype.method_missing= function(method, obj, params){
-  alert(params)
+
   if ( /new_boid_as_/.test(method) ){
     var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
-    return this.new_boid_of(eval("" + subtype), eval(params))
+    return this.new_boid_of(eval("" + subtype), params)
+    //todo: This is dependant of bad ll_Exception params analysis
   }
   return this.super.method_missing.apply(this, arguments) 
 }

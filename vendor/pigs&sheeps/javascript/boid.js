@@ -18,18 +18,23 @@ Boid.prototype.constructor = Boid
  * @param {Object} geo_data.acceleration Initial acceleration
  * @param {String} colour css color to paint it
  */
-function Boid(configuration, brain){
+function Boid(configuration){
 
   var that = this
+  var args = arguments
+  var config = new Hash()
+
+    function initialize(){
+
+      if (typeof(args[args.length-1]) == "function")
+         config = Boid.yield(that, new Hash() ) || new Hash()
   
-  function initialize(){
     that.last_heading = new Vector(0, 1)
     that.my_world = null
     that.last_time = that.current_time = null
 
     /* Overridable configuration */
-    var config = Boid.yield(that, new Hash()) || new Hash()
-    
+
     var default_config = {
       geo_data: { 
         position: new Vector(0,0), 

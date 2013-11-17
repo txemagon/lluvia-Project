@@ -9,13 +9,13 @@
  Sheep.super = Boid
 
  function Sheep(){
+ 	var args = []
  	for (var i=0; i<arguments.length; i++)
- 	alert(arguments[i])
+ 		args[i] = arguments[i]
  	var that = this
-    Sheep.super.apply(this, arguments)
-
+    
  	function initialize(){
- 		that.colour = "pink"
+ 		that.colour = "white"
  		that.vel_max = 50
  		that.mass = 2
  		that.vision = {radius: 100, angle: 130 * Math.PI / 180}
@@ -25,11 +25,11 @@
  			steering: 50,
  			braking: 70
  		}
-
+      Sheep.super.apply(that, args)
  	}
 
  	if (arguments.length)
- 		initialize
+ 		return initialize()
  }
 
  SheepBrain.prototype = new Brain

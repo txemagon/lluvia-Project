@@ -29,31 +29,41 @@ Exception.is$U = function(err, type){
   return error_with
 }
 
-Exception.parse = function(err){
+Exception.closures = 0
 
+Exception.parse = function(err){
 /* Catch scoped calls*/
    var obj = null
    var m = err.toString().match(/TypeError:\s*([^\.]+)\.([^\s]*)\s+is not a function.*/)
    if ( m && (m.length == 3) )
      if ( (obj = eval(m[1])) instanceof Object){
-       var stack_line = err.stack.split('\n')[2]
-       var params = ""
-       var braces = 1 
-       var opened = 0
+      
+      var src = (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
+      var params  = new CodeBlockFinder( src, m[1] + "." + m[2], {open:'(', close: ')'}).start()
+      params = params.substr(0, params.length-1)  // Rip parenthesis
 
-       var init = stack_line.indexOf(m[2]) + m[2].length
 
-       for( var i= init; i<stack_line.length && braces; i++){
-              if (stack_line[i] == '(')
-                if (opened == 0) opened = -1; else braces++;
-              if (stack_line[i] == ')') braces--
-              if (opened && braces) params += stack_line[i]
-            }
-
-       var actual_parameters = Expression.parse( params.substr(1) )
+      // var actual_parameters = Expression.parse( params.substr(1) )
+      // todo: This isn't valid as long as we permit closures with comma separated
+      // parameters. Till this is fixed only one param is permitted
+       /*
        for (var i=0; i<actual_parameters.length; i++)
          actual_parameters[i] = eval(actual_parameters[i])
-       return obj.method_missing(m[2], m[1],  actual_parameters)
+       */
+
+       // functions passed as parameters to dynamical methods are just functions
+       // not closures.
+       // 
+
+      err.stack.split("\n")[0].search(/(.*)@/)
+      var scope = eval(RegExp.$1)
+      scope.closures = scope.closures || []
+
+      var actual_parameters = params.substr(1)
+      var func
+      scope.closures.push(func = eval( '(' + actual_parameters + ')' ))
+
+      return obj.method_missing(m[2], m[1],  func) // actual_parameters)
      }
 
 /* catch global calls */

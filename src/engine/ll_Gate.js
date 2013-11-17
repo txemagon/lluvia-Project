@@ -15,7 +15,8 @@ function _stitchWorlds(gate, solicitor){
 		e = e || window.event
 		try{
 		 return gate[solicitor](e, this)
-		} catch (err) { Exception.parse(err) }
+		} catch (err) {
+			Exception.parse(err) }
 	}
 }
 
