@@ -11,7 +11,7 @@ function start_game(){
 	var sheep = w.new_boid_as_sheep(function(boid, config){
 		config.colour = "pink" 
 		config.geo_data = {  
-			position: new Vector(350, 250),
+		   position: new Vector(350, 250),
 		   velocity: new Vector(0, 0),
 		   acceleration: new Vector(0, 0) 
 		}

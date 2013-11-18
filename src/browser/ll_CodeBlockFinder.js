@@ -158,10 +158,12 @@ CodeBlockFinder.parse_params = function(string_of_params){
         closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
         closure_param.start()
 
-        delta +=  closure_param.lines_read
+        delta +=  closure_param.lines_read + 1
 
         closure = possible_param.slice(i, i + delta).join(", ")
         params.push(closure)
+
+        i += delta - 1
 
      } else
      	params.push(possible_param[i])
@@ -169,26 +171,3 @@ CodeBlockFinder.parse_params = function(string_of_params){
 
    return params
 }
-
-/*
-var method = "pepe( 2, 3, a*b, function pepe(a,b,c){ \
-  var j = 0 \
-  for(var i=0; i<3; i++, j++) \
-    alert('hello') \
-  alert('Goodbye') \
-  }, 3)"
-  
- CodeBlockFinder.parse_params(method)
-
-var method = "function(boid, config){\
-    config.colour = "pink" \n\
-    config.geo_data = {  \n\
-      position: new Vector(350, 250),\n\
-       velocity: new Vector(0, 0),\n\
-       acceleration: new Vector(0, 0) \n\
-    }\n\
-    return config \n\
-  }"
-  
-CodeBlockFinder.parse_params(method)
- */

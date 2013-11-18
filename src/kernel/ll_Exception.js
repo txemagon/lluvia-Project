@@ -61,15 +61,10 @@ Exception.parse = function(err){
 
 
       var actual_parameters = CodeBlockFinder.parse_params(params.substr(1))
-
+      
       for (var i=0; i<actual_parameters.length; i++)
         /* Parenthesis added to evaluate function definitions */
-        try{
            actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
-        } catch(err){
-          alert("Error evaluating dynamic parameter:\n" + 
-                 err + "\nParameter: " + actual_parameters[i] )
-        }
 
       
       return obj.method_missing(m[2], m[1],  actual_parameters) 

@@ -247,7 +247,7 @@ World.prototype.method_missing= function(method, obj, params){
 
   if ( /new_boid_as_/.test(method) ){
     var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
-    return this.new_boid_of(eval("" + subtype), params)
+    return this.new_boid_of(eval("" + subtype), params[0])
     //todo: This is dependant of bad ll_Exception params analysis
   }
   return this.super.method_missing.apply(this, arguments) 
