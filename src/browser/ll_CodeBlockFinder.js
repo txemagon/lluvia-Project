@@ -149,19 +149,20 @@ CodeBlockFinder.parse_params = function(string_of_params){
      if (possible_param[i].match(/function/)){
      	var closure = ""
 
-        /* Extract parameters */
+        /* Count commas (lines) inside parameters and function body */
         var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
         closure_param.start()
-        closure = possible_param.slice(i, i+closure_param.lines_read + 1).join(", ")
-        i += closure_param.lines_read
+        var delta = closure_param.lines_read 
 
-        /* Extract function body */
-        closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), 0, null, ',')
+        /* Count commas inside function body */
+        closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
         closure_param.start()
-        closure += possible_param.slice(i, i+closure_param.lines_read).join(", ")
+
+        delta +=  closure_param.lines_read
+
+        closure = possible_param.slice(i, i + delta).join(", ")
         params.push(closure)
 
-        i +=  closure_param.lines_read-1
      } else
      	params.push(possible_param[i])
    }
@@ -179,4 +180,15 @@ var method = "pepe( 2, 3, a*b, function pepe(a,b,c){ \
   
  CodeBlockFinder.parse_params(method)
 
+var method = "function(boid, config){\
+    config.colour = "pink" \n\
+    config.geo_data = {  \n\
+      position: new Vector(350, 250),\n\
+       velocity: new Vector(0, 0),\n\
+       acceleration: new Vector(0, 0) \n\
+    }\n\
+    return config \n\
+  }"
+  
+CodeBlockFinder.parse_params(method)
  */

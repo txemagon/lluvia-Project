@@ -59,12 +59,20 @@ Exception.parse = function(err){
       var scope = eval(RegExp.$1)
       scope.closures = scope.closures || []
 
-      var actual_parameters = params.substr(1)
-      
-      var func
-      scope.closures.push(func = eval( '(' + actual_parameters + ')' ))
 
-      return obj.method_missing(m[2], m[1],  func) // actual_parameters)
+      var actual_parameters = CodeBlockFinder.parse_params(params.substr(1))
+
+      for (var i=0; i<actual_parameters.length; i++)
+        /* Parenthesis added to evaluate function definitions */
+        try{
+           actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
+        } catch(err){
+          alert("Error evaluating dynamic parameter:\n" + 
+                 err + "\nParameter: " + actual_parameters[i] )
+        }
+
+      
+      return obj.method_missing(m[2], m[1],  actual_parameters) 
      }
 
 /* catch global calls */
