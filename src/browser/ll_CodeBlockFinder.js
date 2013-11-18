@@ -28,11 +28,12 @@
  *    (new CodeBlockFinder(code, /function\s+name/))
  */
 
-function CodeBlockFinder(snippet, start_after, delimiters){
+function CodeBlockFinder(snippet, start_after, delimiters, counted_character){
 	delimiters = delimiters || {}
 	delimiters.open  = delimiters.open  || '{'
     delimiters.close = delimiters.close || '}'
     this.delimiters = delimiters
+    this.counted_character = counted_character || "\n"
     this.search_start = 0
     
     if (start_after){
@@ -58,11 +59,12 @@ CodeBlockFinder.States  = new Enumeration("searching", "scanning", "ended")
  * @return {void} 
  */
 CodeBlockFinder.prototype.reset = function(){
-	this.initial   = this.search_start
-    this.final     = this.search_start
-    this.status    = CodeBlockFinder.States.searching
-    this.delimiter = this.delimiters.open  
-    this.nested    = 0
+	this.initial    = this.search_start
+    this.final      = this.search_start
+    this.status     = CodeBlockFinder.States.searching
+    this.delimiter  = this.delimiters.open  
+    this.nested     = 0
+    this.lines_read = 0
 }
 
 /**
@@ -74,6 +76,8 @@ CodeBlockFinder.prototype.start = function(){
 	var car  = null 
 	var text = []
     while(car = this.source[this.initial]){
+    	if (car == this.counted_character)
+    		this.lines_read++
     	switch(this.status){
 
     		case CodeBlockFinder.States.searching:
@@ -110,3 +114,69 @@ CodeBlockFinder.prototype.start = function(){
     return ""
 }
 
+/**
+ * Extract params of a function call. 
+ *
+ * Given a string of comma separated parameters:
+ *
+ * Let a function call be:
+ * 
+ *    add(2, 3)
+ *
+ * the string of params,
+ * 
+ *    "2, 3"
+ *
+ * this method split params.
+ * 
+ * @param  {string} string_of_params list of comma separated parameters.
+ * @return {array}                   list of parameters
+ *
+ *    ###Example
+ *    
+ *    CodeBlockFinder.parse_params( "2, 3, a + 2 * b / 5, function(a, b){\n\
+ *                            var j = 0 \n\
+ *                            for (var i=0; i<3; i++, j+=2*i % 3);
+ *                        })
+ *    // => ["2", "3", "a+2*b/5", "function(a, b){ ... }"]
+ */
+CodeBlockFinder.parse_params = function(string_of_params){
+   var params = []
+   var possible_param = string_of_params.split(/,\s*/)
+   var items = possible_param.length
+
+   for (var i=0; i<items; i++){
+     if (possible_param[i].match(/function/)){
+     	var closure = ""
+
+        /* Extract parameters */
+        var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
+        closure_param.start()
+        closure = possible_param.slice(i, i+closure_param.lines_read + 1).join(", ")
+        i += closure_param.lines_read
+
+        /* Extract function body */
+        closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), 0, null, ',')
+        closure_param.start()
+        closure += possible_param.slice(i, i+closure_param.lines_read).join(", ")
+        params.push(closure)
+
+        i +=  closure_param.lines_read-1
+     } else
+     	params.push(possible_param[i])
+   }
+
+   return params
+}
+
+/*
+var method = "pepe( 2, 3, a*b, function pepe(a,b,c){ \
+  var j = 0 \
+  for(var i=0; i<3; i++, j++) \
+    alert('hello') \
+  alert('Goodbye') \
+  }, 3)"
+  
+ CodeBlockFinder.parse_params(method)
+
+ */

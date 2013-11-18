@@ -60,6 +60,7 @@ Exception.parse = function(err){
       scope.closures = scope.closures || []
 
       var actual_parameters = params.substr(1)
+      
       var func
       scope.closures.push(func = eval( '(' + actual_parameters + ')' ))
 
