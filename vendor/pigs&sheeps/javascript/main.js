@@ -1,14 +1,14 @@
-var canvas = null
-var ctx    = null
-var w      = null
-var play   = null
+var game  = null
+var world = null
+var play  = null
 
 
 function start_game(){
 	var start_button = document.getElementById('main_screen')
 	start_button.style.display = 'none';
 
-	var sheep = w.new_boid_as_sheep(function(boid, config){
+    try{
+	var sheep = world.new_boid_as_sheep(function(boid, config){
 		config.colour = "pink" 
 		config.geo_data = {  
 		   position: new Vector(350, 250),
@@ -16,19 +16,24 @@ function start_game(){
 		   acceleration: new Vector(0, 0) 
 		}
 		return config 
-	})
-
-    w.start()
+	  })
+     } catch(err) {
+     	// Catch the dynamic call and raise it to method_missing()
+     	throw err
+     } finally{
+     	// Keep on after method_missing
+       world.start()
+     }
 }
 
 function main(){ 
-   canvas = document.getElementById('screener');
-   ctx = canvas.getContext('2d');
-   w = new World()
+	world = new World('screener')
+   game = new GameControl('screener')
 
-   play = new Button("play_button",  function(event, element){
+
+   play = new Button("play_button",  { onclick: function(event, element){
       start_game()
-   })
+   } })
   
 }
  

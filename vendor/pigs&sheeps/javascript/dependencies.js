@@ -22,7 +22,9 @@ $K_app_dependencies = [
 		description: "Interface tools", 
 		path: "interface/", 
 		files: [ 
-			{ name: "button.js",          description: "Button." }
+			{ name: "keyboard_control.js", description: "Keyboard Controller." },
+			{ name: "game_control.js",      description: "Game controllers" },
+			{ name: "button.js",           description: "Button." }
 		]
 	},
 	{	module: "Species", 

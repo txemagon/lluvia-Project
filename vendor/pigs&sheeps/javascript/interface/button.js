@@ -14,5 +14,5 @@ function Button(element, action){
 }
 
 Button.prototype.do_onclick = function(event, element){
-   return this.action(event, element)
+   return this.action["onclick"](event, element)
 }
