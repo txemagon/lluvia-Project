@@ -64,7 +64,11 @@ JavascriptSource.read = function(file_name){
 
 	var request = new XMLHttpRequest();
 	request.open("GET", file_name, false);
-	request.send(null);
+	try{
+	   request.send(null);
+	} catch (err){
+		throw "NetError. Imposible to reach file " + file_name
+	}
 	var returnValue = request.responseText;
 
 	return returnValue;

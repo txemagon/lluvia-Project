@@ -24,6 +24,7 @@ function Device(view, state, currentState, parent){
 		     Device.prototype[state + "_" + substate] = function(){;} 
 		})})
 		
+		//todo: refactor to Hashes along with states
 	this.solicitors = [
 		/* suspended */	[
 			function(){

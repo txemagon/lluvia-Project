@@ -12,8 +12,10 @@ function GameControl() {
 
 	this.self_events = ["start_game"]
 
-	Device.apply(this, arguments)
 
+    // todo: object scope rather than class scope
 	this.newGate("screener", KeyboardControl)
 	this.newGate("play_button", Button)
+
+	Device.apply(this, arguments)
 }

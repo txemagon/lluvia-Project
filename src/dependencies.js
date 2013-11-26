@@ -53,6 +53,8 @@ $K_dependencies = [
 		description: "Utilitis for communicating with the browser.",
 		path: "browser/",
 		files: [
+			{name: "ll_HTMLElement.js",      description: "Handle HTML Elements."},
+			{name: "ll_Logger.js",           description: "Event Logger."},
 			{name: "ll_BrowserFeatures.js",  description: "Extract sorme features from the client Browser"},
 			{name: "ll_CodeBlockFinder.js",  description: "Pushdown Automaton for finding code blocks"},
 			{name: "ll_JavascriptSource.js", description: "Reading Javascript Files"}

@@ -13,6 +13,8 @@ catch (e) {
 	$K_debug_level = $KC_dl.USER
 }	
 
+$K_logger = null
+
 $global_space = (function(){return this;}).call(null) 
 $global_space["$constants"] = {}
 

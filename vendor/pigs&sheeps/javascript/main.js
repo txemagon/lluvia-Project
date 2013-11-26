@@ -1,6 +1,7 @@
-var game  = null
-var world = null
-var play  = null
+var game    = null
+var world   = null
+var play    = null
+var $logger = null
 
 
 function start_game(){
@@ -27,8 +28,9 @@ function start_game(){
 }
 
 function main(){ 
-	world = new World('screener')
-   game = new GameControl('screener')
+   $logger = new $Logger()
+   world   = new World('screener')
+   game    = new GameControl('screener')
 
 
    play = new Button("play_button",  { onclick: function(event, element){
