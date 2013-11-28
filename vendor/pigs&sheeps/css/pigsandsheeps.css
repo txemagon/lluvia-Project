@@ -1,0 +1,81 @@
+body{
+background-color: #52CC29;
+margin: 0;
+padding: 0;
+}
+
+#container{
+width: 1200px;
+height: 800px;
+background-image: url("../images/background.png");
+background-repeat: no-repeat;
+background-position: top center;
+margin: auto;
+}
+
+#header{
+height: 220px;
+padding-top: 20px;
+}
+
+#logo{
+margin-left: 274px;
+}
+
+#sheep{
+float: right;
+margin-top: 30px;
+margin-right: 144px;
+}
+
+#canvas{
+width: 852px;
+height: 502px;
+margin: auto;
+background-color: #ffff99;
+border: 1px solid black;
+}
+
+#screener{
+}
+
+#main_screen{
+width: 300px;
+margin: auto;
+margin-top: -300px;
+margin-bottom: 50px;
+}
+
+#main_screen input{
+width: 300px;
+height: 95px;
+background-color: transparent;
+background-image: url("../images/button.png");
+background-repeat: no-repeat;
+color: #ffffff;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 36px;
+margin: auto;
+}
+
+#footer{
+background-color: #996600;
+width: 1200px;
+height: 50px;
+margin: auto;
+border: 1px solid black;
+}
+
+#footer p{
+width: 300px;
+text-align: right;
+font-size: 14pt;
+}
+
+#year{
+float: right;
+margin-top: -42px;
+margin-right: 20px;
+}
+
+

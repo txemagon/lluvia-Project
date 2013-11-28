@@ -264,7 +264,6 @@ Object.prototype.instance_of$U = function (clss){
  * @param  {Array} params List of params of the method call
  */
 Object.prototype.method_missing = function (method, obj, params){
-
   var that = this
   function bad_function(){
     throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') )) 
@@ -300,5 +299,20 @@ Object.prototype.method_missing = function (method, obj, params){
   bad_function()
 }
 
+/* Borrowed from Hash */
+// todo: Make it dynamic
+Object.prototype.merge = function(){
+  return Hash.prototype.merge.apply(this, arguments)
+}
 
+Object.prototype.merge$B = function(){
+  return Hash.prototype.merge$B.apply(this, arguments)
+}
 
+Object.prototype.soft_merge = function(){
+  return Hash.prototype.soft_merge.apply(this, arguments)
+}
+
+Object.prototype.soft_merge$B = function(){
+  return Hash.prototype.soft_merge$B.apply(this, arguments)
+}
