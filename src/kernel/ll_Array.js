@@ -95,7 +95,7 @@ Array.prototype.each = function(){
  *
  * ###Example
  *     var names = ["Peter", "Johnnie", "Walker"]
- *     names.each(function (arrayIndex){ alert(arrayIndex)})
+ *     names.each_index(function (arrayIndex){ alert(arrayIndex)})
  *     //=> ["Peter", "Johnnie", "Walker"]
  *
  * This code throws an alert for each array item showing the array index number
@@ -215,6 +215,7 @@ Array.prototype.reverse_each = function(){
  *     var discounted = number.collect(function(obj){
  *                                  return obj * (1 - discount)
  *                               })
+ *     discounted
  *     //=>  [187.5, 375, 857.25]
  */
 Array.prototype.collect = function(){
@@ -295,7 +296,7 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
 }
 
 /**
- * @method  indexOf
+ * @method  clone
  *
  * Clones an array.
  *
@@ -303,7 +304,7 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
  *
  * ###Example
  *     var numbers = [34,56,78,98]
- *     numbers2 = numbers.clone
+ *     numbers2 = numbers.clone()
  *     //numbers2 = [34,56,78,98]
  */
 Array.prototype.clone = function(){
@@ -329,6 +330,7 @@ Array.prototype.clone = function(){
  * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers.clear()
+ *     numbers
  *     //=> numbers = []
  */
 Array.prototype.clear = function(){
@@ -344,9 +346,15 @@ Array.prototype.clear = function(){
  * @return  {Boolean} If the arrays matches the condition, it returns true. If not, it returns false
  * @param  {Array} Array to compare
  * ###Example
- *     var numbers = [34,56,78,98]
- *     numbers.indexOf(56, 0)
- *     //=> 1
+ *     var numbers = [1,2,3,4,5]
+ *     var numbers2 = [1,2,3,4,5]
+ *     numbers.equals$U(numbers2)
+ *     //=> true
+ *
+ *    var cadena = ["Soy", "Pepe"]
+ *    var cadena2 = ["Soy", "Laura"] 
+ *    cadena.equals$U(cadena2)
+ *    //=> false 
  */
 Array.prototype.equals$U = function(other){
   var same = true
@@ -474,7 +482,7 @@ Array.prototype.last = function(){
 /**
  * @method  erase$B
  * 
- * Deletes the element especify by an index.
+ * Deletes the element especify in parenthesis.
  * 
  * @param  {Number} Index 
  * 
@@ -482,8 +490,8 @@ Array.prototype.last = function(){
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.delete(3)
- *     //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase$B(3)
+ *     //=> [1,2,4,5,6,7,8,9] Note the difference with the method erase_at$B. The element extractes here is number 3
  */
 Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
   //todo: error on erase$B
@@ -510,10 +518,10 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.erase_at$B(3)          //=> [1,2,3,5,6,7,8,9]
+ *     numbers.erase_at$B(3)          //=> [1,2,3,5,6,7,8,9] Note the difference with the method erase$B. The element extracted here is in position 3
  *     numbers.erase_at$B(-1)         //=> [1,2,3,4,5,6,7,8]
- *     numbers.erase_at$B()           //=> [2,3,4,5,6,7,8,9]
- *     numbers.erase_at$B()           //=> [1,2,3,4,5,6,7,8]
+ *     numbers.erase_at$B(0)          //=> [2,3,4,5,6,7,8,9]
+ *     numbers.erase_at$B(8)          //=> [1,2,3,4,5,6,7,8]
  * 
  */
 Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
@@ -621,7 +629,7 @@ Array.prototype.replace = function(){
 /**
  * @method delete$B
  * 
- * Eliminates an object from the array that meets the parameter passed as position. 
+ * Eliminates an object from the array that meets the parameter passed as position. The object can also be returned
  * 
  * @param {Object} Object that is passed to the method as parameter.
  * @return {Array} A copy of the array without the deleted elements.
@@ -629,11 +637,19 @@ Array.prototype.replace = function(){
  * ###Example
  *     var numbers = [1, 2, 3, 4, 5]
  *     numbers.delete$B(3)
+ *     numbers
  *     //=> numbers = [1, 2, 4, 5]
  * 
  * ###Example 2
  *     var numbers = [1, 2, 3, 4, 5]
  *     numbers.delete$B(8, function(){return "Item not found"})
+ *     //=> "Item not found"
+ *
+ * ###Example 3
+ *     var numbers = [1, 2, 3, 4, 5]
+ *     var deleted = numbers.delete$B(3)
+ *     deleted
+ *     //=> deleted = 3
  * 
  */
 Array.prototype.delete$B = function(obj){
@@ -681,7 +697,7 @@ Array.prototype.include$U = function(){
 /**
  * @method  assoc
  * 
- * Searchess on an array the passed parameter and returns the array that contains it.
+ * Searches in array the passed parameter and returns the array that contains it.
  * 
  * @param  {Object} object searched parameter.
  * @return {Array} Array 
@@ -845,7 +861,7 @@ Array.prototype.drop_while = function(){
 /**
  * @method  flatten
  * 
- * Transforms an array that contains other arrays inside in a single array with the data of all the arrays
+ * Transforms an array that contains other arrays in a single array with the data of all of them
  * 
  * @param {Numeber} The level to stop flatting objects
  * @return {Array} Returns an array with the elements
@@ -1027,7 +1043,7 @@ Array.prototype.rotate = function(obj){
  * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     newNumbers = numbers.take(3)
- *     //=> [1,2,3,4]
+ *     //=> [1,2,3]
  */
 Array.prototype.take = function(){
   if(!(arguments[0]) || arguments.length > 1)
