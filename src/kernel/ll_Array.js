@@ -780,10 +780,17 @@ Array.prototype.compact = function(){
 
 /**
  * @method merge
+ *
  * Merges two arrays in one
  *
  * @param {Array} Array that needs to be merged
  * @return {Array} Returns an array made out of two arrays
+ *
+ * ###Example 
+ *     var numbers = [1,2,3]
+ *     var letters = ["Car", "House", "Dog"]
+ *     var merged = numbers.merge(letters)
+ *     //=> merged = [1, 2, 3, "A", "B", "C"]
  */ 
 Array.prototype.merge = function(ary2){
   var ary = []// PROBLEMAS CON EL TEST, LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
