@@ -788,7 +788,7 @@ Array.prototype.compact = function(){
  *
  * ###Example 
  *     var numbers = [1,2,3]
- *     var letters = ["Car", "House", "Dog"]
+ *     var letters = ["A", "B", "C"]
  *     var merged = numbers.merge(letters)
  *     //=> merged = [1, 2, 3, "A", "B", "C"]
  */ 
