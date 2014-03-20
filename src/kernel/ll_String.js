@@ -11,14 +11,14 @@
  * Returns a copy of string with the first character converted to uppercase and the 
  * remainder to lowercase. 
  * 
- * @return {String} String The string with his first letter in uppercase. 
+ * @return {String} String. The string with his first letter in uppercase. 
  * 
  * ###Comments:    Case conversion is effective only in ASCII region.
  * 
  * ###Example
  *       
  *      var text = "hello"   // giving a value to text
- *      text.capitalize()    //=> "Hellow"
+ *      text.capitalize()    //=> "Hello"
  */
 
 String.prototype.capitalize = function(){
@@ -109,8 +109,9 @@ String.prototype.camel_case = function(){
  * @member String
  * @method class_name
  * 
- *  
+ * Takes the String passed and returns a camelCase class name.
  * 
+ * @return      {String} Returns camelCase name of class
  * 
  */ 
 String.prototype.class_name = function(){
@@ -171,7 +172,7 @@ String.prototype.index = function(){
  * @member   String
  * @method   normalize_index
  * 
- * converts an negative index passed to positive valid index
+ * Converts an negative index passed to positive valid index
  * 
  * @param       {Number} number 
  * @return      {Number} number equivalent positive index
@@ -191,8 +192,8 @@ String.prototype.normalize_index = function(){
  * @method      insert 
  * 
  * Inserts other string before the character at the given index, modifying str.
- * Negative indices count from the end of the string, and insert after the 
- * given character. The intent is insert aString so that it starts at the given index.
+ * Negative indexes count from the end of the string, and insert after the 
+ * given character. The intent is to insert a String so that it starts at the given index.
  * 
  * @param       {number} index
  * @param       {string} string
@@ -233,16 +234,16 @@ String.prototype.insert = function(){
 /**
  * @method   ljust
  * 
- * Fills the string until complete de number or character passed as parameter
- * If integer is greater than the length of string, returns a new String of length 
- * integer with str left justified and padded with padstr; otherwise, returns string.
+ * Fills the string until completes the number or character passed as parameter
+ * If integer is greater than the length of string, returns a new String of length of 
+ * passed parameter with string left justified and padded with padstr; otherwise, returns string.
  * 
  * 
  * @param       {Number} number
  * @param       {string} string
  * @return      {String} string
  * 
- * ###Comments: Adjust the posision of the parameter extending it to the max position
+ * ###Comments: Adjust the position of the parameter extending it to the max position
  * 
  * ###Example
  *      "hello".ljust(10,"p") 
@@ -313,7 +314,7 @@ String.prototype.swapcase= function(){
  * Returns true if self contains no elements
  *
  * @param      {String}string
- * @return     {Boolean} Boolean Returns true if it is empty and false is not
+ * @return     {Boolean} Boolean Returns true if empty and false if not
  * 
  * ###Comments:     asks if the variable contains values
  * 
@@ -333,12 +334,12 @@ String.prototype.empty$U = function(){
  * @method   downcase
  * 
  * Returns a copy of string with all uppercase letters replaced with their lowercase counterparts.
- * The operation is locale insensitive—only characters "A" to "Z" are affected. 
+ * The operation is locale insensitive —only characters "A" to "Z" are affected. 
  * Note: case replacement is effective only in ASCII region
  * Ths method use a "toLowerCase()" function
  *
  * @param      {Arguments} This
- * @return     {string} String Return this modificed with character Ascii of this downcase
+ * @return     {string} String. Returns this modified with character Ascii of this downcase
  * 
  * ###Comments: Turns everything to downcase.
  * 
@@ -361,7 +362,7 @@ String.prototype.downcase = function(){
  *
  *
  * @param     {String} String
- * @return    {Number} Returns -1 (lower than), 0 (equals), 1 (greater than)
+ * @return    {Number} Returns -1 (less than), 0 (equals), 1 (greater than)
  * 
  * ###Comments: Case-insensitive version of ruby String.
  * 
@@ -409,7 +410,7 @@ String.prototype.ord = function(){
  * @param        {String}     Number between -7 and 7 and discard the rest.
  * @return       {String}     Return an octal value .
  *
- * ###Comments: This function works using a javascript function(parseInt).Returns
+ * ###Comments: This function works using a javascript function(parseInt). Returns
  * a copy of str with uppercase alphabetic characters converted to lowercase and
  * lowercase characters converted to uppercase. Note: case conversion is effective
  * only in ASCII region.
@@ -426,12 +427,17 @@ String.prototype.oct = function(){
 /**
  * @method       reverse      
  * 
- * Returns a reverse from an introduced string
+ * Returns a reversed version of an introduced string
  *
  * @param        {String}    
  * @return       {String}     Return the reverse from a string.
  *
  * ###Comments: This function use a ".reverse" from array class.
+ *
+ * ###Example:
+ * "pacoelmejor".reverse()
+ *
+ * //=> "rojemleocap"
  */
 String.prototype.reverse = function(){
    return this.split("").reverse().join("")
@@ -457,8 +463,32 @@ String.prototype.include$U = function(){
    return (this.lastIndexOf(arguments[0]) > -1)? true : false 
 }
 
-// Can receive comma separated strings or an array
-String.prototype.include_some_of$U = function(){
+/**
+ * @method       include_some_of     
+ * 
+ * Returns true if str contains the any of the given string or character.
+ *
+ * @param        {String} 
+ * @return       {True o false}
+ *
+ * ###Comments:   Responds if the atribute given is contained in the variable
+ *
+ * ###Example1:
+ * "pacoelmejor".include_some_of$U("oe", "g")
+ * //=> true
+ *
+ * ###Example2:
+ * "pacoelmejor".include_some_of$U("h", "oe")
+ * //=> true
+ *
+ * ###Example2:
+ * "pacoelmejor".include_some_of$U("h", "g")
+ * //=> false
+ *
+ **/
+// Can receive comma-separated strings or an array
+String.prototype.include_some_of$U = function(
+  ){
    var included = false
    for (var i=0; i<arguments.length; i++){
      if (typeof(arguments[i]) == "string")
@@ -470,15 +500,24 @@ String.prototype.include_some_of$U = function(){
 }
 
 /**
- * @method       center
+ * @method       rindex
  *  
- * Returns a center word in the string
+ * Returns the index of the string passed as parameter
  *
  * @param        {String} 
- * @return       {String}     Return the a string with a word center.
+ * @return       {Integer}     Returns index.
  *
  * ###Comments: 
  *
+ * ###Example1:
+ *
+ * "pacoelmejor".rindex("e")
+ * //=> 7
+ *
+ * ###Example2:
+ *
+ * "pacoelmejor".rindex("el")
+ * //=> 4
  */
 String.prototype.rindex = function(){
    if (arguments.length == 0)
@@ -643,8 +682,8 @@ String.prototype.chr = function(){
 /**
  * @method       rjust     
  * 
- * If integer is greater than the length of str, returns a new String of length integer with str right justified and padded with padstr; 
- * otherwise, returns str.  
+ * If integer is greater than the length of str, returns a new String of length integer 
+ * with str right justified and padded with padstr; otherwise, returns str. 
  *
  * @param        {String} Str
  * @return       {String} Str
@@ -677,9 +716,9 @@ alert("okk");
  * @method       succ     
  * 
  * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric 
- * (or the rightmost character if there are no alphanumerics) in the string. Incrementing a digit always results in another digit, 
+ * or the rightmost character if there are no alphanumerics in the string. Incrementing a digit always results in another digit, 
  * and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character 
- * set‘s collating sequence.  
+ * set's collating sequence.  
  *
  * @param        {String} Str
  * @return       {String} Str
@@ -823,7 +862,17 @@ String.prototype.strip = function() {
 }
 
 /**
+ * @method   setbyte
  * 
+ * Modifies the position of the string given as first parameter and changes it for the ASCII code passed as second parameter
+ *
+ * @param    {Integer, Integer} 
+ * @return  {String} Returns modified string 
+ *
+ * ###Example
+ *    "pepe".setbyte(0, 65)
+ *    // => "Aepe"
+ *     
  */
 String.prototype.setbyte = function(){
      var that = this.split("")
@@ -841,7 +890,8 @@ String.prototype.setbyte = function(){
 /**
  * @method       partition     
  * 
- * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
+ * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. 
+ * If it is not found, returns two empty strings and str.
  * 
  * @return       {Array} ary
  *
@@ -887,9 +937,8 @@ String.prototype.rstrip = function(){
  * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. 
  * The String#succ method is used to generate each value.
  * 
- * 
  * @param    {String, function}  If optional second argument exclusive is omitted or is false, the last value will be included; 
- *                               otherwise it will be excluded. If no block is given, an enumerator is returned instead.
+ *   otherwise it will be excluded. If no block is given, an enumerator is returned instead.
  * @return    {String} return string with succ of this to arguments[0], according to parameter function
  *  
  * ###Example
@@ -897,7 +946,7 @@ String.prototype.rstrip = function(){
  *         "a8".upto("b6", function(obj){return obj + ' '}) 
  *
  *          //=> a8 a9 b0 b1 b2 b3 b4 b5 b6
- *          //=> a8 a9 b0 b1 b2 b3 b4 b5 b6 
+ *          
  *
  */
 String.prototype.upto = function(){ 

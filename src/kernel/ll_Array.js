@@ -1262,7 +1262,7 @@ Array.prototype.empty$U = function(){
  * 
  * Checks if the arrays are equals.
  * 
- * @return {boolean} if it is equals, returns true. If not, false.
+ * @return {boolean} if they are equal, returns true. If not, false.
  * 
  * ###Example
  *     var a = [1,2]
@@ -1313,7 +1313,7 @@ Array.prototype.inject_with_index = function(init_value){
  * 
  * Reverses all array elements.
  * 
- * @return {Array} New array with elements reversed.
+ * @return {Array} New array with reversed elements.
  * 
  * ###Example
  *     var a = [1,2,3,4]
@@ -1333,10 +1333,10 @@ Array.prototype.reverse = function(){
 /**
  * @method  values_at
  * 
- * Returns the values of an index passed as parameter.
+ * Returns the value of an index passed as parameter.
  * 
- * @param {number} Index Index to be selected
- * @return {Array} New array with values of index selected.
+ * @param {number} Index to be selected
+ * @return {Array} New array with values of selected index.
  * 
  * ###Example
  *     var a = [1,2,3,4]
@@ -1371,11 +1371,11 @@ Array.prototype.values_at = function(){
 }
 
 /**
- * @method      to_a
+ * @method  to_a
  * 
- * Returns self. If called on a subclass of Array, converts the receiver to an Array object.
+ * Returns self. If called on a subclass of Array, converts the receiver into an Array object.
  * 
- * @return      {Array} this
+ * @return  {Array} this
  * 
  * ###Example
  *      [1, 2, 3, 4, 5].to_a()
@@ -1386,9 +1386,9 @@ Array.prototype.to_a = function(){
 }
 
 /**
- * @method       Cycle
+ * @method  Cycle
  * 
- * Calls block for each element repeatedly n times or forever if none or nil is given. 
+ * Calls block for each element n times or forever if none or nil is given. 
  * If a non-positive number is given or the array is empty, does nothing. 
  * Returns nil if the loop has finished without getting interrupted.
  *  
@@ -1425,8 +1425,8 @@ Array.prototype.strip_all = function(){
  *
  * Generates all the possible combinations grouped by *number*.
  *  
- * @param  {number} number Grouping amount
- * @return {Array}         All the combinations.
+ * @param  {number}  Grouping amount
+ * @return {Array}   All the combinations.
  *
  * ###Example
  *      a = [1, 2, 3, 4]
@@ -1501,7 +1501,7 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * Returns a sorted array using the mapped value returned by the block.
  * When no block is given then acts a Array#sort alias.
  *
- * @param {(function(Object):Object)=} Block Maps to provide a comparison item.
+ * @param {(function(Object):Object)=} Block. Maps to provide a comparison item.
  * 
  * @return {Array} Sorted Array
  * 
