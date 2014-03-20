@@ -922,7 +922,7 @@ String.prototype.upto = function(){
  *
  * ###Example 
  *
- *      "hello".each_char(function(){return obj + ' '})
+ *      "hello".each_char(function(obj){return obj + ' '})
  *      //=> "h e l l o "
  *
  **/
