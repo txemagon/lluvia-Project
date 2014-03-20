@@ -86,7 +86,7 @@ String.prototype.underscore = function(){
  *
  * ###Example
  *
- *     "the_rollings stones".camel_case //=> "theRollingStones"
+ *     "the_rollings stones".camel_case() //=> "theRollingStones"
  * @return  {String} String
  *
  * ###Comments:    
@@ -177,7 +177,7 @@ String.prototype.index = function(){
  * @return      {Number} number equivalent positive index
  *  
  * ###Comments:    
- * In case of abs of number more than this.length, returns null, else returns index
+ * In case of abs() of number more than this.length, returns null, else returns index
  *
  */
 String.prototype.normalize_index = function(){
@@ -391,6 +391,12 @@ String.prototype.casecmp = function(){
  * @return      {String}     
  *
  * ###Comments:   This function works using a javascript function(.charCodeAt).
+ *
+ * ###Example
+ *     "A".ord()     //=> 65
+ *     "B".ord()     //=> 66
+ *     "a".ord()     //=> 97
+ *     "b".ord()     //=> 98
  */
 String.prototype.ord = function(){
    return this.charCodeAt(0)
@@ -432,7 +438,7 @@ String.prototype.reverse = function(){
 }
 
 /**
- * @method       include     
+ * @method       include$U    
  * 
  * Returns true if str contains the given string or character.
  *
@@ -440,6 +446,12 @@ String.prototype.reverse = function(){
  * @return       {True o false}
  *
  * ###Comments:   Responds if the atribute given is contained in the variable
+ *
+ * ###Example
+ *     "Happy".include$U("a")     //=> true
+ *     "Happy".include$U("app")   //=> true
+ *     "Happy".include$U("e")     //=> false
+ *
  **/
 String.prototype.include$U = function(){
    return (this.lastIndexOf(arguments[0]) > -1)? true : false 
@@ -628,7 +640,6 @@ String.prototype.chr = function(){
      return this[0]
   return this
 }
-
 /**
  * @method       rjust     
  * 
@@ -646,6 +657,7 @@ String.prototype.chr = function(){
  * 
  **/
 String.prototype.rjust = function(){
+alert("okk");
   if (this.length >= arguments[0])
      return this
   var str = ""
@@ -713,7 +725,7 @@ String.prototype.succ = function(){
  * @param        {String} Str
  * @return       {String} Str      
  *
- **/ 
+ **/
 String.prototype.next = function(){
    return this.succ.apply(this,arguments)
 }
@@ -861,6 +873,10 @@ String.prototype.partition = function(){
  * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
  *
+ * ###Example
+ *     "Madrid     ".rstrip()                 //=> "Madrid"
+ *     "     Madrid     ".rstrip()            //=> "     Madrid"
+ *     "     Madrid Barcelona    ".rstrip()   //=> "     Madrid Barcelona"
  **/
 String.prototype.rstrip = function(){
   return this.replace(/\s+$/g,'')
