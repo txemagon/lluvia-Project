@@ -951,13 +951,15 @@ String.prototype.upto = function(){
  * Passes each character in str to the given block, or returns an enumerator if no block is given.  
  *
  * @param    {function}
- * @return   {String} return a string according function
+ * @return   {String} return a string according to function
  *
  * ###Example 
  *
  *      "hello".each_char(function(){return obj + ' '})
  *      //=> "h e l l o "
  *
+ *      "hello".each_char(function(obj){return obj + '/'})
+ *      //=> "h/e/l/l/o/"
  **/
 String.prototype.each_char = function(){
    var str = ""
