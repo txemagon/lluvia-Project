@@ -697,8 +697,8 @@ Array.prototype.include$U = function(){
 /**
  * @method  assoc
  * 
- * Searches in array the passed parameter and returns the array that contains it.
- * 
+ * Checks the first element of each array and compares it with the passed parameter. If found, returns the array that contains it.
+ * If not, returns null.
  * @param  {Object} object searched parameter.
  * @return {Array} Array 
  * 
@@ -708,7 +708,7 @@ Array.prototype.include$U = function(){
  *     var index = [coupleOne, coupleTwo]
  *     var winnerCouple = index.assoc("John")     //=> ["John","Steve"]
  *     var winnerCouple = index.assoc(["John"])   //=> ["John","Steve"]
- *     var winnerCouple = index.assoc("Homer")    //=> nil
+ *     var winnerCouple = index.assoc("Homer")    //=> null
  */
 Array.prototype.assoc = function(){
   if(arguments.length > 1)
@@ -845,12 +845,12 @@ Array.prototype.drop = function(){
  * 
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 5? that: null})
+ *     newNumbers = numbers.drop_while(function(element){ return element > 5? element : null})
  *     //=> [7,8,9]
  *
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     newNumbers = numbers.drop_while(function(obj, that){ return obj > 7? that: null})
- *     //=> [9]
+ *     newNumbers = numbers.drop_while(function(element){ return element > 7? element : null})
+ *     //=> [8,9]
  */
 Array.prototype.drop_while = function(){
   if(arguments.length > 1)
@@ -858,11 +858,8 @@ Array.prototype.drop_while = function(){
     return null
 
   var ary = []
-  var eliminating = true
   for(var i = 0; i < this.length; i++){
-      if (eliminating && !Array.prototype.drop_while.yield(this[i]))
-        eliminating = false
-      if (!eliminating)
+      if (Array.prototype.drop_while.yield(this[i]))
         ary.push( this[i])
   }
 	  return ary.compact()
@@ -885,7 +882,7 @@ Array.prototype.drop_while = function(){
  *     numbers.flatten(1)
  *     //=> [1,2,[3,4,5,6]]
  *
- *     var numbers = [1,2,3,4,5,6]
+ *     var numbers = [1,[2,[3,[4,[5,6]]]]]
  *     numbers.flatten(3)
  *     //=> [1,2,3,4,[5,6]]
  */
@@ -1137,16 +1134,6 @@ Array.prototype.shuffle = function()
 }
 
 /**
- * ??????????????
- */
-Array.prototype.collect = function(){
-  var ary = []
-    for (var i=0; i<this.length; i++)
-      ary.push( Array.prototype.collect.yield(this[i]) )
-	return ary
-}
-
-/**
  * @method   transpose 
  * 
  * Assumes that self is an array of arrays and transposes the rows to columns.
@@ -1223,7 +1210,7 @@ Array.prototype.transpose = function(){
  *     var a = [1,2]
  *     var b = [3,4]
  *     a.zip(b)
- *     //=> [1,2,3,4]
+ *     //=> [[1,2],[3,4]]
  */
 Array.prototype.zip = function(){
   var ary = []
@@ -1292,6 +1279,11 @@ Array.prototype.eql$U = function(model){
 
 /**
  *    ¿??????????
+[1,2,3].inject(0, function(element, acumulator) { return element + acumulator });
+
+[1, 2, 7, 2, 3].inject(0, function(element, acumulator) { 
+   return element > acumulator ? element : acumulator 
+})
  */
 Array.prototype.inject = function(init_value){
   for (var i=0; i<this.length; i++)
@@ -1301,6 +1293,10 @@ Array.prototype.inject = function(init_value){
 
 /**
  * 
+ * ###Example:
+ * [2, 2, 2, 2, 2].inject_with_index(0, function(element, index, acumulator) { 
+   return acumulator + Math.pow(element, index) 
+})
  */ 
 Array.prototype.inject_with_index = function(init_value){
   for (var i=0; i<this.length; i++)
@@ -1388,18 +1384,27 @@ Array.prototype.to_a = function(){
 /**
  * @method  Cycle
  * 
- * Calls block for each element n times or forever if none or nil is given. 
+ * Calls block for each element n times or forever if none or null is given. 
  * If a non-positive number is given or the array is empty, does nothing. 
- * Returns nil if the loop has finished without getting interrupted.
+ * Returns null if the loop has finished without getting interrupted.
  *  
+ *
  * @param        {function {}}
  *
  * ###Example
- * 
+ *
+ *[1,3,2].cycle(2, function(element){
+ *  alert(element);
+ * }) 
  */
-Array.prototype.cycle = function(){
+Array.prototype.cycle = function(times){
+  if (times < 0 || this.empty$U())
+    return
   
-   return this 
+  times = times || -1
+  while(times--)
+    this.each.apply(this, arguments)
+  return null
 }
 
 /**
