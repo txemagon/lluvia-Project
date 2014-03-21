@@ -1393,9 +1393,10 @@ Array.prototype.to_a = function(){
  *
  * ###Example
  *
- *[1,3,2].cycle(2, function(element){
+ * [1,3,2].cycle(2, function(element){
  *  alert(element);
- * }) 
+ * })
+ * //=> shows an alert for each element of the array twice
  */
 Array.prototype.cycle = function(times){
   if (times < 0 || this.empty$U())
