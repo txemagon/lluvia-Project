@@ -86,7 +86,7 @@ String.prototype.underscore = function(){
  *
  * ###Example
  *
- *     "the_rollings stones".camel_case //=> "theRollingStones"
+ *     "the_rollings stones".camel_case() //=> "theRollingStones"
  * @return  {String} String
  *
  * ###Comments:    
@@ -178,7 +178,7 @@ String.prototype.index = function(){
  * @return      {Number} number equivalent positive index
  *  
  * ###Comments:    
- * In case of abs of number more than this.length, returns null, else returns index
+ * In case of abs() of number more than this.length, returns null, else returns index
  *
  */
 String.prototype.normalize_index = function(){
@@ -392,6 +392,12 @@ String.prototype.casecmp = function(){
  * @return      {String}     
  *
  * ###Comments:   This function works using a javascript function(.charCodeAt).
+ *
+ * ###Example
+ *     "A".ord()     //=> 65
+ *     "B".ord()     //=> 66
+ *     "a".ord()     //=> 97
+ *     "b".ord()     //=> 98
  */
 String.prototype.ord = function(){
    return this.charCodeAt(0)
@@ -438,7 +444,7 @@ String.prototype.reverse = function(){
 }
 
 /**
- * @method       include     
+ * @method       include$U    
  * 
  * Returns true if str contains the given string or character.
  *
@@ -446,6 +452,12 @@ String.prototype.reverse = function(){
  * @return       {True o false}
  *
  * ###Comments:   Responds if the atribute given is contained in the variable
+ *
+ * ###Example
+ *     "Happy".include$U("a")     //=> true
+ *     "Happy".include$U("app")   //=> true
+ *     "Happy".include$U("e")     //=> false
+ *
  **/
 String.prototype.include$U = function(){
    return (this.lastIndexOf(arguments[0]) > -1)? true : false 
@@ -667,7 +679,6 @@ String.prototype.chr = function(){
      return this[0]
   return this
 }
-
 /**
  * @method       rjust     
  * 
@@ -685,6 +696,7 @@ String.prototype.chr = function(){
  * 
  **/
 String.prototype.rjust = function(){
+alert("okk");
   if (this.length >= arguments[0])
      return this
   var str = ""
@@ -752,7 +764,7 @@ String.prototype.succ = function(){
  * @param        {String} Str
  * @return       {String} Str      
  *
- **/ 
+ **/
 String.prototype.next = function(){
    return this.succ.apply(this,arguments)
 }
@@ -911,6 +923,10 @@ String.prototype.partition = function(){
  * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
  *
+ * ###Example
+ *     "Madrid     ".rstrip()                 //=> "Madrid"
+ *     "     Madrid     ".rstrip()            //=> "     Madrid"
+ *     "     Madrid Barcelona    ".rstrip()   //=> "     Madrid Barcelona"
  **/
 String.prototype.rstrip = function(){
   return this.replace(/\s+$/g,'')
@@ -955,7 +971,7 @@ String.prototype.upto = function(){
  *
  * ###Example 
  *
- *      "hello".each_char(function(){return obj + ' '})
+ *      "hello".each_char(function(obj){return obj + ' '})
  *      //=> "h e l l o "
  *
  *      "hello".each_char(function(obj){return obj + '/'})
@@ -980,8 +996,20 @@ String.prototype.chars = function(){
 }
 
 /**
+ * @method   sum
  * 
- */
+ * Sum of the ASCII codes of all characters in the string.  
+ *
+ * @param    {void}     //No parameters
+ * @return   {Integer} return the sum
+ *
+ * ###Example 
+ *     
+ *     "A".sum()     //=> 65
+ *     "AA".sum()    //=> 130
+ *     "C3P0".sum()  //=> 246   
+ *
+ **/
 String.prototype.sum = function(){
   var suma = 0
   for (var i = 0; i<this.length;i++)
@@ -1044,7 +1072,11 @@ String.prototype.squeeze = function(){
  * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed  
  * by the given characterhey're firstly intersected. Otherways the first param is returned.
  * 	       
- * 
+ * ###Example
+ *     "Peter".intersection("P")   //=> "P"
+ *     "Peter".intersection("e")   //=> "ee"
+ *     "Peter".intersection("Pe")  //=> "Pee"
+ *
  **/
 String.prototype.intersection = function(){
       var str = this
@@ -1063,6 +1095,10 @@ String.prototype.intersection = function(){
  * @param 	{RegEx,string} 
  * @return      {String}
  * Comments:    Find the letters that match the first parameter given, y these are changed by the given parameter.
+ *
+ * ###Example
+ *     "Peter".sub("t","e");         //=> "Peeer"
+ *     "Peter".sub("r","eeeeeee");   //=> "Peteeeeeeee"
  *
  **/
 String.prototype.sub= function(){
@@ -1090,7 +1126,10 @@ String.prototype.bytes = function(){
  *
  * @param   {this}
  * @return  {this}true or false
- * 
+ *
+ * ###Example
+ *     "Soccer".ascii_only$U()   //=> true
+ *     " ".ascii_only$U()        //=> false
  **/
 String.prototype.ascii_only$U = function(){
      return isNaN(this)
@@ -1160,7 +1199,7 @@ return this
  *
  * ###Example
  *
- *      "hello\u0639".each_codepoint(function(){return obj + ' '})
+ *      "hello\u0639".each_codepoint(function(obj){return obj + ' '})
  *
  *      //=> "104 101 108 108 111 1593 "
  *
@@ -1193,7 +1232,7 @@ String.prototype.codepoint = function(){
  * @param      {string} String
  * @return     {Array} ary
  *
- * Comments:
+ * ###Example
  * 
  *      "hello".rpartition("l")         //=> ["hel", "l", "o"]
  *      "hello".rpartition("x")         //=> ["", "", "hello"]
@@ -1262,6 +1301,10 @@ String.prototype.scan = function(){
  * 
  * ###Comments:    Erases the arguments matched in a string.
  *
+ * ###Example
+ *     "Hello".erase("H")    //=> "ello"
+ *     "Hello".erase("Ho")   //=> "ell"
+ *
  **/
 String.prototype.erase = function(){
    var erase = this
@@ -1278,8 +1321,13 @@ String.prototype.erase = function(){
  * Returns true or false by comparing  object and the argument from the end.
  * 
  * @param       {string} String
- * @return      {String} true or false
+ * @return      {boolean} 
+ *
  * ###Comments:    Compares the object with argument.
+ *
+ * ###Example
+ *     "Hello".end_With$U("Hello")    //=> true
+ *     "Hello".end_With$U("Hel")      //=> false 
  *
  **/
 
@@ -1292,8 +1340,13 @@ String.prototype.end_With$U = function(str){
  * Returns true or false by comparing  object and the argument.
  * 
  * @param       {string}
- * @return      {String}  true or false
+ * @return      {boolean}  
+ *
  * ###Comments:    Compares the object with argument.
+ *
+ * ###Example
+ *     "Car".eql$U("Car")     //=> true
+ *     "Car".eql$U("Plane")   //=> false
  *
  **/
      
@@ -1306,10 +1359,13 @@ String.prototype.eql$U = function() {
  * Returns the indexth byte as an integer. 
  * 
  * @param       {string}   
- * @return      {String}  a interger.
+ * @return      {number}  a interger.
  * 
  * ###Comments:    Using charCodeAt from a javaScript function.
  * 
+ * ###Example
+ *     "A".getbyte()    //=> 65
+ *
  **/
 String.prototype.getbyte = function(){
     return this.charCodeAt(arguments[0])
@@ -1394,6 +1450,7 @@ return op1/mcd + "/" + op2/mcd
 
 /**  
  * @member *****
+ *
  * @methof  decimal
  * 
  * Esta funcion devuelve la cantidad de decimales que tiene un numero
@@ -1429,11 +1486,13 @@ return parseInt(decUno)>=decDos? 0 : (decUno - decDos) * -1
 /** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
  * 
  * @member ******
- * @method   intMdc
- * @param    {interger, integer}  
  *
+ * @method   intMdc
+ *
+ * @param    {interger, integer}  
  * @return   {integer} Return the maximo comun divisor of 2 integers
  *                      If the arguments are invalids, return  null
+ *
  **/
  	
 function intMcd() {
@@ -1463,13 +1522,17 @@ return null
 }
 
 
-/**
- * Returns the length of string in bytes.
- * 
+/** 
  * @member      String
  * @method      bytesize
+ *
+ * Returns the length of string in bytes.
+ *
  * @param       {Arguments} This   
  * @return      {number} the length of string in bytes.
+ *
+ * ###Example
+ *     'abcde'.bytesize()   //=> 5
  * 
  **/
 
