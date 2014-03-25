@@ -47,7 +47,7 @@ function CodeBlockFinder(snippet, start_after, delimiters, counted_character){
         throw "Impossible to set up the CodeBlockFinder" +
               "with params: " + arguments.toSource()
     
-    this.source    = snippet
+    this.source    = snippet + " " // Ensure last char is readed
     this.reset()
 }
 
@@ -79,7 +79,6 @@ CodeBlockFinder.prototype.start = function(){
     	if (car == this.counted_character)
     		this.lines_read++
     	switch(this.status){
-
     		case CodeBlockFinder.States.searching:
 	    		if (car == this.delimiter){
 	    			text.push(car)
@@ -142,6 +141,10 @@ CodeBlockFinder.prototype.start = function(){
  */
 CodeBlockFinder.parse_params = function(string_of_params){
    var params = []
+
+   if (/^\s*$/.test(string_of_params))
+    return params
+
    var possible_param = string_of_params.split(/,\s*/)
    var items = possible_param.length
 
