@@ -31,7 +31,7 @@ Exception.is$U = function(err, type){
 
 Exception.closures = 0
 
-Exception.parse = function(err){
+Exception.parse = function(err, source_code){
 
   var actual_parameters = []
 
@@ -39,20 +39,25 @@ Exception.parse = function(err){
       var search_text = obj_name ? (obj_name + ".") : ""
       search_text += method_name
 
-      var src = (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
+      var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
       var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
-      params = params.substr(0, params.length-1)  // Rip parenthesis
+      //params = params.substring(1, params.length-1)  // Rip parenthesis
+      params = params.replace(/\(\s*/g, "")
+      params = params.replace(/\s*\)/g, "")
 
        // functions passed as parameters to dynamical methods are just functions
        // not closures.
        // 
+      
+      /* I think this is needed for pigs and sheeps 
+      alert(err.stack.split("\n"))
       err.stack.split("\n")[0].search(/(.*)@/)
+      alert(RegExp.$1)
       var scope = eval(RegExp.$1)
       scope.closures = scope.closures || []
+      */
 
-
-      var actual_parameters = CodeBlockFinder.parse_params(params.substr(1))
-      
+      var actual_parameters = CodeBlockFinder.parse_params(params)
       for (var i=0; i<actual_parameters.length; i++)
         /* Parenthesis added to evaluate function definitions */
            actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
@@ -76,6 +81,7 @@ Exception.parse = function(err){
    var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
    if ( m && (m.length == 2) ){
       actual_parameters = get_params(m[1])
+      
 
        // actual_parameters were evaluated twice to suppor TDD
        return method_missing(err, m[1], actual_parameters )
@@ -86,7 +92,6 @@ Exception.parse = function(err){
 
    var m = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
   if ( m && (m.length == 3) )
-
      if ( (obj = eval(m[1])) instanceof Object){
        actual_parameters = get_params()
 
