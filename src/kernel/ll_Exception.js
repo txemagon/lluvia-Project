@@ -42,8 +42,8 @@ Exception.parse = function(err, source_code){
       var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
       var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
       //params = params.substring(1, params.length-1)  // Rip parenthesis
-      params = params.replace(/\(\s*/g, "")
-      params = params.replace(/\s*\)/g, "")
+      params = params.replace(/\(\s*/, "")
+      params = params.replace(/\s*\)\s*$/, "")
 
        // functions passed as parameters to dynamical methods are just functions
        // not closures.

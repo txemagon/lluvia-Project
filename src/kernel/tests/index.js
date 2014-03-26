@@ -8,10 +8,10 @@ var _test_index = [ /* We first bring lluvia */
                     "../ll_Enumeration.js",
                     "../../browser/ll_CodeBlockFinder.js",
                     "../../browser/ll_JavascriptSource.js", 
-                    //"../ll_BasicObject.js",
+                    "../ll_BasicObject.js",
                     "../ll_Array.js",  
                     "../ll_String.js",
-                    //"../ll_Hash.js",
+                    "../ll_Hash.js",
                     "../ll_Module.js",
                     "../ll_Class.js",
                     /* And we then bring asserts */
