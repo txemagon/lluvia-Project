@@ -90,19 +90,21 @@ Class.prototype.call_after = function(fn_name){
 Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }
 
 function _ClassFactory(class_name, initial_functions){
-  
   var whole_class_name = class_name
   class_name           = whole_class_name.split(/\$\$/)[0] 
   var parent_class     = whole_class_name.split(/\$\$/)[1] || "Class"
 
   function parse_arguments(){
     for (var i=1; i<initial_functions.length; i++){
+      if (typeof(initial_functions[i]) === "function" )
+        initial_functions[i] = initial_functions[i].toSource()
       initial_functions[i].match(/function\s*([^(]*)\(/)
       if (RegExp.$1 != ""){
         var fn_name = RegExp.$1
-        var class_method = /^self_/.test(fn_name)
-        if (class_method)
-          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")          
+        var class_method = /^self_/.test(fn_name)        
+        if (class_method){
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ") 
+        }
         var f = eval("$F$ = " + initial_functions[i]).deconstruct()
         
         var fun = []

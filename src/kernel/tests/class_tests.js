@@ -1,4 +1,5 @@
 
+/*
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -12,7 +13,6 @@ assert("The Class factory generates a truly usable class.",
        "Class_MyClass(function() {this.name ='q'}); \
         return_value = new MyClass()")
 
-/*
 
 assert("The Class factory returns the new created class.",
        "return_value.name", "'q'",
@@ -46,14 +46,17 @@ assert("Object initializer accepts parameters.",
                      function initialize(name){ this.name = name }, \
                      function(){this.name = 'luis'}); \
         obj = new Person('pepe')")        
-        
+ */       
 assert("The object initializer is valid even in the third position.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function(){this.name = 'luis'}, \
+                     function(){this.name = 'luis'}, \
+                     function(){this.name = 'luis'}, \
                      function initialize(name){ this.name = name });\
-        obj = new Person('pepe')")                
-        
+        obj = new Person('pepe'), \
+        alert(this.name);")                
+ /*       
 assert("Anonymous functions don't cause any problems.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
@@ -68,6 +71,7 @@ assert("Extra params are considered as object instance methods.",
                      function greet(){ return 'hello. I am ' + this.name }, \
                      function initialize(name){ this.name = name });\
         obj = new Person('pepe');")        
+/*
         
 
 assert("self_initialize is a convenience method for initializing class variables.",
