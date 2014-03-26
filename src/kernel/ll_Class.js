@@ -147,14 +147,15 @@ function _ClassFactory(class_name, initial_functions){
         if (!" + class_name + ".initialized ){ \n\
           if (typeof(arguments[0]) != 'undefined' && arguments[0].initialize)\n\
             try{" + class_name + ".initialize()}catch(err){;}\n\
-            " + class_name + ".initialized = true \n\
+          " + class_name + ".initialized = true \n\
         }\n\
         else if (this instanceof " + class_name + " && this.inheritance_level == 0 )\n\
          try{this.initialize.apply(this, arguments)}catch(err){;} \n\
         }; \n\
       ")
    eval(class_name + "= new Function();")
-	function basic_proto(){
+	
+  function basic_proto(){
 	 
 	  eval.call(null, class_name + ".prototype = new " + parent_class + ";")
 	  eval.call(null, class_name + ".prototype.constructor = " + class_name +";" )      
