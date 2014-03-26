@@ -2,7 +2,7 @@
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
-      
+
 assert("The framework should track new generated classes.",
        "$classes.include$U(MyClass)", "true",
        "Class_MyClass()")
@@ -13,6 +13,7 @@ assert("The Class factory generates a truly usable class.",
         return_value = new MyClass()")
 
 /*
+
 assert("The Class factory returns the new created class.",
        "return_value.name", "'q'",
        "return_value = new Class_MyClass(function() {this.name ='q'})();")
