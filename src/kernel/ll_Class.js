@@ -1,6 +1,6 @@
 var $classes = []
 
-Class.prototype = new Module
+//Class.prototype = new Module
 Class.prototype.constructor = Class
 function Class(){
   var self = this instanceof Function ? this : eval(this.constructor.name)
@@ -132,6 +132,8 @@ function _ClassFactory(class_name, initial_functions){
 
   /* eval only works properly when in expressions so we've added the = sign */
   var initializer = initial_functions[0] || "function (){ }"
+  if (typeof(initializer) === "function" )
+     initializer = initializer.toSource() 
   initializer = initializer.replace(
       /function\s*\(([^\)]*)\)\s*{(.*)/m,
       "function " + class_name + "($1){ \n \
