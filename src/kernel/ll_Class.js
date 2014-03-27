@@ -102,7 +102,7 @@ function _ClassFactory(class_name, initial_functions){
         var fn_name = RegExp.$1
         var class_method = /^self_/.test(fn_name)
         if (class_method)
-          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")          
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")   
         var f = eval("$F$ = " + initial_functions[i]).deconstruct()
         
         var fun = []

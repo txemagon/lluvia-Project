@@ -12,13 +12,10 @@ assert("The Class factory generates a truly usable class.",
        "Class_MyClass(function() {this.name ='q'}); \
         return_value = new MyClass()")
 
-/*
-
 assert("The Class factory returns the new created class.",
        "return_value.name", "'q'",
        "return_value = new Class_MyClass(function() {this.name ='q'})();")
       
-
 assert("The returned class contains the appropriate code.",
        "MyClass.toSource()", "return_value.toSource()",
        "return_value = Class_MyClass()")
@@ -70,6 +67,7 @@ assert("Extra params are considered as object instance methods.",
         obj = new Person('pepe');")        
         
 
+/*
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
        "Class_Person(function(name){this.name = name}, \
