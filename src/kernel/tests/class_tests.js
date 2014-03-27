@@ -1,3 +1,4 @@
+/*
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -56,15 +57,15 @@ assert("Anonymous functions don't cause any problems.",
                      function(){this.name = 'luis'}, \
                      function initialize(name){ this.name = name });\
         obj = new Person('pepe');")                
+*/
 
-
-/*
 assert("Extra params are considered as object instance methods.",
        "obj.greet()", "'hello. I am pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
-                     function greet(){ return 'hello. I am ' + this.name }, \
-                     function initialize(name){ this.name = name });\
+                     function initialize(name){ this.name = name }, \
+                     function greet(){ return 'hello. I am ' + this.name } ); \
         obj = new Person('pepe');")        
+/*
 
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",

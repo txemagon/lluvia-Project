@@ -77,13 +77,14 @@ Class.prototype.add_after_filter   = function(observed_function, filters) {
 }
 
 Class.prototype.call_before = function(fn_name){
+  this.before_filters[fn_name] = this.before_filters[fn_name] || []
   for (var i=0; i<this.before_filters[fn_name].length; i++)
     this.before_filters[fn_name][i]();
 }
 
 Class.prototype.call_after = function(fn_name){
-   alert("hello")
-    for (var i=0; i<this.after_filters[fn_name].length; i++)
+  this.before_filters[fn_name] = this.after_filters[fn_name] || []
+  for (var i=0; i<this.after_filters[fn_name].length; i++)
        this.after_filters[fn_name][i]();
 }
 
