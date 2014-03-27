@@ -71,7 +71,6 @@ Exception.parse = function(err, source_code){
    if ( m && (m.length == 3) )
      if ( (obj = eval(m[1])) instanceof Object){
       actual_parameters = get_params(m[2], m[1])
-      
       return obj.method_missing(m[2], m[1],  actual_parameters) 
      }
 

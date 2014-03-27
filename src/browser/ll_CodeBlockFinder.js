@@ -147,30 +147,39 @@ CodeBlockFinder.parse_params = function(string_of_params){
 
    var possible_param = string_of_params.split(/,\s*/)
    var items = possible_param.length
+   var position_line = 0
+   var position_initialize = 1  
+
+   for (var i=0; i<items; i++){
+        if (!possible_param[i].match(/initialize/))
+            position_line++
+        else
+            position_initialize = position_line
+    }
 
    for (var i=0; i<items; i++){
      if (possible_param[i].match(/function/)){
-     	var closure = ""
+        var closure = ""
 
         /* Count commas (lines) inside parameters and function body */
         var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
         closure_param.start()
         var delta = closure_param.lines_read 
-
         /* Count commas inside function body */
+
         closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
         closure_param.start()
 
-        delta +=  closure_param.lines_read + 1
+
+        delta +=  closure_param.lines_read + (position_initialize)
 
         closure = possible_param.slice(i, i + delta).join(", ")
         params.push(closure)
 
-        i += delta - 1
+        i += delta - (position_initialize)
 
      } else
-     	params.push(possible_param[i])
+        params.push(possible_param[i])
    }
-
    return params
 }
