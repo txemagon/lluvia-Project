@@ -1,4 +1,5 @@
 /*
+
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -57,7 +58,6 @@ assert("Anonymous functions don't cause any problems.",
                      function(){this.name = 'luis'}, \
                      function initialize(name){ this.name = name });\
         obj = new Person('pepe');")                
-*/
 
 assert("Extra params are considered as object instance methods.",
        "obj.greet()", "'hello. I am pepe'",
@@ -65,16 +65,24 @@ assert("Extra params are considered as object instance methods.",
                      function initialize(name){ this.name = name }, \
                      function greet(){ return 'hello. I am ' + this.name } ); \
         obj = new Person('pepe');")        
-/*
+ 
 
+*/
+assert("test parse_arguments",
+       "obj.greet()", '"Person"',
+       "Class_Person(function(name){this.name = 'juan'}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(){ return Self() } ); \
+        obj = new Person();") 
+
+/*
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
        "Class_Person(function(name){this.name = name}, \
                      function self_number(){ return self.people }, \
                      function self_initialize(){self.people = 0 }, \
                      function initialize(){ self.people++ });\
-        new Person('pepe'); new Person('juan');")                
- 
+        new Person('pepe'); new Person('juan');")               
 
 assert("Whenever a function name starts with self_ is considered as a class method.",
        "Person.number()", "11",
@@ -83,6 +91,7 @@ assert("Whenever a function name starts with self_ is considered as a class meth
                      function self_initialize(){self.people = 10 }, \
                      function initialize(){ self.people++ });\
          new Person('juan')")
+
 
 assert("self_initialize doesn't run on parent class as a default.",
        "Freaky.number()", "1",

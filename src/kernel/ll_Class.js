@@ -126,7 +126,7 @@ function _ClassFactory(class_name, initial_functions){
         else
           eval(class_name).prototype[f.name] = ( function(){ 
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name); 
-                                                   var Self =  function(){ return "hello" }
+                                                   var Self =  function(){ return self }
                                                    with(this)
                                                    return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()

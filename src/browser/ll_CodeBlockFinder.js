@@ -141,7 +141,6 @@ CodeBlockFinder.prototype.start = function(){
  */
 CodeBlockFinder.parse_params = function(string_of_params){
    var params = []
-
    if (/^\s*$/.test(string_of_params))
     return params
 
