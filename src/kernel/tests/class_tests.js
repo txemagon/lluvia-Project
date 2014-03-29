@@ -72,7 +72,7 @@ assert("test parse_arguments",
        "obj.greet()", '"Person"',
        "Class_Person(function(name){this.name = 'juan'}, \
                      function initialize(name){ this.name = name }, \
-                     function greet(){ return Self() } ); \
+                     function greet(name){ return class_name } ); \
         obj = new Person();") 
 
 /*

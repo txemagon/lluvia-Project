@@ -42,15 +42,13 @@ var $LLGvn // It's necessary to hold the evaluation in a globlal variable to kee
 
        return code
      }
-var n = 0
+
 	function eval_value(testing, depth){
      depth = depth || 0
 
      try{
        return eval.call(null, sanitize(testing)) 
      } catch(err){ 
-    //  alert(n)
-      n++
              if (Exception.is$U(err, "method call") || Exception.is$U(err, "singleton method")){
                return Exception.parse(err, "method call")
              }
