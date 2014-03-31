@@ -1,5 +1,5 @@
-
 /*
+
 assert("There is a factory for /Class_[a-zA-Z_$][a-zA-Z_$0-9]* /",
        "MyClass instanceof Function", "true",
        "Class_MyClass()")
@@ -13,12 +13,10 @@ assert("The Class factory generates a truly usable class.",
        "Class_MyClass(function() {this.name ='q'}); \
         return_value = new MyClass()")
 
-
 assert("The Class factory returns the new created class.",
        "return_value.name", "'q'",
        "return_value = new Class_MyClass(function() {this.name ='q'})();")
       
-
 assert("The returned class contains the appropriate code.",
        "MyClass.toSource()", "return_value.toSource()",
        "return_value = Class_MyClass()")
@@ -46,42 +44,45 @@ assert("Object initializer accepts parameters.",
                      function initialize(name){ this.name = name }, \
                      function(){this.name = 'luis'}); \
         obj = new Person('pepe')")        
- */       
+
 assert("The object initializer is valid even in the third position.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function(){this.name = 'luis'}, \
-                     function(){this.name = 'luis'}, \
-                     function(){this.name = 'luis'}, \
                      function initialize(name){ this.name = name });\
-        obj = new Person('pepe'), \
-        alert(this.name);")                
- /*       
+        obj = new Person('pepe');")                
+
 assert("Anonymous functions don't cause any problems.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function(){this.name = 'luis'}, \
                      function initialize(name){ this.name = name });\
-        obj = new Person('pepe')")                
-                
+        obj = new Person('pepe');")                
 
 assert("Extra params are considered as object instance methods.",
        "obj.greet()", "'hello. I am pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
-                     function greet(){ return 'hello. I am ' + this.name }, \
-                     function initialize(name){ this.name = name });\
+                     function initialize(name){ this.name = name }, \
+                     function greet(){ return 'hello. I am ' + this.name } ); \
         obj = new Person('pepe');")        
-/*
-        
+ 
 
+
+assert("test parse_arguments",
+       "obj.greet()", '"Person"',
+       "Class_Person(function(name){this.name = 'juan'}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(name){ return class_name } ); \
+        obj = new Person();") 
+*/
+/*
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
        "Class_Person(function(name){this.name = name}, \
                      function self_number(){ return self.people }, \
                      function self_initialize(){self.people = 0 }, \
                      function initialize(){ self.people++ });\
-        new Person('pepe'); new Person('juan');")                
- 
+        new Person('pepe'); new Person('juan');")               
 
 assert("Whenever a function name starts with self_ is considered as a class method.",
        "Person.number()", "11",
@@ -90,6 +91,7 @@ assert("Whenever a function name starts with self_ is considered as a class meth
                      function self_initialize(){self.people = 10 }, \
                      function initialize(){ self.people++ });\
          new Person('juan')")
+
 
 assert("self_initialize doesn't run on parent class as a default.",
        "Freaky.number()", "1",
@@ -262,30 +264,37 @@ assert("Super works at class level.",
         Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
 
 
+/**/
 assert("Before filters are singleton facilities.",
        "a", "true",
        "a = false; function change(){ a = true; }\
-        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        Class_Person(function(name){this.name = name}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(name){ return class_name } ); \
         me = new Person('Txema');\
         me.add_before_filter('greet', change);\
         me.greet();")
 
+assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
+       "a", "true",
+       "a = false; function change(){ a = true; }\
+        Class_Person(function(name){this.name = name}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(name){ return class_name } ); \
+        me = new Person('Txema');\
+        me.add_after_filter('greet', change);\
+        me.greet();" )
 
 assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
        "a", "true",
        "a = false; function change(){ a = true; }\
-        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
+        Class_Person(function(name){this.name = name}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(name){ return class_name } ); \
         me = new Person('Txema');\
         me.add_after_filter('greet', change);\
         me.greet();" )
 /*
-assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
-       "a", "true",
-       "a = false; function change(){ a = true; }\
-        Class_Person(function(name){ this.name = name }, function greet(){ return 'Hi I am ' + this.name } ); \
-        me = new Person('Txema');\
-        me.add_after_filter('greet', change);\
-        me.greet();" )
 /*
  * todo: provide an especific include
  *  A module can define initialize and in that case it will be called when the initialize method of a class calls super.

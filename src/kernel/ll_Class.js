@@ -77,13 +77,14 @@ Class.prototype.add_after_filter   = function(observed_function, filters) {
 }
 
 Class.prototype.call_before = function(fn_name){
+  this.before_filters[fn_name] = this.before_filters[fn_name] || []
   for (var i=0; i<this.before_filters[fn_name].length; i++)
     this.before_filters[fn_name][i]();
 }
 
 Class.prototype.call_after = function(fn_name){
-   alert("hello")
-    for (var i=0; i<this.after_filters[fn_name].length; i++)
+  this.after_filters[fn_name] = this.after_filters[fn_name] || []
+  for (var i=0; i<this.after_filters[fn_name].length; i++)
        this.after_filters[fn_name][i]();
 }
 
@@ -101,10 +102,11 @@ function _ClassFactory(class_name, initial_functions){
       initial_functions[i].match(/function\s*([^(]*)\(/)
       if (RegExp.$1 != ""){
         var fn_name = RegExp.$1
-        var class_method = /^self_/.test(fn_name)        
-        if (class_method){
-          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ") 
-        }
+
+        var class_method = /^self_/.test(fn_name)
+        if (class_method)
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")   
+
         var f = eval("$F$ = " + initial_functions[i]).deconstruct()
         
         var fun = []
@@ -124,9 +126,13 @@ function _ClassFactory(class_name, initial_functions){
         else
           eval(class_name).prototype[f.name] = ( function(){ 
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name); 
-                                                   var Self =  function(){ return "hello" }
+                                                   var Self =  function(){ return self }
+                                                   var aux_body = f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";"
+          
+                                                   eval(class_name + ".prototype._" + f.name +" = function(" + f.params + "){"+aux_body+"}")
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){\n var return_value;\nthis.call_before('" + f.name + "');\n" + "return_value = this._"+ f.name +"(" + f.params + "); \nthis.call_after('" + f.name + "');\nreturn return_value;\n}" )}
+                                                   //Original-->//return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
        }
      }
@@ -151,14 +157,15 @@ function _ClassFactory(class_name, initial_functions){
         if (!" + class_name + ".initialized ){ \n\
           if (typeof(arguments[0]) != 'undefined' && arguments[0].initialize)\n\
             try{" + class_name + ".initialize()}catch(err){;}\n\
-            " + class_name + ".initialized = true \n\
+          " + class_name + ".initialized = true \n\
         }\n\
         else if (this instanceof " + class_name + " && this.inheritance_level == 0 )\n\
          try{this.initialize.apply(this, arguments)}catch(err){;} \n\
         }; \n\
       ")
    eval(class_name + "= new Function();")
-	function basic_proto(){
+	
+  function basic_proto(){
 	 
 	  eval.call(null, class_name + ".prototype = new " + parent_class + ";")
 	  eval.call(null, class_name + ".prototype.constructor = " + class_name +";" )      

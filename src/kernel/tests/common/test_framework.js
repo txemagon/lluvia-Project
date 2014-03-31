@@ -44,15 +44,17 @@ var $LLGvn // It's necessary to hold the evaluation in a globlal variable to kee
      }
 
 	function eval_value(testing, depth){
-	   depth = depth || 0
-	   try{
-	     return eval.call(null, sanitize(testing)) 
-	   } catch(err){ 
-             if (Exception.is$U(err, "method call") || Exception.is$U(err, "singleton method"))
+     depth = depth || 0
+
+     try{
+       return eval.call(null, sanitize(testing)) 
+     } catch(err){ 
+             if (Exception.is$U(err, "method call") || Exception.is$U(err, "singleton method")){
                return Exception.parse(err, "method call")
-	     if (Exception.is$U(err, "function call")){
-	       if (depth >= 10 ) 
-	         throw err
+             }
+       if (Exception.is$U(err, "function call")){
+         if (depth >= 10 ) 
+           throw err
 	       return eval_value( replace_function_call(testing, Exception.is$U(err, "function call"), Exception.parse(err, testing).toSource() ), depth + 1 )
 	     }
 	     return Exception.parse(err) // todo: this is actually a problem because we only rescue the problematic snippet (the problem rises in the eval not in the real code, so it affects the whole expression).
