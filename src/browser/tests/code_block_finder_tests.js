@@ -1,3 +1,4 @@
+/*
 assert("Create new CodeBlockFinder without parameters.",
     "typeof a.value", "'function'",
     "a = new CodeBlockFinder()")
@@ -22,6 +23,31 @@ this.initial    = this.search_start \
    this.lines_read = 0 \
 } '",
       "a = new CodeBlockFinder().reset")
+
+assert("Use of start function when creating new CodeBlockFinder",
+  "a.text", "'{return 1+2}'",
+  "a = new CodeBlockFinder('function sum(){return 1+2}'); \
+  a.start()")
+
+assert("Use of start function when pasing variables to the function",
+  "a.text", "'{return num1+num2}'",
+  "a = new CodeBlockFinder('function sum(num1, num2){return num1+num2}'); \
+  a.start()")
+
+*/
+assert("Use of start function when pasing variables to the function",
+  "a.text", "'{sq_radious = function {return r*r}}'",
+  "a = new CodeBlockFinder('function pi(){sq_radious = function {return r*r}}'); \
+  a.start()")
+
+assert("Use of start function when pasing variables to the function",
+  "a.text", "'{sq_radious = function {return r*r}; pi_num = 3,141516; return sq * pi_num;}'",
+  "a = new CodeBlockFinder('function pi(){ \
+    sq_radious = function {return r*r}; \
+    pi_num = 3,141516; \
+    return sq * pi_num;}'); \
+  a.start()")
+/*
 
 assert("Count lines having the counted_character as line break.",
   "a.lines_read", "4",
@@ -69,3 +95,4 @@ assert('CodeBlockFinder.parse_params can receive a complex function string of pa
       'a = new CodeBlockFinder.parse_params("2, 3, a + 2 * b / 5, function(a, b){\
                         var j = 0; \
                         for (var i=0; i<3; i++, j+=2*i % 3)}");')
+*/

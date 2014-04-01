@@ -8,13 +8,13 @@
  Sheep.prototype.constructor = Sheep
  Sheep.super = Boid
 
- function Sheep(){
+ function Sheep(){ //clase
  	var args = []
  	for (var i=0; i<arguments.length; i++)
  		args[i] = arguments[i]
  	var that = this
     
- 	function initialize(){
+ 	function initialize(){ //constructor
  		that.colour = "white"
  		that.vel_max = 50
  		that.mass = 2
@@ -46,6 +46,6 @@
  	}
 
  	if (arguments.length)
- 		initialize()
+ 		initialize() //Hace falta return??
 
  }
