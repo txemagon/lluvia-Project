@@ -150,7 +150,7 @@ CodeBlockFinder.parse_params = function(string_of_params){
    var position_initialize = 1  
 
    for (var i=0; i<items; i++){
-        if (!possible_param[i].match(/initialize/))
+        if (!possible_param[i].match(/function\s+initialize/))
             position_line++
         else
             position_initialize = position_line

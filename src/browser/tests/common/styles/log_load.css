@@ -1,0 +1,144 @@
+body{
+  background-color: #DDF;
+  font-family: arial;
+  color: black;
+  margin: 0px;
+  padding: 0px;
+}
+
+h1,h2,h3{
+  color: #6495ed; 
+}
+
+#header h1{
+  background-color: black;
+  color: white;
+  padding: 0.5ex;
+  padding-right: 2ex;
+  text-align: right;
+}
+
+.DateLesson{
+  color: black;
+  font-style: italic;
+  float: right;
+}
+
+#layout {
+  width: 1200px;
+  margin: 0 auto 0 auto;
+  background-color: white;
+  padding: 3ex;  
+  border-style: none solid none solid;
+  border-color: #66F;
+  border-width: 1px;
+}
+
+#left_panel {
+  width: 250px;
+  float: right;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #ccc;
+  font-size: 9pt;  
+  padding: 2ex;
+  margin:0px;
+}
+
+#lesson{
+  width: 920px;
+  display: inline-block;
+}
+
+#tested_code,#html_out{
+  width: 47%;
+  display: inline-block;
+  margin:1ex;
+  background-color: #fff;
+  vertical-align: top;
+}
+
+._LogModule{
+  padding: 6px;
+  font-size: 9pt;
+  color: #fff;
+  font-family: serif;
+}
+
+#left_panel *{
+  color: white;
+}
+
+._LogModuleName {
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+  margin-top: 8px;
+} 
+
+._LogModulePath{
+  font-style: italic;
+}
+
+._LogModuleDescription{
+}
+
+._LogFile{
+  padding-left: 2ex;
+}
+
+#lluvia_load h2 {
+  border-width: 1px;
+  border-style: solid none solid none;
+  border-color: white;
+  padding: 3px;
+}
+
+#footer {
+  text-align: center;
+  color: black;
+  border-top: solid 1px;
+  margin-top: 40px;
+  padding-top: 8px;
+  font-family: arial;
+  font-size: 9pt;
+}
+
+#debug {
+  border: 1px solid #ccc;  
+  margin-top: 17px;
+}
+
+#lesson{
+  width: 900px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+#code_example{
+  width: 900px;
+}
+
+p{
+  text-indent:2em;
+  width: 880px;
+  text-align: justify;
+  padding-right: 10px;
+}
+
+ol{
+  width: 835px;
+}
+
+#conclusion{
+  width: 900px;
+  padding-left: 10px;
+  text-align: left;
+}
+
+#diagram{
+  width: 900px;
+  padding-left:10px;
+  text-align: left; 
+}
+
