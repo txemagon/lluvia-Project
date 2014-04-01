@@ -20,7 +20,9 @@ var _test_index = [ /* We first bring lluvia */
                     //"array_tests.js"
                     //"string_tests.js"
                     //"object_tests.js",
-                    "class_tests.js"
+                    //"class_tests.js",
+                    "code_block_finder_tests.js"
+                    //"codeBlockFinder_test.js"
                     //"basic_object_tests.js",
                     //"module_tests.js"
                   ]

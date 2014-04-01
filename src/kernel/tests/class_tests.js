@@ -38,13 +38,21 @@ assert("Whenever function initialize is present from second place onwards it is 
                      function(){this.name = 'luis'}); \
         obj = new Person()")
 
+*/
 assert("Object initializer accepts parameters.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
                      function initialize(name){ this.name = name }, \
                      function(){this.name = 'luis'}); \
-        obj = new Person('pepe')")        
+        obj = new Person('pepe')")
 
+assert("initialize calls doesn't interfere with function initialize definition.",
+       "obj.name", "'pepe'",
+       "Class_Person(function(name){this.name = 'juan'; initialize();}, \
+                     function initialize(name){ this.name = name }, \
+                     function(){this.name = 'luis'}); \
+        obj = new Person('pepe')")        
+/*
 assert("The object initializer is valid even in the third position.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
@@ -75,15 +83,16 @@ assert("test parse_arguments",
                      function greet(name){ return class_name } ); \
         obj = new Person();") 
 */
-/*
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
        "Class_Person(function(name){this.name = name}, \
                      function self_number(){ return self.people }, \
-                     function self_initialize(){self.people = 0 }, \
-                     function initialize(){ self.people++ });\
+                     function self_initialize(){alert('okokok')}, \
+                     function initialize(){ alert('epepepe') });\
         new Person('pepe'); new Person('juan');")               
 
+
+/*
 assert("Whenever a function name starts with self_ is considered as a class method.",
        "Person.number()", "11",
        "Class_Person(function(name){this.name = name}, \
@@ -264,7 +273,8 @@ assert("Super works at class level.",
         Class_Person$$Human( function(){}, function self_greet(){ return Super() });") 
 
 
-/**/
+/*
+*/
 assert("Before filters are singleton facilities.",
        "a", "true",
        "a = false; function change(){ a = true; }\
