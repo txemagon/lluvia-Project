@@ -90,7 +90,7 @@ Vector.prototype.unit = function(){
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
  * @memberOf    {vector}
- * @method      lenght        returns a number whitch is the final result of the vector lenght.
+ * @method      length        returns a number whitch is the final result of the vector length.
  * @param       (Vector)      vector array of at least vector. Only one vector will be processed.
  *
  * @return      (Vector)      length
@@ -148,6 +148,30 @@ Vector.prototype.parseInput = function(args){
     return out
 }
 
+// This array is for Vector.classize method and contains class methods.
+Vector.class_methods = ["add", "subs", "dot", "cross"]
+
+/**
+ * Given a object method this function creates a class method.
+ *
+ * @memberOf    {vector}
+ * @method      classize
+ * @param       (Array)       Array with the class methods to create.
+ *
+ * @return      (Function)    The method created.
+ */
+Vector.classize = function(){
+   for (var i=0; i<arguments.length; i++){
+      var function_name = arguments[i]
+      var args          = []
+      Vector[function_name] = function() {
+         for (var i = 0; i < arguments.length; i++)
+            args[i] = arguments[i]
+         var aux_vector = new Vector(args.shift())
+         return Vector.prototype[function_name].apply(aux_vector, args)
+      }
+   }
+}
 
 Vector.prototype.cloneCoords = function(vectCpy){
     for (var i = 0; i < vectCpy.Coord.length; i++)
@@ -226,7 +250,7 @@ Vector.prototype.add$B = function(vectAdd){
  * @method      length        returns a number whitch is the final result of the vector length.
  * @param       (vector)      vector array of at least vector. Only one vector will be processed.
  *
- * @return      (vector)      lenght
+ * @return      (vector)      length
  *
  * Comments:   This function works creating a vector from the length of the biggest vector to substract,
  *             witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
@@ -771,7 +795,7 @@ Vector.prototype.angle = function(){
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
  * @memberOf    {vector}
- * @method      module      returns a number whitch is the final result of the vector lenght.
+ * @method      module      returns a number whitch is the final result of the vector lenth.
  * @param       (vector)    vector array of at least vector. Only one vector will be processed.
  *
  * @return      (number)    module
