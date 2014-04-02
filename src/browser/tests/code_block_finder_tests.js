@@ -35,17 +35,33 @@ assert("Use of start function when pasing variables to the function",
   a.start()")
 
 */
-assert("Use of start function when pasing variables to the function",
+assert("Use of start function when pasing a function",
   "a.text", "'{sq_radious = function {return r*r}}'",
   "a = new CodeBlockFinder('function pi(){sq_radious = function {return r*r}}'); \
   a.start()")
 
-assert("Use of start function when pasing variables to the function",
-  "a.text", "'{sq_radious = function {return r*r}; pi_num = 3,141516; return sq * pi_num;}'",
+assert("Use of start function when pasing a function and variables (it should be working!!)",
+  "a.text", "'{ sq_radious = function {return r*r}, pi_num = 3.141516, return sq * pi_num}'",
   "a = new CodeBlockFinder('function pi(){ \
-    sq_radious = function {return r*r}; \
-    pi_num = 3,141516; \
-    return sq * pi_num;}'); \
+    sq_radious = function {return r*r}, \
+    pi_num = 3.141516, \
+    return sq * pi_num}'); \
+  a.start()")
+
+assert("Use of start function when pasing two functions (it should be working!!)",
+  "a.text", "'{ power = function {return r*r}; sum = function {return r+r}}'",
+  "a = new CodeBlockFinder('function(){ \
+    power = function {return r*r}, \
+    sum = function {return r+r}}'); \
+  a.start()")
+
+assert("Use of start function when pasing two functions and variables (it should be working!!)",
+  "a.text", "'{ sq_radious = function {return r*r}, sum = function {return r+r}, pi_num = 3.141516, return sq * pi_num}'",
+  "a = new CodeBlockFinder('function pi(){ \
+    sq_radious = function {return r*r}, \
+    sum = function (){return r+r}, \
+    pi_num = 3.141516, \
+    return sq * pi_num}'); \
   a.start()")
 /*
 
