@@ -35,6 +35,7 @@ assert("Use of start function when pasing variables to the function",
   a.start()")
 
 */
+/*
 assert("Use of start function when pasing a function",
   "a.text", "'{sq_radious = function {return r*r}}'",
   "a = new CodeBlockFinder('function pi(){sq_radious = function {return r*r}}'); \
@@ -63,7 +64,6 @@ assert("Use of start function when pasing two functions and variables (it should
     pi_num = 3.141516, \
     return sq * pi_num}'); \
   a.start()")
-/*
 
 assert("Count lines having the counted_character as line break.",
   "a.lines_read", "4",
@@ -112,3 +112,38 @@ assert('CodeBlockFinder.parse_params can receive a complex function string of pa
                         var j = 0; \
                         for (var i=0; i<3; i++, j+=2*i % 3)}");')
 */
+
+assert("Obtain parameters within brackets.",
+  "a.text", "'{function() {this.name = name}}'",
+  "fun = 'function sum(name){function() {this.name = name}}';  \
+   a = new CodeBlockFinder(fun, /function/, {open: '{', close: '}'}, ',');  \
+   a.start();")
+
+
+assert("Obtain parameters within brackets.",
+  "a.text", "'(function(name){this.name = name}, \
+                function initialize(name){ this.name = name }, \
+                function greet(name){ return class_name } )'",
+  "fun = 'Class_Person(function(name){this.name = name}, \
+                function initialize(name){ this.name = name }, \
+                function greet(name){ return class_name } )'; \
+   a = new CodeBlockFinder(fun, 'Class', {open: '(', close: ')'}, ',');  \
+   a.start();")
+
+assert("Obtain parameters within brackets.",
+  "a.text", "'(function(name){this.name = name}, \
+                function initialize(name){ this.name = name }, \
+                function self_initialize(name){ return class_name } )'",
+  "fun = 'Class_Person(function(name){this.name = name}, \
+                function initialize(name){ this.name = name }, \
+                function self_initialize(name){ return class_name } )'; \
+   a = new CodeBlockFinder(fun, 'Class', {open: '(', close: ')'}, ',');  \
+   a.start();")
+assert("Obtain parameters with two initialize methods",
+  "a.toSource()", "",
+  "fun = 'function(name){this.name = name}, \
+                     function self_number(){ return self.people }, \
+                     function self_initialize(){self.people = 0}, \
+                     function initialize(){self.people++}'; \
+   a = new CodeBlockFinder.parse_params(fun);")                        
+
