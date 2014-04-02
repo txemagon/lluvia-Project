@@ -14,11 +14,14 @@
  * @constructor
 */
 
+//Steps to build a new world from class device
 World.prototype = new Device
 World.prototype.constructor = World
 World.prototype.super = Device
 
 function World(screen, width, height){
+
+  /*function World sets the default parameter for the world unless given*/
 
   var that = this
   this.self_events = ["focus_boid", "new_boid"]
@@ -43,26 +46,81 @@ function World(screen, width, height){
   if ( screen && context)
     this.screen.push( { screen: screen, context: context } )
 
-    Device.call(that, null, null)
-  
+    Device.call(that, null, null) 
 }
 
+/**
+ * @method set_dashboard
+ *
+ * Sets a new World interface into the dashboard.
+ *
+ * @param  {(String | String[])...} name Name of the view to create a WorldInterface.
+ *
+ *
+ * ###Example
+ *      // Set dashboard for a world
+ *      green_world = new World();
+ *      green_world.set_dashboard('');
+ *
+ */
 World.prototype.set_dashboard = function(name){
     this.dashboard = new WorldInterface(name, this)
 }
 
+/**
+ * @method width
+ *
+ * Sets the width of the world
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // Set the width
+ *      
+ *      
+ *
+ */
 World.prototype.width = function(){
   if (arguments.length == 0)
     return this.width
   this.width = arguments[0] 
 }
 
+/**
+ * @method height
+ *
+ * Sets the height of the world
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // Set the height
+ *      
+ *      
+ *
+ */
 World.prototype.height = function(){
   if (arguments.length == 0)
     return this.height
   this.height = arguments[0] 
 }
 
+/**
+ * @method screen_width
+ *
+ * Sets the width of the canvas
+ *
+ * @param  {(String | String[])...} screen Name of the canvas.
+ *
+ *
+ * ###Example
+ *      // Set screen_width
+ *      
+ *      
+ *
+ */
 World.prototype.screen_width = function(screen){
   var i
   this.assert_screen()
@@ -78,11 +136,39 @@ World.prototype.screen_width = function(screen){
   throw "Screen not found"
 }
 
+/**
+ * @method assert_screen
+ *
+ * Checks if there are any screens
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // Check for screen
+ *      
+ *      
+ *
+ */
 World.prototype.assert_screen = function(){
   if ( !this.screen.length )
     throw "No screens yet"
 } 
 
+/**
+ * @method screen_height
+ *
+ * Sets the height of the canvas.
+ *
+ * @param  {(String | String[])...} screen Name of the screen.
+ *
+ *
+ * ###Example
+ *      // Set dashboard for a world
+ *      
+ *      
+ *
+ */
 World.prototype.screen_height = function(screen){
   var i
   this.assert_screen()
@@ -98,6 +184,20 @@ World.prototype.screen_height = function(screen){
   throw "Screen not found"
 }
 
+/**
+ * @method has_born
+ *
+ * Brings a new Boid into the world
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // Bring Boid
+ *      
+ *      
+ *
+ */
 World.prototype.has_born = function (){
   for (var i=0; i<arguments.length; i++){
     arguments[i].my_world = this
@@ -107,6 +207,20 @@ World.prototype.has_born = function (){
    }
 }
 
+/**
+ * @method get_boids
+ *
+ * Creates an array with all the Boids
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // Create array of Boids
+ *      
+ *      
+ *
+ */
 World.prototype.get_boids = function(){
   var boids = []
   boids = this.threads.select_if( function(el){
@@ -115,6 +229,20 @@ World.prototype.get_boids = function(){
   return boids.collect( function(el){ return el.object; })
 }
 
+/**
+ * @method each_boid
+ *
+ * Sets a new World interface into the dashboard.
+ *
+ * @param  {(String | String[])...} name Name of the view to create a WorldInterface.
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.each_boid = function(){
   var that = this
   this.get_boids().each(function(el){
@@ -122,6 +250,20 @@ World.prototype.each_boid = function(){
       })
 }
 
+/**
+ * @method start
+ *
+ * Starts the new World
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.start = function(){
   var that = this
   this.start_time = new Date()
@@ -130,6 +272,20 @@ World.prototype.start = function(){
   })
 }
 
+/**
+ * @method draw
+ *
+ * Draw the canvas into the page
+ *
+ * @param  {}
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.draw = function(){
   var that = this
   this.get_boids().each( function(el) {
@@ -137,6 +293,20 @@ World.prototype.draw = function(){
   })
 }
 
+/**
+ * @method step
+ *
+ * 
+ *
+ * @param  {DateTime} current_time Time ...
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.step = function(current_time){
   var that = this
   current_time = current_time || this.now || new Date()
@@ -145,6 +315,20 @@ World.prototype.step = function(current_time){
   })
 }
 
+/**
+ * @method is_one_second_from_begining
+ *
+ * Sets the start time of the world one second after the function is called
+ *
+ * @param  {} 
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.is_one_second_from_begining = function(){
   this.start()
   var current_time = new Date( this.start_time.toString() )
@@ -154,6 +338,20 @@ World.prototype.is_one_second_from_begining = function(){
   this.step(current_time)
 }
 
+/**
+ * @method show_boids
+ *
+ * Gets the Boids that currently exist in the world
+ *
+ * @param  {} 
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.show_boids = function(){
 
   var logger = document.getElementById("logger")
@@ -169,6 +367,20 @@ World.prototype.show_boids = function(){
   })
 }
 
+/**
+ * @method running_steady
+ *
+ * 
+ *
+ * @param  {DateTime} processors_time Time of the processor 
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.running_steady = function(processors_time){
   //this.show_boids()
   var that = this
@@ -183,6 +395,21 @@ World.prototype.running_steady = function(processors_time){
   //setTimeout(this.run.bind(this), 100)
 }
 
+/**
+ * @method visible_for
+ *
+ * Creates an array with the Boids that the referred Boid can see
+ *
+ * @param  {Vector} position Position of the Boid
+ * @param  {Vector} vision Vision of the Boid taken as center
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.visible_for = function(position, vision){
  var that = this
   vision = vision * vision
@@ -198,6 +425,21 @@ World.prototype.visible_for = function(position, vision){
   return visible
 }
 
+/**
+ * @method new_boid
+ *
+ * Creates a new boid
+ *
+ * @param  {String} color Color of the Boid
+ * @param  {Vector} geo_data Position, velocity and acceleration of the Boid
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.new_boid = function(color, geo_data){
   color = color || "blue"
   if (typeof(geo_data) === "undefined")
@@ -213,6 +455,21 @@ World.prototype.new_boid = function(color, geo_data){
   return b
 }
 
+/**
+ * @method new_seeker
+ *
+ * Creates a new Seeker Boid
+ *
+ * @param  {Target} target Target of the new Seeker Boid
+ * @param  {String} color Color of the Boid
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.new_seeker = function(target, color){
   var b = this.new_boid(color)
   b.brain.activate('seek')
@@ -220,12 +477,40 @@ World.prototype.new_seeker = function(target, color){
   return b
 }
 
+/**
+ * @method start_and_run
+ *
+ * Starts the Boid and makes it run
+ *
+ * @param  {} 
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.start_and_run = function(){
   this.start()
   this.run()
 }
 
-
+/**
+ * @method attend_focus_boid
+ *
+ * 
+ *
+ * @param  {DateTime} date Time of the message
+ * @param  {String} mssg Message
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
 World.prototype.attend_focus_boid = function(date, mssg){
   mssg.current++;
 }
