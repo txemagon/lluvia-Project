@@ -38,7 +38,6 @@ assert("Whenever function initialize is present from second place onwards it is 
                      function(){this.name = 'luis'}); \
         obj = new Person()")
 
-*/
 assert("Object initializer accepts parameters.",
        "obj.name", "'pepe'",
        "Class_Person(function(name){this.name = 'juan'}, \
@@ -52,6 +51,8 @@ assert("initialize calls doesn't interfere with function initialize definition."
                      function initialize(name){ this.name = name }, \
                      function(){this.name = 'luis'}); \
         obj = new Person('pepe')")        
+*/
+
 /*
 assert("The object initializer is valid even in the third position.",
        "obj.name", "'pepe'",
@@ -82,7 +83,6 @@ assert("test parse_arguments",
                      function initialize(name){ this.name = name }, \
                      function greet(name){ return class_name } ); \
         obj = new Person();") 
-*/
 assert("self_initialize is a convenience method for initializing class variables.",
        "Person.people", "2",
        "Class_Person(function(name){this.name = name}, \
@@ -91,6 +91,7 @@ assert("self_initialize is a convenience method for initializing class variables
                      function initialize(){ alert('epepepe') });\
         new Person('pepe'); new Person('juan');")               
 
+*/
 
 /*
 assert("Whenever a function name starts with self_ is considered as a class method.",
@@ -274,7 +275,6 @@ assert("Super works at class level.",
 
 
 /*
-*/
 assert("Before filters are singleton facilities.",
        "a", "true",
        "a = false; function change(){ a = true; }\
@@ -285,7 +285,7 @@ assert("Before filters are singleton facilities.",
         me.add_before_filter('greet', change);\
         me.greet();")
 
-assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
+assert("After filters are singleton facilities.",
        "a", "true",
        "a = false; function change(){ a = true; }\
         Class_Person(function(name){this.name = name}, \
@@ -295,7 +295,7 @@ assert("After filters are singleton facilities. (Currently is failing because ca
         me.add_after_filter('greet', change);\
         me.greet();" )
 
-assert("After filters are singleton facilities. (Currently is failing because call_after is after the return statement).",
+assert("After filters are singleton facilities.",
        "a", "true",
        "a = false; function change(){ a = true; }\
         Class_Person(function(name){this.name = name}, \
@@ -304,6 +304,28 @@ assert("After filters are singleton facilities. (Currently is failing because ca
         me = new Person('Txema');\
         me.add_after_filter('greet', change);\
         me.greet();" )
+*/
+
+
+assert("initialize calls doesn't interfere with function initialize definition.",
+       "obj.attr_readers", "'pepe'",
+       "Class_Person(function(name){this.name = name}, \
+                     function initialize(name){ this.name = name }, \
+                     function greet(name){ return class_name } ); \
+        obj = new Person('pepe'); obj.attr_reader(name)")
+
+assert(".",
+       "obj.attr_readers", "''",
+       "Class_Person(function(){this.age = 34 }, \
+                     function(){this.name = 'José'}); \
+        obj = new Person();obj.attr_reader(name)")
+
+assert("Show how attr are saved in attr_reader.",
+       "obj.attr_readers", "''",
+       "Class_Person(function(){this.age = 34 }, \
+                     function(){this.name = 'José'}); \
+        obj = new Person();obj.attr_reader(name)")
+
 /*
 /*
  * todo: provide an especific include
