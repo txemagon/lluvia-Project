@@ -2,12 +2,13 @@
  * @class EventDispatcher
  * @extends ThreadAutomata
  *
- * Description.
+ * Handle in and out asynchronous communications via a message queue
+ * and a listener mechanism (ports).
  *
  * @constructor
  * Creates a EventDispatcher.
  *
- * @param {} lookup 
+ * @param {Object} lookup
  *
  */
 
@@ -35,12 +36,13 @@ function EventDispatcher(lookup){
 
 /**
  * @method enqueue
- * 
- * Description
- * 
- * @param {Object} mssg Message object shifted from the message queue.
  *
- * @return {Number} mssg.received.id Number of received message
+ * Receives incoming messages stamping the arrival number. The arrival
+ * order can be used to identificate messages.
+ *
+ * @param {Object} mssg Message object pushed into the message queue.
+ *
+ * @return {Number} Order of arrival
  *
  */
 EventDispatcher.prototype.enqueue = function(mssg){
@@ -53,10 +55,11 @@ EventDispatcher.prototype.enqueue = function(mssg){
 /**
  * @method addPort
  *
- * Adds an specific event to the selected device.
+ * Adds an specific device referer in the list of event listeners for a
+ * particular event.
  *
- * @param {Object} event Event generated
- * @param {Object} device Device to be added to the ports array
+ * @param {String} event Name of the event to listen
+ * @param {Object} device Device to be added to the ports array (dock).
  *
  */
 EventDispatcher.prototype.addPort = function (event, device){
@@ -66,10 +69,10 @@ EventDispatcher.prototype.addPort = function (event, device){
 
 /**
  * @method joinPorts
- * 
- * Description
  *
- * @param {Array} listArray 
+ * Builds an empty dock (port array) for every event.
+ *
+ * @param {Array} listArray
  */
 EventDispatcher.prototype.joinPorts = function (listArray){
 	for (var i=0; i<listArray.length; i++)
@@ -79,10 +82,10 @@ EventDispatcher.prototype.joinPorts = function (listArray){
 /**
  * @method delPort
  *
- * Description.
+ * Removes a listener from the dock.
  *
- * @param {Object} event Event generated
- * @param {Object} device Device to be added to the ports array
+ * @param {Object} event Event that we were listening to
+ * @param {Object} device Device to be deleted to the ports array
  *
  */
 EventDispatcher.prototype.delPort = function (event, device){
@@ -107,9 +110,13 @@ EventDispatcher.prototype.fireEvent = function(event){
 
 /**
  * @method shift
- * 
- * Description
- * 
+ *
+ * Extract messages from the queue and send them
+ * to the device default dispatcher. If the dispatcher
+ * has closed the message being processed then it removes
+ * it from the message queue. Otherwise is kept until
+ * operations around this message are finished.
+ *
  * @return {Boolean} true Confirms removal
  */
 EventDispatcher.prototype.shift = function(){ //attend the inqueue
@@ -133,11 +140,11 @@ EventDispatcher.prototype.shift = function(){ //attend the inqueue
 }
 
 /**
- * @method 
- * 
- * Description
- * 
- * @return {}
+ * @method run
+ *
+ * Drives the incoming message queue.
+ *
+ * @return {Boolean} true
  */
 EventDispatcher.prototype.run = function(){
 	return shift.apply(this, arguments)
