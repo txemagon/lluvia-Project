@@ -129,12 +129,14 @@ Gate.prototype.run = function(now, before){
 /**
  * @method new_effect
  * 
- * Registers a new effect for the Gate. 
+ * Registers a new effect for the Gate. An effect is a ThreadAutomata used to handle
+ * the gate html element (body of the gate) creating visual effects.
  *
  * @param {ThreadAutomata} eff  Visual effect to handle the div of the Gate.
+ *
+ * @return {Object}  ThreadAutomata created.
  */ 
 Gate.prototype.new_effect = function(eff){
 	this.threads.push(eff)
 	return eff
 }
-
