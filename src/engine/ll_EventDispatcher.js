@@ -1,5 +1,14 @@
 /**
- * @author txema
+ * @class EventDispatcher
+ * @extends ThreadAutomata
+ *
+ * Description.
+ *
+ * @constructor
+ * Creates a EventDispatcher.
+ *
+ * @param {} lookup 
+ *
  */
 
 EventDispatcher.prototype = new ThreadAutomata
@@ -24,6 +33,16 @@ function EventDispatcher(lookup){
 	lookup.add(this)
 }
 
+/**
+ * @method enqueue
+ * 
+ * Description
+ * 
+ * @param {Object} mssg Message object shifted from the message queue.
+ *
+ * @return {Number} mssg.received.id Number of received message
+ *
+ */
 EventDispatcher.prototype.enqueue = function(mssg){
 	var ev = this
 	mssg.received = {id: ev.getId(), time: new Date()};
@@ -31,16 +50,41 @@ EventDispatcher.prototype.enqueue = function(mssg){
 	return mssg.received.id
 }
 
+/**
+ * @method addPort
+ *
+ * Adds an specific event to the selected device.
+ *
+ * @param {Object} event Event generated
+ * @param {Object} device Device to be added to the ports array
+ *
+ */
 EventDispatcher.prototype.addPort = function (event, device){
 	if (this.ports[event])
 		this.ports[event].push(device)
 }
 
+/**
+ * @method joinPorts
+ * 
+ * Description
+ *
+ * @param {Array} listArray 
+ */
 EventDispatcher.prototype.joinPorts = function (listArray){
 	for (var i=0; i<listArray.length; i++)
 		this.ports[listArray[i]] = []
 }
 
+/**
+ * @method delPort
+ *
+ * Description.
+ *
+ * @param {Object} event Event generated
+ * @param {Object} device Device to be added to the ports array
+ *
+ */
 EventDispatcher.prototype.delPort = function (event, device){
 	if (this.clss.ports[event])
 		for (var i=0; i<this.clss.ports.length; i++)
@@ -48,12 +92,26 @@ EventDispatcher.prototype.delPort = function (event, device){
 				this.clss.ports[i].splice(i,1)
 }
 
+/**
+ * @method fireEvent
+ *
+ * Notifies to all the listeners that this device has generated an event.
+ *
+ * @param {Object} event Event generated
+ */
 EventDispatcher.prototype.fireEvent = function(event){
 	if (this.clss.ports[event.name])
 		for (var i=0; i<this.clss.ports[event.name].length; i++)
 			this.clss.ports[event.name][i](event);
 }
 
+/**
+ * @method shift
+ * 
+ * Description
+ * 
+ * @return {Boolean} true Confirms removal
+ */
 EventDispatcher.prototype.shift = function(){ //attend the inqueue
 	for (var i=0; i<this.inqueue.length; i++)
 		try {
@@ -74,6 +132,13 @@ EventDispatcher.prototype.shift = function(){ //attend the inqueue
 	return true;
 }
 
+/**
+ * @method 
+ * 
+ * Description
+ * 
+ * @return {}
+ */
 EventDispatcher.prototype.run = function(){
 	return shift.apply(this, arguments)
 }
