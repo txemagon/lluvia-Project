@@ -105,8 +105,9 @@ function Gate(element, parent){
 Gate.prototype.listen = function(event, handler){
 	this.panel[event] = _stitchWorlds(this, handler)
 }
-
+//getCanvas not finish yet
 Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } // This is wrong
+
 Gate.prototype.applySkin = function(skin){
 	var div = document.createElement("div")
 	div.setAttribute("class", skin)

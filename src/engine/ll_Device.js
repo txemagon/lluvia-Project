@@ -257,21 +257,61 @@ Device.prototype.fireEvent = function (mssg){
 		this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg)
 }
 
+/**
+ * @method addPort
+ *
+ * Adds an specific port to the selected device
+ *
+ * @param {Object} mssg_name The message to be triggered.
+ * @param {Object} device Device to be added to the ports array
+ *
+ */
 Device.prototype.addPort = function (mssg_name, device){
 	this.eventDispatcher.addPort(mssg_name, device)
 }
 
+/**
+ * @method newMessage
+ *
+ * Creates new message
+ *
+ * @param {String} type Message type.
+ * @param {String} name Name of the event
+ * @param {String} data If defined, gives extra information about the event
+ *
+ */
 Device.prototype.newMessage = function(type, name, data){
       // logger.innerHTML += "data: " +  systemEv(type , {name: name, data: data || "no extra data available"}, this).toSource() + "<br/>"
 	if (type && name)
 		return systemEv(type , {name: name, data: data || "no extra data available"}, this)
 }
 
+/**
+ * @method sendMessage
+ *
+ * Sends a message to a listener
+ *
+ * @param {String} type Message type.
+ * @param {String} name Name of the event
+ * @param {String} data If defined, gives extra information about the event
+ * @param {Object} receiptant Device that receives the message
+ *
+ */
 Device.prototype.sendMessage = function(type, name, data, receiptant){
 	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
 
 }
 
+/**
+ * @method method_missing
+ *
+ * Throws an exception when a method is not defined
+ *
+ * @param {String} method Name of the non-existing method.
+ * @param {String} obj Name of the object to which the method applies
+ * @param {Array} params List of the parameter taken by the method
+ *
+ */
 Device.prototype.method_missing = function (method, obj, params){
   if (this.respond_to$U(method.underscore()))
     return method.underscore.apply(this, params)
