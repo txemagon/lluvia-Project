@@ -12,14 +12,14 @@ function EventDispatcher(lookup){
 	this.ports = {
 		 // List event listeners. "app_down": []
 	}
-	
+
 	// Public vars
 	this.inqueue = []
 	this.clss = that	// Reference for static members to be used inside instances
-	
+
 	// Privileged methods
 	this.getId = function(){return ++that.ids;}
-	
+
 	// Initialization
 	lookup.add(this)
 }
@@ -31,9 +31,9 @@ EventDispatcher.prototype.enqueue = function(mssg){
 	return mssg.received.id
 }
 
-EventDispatcher.prototype.addPort = function (event, funct){
+EventDispatcher.prototype.addPort = function (event, device){
 	if (this.ports[event])
-		this.ports[event].push(funct)
+		this.ports[event].push(device)
 }
 
 EventDispatcher.prototype.joinPorts = function (listArray){
@@ -41,10 +41,10 @@ EventDispatcher.prototype.joinPorts = function (listArray){
 		this.ports[listArray[i]] = []
 }
 
-EventDispatcher.prototype.delPort = function (event, funct){
+EventDispatcher.prototype.delPort = function (event, device){
 	if (this.clss.ports[event])
 		for (var i=0; i<this.clss.ports.length; i++)
-			if (this.clss.ports[i] === funct)
+			if (this.clss.ports[i] === device)
 				this.clss.ports[i].splice(i,1)
 }
 

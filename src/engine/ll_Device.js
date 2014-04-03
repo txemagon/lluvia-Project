@@ -1,104 +1,119 @@
 /**
- * @author txema
+ * @class Device
+ * @extends Processor
+ * @extends ThreadAutomata
+ *
+ * Provides an asynchronous mechanism for communicating with another devices.
+ * In practical terms, it uses a message queue and fires events.
+ * I doesn't have a window on his own but handles Gates to communicate
+ * with HTML DOM.
+ *
+ * @constructor
+ * Creates a Device.
+ *
+ * @param {String | HTMLElement} [view] (optional) A possible view associated with the Device.
+ * @param {Object} [state] (optional) Default Device states -as ll_Enumeration- are: suspended, running, suspending, killing and killed.
+ * @param {Object} [currentState={ previous: state.suspended, current: state.suspended, requested: state.running }] Sets the initial conditions for the device to start.
+ * @param {Object} [parent=Processor] Parent Device or processor this Device belongs to.
  */
 
-// Device.prototype = new ThreadAutomata
 Device.prototype = new Processor
 extend(Device, ThreadAutomata)  // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
+
 function Device(view, state, currentState, parent){
 	/* Inheritance initialization */
-	
-	
+
+
 	/* Class accesors*/
 	var that    = this
 	this._class = that
-	
-	var state = state 
+
+	var state = state
 	if (!state)
 		state = new Enumeration("suspended", "running", "suspending", "killing", "killed")
-      
+
       state.self_keys().each(function(key){  // Define overridable functions
 		   ["up", "steady", "down"].each(function(substate){
-		     Device.prototype[state + "_" + substate] = function(){;} 
+		     Device.prototype[state + "_" + substate] = function(){;}
 		})})
-		
+
 		//todo: refactor to Hashes along with states
 	this.solicitors = [
 		/* suspended */	[
 			function(){
-				;	
+				;
 			},
 			function(){
-				;	
+				;
 			},
 			function(){
-				;	
+				;
 			}
 		],
 		/* running */ 	[
 			function(){
-				;	
+				;
 			},
 			function (){
-				/* TO DO */ ;	
+				/* TO DO */ ;
 				this.gateRunner(this.now)
 				this.childRunner(this.now);
 				this.running_steady(this.now)
 			},
 			function(){
-				;	
+				;
 			}
 		],
 		/* suspending */[
 			function(){
-				;	
+				;
 			},
 			function(){
-				/* TO DO */ ;	
-				this.childRunner(this.now);	
+				/* TO DO */ ;
+				this.childRunner(this.now);
 			},
 			function(){
-				;	
+				;
 			}
 		],
 		/* killing */ 	[
 			function(){
-				;	
+				;
 			},
 			function(){
-				/* TO DO */ ;	
+				/* TO DO */ ;
 				this.gateRunner(this.now)
 			},
 			function(){
-				;	
+				;
 			}
 		],
 		/* killed */ 	[
 			function(){
-				;	
+				;
 			},
 			function(){
-				;	
+				;
 			},
 			function(){
-				;	
+				;
 			}
 		]
 	]
 	/* Instance vars */
-	if (view) 
+	if (view)
 		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
 	this.lookup = new Lookup();
 	this.eventDispatcher = new EventDispatcher(this.lookup);
-	this.currentState = currentState || 
-						{ 	previous:  state.suspended, 
-							current:   state.suspended, 
+	this.currentState = currentState ||
+						{ 	previous:  state.suspended,
+							current:   state.suspended,
 							requested: state.running
 						}
 	this.gates		   = []
-	 
+
 	/* privileged functions (mainly public static accessors)*/
 	this.getSolicitors = function(){return that.solicitors;}
 	this.getStates	   = function(){return state;}
@@ -114,32 +129,52 @@ function Device(view, state, currentState, parent){
 	}
 
 	if (arguments.length)	// Avoid registering during prototype copy while inheritance process
-		initialize();	
-		
-		
+		initialize();
+
+
 }
 
+/**
+ * @method gateRunner
+ * @private
+ *
+ * Simulates multithreading for each gate by calling the run method.
+ */
 Device.prototype.gateRunner = function(){
 		for (var i=0; i<this.gates.length; i++)
-			this.gates[i].run(this.now, this.before)	
+			this.gates[i].run(this.now, this.before)
 }
 
+/**
+ * @method childRunner
+ * @private
+ *
+ * Simulates multithreading for each device attached to this one.
+ */
 Device.prototype.childRunner = function(){
 	if (this.currentState != this.getStates().killed) {
 		this.now = arguments[0]
-		for (var i in this.threads) 
+		for (var i in this.threads)
 			try {
 				this.threads[i].solicitor.call(this.threads[i].object, this.now);
-			} 
+			}
 			catch (e) {
-			
+
 			}
 	}
 
-	// If they are devices we shall call them just in case they are running 
+	// If they are devices we shall call them just in case they are running
 
 }
 
+/**
+ * @method newGate
+ * 
+ * Creates a new Object using a derived class of Gate and attaches it to the gates array own property.
+ * 
+ * @param {String | HTMLElement} el See (@link Gate)
+ * @param {Function} ClassCons Class constructor deriving from Gate.
+ */
 Device.prototype.newGate = function(el, ClassCons){
 	try {
 		var Cons = this.openDevice(ClassCons)
@@ -154,6 +189,22 @@ Device.prototype.newGate = function(el, ClassCons){
 	}
 }
 
+/**
+ * @method attend
+ *
+ * Generic meesage dispatcher. Seeks for a more specific message handler.
+ *
+ * @param {Date} date   Time in which the message was attended in the inqueue.
+ * @param {Object} mssg Message object shifted from the message queue.
+ *
+ * ### Note:
+ *
+ *   To attend a message called "close" define:
+ *
+ *       Device.prototype.attend_close = function(){;}
+ *
+ *  Make the previous definition in a derived class.
+ */
 Device.prototype.attend = function(date, mssg){
 	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then whe shall provide a generic dispatcher.
 }
@@ -173,7 +224,7 @@ Device.prototype._x = function(htmlElement, stopAt){
 		stopAt = document.getElementById(stopAt)
 	if (stopAt && htmlElement && stopAt === htmlElement)
 		return 0
-	if (htmlElement.offsetParent) 
+	if (htmlElement.offsetParent)
 		return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
 	return 0
 }
@@ -194,13 +245,20 @@ Device.prototype.x_calc = function(){
 	return null
 }
 
+/**
+ * @method fireEvent
+ *
+ * Notifies to all the listeners that this device has generated an event.
+ *
+ * @param {Object} mssg The message to be triggered.
+ */
 Device.prototype.fireEvent = function (mssg){
 	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
 		this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg)
 }
 
-Device.prototype.addPort = function (mssg_name, obj){
-	this.eventDispatcher.addPort(mssg_name, obj)
+Device.prototype.addPort = function (mssg_name, device){
+	this.eventDispatcher.addPort(mssg_name, device)
 }
 
 Device.prototype.newMessage = function(type, name, data){
@@ -211,7 +269,7 @@ Device.prototype.newMessage = function(type, name, data){
 
 Device.prototype.sendMessage = function(type, name, data, receiptant){
 	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
-	
+
 }
 
 Device.prototype.method_missing = function (method, obj, params){
@@ -228,18 +286,18 @@ Device.prototype.method_missing = function (method, obj, params){
  * EXAMPLE APP DEVICE
  */
 
-/* ButtonGate Example 
+/* ButtonGate Example
 ButtonGate.prototype = new Gate
 ButtonGate.prototype.constructor = ButtonGate
 
-function ButtonGate(el){ 
+function ButtonGate(el){
 	if (arguments.length)
 		Gate.call(this, el)
 }
 */
-/* No 'device' references in the constructor 
-	
-	
+/* No 'device' references in the constructor
+
+
 ButtonGate.prototype.do_onclick = function(event, element){
 	alert("You have made click.")
 }
@@ -251,20 +309,20 @@ TryApp.prototype.constructor = TryApp
 
 /*
 function TryApp(){
-	/* self reference for static methods 
+	/* self reference for static methods
 	var that = this;
-	
-	/* class reference for instance objects 
+
+	/* class reference for instance objects
 	this._class = that
-	
-	
-	/* private static vars 
+
+
+	/* private static vars
 	Device.call(this, null)
 	this.newGate("llaveEnMano", ButtonGate)
 	this.solicitors[this.state.running][this.stateChange.steady] = function(){
 		that.gates[0].panel.innerHTML = new Date()
 	}
-	
+
 }
 */
 
@@ -272,7 +330,7 @@ function TryApp(){
  * We have to be very carefull with non idempotent methods (specially function references),
  * because they are called twice during inheritance processes. Once in xxx.prototype = new yy
  * and another time at object initialization " yyy.call(xxx, params) "
- * 
- * Third generation inheritance generates constructor calls with null arguments 
+ *
+ * Third generation inheritance generates constructor calls with null arguments
  */
 
