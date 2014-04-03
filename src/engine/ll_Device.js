@@ -8,6 +8,73 @@
  * I doesn't have a window on his own but handles Gates to communicate
  * with HTML DOM.
  *
+ * ###Example of use:
+ *
+ *
+ *     // EXAMPLE APP DEVICE
+ *     // ButtonGate Example
+ *     ButtonGate.prototype = new Gate
+ *     ButtonGate.prototype.constructor = ButtonGate
+ *
+ *     function ButtonGate(el){
+ *     	if (arguments.length)
+ *     		Gate.call(this, el)
+ *     }
+ *     // No 'device' references are provided in the constructor
+ *
+ *
+ *     ButtonGate.prototype.do_onclick = function(event, element){
+ *     	alert("You have made click.")
+ *     }
+ *
+ *     TryApp.prototype = new Device
+ *     TryApp.prototype.constructor = TryApp
+ *
+ *
+ *
+ *     function TryApp(){
+ *     	//  self reference for static methods
+ *     	var that = this;
+ *
+ *     	// class reference for instance objects
+ *     	this._class = that
+ *
+ *
+ *     	//  private static vars
+ *     	Device.call(this, null)
+ *     	this.newGate("llaveEnMano", ButtonGate)
+ *      // Device#newGate inject a device property inside
+ *      // the ButtonGate object pointing to _this_.
+ *     	this.solicitors[this.state.running][this.stateChange.steady] = function(){
+ *     		that.gates[0].panel.innerHTML = new Date()
+ *     	}
+ *     }
+ *
+ *
+ *
+ * We have to be very carefull with non idempotent methods (specially function references),
+ * because they are called twice during inheritance processes. Once in xxx.prototype = new yy
+ * and another time at object initialization " yyy.call(xxx, params) "
+ *
+ * Third generation inheritance generates constructor calls with null arguments
+ *
+ * @property {Object} state Enumeration with all possible states. Default values are listed below.
+ * @property {Number} [state.suspended=0] The device is not using its executdion turn.
+ * @property {Number} [state.running=1]  Normal work operations.
+ * @property {Number} [state.suspending=2] The device is cleaning up before sleeping.
+ * @property {Number} [state.killing=3] Write your last will.
+ * @property {Number} [state.killed=4] No aim to recover.
+ *
+ * @property {Array} solicitors The three functions (up, steady and down) that drive any state.
+ *
+ * @property {Object} eventDispatcher EventDispatcher object. Handles in and out communications.
+ * @property {Object} currentState    Holds the current state of the device.
+ * @property currentState.previous    Record of the previous state.
+ * @property currentState.current     State we are currently in.
+ * @property currentState.requested   State to change in the next run.
+ *
+ * @property {Array} gates List of all attached Gates.
+ *
  * @constructor
  * Creates a Device.
  *
@@ -15,6 +82,7 @@
  * @param {Object} [state] (optional) Default Device states -as ll_Enumeration- are: suspended, running, suspending, killing and killed.
  * @param {Object} [currentState={ previous: state.suspended, current: state.suspended, requested: state.running }] Sets the initial conditions for the device to start.
  * @param {Object} [parent=Processor] Parent Device or processor this Device belongs to.
+ *
  */
 
 Device.prototype = new Processor
@@ -135,6 +203,34 @@ function Device(view, state, currentState, parent){
 }
 
 /**
+* @method state_substate
+* Dynamic
+*
+* Default method to handle any state.
+*
+* ###Example
+*
+*     Device.prototype.runnig_steady = function(){;}
+*
+* When functionality is required, override the required method.
+*/
+
+/**
+ * @method getSolicitors 
+ * 
+ * Return the array of solicitors.
+ *
+ * @return {Array} Array of three functions (up, steady and running) by state, packed in a global array.
+ */
+
+/**
+ * @method getStates
+ * Return the list of all possible states for this Device.
+ *
+ * @return {Array} List of states.
+ */
+
+/**
  * @method gateRunner
  * @private
  *
@@ -169,9 +265,9 @@ Device.prototype.childRunner = function(){
 
 /**
  * @method newGate
- * 
+ *
  * Creates a new Object using a derived class of Gate and attaches it to the gates array own property.
- * 
+ *
  * @param {String | HTMLElement} el See (@link Gate)
  * @param {Function} ClassCons Class constructor deriving from Gate.
  */
@@ -260,7 +356,7 @@ Device.prototype.fireEvent = function (mssg){
 /**
  * @method addPort
  *
- * Adds an specific port to the selected device
+ * Adds an specific port (reference to a listener) to the selected event listeners list.
  *
  * @param {Object} mssg_name The message to be triggered.
  * @param {Object} device Device to be added to the ports array
@@ -273,7 +369,7 @@ Device.prototype.addPort = function (mssg_name, device){
 /**
  * @method newMessage
  *
- * Creates new message
+ * Creates new message.
  *
  * @param {String} type Message type.
  * @param {String} name Name of the event
@@ -289,7 +385,7 @@ Device.prototype.newMessage = function(type, name, data){
 /**
  * @method sendMessage
  *
- * Sends a message to a listener
+ * Sends a message to a particular device, without using the listeners list.
  *
  * @param {String} type Message type.
  * @param {String} name Name of the event
@@ -305,7 +401,9 @@ Device.prototype.sendMessage = function(type, name, data, receiptant){
 /**
  * @method method_missing
  *
- * Throws an exception when a method is not defined
+ * Throws an exception when a method is not defined, unless someone has used the 
+ * camel case version of an existing method. In that particular case it recovers
+ * from the crash and executes the call.
  *
  * @param {String} method Name of the non-existing method.
  * @param {String} obj Name of the object to which the method applies
@@ -319,58 +417,4 @@ Device.prototype.method_missing = function (method, obj, params){
   params = params || []
   throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
 }
-
-
-/*
-/*
- * EXAMPLE APP DEVICE
- */
-
-/* ButtonGate Example
-ButtonGate.prototype = new Gate
-ButtonGate.prototype.constructor = ButtonGate
-
-function ButtonGate(el){
-	if (arguments.length)
-		Gate.call(this, el)
-}
-*/
-/* No 'device' references in the constructor
-
-
-ButtonGate.prototype.do_onclick = function(event, element){
-	alert("You have made click.")
-}
-
-
-TryApp.prototype = new Device
-TryApp.prototype.constructor = TryApp
-*/
-
-/*
-function TryApp(){
-	/* self reference for static methods
-	var that = this;
-
-	/* class reference for instance objects
-	this._class = that
-
-
-	/* private static vars
-	Device.call(this, null)
-	this.newGate("llaveEnMano", ButtonGate)
-	this.solicitors[this.state.running][this.stateChange.steady] = function(){
-		that.gates[0].panel.innerHTML = new Date()
-	}
-
-}
-*/
-
-/*
- * We have to be very carefull with non idempotent methods (specially function references),
- * because they are called twice during inheritance processes. Once in xxx.prototype = new yy
- * and another time at object initialization " yyy.call(xxx, params) "
- *
- * Third generation inheritance generates constructor calls with null arguments
- */
 
