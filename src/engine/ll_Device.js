@@ -210,7 +210,7 @@ function Device(view, state, currentState, parent){
 *
 * ###Example
 *
-*     Device.prototype.runnig_steady = function(){;}
+*     Device.prototype.running_steady = function(){;}
 *
 * When functionality is required, override the required method.
 */

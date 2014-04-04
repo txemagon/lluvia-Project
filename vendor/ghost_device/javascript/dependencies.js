@@ -8,3 +8,4 @@ $K_app_dependencies = [
 			{name: "GhostClass.js", description: "Gate inherited class for demonstration purposes."}
 	    ]
 }
+]

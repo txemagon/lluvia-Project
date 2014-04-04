@@ -1,0 +1,14 @@
+#ghost_world{
+	width: 800px;
+	height: 600px;
+	position: absolute;
+	border: 1px solid black;
+}
+
+#lluvia_load{
+	display: none;
+}
+
+.ghost{
+	opacity: 0;
+}
