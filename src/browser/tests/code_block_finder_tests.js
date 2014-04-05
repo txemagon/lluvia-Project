@@ -1,4 +1,3 @@
-/*
 assert("Create new CodeBlockFinder without parameters.",
     "typeof a.value", "'function'",
     "a = new CodeBlockFinder()")
@@ -34,8 +33,6 @@ assert("Use of start function when pasing variables to the function",
   "a = new CodeBlockFinder('function sum(num1, num2){return num1+num2}'); \
   a.start()")
 
-*/
-/*
 assert("Use of start function when pasing a function",
   "a.text", "'{sq_radious = function {return r*r}}'",
   "a = new CodeBlockFinder('function pi(){sq_radious = function {return r*r}}'); \
@@ -111,7 +108,6 @@ assert('CodeBlockFinder.parse_params can receive a complex function string of pa
       'a = new CodeBlockFinder.parse_params("2, 3, a + 2 * b / 5, function(a, b){\
                         var j = 0; \
                         for (var i=0; i<3; i++, j+=2*i % 3)}");')
-*/
 
 assert("Obtain parameters within brackets.",
   "a.text", "'{function() {this.name = name}}'",
@@ -146,4 +142,62 @@ assert("Obtain parameters with two initialize methods",
                      function self_initialize(){self.people = 0}, \
                      function initialize(){self.people++}'; \
    a = new CodeBlockFinder.parse_params(fun);")                        
+
+assert("Starts counting from zero",
+  "a.lines_read", "0",
+  "myClass = 'Class_MyClass()';  \
+   a = new CodeBlockFinder(myClass, null, null, ',');  \
+   a.start();")
+
+assert("Count the lines of a simple class",
+  "a.lines_read", "1",
+  "myClass = 'MyClass(function(){this.name},  \
+                            function GetName(){return name}),';  \
+   a = new CodeBlockFinder(myClass, null, null, ',');  \
+   a.start();")
+
+assert("Collect the text of the first keys",
+  "a.text", "'{this.name}'",
+  "myClass = 'Class_MyClass(function(){this.name},  \
+                            function GetName(){return name}),';  \
+   a = new CodeBlockFinder(myClass, null, null, ',');  \
+   a.start();")
+
+assert("Collect the text inside the class",
+  "a.text", "'(function(){this.name}, function GetName(){return name})'",
+  "myClass = 'Class_MyClass(function(){this.name},  \
+                            function GetName(){return name}),';  \
+   a = new CodeBlockFinder(myClass, null, {open: '(', close: ')'}, ',');  \
+   a.start();")
+
+assert("Count the lines of a class",
+  "a.lines_read", "2",
+  "myClass = 'Class_MyClass(function(){},  \
+                            function greet(){},  \
+                            function pepe(name){this.name = name })';  \
+   a = new CodeBlockFinder(myClass, null, {open: '(', close: ')'}, ',');  \
+   a.start();")
+
+
+// parse_params agrupa las lineas por parejas, preguntar el motivo a Txema, a lo mejor
+// falla por eso.
+assert("Value returned by parse_params",
+  "a.toSource()", '["function(){}, function greet(){}", "function pepe(name){this.name = name })"]',
+  "myClass = 'function(){},  \
+              function greet(){},  \
+              function pepe(name){this.name = name })';  \
+   a = new CodeBlockFinder.parse_params(myClass);")
+
+assert("Value returned by parse_params",
+  "a.length", "3",
+  "myClass = 'function uno(){},  \
+              function dos(name){this.name = name },  \
+              function tres(name){this.name = name },  \
+              function cuatro(name){this.name = name },  \
+              function cinco(name){this.name = name },  \
+              function seis(){})';  \
+   a = new CodeBlockFinder.parse_params(myClass);")
+
+
+
 
