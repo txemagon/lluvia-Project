@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg2994"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="cara_hablando3.svg">
+  <defs
+     id="defs2996" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.556349"
+     inkscape:cx="32.841969"
+     inkscape:cy="33.303967"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2999">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     style="opacity:0;display:inline"
+     sodipodi:insensitive="true" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Dibujo"
+     style="display:inline">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.90959805000000005;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3009"
+       width="43.244949"
+       height="39.426769"
+       x="10.468436"
+       y="11.377527"
+       ry="7.4719725" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3783"
+       sodipodi:cx="24"
+       sodipodi:cy="23.59091"
+       sodipodi:rx="3.3636363"
+       sodipodi:ry="3.2272727"
+       d="m 27.363625,23.582428 a 3.3636363,3.2272727 0 1 1 -6.727245,-0.0016 L 24,23.59091 z"
+       sodipodi:start="6.280557"
+       sodipodi:end="9.427893" />
+    <path
+       transform="translate(17.636363,-0.2272736)"
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3783-1"
+       sodipodi:cx="24"
+       sodipodi:cy="23.59091"
+       sodipodi:rx="3.3636363"
+       sodipodi:ry="3.2272727"
+       d="m 27.362866,23.659984 a 3.3636363,3.2272727 0 0 1 -6.72507,0.02509 L 24,23.59091 z"
+       sodipodi:start="0.021404992"
+       sodipodi:end="3.112412" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Boca feliz"
+     sodipodi:insensitive="true"
+     style="display:none">
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.69999999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3806"
+       sodipodi:cx="33.045456"
+       sodipodi:cy="44.136364"
+       sodipodi:rx="12.227273"
+       sodipodi:ry="10.136364"
+       d="m 45.270534,43.944322 a 12.227273,10.136364 0 1 1 -24.45235,0.188476 l 12.227272,0.0036 z"
+       sodipodi:start="6.2642383"
+       sodipodi:end="9.4251298"
+       transform="matrix(1.0464176,0,0,1.0873825,-2.2157338,-14.127043)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Boca hablando 1"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 19.727273,38.818182 45.272727,38.545455"
+       id="path3905"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="Boca hablando 2"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 19.714983,38.754828 c 9.340645,-6.718484 17.322675,4.092392 25.546866,-0.04698"
+       id="path3905-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="Cara hablando 3"
+     style="display:none">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 19.522136,38.754581 C 30.075073,33.32199 39.386844,35.262682 45.069002,38.707601"
+       id="path3905-7-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Antena 1"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.70899999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 32.316689,10.959073 C 32.589561,7.0175054 26.586381,6.3136539 26.586381,6.3136539"
+       id="path3910"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.70899999;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3914"
+       sodipodi:cx="26.181818"
+       sodipodi:cy="7.1363635"
+       sodipodi:rx="1.6363636"
+       sodipodi:ry="2.7727273"
+       d="m 24.548612,6.9642033 a 1.6363636,2.7727273 0 1 1 -0.0032,0.1711847"
+       sodipodi:start="3.2037232"
+       sodipodi:end="9.4251298"
+       sodipodi:open="true"
+       transform="matrix(0.67820841,0,0,0.46584268,8.5614616,2.9028499)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="Antena 2"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 32.207393,11.086113 -0.04545,-2.8636355 1.181818,-0.7727273 -2.181818,-0.8181818 2.227273,-0.6363636 -1.181818,-0.5 0,-0.9090907"
+       id="path3917"
+       inkscape:connector-curvature="0" />
+    <path
+       transform="translate(0.16193761,-0.23206796)"
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3919"
+       sodipodi:cx="32"
+       sodipodi:cy="3.6363635"
+       sodipodi:rx="1.1363636"
+       sodipodi:ry="1.1363636"
+       d="m 30.865829,3.565806 a 1.1363636,1.1363636 0 1 1 -0.0022,0.070158"
+       sodipodi:start="3.2037232"
+       sodipodi:end="9.4251298"
+       sodipodi:open="true" />
+  </g>
+</svg>
