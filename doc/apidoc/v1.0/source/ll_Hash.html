@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Hash.prototype = new BasicObject
+Hash.prototype.constructor = Hash
+
+function Hash(){
+	
+}
+
+Hash.bang_methods = [&quot;merge&quot;, &quot;soft_merge&quot;]
+
+Hash.prototype.self_keys = function(re){
+	var the_keys = []
+	for (var i in this)
+		if (!re || re.test(i))
+			if (i !== &quot;keys&quot; &amp;&amp; this.hasOwnProperty(i) )
+				the_keys.push(i)
+	return the_keys
+}
+
+
+Hash.prototype.alias(&quot;own_keys&quot;, &quot;self_keys&quot;)
+
+Hash.prototype.values = function(){
+	var that = this
+	return this.keys().collect( function(i){ return that[i] } )
+}
+
+Hash.prototype.self_values = function(){
+	var that = this
+	return this.self_keys().collect( function(i){ return that[i] } )
+}
+
+Hash.prototype.alias(&quot;own_values&quot;, &quot;self_values&quot;)
+
+Hash.prototype.merge = function(source){
+	if (!source.respond_to$U(&quot;self_keys&quot;))
+		throw &quot;Invalid source. Impossible to merge.&quot;
+	var that = this
+	source.self_keys().each(function(key){
+		that[key] = source[key]
+	})
+	return this
+}
+
+Hash.prototype.soft_merge = function(source){
+	if (!source.respond_to$U(&quot;self_keys&quot;))
+		throw &quot;Invalid source. Impossible to merge.&quot;
+	var that = this
+	source.self_keys().each(function(key){
+		that[key] = that[key] || source[key]
+	})
+	return this
+}	
+
+Hash.reflect(Hash.bang_methods)</pre>
+</body>
+</html>
