@@ -3,19 +3,24 @@ Ghost.prototype.constructor = Ghost
 Ghost.super = Gate
 
 function Ghost(element){
-	this.ghost_amount = 0
+	this.ghost_amount = 0	
 
+function initialize(){
 	try{
 		if(element){
 			Gate.call(this, element)
 		}		
 	} catch (e) {
-	if ($K_debug_level >= $KC_dl.DEVELOPER)
-	    alert("No event handlers were found.\nException: " + e.toSource())
+	    if ($K_debug_level >= $KC_dl.DEVELOPER)
+	       alert("No event handlers were found.\nException: " + e.toSource())
+        }
     }
 
-}
+    if (arguments.length)
+        initialize()
 
+    //that[el].slideMenu_over = that.newEffect(new SlideMenu_over(that.device, that))
+}
 
 Ghost.prototype.do_onclick   = function(element){
    this.ghost_amount++
@@ -31,15 +36,15 @@ Ghost.prototype.do_onmouseover   = function(element){
 GhostAutomata.prototype = new ThreadAutomata
 GhostAutomata.prototype.constructor = GhostAutomata
 
-function GhostAutomata(gate){
+function GhostAutomata(el, gate){
 	var that = this
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
 	var state = this.state = new Enumeration("vanished", "vanishing", "appearing", "appeared")
-	this.currentState = [previous: state.down, 
+	this.currentState = {previous: state.down, 
 						 current: state.down,
-						 request: state.down]
+						 request: state.down}
 	this.solicitors = [
 		/* vanished */	[
 			function(){
@@ -50,7 +55,6 @@ function GhostAutomata(gate){
 				;
 			},
 			function(){
-				alert(9)
 				;
 			}
 		],
@@ -97,18 +101,20 @@ function GhostAutomata(gate){
 		]
 	]
 
+    function initialize(){
+	    try{
+		    if(that.state){
+			    ThreadAutomata.call(that, that.state)
+		        that.newGate(el, Ghost)
+			}
+	    }catch(e){
+		    if ($K_debug_level >= $KC_dl.DEVELOPER)
+		    alert("No event handlers were found.\nException: " + e.toSource())
+	    }
+    }
 
-
-
-	try{
-		if(initial_state)
-			ThreadAutomata.call(this, initial_state)
-		    this.newGate(element, Ghost)
-	}catch(e){
-		if ($K_debug_level >= $KC_dl.DEVELOPER)
-		alert("No event handlers were found.\nException: " + e.toSource())
-	}
-
+    if (arguments.length)
+        initialize()
 
 }
 
