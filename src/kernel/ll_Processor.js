@@ -187,6 +187,7 @@ Automata.prototype.run = function(){
 		this.currentState.current   = this.currentState.requested;
 		this.currentState.requested = this.state.none;
 	}
+	this.solicitor[this.currentState.current][this.stateChange.steady].call(this);
 }
 
 ThreadAutomata.prototype  = new Thread;
