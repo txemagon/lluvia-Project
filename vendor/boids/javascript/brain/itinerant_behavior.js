@@ -63,14 +63,53 @@ SeekBehavior.prototype.desired_acceleration = function(){
  * @constructor
 */
 
-
 FleeBehavior.prototype = new Behavior
 FleeBehavior.prototype.constructor = FleeBehavior
 FleeBehavior.prototype.super = Behavior
 
 function FleeBehavior(){
   Behavior.apply(this, arguments)
+  this.target = null
 }
+
+FleeBehavior.prototype.set_target = function(boid){
+  this.target = boid || new Boid({
+                          position:      new Vector(1,1),
+                          velocity:      new Vector(1,1),
+                          acceleration:  new Vector(1,1)
+      }, "red")
+}
+
+FleeBehavior.prototype.target_data = function(){
+  if (!this.target)
+    throw "FleeBehavior Disabled. Still no target."
+  return this.target ? this.target.geo_data : null
+}
+
+FleeBehavior.prototype.get_target = function(){
+  return this.target_data()
+}
+
+FleeBehavior.prototype.target_at = function(){
+  return this.get_target().position.subs( this.me.geo_data.position )
+}
+
+FleeBehavior.prototype.desired_velocity = function(){
+  var arrival_distance
+  try{ 
+    arrival_distance = this.target_at().module()
+  }catch(err){
+    arrival_distance = 0
+  }
+  var scale = 1
+
+  return (new Vector(this.target_at().unit().scale(-scale * this.me.vel_max)))
+}
+
+FleeBehavior.prototype.desired_acceleration = function(){
+  return this.desired_velocity().subs(this.me.velocity())
+}
+
 
 /**
  * @classDescription Creates Itinerant Behavior: wander

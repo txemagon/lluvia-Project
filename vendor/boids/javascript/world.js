@@ -478,6 +478,28 @@ World.prototype.new_seeker = function(target, color){
 }
 
 /**
+ * @method new_flee
+ *
+ * Creates a new Flee Boid
+ *
+ * @param  {Target} target Target of the new Flee Boid
+ * @param  {String} color Color of the Boid
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
+World.prototype.new_flee = function(target, color){
+  var b = this.new_boid(color)
+  b.brain.activate('flee')
+  b.brain.get_behavior('flee').set_target(target)
+  return b
+}
+
+/**
  * @method start_and_run
  *
  * Starts the Boid and makes it run
