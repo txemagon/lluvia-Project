@@ -13,7 +13,7 @@ function Brain(body){
 
      /* GOAL BEHAVIORS */
    this.behaviors.push( 
-     [ "seek>arrival", "flee", "wander", 
+     [ "seek>arrival", "flee", "wander","wander_around", 
        "wall following", "path following" 
      ].inject( new BehaviorSet(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)

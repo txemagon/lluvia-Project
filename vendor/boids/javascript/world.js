@@ -500,6 +500,28 @@ World.prototype.new_flee = function(target, color){
 }
 
 /**
+ * @method new_wander_around
+ *
+ * Creates a new wander around Boid
+ *
+ * @param  {Target} target Target of the new wander around Boid
+ * @param  {String} color Color of the Boid
+ *
+ *
+ * ###Example
+ *      // 
+ *      
+ *      
+ *
+ */
+World.prototype.new_wander_around = function(color){
+  var b = this.new_boid(color)
+  b.brain.activate('wander_around')
+  b.brain.get_behavior('wander_around').set_target()
+  return b
+}
+
+/**
  * @method start_and_run
  *
  * Starts the Boid and makes it run
