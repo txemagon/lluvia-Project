@@ -1,9 +1,17 @@
 /**
- * @classDescription Creates a Behavior
+ * @class Behavior
+ * 
+ * Creates a Behavior
  *
- * @return {Behavior}
  * @constructor
-*/
+ *    
+ * @params {Object} brain 
+ * @params {Object} body
+ * @params {ObjectObject} before_modifier
+ * @params {Object} after_modifier
+ *
+ */
+
 
 function Behavior( brain, body, before_modifier, after_modifier ){
   var that = this
@@ -41,10 +49,29 @@ function Behavior( brain, body, before_modifier, after_modifier ){
      initialize()
 }
 
+/**
+ * @method type_of
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.type_of = function(b_name){
   return eval(b_name.class_name() + "Behavior")
 }
 
+
+/**
+ * @method is_a$U
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.is_a$U = function(b_name){
   b_name = Behavior.decompose_name(b_name)[1]
   try{
@@ -54,26 +81,75 @@ Behavior.prototype.is_a$U = function(b_name){
   }
 }
 
+
+/**
+ * @method desired_acceleration 
+ *
+ * Description
+ *
+ * @return {}
+ */
 Behavior.prototype.desired_acceleration = function(){
+  a = new Vector(0, 0);
   return new Vector(0, 0);
 }
 
+
+/**
+ * @method is_premodified_by$U
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.is_premodified_by$U = function(mod_name){
   return this.before.inject(false, function(modifier, modified){
     return modified ||  (modifier.is_a$U(mod_name) ? !modifier.frozen$U() : false)
   })
 }
 
+
+/**
+ * @method is_postmodified_by$U
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.is_postmodified_by$U = function(mod_name){
   return this.after.inject(false, function(modifier, modified){
     return modified ||  (modifier.is_a$U(mod_name) ? !modifier.frozen$U() : false)
   })
 }
 
+
+/**
+ * @method is_modified_by$U
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.is_modified_by$U = function(mod_name){
   return this.is_premodified_by$U(mod_name) || this.is_postmodified_by$U(mod_name)
 }
 
+
+/**
+ * @method get_modifiers_for
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.get_modifiers_for = function(scope){
   var ary = []
   scope = scope || Behavior.Scope.ALL
@@ -86,15 +162,46 @@ Behavior.prototype.get_modifiers_for = function(scope){
   return ary
 }
 
+/**
+ * @method active_modifiers
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.active_modifiers = function(scope){
   return this.get_modifiers_for(Behavior.Scope.ALL)
 }
+
+
+/**
+ * @method activate_modifier
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.activate_modifier = function(mod_name, scope){
   this.get_modifiers_for(scope).each(function(el){
     if (el.is_a$U(mod_name))
       el.unfreeze()
   })  
 }
+
+
+/**
+ * @method get_modifier
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.get_modifier = function (mod_name, scope){
     var requested_modifier = null
     return this.get_modifiers_for(scope).inject(requested_modifier, function(mod, rq){
@@ -102,6 +209,16 @@ Behavior.prototype.get_modifier = function (mod_name, scope){
     })
 }
 
+
+/**
+ * @method deactivate_modifier
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.prototype.deactivate_modifier = function(mod_name, scope){
   this.get_modifiers_for(scope).each(function(el){
     if (el.is_a$U(mod_name))
@@ -110,6 +227,15 @@ Behavior.prototype.deactivate_modifier = function(mod_name, scope){
 }
 
 
+/**
+ * @method decompose_name
+ *
+ * Description
+ *
+ * @param  {} 
+ *
+ * @return {}
+ */
 Behavior.decompose_name = function(behavior){
   var pre_state = behavior.match(/\s*([^<]+)/g)
   behavior = pre_state.pop()

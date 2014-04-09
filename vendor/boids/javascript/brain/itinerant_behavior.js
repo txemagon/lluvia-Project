@@ -1,9 +1,11 @@
 /**
- * @classDescription Creates Itinerant Behavior: seek
+ * @class SeekBehavior
  *
- * @return {SeekBehavior}
+ * Creates Itinerant Behavior: seek
+ *
  * @constructor
-*/
+ * 
+ */
 
 SeekBehavior.prototype = new Behavior
 SeekBehavior.prototype.constructor = SeekBehavior
@@ -14,6 +16,14 @@ function SeekBehavior(){
   this.target = null
 }
 
+/**
+ * @method set_target
+ *
+ * Search a target boid
+ *
+ * @param  {Object} boid Target boid
+ *
+ */
 SeekBehavior.prototype.set_target = function(boid){
   this.target = boid || new Boid({
                           position:      new Vector(1,1),
@@ -22,20 +32,48 @@ SeekBehavior.prototype.set_target = function(boid){
       }, "red")
 }
 
+/**
+ * @method target_data
+ *
+ * Position information of boid
+ *
+ * @return {Object} this.target.geo_data Position information of boid
+ */
 SeekBehavior.prototype.target_data = function(){
   if (!this.target)
     throw "SeekBehavior Disabled. Still no target."
   return this.target ? this.target.geo_data : null
 }
 
+/**
+ * @method get_target
+ *
+ * Get a targetboid 
+ *
+ * @return {Object} this.target_data() Position information of boid
+ */
 SeekBehavior.prototype.get_target = function(){
   return this.target_data()
 }
 
+/**
+ * @method target_at
+ *
+ * Description
+ *
+ * @return {}
+ */
 SeekBehavior.prototype.target_at = function(){
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
+/**
+ * @method desired_velocity
+ *
+ * Desired velocity by boid
+ *
+ * @return {Object} vector Vector velocity
+ */
 SeekBehavior.prototype.desired_velocity = function(){
   var arrival_distance
   try{ 
@@ -51,18 +89,26 @@ SeekBehavior.prototype.desired_velocity = function(){
   return (new Vector(this.target_at().unit().scale(scale * this.me.vel_max)))
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Desired acceleration by boid
+ *
+ * @return {Object} vector Vector acceleration
+ *
+ */
 SeekBehavior.prototype.desired_acceleration = function(){
   return this.desired_velocity().subs(this.me.velocity())
 }
 
-
 /**
- * @classDescription Creates Itinerant Behavior: flee
+ * @class FleeBehavior
  *
- * @return {FleeBehavior}
+ * Creates Itinerant Behavior: flee
+ *
  * @constructor
-*/
-
+ * 
+ */
 FleeBehavior.prototype = new Behavior
 FleeBehavior.prototype.constructor = FleeBehavior
 FleeBehavior.prototype.super = Behavior
@@ -72,6 +118,14 @@ function FleeBehavior(){
   this.target = null
 }
 
+/**
+ * @method set_target
+ *
+ * Search a target boid
+ *
+ * @param  {Object} boid Target boid
+ *
+ */
 FleeBehavior.prototype.set_target = function(boid){
   this.target = boid || new Boid({
                           position:      new Vector(1,1),
@@ -80,20 +134,48 @@ FleeBehavior.prototype.set_target = function(boid){
       }, "red")
 }
 
+/**
+ * @method target_data
+ *
+ * Position information of boid
+ *
+ * @return {Object} this.target.geo_data Position information of boid
+ */
 FleeBehavior.prototype.target_data = function(){
   if (!this.target)
     throw "FleeBehavior Disabled. Still no target."
   return this.target ? this.target.geo_data : null
 }
 
+/**
+ * @method get_target
+ *
+ * Get a targetboid 
+ *
+ * @return {Object} this.target_data() Position information of boid
+ */
 FleeBehavior.prototype.get_target = function(){
   return this.target_data()
 }
 
+/**
+ * @method target_at
+ *
+ * Description
+ *
+ * @return {}
+ */
 FleeBehavior.prototype.target_at = function(){
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
+/**
+ * @method desired_velocity
+ *
+ * Desired velocity by boid
+ *
+ * @return {Object} vector Vector velocity
+ */
 FleeBehavior.prototype.desired_velocity = function(){
   var arrival_distance
   try{ 
@@ -106,17 +188,26 @@ FleeBehavior.prototype.desired_velocity = function(){
   return (new Vector(this.target_at().unit().scale(-scale * this.me.vel_max)))
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Desired acceleration by boid
+ *
+ * @return {Object} vector Vector acceleration
+ *
+ */
 FleeBehavior.prototype.desired_acceleration = function(){
   return this.desired_velocity().subs(this.me.velocity())
 }
 
 
 /**
- * @classDescription Creates Itinerant Behavior: wander
+ * @class WanderBehavior 
  *
- * @return {WanderBehavior}
+ * Creates Itinerant Behavior: wander
+ *
  * @constructor
-*/
+ */
 
 
 WanderBehavior.prototype = new Behavior
@@ -127,14 +218,13 @@ function WanderBehavior(){
   Behavior.apply(this, arguments)
 }
 
-
 /**
- * @classDescription Creates Itinerant Behavior: wander around
+ * @class WanderBehavior 
  *
- * @return {WanderAroundBehavior}
+ * Creates Itinerant Behavior: wander around
+ *
  * @constructor
-*/
-
+ */
 WanderAroundBehavior.prototype = new Behavior
 WanderAroundBehavior.prototype.constructor = WanderAroundBehavior
 WanderAroundBehavior.prototype.super = Behavior
@@ -146,6 +236,15 @@ function WanderAroundBehavior(){
   this.aux = 0
 }
 
+
+/**
+ * @method set_target
+ *
+ * Search a target boid
+ *
+ * @param  {Object} boid Target boid
+ *
+ */
 WanderAroundBehavior.prototype.set_target = function(boid){
   this.target = boid || new Boid({
                           position:      new Vector(Math.floor(Math.random()*400),Math.floor(Math.random()*400)),
@@ -154,6 +253,13 @@ WanderAroundBehavior.prototype.set_target = function(boid){
       }, "red")
 }
 
+/**
+ * @method target_data
+ *
+ * Position information of boid
+ *
+ * @return {Object} this.target.geo_data Position information of boid
+ */
 WanderAroundBehavior.prototype.target_data = function(){
   //timer = (Math.random()* 300) + 200
   if (!this.target)
@@ -167,14 +273,35 @@ WanderAroundBehavior.prototype.target_data = function(){
   return this.target ? this.target.geo_data : null
 }
 
+/**
+ * @method get_target
+ *
+ * Get a targetboid 
+ *
+ * @return {Object} this.target_data() Position information of boid
+ */
 WanderAroundBehavior.prototype.get_target = function(){
   return this.target_data()
 }
 
+/**
+ * @method target_at
+ *
+ * Description
+ *
+ * @return {}
+ */
 WanderAroundBehavior.prototype.target_at = function(){
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
+/**
+ * @method desired_velocity
+ *
+ * Desired velocity by boid
+ *
+ * @return {Object} vector Vector velocity
+ */
 WanderAroundBehavior.prototype.desired_velocity = function(){
   var arrival_distance
   try{ 
@@ -187,6 +314,14 @@ WanderAroundBehavior.prototype.desired_velocity = function(){
   return (new Vector(this.target_at().unit().scale(scale * this.me.vel_max)))
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Desired acceleration by boid
+ *
+ * @return {Object} vector Vector acceleration
+ *
+ */
 WanderAroundBehavior.prototype.desired_acceleration = function(){
   return this.desired_velocity().subs(this.me.velocity())
 }

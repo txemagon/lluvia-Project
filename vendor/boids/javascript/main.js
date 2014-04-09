@@ -13,13 +13,11 @@ function main(){
                            acceleration: new Vector(0, 0) } )
   
   var first = t                           
-/*
 //// Example seek behavior ////                    
   for(var i=0; i<10; i++)
     t = w.new_seeker(t)
   first.brain.activate('seek')
   first.brain.get_behavior('seek').set_target(t)
-*/
 
 /*
 //// Example flee behavior //// 
@@ -28,10 +26,12 @@ function main(){
   first.brain.get_behavior('flee').set_target(t)
 */
 
+/*
 //// Example wander around behavior ////
   for(var i = 0; i<10; i++){
     var b = w.new_wander_around()
   }
+*/
 
 
   w.start()
