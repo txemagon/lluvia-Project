@@ -568,7 +568,7 @@ Vector.prototype.scale$B = function(vector, number){
 }
 
 /**
- * Projection of one vector about another.
+ * Projection of one vector over another.
  * @memberOf	{Vector}
  * @method		projection  Dice two vectors, we want obtain the orthogonal projection of one vector on another.
  * @param 		{Vector} 	Vectors Array of at least two vectors. Only two vectors will be processed

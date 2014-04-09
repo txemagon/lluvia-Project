@@ -13,6 +13,8 @@ catch (e) {
 	$K_debug_level = $KC_dl.USER
 }	
 
+$K_logger = null
+
 $global_space = (function(){return this;}).call(null) 
 $global_space["$constants"] = {}
 
@@ -34,6 +36,19 @@ function O(variable){
   return variable
 }
 
+/**
+ * Dinamically called when a no existent function is invoked
+ * 
+ * @param  {Object} error  [The error that triggers method_missing call.]
+ * @param  {String} method [Name of the method that was invoked]
+ * @param  {Array}  params List of params in the invokation.
+ * @return {[type]}        [description]
+ *
+ * **NOTE:**
+ *
+ *  Class_<Name>() function calls generates a class with the 
+ *  scaffolding.
+ */
 function method_missing(error, method, params){
   if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))
     return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)

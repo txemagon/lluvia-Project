@@ -24,6 +24,7 @@ function Device(view, state, currentState, parent){
 		     Device.prototype[state + "_" + substate] = function(){;} 
 		})})
 		
+		//todo: refactor to Hashes along with states
 	this.solicitors = [
 		/* suspended */	[
 			function(){
@@ -154,7 +155,7 @@ Device.prototype.newGate = function(el, ClassCons){
 }
 
 Device.prototype.attend = function(date, mssg){
-	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then whe shall provide a generic dispatcher.
+	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then we shall provide a generic dispatcher.
 }
 
 Device.prototype._y = function(htmlElement, stopAt){

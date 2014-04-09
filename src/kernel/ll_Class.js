@@ -1,6 +1,27 @@
+/**
+ * @var $classes
+ * @static 
+ * 
+ * All class created. 
+ */
 var $classes = []
 
-Class.prototype = new Module
+/**
+ * @class Class
+ *
+ * Create a class in lluvia. 
+ *
+ * ###Example:
+ *     // Create class MyClass
+ *     Class_MyClass()
+ *   
+ *     // Create class Person
+ *     Class_Person(function(name){this.name = 'juan'},
+ *                  function initialize(name){ this.name = name },
+ *                  function(){this.name = 'luis'});
+ *
+ */
+//Class.prototype = new Module
 Class.prototype.constructor = Class
 function Class(){
   var self = this instanceof Function ? this : eval(this.constructor.name)
@@ -11,11 +32,31 @@ function Class(){
   this.attr_writers = []
 }
 
+/**
+ * @method create_attr
+ *
+ * Description.
+ *
+ * @param  {String}   
+ *
+ * ###Example
+ *
+ */
 Class.prototype.create_attr = function(attr){
    if (typeof(this[attr]) == "undefined")
   this[attr] = null
 }
 
+/**
+ * @method attr_reader
+ *
+ * Description.
+ *
+ * @param  {String}   
+ *
+ * ###Example
+ *
+ */
 Class.prototype.attr_reader = function (names){
    for (var i=0; i<arguments.length; i++){
       name = arguments[i]
@@ -29,7 +70,16 @@ Class.prototype.attr_reader = function (names){
    }
 }
 
-
+/**
+ * @method attr_writer
+ *
+ * Description.
+ *
+ * @param  {String}   
+ *
+ * ###Example
+ *
+ */
 Class.prototype.attr_writer = function (names){
 for (var i=0; i<arguments.length; i++){
       name = arguments[i]
@@ -43,12 +93,32 @@ for (var i=0; i<arguments.length; i++){
   }
 }
 
+/**
+ * @method attr_accessor
+ *
+ * Description.
+ *
+ * @param  {String}   
+ *
+ * ###Example
+ *
+ */
 Class.prototype.attr_accessor = function(name){
      this.attr_reader(name) 
      this.attr_writer(name) 
 }
 
-
+/**
+ * @method _$_add_filter
+ *
+ * Description.
+ *
+ * @param  {String} 
+ * @param  {String}   
+ *
+ * ###Example
+ *
+ */
 function _$_add_filter(where, single_param){
   if (!(single_param instanceof Array))
     single_param = [single_param]
@@ -59,7 +129,27 @@ function _$_add_filter(where, single_param){
 Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
-  
+ 
+/**
+ * @method add_before_filter
+ *
+ * Description.
+ *
+ * @param  {String} 
+ * @param  {function()}   
+ *
+ * ###Example
+ *    a = false;
+ *    function change(){ a = true; };
+ *    Class_Person(function(name){this.name = name}, 
+ *                 function initialize(name){ this.name = name }, 
+ *                 function greet(name){ return class_name } ); 
+ *    me = new Person('Txema');
+ *    me.add_before_filter('greet', change);
+ *    me.greet();
+ *    a //=> true
+ *
+ */  
 //todo: accept strings as argument names. Accept blocks, too.
 Class.prototype.add_before_filter   = function(observed_function, filters) {
    if (typeof(this.before_filters[observed_function]) == "undefined")
@@ -68,6 +158,26 @@ Class.prototype.add_before_filter   = function(observed_function, filters) {
       _$_add_filter(this.before_filters[observed_function], arguments[i])
 }
 
+/**
+ * @method add_after_filter
+ *
+ * Description.
+ *
+ * @param  {String} 
+ * @param  {function()}   
+ *
+ * ###Example
+ *    a = false;
+ *    function change(){ a = true; };
+ *    Class_Person(function(name){this.name = name}, 
+ *                 function initialize(name){ this.name = name }, 
+ *                 function greet(name){ return class_name } ); 
+ *    me = new Person('Txema');
+ *    me.add_after_filter('greet', change);
+ *    me.greet();
+ *    a //=> true
+ *
+ */  
 Class.prototype.add_after_filter   = function(observed_function, filters) {
 
    if (typeof(this.after_filters[observed_function]) == "undefined")
@@ -76,33 +186,87 @@ Class.prototype.add_after_filter   = function(observed_function, filters) {
       _$_add_filter(this.after_filters[observed_function], arguments[i])
 }
 
+/**
+ * @method call_before
+ *
+ * Description.
+ *
+ * @param  {String} function name 
+ *
+ * ###Example
+ *
+ *
+ */ 
 Class.prototype.call_before = function(fn_name){
+  this.before_filters[fn_name] = this.before_filters[fn_name] || []
   for (var i=0; i<this.before_filters[fn_name].length; i++)
     this.before_filters[fn_name][i]();
 }
 
+/**
+ * @method call_after
+ *
+ * Description.
+ *
+ * @param  {String} function name   
+ *
+ * ###Example
+ *
+ *
+ */ 
 Class.prototype.call_after = function(fn_name){
-   alert("hello")
-    for (var i=0; i<this.after_filters[fn_name].length; i++)
+  this.after_filters[fn_name] = this.after_filters[fn_name] || []
+  for (var i=0; i<this.after_filters[fn_name].length; i++)
        this.after_filters[fn_name][i]();
 }
 
+/**
+ * @method method_missing
+ *
+ * Throws an exception when a method is not defined.
+ *
+ * @param  {String} method
+ * @param  {String} object
+ * @param  {String} arguments    
+ *
+ */ 
 Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }
 
+/**
+ * @method _ClassFactory
+ *
+ * Creates a new class
+ *
+ * @param  {String} class name
+ * @param  {String} initial functions   
+ *
+ * @return {String} new_class
+ *
+ * ###Example
+ *    // Create class MyClass
+ *    Class_MyClass()  // _ClassFactory is internally call and make the class.
+ *
+ *    // Create class Person
+ *    _ClassFactory('Person', 'function initialize(name){ this.name = name }, function greet(name){ return class_name }') 
+ *    
+ */ 
 function _ClassFactory(class_name, initial_functions){
-  
   var whole_class_name = class_name
   class_name           = whole_class_name.split(/\$\$/)[0] 
   var parent_class     = whole_class_name.split(/\$\$/)[1] || "Class"
 
   function parse_arguments(){
     for (var i=1; i<initial_functions.length; i++){
+      if (typeof(initial_functions[i]) === "function" )
+        initial_functions[i] = initial_functions[i].toSource()
       initial_functions[i].match(/function\s*([^(]*)\(/)
       if (RegExp.$1 != ""){
         var fn_name = RegExp.$1
+
         var class_method = /^self_/.test(fn_name)
         if (class_method)
-          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")          
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")   
+
         var f = eval("$F$ = " + initial_functions[i]).deconstruct()
         
         var fun = []
@@ -122,9 +286,13 @@ function _ClassFactory(class_name, initial_functions){
         else
           eval(class_name).prototype[f.name] = ( function(){ 
                                                    var super_mthd = eval(parent_class + ".prototype." + f.name); 
-                                                   var Self =  function(){ return "hello" }
+                                                   var Self =  function(){ return self }
+                                                   var aux_body = f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";"
+          
+                                                   eval(class_name + ".prototype._" + f.name +" = function(" + f.params + "){"+aux_body+"}")
                                                    with(this)
-                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){\n var return_value;\nthis.call_before('" + f.name + "');\n" + "return_value = this._"+ f.name +"(" + f.params + "); \nthis.call_after('" + f.name + "');\nreturn return_value;\n}" )}
+                                                   //Original-->//return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n" + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )} 
                                                )()
        }
      }
@@ -132,6 +300,8 @@ function _ClassFactory(class_name, initial_functions){
 
   /* eval only works properly when in expressions so we've added the = sign */
   var initializer = initial_functions[0] || "function (){ }"
+  if (typeof(initializer) === "function" )
+     initializer = initializer.toSource() 
   initializer = initializer.replace(
       /function\s*\(([^\)]*)\)\s*{(.*)/m,
       "function " + class_name + "($1){ \n \
@@ -147,14 +317,15 @@ function _ClassFactory(class_name, initial_functions){
         if (!" + class_name + ".initialized ){ \n\
           if (typeof(arguments[0]) != 'undefined' && arguments[0].initialize)\n\
             try{" + class_name + ".initialize()}catch(err){;}\n\
-            " + class_name + ".initialized = true \n\
+          " + class_name + ".initialized = true \n\
         }\n\
         else if (this instanceof " + class_name + " && this.inheritance_level == 0 )\n\
          try{this.initialize.apply(this, arguments)}catch(err){;} \n\
         }; \n\
       ")
    eval(class_name + "= new Function();")
-	function basic_proto(){
+	
+  function basic_proto(){
 	 
 	  eval.call(null, class_name + ".prototype = new " + parent_class + ";")
 	  eval.call(null, class_name + ".prototype.constructor = " + class_name +";" )      
@@ -192,6 +363,7 @@ basic_proto()
 
   $global_space[class_name].call(eval(class_name + "({initialize: true})")) // Execute as a function (class initialization)
   $classes.push(new_class)
+  alert(new_class)
   return new_class
 }
 

@@ -1,0 +1,18 @@
+#lluvia_load{
+  display: none;
+}
+
+#ll_logger{
+  border: 1px solid white;
+  background-image: url('../images/fondoApps.png');
+  width: 40ex;
+  height: 50ex;
+  position: absolute; /* This doesn't work because of bad pigsandsheep.css */
+  top: 30px;
+  left: 1300px;
+  padding: 1ex 3ex 1ex 3ex;
+  color: white;
+  font-family: arial, helvetica, verdana;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

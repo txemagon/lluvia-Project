@@ -13,7 +13,10 @@
 function _stitchWorlds(gate, solicitor){
 	return function(e){
 		e = e || window.event
-		return gate[solicitor](e, this)
+		try{
+		 return gate[solicitor](e, this)
+		} catch (err) {
+			Exception.parse(err) }
 	}
 }
 
@@ -51,6 +54,10 @@ function Gate(element, parent){
 	
 	if (arguments.length)
 		initialize()
+}
+
+Gate.prototype.listen = function(event, handler){
+	this.panel[event] = _stitchWorlds(this, handler)
 }
 
 Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } // This is wrong

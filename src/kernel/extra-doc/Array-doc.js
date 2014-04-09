@@ -181,7 +181,7 @@
 
 /**
  * @method pop
- * The pop method removes the last element from an array and returns that value to the caller.
+ * Removes the last element from an array and returns its value to the caller.
  *
  * `pop` is intentionally generic; this method can be called or applied to objects resembling
  * arrays. Objects which do not contain a length property reflecting the last in a series of
