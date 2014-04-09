@@ -1,25 +1,25 @@
 /**
- * @classDescription Creates Alignment Behavior.
+ * @classDescription Creates Cohesion Behavior.
  *
- * @return {AlignmentBehavior}
+ * @return {CohesionBehavior}
  * @constructor
 */
 
-AlignmentBehavior.prototype = new Behavior
-AlignmentBehavior.prototype.constructor = AlignmentBehavior
-AlignmentBehavior.prototype.super = Behavior
+CohesionBehavior.prototype = new Behavior
+CohesionBehavior.prototype.constructor = CohesionBehavior
+CohesionBehavior.prototype.super = Behavior
 
-function AlignmentBehavior(){
+function CohesionBehavior(){
   Behavior.apply(this, arguments)
   this.target = null
 }
 
-AlignmentBehavior.prototype.desired_acceleration = function(){
+CohesionBehavior.prototype.desired_acceleration = function(){
 	var x = 0
 	var y = 0
 	var count = 0
 	this.me.visible_objects().each( function(boid){
-	  var direction = boid.heading()
+	  var direction = boid.position()
       x += direction.get_cord(0)
       y += direction.get_cord(1)
       count++
