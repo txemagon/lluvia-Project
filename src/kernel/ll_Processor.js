@@ -65,7 +65,7 @@ Processor.prototype.kill = function(rObject, solicitorF){
  * Execute all threads one step.
  * 
  * @memberOf 	{Processor}
- * @method 		run
+ * @method 		step
  */
 Processor.prototype.step = function (date){
 	
