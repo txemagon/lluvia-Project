@@ -8,15 +8,15 @@
 /**
  * @member String
  * @method  capitalize
- * Returns a copy of string with the first character converted to uppercase and the 
- * remainder to lowercase. 
- * 
- * @return {String} String. The string with his first letter in uppercase. 
- * 
+ * Returns a copy of string with the first character converted to uppercase and the
+ * remainder to lowercase.
+ *
+ * @return {String} String. The string with his first letter in uppercase.
+ *
  * ###Comments:    Case conversion is effective only in ASCII region.
- * 
+ *
  * ###Example
- *       
+ *
  *      var text = "hello"   // giving a value to text
  *      text.capitalize()    //=> "Hello"
  */
@@ -29,20 +29,20 @@ String.prototype.capitalize = function(){
 /**
  * @member   String
  * @method   humanize
- * 
+ *
  * Changes the underscore or camelCase string and returns a string which has each word separated with one space
- * 
+ *
  * @return   {String} String
- * 
+ *
  * ###Example
- *       
+ *
  *      "TheRollingStones".humanize()      //=>"the rolling stones"
- *       
+ *
  *      "the_rolling_stones".humanize()    //=>"the rolling stones"
- *           
+ *
  *      "theRolling_stones".humanize()    //=>"the rolling stones"
- *      
- */	
+ *
+ */
 
 
 
@@ -62,7 +62,7 @@ String.prototype.humanize = function(){
  * returns a underscored string
  *
  * ###Example:
- *     
+ *
  *      "TheRollingStone".underscore()   //=> "The rolling stones"
  *
  *
@@ -80,16 +80,16 @@ String.prototype.underscore = function(){
 /**
  * @member  String
  * @method  camel_case
- * 
+ *
  * Returns the same string in camel case form.
- * 
+ *
  *
  * ###Example
  *
  *     "the_rollings stones".camel_case() //=> "theRollingStones"
  * @return  {String} String
  *
- * ###Comments:    
+ * ###Comments:
  * "seek_case"
  *
  **/
@@ -108,12 +108,12 @@ String.prototype.camel_case = function(){
 /**
  * @member String
  * @method class_name
- * 
+ *
  * Takes the String passed and returns a camelCase class name.
- * 
+ *
  * @return      {String} Returns camelCase name of class
- * 
- */ 
+ *
+ */
 String.prototype.class_name = function(){
   var sentence = ""
   var first = this.strip()[0]
@@ -127,15 +127,15 @@ String.prototype.class_name = function(){
 
 /**
  * @member   String
- * @method   index 
- * Returns the index of the first occurrence of the given substring or pattern 
- * 'regexp' in str. Returns null if not found. If the second parameter is 
+ * @method   index
+ * Returns the index of the first occurrence of the given substring or pattern
+ * 'regexp' in str. Returns null if not found. If the second parameter is
  * present, it specifies the position in the string to begin the search.
- * 
- * 
+ *
+ *
  * @param       {string} string/regex
  * @return      {Number} Index Index of char
- * 
+ *
  * ###Example
  *      "hello".index("e")  //=> 1
  */
@@ -171,13 +171,13 @@ String.prototype.index = function(){
 /**
  * @member   String
  * @method   normalize_index
- * 
+ *
  * Converts an negative index passed to positive valid index
- * 
- * @param       {Number} number 
+ *
+ * @param       {Number} number
  * @return      {Number} number equivalent positive index
- *  
- * ###Comments:    
+ *
+ * ###Comments:
  * In case of abs() of number more than this.length, returns null, else returns index
  *
  */
@@ -189,21 +189,21 @@ String.prototype.normalize_index = function(){
 }
 
 /**
- * @method      insert 
- * 
+ * @method      insert
+ *
  * Inserts other string before the character at the given index, modifying str.
- * Negative indexes count from the end of the string, and insert after the 
+ * Negative indexes count from the end of the string, and insert after the
  * given character. The intent is to insert a String so that it starts at the given index.
- * 
+ *
  * @param       {number} index
  * @param       {string} string
- * @return      {String} A string that insert 
- * 
- * ###Comments:    
+ * @return      {String} A string that insert
+ *
+ * ###Comments:
  * giving the position and a new string the function will insert the new string next to the given position.
- * 
+ *
  * ###Example
- *      "hello".insert(2, "haha")  
+ *      "hello".insert(2, "haha")
  *      //=> hehahallo
  */
 String.prototype.insert = function(){
@@ -233,20 +233,20 @@ String.prototype.insert = function(){
 
 /**
  * @method   ljust
- * 
+ *
  * Fills the string until completes the number or character passed as parameter
- * If integer is greater than the length of string, returns a new String of length of 
+ * If integer is greater than the length of string, returns a new String of length of
  * passed parameter with string left justified and padded with padstr; otherwise, returns string.
- * 
- * 
+ *
+ *
  * @param       {Number} number
  * @param       {string} string
  * @return      {String} string
- * 
+ *
  * ###Comments: Adjust the position of the parameter extending it to the max position
- * 
+ *
  * ###Example
- *      "hello".ljust(10,"p") 
+ *      "hello".ljust(10,"p")
  *      //=> helloppppp
  */
 String.prototype.ljust = function(){
@@ -263,14 +263,14 @@ String.prototype.ljust = function(){
 }
 
 /**
- * @method      lstrip 
- * 
+ * @method      lstrip
+ *
  * Returns a copy of string with leading whitespace removed. See also 'String#rstrip'
- * and 'String#strip'. 
- * 
+ * and 'String#strip'.
+ *
  * @param       {string} string
  * @return      {String} string
- *     
+ *
  * ###Example
  *
  */
@@ -279,52 +279,52 @@ String.prototype.lstrip = function(){
 }
 
 /**
- * @method   swapcase 
- * 
+ * @method   swapcase
+ *
  * Returns a copy of string with uppercase alphabetic characters converted to lowercase
  * and lowercase characters converted to uppercase.
- * 
+ *
  * @param       {string} string
  * @return      {String} string
- * 
+ *
  * ###Comments: Case conversion is effective only in ASCII region.
- * 
+ *
  * ###Example
- *      "Hello".swapcase() 
+ *      "Hello".swapcase()
  *      //=> hELLO
  *
  */
 String.prototype.swapcase= function(){
   var str = []
   for(var i = 0; i < this.length;i++){
-    if ((this[i].charCodeAt(0) > 64) && (this[i].charCodeAt(0) < 97)){      
-      str[i] = this[i].toLowerCase()      
+    if ((this[i].charCodeAt(0) > 64) && (this[i].charCodeAt(0) < 97)){
+      str[i] = this[i].toLowerCase()
     }
     else{
       str[i] = this[i].toUpperCase()
     }
-  }  
+  }
   var word = str.join("")
   return word
 }
 
 /**
- * @method   empty$ 
- * 
+ * @method   empty$
+ *
  * Returns true if self contains no elements
  *
  * @param      {String}string
  * @return     {Boolean} Boolean Returns true if empty and false if not
- * 
+ *
  * ###Comments:     asks if the variable contains values
- * 
+ *
  * ###Example:
  *      "hello".empty$U()   //=> false
  *      "".empty$U()        //=> true
  *
  */
 String.prototype.empty$U = function(){
-   if(arguments.length > 0)	
+   if(arguments.length > 0)
       //throw ("wrong number of arguments. This function not needs arguments")
       return null
    return this.length>0? false : true
@@ -332,17 +332,17 @@ String.prototype.empty$U = function(){
 
 /**
  * @method   downcase
- * 
+ *
  * Returns a copy of string with all uppercase letters replaced with their lowercase counterparts.
- * The operation is locale insensitive —only characters "A" to "Z" are affected. 
+ * The operation is locale insensitive —only characters "A" to "Z" are affected.
  * Note: case replacement is effective only in ASCII region
  * Ths method use a "toLowerCase()" function
  *
  * @param      {Arguments} This
  * @return     {string} String. Returns this modified with character Ascii of this downcase
- * 
+ *
  * ###Comments: Turns everything to downcase.
- * 
+ *
  * ###Example
  *
  *     "hEllO".downcase() //=> "hello"
@@ -350,46 +350,46 @@ String.prototype.empty$U = function(){
  *
  */
 String.prototype.downcase = function(){
-   return this.toLowerCase() == this? null : this.toLowerCase() 
+   return this.toLowerCase() == this? null : this.toLowerCase()
 }
 
 /**
- * @method     casecmp 
- * 
+ * @method     casecmp
+ *
  * Compares two strings and returns 0 if the two strings are equals.
  * If the first string (argument) is different returns 1.
- * If the second string (this) is different returns -1. 
+ * If the second string (this) is different returns -1.
  *
  *
  * @param     {String} String
  * @return    {Number} Returns -1 (less than), 0 (equals), 1 (greater than)
- * 
+ *
  * ###Comments: Case-insensitive version of ruby String.
- * 
+ *
  * ###Example
- * 
+ *
  *     "abcdef".casecmp("abcde")     //=> 1
  *     "aBcDeF".casecmp("abcdef")    //=> 0
  *     "abcdef".casecmp("abcdefg")   //=> -1
  *     "abcdef".casecmp("ABCDEF")    //=> 0
  */
 String.prototype.casecmp = function(){
-  
+
   if (arguments.length < 1)
    throw("ArgumentError: Wrong number of arguments")
   var str1 = this.toLowerCase()
-  var str2 = arguments[0].toLowerCase() 
+  var str2 = arguments[0].toLowerCase()
   return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
 
 }
 
 /**
  * @method   ord
- * 
+ *
  * Returns the integer ordinal of a one-character string.
  *
- * @param       {String}  One letter only from ASCII code. 
- * @return      {String}     
+ * @param       {String}  One letter only from ASCII code.
+ * @return      {String}
  *
  * ###Comments:   This function works using a javascript function(.charCodeAt).
  *
@@ -404,9 +404,9 @@ String.prototype.ord = function(){
 }
 
 /**
- * @method       oct        
+ * @method       oct
  * This function make an octal value from a number.
- * 
+ *
  * @param        {String}     Number between -7 and 7 and discard the rest.
  * @return       {String}     Return an octal value .
  *
@@ -415,8 +415,8 @@ String.prototype.ord = function(){
  * lowercase characters converted to uppercase. Note: case conversion is effective
  * only in ASCII region.
  *
- *        
- *  
+ *
+ *
  */
 String.prototype.oct = function(){
   oct = this.match( /^[(-7)-7]+/)
@@ -425,11 +425,11 @@ String.prototype.oct = function(){
 }
 
 /**
- * @method       reverse      
- * 
+ * @method       reverse
+ *
  * Returns a reversed version of an introduced string
  *
- * @param        {String}    
+ * @param        {String}
  * @return       {String}     Return the reverse from a string.
  *
  * ###Comments: This function use a ".reverse" from array class.
@@ -444,11 +444,11 @@ String.prototype.reverse = function(){
 }
 
 /**
- * @method       include$U    
- * 
+ * @method       include$U
+ *
  * Returns true if str contains the given string or character.
  *
- * @param        {String} 
+ * @param        {String}
  * @return       {True o false}
  *
  * ###Comments:   Responds if the atribute given is contained in the variable
@@ -460,15 +460,15 @@ String.prototype.reverse = function(){
  *
  **/
 String.prototype.include$U = function(){
-   return (this.lastIndexOf(arguments[0]) > -1)? true : false 
+   return (this.lastIndexOf(arguments[0]) > -1)? true : false
 }
 
 /**
- * @method       include_some_of     
- * 
+ * @method       include_some_of
+ *
  * Returns true if str contains the any of the given string or character.
  *
- * @param        {String} 
+ * @param        {String}
  * @return       {True o false}
  *
  * ###Comments:   Responds if the atribute given is contained in the variable
@@ -501,13 +501,13 @@ String.prototype.include_some_of$U = function(
 
 /**
  * @method       rindex
- *  
+ *
  * Returns the index of the string passed as parameter
  *
- * @param        {String} 
+ * @param        {String}
  * @return       {Integer}     Returns index.
  *
- * ###Comments: 
+ * ###Comments:
  *
  * ###Example1:
  *
@@ -526,17 +526,17 @@ String.prototype.rindex = function(){
 }
 
 /**
- * @method       center      
+ * @method       center
  * Returns a center word in the string
  *
- * @param        {String} 
+ * @param        {String}
  * @return       {String}     Return the a string with a word center.
  *
- * ###Comments: If integer is greater than the length of str, 
+ * ###Comments: If integer is greater than the length of str,
  * returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
- * 
+ *
  * ###Example
- * 
+ *
  *    "hello".center(4)            //=> "hello"
  *    "hello".center(20)           //=> "       hello        "
  *    "hello".center(20, '123')    //=> "1231231hello12312312"
@@ -546,7 +546,7 @@ String.prototype.center = function(){
      throw("wrong number arguments")
   if (this.length >= arguments[0])
      return this
-  var str = "" 
+  var str = ""
   var i = 0
   var j = 0
   while(i<=(arguments[0] - this.length)){
@@ -561,24 +561,24 @@ String.prototype.center = function(){
            else
               str += " "
       i++
-  } 
+  }
   return str
 }
 
 /**
  * @method       chomp
- *   
+ *
  * Returns a string without \n or \r or \r\n of the end.
  *
  * @param        {String} This
  * @return       {String}
  *
- * ###Comments: Returns a new String with the given record separator removed from the end of str (if present). 
- * If $/ has not been changed from the default Ruby record separator, 
+ * ###Comments: Returns a new String with the given record separator removed from the end of str (if present).
+ * If $/ has not been changed from the default Ruby record separator,
  * then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
- * 
+ *
  * ###Example
- * 
+ *
  *     "hello".chomp()            //=> "hello"
  *     "hello\n".chomp()          //=> "hello"
  *     "hello\r\n".chomp()        //=> "hello"
@@ -602,23 +602,23 @@ String.prototype.chomp = function(){
 
 /**
  * @method       chop
- *     
+ *
  * Returns a string without \n or \r or \r\n or char of the end the String.
  *
- * @param        {String} 
+ * @param        {String}
  * @return       {String}
  *
- * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed. 
- * Applying chop to an empty string returns an empty string. 
+ * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed.
+ * Applying chop to an empty string returns an empty string.
  * String#chomp is often a safer alternative, as it leaves the string unchanged if it doesn‘t end in a record separator.
- * 
+ *
  * ###Example
  *    "string\r\n".chop()   //=> "string"
  *    "string\n\r".chop()   //=> "string\n"
  *    "string\n".chop()     //=> "string"
  *    "string".chop()       //=> "strin"
  *    "x".chop.chop()       //=> ""
- * 
+ *
  **/
 String.prototype.chop = function(){
   if (arguments.length > 0)
@@ -631,47 +631,47 @@ String.prototype.chop = function(){
 }
 
 /**
- * @method       hex     
- * 
+ * @method       hex
+ *
  * Returns a number hexadecimal convert to decimal.
  *
- * @param        {Number} 
+ * @param        {Number}
  * @return       {Number}
  *
- * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x) 
+ * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x)
  * and returns the corresponding number. Zero is returned on error.
- * 
+ *
  * ###Example
  *    "0x0a".hex()     //=> 10
  *    "-1234".hex()    //=> -4660
  *    "0".hex()        //=> 0
  *    "wombat".hex()   //=> 0
- * 
+ *
  **/
 String.prototype.hex = function(){
-   if (this.search("0x") == 0) 
+   if (this.search("0x") == 0)
      return parseInt(this)
    return isNaN(parseInt(this,16))? 0 : parseInt(this,16)
 }
 
 /**
- * @method       chr     
- * 
+ * @method       chr
+ *
  * Returns first char of the string.
  *
- * @param        {Char} 
+ * @param        {Char}
  * @return       {Char}
  *
  * Comments: Returns a one-character string at the beginning of the string.
- * 
+ *
  * #Example
  *      a = "abcde"
- *      a.chr()    
+ *      a.chr()
  *      //=> "a"
- * 
+ *
  **/
 String.prototype.chr = function(){
-// No se puede coger el numero que se 
+// No se puede coger el numero que se
 // mete en this y sacar un string con la conversion en hexadecimal
 // Problema: this no puede ser un valor decimal en esta clase, ya que
 // solo deja meter strings
@@ -680,20 +680,20 @@ String.prototype.chr = function(){
   return this
 }
 /**
- * @method       rjust     
- * 
- * If integer is greater than the length of str, returns a new String of length integer 
- * with str right justified and padded with padstr; otherwise, returns str. 
+ * @method       rjust
+ *
+ * If integer is greater than the length of str, returns a new String of length integer
+ * with str right justified and padded with padstr; otherwise, returns str.
  *
  * @param        {String} Str
  * @return       {String} Str
  *
- * Comments: 
- * 
+ * Comments:
+ *
  *    "hello".rjust(4)            //=> "hello"
  *    "hello".rjust(20)           //=> "               hello"
  *    "hello".rjust(20, '1234')   //=> "123412341234123hello"
- * 
+ *
  **/
 String.prototype.rjust = function(){
 alert("okk");
@@ -713,19 +713,19 @@ alert("okk");
 }
 
 /**
- * @method       succ     
- * 
- * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric 
- * or the rightmost character if there are no alphanumerics in the string. Incrementing a digit always results in another digit, 
- * and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character 
- * set's collating sequence.  
+ * @method       succ
+ *
+ * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric
+ * or the rightmost character if there are no alphanumerics in the string. Incrementing a digit always results in another digit,
+ * and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character
+ * set's collating sequence.
  *
  * @param        {String} Str
  * @return       {String} Str
  *
- * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented. 
+ * Comments: If the increment generates a ``carry,’’ the character to the left of it is incremented.
  * This process repeats until there is no carry, adding an additional character if necessary.
- * 
+ *
  *  "abcd".succ()        //=> "abce"
  *  "THX1138".succ()     //=> "THX1139"
  *  "<<koala>>".succ()   //=> "<<koalb>>"
@@ -757,12 +757,12 @@ String.prototype.succ = function(){
 }
 
 /**
- * @method       next     
- * 
+ * @method       next
+ *
  *  Alias of the function succ.
- * 
+ *
  * @param        {String} Str
- * @return       {String} Str      
+ * @return       {String} Str
  *
  **/
 String.prototype.next = function(){
@@ -771,17 +771,17 @@ String.prototype.next = function(){
 
 /**
  * @ method   to_i
- * 
+ *
  * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
- * Extraneous characters past the end of a valid number are ignored. 
- * If there is not a valid number at the start of str, 0 is returned. 
- * This method never raises an exception when base is valid. 
+ * Extraneous characters past the end of a valid number are ignored.
+ * If there is not a valid number at the start of str, 0 is returned.
+ * This method never raises an exception when base is valid.
  *
  * @ param    {int} -> is a base (2 - 36), or 0 who is the same that 10
  * @ return   {Integret} Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
- * 
+ *
  * ###Example
- * 
+ *
  * "12345".to_i()             //=> 12345
  * "99 red balloons".to_i()   //=> 99
  * "0a".to_i()                //=> 0
@@ -808,24 +808,24 @@ if(arguments.length != 0)
        return null
     else base = arguments[0]
 
-return isNaN( parseInt(this,base) )? 0 : parseInt(this,base) 
+return isNaN( parseInt(this,base) )? 0 : parseInt(this,base)
 }
 
 /**
  * Returns the result of interpreting leading characters in str as a floating point number
  *
  * @member String  String.prototype.prueba = function(){
- * return this.replace(arguments[0], arguments[1]) 
+ * return this.replace(arguments[0], arguments[1])
  * }
  * var i="hello"
  * i.prueba(/[aeio]/,"+")
 */
 
 /**
- * @method   to_f	    
- * 
+ * @method   to_f
+ *
  * Returns the result of interpreting leading characters in str as a floating point number
- * 
+ *
  * @param    {void}     //No parameters
  * @return   {Float}    //Returns float numbers if string is a number. Returns 0.0 if a string is not a number
  *
@@ -846,8 +846,8 @@ String.prototype.to_f = function() {
 
 /**
  * @method   strip
- * 
- * Returns a copy of str with leading and trailing whitespace removed. 
+ *
+ * Returns a copy of str with leading and trailing whitespace removed.
  *
  * @param    {void}
  * @return  {String} // Return a copy of str with leading and trailing whitespace removed
@@ -863,36 +863,36 @@ String.prototype.strip = function() {
 
 /**
  * @method   setbyte
- * 
+ *
  * Modifies the position of the string given as first parameter and changes it for the ASCII code passed as second parameter
  *
- * @param    {Integer, Integer} 
- * @return  {String} Returns modified string 
+ * @param    {Integer, Integer}
+ * @return  {String} Returns modified string
  *
  * ###Example
  *    "pepe".setbyte(0, 65)
  *    // => "Aepe"
- *     
+ *
  */
 String.prototype.setbyte = function(){
      var that = this.split("")
-     if(arguments[0] < that.length) 
+     if(arguments[0] < that.length)
        that[arguments[0]] = String.fromCharCode(arguments[1])
      else
-	//throw("Wrong index") 
+	//throw("Wrong index")
        return null
      str = ""
      for(var i = 0; i < that.length; i++)
-      str += that[i]    
+      str += that[i]
  return str
 }
 
 /**
- * @method       partition     
- * 
- * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it. 
+ * @method       partition
+ *
+ * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it.
  * If it is not found, returns two empty strings and str.
- * 
+ *
  * @return       {Array} ary
  *
  * ###Example
@@ -905,7 +905,7 @@ String.prototype.setbyte = function(){
 String.prototype.partition = function(){
      var ary = [3]
      var str = arguments[0].toString()
-     var pos = this.search(arguments[0]) 
+     var pos = this.search(arguments[0])
      if (pos < 0)
          ary = [this.substr(0,this.length), "", ""]
      else if (str[0] == '/' && str[str.length-1] == '/')
@@ -917,8 +917,8 @@ String.prototype.partition = function(){
 
 /**
  * @method   rstrip
- * 
- * Returns a copy of str with trailing whitespace removed. 
+ *
+ * Returns a copy of str with trailing whitespace removed.
  *
  * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
@@ -934,22 +934,22 @@ String.prototype.rstrip = function(){
 
 /**
  * @method   upto
- * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block. 
+ * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block.
  * The String#succ method is used to generate each value.
- * 
- * @param    {String, function}  If optional second argument exclusive is omitted or is false, the last value will be included; 
+ *
+ * @param    {String, function}  If optional second argument exclusive is omitted or is false, the last value will be included;
  *   otherwise it will be excluded. If no block is given, an enumerator is returned instead.
  * @return    {String} return string with succ of this to arguments[0], according to parameter function
- *  
+ *
  * ###Example
- * 
- *         "a8".upto("b6", function(obj){return obj + ' '}) 
+ *
+ *         "a8".upto("b6", function(obj){return obj + ' '})
  *
  *          //=> a8 a9 b0 b1 b2 b3 b4 b5 b6
- *          
+ *
  *
  */
-String.prototype.upto = function(){ 
+String.prototype.upto = function(){
    var num = this
    var str = ""
    while( num != arguments[0] && num.length <= arguments[0].length && num < arguments[0] ){
@@ -957,19 +957,19 @@ String.prototype.upto = function(){
      num = num.succ()
    }
    if( num.length > arguments[0].length )
-     return str  
+     return str
    return str + String.prototype.upto.yield(num)
 }
 
 /**
  * @method   each_char
- * 
- * Passes each character in str to the given block, or returns an enumerator if no block is given.  
+ *
+ * Passes each character in str to the given block, or returns an enumerator if no block is given.
  *
  * @param    {function}
  * @return   {String} return a string according to function
  *
- * ###Example 
+ * ###Example
  *
  *      "hello".each_char(function(obj){return obj + ' '})
  *      //=> "h e l l o "
@@ -980,34 +980,34 @@ String.prototype.upto = function(){
 String.prototype.each_char = function(){
    var str = ""
    for (var i = 0; i<this.length;i++)
-      str += String.prototype.each_char.yield(this[i]) 
+      str += String.prototype.each_char.yield(this[i])
    return str
 }
 /**
- * @method       chars     
- * 
+ * @method       chars
+ *
  * Alias of the function each_char.
- * 
- * @return      {String} str      
- * 
- **/ 
+ *
+ * @return      {String} str
+ *
+ **/
 String.prototype.chars = function(){
    return this.each_char.apply(this, arguments)
 }
 
 /**
  * @method   sum
- * 
- * Sum of the ASCII codes of all characters in the string.  
+ *
+ * Sum of the ASCII codes of all characters in the string.
  *
  * @param    {void}     //No parameters
  * @return   {Integer} return the sum
  *
- * ###Example 
- *     
+ * ###Example
+ *
  *     "A".sum()     //=> 65
  *     "AA".sum()    //=> 130
- *     "C3P0".sum()  //=> 246   
+ *     "C3P0".sum()  //=> 246
  *
  **/
 String.prototype.sum = function(){
@@ -1019,59 +1019,59 @@ String.prototype.sum = function(){
 
 /**
  * @method   squeeze
- * 
+ *
  * Returns a string where runs of the same character that occur in this set are replaced by a single character.
  *
  * @param    {String} Remove only the repeated characters in the string contents.
- * Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. 
- * Note: case conversion is effective only in ASCII region. 
- * 
+ * Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase.
+ * Note: case conversion is effective only in ASCII region.
+ *
  * @return  {String} Returns a copy  where runs of the same character that occur in this set are replaced by a single character.
  *
  *
  **/
 //Falta que coja el argumento ("x-y")
 /*
-String.prototype.squeeze = function(){ 
-   var strng = this 
-      if (arguments.length == 0){ 
-	    for(var i=0; i<strng.length - 1; i++) 
-	      while (strng[i] == strng[i+1]) 
+String.prototype.squeeze = function(){
+   var strng = this
+      if (arguments.length == 0){
+	    for(var i=0; i<strng.length - 1; i++)
+	      while (strng[i] == strng[i+1])
 	        strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
 		  return strng
       }
-                  
-      if(arguments.length > 0){                
-        for(j = 0; j < arguments.length; j++){  
+
+      if(arguments.length > 0){
+        for(j = 0; j < arguments.length; j++){
           var dwords = ""
           for(var k = 0; k < arguments[j].length; k++)
             if(arguments[j][k] == "-")
-              if(arguments[j][k-1] <  
-                
+              if(arguments[j][k-1] <
 
 
-	  for (var arg = 0; arg<arguments[j].length ; arg++) 
-	    for(var i=0; i<strng.length - 1; i++) 
-	      while (strng[i] == strng[i+1] && strng[i] == arguments[j][arg]) 
-	        strng = (strng.slice(0, i+1)).concat(strng.slice(i+2)) 
-        } 
+
+	  for (var arg = 0; arg<arguments[j].length ; arg++)
+	    for(var i=0; i<strng.length - 1; i++)
+	      while (strng[i] == strng[i+1] && strng[i] == arguments[j][arg])
+	        strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
+        }
       }
-        
+
    return strng
 }
 */
 
 /**
  * @method    String#intersection
- * 
+ *
  * Returns a string containing common letters in the parameter strings
- * 
+ *
  * @param     {String} character_list List of characters to be deleted
  * @return    {String}
- *  
- * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed  
+ *
+ * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed
  * by the given characterhey're firstly intersected. Otherways the first param is returned.
- * 	       
+ *
  * ###Example
  *     "Peter".intersection("P")   //=> "P"
  *     "Peter".intersection("e")   //=> "ee"
@@ -1089,10 +1089,10 @@ String.prototype.intersection = function(){
 
 /**
  * @method	sub
- * 
+ *
  * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
- * 
- * @param 	{RegEx,string} 
+ *
+ * @param 	{RegEx,string}
  * @return      {String}
  * Comments:    Find the letters that match the first parameter given, y these are changed by the given parameter.
  *
@@ -1102,17 +1102,17 @@ String.prototype.intersection = function(){
  *
  **/
 String.prototype.sub= function(){
-   return this.replace(arguments[0], arguments[1]) 
+   return this.replace(arguments[0], arguments[1])
 }
 
-/**   
+/**
  * @method  bytes
- * 
+ *
  * Passes each byte in str to the given block, or returns an enumerator if no block is given.
- * 
- * @param   {String} 
+ *
+ * @param   {String}
  * @return  {number} Return an enumerator black or //nose continuar en ingles
- * 
+ *
  **/
 String.prototype.bytes = function(){
   for(var i = 0; i < this.length; i++)
@@ -1121,8 +1121,8 @@ String.prototype.bytes = function(){
 
 /**
  * @method  ascii_only$U
- * 
- * Returns true for a string which has only ASCII characters. 
+ *
+ * Returns true for a string which has only ASCII characters.
  *
  * @param   {this}
  * @return  {this}true or false
@@ -1137,17 +1137,17 @@ String.prototype.ascii_only$U = function(){
 
 /**
  * @method   each_line
- * 
- * Splits str using the supplied parameter as the record separator.
- * Passing each substring in turn to the supplied block. 
- * If a zero-length record separator is supplied, the string is split 
- * into paragraphs delimited by multiple successive newlines. 
  *
- * @param    {[ string | number ],function { } } 
+ * Splits str using the supplied parameter as the record separator.
+ * Passing each substring in turn to the supplied block.
+ * If a zero-length record separator is supplied, the string is split
+ * into paragraphs delimited by multiple successive newlines.
+ *
+ * @param    {[ string | number ],function { } }
  * @return   {this} str split by separator
  *
  * ###Example
- * 
+ *
  * "Hello\nworld".each_line(function(obj){return "" + obj + ""})            //=> "Hello\n","world"
  * "Hello\n world".each_line("l",function(obj){return "" + obj + ""}))      //=> "Hel", "l", "o \\n worl", "d"
  * "Hello \n\n\n world".each_line("",function(obj){return "" + obj + ""}))  //=> "Hello \\n\\n\\n"," world"
@@ -1157,7 +1157,7 @@ var ary = this
 var arycpy = []  //ary with string result
 var posEnd = 0		//position to split the origin string
 var ind = 0			//index for ary
-var regExp = /\n/g	
+var regExp = /\n/g
 var argZero = false	//Indicates if the arguments zero is a ""
 
 if(arguments.length == 0 || arguments.length > 2)
@@ -1171,7 +1171,7 @@ if( typeof(arguments[0]) !== "function" ){
       argZero = true
 	}
 }
-posEnd = ary.search(regExp) + 1 
+posEnd = ary.search(regExp) + 1
 while( (posEnd < ary.length) && (posEnd >0) ){
    if(argZero){
       var trash = ary.substring(posEnd)
@@ -1184,18 +1184,18 @@ while( (posEnd < ary.length) && (posEnd >0) ){
    posEnd = ary.search(regExp) + 1
 }
 ary = ary.substring(posEnd)
-ary.each_line.yield(ary) 
+ary.each_line.yield(ary)
 return this
 }
 
 /**
  * @method   each_codepoint
- * 
- * Passes the Integer ordinal of each character in str, also known as a codepoint when applied to Unicode strings to the given block.
- * If no block is given, an enumerator is returned instead.  
  *
- * @param    {function}  
- * @return   {string}    Returns a string according function. 
+ * Passes the Integer ordinal of each character in str, also known as a codepoint when applied to Unicode strings to the given block.
+ * If no block is given, an enumerator is returned instead.
+ *
+ * @param    {function}
+ * @return   {string}    Returns a string according function.
  *
  * ###Example
  *
@@ -1212,32 +1212,32 @@ String.prototype.each_codepoint = function(){
 }
 
 /**
- * @method      codepoint     
- * 
- * Alias of the function each_codepoint.
- * 
- * @param       {string} String
- * @return      {String} str of digits ASCII     
+ * @method      codepoint
  *
- **/ 
+ * Alias of the function each_codepoint.
+ *
+ * @param       {string} String
+ * @return      {String} str of digits ASCII
+ *
+ **/
 String.prototype.codepoint = function(){
   return this.each_codepoint.apply(this,arguments)
 }
 
 /**
  * @method     rpartition
- * 
- * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str. 
- * 
+ *
+ * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
+ *
  * @param      {string} String
  * @return     {Array} ary
  *
  * ###Example
- * 
+ *
  *      "hello".rpartition("l")         //=> ["hel", "l", "o"]
  *      "hello".rpartition("x")         //=> ["", "", "hello"]
  *      "hello".rpartition(/.l/)        //=> ["he", "ll", "o"]
- *  
+ *
  **/
 String.prototype.rpartition = function(){
      var ary = [3]
@@ -1258,23 +1258,23 @@ String.prototype.rpartition = function(){
 }
 
 /**
- * @method scan  
+ * @method scan
  *
  * Searches for a match between a regular expression and a string, and returns the matches.
- * Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. 
- * Note: case conversion is effective only in ASCII region. 
+ * Returns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase.
+ * Note: case conversion is effective only in ASCII region.
  *
  * @param  {string} String
- * @return {string} String Returns an array of matches, or null if no match is found. 
- * 
+ * @return {string} String Returns an array of matches, or null if no match is found.
+ *
  **/
 String.prototype.scan = function(){
    var ary = this.match(arguments[0])
-   if (ary.length > 1 && arguments.length <2) 
+   if (ary.length > 1 && arguments.length <2)
       ary.shift()
    if ( arguments.length > 1 && typeof(arguments[1]) === "function" ){
      ary = this
-     
+
      while( ary.length > 0 && ary.search(arguments[0]) != -1){
        var finds = []
        var find = ary.match(arguments[0])
@@ -1293,12 +1293,12 @@ String.prototype.scan = function(){
 
 /**
  * @method      erase
- * 
+ *
  *  Returns a new string with erased letters.
  *
  * @param       {string} String
  * @return      {String}
- * 
+ *
  * ###Comments:    Erases the arguments matched in a string.
  *
  * ###Example
@@ -1317,30 +1317,30 @@ String.prototype.erase = function(){
 
 /**
  * @method      end_With$U
- * 
+ *
  * Returns true or false by comparing  object and the argument from the end.
- * 
+ *
  * @param       {string} String
- * @return      {boolean} 
+ * @return      {boolean}
  *
  * ###Comments:    Compares the object with argument.
  *
  * ###Example
  *     "Hello".end_With$U("Hello")    //=> true
- *     "Hello".end_With$U("Hel")      //=> false 
+ *     "Hello".end_With$U("Hel")      //=> false
  *
  **/
 
 String.prototype.end_With$U = function(str){
     return (this.match(str+"$")==str)}
-     
+
 /**
  * @method      eql$U
- * 
+ *
  * Returns true or false by comparing  object and the argument.
- * 
+ *
  * @param       {string}
- * @return      {boolean}  
+ * @return      {boolean}
  *
  * ###Comments:    Compares the object with argument.
  *
@@ -1349,20 +1349,20 @@ String.prototype.end_With$U = function(str){
  *     "Car".eql$U("Plane")   //=> false
  *
  **/
-     
+
 String.prototype.eql$U = function() {
     return this == arguments[0]}
 
 /**
  * @method      getbyte
- * 
- * Returns the indexth byte as an integer. 
- * 
- * @param       {string}   
+ *
+ * Returns the indexth byte as an integer.
+ *
+ * @param       {string}
  * @return      {number}  a interger.
- * 
+ *
  * ###Comments:    Using charCodeAt from a javaScript function.
- * 
+ *
  * ###Example
  *     "A".getbyte()    //=> 65
  *
@@ -1372,26 +1372,26 @@ String.prototype.getbyte = function(){
 }
 
 /**
- * 
+ *
  */
 String.prototype.to_str = function(){
     return this.toString()
 }
 
-/** 
+/**
  * @method     to_r
- * 
+ *
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
- * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string. 
- * 
+ * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
+ *
  * @param      {string}
  * @return     {string}  Return a rational
- *			             If the arguments is invalid return "0/1" 
- *                       Returns a copy of str with uppercase alphabetic characters 
+ *			             If the arguments is invalid return "0/1"
+ *                       Returns a copy of str with uppercase alphabetic characters
  *                       converted to lowercase and lowercase characters converted to uppercase.
- * 
+ *
  * ###Example
- * 
+ *
  * '  2  '.to_r()       //=> (2/1)
  * '300/2'.to_r()       //=> (150/1)
  * '-9.2'.to_r()        //=> (-46/5)
@@ -1406,7 +1406,7 @@ var str1 	//String auxiliar
 var str2 	//String auxiliar
 var op1 = "0/1" //operando one rational number
 var op2 = 1	//operando two rational number
-var pos 
+var pos
 var mcd
 var dec
 
@@ -1422,18 +1422,18 @@ if( pos > 0) {
 else
    str2 = null
 
-if( isNaN( (op1 = parseFloat(str1)) ) )//Checks the string is a number 
+if( isNaN( (op1 = parseFloat(str1)) ) )//Checks the string is a number
    return op1
    //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
 if( isNaN(str1) || isNaN( op2 = parseInt(str2) ) )
-   op2 = 1 
-	   
-   //Dejo el primer numero sin decimales pasando los decimales que tuviese a la izquierdaReturns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region. 
+   op2 = 1
+
+   //Dejo el primer numero sin decimales pasando los decimales que tuviese a la izquierdaReturns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region.
 dec = decimal(op1)
 op1 = op1 * Math.pow(10,dec)
 if( op2 == 1)//Si solo tenemos el operando 1
    op2 = Math.pow(10,dec)
-else 
+else
    op2 = op2 * Math.pow(10,dec)
 //Calculo el maximo comun divisor de los 2 operandos
 mcd = intMcd(op1,op2)
@@ -1448,16 +1448,16 @@ return op1/mcd + "/" + op2/mcd
 /* La parte de abajo esta reservada para añadir funciones ******/
 
 
-/**  
+/**
  * @member *****
  *
  * @methof  decimal
- * 
+ *
  * Esta funcion devuelve la cantidad de decimales que tiene un numero
- * 
- * @param  {number | string }   
+ *
+ * @param  {number | string }
  * @return {integer}  Number of decimal. If the arguments is invalid return 0
- *	
+ *
  **/
 
 function decimal() {
@@ -1484,17 +1484,17 @@ return parseInt(decUno)>=decDos? 0 : (decUno - decDos) * -1
 }
 
 /** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
- * 
+ *
  * @member ******
  *
  * @method   intMdc
  *
- * @param    {interger, integer}  
+ * @param    {interger, integer}
  * @return   {integer} Return the maximo comun divisor of 2 integers
  *                      If the arguments are invalids, return  null
  *
  **/
- 	
+
 function intMcd() {
 
 if(arguments.length != 2 || isNaN(arguments[0]) || isNaN(arguments[1]) )
@@ -1518,22 +1518,22 @@ while ( op1 != op2 || op1 < 0 || op2< 0 ){
 }
 if( op1 == op2)
    return op1
-return null 
+return null
 }
 
 
-/** 
+/**
  * @member      String
  * @method      bytesize
  *
  * Returns the length of string in bytes.
  *
- * @param       {Arguments} This   
+ * @param       {Arguments} This
  * @return      {number} the length of string in bytes.
  *
  * ###Example
  *     'abcde'.bytesize()   //=> 5
- * 
+ *
  **/
 
 String.prototype.bytesize = function(){
@@ -1543,7 +1543,7 @@ String.prototype.bytesize = function(){
 /**
  * @method is_string$U
  *
- * @param  {string | String} name 
+ * @param  {string | String} name
  * @return {boolean}      true if name is any kind of string
  */
 String.is_string$U = function(name){
