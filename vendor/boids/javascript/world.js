@@ -7,11 +7,13 @@
 
 
 /**
- * @classDescription Creates a World for handling boids.
+ * @class World
  *
+ * Creates a World for handling boids.
+ *
+ * @constructor World
  * @param  {screen} World screen
  * @return {World}
- * @constructor
 */
 
 //Steps to build a new world from class device
@@ -187,7 +189,11 @@ World.prototype.screen_height = function(screen){
 /**
  * @method has_born
  *
- * Brings a new Boid into the world
+ * Brings a new Boid into the world.
+ *
+ * See Device#newMessage
+ *
+ * @fires new_boid
  *
  * @param  {}
  *

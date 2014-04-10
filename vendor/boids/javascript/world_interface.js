@@ -1,20 +1,15 @@
 /**
- * World's menu
+ * @class WorldInterface 
  *
- * @author Txema
- * @version 1.00 Aug, 2011
- */
-
-
-/**
- * @classDescription Creates a Interface to interact with boids.
+ * World's menu. Creates a Interface to interact with boids.
  *
- * @param  {view} Button holder panel.
- * @return {WorldInterface}
- * @constructor
+ * version 1.00 Aug, 2011
+ * 
+ * @constructor WorldInterface
+ *
+ * @param  {htmlElement} view Button holder panel.
+ * @return {} WorldInterface
 */
-
-
 WorldInterface.prototype = new Device
 WorldInterface.prototype.constructor = WorldInterface
 
@@ -34,11 +29,27 @@ function WorldInterface(view){
   
 }
 
+/**
+ * @method add_boid
+ *
+ * Creates a Gate to be used as a lever of a boid instance.
+ *
+ * @param {Object} boid Boid instance.
+ * 
+ */
 WorldInterface.prototype.add_boid = function(boid){
   var gate = this.newGate("Boid_" + boid.id, BoidCollector)
   gate.boid = boid
 }
 
+/**
+ * @method attend_new_boid
+ *
+ *  Message to be attended.
+ *
+ * @param {Date}    date Date in which the message was unqueued. See Device#attend.
+ * @param {Object}  mssg Message to be attended Message to be attended. 
+ */
 WorldInterface.prototype.attend_new_boid = function(date, mssg){
   // logger.innerHTML += mssg.received.id + ": " + mssg.status[mssg.current] + " => " + mssg.event.new_boid.data.self_keys() + "<br/>"
   mssg.current++
@@ -46,7 +57,6 @@ WorldInterface.prototype.attend_new_boid = function(date, mssg){
   var gate = this.newGate("Boid_" + boid.id, BoidCollector)
   gate.boid = boid
 }
-
 
 
 BoidCollector.prototype = new Gate
