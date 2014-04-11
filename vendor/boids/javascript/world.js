@@ -27,10 +27,10 @@ function World(screen, width, height){
 
   var that = this
   this.self_events = ["focus_boid", "new_boid"]
-  
+
   this.screen = []
   this.width   = width  || 100 //meters
-  this.height  = height || 100 
+  this.height  = height || 100
   this.start_time = null
   this.acceleration_max = 30
   this.velocity_max = 200
@@ -48,7 +48,7 @@ function World(screen, width, height){
   if ( screen && context)
     this.screen.push( { screen: screen, context: context } )
 
-    Device.call(that, null, null) 
+    Device.call(that, null, null)
 }
 
 /**
@@ -79,14 +79,14 @@ World.prototype.set_dashboard = function(name){
  *
  * ###Example
  *      // Set the width
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.width = function(){
   if (arguments.length == 0)
     return this.width
-  this.width = arguments[0] 
+  this.width = arguments[0]
 }
 
 /**
@@ -99,14 +99,14 @@ World.prototype.width = function(){
  *
  * ###Example
  *      // Set the height
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.height = function(){
   if (arguments.length == 0)
     return this.height
-  this.height = arguments[0] 
+  this.height = arguments[0]
 }
 
 /**
@@ -119,8 +119,8 @@ World.prototype.height = function(){
  *
  * ###Example
  *      // Set screen_width
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.screen_width = function(screen){
@@ -130,7 +130,7 @@ World.prototype.screen_width = function(screen){
    return  this.screen[0].screen.width
   if (typeof(screen) === "string" )
     screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++) 
+  for(i=0; i<this.screen.length; i++)
     if (this.screen[i].screen == screen)
       break;
   if (i < this.screen.length)
@@ -148,14 +148,14 @@ World.prototype.screen_width = function(screen){
  *
  * ###Example
  *      // Check for screen
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.assert_screen = function(){
   if ( !this.screen.length )
     throw "No screens yet"
-} 
+}
 
 /**
  * @method screen_height
@@ -167,8 +167,8 @@ World.prototype.assert_screen = function(){
  *
  * ###Example
  *      // Set dashboard for a world
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.screen_height = function(screen){
@@ -178,7 +178,7 @@ World.prototype.screen_height = function(screen){
    return  this.screen[0].screen.height
   if (typeof(screen) === "string" )
     screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++) 
+  for(i=0; i<this.screen.length; i++)
     if (this.screen[i].screen == screen)
       break;
   if (i < this.screen.length)
@@ -200,8 +200,8 @@ World.prototype.screen_height = function(screen){
  *
  * ###Example
  *      // Bring Boid
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.has_born = function (){
@@ -223,8 +223,8 @@ World.prototype.has_born = function (){
  *
  * ###Example
  *      // Create array of Boids
- *      
- *      
+ *
+ *
  *
  */
 World.prototype.get_boids = function(){
@@ -244,9 +244,9 @@ World.prototype.get_boids = function(){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.each_boid = function(){
@@ -265,16 +265,16 @@ World.prototype.each_boid = function(){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.start = function(){
   var that = this
   this.start_time = new Date()
   this.get_boids().each( function(el) {
-    el.start(that.start_time) 
+    el.start(that.start_time)
   })
 }
 
@@ -287,30 +287,30 @@ World.prototype.start = function(){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.draw = function(){
   var that = this
   this.get_boids().each( function(el) {
-    el.draw(that.screen[0].context) 
+    el.draw(that.screen[0].context)
   })
 }
 
 /**
  * @method step
  *
- * 
+ *
  *
  * @param  {DateTime} current_time Time ...
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.step = function(current_time){
@@ -326,13 +326,13 @@ World.prototype.step = function(current_time){
  *
  * Sets the start time of the world one second after the function is called
  *
- * @param  {} 
+ * @param  {}
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.is_one_second_from_begining = function(){
@@ -340,7 +340,7 @@ World.prototype.is_one_second_from_begining = function(){
   var current_time = new Date( this.start_time.toString() )
   current_time.setSeconds( this.start_time.getSeconds() + 1 )
   current_time.setMilliseconds( this.start_time.getMilliseconds())
-  
+
   this.step(current_time)
 }
 
@@ -349,13 +349,13 @@ World.prototype.is_one_second_from_begining = function(){
  *
  * Gets the Boids that currently exist in the world
  *
- * @param  {} 
+ * @param  {}
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.show_boids = function(){
@@ -376,15 +376,15 @@ World.prototype.show_boids = function(){
 /**
  * @method running_steady
  *
- * 
  *
- * @param  {DateTime} processors_time Time of the processor 
+ *
+ * @param  {DateTime} processors_time Time of the processor
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.running_steady = function(processors_time){
@@ -411,9 +411,9 @@ World.prototype.running_steady = function(processors_time){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.visible_for = function(position, vision){
@@ -421,7 +421,7 @@ World.prototype.visible_for = function(position, vision){
   vision = vision * vision
   var visible = []
   this.each_boid(function (boid){
-    var x1 = position.get_coord(0) 
+    var x1 = position.get_coord(0)
     var y1 = position.get_coord(1)
     var dx = boid.geo_data.position.get_coord(0) - x1
     var dy = boid.geo_data.position.get_coord(1) - y1
@@ -441,17 +441,17 @@ World.prototype.visible_for = function(position, vision){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.new_boid = function(color, geo_data){
   color = color || "blue"
   if (typeof(geo_data) === "undefined")
-    geo_data = { 
+    geo_data = {
           position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
-          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)), 
+          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
           acceleration: new Vector(0,0)
   }
   var b = new Boid( geo_data, color)
@@ -471,9 +471,9 @@ World.prototype.new_boid = function(color, geo_data){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.new_seeker = function(target, color){
@@ -493,9 +493,9 @@ World.prototype.new_seeker = function(target, color){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.new_flee = function(target, color){
@@ -515,9 +515,9 @@ World.prototype.new_flee = function(target, color){
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.new_wander_around = function(color){
@@ -532,13 +532,13 @@ World.prototype.new_wander_around = function(color){
  *
  * Starts the Boid and makes it run
  *
- * @param  {} 
+ * @param  {}
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.start_and_run = function(){
@@ -549,16 +549,16 @@ World.prototype.start_and_run = function(){
 /**
  * @method attend_focus_boid
  *
- * 
+ *
  *
  * @param  {DateTime} date Time of the message
  * @param  {String} mssg Message
  *
  *
  * ###Example
- *      // 
- *      
- *      
+ *      //
+ *
+ *
  *
  */
 World.prototype.attend_focus_boid = function(date, mssg){

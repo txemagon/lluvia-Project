@@ -1,11 +1,11 @@
 /**
  * @class Behavior
- * 
+ *
  * Creates a Behavior
  *
  * @constructor
- *    
- * @params {Object} brain 
+ *
+ * @params {Object} brain
  * @params {Object} body
  * @params {ObjectObject} before_modifier
  * @params {Object} after_modifier
@@ -27,7 +27,7 @@ function Behavior( brain, body, before_modifier, after_modifier ){
             that.brain = brain || null
       if (body)
         that.me = body
-      
+
       if (typeof(before_modifier) === "string")
           before_modifier = [before_modifier]
       if (typeof(after_modifier) === "string")
@@ -54,7 +54,7 @@ function Behavior( brain, body, before_modifier, after_modifier ){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -68,7 +68,7 @@ Behavior.type_of = function(b_name){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -83,7 +83,7 @@ Behavior.prototype.is_a$U = function(b_name){
 
 
 /**
- * @method desired_acceleration 
+ * @method desired_acceleration
  *
  * Description
  *
@@ -100,7 +100,7 @@ Behavior.prototype.desired_acceleration = function(){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -116,7 +116,7 @@ Behavior.prototype.is_premodified_by$U = function(mod_name){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -132,7 +132,7 @@ Behavior.prototype.is_postmodified_by$U = function(mod_name){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -146,19 +146,19 @@ Behavior.prototype.is_modified_by$U = function(mod_name){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
 Behavior.prototype.get_modifiers_for = function(scope){
   var ary = []
   scope = scope || Behavior.Scope.ALL
-  
+
   if (scope != Behavior.Scope.POST)
     ary = ary.merge(this.before)
   if (scope != Behavior.Scope.PRE)
     ary = ary.merge(this.after)
-    
+
   return ary
 }
 
@@ -167,7 +167,7 @@ Behavior.prototype.get_modifiers_for = function(scope){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -181,7 +181,7 @@ Behavior.prototype.active_modifiers = function(scope){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -189,7 +189,7 @@ Behavior.prototype.activate_modifier = function(mod_name, scope){
   this.get_modifiers_for(scope).each(function(el){
     if (el.is_a$U(mod_name))
       el.unfreeze()
-  })  
+  })
 }
 
 
@@ -198,7 +198,7 @@ Behavior.prototype.activate_modifier = function(mod_name, scope){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -215,7 +215,7 @@ Behavior.prototype.get_modifier = function (mod_name, scope){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */
@@ -223,7 +223,7 @@ Behavior.prototype.deactivate_modifier = function(mod_name, scope){
   this.get_modifiers_for(scope).each(function(el){
     if (el.is_a$U(mod_name))
       el.freeze()
-  })  
+  })
 }
 
 
@@ -232,7 +232,7 @@ Behavior.prototype.deactivate_modifier = function(mod_name, scope){
  *
  * Description
  *
- * @param  {} 
+ * @param  {}
  *
  * @return {}
  */

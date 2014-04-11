@@ -11,7 +11,7 @@ Boid.prototype.constructor = Boid
 
 /**
  * Personal Autonomous character
- * 
+ *
  * @param {Object} geo_data Position, speed and acceleration
  * @param {Object} geo_data.position 2D position of the Boid
  * @param {Object} geo_data.velocity Planar Velocity
@@ -21,15 +21,18 @@ Boid.prototype.constructor = Boid
 function Boid(geo_data,colour){
 
   var that = this
-  
-  function initialize(){
+
+  function initialize() {
+
     that.brain = new Brain(that)
     that.last_heading = new Vector(0, 1)
-    that.geo_data = geo_data || { 
-      position: new Vector(0,0), 
-      velocity: new Vector(0,0), 
-      acceleration: new Vector(0,0) 
-      }
+
+    that.geo_data = geo_data || {
+      position: new Vector(0,0),
+      velocity: new Vector(0,0),
+      acceleration: new Vector(0,0)
+    }
+
     that.vel_max = 50
     that.my_world = null
     that.last_time = that.current_time = null
@@ -42,18 +45,18 @@ function Boid(geo_data,colour){
       steering: 50,
       braking: 70
     }
-   }
-   
+  }
+
    if (arguments.length)
      initialize()
-    
+
 }
 
 /**
  * @method  position
  *
  * Gets or set the position of the void
- * 
+ *
  * @return {"undefined" | Number[]}
  */
 Boid.prototype.position = function(){
@@ -66,7 +69,7 @@ Boid.prototype.position = function(){
  * @method  velocity
  *
  * Gets or set the velocity of the void
- * 
+ *
  * @return {"undefined" | Number[]}
  */
 Boid.prototype.velocity = function(){
@@ -79,7 +82,7 @@ Boid.prototype.velocity = function(){
  * @method  accelertation
  *
  * Gets or set the accelertation of the void
- * 
+ *
  * @return {"undefined" | Number[]}
  */
 Boid.prototype.acceleration = function(){
@@ -92,10 +95,10 @@ Boid.prototype.acceleration = function(){
  * @method  start
  *
  * Stamps the initial processing time.
- * 
+ *
  * @param  {Date} date
  */
-Boid.prototype.start = function(date){ 
+Boid.prototype.start = function(date){
   this.last_time = this.current_time = date
 }
 
@@ -103,11 +106,11 @@ Boid.prototype.start = function(date){
  * @method delta_t
  *
  * Ellapsed time since *last_time* was updated.
- * 
+ *
  * @return {Number} Number of seconds ellapsed.
  */
-Boid.prototype.delta_t = function(){ 
-   return (this.current_time.getTime() - this.last_time.getTime()) / 1000; 
+Boid.prototype.delta_t = function(){
+   return (this.current_time.getTime() - this.last_time.getTime()) / 1000;
 }
 
 /**
@@ -140,34 +143,34 @@ Boid.prototype.draw = function(ctx){
   ctx.fillStyle = this.colour
   ctx.strokeStyle = "black"
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true); 
+  ctx.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);
   ctx.closePath();
   ctx.fill();
-  
+
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true); 
+  ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
   ctx.closePath();
   ctx.stroke()
 
   if (this.focused){
     ctx.strokeStyle = "red"
     ctx.beginPath();
-    ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true); 
+    ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.stroke()
   }
 
 
   /* Speed */
-  ctx.strokeStyle = "black"  
+  ctx.strokeStyle = "black"
   ctx.beginPath();
   ctx.moveTo(p.get_coord(0), p.get_coord(1))
   ctx.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
   ctx.closePath();
   ctx.stroke()
-  
+
   /* Acceleration */
-  ctx.strokeStyle = "red"  
+  ctx.strokeStyle = "red"
   ctx.beginPath();
   ctx.moveTo(p.get_coord(0), p.get_coord(1))
   ctx.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
@@ -175,7 +178,7 @@ Boid.prototype.draw = function(ctx){
   ctx.stroke()
   /*
   if (this.target && this.target != this){
-  /* Displacement to target 
+  /* Displacement to target
   ctx.beginPath();
   ctx.moveTo(p.get_coord(0), p.get_coord(1))
   ctx.lineTo(p.get_coord(0) + this.target_at().get_coord(0), p.get_coord(1) + this.target_at().get_coord(1))
@@ -185,19 +188,19 @@ Boid.prototype.draw = function(ctx){
   if (this.target != this){
     var p_target = this.target_data().position
   /*
-    // Desired Velocity 
-    ctx.strokeStyle = "black"  
+    // Desired Velocity
+    ctx.strokeStyle = "black"
     ctx.beginPath();
     ctx.moveTo(p.get_coord(0), p.get_coord(1))
     ctx.lineTo(p.get_coord(0) + this.desired_velocity().get_coord(0), p.get_coord(1) + this.desired_velocity().get_coord(1))
     ctx.closePath();
     ctx.stroke()
-  
-   
+
+
    // Approach distance
     ctx.strokeStyle = "black"
     ctx.beginPath();
-    ctx.arc(p_target.get_coord(0), p_target.get_coord(1), this.approach_distance, 0, Math.PI*2, true); 
+    ctx.arc(p_target.get_coord(0), p_target.get_coord(1), this.approach_distance, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.stroke();
 
@@ -206,11 +209,11 @@ Boid.prototype.draw = function(ctx){
     if (this.approach_distance > arrival_distance ){
       ctx.strokeStyle = "red"
       ctx.beginPath();
-      ctx.arc(p_target.get_coord(0), p_target.get_coord(1), arrival_distance, 0, Math.PI*2, true); 
+      ctx.arc(p_target.get_coord(0), p_target.get_coord(1), arrival_distance, 0, Math.PI*2, true);
       ctx.closePath();
       ctx.stroke();
     }
-    
+
     }
   }
   */
@@ -220,25 +223,25 @@ Boid.prototype.draw = function(ctx){
  * @method heading
  *
  * Gets the normal vector aligned with the heading.
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.heading = function(){
   var _heading
   try{
-    _heading = this.geo_data.velocity.unit() 
+    _heading = this.geo_data.velocity.unit()
     this.last_heading = _heading || this.last_heading
   } catch(err){
-    _heading = this.last_heading 
+    _heading = this.last_heading
   }
-  return _heading 
+  return _heading
 }
 
 /**
  * @method locale
  *
  * The local coordinate system expressed in the global cs.
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.locale = function(){  // The local coordinate system expressed in the global cs.
@@ -253,10 +256,10 @@ Boid.prototype.locale = function(){  // The local coordinate system expressed in
  * @method globale
  *
  * Expresses global cs (coordinate system) into lcs
- * 
+ *
  * @return {Vector}
  */
-Boid.prototype.globale = function(){  
+Boid.prototype.globale = function(){
   var aux = this.heading()
   if (isNaN(aux.get_coord(0)) || isNaN(aux.get_coord(1)))
     aux = new Vector(1,0)
@@ -269,7 +272,7 @@ Boid.prototype.globale = function(){
  * @method localize
  *
  * Changes global coordinates into boid coordinates
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.localize = function(){
@@ -283,7 +286,7 @@ Boid.prototype.localize = function(){
  * @method globalize
  *
  * Changes local coordinates into world (global) coordinates
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.globalize = function(){
@@ -297,7 +300,7 @@ Boid.prototype.globalize = function(){
  * @method visible_objects
  *
  * Ask the world if something is visible with my geo_data and vision abilities.
- * 
+ *
  * @return {boolean}
  */
 Boid.prototype.visible_objects = function(){
@@ -308,7 +311,7 @@ Boid.prototype.visible_objects = function(){
  * @method  requested_acceleration
  *
  * Answers to the world the acceleration requested (brain desired and body clipped)
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.requested_acceleration = function(){
@@ -319,7 +322,7 @@ Boid.prototype.requested_acceleration = function(){
  * @method clip
  *
  * Clips acceleration according to the boid force limits.
- * 
+ *
  * @return {Vector}
  */
 Boid.prototype.clip = function(){
@@ -329,11 +332,11 @@ Boid.prototype.clip = function(){
   if (v.Coord[0] > this.force_limits.thrust)
     v.Coord[0] = this.force_limits.thrust
   if (v.Coord[0] < -this.force_limits.brake)
-    v.Coord[0] = -this.force_limits.brake    
+    v.Coord[0] = -this.force_limits.brake
   if (v.Coord[1] > this.force_limits.steering)
     v.Coord[1] = this.force_limits.steering
   if (v.Coord[1] < -this.force_limits.steering)
-    v.Coord[1] = -this.force_limits.steering    
+    v.Coord[1] = -this.force_limits.steering
   return this.globalize(new Vector(v.Coord[0], v.Coord[1])) // Ensure the module is correct
 }
 
@@ -341,7 +344,7 @@ Boid.prototype.clip = function(){
  * @method set_target
  *
  * Targets a boid.
- * 
+ *
  * @param  {Boid} boid
  * @return {Boid} Returns the boid being
  */

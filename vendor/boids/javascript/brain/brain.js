@@ -4,17 +4,16 @@
  * @return {Brain}
  * @constructor
 */
-
-
 function Brain(body){
+
    this.body = body
    var that = this
    this.behaviors = []
 
+   alert("Wait for behavior")
      /* GOAL BEHAVIORS */
-   this.behaviors.push( 
-     [ "seek>arrival", "flee", "wander","wander_around", 
-       "wall following", "path following" 
+   this.behaviors.push(
+     [ "seek>arrival" //, "flee", "wander","wander around", "wall following", "path following"
      ].inject( new BehaviorSet(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)
            set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
@@ -26,8 +25,8 @@ function Brain(body){
 
      /* SECURITY BEHAVIORS */
    this.behaviors.push(
-     [ "separation", "alignment", "cohesion", 
-       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){ 
+     [ "separation", "alignment", "cohesion",
+       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){
            var b_name = Behavior.decompose_name(behavior)
 	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
 	   return list
@@ -112,25 +111,25 @@ Behaviors
   3.  wander
   4.  wall following
   5.  path following
-  
-  
+
+
   flow field following (it isn't a behavior but an aditive force)
-  
+
   Auxiliary Behaviors
   ===================
-  
+
   1.  arrival (is a substate of seeking, and may be pursuing)
   2.  obstacle avoidance
   3.  containment
   4.  Separation
   5.  Alignment
   6.  Cohesion
-  
+
   Combined (named) behaviors
   ==========================
   1.  pursue
   2.  evade
-  3.  flocking 
+  3.  flocking
   4.  Crowd path following
   5.  Leader following
   6.  Unaligned collision avoidance

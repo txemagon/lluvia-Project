@@ -3,8 +3,8 @@
  *
  * Creates Itinerant Behavior: seek
  *
- * @constructor
- * 
+ * @constructor SeekBehavior
+ *
  */
 
 SeekBehavior.prototype = new Behavior
@@ -15,6 +15,7 @@ function SeekBehavior(){
   Behavior.apply(this, arguments)
   this.target = null
 }
+
 
 /**
  * @method set_target
@@ -32,6 +33,7 @@ SeekBehavior.prototype.set_target = function(boid){
       }, "red")
 }
 
+
 /**
  * @method target_data
  *
@@ -45,16 +47,18 @@ SeekBehavior.prototype.target_data = function(){
   return this.target ? this.target.geo_data : null
 }
 
+
 /**
  * @method get_target
  *
- * Get a targetboid 
+ * Get a targetboid
  *
  * @return {Object} this.target_data() Position information of boid
  */
 SeekBehavior.prototype.get_target = function(){
   return this.target_data()
 }
+
 
 /**
  * @method target_at
@@ -67,6 +71,7 @@ SeekBehavior.prototype.target_at = function(){
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
+
 /**
  * @method desired_velocity
  *
@@ -76,7 +81,7 @@ SeekBehavior.prototype.target_at = function(){
  */
 SeekBehavior.prototype.desired_velocity = function(){
   var arrival_distance
-  try{ 
+  try{
     arrival_distance = this.target_at().module()
   }catch(err){
     arrival_distance = 0
@@ -88,6 +93,7 @@ SeekBehavior.prototype.desired_velocity = function(){
     */
   return (new Vector(this.target_at().unit().scale(scale * this.me.vel_max)))
 }
+
 
 /**
  * @method desired_acceleration
