@@ -578,3 +578,35 @@ World.prototype.attend_focus_boid = function(date, mssg){
   mssg.current++;
 }
 
+/**
+ * @method new_boid_of
+ * Creates a new boid with a particular behaviour: seek, flee, etc.
+ *
+ * @param {Function} class_name Name of the derived class of boid.
+ * @param {Object} config Configuration object to provide to the boid constructor.
+ *
+ */
+World.prototype.new_boid_of = function(class_name, config){
+    var b = new class_name(config)
+    if (this[class_name])
+        this[class_name]++
+        else
+    this[class_name] = 1
+    this.boids.total++
+        this.has_born(b)
+    return b
+}
+
+/**
+ * @method method_missing
+ * Provides dynamic method new_bois_as_<ClassName>
+ */
+World.prototype.method_missing= function(method, obj, params){
+
+    if ( /new_boid_as_/.test(method) ){
+        var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
+        return this.new_boid_of(eval("" + subtype), params[0])
+        //todo: This is dependant of bad ll_Exception params analysis
+    }
+    return this.super.method_missing.apply(this, arguments)
+}
