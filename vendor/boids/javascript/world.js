@@ -528,6 +528,19 @@ World.prototype.new_wander_around = function(color){
 }
 
 /**
+ * @method new_wanderer
+ * Creates a wanderer boid. This is method is temporarl due to new dynamic facility 
+ * for making boids, incorporated in pigs and sheeps.
+ *
+ * @param {String} color Color of the boid.
+ */
+World.prototype.new_wanderer = function(color){
+  var b = this.new_boid(color)
+  b.brain.activate('wander')
+  return b
+}
+
+/**
  * @method start_and_run
  *
  * Starts the Boid and makes it run

@@ -8,12 +8,12 @@ $K_app_dependencies = [
 	{ name: "behavior.js",           description: "Abstract Behavior." },
 	{ name: "behavior_group.js",     description: "Group of related behaviors." },
 	{ name: "security_behavior.js",  description: "Self protection behaviors." },
-	{ name: "itinerant_behavior/seek_behavior.js",            description: "Seek" },
-	{ name: "itinerant_behavior/flee_behavior.js",            description: "Flee" },
-	{ name: "itinerant_behavior/wander_behavior.js",          description: "Wander" },
-	{ name: "itinerant_behavior/wander_around_behaviour.js",  description: "Wander changing the target." },
-	{ name: "itinerant_behavior/wall_folloging_behavior.js",  description: "Wall Following" },
-	{ name: "itinerant_behavior/path_following_behavior.js",  description: "Path Following" },
+	{ name: "itinerant_behaviors/seek_behavior.js",            description: "Seek" },
+	{ name: "itinerant_behaviors/flee_behavior.js",            description: "Flee" },
+	{ name: "itinerant_behaviors/wander_behavior.js",          description: "Wander" },
+	{ name: "itinerant_behaviors/wander_around_behaviour.js",  description: "Wander changing the target." },
+	{ name: "itinerant_behaviors/wall_folloging_behavior.js",  description: "Wall Following" },
+	{ name: "itinerant_behaviors/path_following_behavior.js",  description: "Path Following" },
 	{ name: "brain.js",              description: "Boid Brain." }
            ]
         },

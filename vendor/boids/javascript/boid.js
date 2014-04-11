@@ -160,6 +160,7 @@ Boid.prototype.draw = function(ctx){
     ctx.stroke()
   }
 
+  // todo: Move this to another class
 
   /* Speed */
   ctx.strokeStyle = "black"
@@ -217,6 +218,26 @@ Boid.prototype.draw = function(ctx){
     }
   }
   */
+
+  if (this.brain.is_in$U("wander")){
+    var wander = this.brain.get_behavior("wander");
+    ctx.strokeStyle = "red"
+    var xc = p.get_coord(0) + v.unit().get_coord(0) * wander.D
+    var yc = p.get_coord(1) + v.unit().get_coord(1) * wander.D
+    var xp = xc + wander.R * Math.cos(wander.theta)
+    var yp = yc + wander.R * Math.sin(wander.theta)
+
+    ctx.beginPath();
+    ctx.arc( xc, yc, wander.R, 0, Math.PI*2, true);
+    /* Target  */
+    ctx.moveTo( xp, yp )
+    ctx.arc( xp,
+             yp,
+             4, 0, Math.PI*2, true);
+
+    ctx.closePath();
+    ctx.stroke()
+  }
 }
 
 /**

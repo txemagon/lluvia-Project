@@ -10,10 +10,10 @@ function Brain(body){
    var that = this
    this.behaviors = []
 
-   alert("Wait for behavior")
      /* GOAL BEHAVIORS */
    this.behaviors.push(
-     [ "seek>arrival" //, "flee", "wander","wander around", "wall following", "path following"
+     [ "seek>arrival" , "flee", "wander","wander around", 
+       "wall following", "path following"
      ].inject( new BehaviorSet(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)
            set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
