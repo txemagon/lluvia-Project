@@ -483,6 +483,13 @@ World.prototype.new_seeker = function(target, color){
   return b
 }
 
+World.prototype.new_pursuer = function(target, color){
+  var b = this.new_boid(color)
+  b.brain.activate('pursue')
+  b.brain.get_behavior('pursue').set_target(target)
+  return b
+}
+
 /**
  * @method new_flee
  *

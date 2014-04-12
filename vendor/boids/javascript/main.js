@@ -38,5 +38,9 @@ function main(){
     // first.brain.get_behavior('seek').set_target(first)
   }
 
+  /*  Example: pursue behaviour*/
+  var b1 = w.new_wanderer()
+  var b2 = w.new_pursuer(b1)
+
   w.start()
 }

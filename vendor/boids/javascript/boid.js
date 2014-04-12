@@ -238,6 +238,14 @@ Boid.prototype.draw = function(ctx){
     ctx.closePath();
     ctx.stroke()
   }
+
+  if(this.brain.is_in$U("pursue")){
+    var pursue = this.brain.get_behavior("pursue")
+    ctx.beginPath();
+    ctx.arc(pursue.X.get_coord(0), pursue.X.get_coord(1) ,3 , 0, Math.PI*2, false); 
+    ctx.closePath();
+    ctx.stroke()
+  }
 }
 
 /**
