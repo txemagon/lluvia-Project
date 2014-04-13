@@ -14,3 +14,8 @@ PathFollowingBehavior.prototype.super = Behavior
 function PathFollowingBehavior(){
   Behavior.apply(this, arguments)
 }
+
+PathFollowingBehavior.prototype.desired_acceleration = function() {
+  return new Vector(0,0)
+}
+

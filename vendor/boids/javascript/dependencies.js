@@ -13,7 +13,7 @@ $K_app_dependencies = [
 	{ name: "itinerant_behaviors/pursue_behavior.js",            description: "Pursue" },
 	{ name: "itinerant_behaviors/wander_behavior.js",          description: "Wander" },
 	{ name: "itinerant_behaviors/wander_around_behaviour.js",  description: "Wander changing the target." },
-	{ name: "itinerant_behaviors/wall_folloging_behavior.js",  description: "Wall Following" },
+	{ name: "itinerant_behaviors/wall_following_behavior.js",  description: "Wall Following" },
 	{ name: "itinerant_behaviors/path_following_behavior.js",  description: "Path Following" },
 	{ name: "brain.js",              description: "Boid Brain." }
            ]

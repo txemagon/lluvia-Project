@@ -17,17 +17,21 @@
 
 Boid.prototype.constructor = Boid
 
-function Boid(configuration){
+function Boid(config_object){
 
   var that = this
   var args = arguments
   var config = new Hash()
+  var configuration
 
-    function initialize(){
+  if (typeof(config_object) !== "function")
+      configuration = config_object
+  else
+      configuration = new Hash()
 
-      if (typeof(args[args.length-1]) == "function")
-         config = Boid.yield(that, new Hash() ) || new Hash()
-  
+
+  function initialize(){
+
     that.last_heading = new Vector(0, 1)
     that.my_world = null
     that.last_time = that.current_time = null
@@ -36,8 +40,8 @@ function Boid(configuration){
 
     var default_config = {
       geo_data: {
-        position: new Vector(0,0),
-        velocity: new Vector(0,0),
+        position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+        velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
         acceleration: new Vector(0,0)
       },
       colour: "blue",
@@ -53,13 +57,20 @@ function Boid(configuration){
         braking: 70
       }
     }
-    that.merge$B(config.soft_merge$B(default_config))
+
+    configuration.soft_merge$B(default_config)
+    var config = new Hash()
+    if ((args.length-1) === "function")
+      config = Boid.yield(that, default_config) || new Hash()
+    that.merge$B(config.soft_merge$B(configuration))
+    if (that.color)
+      that.colour = that.color
   }
 
-   if (arguments.length)
-     initialize()
-    
+  if (arguments.length)
+    initialize()
 }
+
 /**
  * @method  position
  *
@@ -118,7 +129,7 @@ Boid.prototype.start = function(date){
  * @return {Number} Number of seconds ellapsed.
  */
 Boid.prototype.delta_t = function(){
-   return (this.current_time.getTime() - this.last_time.getTime()) / 1000;
+  return (this.current_time.getTime() - this.last_time.getTime()) / 1000;
 }
 
 /**
@@ -186,17 +197,17 @@ Boid.prototype.draw = function(ctx){
   ctx.closePath();
   ctx.stroke()
   /*
-  if (this.target && this.target != this){
-  /* Displacement to target
-  ctx.beginPath();
-  ctx.moveTo(p.get_coord(0), p.get_coord(1))
-  ctx.lineTo(p.get_coord(0) + this.target_at().get_coord(0), p.get_coord(1) + this.target_at().get_coord(1))
-  ctx.closePath();
-  ctx.stroke()
+     if (this.target && this.target != this){
+    /* Displacement to target
+    ctx.beginPath();
+    ctx.moveTo(p.get_coord(0), p.get_coord(1))
+    ctx.lineTo(p.get_coord(0) + this.target_at().get_coord(0), p.get_coord(1) + this.target_at().get_coord(1))
+    ctx.closePath();
+    ctx.stroke()
 
-  if (this.target != this){
+    if (this.target != this){
     var p_target = this.target_data().position
-  /*
+    /*
     // Desired Velocity
     ctx.strokeStyle = "black"
     ctx.beginPath();
@@ -206,7 +217,7 @@ Boid.prototype.draw = function(ctx){
     ctx.stroke()
 
 
-   // Approach distance
+    // Approach distance
     ctx.strokeStyle = "black"
     ctx.beginPath();
     ctx.arc(p_target.get_coord(0), p_target.get_coord(1), this.approach_distance, 0, Math.PI*2, true);
@@ -216,44 +227,44 @@ Boid.prototype.draw = function(ctx){
     // Arrival distance
     var arrival_distance = this.target_at().module()
     if (this.approach_distance > arrival_distance ){
-      ctx.strokeStyle = "red"
-      ctx.beginPath();
-      ctx.arc(p_target.get_coord(0), p_target.get_coord(1), arrival_distance, 0, Math.PI*2, true);
-      ctx.closePath();
-      ctx.stroke();
-    }
-
-    }
-  }
-  */
-
-  if (this.brain.is_in$U("wander")){
-    var wander = this.brain.get_behavior("wander");
     ctx.strokeStyle = "red"
-    var xc = p.get_coord(0) + v.unit().get_coord(0) * wander.D
-    var yc = p.get_coord(1) + v.unit().get_coord(1) * wander.D
-    var xp = xc + wander.R * Math.cos(wander.theta)
-    var yp = yc + wander.R * Math.sin(wander.theta)
-
     ctx.beginPath();
-    ctx.arc( xc, yc, wander.R, 0, Math.PI*2, true);
-    /* Target  */
-    ctx.moveTo( xp, yp )
-    ctx.arc( xp,
-             yp,
-             4, 0, Math.PI*2, true);
-
+    ctx.arc(p_target.get_coord(0), p_target.get_coord(1), arrival_distance, 0, Math.PI*2, true);
     ctx.closePath();
-    ctx.stroke()
-  }
+    ctx.stroke();
+    }
 
-  if(this.brain.is_in$U("pursue")){
-    var pursue = this.brain.get_behavior("pursue")
-    ctx.beginPath();
-    ctx.arc(pursue.X.get_coord(0), pursue.X.get_coord(1) ,3 , 0, Math.PI*2, false); 
-    ctx.closePath();
-    ctx.stroke()
-  }
+    }
+    }
+    */
+
+    if (this.brain.is_in$U("wander")){
+      var wander = this.brain.get_behavior("wander");
+      ctx.strokeStyle = "red"
+      var xc = p.get_coord(0) + v.unit().get_coord(0) * wander.D
+      var yc = p.get_coord(1) + v.unit().get_coord(1) * wander.D
+      var xp = xc + wander.R * Math.cos(wander.theta)
+      var yp = yc + wander.R * Math.sin(wander.theta)
+
+      ctx.beginPath();
+      ctx.arc( xc, yc, wander.R, 0, Math.PI*2, true);
+      /* Target  */
+      ctx.moveTo( xp, yp )
+      ctx.arc( xp,
+              yp,
+              4, 0, Math.PI*2, true);
+
+              ctx.closePath();
+              ctx.stroke()
+    }
+
+    if(this.brain.is_in$U("pursue")){
+      var pursue = this.brain.get_behavior("pursue")
+      ctx.beginPath();
+      ctx.arc(pursue.X.get_coord(0), pursue.X.get_coord(1) ,3 , 0, Math.PI*2, false);
+      ctx.closePath();
+      ctx.stroke()
+    }
 }
 
 /**
@@ -334,12 +345,12 @@ Boid.prototype.globalize = function(){
 }
 
 /**
-* @method visible_objects
-*
-* Ask the world if something is visible with my geo_data and vision abilities.
-*
-* @return {boolean}
-*/
+ * @method visible_objects
+ *
+ * Ask the world if something is visible with my geo_data and vision abilities.
+ *
+ * @return {boolean}
+ */
 Boid.prototype.visible_objects = function(){
   return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
 }
@@ -387,10 +398,10 @@ Boid.prototype.clip = function(){
  */
 Boid.prototype.set_target = function(boid){
   this.target = boid || new Boid({
-                          position:      new Vector(1,1),
-                          velocity:      new Vector(1,1),
-                          acceleration:  new Vector(1,1)
-      }, "red")
+    position:      new Vector(1,1),
+    velocity:      new Vector(1,1),
+    acceleration:  new Vector(1,1)
+  }, "red")
   return boid
 }
 

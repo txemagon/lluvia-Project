@@ -446,15 +446,9 @@ World.prototype.visible_for = function(position, vision){
  *
  *
  */
-World.prototype.new_boid = function(color, geo_data){
-  color = color || "blue"
-  if (typeof(geo_data) === "undefined")
-    geo_data = {
-          position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
-          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
-          acceleration: new Vector(0,0)
-  }
-  var b = new Boid( geo_data, color)
+World.prototype.new_boid = function(config, block){
+
+  var b = typeof(block) === "undefined" ? new Boid( config, block) : new Boid(config)
   this.boids++
   b.id = this.boids
   this.has_born(b)
