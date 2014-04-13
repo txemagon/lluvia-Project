@@ -14,6 +14,7 @@ $K_app_dependencies = [
 			{ name: "world_interface.js",          description: "World Interface." },
 			{ name: "boid_editor.js",              description: "Boid panel editor." },
 			{ name: "world.js",                    description: "The world where all boids live." },
+			{ name: "face_animation.js",           description: "" },
 			{ name: "main.js",                     description: "main function." },
 		]
 	}

@@ -1,6 +1,9 @@
 alert("")
 var escala = 1
 logger = document.getElementById("logger")
+
+var c = null, cxt = null;
+
 function main(){ 
   var w = new World()
 
@@ -8,6 +11,11 @@ function main(){
   w.addPort("new_boid", boid_list)
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
+
+  c=document.getElementById("face");
+  cxt=c.getContext("2d");
+
+  setInterval(pintarCara, 100)
 
   for(var i = 0; i<10; i++){
     var b = w.new_wander()

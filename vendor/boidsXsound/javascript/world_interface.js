@@ -74,49 +74,9 @@ BoidCollector.prototype.do_onclick = function(event, element){
 BoidCollector.prototype.do_onmouseover = function(event, element){
   this.panel.style.color = "grey"
   this.boid.focused = true
-  paint_face(this.boid.id)
-  //face.src = "images/cara.svg"
 }
 
 BoidCollector.prototype.do_onmouseout = function(event, element){
   this.panel.style.color = "white"
   this.boid.focused = false
-  paint_face(0)
-}
-
-var face = document.getElementById("face")
-function paint_face(number_boid){
-  switch(number_boid){
-    case 0: 
-      face.src = "images/faces/no_face.png"
-      break;
-
-    case '1': 
-      alert("1")
-      break;
-
-    case 2: 
-      face.src = "images/faces/face2.svg"
-      break;
-
-    case 3: 
-      face.src = "images/faces/face3.svg"
-      break; 
-
-    case 4: 
-      face.src = "images/faces/face4.svg"
-      break;
-
-    case 5: 
-      face.src = "images/faces/face5.svg"
-      break; 
-
-    case 6: 
-      face.src = "images/faces/face6.svg"
-      break;  
-
-    default:
-      face.src = "images/faces/face1.svg"
-      break;
-  }
 }

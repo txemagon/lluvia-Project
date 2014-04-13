@@ -35,7 +35,16 @@ function BoidEditor(view){
 }
 
 BoidEditor.prototype.attend_focus_boid = function(date, mssg){
-  this.view.innerHTML = "Following " + mssg.event.focus_boid.data.id + "<br/>"
+  this.view.innerHTML = "Id: " + mssg.event.focus_boid.data.id + "<br/>" +
+                        "Vel_max: " + mssg.event.focus_boid.data.vel_max + "<br/>" +
+                        "Colour: " + mssg.event.focus_boid.data.colour + "<br/>" +
+                        "Mass: " + mssg.event.focus_boid.data.mass + "<br/>" +
+                        "Vision: " + mssg.event.focus_boid.data.vision + "<br/>" + 
+                        "Position X: " +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]*100)/100 + "<br/>" +
+                        "Position Y: " + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*100)/100 + "<br/>" +
+                        "Vision: " + mssg.event.focus_boid.data.vision + "<br/>" +
+                        "Vision: " + mssg.event.focus_boid.data.vision + "<br/>" +
+
   mssg.current++
 }
 

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../../src/lluvia.js" ></script>
     <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
   </head>
-  <body onload="bringLLuvia();">
+  <body onload="bringLLuvia();init();">
     <h1>BOIDS</h1>
     <div id="application">
       <div id="canvas">
@@ -16,8 +16,10 @@
       </div>
       <div id="panels">
         <div id="boid_list">
-          <h2>Current Boids</h2>
-          <img id="face" src="images/faces/no_face.png" width="125" height="125"></br>
+
+          <div id="face_canvas">
+            <canvas id="face" width="150" height="150" style="border:2px solid #000000;"> </canvas>
+          </div>
           <div id="boid_list_content" class="Panel">
           </div>
           <div id="boid_properties" class="Panel">
