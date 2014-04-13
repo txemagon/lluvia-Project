@@ -40,6 +40,7 @@ margin-right: 144px;
 	-o-transition: all 1s ease-in-out 1s;
 	overflow:hidden;
 }
+
 #menu:hover{
 	height:200px;
 }
@@ -47,13 +48,27 @@ margin-right: 144px;
 #desplegable{
 	border-bottom:1px solid black;
 	width:150px;
-	height:40px;
+	height:50px;
 	float:left;
 	background-color: #ffff99;
-	color:#ff33ff;
-	padding-top:10px;
-	text-align:center;
+	color:#ff33ff;	
 	font-size:24px;
+}
+
+#menu_title{
+	float:left;
+	padding-top:10px;
+}
+
+#menu_image{
+	float:left;	
+	margin-left:20px;
+	padding-top:5px;
+}
+
+#menu_img{
+	width:40px;
+	height:40px;
 }
 
 .opcion{
