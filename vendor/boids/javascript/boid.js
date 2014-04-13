@@ -1,57 +1,65 @@
 /**
  * @classDescription Creates a Boid
  *
- * @return {Boid}
- * @constructor
-*/
-
-//require('Mathematics')
-
-Boid.prototype.constructor = Boid
-
-/**
  * Personal Autonomous character
+ *
+ * @constructor Boid
  *
  * @param {Object} geo_data Position, speed and acceleration
  * @param {Object} geo_data.position 2D position of the Boid
  * @param {Object} geo_data.velocity Planar Velocity
  * @param {Object} geo_data.acceleration Initial acceleration
  * @param {String} colour css color to paint it
+ * @return {Boid}
  */
-function Boid(geo_data,colour){
+
+//require('Mathematics')
+
+Boid.prototype.constructor = Boid
+
+function Boid(configuration){
 
   var that = this
+  var args = arguments
+  var config = new Hash()
 
-  function initialize() {
+    function initialize(){
 
-    that.brain = new Brain(that)
+      if (typeof(args[args.length-1]) == "function")
+         config = Boid.yield(that, new Hash() ) || new Hash()
+  
     that.last_heading = new Vector(0, 1)
-
-    that.geo_data = geo_data || {
-      position: new Vector(0,0),
-      velocity: new Vector(0,0),
-      acceleration: new Vector(0,0)
-    }
-
-    that.vel_max = 50
     that.my_world = null
     that.last_time = that.current_time = null
-    that.colour = colour || "blue"
-    that.mass = 2
-    that.vision = 100
 
-    that.force_limits = {
-      thrust: 20,
-      steering: 50,
-      braking: 70
+    /* Overridable configuration */
+
+    var default_config = {
+      geo_data: {
+        position: new Vector(0,0),
+        velocity: new Vector(0,0),
+        acceleration: new Vector(0,0)
+      },
+      colour: "blue",
+
+      brain: new Brain(that),
+      vel_max: 50,
+      mass: 2,
+      vision: {radius: 100, angle: 130 * Math.PI / 180},
+
+      force_limits: {
+        thrust: 20,
+        steering: 50,
+        braking: 70
+      }
     }
+    that.merge$B(config.soft_merge$B(default_config))
   }
 
    if (arguments.length)
      initialize()
-
+    
 }
-
 /**
  * @method  position
  *
@@ -326,14 +334,14 @@ Boid.prototype.globalize = function(){
 }
 
 /**
- * @method visible_objects
- *
- * Ask the world if something is visible with my geo_data and vision abilities.
- *
- * @return {boolean}
- */
+* @method visible_objects
+*
+* Ask the world if something is visible with my geo_data and vision abilities.
+*
+* @return {boolean}
+*/
 Boid.prototype.visible_objects = function(){
-  return this.my_world.visible_for(this.geo_data.position, this.vision)
+  return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
 }
 
 /**
