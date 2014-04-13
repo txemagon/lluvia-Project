@@ -2,6 +2,7 @@ body{
 background-color: #52CC29;
 margin: 0;
 padding: 0;
+font-family: courier;
 }
 
 #container{
@@ -27,6 +28,51 @@ float: right;
 margin-top: 30px;
 margin-right: 144px;
 }
+
+#menu{
+	border:1px solid black;
+	width:150px;
+	float:left;
+	height:50px;
+	-webkit-transition: all 1s ease-in-out 1s;
+	-moz-transition: all 1s ease-in-out 1s;
+	-ms-transition: all 1s ease-in-out 1s;
+	-o-transition: all 1s ease-in-out 1s;
+	overflow:hidden;
+}
+#menu:hover{
+	height:200px;
+}
+
+#desplegable{
+	border-bottom:1px solid black;
+	width:150px;
+	height:40px;
+	float:left;
+	background-color: #ffff99;
+	color:#ff33ff;
+	padding-top:10px;
+	text-align:center;
+	font-size:24px;
+}
+
+.opcion{
+	border-bottom:1px solid black;
+	width:150px;
+	height:40px;
+	float:left;
+	background-color: #ffff99;
+	color:#ff33ff;
+	padding-top:10px;
+	text-align:center;
+	font-size:18px;
+	
+}
+.opcion:hover{
+	color:#ffff99;
+	background-color:#ff33ff;
+}
+
 
 #canvas{
 width: 852px;
