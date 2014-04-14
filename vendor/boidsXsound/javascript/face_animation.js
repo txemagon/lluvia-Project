@@ -60,6 +60,7 @@ function ojos(){
 	cxt.beginPath();
 	cxt.arc(55, 75 ,8 , 0, Math.PI*2, false); 
 	cxt.arc(95, 75 ,8 , 0, Math.PI*2, false); 
+
 	cxt.fill();
 }
 

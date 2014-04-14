@@ -9,8 +9,12 @@ function main(){
 
   var boid_list = new WorldInterface("boid_list_content")
   w.addPort("new_boid", boid_list)
+    
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
+
+  var face_boids = new FaceDevice("boid_properties")
+  boid_list.addPort("face_boid", face_boids)
 
   c=document.getElementById("face");
   cxt=c.getContext("2d");

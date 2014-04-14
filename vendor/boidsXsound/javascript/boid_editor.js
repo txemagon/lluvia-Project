@@ -1,12 +1,4 @@
 /**
- * Boid's dashboard
- *
- * @author Txema
- * @version 1.00 Aug, 2011
- */
-
-
-/**
  * @classDescription Creates a dashboard for handling one boid.
  *
  * @param  {view} Button holder panel.

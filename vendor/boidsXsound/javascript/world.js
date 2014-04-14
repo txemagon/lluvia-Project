@@ -1,12 +1,4 @@
 /**
- * Boid's world
- *
- * @author Txema
- * @version 1.00 Aug, 2011
- */
-
-
-/**
  * @classDescription Creates a World for handling boids.
  *
  * @param  {screen} World screen

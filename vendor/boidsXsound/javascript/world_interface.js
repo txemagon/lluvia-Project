@@ -1,12 +1,4 @@
 /**
- * World's menu
- *
- * @author Txema
- * @version 1.00 Aug, 2011
- */
-
-
-/**
  * @classDescription Creates a Interface to interact with boids.
  *
  * @param  {view} Button holder panel.
@@ -23,7 +15,7 @@ function WorldInterface(view){
   var args = arguments
   
   /* Events */
-  this.self_events = ["focus_boid"]
+  this.self_events = ["focus_boid", "face_boid"]
   
   function initialize(){
     Device.call(that, view)
@@ -69,6 +61,7 @@ function BoidCollector(el, parent){
 	
 BoidCollector.prototype.do_onclick = function(event, element){
   this.device.fireEvent(this.device.newMessage("sync", "focus_boid", this.boid))
+  this.device.fireEvent(this.device.newMessage("sync", "face_boid", this.boid))
 }
 
 BoidCollector.prototype.do_onmouseover = function(event, element){
