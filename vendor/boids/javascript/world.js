@@ -448,7 +448,8 @@ World.prototype.visible_for = function(position, vision){
  */
 World.prototype.new_boid = function(config, block){
 
-  var b = typeof(block) === "undefined" ? new Boid( config, block) : new Boid(config)
+  var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
+ 
   this.boids++
   b.id = this.boids
   this.has_born(b)
@@ -530,7 +531,7 @@ World.prototype.new_wander_around = function(color){
 
 /**
  * @method new_wanderer
- * Creates a wanderer boid. This is method is temporarl due to new dynamic facility 
+ * Creates a wanderer boid. This is method is temporarl due to new dynamic facility
  * for making boids, incorporated in pigs and sheeps.
  *
  * @param {String} color Color of the boid.

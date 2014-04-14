@@ -19,23 +19,36 @@ function main(){
    })
 
 
+
     /* Example: wander behavior */
   var wanderer = []
-  for(var i = 0; i<3; i++)
+  for(var i = 0; i<10; i++)
     wanderer.push( w.new_boid( function (config) {
-      alert(config.toSource())
       config.color = "purple"
-      //config.brain.activate("wander")
+      config.brain.activate("wander")
       return config
     }))
 
    /* Example: seek behavior */
    var seeker = []
-    var t = w.new_boid( function(config){
+    var t = w.new_boid( function(config) {
                            /* Here you can interact with the outer scope */
                            config.colour   = "red"
                            config.geo_data = {
                               position: new Vector(200, 200),
+                              velocity: new Vector(0, 0),
+                              acceleration: new Vector(0, 0)
+                           }
+                           return config
+    })
+
+
+    var ba = w.new_boid( {colour: "yellow"}, function(config) {
+                           /* Here you can interact with the outer scope */
+                           /* You can also access the already created brain */
+                           alert("hey")
+                           config.geo_data = {
+                              position: new Vector(100, 100),
                               velocity: new Vector(0, 0),
                               acceleration: new Vector(0, 0)
                            }

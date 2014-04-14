@@ -17,20 +17,21 @@
 
 Boid.prototype.constructor = Boid
 
-function Boid(config_object){
+function Boid(config_object, block){
 
   var that = this
   var args = arguments
-  var config = new Hash()
-  var configuration
 
-  if (typeof(config_object) !== "function")
-      configuration = config_object
-  else
-      configuration = new Hash()
+  if (typeof(block) === "undefined")
+    if (typeof(config_object) === "function" ){
+      block = config_object
+      config_object = new Hash()
+    }
 
 
   function initialize(){
+
+    var config = new Hash()
 
     that.last_heading = new Vector(0, 1)
     that.my_world = null
@@ -58,11 +59,10 @@ function Boid(config_object){
       }
     }
 
-    configuration.soft_merge$B(default_config)
-    var config = new Hash()
-    if ((args.length-1) === "function")
-      config = Boid.yield(that, default_config) || new Hash()
-    that.merge$B(config.soft_merge$B(configuration))
+    config_object.soft_merge$B(default_config)
+    if ( typeof(block) === "function")
+      config = block(config_object) || new Hash()
+    that.merge$B(config.soft_merge$B(config_object))
     if (that.color)
       that.colour = that.color
   }
