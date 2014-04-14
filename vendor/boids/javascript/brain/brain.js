@@ -10,9 +10,15 @@ function Brain(body){
    var that = this
    this.behaviors = []
 
+   // var string = "pursue < seek > arrival > pursue"
+   // var b_name = Behavior.decompose_name(string)
+   // string = "new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')"
+   // alert(string)
+
+
      /* GOAL BEHAVIORS */
    this.behaviors.push(
-     [ "seek>arrival" , "flee", "wander","wander around","pursue",
+     [ "seek > arrival" , "flee", "wander","wander around", "pursue",
        "alignment", "wall following", "path following"
      ].inject( new BehaviorSet(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)

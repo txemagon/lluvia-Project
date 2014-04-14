@@ -48,14 +48,14 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  
+
   this.me.visible_objects().each( function(boid){
-    var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
+    var target_at = boid.geo_data.position.subs( that.me.geo_data.position )
     x += target_at.get_coord(0)
     y += target_at.get_coord(1)
     count++
   })
-  
+
   return new Vector(x/count, y/count).scale(-1)
 }
 

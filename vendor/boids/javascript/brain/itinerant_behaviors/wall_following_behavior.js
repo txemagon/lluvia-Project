@@ -1,5 +1,3 @@
-requires('Behavior')
-
 WallFollowingBehavior.prototype = new Behavior
 WallFollowingBehavior.prototype.constructor = WallFollowingBehavior
 WallFollowingBehavior.prototype.super = Behavior

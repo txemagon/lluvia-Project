@@ -13,7 +13,6 @@
  * @return {Boid}
  */
 
-//require('Mathematics')
 
 Boid.prototype.constructor = Boid
 

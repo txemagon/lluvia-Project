@@ -1,5 +1,3 @@
-requires('Behavior')
-
 /**
  * @class PathFollowingBehavior
  * Creates Itinerant Behavior: path following

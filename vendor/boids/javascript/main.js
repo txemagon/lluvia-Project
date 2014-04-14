@@ -1,4 +1,3 @@
-alert("Welcome")
 logger = document.getElementById("logger")
 
 function main(){
@@ -102,9 +101,9 @@ function main(){
      config.force_limits.steering = 80
      config.geo_data.position     = new Vector(0, 0)
      config.brain.activate("seek")
-     //var seek = config.brain.get_behavior("seek")
-     // seek.set_target(first)
-     //seek.activate_modifier("pursue")
+     var seek = config.brain.get_behavior("seek")
+     seek.set_target(first)
+     seek.activate_modifier("pursue")
      return config
    })
 
