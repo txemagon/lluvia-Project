@@ -456,7 +456,6 @@ World.prototype.new_boid = function(config, block){
   return b
 }
 
-
 /**
  * @method start_and_run
  *
