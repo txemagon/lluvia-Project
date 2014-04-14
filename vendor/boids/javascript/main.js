@@ -43,10 +43,9 @@ function main(){
     })
 
 
-    var ba = w.new_boid( {colour: "yellow"}, function(config) {
+    w.new_boid( {colour: "yellow"}, function(config) {
                            /* Here you can interact with the outer scope */
                            /* You can also access the already created brain */
-                           alert("hey")
                            config.geo_data = {
                               position: new Vector(100, 100),
                               velocity: new Vector(0, 0),
@@ -55,28 +54,41 @@ function main(){
                            return config
     })
 
-//   var first = t
-//   seeker.push(t)
-//
-//   for(var i=0; i<5; i++)
-//     seeker.push( t = w.new_seeker(t) )
-//
-//   first.brain.activate('seek')
-//   first.brain.get_behavior('seek').set_target(t)
-//
-//
-//   /*  Example: flee behavior */
-//   var fleer = []
-//   for (var i=0; i<8; i++) {
-//     var f
-//     fleer.push( f = w.new_flee(wanderer[i % wanderer.length], "green") )
-//     // f.brain.activate('seek')
-//     // first.brain.get_behavior('seek').set_target(first)
-//   }
-//
-//   /*  Example: pursue behaviour*/
-//   var b1 = w.new_wanderer()
-//   var b2 = w.new_pursuer(b1, "yellow")
+   var first = t
+   seeker.push(t)
 
-  w.start()
+   for(var i=0; i<5; i++)
+     seeker.push( t = w.new_boid( function(config) {
+       config.brain.activate('seek')
+       config.brain.get_behavior('seek').set_target(t)
+     }) )
+
+   first.brain.activate('seek')
+   first.brain.get_behavior('seek').set_target(t)
+
+
+   /*  Example: flee behavior */
+   var fleer = []
+   for (var i=0; i<8; i++) {
+     var f
+     fleer.push( f = w.new_boid( function(config) {
+       config.color = "silver"
+       config.vel_max = 10
+       config.brain.activate("flee")
+       config.brain.get_behavior("flee").set_target( wanderer[i % wanderer.length] )
+     } ))
+   }
+
+   /*  Example: pursue behaviour*/
+   var b2 = w.new_boid( function (config) {
+     config.colour  = "lime"
+     config.vel_max = 80
+     config.force_limits.thrust   = 40
+     config.force_limits.steering = 80
+     config.geo_data.position     = new Vector(0, 0)
+     config.brain.activate("pursue")
+     config.brain.get_behavior("pursue").set_target(first)
+   })
+
+   w.start()
 }

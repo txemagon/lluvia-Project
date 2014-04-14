@@ -25,7 +25,7 @@ function Brain(body){
 
      /* SECURITY BEHAVIORS */
    this.behaviors.push(
-     [ "separation", "alignment", "cohesion",
+     [ "separation", "cohesion",
        "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){
            var b_name = Behavior.decompose_name(behavior)
 	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )

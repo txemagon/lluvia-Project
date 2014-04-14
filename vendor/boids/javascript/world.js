@@ -449,98 +449,13 @@ World.prototype.visible_for = function(position, vision){
 World.prototype.new_boid = function(config, block){
 
   var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
- 
+
   this.boids++
   b.id = this.boids
   this.has_born(b)
   return b
 }
 
-/**
- * @method new_seeker
- *
- * Creates a new Seeker Boid
- *
- * @param  {Target} target Target of the new Seeker Boid
- * @param  {String} color Color of the Boid
- *
- *
- * ###Example
- *      //
- *
- *
- *
- */
-World.prototype.new_seeker = function(target, color){
-  var b = this.new_boid(color)
-  b.brain.activate('seek')
-  b.brain.get_behavior('seek').set_target(target)
-  return b
-}
-
-World.prototype.new_pursuer = function(target, color){
-  var b = this.new_boid(color)
-  b.brain.activate('pursue')
-  b.brain.get_behavior('pursue').set_target(target)
-  return b
-}
-
-/**
- * @method new_flee
- *
- * Creates a new Flee Boid
- *
- * @param  {Target} target Target of the new Flee Boid
- * @param  {String} color Color of the Boid
- *
- *
- * ###Example
- *      //
- *
- *
- *
- */
-World.prototype.new_flee = function(target, color){
-  var b = this.new_boid(color)
-  b.brain.activate('flee')
-  b.brain.get_behavior('flee').set_target(target)
-  return b
-}
-
-/**
- * @method new_wander_around
- *
- * Creates a new wander around Boid
- *
- * @param  {Target} target Target of the new wander around Boid
- * @param  {String} color Color of the Boid
- *
- *
- * ###Example
- *      //
- *
- *
- *
- */
-World.prototype.new_wander_around = function(color){
-  var b = this.new_boid(color)
-  b.brain.activate('wander_around')
-  b.brain.get_behavior('wander_around').set_target()
-  return b
-}
-
-/**
- * @method new_wanderer
- * Creates a wanderer boid. This is method is temporarl due to new dynamic facility
- * for making boids, incorporated in pigs and sheeps.
- *
- * @param {String} color Color of the boid.
- */
-World.prototype.new_wanderer = function(color){
-  var b = this.new_boid(color)
-  b.brain.activate('wander')
-  return b
-}
 
 /**
  * @method start_and_run

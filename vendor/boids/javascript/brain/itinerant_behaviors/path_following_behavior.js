@@ -1,6 +1,8 @@
+requires('Behavior')
 
 /**
- * @classDescription Creates Itinerant Behavior: path following
+ * @class PathFollowingBehavior
+ * Creates Itinerant Behavior: path following
  *
  * @return {PathFollowingBehavior}
  * @constructor

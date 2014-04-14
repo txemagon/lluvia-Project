@@ -1,0 +1,54 @@
+\setlength{\unitlength}{1mm}
+
+\begin{picture}(50,70)
+    % axis
+    \put(10,10){\vector(1,0){40}}
+    \put(10,10){\vector(0,1){40}}
+    \put(47,7){$x$}
+    \put(7,47){$y$}
+    % straight line
+    \color{blue}
+    \put(0,20){\line(2,1){60}}
+    \put(55,49){$r$}
+
+
+    % position vector
+    \color{Red}
+    \put(10,10){\vector(1,2){10}}
+    \put(18,30){\circle*{1.5}}
+    \put(12,20){$\vec{r}_r$}
+
+    \thicklines
+
+    % direction vector
+    \color{blue}
+    \put(20,30){\vector(2,1){20}}
+    \put(40,40){\circle*{1.5}}
+    \put(26,37){$\vec{v_d}$}
+
+
+    \color{black}
+    % normal vector at origin
+    \color{sepia}
+    \put(10,10){\vector(-1,2){10}}
+    \color{black}
+    \put(-5,25){$ \vec{N} $}
+
+    % Outer point
+    \put(43,49){$p$}
+    \put(40,50){\circle*{1.5}}
+
+    \thinlines
+    % position vector for p
+    \color{red}
+    \put(10,10){\vector(3,4){30}}
+    \put(24,25){$ \vec{r}_p $}
+
+    % The former normal is the new direction vector.
+    \thicklines
+    \color{black}
+    \put(40,50){\vector(-1,2){10}}
+    \put(37,60){$ \vec{N} $}
+
+\end{picture}
+

@@ -260,8 +260,10 @@ Boid.prototype.draw = function(ctx){
 
     if(this.brain.is_in$U("pursue")){
       var pursue = this.brain.get_behavior("pursue")
+      var target_position = p.add(pursue.target_at())
       ctx.beginPath();
-      ctx.arc(pursue.X.get_coord(0), pursue.X.get_coord(1) ,3 , 0, Math.PI*2, false);
+      ctx.arc(target_position.get_coord(0), target_position.get_coord(1), 10, 0, Math.PI*2, false)
+      ctx.arc(target_position.get_coord(0), target_position.get_coord(1), 12, 0, Math.PI*2, false)
       ctx.closePath();
       ctx.stroke()
     }

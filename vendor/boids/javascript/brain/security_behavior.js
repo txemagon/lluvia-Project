@@ -44,21 +44,6 @@ function SeparationBehavior(){
 }
 
 /**
- * @classDescription Creates Itinerant Behavior: alignment
- *
- * @return {AlignmentBehavior}
- * @constructor
-*/
-
-AlignmentBehavior.prototype = new Behavior
-AlignmentBehavior.prototype.constructor = AlignmentBehavior
-AlignmentBehavior.prototype.super = Behavior
-
-function AlignmentBehavior(){
-  Behavior.apply(this, arguments)
-}
-
-/**
  * @classDescription Creates Itinerant Behavior: cohesion
  *
  * @return {CohesionBehavior}
