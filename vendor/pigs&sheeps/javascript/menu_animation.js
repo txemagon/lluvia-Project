@@ -21,17 +21,20 @@ function countdown(){
 	            minutes.innerHTML = min;
 
 	        }
-	        if(min==0 && sec<10){
+	        if(min==0 && sec<=9){
 	        	seconds.style.color="red";
 	        	minutes.style.color="red";
 	        	seconds.innerHTML =  "0" + sec;
-	        	sec--;
+	        	
 	        }
 	        else{	 
-	        	seconds.innerHTML =  sec;
-	        	sec--;	
+			if(sec>=10)
+	        		seconds.innerHTML =  sec;	        			
+			else
+			seconds.innerHTML = "0" + sec;
 	    	}
+		sec--;
 	     }
 	    }
-	    ,1500);
+	    ,300);
 }
