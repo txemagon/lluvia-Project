@@ -42,12 +42,12 @@ assert("There is a list of active behaviors",
 assert("The brain gives a desired acceleration for each active state",
        "brain.desired_accelerations().self_keys()", "['none', 'flee', 'obstacle avoidance']",
        "")
-              
+
 given ("Given a brain that has seeked, and now is currently fleeing and avoiding obstacles.",
        $LLGvn = "brain = new Brain();" )
 
-       
-eval($LLGvn)       
+
+eval($LLGvn)
 
 
 assert("The brain has a default 0 vector desired acceleration",

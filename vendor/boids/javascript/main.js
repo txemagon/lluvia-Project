@@ -94,5 +94,18 @@ function main(){
      config.brain.get_behavior("pursue").set_target(first)
    })
 
+   /*  Example: pursue behaviour*/
+   var b3 = w.new_boid( function (config) {
+     config.colour  = "fuchsia"
+     config.vel_max = 80
+     config.force_limits.thrust   = 40
+     config.force_limits.steering = 80
+     config.geo_data.position     = new Vector(0, 0)
+     config.brain.activate("seek")
+     config.brain.get_behavior("seek").set_target(first)
+     return config
+   })
+
+
    w.start()
 }
