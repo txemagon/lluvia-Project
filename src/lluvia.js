@@ -21,6 +21,7 @@ function _includeScript(src, event, callback){
     var script = document.createElement('script')
     script.setAttribute('type', 'text/javascript')
     script.setAttribute('src', ($K_loading_app ? $K_WHEREApp : $K_WHERELL) + src)
+    script.async = false
     if (event && callback) 
         script.setAttribute(event, callback)
     document.getElementsByTagName('head')[0].appendChild(script)
