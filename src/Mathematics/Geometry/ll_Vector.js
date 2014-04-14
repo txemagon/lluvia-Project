@@ -600,7 +600,7 @@ Vector.prototype.projection = function(vector1){
 	if(vector1.length != this.length && this.length < 1)
 		throw "Lengths of vectors are different"
 	else
-		return vector1.scale(this.dot(vector1)/vector1.dot(vector1))
+		return new Vector( vector1.scale(this.dot(vector1)/vector1.dot(vector1)) )
 	
 }
 

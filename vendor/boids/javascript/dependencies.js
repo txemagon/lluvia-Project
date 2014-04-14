@@ -11,7 +11,7 @@ $K_app_dependencies = [
 	{ name: "itinerant_behaviors/seek_behavior.js",            description: "Seek" },
 	{ name: "itinerant_behaviors/flee_behavior.js",            description: "Flee" },
 	{ name: "itinerant_behaviors/pursue_behavior.js",          description: "Pursue" },
-	{ name: "herd_behaviors/alignment_behavior.js",            description: "Tries to keep the same direction" },
+	//{ name: "herd_behaviors/alignment_behavior.js",            description: "Tries to keep the same direction" },
 	{ name: "itinerant_behaviors/wander_behavior.js",          description: "Wander" },
 	{ name: "itinerant_behaviors/wander_around_behaviour.js",  description: "Wander changing the target." },
 	{ name: "itinerant_behaviors/wall_following_behavior.js",  description: "Wall Following" },
