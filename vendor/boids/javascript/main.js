@@ -102,7 +102,9 @@ function main(){
      config.force_limits.steering = 80
      config.geo_data.position     = new Vector(0, 0)
      config.brain.activate("seek")
-     config.brain.get_behavior("seek").set_target(first)
+     //var seek = config.brain.get_behavior("seek")
+     // seek.set_target(first)
+     //seek.activate_modifier("pursue")
      return config
    })
 

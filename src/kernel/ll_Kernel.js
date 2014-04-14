@@ -45,7 +45,6 @@ function O(variable){
  * @param {String} list_of_objects list of elements required to proceed with the execution.
  */
 function requires(list_of_objects){
-
     for (var i=0; i<arguments.length; i++)
     if (arguments[i] instanceof Array)
 	requires.apply(null, arguments[i])
