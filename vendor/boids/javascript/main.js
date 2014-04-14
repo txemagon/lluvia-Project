@@ -10,7 +10,7 @@ function main(){
   boid_list.addPort("focus_boid", boid_editor)
 
   /* Example 1 of Boid creation */
-   w.new_boid( { colour: "green",
+   var fixed_target = w.new_boid( { colour: "green",
                  geo_data:  {
                                position: new Vector(220, 230),
                                velocity: new Vector(0, 0),
@@ -18,6 +18,22 @@ function main(){
                             }
    })
 
+
+
+    w.new_boid( {colour: "yellow"}, function(config) {
+                           /* Here you can interact with the outer scope */
+                           /* You can also access the already created brain */
+                           config.geo_data = {
+                              position: new Vector(100, 100),
+                              velocity: new Vector(0, 0),
+                              acceleration: new Vector(0, 0)
+                           }
+                           config.brain.activate("seek")
+                           var seek = config.brain.get_behavior("seek")
+                           seek.set_target(fixed_target)
+                           seek.activate_modifier("arrival")
+                           return config
+    })
 
 
     /* Example: wander behavior */
@@ -36,18 +52,6 @@ function main(){
                            config.colour   = "red"
                            config.geo_data = {
                               position: new Vector(200, 200),
-                              velocity: new Vector(0, 0),
-                              acceleration: new Vector(0, 0)
-                           }
-                           return config
-    })
-
-
-    w.new_boid( {colour: "yellow"}, function(config) {
-                           /* Here you can interact with the outer scope */
-                           /* You can also access the already created brain */
-                           config.geo_data = {
-                              position: new Vector(100, 100),
                               velocity: new Vector(0, 0),
                               acceleration: new Vector(0, 0)
                            }

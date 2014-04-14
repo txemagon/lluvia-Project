@@ -14,6 +14,7 @@ SeekBehavior.prototype.super = Behavior
 function SeekBehavior(){
   Behavior.apply(this, arguments)
   this.target = null
+  this.approach_distance = 100 // Default approach distance
 }
 
 
@@ -87,10 +88,11 @@ SeekBehavior.prototype.desired_velocity = function(){
     arrival_distance = 0
   }
   var scale = 1
-  /* Arrival behavior Modifier
-  if (this.approach_distance > arrival_distance)
-    scale = arrival_distance / this.approach_distance
-    */
+  /* Arrival behavior Modifier */
+  if (this.is_modified_by$U("arrival"))
+    if (this.approach_distance > arrival_distance)
+      scale = arrival_distance / this.approach_distance
+
   return (new Vector(this.target_at().unit().scale(scale * this.me.vel_max)))
 }
 
