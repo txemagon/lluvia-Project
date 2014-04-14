@@ -78,7 +78,7 @@ BehaviorGroup.prototype.desired_accelerations = function(){
 
     return bh_list.inject( {}, function(state, results){
         if (typeof(that.behavior[state]) !== "undefined")
-	  results[state] = that.behavior[state].respond_to("desired_acceleration")? that.behavior[state].desired_acceleration() : new Vector(0,0)
+          results[state] = that.behavior[state].respond_to("desired_acceleration")? that.behavior[state].desired_acceleration() : new Vector(0, 0)
 	  return results
 	})
 }

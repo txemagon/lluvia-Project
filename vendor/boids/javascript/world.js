@@ -416,9 +416,9 @@ World.prototype.running_steady = function(processors_time){
  *
  *
  */
-World.prototype.visible_for = function(position, vision){
+World.prototype.visible_for = function(position, heading, vision){
  var that = this
-  vision = vision * vision
+  vision = vision.radius * vision.radius
   var visible = []
   this.each_boid(function (boid){
     var x1 = position.get_coord(0)

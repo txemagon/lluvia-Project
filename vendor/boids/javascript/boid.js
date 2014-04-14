@@ -355,7 +355,7 @@ Boid.prototype.draw = function(ctx){
  *
  * Ask the world if something is visible with my geo_data and vision abilities.
  *
- * @return {boolean}
+ * @return {}
  */
     Boid.prototype.visible_objects = function(){
       return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
