@@ -485,6 +485,12 @@ World.prototype.new_pursuer = function(target, color){
   return b
 }
 
+World.prototype.new_separation = function(target, color){
+  var b = this.new_boid(color)
+  b.brain.activate('separation')
+  return b
+}
+
 /**
  * @method new_flee
  *
