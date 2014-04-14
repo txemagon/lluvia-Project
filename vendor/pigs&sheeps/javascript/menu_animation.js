@@ -36,5 +36,5 @@ function countdown(){
 		sec--;
 	     }
 	    }
-	    ,300);
+	    ,1500);
 }
