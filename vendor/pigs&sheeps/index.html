@@ -27,11 +27,15 @@
         </div>	
      	  <div id="canvas">
           <!-- tabindex is necessary to capture keyboard -->
+          <div id="timer"><b><span id="minutes">2</span>:<span id="seconds">00</span></b></div>
 		      <canvas id="screener" width="850" height="500" tabindex="1"></canvas>
+
 	      </div>
+        
 	      <div id="main_screen">  
-		      <input type="button" value="PLAY" id="play_button"></input>
+		      <input type="button" value="PLAY" id="play_button" onclick="countdown();"></input>
 	      </div>
+
       </div>	
       <div id="footer">
 	     <p>Copyright Mar&iacutea, Estefan&iacutea, Laura</p>
