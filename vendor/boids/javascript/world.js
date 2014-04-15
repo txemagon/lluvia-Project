@@ -402,9 +402,9 @@ World.prototype.running_steady = function(processors_time){
 }
 
 /**
- * @method visible_for
+ * @method visible_from
  *
- * Creates an array with the Boids that the referred Boid can see
+ * Creates an array with the Boids that are visible with the given (params) conditions
  *
  * @param  {Vector} position Position of the Boid
  * @param  {Vector} vision Vision of the Boid taken as center
@@ -416,7 +416,7 @@ World.prototype.running_steady = function(processors_time){
  *
  *
  */
-World.prototype.visible_for = function(position, heading, vision){
+World.prototype.visible_from = function(position, heading, vision){
  var that = this
   vision = vision.radius * vision.radius
   var visible = []
@@ -427,6 +427,38 @@ World.prototype.visible_for = function(position, heading, vision){
     var dy = boid.geo_data.position.get_coord(1) - y1
     if (dx * dx + dy * dy < vision )
       visible.push(boid)
+  })
+  return visible
+}
+
+/**
+ * @method visible_for
+ *
+ * Creates an array with the Boids that are visible for a given one.
+ * Differs from World#visible_from because it excludes the one seeing.
+ *
+ * @param  {Object} boid Boid that is seeing.
+ *
+ *
+ * ###Example
+ *      //
+ *
+ *
+ *
+ */
+World.prototype.visible_for = function(boid){
+  var that = this
+  vision = boid.vision.radius * boid.vision.radius
+  var visible = []
+  this.each_boid(function (possible_boid){
+    if (possible_boid != boid) {
+      var x1 = boid.geo_data.position.get_coord(0)
+      var y1 = boid.geo_data.position.get_coord(1)
+      var dx = possible_boid.geo_data.position.get_coord(0) - x1
+      var dy = possible_boid.geo_data.position.get_coord(1) - y1
+      if (dx * dx + dy * dy < vision )
+        visible.push(possible_boid)
+    }
   })
   return visible
 }
@@ -451,7 +483,7 @@ World.prototype.new_boid = function(config, block){
   var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
 
   this.boids++
-  b.id = this.boids
+    b.id = this.boids
   this.has_born(b)
   return b
 }
@@ -503,14 +535,14 @@ World.prototype.attend_focus_boid = function(date, mssg){
  *
  */
 World.prototype.new_boid_of = function(class_name, config){
-    var b = new class_name(config)
-    if (this[class_name])
-        this[class_name]++
-        else
-    this[class_name] = 1
-    this.boids.total++
-        this.has_born(b)
-    return b
+  var b = new class_name(config)
+  if (this[class_name])
+    this[class_name]++
+    else
+  this[class_name] = 1
+  this.boids.total++
+    this.has_born(b)
+  return b
 }
 
 /**
@@ -519,10 +551,10 @@ World.prototype.new_boid_of = function(class_name, config){
  */
 World.prototype.method_missing= function(method, obj, params){
 
-    if ( /new_boid_as_/.test(method) ){
-        var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
-        return this.new_boid_of(eval("" + subtype), params[0])
-        //todo: This is dependant of bad ll_Exception params analysis
-    }
-    return this.super.method_missing.apply(this, arguments)
+  if ( /new_boid_as_/.test(method) ){
+    var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
+    return this.new_boid_of(eval("" + subtype), params[0])
+    //todo: This is dependant of bad ll_Exception params analysis
+  }
+  return this.super.method_missing.apply(this, arguments)
 }

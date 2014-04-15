@@ -49,7 +49,12 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   var y = 0
   var count = 0
 
-  this.me.visible_objects().each( function(boid){
+  var visible_objects = this.me.visible_objects()
+
+  if (visible_objects.empty$U())
+   return new Vector(0, 0)
+
+  visible_objects.each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position )
     x += target_at.get_coord(0)
     y += target_at.get_coord(1)
@@ -97,27 +102,34 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  this.me.visible_objects().each( function(boid){
+
+  var visible_objects = this.me.visible_objects()
+
+  if (visible_objects.empty$U())
+   return new Vector(0, 0)
+
+  visible_objects.each( function(boid){
    try {
-   var direction = boid.heading()
-   x += direction.get_coord(0)
-   y += direction.get_coord(1)
-   count++
- }catch(e){
+    var direction = boid.heading()
+    var aux_x
+    var aux_y
+    if (! (isNaN( aux_x = direction.get_coord(0) ) || isNaN( aux_y = direction.get_coord(1) ))){
+     x += aux_x
+     y += aux_y
+     count++
+    }
+   }catch(e){
     alert("Something went wrong when calculating heading for boid " + boid.id)
- }
+   }
   })
   var velocity = this.me.geo_data.velocity
-  
+
   if(count == 0)
-    return new Vector(0, 0)
+   return new Vector(0, 0)
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
-  //alert(velocity.Coord)
-  //alert(desired_velocity.subs(velocity))
 
   return desired_velocity.subs(velocity)
-  //return new Vector(0, 0)
 }
 
 
@@ -129,26 +141,26 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
  * @constructor Cohesion Behavior
  *
  * @return {CohesionBehavior}
-*/
+ */
 
 CohesionBehavior.prototype = new Behavior
 CohesionBehavior.prototype.constructor = CohesionBehavior
 CohesionBehavior.prototype.super = Behavior
 
 function CohesionBehavior(){
-  Behavior.apply(this, arguments)
+ Behavior.apply(this, arguments)
 }
 
 CohesionBehavior.prototype.desired_acceleration = function(){
-  var x = 0
-  var y = 0
-  var count = 0
-  this.me.visible_objects().each( function(boid){
-   var direction = boid.position
-      x += direction.get_cord(0)
-      y += direction.get_cord(1)
-      count++
-  })
+ var x = 0
+ var y = 0
+ var count = 0
+ this.me.visible_objects().each( function(boid){
+  var direction = boid.position
+  x += direction.get_cord(0)
+  y += direction.get_cord(1)
+  count++
+ })
   var velocity = this.me.geo_data.velocity
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 

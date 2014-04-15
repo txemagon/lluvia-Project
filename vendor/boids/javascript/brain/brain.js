@@ -10,24 +10,16 @@ function Brain(body){
    var that = this
    this.behaviors = []
 
-   // var string = "pursue < seek > arrival > pursue"
-   // var b_name = Behavior.decompose_name(string)
-   // string = "new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')"
-   // alert(string)
-
-
      /* GOAL BEHAVIORS */
    this.behaviors.push(
-     [ "seek > arrival" , "flee", "wander","wander around", "pursue",
-       "alignment", "wall following", "path following"
+     [ "alignment", "seek > arrival" , "flee", "wander","wander around", "pursue",
+       "wall following", "path following"
      ].inject( new BehaviorSet(), function(behavior, set){
            var b_name = Behavior.decompose_name(behavior)
            set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
 	   return set
 	 })
      )
-// Arrival is a BehaviorModifier (not a Behavior anymore)
-// As long as  "pursue" and "evade" can be got with a BehaviorModifier now are part of named behaviors
 
      /* SECURITY BEHAVIORS */
    this.behaviors.push(
@@ -52,7 +44,7 @@ Brain.prototype.can_be_in$U = function(behavior){
 
 Brain.prototype.activate = function(){
   for (var i=0; i<arguments.length; i++){
-    do_something = arguments[i]
+    var do_something = arguments[i]
     this.behaviors.each(function(this_behavior){
         if (this_behavior.can$U(do_something))
           this_behavior.activate(do_something)
@@ -92,6 +84,12 @@ Brain.prototype.get_behavior = function(b_name){
   })
 }
 
+/**
+ *
+ * accelerations = { none: new Vector(0,0),
+ *                   alignment:  new Vector(ax, ay)
+ *                 }
+ */
 Brain.prototype.desired_accelerations = function(){
   return this.behaviors.inject( { none: new Vector(0,0) }, function(el_group, accelerations){
           var da = el_group.desired_accelerations() || {}
