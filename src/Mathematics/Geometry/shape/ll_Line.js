@@ -55,15 +55,15 @@ Line.distance = function(line1, line2){
 * ###Example
 *    |
 */
-Line.prototype.get_intersection = function(line2){
+Line.get_intersection = function(line1, line2){
 	// 1º Conseguir los valores para la ecuacion general de la recta => Ax + By + C = 0
 	// Sabiendo dos puntos podemos averiguar la ecuacion punto-pendiente => y-y1 = m(x-x1)
-	var y1 = this.v1.get_coord(1)
-	var x1 = this.v1.get_coord(0)
-	var m1 = slope_line(this)
+	var y1 = line1.initial_point.get_coord(1)
+	var x1 = line1.initial_point.get_coord(0)
+	var m1 = slope_line(line1)
 
-	var y2 = line2.v1.get_coord(1)
-	var x2 = line2.v1.get_coord(0)
+	var y2 = line2.initial_point.get_coord(1)
+	var x2 = line2.initial_point.get_coord(0)
 	var m2 = slope_line(line2)
 
 	// Despejamos lo anterior para obtener la formula general 
@@ -81,7 +81,7 @@ Line.prototype.get_intersection = function(line2){
 	var determinante = (A1 * B2) - (B1 * A2)
 	var x = ((C1* B2) - (B1*C2)) / determinante
 	var y = ((A1* C2) - (C1*A2)) / determinante
-
+	//alert(x +" , "+ y)
 	return new Vector(x,y)  
 }
 
@@ -120,7 +120,7 @@ Line.intersects$U = function(line1, line2){
 *    |
 */
 function slope_line(line){
-	var m = (line.director.get_coord(1) - line.initial_point.get_coord(1)) / (line.director.get_coord(0) - line.initial_point.get_coord(0))
+	var m = (line.get_final_point().get_coord(1) - line.initial_point.get_coord(1)) / (line.get_final_point().get_coord(0) - line.initial_point.get_coord(0))
 	return m
 }
 

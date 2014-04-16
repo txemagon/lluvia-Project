@@ -1,47 +1,50 @@
-assert("Check if two lines intersect",
+assert("Calculate the slope of a line",
+    "m", '-0.5',  
+  'l1 = new StraightLine(new Vector(4,2), new Vector(2,3));  \
+   m = slope_line(l1)')
+
+
+assert("Check if two lines not intersect",
+    "inter", 'false',  
+  'l1 = new StraightLine(new Vector(0,1), new Vector(1,0));  \
+   l2 = new StraightLine(new Vector(0,2), new Vector(2,0));  \
+   inter = Line.intersects$U(l1, l2)')
+
+assert("Check if two lines intersect in first quadrant",
     "inter", 'true',  
-  'l1 = new StraightLine(new Vector(0,1), new Vector(1,0)),  \
-   l2 = new StraightLine(new Vector(0,2), new Vector(1,0)),  \
+  'l1 = new StraightLine(new Vector(1,0), new Vector(3,3));  \
+   l2 = new StraightLine(new Vector(0,3), new Vector(3,0));  \
+   inter = Line.intersects$U(l1, l2)')
+
+assert("Check if two lines intersect in second quadrant",
+    "inter", 'true',  
+  'l1 = new StraightLine(new Vector(-4,3), new Vector(-3,2));  \
+   l2 = new StraightLine(new Vector(-2,3), new Vector(-3,2));  \
    inter = Line.intersects$U(l1, l2)')
 
 
+assert("Check if two lines intersect in third quadrant SIN HACER",
+    "inter", 'true',  
+  'l1 = new StraightLine(new Vector(1,0), new Vector(3,3));  \
+   l2 = new StraightLine(new Vector(0,3), new Vector(3,0));  \
+   inter = Line.intersects$U(l1, l2)')
 
+assert("Check if two lines intersect in fourth quadrant SIN HACER",
+    "inter", 'true',  
+  'l1 = new StraightLine(new Vector(1,0), new Vector(3,3));  \
+   l2 = new StraightLine(new Vector(0,3), new Vector(3,0));  \
+   inter = Line.intersects$U(l1, l2)')
 
+assert("Check if two lines intersect one vertical and other horizontal",
+    "inter", 'true',  
+  'l1 = new StraightLine(new Vector(1,1), new Vector(6,1));  \
+   l2 = new StraightLine(new Vector(2,3), new Vector(2,-4));  \
+   inter = Line.intersects$U(l1, l2)')
 
+assert("Cut point of a horizontal line and a vertical",
+    "inter", '[1,1]',  
+  'l1 = new StraightLine(new Vector(-1,-1), new Vector(1,1));  \
+   l2 = new StraightLine(new Vector(0,2), new Vector(2,0));  \
+   inter = Line.get_intersection(l1, l2)')
 
-/*
-
-
-assert("Use of start function when creating new CodeBlockFinder",
-  "a.text", "'{return 1+2}'",
-  "a = new CodeBlockFinder('function sum(){return 1+2}'); \
-  a.start()")
-
-assert("Use of start function when pasing variables to the function",
-  "a.text", "'{return num1+num2}'",
-  "a = new CodeBlockFinder('function sum(num1, num2){return num1+num2}'); \
-  a.start()")
-
-assert("Use of start function when pasing a function",
-  "a.text", "'{sq_radious = function {return r*r}}'",
-  "a = new CodeBlockFinder('function pi(){sq_radious = function {return r*r}}'); \
-  a.start()")
-
-assert("Use of start function when pasing a function and variables (it should be working!!)",
-  "a.text", "'{ sq_radious = function {return r*r}, pi_num = 3.141516, return sq * pi_num}'",
-  "a = new CodeBlockFinder('function pi(){ \
-    sq_radious = function {return r*r}, \
-    pi_num = 3.141516, \
-    return sq * pi_num}'); \
-  a.start()")
-
-assert("Use of start function when pasing two functions (it should be working!!)",
-  "a.text", "'{ power = function {return r*r}; sum = function {return r+r}}'",
-  "a = new CodeBlockFinder('function(){ \
-    power = function {return r*r}, \
-    sum = function {return r+r}}'); \
-  a.start()")
-
-
-*/
 
