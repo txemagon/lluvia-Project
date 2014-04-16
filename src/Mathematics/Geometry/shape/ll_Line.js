@@ -22,8 +22,34 @@ Line.prototype.distance = function(line2){
 	return d
 }
 
-Line.prototype.get_intersection = function(){
+Line.prototype.get_intersection = function(line2){
+	// 1º Conseguir los valores para la ecuacion general de la recta => Ax + By + C = 0
+	// Sabiendo dos puntos podemos averiguar la ecuacion punto-pendiente => y-y1 = m(x-x1)
+	var y1 = this.v1.get_coord(1)
+	var x1 = this.v1.get_coord(0)
+	var m1 = pendiente_recta(this)
 
+	var y2 = line2.v1.get_coord(1)
+	var x2 = line2.v1.get_coord(0)
+	var m2 = pendiente_recta(line2)
+
+	// Despejamos lo anterior para obtener la formula general 
+	// Ax + By + C = 0
+	var A1 = m1 
+	var B1 = -1 
+	var C1 = (m1*x1) + (-y1)
+
+	var A2 = m2
+	var B2 = -1
+	var C2 = (m2*x2) + (-y2)
+
+	// 2º Resolver el sistema de dos ecuaciones por cramer a capon 
+
+	var determinante = (A1 * B2) - (B1 * A2)
+	var x = ((C1* B2) - (B1*C2)) / determinante
+	var y = ((A1* C2) - (C1*A2)) / determinante
+
+	return new Vector(x,y)  
 }
 
 Line.prototype.intersects$U = function(line2){
