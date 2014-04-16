@@ -6,6 +6,7 @@
     <title>Pigs and Sheeps</title>
     <script type="text/javascript" src="javascript/dependencies.js" ></script>
     <script type="text/javascript" src="../../src/lluvia.js" ></script>
+    <script type="text/javascript" src="javascript/menu_animation.js"></script>
     <link type="text/css" rel="stylesheet" href="css/lluvia.css" ></link>
     <link type="text/css" rel="stylesheet" href="css/pigsandsheeps.css" ></link>
   </head>
@@ -14,14 +15,27 @@
 	      <div id="header">
 		      <img src="images/logoPink.png" id="logo" alt="logo"/>
 		      <img src="images/sheep.png" id="sheep" alt="sheep"/>
-	      </div>	
+	      </div>
+        <div id="menu"> 
+            <div id="desplegable" onMouseOver="change_image();" onMouseOut="first_image();">
+              <div id="menu_image"><img id="menu_img" src="images/sheep1.png"></div>
+              <div id="menu_title"><b>MENU</b></div>              
+            </div>
+            <div class="opcion"><b>Start</b></div>
+            <div class="opcion"><b>Restart Level</b></div>
+            <div class="opcion"><b>Instructions</b></div>
+        </div>	
      	  <div id="canvas">
           <!-- tabindex is necessary to capture keyboard -->
+          <div id="timer"><b><span id="minutes">2</span>:<span id="seconds">00</span></b></div>
 		      <canvas id="screener" width="850" height="500" tabindex="1"></canvas>
+
 	      </div>
+        
 	      <div id="main_screen">  
-		      <input type="button" value="PLAY" id="play_button"></input>
+		      <input type="button" value="PLAY" id="play_button" onclick="countdown();"></input>
 	      </div>
+
       </div>	
       <div id="footer">
 	     <p>Copyright Mar&iacutea, Estefan&iacutea, Laura</p>

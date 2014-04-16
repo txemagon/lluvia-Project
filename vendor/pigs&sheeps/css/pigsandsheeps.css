@@ -2,6 +2,7 @@ body{
 background-color: #52CC29;
 margin: 0;
 padding: 0;
+font-family: courier;
 }
 
 #container{
@@ -28,6 +29,70 @@ margin-top: 30px;
 margin-right: 144px;
 }
 
+#menu{
+	border:3px solid #bdae68;
+	width:150px;
+	float:left;
+	height:50px;
+	-webkit-transition: all 1s ease-in-out 1s;
+	-moz-transition: all 1s ease-in-out 1s;
+	-ms-transition: all 1s ease-in-out 1s;
+	-o-transition: all 1s ease-in-out 1s;
+	overflow:hidden;
+}
+
+#menu:hover{
+	height:210px;
+}
+
+#desplegable{
+	border-bottom:3px solid #bdae68;
+	width:150px;
+	height:50px;
+	float:left;
+	background-color: #ffff99;
+	color:#ff33ff;	
+	font-size:24px;
+}
+#desplegable:hover {	
+	cursor:pointer;
+}
+
+#menu_title{
+	float:left;
+	padding-top:10px;
+}
+
+#menu_image{
+	float:left;	
+	margin-left:20px;
+	padding-top:5px;
+}
+
+#menu_img{
+	width:40px;
+	height:40px;
+}
+
+.opcion{
+	border-bottom:3px solid #bdae68;
+	width:150px;
+	height:40px;
+	float:left;
+	background-color: #ffff99;
+	color:#ff33ff;
+	padding-top:10px;
+	text-align:center;
+	font-size:18px;
+	
+}
+.opcion:hover{
+	color:#ffff99;
+	background-color:#ff33ff;
+	cursor:pointer;
+}
+
+
 #canvas{
 width: 852px;
 height: 502px;
@@ -37,6 +102,19 @@ border: 1px solid black;
 }
 
 #screener{
+}
+
+#timer{
+	position:absolute;
+	width:50px;
+	height:25px;
+	border:3px solid #bdae68;
+	background-color: #efeeac;
+	color:#996842;
+	padding-top:5px;
+	text-align:center;
+	margin-top:5px;
+	margin-left:790px;
 }
 
 #main_screen{
