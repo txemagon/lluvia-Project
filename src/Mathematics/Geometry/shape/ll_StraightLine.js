@@ -8,12 +8,9 @@
  StraightLine.super = Line
 
  function StraightLine(initial_point, final_point) {
- 	var initial point = initial_point
- 	var final_point = final_point
+ 	this.initial point = initial_point
  	var that = this
- 	var director = new Vector(0, 0)
-
- 	director = final_point.subs(initial_point)
+ 	this.director = new Vector( final_point.subs( new Vector(initial_point) ) )
 
  }
 
@@ -24,28 +21,28 @@
 
  StraightLine.prototype.get_final_point = function(){
 
- 	return director
+ 	return new Vector( this.initial_point.add(this.director))
  }
 
   StraightLine.prototype.at = function(lambda){
-  	var selected_point
 
-  	selected_point = initial_point.subs( director.add(lambda) )
+  	var x = this.director.get_coord(0) * lambda
+  	var y = this.director.get_coord(1) * lambda  	
 
- 	return selected_point
+ 	return director(x, y).subs( initial_point )
  }
 
  StraightLine.prototype.get_tangent = function(lambda){
- 	var lambda = lambda || 0.1
- 	var tangent = director.unit()
+ 	var lambda = lambda || 0.1 
 
- 	return tangent
+ 	return director.unit()
  }
 
  StraightLine.prototype.get_normal = function(lambda){
  	var lambda = lambda || 0.1
  	var t = get_tangent()
- 	var normal = new Vector(0, 0)
+
+ 	var normal = 
 
  	return normal
  }
