@@ -42,7 +42,9 @@
  	var lambda = lambda || 0.1
  	var t = get_tangent()
 
- 	var normal = 
+ 	var x = this.t.get_coord(0)
+ 	var y = this.t.get_coord(1)
+ 
+ 	return director(-y, x)
 
- 	return normal
  }
