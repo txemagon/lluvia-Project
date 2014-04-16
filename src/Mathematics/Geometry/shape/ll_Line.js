@@ -1,7 +1,7 @@
 /**
  * @class Line
  * 
- * Description 
+ * Define method for lines and curves
  *
  * @property {Number} Permissible error in the calculations with Line 
  *
