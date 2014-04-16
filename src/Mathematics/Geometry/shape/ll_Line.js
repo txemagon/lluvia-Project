@@ -7,6 +7,38 @@ function Line() {
 	const ERROR = 0.00001
 }
 
+Line.prototype.distance = function(line2){
+	var d = 0
+	if(!this.intersects$U(line2)){
+		// Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
+		//                         __   _     _
+		//dist(P,r) = Area/Base = |RP x d| / |d|
+		var RP = new Vector(this.v1.get_coord(0) - line2.v1.get_coord(0), this.v2.get_coord(1) - line2.v2.get_coord(1), 0)
+		var d = new Vector(this.v1.get_coord(0) - this.v2.get_coord(0), this.v1.get_coord(1) - this.v2.get_coord(1), 0)
+		var RP_module = RP.cross(d).module() 
+		var d_module = d.module()
+		d = RP_module / d_module
+	}
+	return d
+}
+
+Line.prototype.get_intersection = function(){
+
+}
+
+Line.prototype.intersects$U = function(line2){
+	m1 = pendiente_recta(this)
+	m2 = pendiente_recta(line2)
+	if(m1 === m2)
+		return false // Son paralelas
+	return true
+}
+
+function pendiente_recta(line){
+	var m = (line.v2.get_coord(1) - line.v1.get_coord(1)) / (line.v2.get_coord(0) - line.v1.get_coord(0))
+	return m
+}
+
 Line.prototype.get_initial_point = function() {
 	throw "virtual function invocation: Please define get_initial_point():Vector"
 }
