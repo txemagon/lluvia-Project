@@ -40,7 +40,7 @@
 
  StraightLine.prototype.get_normal = function(lambda){
  	var lambda = lambda || 0.1
- 	var t = get_tangent()
+ 	var t = this.get_tangent()
 
  	var x = this.t.get_coord(0)
  	var y = this.t.get_coord(1)
