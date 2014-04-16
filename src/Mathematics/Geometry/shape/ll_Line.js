@@ -3,6 +3,8 @@
  * Define method for lines and curves
  */
 
+ Line.prototype.constructor = new Line
+
 function Line() {
 	const ERROR = 0.00001
 }
