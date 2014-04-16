@@ -8,7 +8,7 @@
  StraightLine.super = Line
 
  function StraightLine(initial_point, final_point) {
- 	this.initial point = initial_point
+ 	this.initial_point = initial_point
  	var that = this
  	this.director = new Vector( final_point.subs( new Vector(this.initial_point) ) )
 
