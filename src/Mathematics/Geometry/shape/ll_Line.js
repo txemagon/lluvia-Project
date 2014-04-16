@@ -13,7 +13,7 @@ Line.prototype.distance = function(line2){
 		// Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
 		//                         __   _     _
 		//dist(P,r) = Area/Base = |RP x d| / |d|
-		var RP = new Vector(this.v1.get_coord(0) - line2.v1.get_coord(0), this.v2.get_coord(1) - line2.v2.get_coord(1), 0)
+		var RP = new Vector(this.v1.get_coord(0) - line2.v1.get_coord(0), this.v1.get_coord(1) - line2.v1.get_coord(1), 0)
 		var d = new Vector(this.v1.get_coord(0) - this.v2.get_coord(0), this.v1.get_coord(1) - this.v2.get_coord(1), 0)
 		var RP_module = RP.cross(d).module() 
 		var d_module = d.module()
