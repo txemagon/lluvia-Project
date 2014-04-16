@@ -1,14 +1,32 @@
 /**
- * @class       Line
- * Define method for lines and curves
+ * @class Line
+ * 
+ * Description 
+ *
+ * @property {Number} Permissible error in the calculations with Line 
+ *
+ * @constructor Line
+ *
  */
-
- Line.prototype.constructor = new Line
+Line.prototype.constructor = new Line
 
 function Line() {
 	const ERROR = 0.00001
 }
 
+/**
+* @method distance
+* @static
+*
+* Calculate the distance between two lines
+*
+* @param {Object} line2 Second line for calculations  
+* 
+* @return {Number} d Distance between lines 
+*
+* ###Example
+*    |
+*/
 Line.prototype.distance = function(line2){
 	var d = 0
 	if(!this.intersects$U(line2)){
@@ -24,16 +42,29 @@ Line.prototype.distance = function(line2){
 	return d
 }
 
+/**
+* @method get_intersection
+* @static
+*
+* Calculate the cut point two line
+*
+* @param {Object} line2 Second line for calculations  
+* 
+* @return {Object} vector Cut point
+*
+* ###Example
+*    |
+*/
 Line.prototype.get_intersection = function(line2){
 	// 1º Conseguir los valores para la ecuacion general de la recta => Ax + By + C = 0
 	// Sabiendo dos puntos podemos averiguar la ecuacion punto-pendiente => y-y1 = m(x-x1)
 	var y1 = this.v1.get_coord(1)
 	var x1 = this.v1.get_coord(0)
-	var m1 = pendiente_recta(this)
+	var m1 = slope_line(this)
 
 	var y2 = line2.v1.get_coord(1)
 	var x2 = line2.v1.get_coord(0)
-	var m2 = pendiente_recta(line2)
+	var m2 = slope_line(line2)
 
 	// Despejamos lo anterior para obtener la formula general 
 	// Ax + By + C = 0
@@ -54,18 +85,45 @@ Line.prototype.get_intersection = function(line2){
 	return new Vector(x,y)  
 }
 
+/**
+* @method intersects$U
+* @static
+*
+* Check if two lines intersect
+*
+* @param {Object} line2 Second line for calculations
+* 
+* @return {Boolean} 
+*
+* ###Example
+*    |
+*/
 Line.prototype.intersects$U = function(line2){
-	m1 = pendiente_recta(this)
-	m2 = pendiente_recta(line2)
+	m1 = slope_line(this)
+	m2 = slope_line(line2)
 	if(m1 === m2)
 		return false // Son paralelas
 	return true
 }
 
-function pendiente_recta(line){
+/**
+* @method slope line
+* @static
+*
+* Internal functions. Calculate the slope line 
+*
+* @param {Object} line Line for calculations
+* 
+* @return {Number} m The slope line 
+*
+* ###Example
+*    |
+*/
+function slope_line(line){
 	var m = (line.v2.get_coord(1) - line.v1.get_coord(1)) / (line.v2.get_coord(0) - line.v1.get_coord(0))
 	return m
 }
+
 /**
  * 
  * @method get_initial_point
@@ -126,7 +184,8 @@ Line.prototype.get_arc_length = function() {
 	//Note: lambda = lambda || 1
 	throw "virtual function invocation: Please define get_arc_length([lambda:Number=1]):Number"
 }
-ç/**
+
+/**
  * 
  * @method get_tangent
  * @virtual
@@ -141,18 +200,52 @@ Line.prototype.get_tangent = function() {
 	throw "virtual function invocation: Please define get_tangent(lambda:Number):Vector"
 }
 
+/**
+ * 
+ * @method get_normal
+ * @virtual
+ *
+ * Calculates the coordinates of the normal vector to the straight line according to lambda.
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_normal = function() {
 	throw "virtual function invocation: Please define get_normal(lambda:Number):Vector"
 }
 
+/**
+ * 
+ * @method get_perpendicular
+ * @virtual
+ *
+ * Calculates the coordinates of the perpendicular vector to the straight line according to lambda.
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_perpendicular = function() {
 	throw "virtual function invocation: Please define get_perpendicular([point:Vector | iterator:Number]):StraightLine"
 }
 
+/**
+ * 
+ * @method belongs_to
+ * @virtual
+ *
+ * Description
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.belongs_to = function() {
 	throw "virtual function invocation: Please define belongs_to(point:Vector):Boolean"
 }
 
+/*
 Line.prototype.intersects$U = function() {
 	throw "virtual function invocation: Please define intersects(line:Line):Boolean"
 }
@@ -160,3 +253,4 @@ Line.prototype.intersects$U = function() {
 Line.prototype.get_intersection = function() {
 	throw "virtual function invocation: Please define get_intersection(line:Line):Vector"
 }
+*/
