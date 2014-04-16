@@ -81,19 +81,62 @@ Line.prototype.get_initial_point = function() {
 	throw "virtual function invocation: Please define get_initial_point():Vector"
 }
 
+/**
+ * 
+ * @method get_final_point
+ * @virtual
+ *
+ * Gets the final coordinates of the defined vector
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_final_point = function() {
 	throw "virtual function invocation: Please define get_final_point():Vector"
 }
 
+/**
+ * 
+ * @method at
+ * @virtual
+ *
+ * Gets the coordinates of the defined vector at a given point represented by lambda
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.at = function() {
 	throw "virtual function invocation: Please define at(lambda:Number):Vector"
 }
 
+/**
+ * 
+ * @method get_arc_length
+ * @virtual
+ *
+ * Calculates the length of an arc
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_arc_length = function() {
 	//Note: lambda = lambda || 1
 	throw "virtual function invocation: Please define get_arc_length([lambda:Number=1]):Number"
 }
-
+ç/**
+ * 
+ * @method get_tangent
+ * @virtual
+ *
+ * Calculates the coordinates of the tangent to the straight line according to lambda
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_tangent = function() {
 	throw "virtual function invocation: Please define get_tangent(lambda:Number):Vector"
 }

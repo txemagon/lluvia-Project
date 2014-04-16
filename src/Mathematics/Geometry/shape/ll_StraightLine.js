@@ -67,7 +67,7 @@
  * @method get_tangent
  * @static
  *
- * Gets the initial point of the defined vector
+ * Calculates the coordinates of the tangent to the straight line according to lambda
  *
  * @param  {Number} lamba [Optional] Number type double between 0 and 1 
  * 
@@ -83,7 +83,7 @@
  * @method get_normal
  * @static
  *
- * Gets the initial point of the defined vector
+ * Calculates the coordinates of the normal Vector of the given one
  *
  * @param  {Number} lamba [Optional] Number type double between 0 and 1 
  * 
