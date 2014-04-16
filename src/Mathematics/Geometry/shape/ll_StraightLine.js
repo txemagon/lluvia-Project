@@ -14,26 +14,81 @@
 
  }
 
+/**
+ * 
+ * @method get_initial_point
+ * @static
+ *
+ * Gets the initial coordinates of the defined vector
+ *
+ * @param  {} 
+ * 
+ * @return {Vector} Returns the initial coordinates of the direction Vector  
+ */
  StraightLine.prototype.get_initial_point = function(){
 
  	return this.initial_point
  }
 
+/**
+ * 
+ * @method get_final_point
+ * @static
+ *
+ * Gets a new Vector with the final coordinates of the defined vector
+ *
+ * @param  {} 
+ * 
+ * @return {Vector} Returns the final coordinates of the direction Vector  
+ */
  StraightLine.prototype.get_final_point = function(){
 
  	return new Vector( this.initial_point.add(this.director) )
  }
 
+/**
+ * 
+ * @method at
+ * @static
+ *
+ * Gets the coordinates of the defined vector at a given point represented by lambda
+ *
+ * @param  {Number} lamba Number type double between 0 and 1
+ * 
+ * @return {Vector} Returns the coordinates calculated according to variable lambda
+ */
  StraightLine.prototype.at = function(lambda){
 
-  	return intial_point.add( this.director.scale(lamda) )
+  	return initial_point.add( this.director.scale(lamda) )
  }
 
+/**
+ * 
+ * @method get_tangent
+ * @static
+ *
+ * Gets the initial point of the defined vector
+ *
+ * @param  {Number} lamba [Optional] Number type double between 0 and 1 
+ * 
+ * @return {Vector} Returns a tangent Vector to the given one
+ */
  StraightLine.prototype.get_tangent = function(lambda){
 
  	return this.director.unit()
  }
 
+/**
+ * 
+ * @method get_normal
+ * @static
+ *
+ * Gets the initial point of the defined vector
+ *
+ * @param  {Number} lamba [Optional] Number type double between 0 and 1 
+ * 
+ * @return {Vector} Returns the perpendicular Vector of the given one
+ */
  StraightLine.prototype.get_normal = function(lambda){
 
  	var t = this.get_tangent()

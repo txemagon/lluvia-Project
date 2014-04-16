@@ -66,7 +66,17 @@ function pendiente_recta(line){
 	var m = (line.v2.get_coord(1) - line.v1.get_coord(1)) / (line.v2.get_coord(0) - line.v1.get_coord(0))
 	return m
 }
-
+/**
+ * 
+ * @method get_initial_point
+ * @virtual
+ *
+ * Gets the initial coordinates of the defined vector
+ *
+ * @param  {} 
+ * 
+ * @return {String} Returns an exception for this virtual function 
+ */
 Line.prototype.get_initial_point = function() {
 	throw "virtual function invocation: Please define get_initial_point():Vector"
 }
@@ -100,7 +110,7 @@ Line.prototype.belongs_to = function() {
 	throw "virtual function invocation: Please define belongs_to(point:Vector):Boolean"
 }
 
-Line.prototype.intersects = function() {
+Line.prototype.intersects$U = function() {
 	throw "virtual function invocation: Please define intersects(line:Line):Boolean"
 }
 
