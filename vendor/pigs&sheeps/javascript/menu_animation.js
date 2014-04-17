@@ -36,7 +36,7 @@ function countdown(){
 				sec--;
 		    }
 	    }
-	,100);
+	,1500);
 }
 function dibujarCanvas(){
 
