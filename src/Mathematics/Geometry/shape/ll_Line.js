@@ -30,12 +30,12 @@ function Line() {
 */
 Line.distance = function(line1, line2){
 	var d = 0
-	if(!line1.intersects$U(line2)){
+	if(!Line.intersects$U(line1, line2)){
 		// Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
 		//                         __   _     _
 		//dist(P,r) = Area/Base = |RP x d| / |d|
-		var RP = new Vector(line1.v1.get_coord(0) - line2.v1.get_coord(0), line1.v1.get_coord(1) - line2.v1.get_coord(1), 0)
-		var d = new Vector(line1.v1.get_coord(0) - line1.v2.get_coord(0), line1.v1.get_coord(1) - line1.v2.get_coord(1), 0)
+		var RP = new Vector(line1.get_initial_point().get_coord(0) - line2.get_initial_point().get_coord(0), line1.get_initial_point().get_coord(1) - line2.get_initial_point().get_coord(1), 0)
+		var d = new Vector(line1.get_initial_point().get_coord(0) - line1.get_final_point().get_coord(0), line1.get_initial_point().get_coord(1) - line1.get_final_point().get_coord(1), 0)
 		var RP_module = RP.cross(d).module()
 		var d_module = d.module()
 		d = RP_module / d_module
@@ -101,11 +101,9 @@ Line.get_intersection = function(line1, line2){
 *    |
 */
 Line.intersects$U = function(line1, line2){
-	m1 = slope_line(line1)
-	m2 = slope_line(line2)
-	if(m1 === m2)
-		return false // Son paralelas
-	return true
+    if(line1.director.get_coord(0) / line1.director.get_coord(1) == line2.director.get_coord(0) / line2.director.get_coord(1))
+        return false // Son paralelas    
+    return true
 }
 
 /**

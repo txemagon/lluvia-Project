@@ -41,6 +41,26 @@ assert("Check if two lines intersect one vertical and other horizontal",
    l2 = new StraightLine(new Vector(2,3), new Vector(2,-4));  \
    inter = Line.intersects$U(l1, l2)')
 
+assert("Calculating the distance between two parallel lines",
+    "Math.round(d*100)/100", '0.71',  
+  'l1 = new StraightLine(new Vector(0,2), new Vector(2,0));  \
+   l2 = new StraightLine(new Vector(0,1), new Vector(1,0));  \
+   d = Line.distance(l1, l2)')
+
+assert("Calculating the distance between two parallel lines vertical",
+    "d", '3',  
+  'l1 = new StraightLine(new Vector(1,1), new Vector(1,0));  \
+   l2 = new StraightLine(new Vector(4,3), new Vector(4,0));  \
+   d = Line.distance(l1, l2)')
+
+
+assert("Calculating the distance between two parallel lines horizontal",
+    "d", '2',  
+  'l1 = new StraightLine(new Vector(0,4), new Vector(4,4));  \
+   l2 = new StraightLine(new Vector(0,2), new Vector(4,2));  \
+   d = Line.distance(l1, l2)')
+
+
 assert("Cut point of a horizontal line and a vertical",
     "inter", '[1,1]',
   'l1 = new StraightLine(new Vector(-1,-1), new Vector(1,1));  \
