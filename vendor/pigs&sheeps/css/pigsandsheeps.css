@@ -141,6 +141,9 @@ margin: auto;
 #play_button{
 	border:none;	
 }
+#play_button:hover{
+	cursor:pointer;
+}
 
 #footer{
 background-color: #996600;
