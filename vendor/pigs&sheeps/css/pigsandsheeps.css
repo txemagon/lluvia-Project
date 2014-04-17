@@ -33,7 +33,7 @@ margin-right: 144px;
 	border:3px solid #bdae68;
 	width:150px;
 	position:absolute;
-	margin-left:180px;
+	margin-left:865px;
 	margin-top:5px;
 	height:50px;
 	-webkit-transition: all 1s ease-in-out 1s;
@@ -76,7 +76,7 @@ margin-right: 144px;
 	height:40px;
 }
 
-.opcion{
+.option{
 	border-bottom:3px solid #bdae68;
 	width:150px;
 	height:40px;
@@ -88,7 +88,7 @@ margin-right: 144px;
 	font-size:18px;
 	
 }
-.opcion:hover{
+.option:hover{
 	color:#ffff99;
 	background-color:#ff33ff;
 	cursor:pointer;
@@ -116,7 +116,7 @@ border: 1px solid black;
 	padding-top:5px;
 	text-align:center;
 	margin-top:5px;
-	margin-left:790px;
+	margin-left:5px;*/
 }
 
 #main_screen{
@@ -138,16 +138,21 @@ font-size: 36px;
 margin: auto;
 }
 
+#play_button{
+	border:none;	
+}
+
 #footer{
 background-color: #996600;
 width: 1200px;
 height: 50px;
 margin: auto;
 border: 1px solid black;
+padding-left: 20px;
 }
 
 #footer p{
-width: 300px;
+width: 365px;
 text-align: right;
 font-size: 14pt;
 }

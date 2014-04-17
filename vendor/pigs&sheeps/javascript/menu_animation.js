@@ -12,31 +12,31 @@ function countdown(){
 	seconds = document.getElementById("seconds");
 	minutes = document.getElementById("minutes");
 	 
-	timer = setInterval(
+	setInterval(
 	    function(){
-	    if(min >=0 && sec<=59){
-	     	if(sec==0){
-	            sec=60;
-	            min--;
-	            minutes.innerHTML = min;
+		    if(min >=0 && sec<=59){
+		     	if(sec==0){
+		            sec=60;
+		            min--;
+		            minutes.innerHTML = min;
 
-	        }
-	        if(min==0 && sec<=9){
-	        	seconds.style.color="red";
-	        	minutes.style.color="red";
-	        	seconds.innerHTML =  "0" + sec;
-	        	
-	        }
-	        else{	 
-			if(sec>=10)
-	        		seconds.innerHTML =  sec;	        			
-			else
-			seconds.innerHTML = "0" + sec;
-	    	}
-		sec--;
-	     }
+		        }
+		        if(min==0 && sec<=9){
+		        	seconds.style.color="red";
+		        	minutes.style.color="red";
+		        	seconds.innerHTML =  "0" + sec;
+		        	
+		        }
+		        else{	 
+					if(sec>=10)
+		        		seconds.innerHTML =  sec;	        			
+					else
+						seconds.innerHTML = "0" + sec;
+		    	}
+				sec--;
+		    }
 	    }
-	    ,1500);
+	,100);
 }
 function dibujarCanvas(){
 
@@ -50,7 +50,7 @@ function dibujarCanvas(){
 
         //cielo
         contexto.fillStyle = '#B5CDFF';
-        contexto.fillRect (0, 0, 851, 505);
+        contexto.fillRect (0, 0, 852, 502);
 
         // sol
         contexto.beginPath();
@@ -111,7 +111,7 @@ function dibujarCanvas(){
         contexto.fillStyle = 'white';  
         contexto.fill();  
         contexto.beginPath();
-        contexto.arc(800,120,41,0,Math.PI*2, true);        
+        contexto.arc(850,120,45,0,Math.PI*2, true);        
         contexto.fillStyle = 'white';  
         contexto.fill();  	
 		
@@ -122,7 +122,7 @@ function dibujarCanvas(){
 		gr.addColorStop(0,"#6B8E23");
 		gr.addColorStop(1,"#9ACD32");
 		contexto.fillStyle=gr;
-		contexto.fillRect(0,120,851, 505);
+		contexto.fillRect(0,120,852, 502);
 		contexto.fill();
 		// corral
 		//1
@@ -468,62 +468,62 @@ function dibujarCanvas(){
         //caseta
 
         contexto.beginPath();
-        contexto.moveTo(100,140);
-        contexto.lineTo(100,180);
-        contexto.lineTo(150,175);        
-        contexto.lineTo(150,135);
-        contexto.lineTo(97,140);
-        contexto.lineTo(125,100);
-        contexto.lineTo(156,136);
+        contexto.moveTo(150,140);
+        contexto.lineTo(150,180);
+        contexto.lineTo(200,175);        
+        contexto.lineTo(200,135);
+        contexto.lineTo(147,140);
+        contexto.lineTo(175,100);
+        contexto.lineTo(206,136);
         contexto.fillStyle = '#d2b681';  
         contexto.strokeStyle = "#924f3a";
         contexto.fill();        
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.moveTo(126,100);
-        contexto.lineTo(126,140);
+        contexto.moveTo(176,100);
+        contexto.lineTo(176,140);
         contexto.strokeStyle = "#924f3a";
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.moveTo(109,119);
-        contexto.lineTo(126,139);
+        contexto.moveTo(159,119);
+        contexto.lineTo(176,139);
         contexto.strokeStyle = "#924f3a";
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.moveTo(143,119);
-        contexto.lineTo(126,138);
+        contexto.moveTo(193,119);
+        contexto.lineTo(176,138);
         contexto.strokeStyle = "#924f3a";
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.moveTo(125,100);
-        contexto.lineTo(99,80);
-        contexto.lineTo(70,118); 
-        contexto.lineTo(95,142);
+        contexto.moveTo(175,100);
+        contexto.lineTo(149,80);
+        contexto.lineTo(120,118); 
+        contexto.lineTo(145,142);
         contexto.fillStyle = '#924f3a';  
         contexto.strokeStyle = "#924f3a";
         contexto.fill();        
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.moveTo(100,180);
-        contexto.lineTo(75,145);
-        contexto.lineTo(75,120);
-        contexto.lineTo(99,142);
-        contexto.lineTo(100,180);
+        contexto.moveTo(150,180);
+        contexto.lineTo(125,145);
+        contexto.lineTo(125,120);
+        contexto.lineTo(149,142);
+        contexto.lineTo(150,180);
         contexto.fillStyle = '#d2b681';  
         contexto.strokeStyle = "#924f3a";
         contexto.fill();        
         contexto.stroke();
         //puerta casa
         contexto.beginPath();
-        contexto.moveTo(130,179);
-        contexto.lineTo(130,160);
-        contexto.lineTo(124,160);
-        contexto.lineTo(124,180);
+        contexto.moveTo(180,179);
+        contexto.lineTo(180,160);
+        contexto.lineTo(174,160);
+        contexto.lineTo(174,180);
         contexto.fillStyle = '#2d2c20';  
         contexto.strokeStyle = "#2d2c20";
         contexto.fill();        
@@ -531,14 +531,14 @@ function dibujarCanvas(){
 
         //ventana
         contexto.beginPath();
-        contexto.moveTo(119,146);
-        contexto.lineTo(134,145);
+        contexto.moveTo(169,146);
+        contexto.lineTo(184,145);
         contexto.lineWidth=9;
         contexto.strokeStyle = "#2d2c20";       
         contexto.stroke();
 
         contexto.beginPath();
-        contexto.arc(126,149,5,0,Math.PI, true);
+        contexto.arc(176,149,5,0,Math.PI, true);
         contexto.fillStyle = '#f3c627';  
         contexto.fill();  
 
