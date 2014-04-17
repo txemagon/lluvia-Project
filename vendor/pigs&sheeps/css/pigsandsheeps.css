@@ -32,7 +32,9 @@ margin-right: 144px;
 #menu{
 	border:3px solid #bdae68;
 	width:150px;
-	float:left;
+	position:absolute;
+	margin-left:180px;
+	margin-top:5px;
 	height:50px;
 	-webkit-transition: all 1s ease-in-out 1s;
 	-moz-transition: all 1s ease-in-out 1s;
