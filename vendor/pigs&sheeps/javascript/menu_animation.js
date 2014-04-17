@@ -375,7 +375,7 @@ function countdown(){
 			    }
 			 }
 	    }
-	,100);
+	,1500);
 	
 	
 }
