@@ -8,8 +8,10 @@ function first_image(){
 function gameover(){
 		var canvas = document.getElementById('screener');
         var contexto = canvas.getContext('2d');
-		canvas.width=canvas.width;     
-
+		canvas.width=canvas.width;   
+		contexto.font = "bold 48px courier";  
+		contexto.fillStyle = '#ff33ff';
+		contexto.fillText("Game Over",250,80);
        	//pata 1
 		   contexto.beginPath();
 		   contexto.moveTo(285,230);
@@ -300,12 +302,9 @@ function gameover(){
 
 		   //boca triste
 		   contexto.beginPath();
-		contexto.arc(300,217,10,0,(Math.PI/180)*180,true); // media circunferencia
-		
-		//contexto.fillStyle = '#fbbbb2';
-		contexto.strokeStyle="black";
-		//contexto.fill();
-		contexto.stroke();
+		   contexto.arc(300,217,10,0,(Math.PI/180)*180,true); // media circunferencia		
+		   contexto.strokeStyle="black";		
+		   contexto.stroke();
 
 		 	//nariz
 			contexto.save();
@@ -337,7 +336,6 @@ function gameover(){
 		   contexto.strokeStyle="#F69D9A";
 		   contexto.fill();
 		   contexto.stroke();
-
         
 }
 function countdown(){
