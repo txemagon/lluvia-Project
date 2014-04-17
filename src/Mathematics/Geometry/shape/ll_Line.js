@@ -57,33 +57,41 @@ Line.distance = function(line1, line2){
 *    |
 */
 Line.get_intersection = function(line1, line2){
-	// 1º Conseguir los valores para la ecuacion general de la recta => Ax + By + C = 0
-	// Sabiendo dos puntos podemos averiguar la ecuacion punto-pendiente => y-y1 = m(x-x1)
-	var y1 = line1.initial_point.get_coord(1)
-	var x1 = line1.initial_point.get_coord(0)
-	var m1 = slope_line(line1)
+	// Meter en un boqle try??????
+	var intersection_point
+	if(Line.intersects$U(line1,line2)){
+		var x1 = line1.initial_point.get_coord(0)
+	    var y1 = line1.initial_point.get_coord(1)
+	    var v1_1 = line1.director.get_coord(0)
+	    var v2_1 = line1.director.get_coord(1)
+	//alert(x1 +","+ y1 +","+ v1_1 +","+ v2_1)
 
-	var y2 = line2.initial_point.get_coord(1)
-	var x2 = line2.initial_point.get_coord(0)
-	var m2 = slope_line(line2)
+	    var x2 = line2.initial_point.get_coord(0)
+	    var y2 = line2.initial_point.get_coord(1)
+	    var v1_2 = line2.director.get_coord(0)
+	    var v2_2 = line2.director.get_coord(1)
+	//alert(x2 +","+ y2 +","+ v1_2 +","+ v2_2)
+	//alert(line2.director.toSource())
+	//alert(line2.get_final_point().get_coord(0)-line2.initial_point.get_coord(0))
+	    var A1 = v2_1
+	    var B1 = -v1_1
+	    var C1 = (v2_1*x1) + (-v1_1*y1)
+	//alert(A1+ " , " +B1+ " , " + C1)
 
-	// Despejamos lo anterior para obtener la formula general
-	// Ax + By + C = 0
-	var A1 = m1
-	var B1 = -1
-	var C1 = (m1*x1) + (-y1)
+	    var A2 = v2_2
+	    var B2 = -v1_2                       //Aqui esta el error
+	    var C2 = (v2_2*x2) + (-v1_2*y2)      //
+	//alert(A2+ " , " +B2+ " , " + C2)
 
-	var A2 = m2
-	var B2 = -1
-	var C2 = (m2*x2) + (-y2)
+	    // 2º Resolver el sistema de dos ecuaciones por cramer a capon
+	    var determinante = (A1 * B2) - (B1 * A2)
+	    var x = ((C1* B2) - (B1*C2)) / determinante
+	    var y = ((A1* C2) - (C1*A2)) / determinante
+	//    alert(x +","+ y)
+	    intersection_point = new Vector(x,y)  
 
-	// 2º Resolver el sistema de dos ecuaciones por cramer a capon
-
-	var determinante = (A1 * B2) - (B1 * A2)
-	var x = ((C1* B2) - (B1*C2)) / determinante
-	var y = ((A1* C2) - (C1*A2)) / determinante
-	//alert(x +" , "+ y)
-	return new Vector(x,y)
+	}
+	return intersection_point
 }
 
 
