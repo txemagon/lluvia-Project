@@ -59,7 +59,7 @@
  */
  StraightLine.prototype.at = function(lambda){
 
-  	return initial_point.add( this.director.scale(lamda) )
+  	return this.initial_point.add( this.director.scale(lambda) )
  }
 
 /**
