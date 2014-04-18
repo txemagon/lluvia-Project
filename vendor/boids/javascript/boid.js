@@ -13,6 +13,7 @@
  * @return {Boid}
  */
 
+//require('Mathematics')
 
 Boid.prototype.constructor = Boid
 
@@ -135,31 +136,26 @@ Boid.prototype.delta_t = function(){
  * @method update_physics
  *
  * Calculates new position, velocity and acceleration depending on the ellapsed time.
+ *
  * @param  {Date} current_time Time for estimating coords.
  */
 Boid.prototype.update_physics = function(current_time){
-  //alert(
-  //  "Boid " + this.id +
-  //  "\nColour: " + this.colour +
-  //  "\nPosition: " + this.geo_data.position.Coord +
-  //  "\nVelocity: " + this.geo_data.velocity.Coord +
-  //  "\nAcceleration: " + this.geo_data.acceleration.Coord
-  //     )
-this.last_time = this.current_time
+  this.last_time = this.current_time
   this.current_time = current_time
   this.geo_data.acceleration = this.requested_acceleration()
   this.geo_data.velocity = integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )
   this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
-//
-//  alert(
-//    "Boid " + this.id +
-//    "\nColour: " + this.colour +
-//    "\nPosition: " + this.geo_data.position.Coord +
-//    "\nVelocity: " + this.geo_data.velocity.Coord +
-//    "\nAcceleration: " + this.geo_data.acceleration.Coord
-//       )
 }
 
+
+/**
+ * @method run
+ *
+ * Updates the time in the boid's variables
+ *
+ * @param {Date}   current_time Current time of the boid
+ * 
+ */ 
 Boid.prototype.run = function(current_time){
   if (!(current_time instanceof Date))
     return
@@ -167,6 +163,15 @@ Boid.prototype.run = function(current_time){
   this.update_physics(current_time)
 }
 
+
+/**
+ * @method draw
+ *
+ * Draws a boid into the world defined by the context
+ *
+ * @param {}   ctx Context in which to paint the Boid
+ * 
+ */ 
 Boid.prototype.draw = function(ctx){
 
   var p = this.geo_data.position;
@@ -370,15 +375,10 @@ Boid.prototype.draw = function(ctx){
  *
  * Ask the world if something is visible with my geo_data and vision abilities.
  *
- * if no param is given it calls World.visible_for(this boid) else calls visible_from
- *
  * @return {}
  */
     Boid.prototype.visible_objects = function(){
-      if ( ! arguments.length)
-        return this.my_world.visible_for(this)
-
-      return this.my_world.visible_from.apply(this.my_world, arguments)
+      return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
     }
 
 /**

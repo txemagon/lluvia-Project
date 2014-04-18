@@ -5,7 +5,7 @@
  * Creates Itinerant Behavior: flee
  *
  * @constructor
- *
+ * 
  */
 FleeBehavior.prototype = new Behavior
 FleeBehavior.prototype.constructor = FleeBehavior
@@ -19,7 +19,7 @@ function FleeBehavior(){
 /**
  * @method set_target
  *
- * Search a target boid
+ * Searches for a target boid
  *
  * @param  {Object} boid Target boid
  *
@@ -48,7 +48,7 @@ FleeBehavior.prototype.target_data = function(){
 /**
  * @method get_target
  *
- * Get a targetboid
+ * Get a targetboid 
  *
  * @return {Object} this.target_data() Position information of boid
  */
@@ -59,7 +59,7 @@ FleeBehavior.prototype.get_target = function(){
 /**
  * @method target_at
  *
- * Description
+ * Get the distance between the given boid and its target
  *
  * @return {}
  */
@@ -76,7 +76,7 @@ FleeBehavior.prototype.target_at = function(){
  */
 FleeBehavior.prototype.desired_velocity = function(){
   var arrival_distance
-  try{
+  try{ 
     arrival_distance = this.target_at().module()
   }catch(err){
     arrival_distance = 0

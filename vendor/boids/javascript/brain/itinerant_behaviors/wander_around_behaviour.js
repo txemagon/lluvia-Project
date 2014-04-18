@@ -68,7 +68,7 @@ WanderAroundBehavior.prototype.get_target = function(){
 /**
  * @method target_at
  *
- * Description
+ * Get the distance between the given boid and its target
  *
  * @return {}
  */
