@@ -7,14 +7,14 @@
 
 
 /**
- * @classDescription Creates a dashboard for handling one boid.
+ * @class BoidEditor
+ *
+ * Creates a dashboard for handling one boid.
  *
  * @param  {view} Button holder panel.
  * @return {BoidEditor}
- * @constructor
+ * @constructor BoidEditor
 */
-
-
 BoidEditor.prototype = new Device
 BoidEditor.prototype.constructor = BoidEditor
 
@@ -34,6 +34,14 @@ function BoidEditor(view){
   
 }
 
+/**
+ * @method attend_focus_boid
+ *
+ * Gives information about the boid the given boid is following
+ *
+ * @param {Date}   date 
+ * @param {String}  mssg 
+ */ 
 BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   this.view.innerHTML = "Following " + mssg.event.focus_boid.data.id + "<br/>"
   mssg.current++
@@ -44,7 +52,6 @@ WorldInterface.prototype.add_boid = function(boid){
   var gate = this.newGate("Boid_" + boid.id, BoidCollector)
   gate.boid = boid
 }
-
 
 
 BoidCollector.prototype = new Gate
