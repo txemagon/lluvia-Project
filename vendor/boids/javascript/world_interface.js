@@ -58,7 +58,19 @@ WorldInterface.prototype.attend_new_boid = function(date, mssg){
   gate.boid = boid
 }
 
-
+/**
+ * @class BoidCollector 
+ *
+ * 
+ *
+ * 
+ * @constructor BoidCollector
+ *
+ * @param  {} 
+ * @param  {} 
+ * 
+ * @return {} BoidCollector
+ */
 BoidCollector.prototype = new Gate
 BoidCollector.prototype.constructor = BoidCollector
 
@@ -76,16 +88,45 @@ function BoidCollector(el, parent){
 	if (arguments.length)
 		initialize()
 }
-	
+
+
+/**
+ * @method do_onclick
+ *
+ * When event onClick is activated, it shows a message with the given boid's information
+ *
+ * @param {Event}   event Event that has to be triggered
+ * @param {Object}  element Element that triggered the event
+ */	
 BoidCollector.prototype.do_onclick = function(event, element){
 	this.device.fireEvent(this.device.newMessage("sync", "focus_boid", this.boid))
 }
 
+
+/**
+ * @method do_onmouseover
+ *
+ * When event onMouseOver is activated, it changes the color of the panel to grey
+ * and get the focus on the given boid
+ *
+ * @param {Event}   event Event that has to be triggered
+ * @param {Object}  element Element that triggered the event
+ */
 BoidCollector.prototype.do_onmouseover = function(event, element){
   this.panel.style.color = "grey"
   this.boid.focused = true
 }
 
+
+/**
+ * @method do_onmouseout
+ *
+ * When event onMouseOut is activated, it changes the color of the panel to white
+ * and get the focus out the given boid
+ *
+ * @param {Event}   event Event that has to be triggered
+ * @param {Object}  element Element that triggered the event
+ */
 BoidCollector.prototype.do_onmouseout = function(event, element){
   this.panel.style.color = "white"
   this.boid.focused = false

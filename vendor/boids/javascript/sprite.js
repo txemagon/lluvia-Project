@@ -54,6 +54,14 @@ function Sprite(ctx, image_source, width, height) {
  **/
 
 
+/**
+ * @method next_turn_in
+ *
+ * Changes the position of the object to a current one according to the passed coordinates
+ *
+ * @param {Number}  x Current x coordinate to pass to the context
+ * @param {Number}  y Current y coordinate to pass to the context
+ */ 
 Sprite.prototype.next_turn_in = function(x, y){
    this.position.before.x = this.position.now.x
    this.position.before.y = this.position.now.y
@@ -62,6 +70,15 @@ Sprite.prototype.next_turn_in = function(x, y){
 
 }
 
+
+/**
+ * @method draw
+ *
+ * Paints the data in the context according to the passed coordinates
+ *
+ * @param {Number}  x Current x coordinate to pass to the context
+ * @param {Number}  y Current y coordinate to pass to the context
+ */ 
 Sprite.prototype.draw = function(x, y){
      
    this.next_turn_in(x, y) 
