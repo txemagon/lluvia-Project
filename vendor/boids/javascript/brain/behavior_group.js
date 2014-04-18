@@ -49,10 +49,10 @@ BehaviorGroup.prototype.activate = function(state){
 }
 
 BehaviorGroup.prototype.active_behavior = function(){
-  
+
   if (this.type == BehaviorGroup.valid_types.set)
     return this._active_behaviors[0]
- 
+
   return this._active_behaviors
 }
 
@@ -68,17 +68,17 @@ BehaviorGroup.prototype.is_active$U = function(state){
 }
 
 BehaviorGroup.prototype.desired_accelerations = function(){
-   
+
     if ( (typeof(this._active_behaviors) == "undefined"))
       return {none: new Vector(0,0)}
     var that = this
     var bh_list = this.active_behaviors()
     if (this.type == BehaviorGroup.valid_types.set)
       bh_list = [ bh_list ]
-    
+
     return bh_list.inject( {}, function(state, results){
         if (typeof(that.behavior[state]) !== "undefined")
-	  results[state] = that.behavior[state].respond_to("desired_acceleration")? that.behavior[state].desired_acceleration() : new Vector(0,0)
+          results[state] = that.behavior[state].respond_to("desired_acceleration")? that.behavior[state].desired_acceleration() : new Vector(0, 0)
 	  return results
 	})
 }
