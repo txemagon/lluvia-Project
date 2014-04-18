@@ -94,7 +94,7 @@ function Thread(solicitor){
  * @memberOf  {Thread}
  * @method    run	State machine manager.
  */
-Thread.prototype.run = function(){alert("The solicitor function remains still undefined.");}
+Thread.prototype.run = function(){ alert("The solicitor function remains still undefined."); }
 
 Automata.prototype.constructor = Automata;
 

@@ -302,7 +302,7 @@ Device.prototype.newGate = function(el, ClassCons){
  *  Make the previous definition in a derived class.
  */
 Device.prototype.attend = function(date, mssg){
-	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then whe shall provide a generic dispatcher.
+	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then we shall provide a generic dispatcher.
 }
 
 Device.prototype._y = function(htmlElement, stopAt){

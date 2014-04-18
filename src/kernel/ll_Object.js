@@ -12,9 +12,9 @@ Object.prototype.to_a = function(){
 /**
  * @method alias
  *
- * Creates a reference to an original method. Changing 
+ * Creates a reference to an original method. Changing
  * the original one behavior, the alias is also changing.
- *  
+ *
  * @param  {string} alias_name      Name of the new method.
  * @param  {string} original_method Name of the original method.
  */
@@ -24,47 +24,47 @@ Object.prototype.alias = function(alias_name, original_method){
   }
 }
 /*
- * 
+ *
  * a = {a: 2, b:3}
  * b = Object.extend(a)
  * alert(b.a)
  * b.a++
  * alert(a.a)
  * alert(b.a)
- * 
+ *
  * RESULTS
  * 2,2,3
- * 
+ *
  * CONCLUSIONS
- * 
- * As long as the constructor $F is an inner function each time we extend/create an object 
+ *
+ * As long as the constructor $F is an inner function each time we extend/create an object
  * we get a different object, and, thus, a different prototype. In this way we don't share the
  * prototipical attribute a and b.
  */
 
 
- 
+
 Object._$NUM_ERR = 0.000001
 
 Object.prototype.inspect = function(sp){
 	sp = sp || [""]
 	var output = "{\n"
 	sp.push("")
-	if (sp.length > 3) 
+	if (sp.length > 3)
 		return ""
 	for (var i in this){
-		output += sp.join("\t") + i + ": \t" 
-		
+		output += sp.join("\t") + i + ": \t"
+
 		if (this[i] != null)
 			if (typeof(this[i]) == "object")
 				output += (this[i].toSource? this[i].toSource(sp): this[i])
-			else	
+			else
 				output += this[i]
 		else
 			output += "null"
 		output += " \n "
-	
-	}	
+
+	}
 	sp.pop()
 	output += sp.join("\t") + "}"
 	return output
@@ -117,7 +117,7 @@ Object.prototype.eql$U = function(model){
 }
 // Ruby no tiene esta clase. to_a solamente está en String y Array...
 /*Object.prototype.to_a = function(){
-  var that = [] 
+  var that = []
   that.push(this)
   return that
 }*/
@@ -128,7 +128,7 @@ function _$innerObject(that, parentName){
 	return function(){
 		var clss = arguments[0]
 		var args = []
-		for (var i = 1; i < arguments.length; i++) 
+		for (var i = 1; i < arguments.length; i++)
 			args.push(arguments[i])
 		function $F_innerObj(){
 			if (parentName)
@@ -139,7 +139,7 @@ function _$innerObject(that, parentName){
 		}
 		$F_innerObj.prototype = new arguments[0]
 		$F_innerObj.prototype.constructor = arguments[0]
-		
+
 		return $F_innerObj
 	}
 }
@@ -156,11 +156,11 @@ Object.prototype._trust = true
 Object.prototype._FROZEN = false
 
 Object.prototype.taint  = function (){
-  this.tainted = true  
+  this.tainted = true
 }
 
 Object.prototype.untaint  = function (){
-  this.tainted = false  
+  this.tainted = false
 }
 
 Object.prototype.tainted$U  = function (){
@@ -168,11 +168,11 @@ Object.prototype.tainted$U  = function (){
 }
 
 Object.prototype.trust  = function (){
-  this._trust = true  
+  this._trust = true
 }
 
 Object.prototype.untrust  = function (){
-  this._trust = false  
+  this._trust = false
 }
 
 Object.prototype.untrusted$U = function (){
@@ -232,7 +232,7 @@ Object.prototype.value = function (){
 }
 
 Object.prototype.is_a$U = function (clss){
- return this instanceof clss 
+ return this instanceof clss
 }
 
 Object.prototype.kind_of$U = function (clss){
@@ -253,12 +253,12 @@ Object.prototype.instance_of$U = function (clss){
  *      function N(){
  *         this.a = 2;
  *      }
- *      
+ *
  *      n = new N()
  *      n.set_a(3)
  *      n.get_a()
- *      //=> 3     
- *       
+ *      //=> 3
+ *
  * @param  {string} method Method name
  * @param  {Object} obj   Scope of the method call
  * @param  {Array} params List of params of the method call
@@ -266,7 +266,7 @@ Object.prototype.instance_of$U = function (clss){
 Object.prototype.method_missing = function (method, obj, params){
   var that = this
   function bad_function(){
-    throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') )) 
+    throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') ))
   }
 
   function is_in(list, word){
