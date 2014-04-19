@@ -237,8 +237,13 @@ function Device(view, state, currentState, parent){
  * Simulates multithreading for each gate by calling the run method.
  */
 Device.prototype.gateRunner = function(){
-		for (var i=0; i<this.gates.length; i++)
-			this.gates[i].run(this.now, this.before)
+        
+		for (var i=0; i<this.gates.length; i++) {
+			//alert(this.gates[i].keys())
+			//alert( "Gate " + i + ": " + this.gates[i].currentState.toSource())
+			this.gates[i].run( this.now, this.before )
+
+		}
 }
 
 /**

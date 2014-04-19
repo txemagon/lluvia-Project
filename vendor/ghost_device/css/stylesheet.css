@@ -10,5 +10,17 @@
 }
 
 .ghost{
-	opacity: 0;
+	opacity: 0.1;
+	position: relative;
 }
+
+#ghost1{
+	position-top: 20px;
+	position-left: 20px;
+}
+
+#ghost2{}
+
+#ghost3{}
+
+#ghost4{}
