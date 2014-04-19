@@ -11,10 +11,10 @@ Home_App.prototype.constructor = Home_App
 function Home_App(view){
 	var that = this
 	var args = arguments
-	
+
 	/* Events */
 	this.self_events = ["app_down", "app_pause"]
-	
+
 	function initialize(){
 		Device.call(that, view)
 		that.threads.push( new God("godHome", null, null, that) )
@@ -24,10 +24,10 @@ function Home_App(view){
 		that.newGate("portafolios", Sender)
 		that.solicitors[that.getStates().killing][1] = that.killing
 	}
-	
+
 	if (arguments.length)
 		initialize()
-		
+
 }
 Home_App.prototype.sendMessage = function(type, name, data, receiptant){
 	this.threads[3].eventDispatcher.enqueue(this.newMessage(type, name, data))
@@ -41,10 +41,10 @@ Home_App.prototype.newMessage = function(type, name, data){
 Home_App.prototype.killing = function(){
 	this.gateRunner(this.now)
 	var end = true
-	for (var i = 0; i < this.gates.length; i++) 
-		if (this.gates[i].threads[0].currentState.current != this.gates[i].threads[0].state.down) 
+	for (var i = 0; i < this.gates.length; i++)
+		if (this.gates[i].threads[0].currentState.current != this.gates[i].threads[0].state.down)
 			end = false
-		
+
 	if (end)
 		this.currentState.requested = this.getStates().killed
 }
@@ -57,22 +57,22 @@ Home_App.prototype.Har_Mageddon_back = function(){
 Sender.prototype = new Gate
 Sender.prototype.constructor = Sender
 
-function Sender(el){ 
-	var that = this	
-	
+function Sender(el){
+	var that = this
+
 	function initialize(){
 		that.y = 0
 		that.el = el
 		that[el] = {}
 		Gate.call(that, el)
 		that.panel.style.position = "relative"
-		that[el].edificio_over = that.newEffect(new Edificio_over(that.device, that))
+		that[el].edificio_over = that.new_effect(new Edificio_over(that.device, that))
 	}
 
 	if (arguments.length)
 		initialize()
 }
-	
+
 Sender.prototype.do_onclick = function(event, element){
 	this.device.sendMessage("sync", "Har_Mageddon", null, this.device)
 }
@@ -90,7 +90,7 @@ Edificio_over.prototype.constructor = Edificio_over
 
 function Edificio_over(processor, gate){
 	var that = this
-	
+
 	this.y0 = this.y = 0//Device.prototype._y(that.gate.panel)
 	this.y1 = - 30
 	this.v = 2
@@ -103,13 +103,13 @@ function Edificio_over(processor, gate){
 	this.now = new Date()
 	this.before = new Date()
 	var state = this.state = new Enumeration("down", "rising", "top", "descending")
-	this.currentState = { 	previous:  state.down, 
-							current:   state.down, 
+	this.currentState = { 	previous:  state.down,
+							current:   state.down,
 							requested: state.down
 						}
-	this.solicitors = [ 
+	this.solicitors = [
 	/* down */
-	[ 
+	[
 	function(){
 		this.y = this.y0;
 		this.shadow.style.top = (- this.k2 * this.y) + "px"
@@ -161,8 +161,8 @@ function Edificio_over(processor, gate){
 		this.time   = this.now
 	},
 	function(){
-		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y) 
-		this.y += (this.now - this.before) / 1000 * this.v 
+		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y)
+		this.y += (this.now - this.before) / 1000 * this.v
 		this.gate.panel.style.top = this.y + "px"
 		this.shadow.style.top = (- this.k2 * this.y) + "px"
 		if (this.y >= this.y0)
@@ -173,7 +173,7 @@ function Edificio_over(processor, gate){
 	}
 	]
 	]
-	
+
 	function initialize(){
 		that.gate = gate
 		ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, processor)

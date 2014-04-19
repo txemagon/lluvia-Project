@@ -12,7 +12,7 @@ function God(view, state, currentState, parent){
     var that = this;
 	var args = arguments
 	var self_events = ["Har_Mageddon"]
-	
+
     /* class reference for instance objects */
     this._class = that
 	this.view = view || document.body
@@ -20,7 +20,7 @@ function God(view, state, currentState, parent){
     this.maxWidth = screen.width
     this.lastCycle = null
 	this.human = []
-    
+
     /* Inherit */
 	function initialize(){
 		Device.apply(that, args)
@@ -34,14 +34,14 @@ function God(view, state, currentState, parent){
 		that.view.style.position = "absolute"
 		//that.view.style.backgroundColor = "#0000FF"
 		that.view.style.width    = that.w_s + "px"
-		that.view.style.height   = that.h_s + "px" 
+		that.view.style.height   = that.h_s + "px"
 		that.view.style.top      = that.t_s + "px"
 		that.view.style.left     = that.l_s + "px"
 		that.view.style.zIndex   = 1000
 		that.newMan( _random_prop(animations) )
 	}
-    
-	
+
+
 	if (arguments.length)
 		initialize()
 }
@@ -49,12 +49,12 @@ function God(view, state, currentState, parent){
 God.prototype.newMan = function(name){
     try {
         var AHuman = this.openDevice(Human)
-        var person = new AHuman(name) // new AHuman("simon", "powerwalk", 32, "D")// 
+        var person = new AHuman(name) // new AHuman("simon", "powerwalk", 32, "D")//
         this.human.push(person)
 		setTimeout(this.generations.bind(this), 10000 + Math.random() * 10000)
-    } 
+    }
     catch (e) {
-        if ($K_debug_level >= $KC_dl.DEVELOPER) 
+        if ($K_debug_level >= $KC_dl.DEVELOPER)
             alert("No event handlers were found.\nException: " + e.toSource())
     }
 }
@@ -69,20 +69,20 @@ God.prototype.run = function(){
 		this.movieOrigin = arguments[0]
 		this.lastCycle = this.movieOrigin
 	}
-    for (var i = 0; i < this.human.length; i++) 
+    for (var i = 0; i < this.human.length; i++)
         this.human[i].run(arguments[0])
     this.lastCycle = arguments[0]
-	
+
 }
 
 God.prototype.kill = function(human){
 	try {
-	for (var i = 0; i < this.human.length; i++) 
+	for (var i = 0; i < this.human.length; i++)
 		if (this.human[i] === human)
 			this.human.splice(i, 1)
 	} catch (e) {
-		if ($K_debug_level >= $KC_dl.PROGRAMMER) 
-			alert("God has some rebels that don't want to die.")	
+		if ($K_debug_level >= $KC_dl.PROGRAMMER)
+			alert("God has some rebels that don't want to die.")
 	}
 }
 
@@ -96,7 +96,7 @@ God.prototype.attend_Har_Mageddon = function(date, mssg){
 			mssg.creation.creator[mssg.name + "_back"]("All dead")
 		this.currentState.requested = this.getStates().killed
 	} catch (e) {
-		if ($K_debug_level >= $KC_dl.PROGRAMMER) 
+		if ($K_debug_level >= $KC_dl.PROGRAMMER)
 			alert("Har Mageddon has failed.\nException: " + e.toSource())
 	}
 }
@@ -116,7 +116,7 @@ function Human(name, state, size, dir){
 			"elder": 700,
 			"walk": 1020
 	}
-	
+
 	var msgs = [
 		"Ouch !",
 		"mmmh !",
@@ -128,7 +128,7 @@ function Human(name, state, size, dir){
 		"-=-",
 		"jajaja"
 	]
-	
+
 	this.getMessage = function(){
 		return msgs[Math.floor(Math.random() * msgs.length )]
 	}
@@ -136,7 +136,7 @@ function Human(name, state, size, dir){
 		var k = this.size / 50
 		return anim_speeds[this.state] * k || 1605
 	}
-	
+
 	function initialize(){
 		that.name  = name
 		that.state = state || _random_prop(animations[that.name])
@@ -159,17 +159,17 @@ function Human(name, state, size, dir){
 			that.Y = 8 + Math.floor(Math.random() * 16) - 8
 			that.panel.style.zIndex = 3
 		}
-    	that.setx(that.X)
+	that.setx(that.X)
 		that.sety(that.Y)
-		that.panel.style.backgroundImage = that.the_image() 
-    	that.panel.style.width = that.size + "px"
+		that.panel.style.backgroundImage = that.the_image()
+	that.panel.style.width = that.size + "px"
 		that.panel.style.height = (that.size * 2 - 10) +"px"
 		that.panel.style.position = "absolute"
-		
+
 	}
-	
-    if (arguments.length) 
-	    initialize()    
+
+    if (arguments.length)
+	    initialize()
 }
 
 Human.prototype.kill = function(){
@@ -180,11 +180,15 @@ Human.prototype.kill = function(){
 Human.prototype.run = function(){
 	this.frame = Math.ceil((arguments[0] - this.device.movieOrigin) / this.fr) % 31
 	this.panel.style.backgroundImage = this.the_image()
-	this.setx(this.X + this.vx * (arguments[0] - this.device.lastCycle) / 1000)
+//	alert("x: " + this.X +
+//	      "\nVx: " + this.vx +
+//	      "\nTime: " + this.device.now +
+//	      "\nlast: " + this.device.before)
+	this.setx(this.X + this.vx * ( (this.device.now - this.device.before) || 0 ) / 2000)
 	if (this.bubble) {
-		if (this.bubble > 0) 
-			this.bubble = 4 - (arguments[0] - this.bubble_t)/1000
-		if (this.bubble < 0) 
+		if (this.bubble > 0)
+			this.bubble = 4 - (arguments[0] - this.bubble_t)/2000
+		if (this.bubble < 0)
 			this.bubble = 0
 		this.panel.firstChild.style.opacity = this.bubble;
 		this.panel.firstChild.style.filter = 'alpha(opacity=' + this.bubble/10 + ')';
@@ -202,13 +206,13 @@ Human.prototype.c_frame = function(){
 	var d = 0
 	var f = this.frame
 	var p = []
-	
+
 	while (f>=1){
 		f = f / 10
 		d++
 	}
 	d = 4 - d
-	
+
 	while(d>0){
 		p.push("")
 		d--
@@ -233,12 +237,12 @@ Human.prototype.x = function(){return this.X;}
 Human.prototype.y = function(){return this.Y;}
 
 function _random_prop(obj){
-	var ak = obj.keys()
+	var ak = obj.self_keys()
 	return ak[Math.floor(Math.random() * ak.length)]
 }
 
 Human.prototype.do_onclick = function(){
-	this.bubble = 100 
+	this.bubble = 100
 	this.bubble_t = new Date()
     this.panel.innerHTML = "<div style='position: relative; top: -12px; color: #" + this.color() + ";'>" + this.getMessage()+ "</div>"
 }

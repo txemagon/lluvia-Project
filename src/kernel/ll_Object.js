@@ -123,6 +123,13 @@ Object.prototype.eql$U = function(model){
 }*/
 ////////////////////////////////////////////////////////////////////
 
+/**
+ * @method _$innerObject
+ *
+ *
+ * @param {Object} that
+ * @param {String} parentName
+ */
 function _$innerObject(that, parentName){
 	var me = that
 	return function(){

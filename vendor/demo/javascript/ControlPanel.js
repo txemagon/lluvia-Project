@@ -11,10 +11,10 @@ ControlPanel_App.prototype.constructor = Home_App
 function ControlPanel_App(view){
 	var that = this
 	var args = arguments
-	
+
 	/* Events */
 	this.self_events = ["go_to"]
-	
+
 	function initialize(){
 		Device.call(that, view)
 		that.newGate(that.view, SlideMenu)
@@ -24,23 +24,23 @@ function ControlPanel_App(view){
 		that.newGate("plantillas$MG", SenderMG)
 		that.newGate("portafolio$MG", SenderMG)
 	}
-	
+
 	if (arguments.length)
 		initialize()
-		
+
 }
 
 SlideMenu.prototype = new Gate
 SlideMenu.prototype.constructor = SlideMenu
 
-function SlideMenu(el){ 
-	var that = this	
+function SlideMenu(el){
+	var that = this
 	function initialize(){
 		that.el = el
 		that[el] = {}
 		Gate.call(that, el)
 		that.panel.style.position = "relative"
-		that[el].slideMenu_over = that.newEffect(new SlideMenu_over(that.device, that))
+		that[el].slideMenu_over = that.new_effect(new SlideMenu_over(that.device, that))
 	}
 
 	if (arguments.length)
@@ -61,7 +61,7 @@ SlideMenu_over.prototype.constructor = SlideMenu_over
 
 function SlideMenu_over(processor, gate){
 	var that = this
-	
+
 	this.y0 = this.y = 0//Device.prototype._y(that.gate.panel)
 	this.y1 = - 150
 	this.v = 2
@@ -74,13 +74,13 @@ function SlideMenu_over(processor, gate){
 	this.now = new Date()
 	this.before = new Date()
 	var state = this.state = new Enumeration("down", "rising", "top", "descending")
-	this.currentState = { 	previous:  state.down, 
-							current:   state.down, 
+	this.currentState = { 	previous:  state.down,
+							current:   state.down,
 							requested: state.down
 						}
-	this.solicitors = [ 
+	this.solicitors = [
 	/* down */
-	[ 
+	[
 	function(){
 		this.y = this.y0;
 		this.gate.panel.style.top = this.y + "px"
@@ -130,8 +130,8 @@ function SlideMenu_over(processor, gate){
 		this.time   = this.now
 	},
 	function(){
-		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y) 
-		this.y += (this.now - this.before) / 1000 * this.v 
+		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y)
+		this.y += (this.now - this.before) / 1000 * this.v
 		this.gate.panel.style.top = this.y + "px"
 		this.gate.panel.style.height = (this.y0 - this.y + this.h) + "px"
 		if (this.y >= this.y0)
@@ -142,7 +142,7 @@ function SlideMenu_over(processor, gate){
 	}
 	]
 	]
-	
+
 	function initialize(){
 		that.gate = gate
 		ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, processor)
@@ -157,9 +157,9 @@ function SlideMenu_over(processor, gate){
 SenderMG.prototype = new Gate
 SenderMG.prototype.constructor = SenderMG
 
-function SenderMG(el){ 
-	var that = this	
-	
+function SenderMG(el){
+	var that = this
+
 	function initialize(){
 		that.el = el
 		that[el] = {}
@@ -169,8 +169,8 @@ function SenderMG(el){
 	if (arguments.length)
 		initialize()
 }
-	
-SenderMG.prototype.do_onclick = function(event, element){ 
+
+SenderMG.prototype.do_onclick = function(event, element){
 	this.el.match(/(.*)\$MG/)
 	this.device.fireEvent(systemEv("sync", {name: "go_to", data: RegExp.$1}, this.device))
 }

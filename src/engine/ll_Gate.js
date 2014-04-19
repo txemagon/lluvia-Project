@@ -52,48 +52,54 @@ function _stitchWorlds(gate, solicitor){
  *
  *     function Button(element){
  *
- *     	try {
- *     		if (arguments.length)
- *     			Gate.call(this, element)	// Call to the super constructor (it does all the work).
- *     	} catch (e) {
- *     		if ($K_debug_level >= $KC_dl.DEVELOPER)
- *     			alert("No event handlers were found.\nException: " + e.toSource())
- *     	}
+ *		try {
+ *			if (arguments.length)
+ *				Gate.call(this, element)	// Call to the super constructor (it does all the work).
+ *		} catch (e) {
+ *			if ($K_debug_level >= $KC_dl.DEVELOPER)
+ *				alert("No event handlers were found.\nException: " + e.toSource())
+ *		}
  *     }
  *
  *     Button.prototype.do_onclick   = function(event, element){
- *     	alert("You have made click.")
+ *		alert("You have made click.")
  *     }
  *
  */
 function Gate(element, parent){
 	var that = this
+	var args = arguments
+
 	function initialize(){
-		if (element)
+		if (element){
 			if (typeof(element) === "string")
-			 if (document.getElementById(element))
-				element = document.getElementById(element)
-			 else{
-			   var element_name = element
-			   element = document.createElement("div")
-			   element.setAttribute('id', element_name)
-			   if (parent){
-			     if (typeof (parent) === "string" )
-			       parent = document.getElementById(parent)
-			     if (parent) parent.appendChild(element)
-			     }
-			 }
-		that.panel = element
-		that.keys(/do_.*/).each(function(handler){
-				handler.match( /do_(.*)/ )
-				that.panel[RegExp.$1] = _stitchWorlds(that, handler)
-			})
+				if (document.getElementById(element))
+					element = document.getElementById(element)
+			else{
+				var element_name = element
+				element = document.createElement("div")
+				element.setAttribute('id', element_name)
+				if (parent){
+					if (typeof (parent) === "string" )
+						parent = document.getElementById(parent)
+					if (parent) parent.appendChild(element)
+				}
+			}
+			that.panel = element
+		}
+
 		if (!element) {
+			that.panel = document.createElement("div")
 			if (parent)
 				parent.appendChild(that.panel)
 			else
 				document.body.appendChild(that.panel)
 		}
+
+		that.keys(/do_.*/).each(function(handler){
+            handler.match( /do_(.*)/ )
+            that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+		})
 
 		that.threads = []
 	}
@@ -123,7 +129,7 @@ Gate.prototype.applySkin = function(skin){
  */
 Gate.prototype.run = function(now, before){
 	for (var i=0; i<this.threads.length; i++)
-		this.threads[i].run(now, before)
+	this.threads[i].run(now, before)
 }
 
 /**

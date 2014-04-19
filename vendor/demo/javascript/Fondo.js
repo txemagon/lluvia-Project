@@ -10,10 +10,10 @@ Fondo_App.prototype.constructor = Fondo_App
 function Fondo_App(view){
     var that = this
     var args = arguments
-    
+
     /* Events */
     this.self_events = ["go_to"]
-    
+
     function initialize(){
         Device.call(that, view)
         that.pant = new Enumeration("home_App", "llaveEnMano_App", "servicios_App", "plantillas_App", "portafolio_App")
@@ -26,10 +26,10 @@ function Fondo_App(view){
         that.destinyApp = null
         that.threads.push(that.transit = new App_transit(that))
     }
-    
-    if (arguments.length) 
+
+    if (arguments.length)
         initialize()
-    
+
 }
 
 Fondo_App.prototype.attend_go_to = function(date, mssg){
@@ -38,7 +38,7 @@ Fondo_App.prototype.attend_go_to = function(date, mssg){
         this.transit.currentState.requested = this.transit.state.killing
 
     }
-    
+
 }
 
 App_transit.prototype = new ThreadAutomata
@@ -46,7 +46,7 @@ App_transit.prototype.constructor = App_transit
 
 function App_transit(app_mgr){
     var that = this
-    
+
     this.v = 2
     this.v0 = 12
     this.k = 1.7
@@ -82,7 +82,7 @@ function App_transit(app_mgr){
         this.v += (this.now - this.before) / 1000 * this.k * (this.x1 - this.x) - 0.009 * this.v * (1 - (this.x1 - this.x) / (this.x1 - this.x0))
         this.x += ((this.now - this.before) / 1000 * this.v)
         this.app_mgr.view.style.left = -this.x + "px"
-        if (Math.abs(this.x1 - this.x) <= this.etha) 
+        if (Math.abs(this.x1 - this.x) <= this.etha)
             this.currentState.requested = state.activating
     }, function(){
         ;
@@ -109,12 +109,12 @@ function App_transit(app_mgr){
         ;
     }
 ]]
-    
+
     function initialize(){
         ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, app_mgr)
         that.app_mgr = app_mgr
     }
-    if (arguments.length) 
+    if (arguments.length)
         initialize()
 }
 

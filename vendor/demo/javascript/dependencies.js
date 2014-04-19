@@ -17,7 +17,7 @@ $K_app_dependencies = [
 			{name: "Edificios.js", description: "People device handler"}
 		]
 	},
-	
+
 	{	module: "sunny",
 		description: "External application defined by third party (lluvia client, not lluvia user)",
 		path: "",

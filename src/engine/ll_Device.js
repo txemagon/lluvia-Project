@@ -216,8 +216,8 @@ function Device(view, state, currentState, parent){
 */
 
 /**
- * @method getSolicitors 
- * 
+ * @method getSolicitors
+ *
  * Return the array of solicitors.
  *
  * @return {Array} Array of three functions (up, steady and running) by state, packed in a global array.
@@ -237,13 +237,10 @@ function Device(view, state, currentState, parent){
  * Simulates multithreading for each gate by calling the run method.
  */
 Device.prototype.gateRunner = function(){
-        
-		for (var i=0; i<this.gates.length; i++) {
-			//alert(this.gates[i].keys())
-			//alert( "Gate " + i + ": " + this.gates[i].currentState.toSource())
+
+		for (var i=0; i<this.gates.length; i++) 
 			this.gates[i].run( this.now, this.before )
 
-		}
 }
 
 /**
@@ -406,7 +403,7 @@ Device.prototype.sendMessage = function(type, name, data, receiptant){
 /**
  * @method method_missing
  *
- * Throws an exception when a method is not defined, unless someone has used the 
+ * Throws an exception when a method is not defined, unless someone has used the
  * camel case version of an existing method. In that particular case it recovers
  * from the crash and executes the call.
  *
