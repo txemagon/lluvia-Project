@@ -21,6 +21,7 @@ function Line() {
 *
 * Calculate the distance between two lines
 *
+* @param {Object} line1 First line for calculations
 * @param {Object} line2 Second line for calculations
 *
 * @return {Number} d Distance between lines
@@ -49,49 +50,41 @@ Line.distance = function(line1, line2){
 *
 * Calculate the cut point two line
 *
+* @param {Object} line1 First line for calculations
 * @param {Object} line2 Second line for calculations
 *
 * @return {Object} vector Cut point
-*
+* 
 * ###Example
 *    |
 */
 Line.get_intersection = function(line1, line2){
-	// Meter en un boqle try??????
-	var intersection_point
-	if(Line.intersects$U(line1,line2)){
-		var x1 = line1.initial_point.get_coord(0)
-	    var y1 = line1.initial_point.get_coord(1)
-	    var v1_1 = line1.director.get_coord(0)
-	    var v2_1 = line1.director.get_coord(1)
-	//alert(x1 +","+ y1 +","+ v1_1 +","+ v2_1)
+	/* __     __   __       __    
+	 * r0 + λ*vr = s0 + ß * vs
+	 * 
+	 * ... un porron de calculos despues ...
+	 * 
+	 * ß = (r1 - s1) + vr1*(s0-r0) / vs1 - vr1*(vs0/vr0)
+	 *                      __       __
+	 * punto_interseccion = s0 + ß * vs
+	 */
+	if(Line.intersects$U(line1, line2)){
+		var r0 = line1.initial_point.get_coord(0)
+		var r1 = line1.initial_point.get_coord(1)
+		var vr0 = line1.director.get_coord(0)
+		var vr1 = line1.director.get_coord(1)
 
-	    var x2 = line2.initial_point.get_coord(0)
-	    var y2 = line2.initial_point.get_coord(1)
-	    var v1_2 = line2.director.get_coord(0)
-	    var v2_2 = line2.director.get_coord(1)
-	//alert(x2 +","+ y2 +","+ v1_2 +","+ v2_2)
-	//alert(line2.director.toSource())
-	//alert(line2.get_final_point().get_coord(0)-line2.initial_point.get_coord(0))
-	    var A1 = v2_1
-	    var B1 = -v1_1
-	    var C1 = (v2_1*x1) + (-v1_1*y1)
-	//alert(A1+ " , " +B1+ " , " + C1)
+		var s0 = line2.initial_point.get_coord(0)
+		var s1 = line2.initial_point.get_coord(1)
+		var vs0 = line2.director.get_coord(0)
+		var vs1 = line2.director.get_coord(1)
 
-	    var A2 = v2_2
-	    var B2 = -v1_2                       //Aqui esta el error
-	    var C2 = (v2_2*x2) + (-v1_2*y2)      //
-	//alert(A2+ " , " +B2+ " , " + C2)
+		var ß = ((r1 - s1) + (vr1*(s0-r0))) / (vs1 - (vr1*(vs0/vr0)))
 
-	    // 2º Resolver el sistema de dos ecuaciones por cramer a capon
-	    var determinante = (A1 * B2) - (B1 * A2)
-	    var x = ((C1* B2) - (B1*C2)) / determinante
-	    var y = ((A1* C2) - (C1*A2)) / determinante
-	//    alert(x +","+ y)
-	    intersection_point = new Vector(x,y)  
-
+		var intersection = line2.initial_point.add(line2.director.scale(ß))
+		
+		return intersection
 	}
-	return intersection_point
 }
 
 
@@ -101,6 +94,7 @@ Line.get_intersection = function(line1, line2){
 *
 * Check if two lines intersect
 *
+* @param {Object} line1 First line for calculations
 * @param {Object} line2 Second line for calculations
 *
 * @return {Boolean}

@@ -1,3 +1,4 @@
+
 assert("Calculate the slope of a line.",
     "m", '-0.5',
   'l1 = new StraightLine(new Vector(4,2), new Vector(2,3));  \
@@ -9,7 +10,7 @@ assert("Calculate the slope of a horizontal line.",
    m = slope_line(l1)')
 
 assert("Calculate the slope of a vertical line(tan 90º is indetermined).",
-    "m", 'undefined',  
+    "m", '"-Infinity"',  
   'l1 = new StraightLine(new Vector(3,3), new Vector(3,-3));  \
    m = slope_line(l1)')   
 
@@ -89,50 +90,81 @@ assert("Calculating the distance between two lines equals.",
   'l1 = new StraightLine(new Vector(0,4), new Vector(4,4));  \
    l2 = new StraightLine(new Vector(0,4), new Vector(4,4));  \
    d = Line.distance(l1, l2)')
-// Punto de corte de dos lienas que no se cortan
-assert(".", 
+
+assert("Cutoff of two lines that do not intersect.", 
     "p", 'undefined',  
   'l1 = new StraightLine(new Vector(1,0), new Vector(0,-1));  \
    l2 = new StraightLine(new Vector(2,0), new Vector(0,-2));  \
    p = Line.get_intersection(l1, l2)')
 
-// Punto de corte de dos lineas iguales
-assert(".", 
+assert("Point cut two equal lines.", 
     "p", 'undefined',  
   'l1 = new StraightLine(new Vector(1,0), new Vector(0,-1));  \
    l2 = new StraightLine(new Vector(1,0), new Vector(0,-1));  \
    p = Line.get_intersection(l1, l2)')
 
-// Punto de corte en el eje X
-assert("Cut off point two lines in first quadrant.", 
+assert("Cutoff in the x axis.", 
     "p", '[2,0]',  
   'l1 = new StraightLine(new Vector(0,2), new Vector(2,0));  \
    l2 = new StraightLine(new Vector(0,-2), new Vector(2,0));  \
    p = Line.get_intersection(l1, l2)')
 
-// Punto de corte en el eje X  dando el punto de corte
-assert(".", 
+assert("Cutoff in the x axis.", 
     "p", '[3,0]',  
   'l1 = new StraightLine(new Vector(0,1), new Vector(3,0));  \
    l2 = new StraightLine(new Vector(0,-3), new Vector(3,0));  \
    p = Line.get_intersection(l1, l2)')
 
-//La misma recta pero con otras coodernadas
-assert(".", 
+assert("Cutoff of a horizontal line and a vertical.", 
+    "p", '[2,1]',  
+  'l1 = new StraightLine(new Vector(0,1), new Vector(1,1));  \
+   l2 = new StraightLine(new Vector(2,-1), new Vector(2,-2));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cutoff of a horizontal line and a vertical(bis).", 
+    "p", '[2,1]',  
+  'l1 = new StraightLine(new Vector(-5,1), new Vector(1,1));  \
+   l2 = new StraightLine(new Vector(2,-2), new Vector(2,-1));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cutoff of two lines", 
+    "p", '[4,10]',  
+  'l1 = new StraightLine(new Vector(1,1), new Vector(2,4));  \
+   l2 = new StraightLine(new Vector(7,1), new Vector(6,4));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cutoff of two lines.", 
     "p", '[3,0]',  
-  'l1 = new StraightLine(new Vector(6,-1), new Vector(3,0));  \
+  'l1 = new StraightLine(new Vector(0,1), new Vector(6,-1));  \
    l2 = new StraightLine(new Vector(0,-3), new Vector(-9,-12));  \
    p = Line.get_intersection(l1, l2)')
 
-
-// Que se corten dos lineas en el primer cuadrante
-assert("No funciona!!!!!! .", 
+assert("Cutoff of two lines(Not working!!).", 
     "p", '[4,2]',  
   'l1 = new StraightLine(new Vector(0,4), new Vector(7,0));  \
    l2 = new StraightLine(new Vector(2,0), new Vector(-2,0));  \
    p = Line.get_intersection(l1, l2)')
-// Punto de corte en el segundo cuadrante
-// Punto de corte en el tercer cuadrante
-// Punto de corte en el cuarto cuadrante
-// Punto de corte siendo una vertical y otra horizontal
-// Punto de corte en eje de coordenadas
+
+assert("Cut off point two lines in first quadrant.", 
+    "p", '[1,1]',  
+  'l1 = new StraightLine(new Vector(-1,3), new Vector(3,-1));  \
+   l2 = new StraightLine(new Vector(-1,-1), new Vector(2,2));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cut off point two lines in second quadrant.", 
+    "p", '[-3,3]',  
+  'l1 = new StraightLine(new Vector(-1,5), new Vector(-5,1));  \
+   l2 = new StraightLine(new Vector(-1,-3), new Vector(-4,6));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cut off point two lines in third quadrant.", 
+    "p", '[-2,-2]',  
+  'l1 = new StraightLine(new Vector(-4,-3), new Vector(2,0));  \
+   l2 = new StraightLine(new Vector(-3,2), new Vector(-1,-4));  \
+   p = Line.get_intersection(l1, l2)')
+
+assert("Cutoff point of two lines in the coordinate axis.", 
+    "p", '[0,0]',  
+  'l1 = new StraightLine(new Vector(4,0), new Vector(-4,0));  \
+   l2 = new StraightLine(new Vector(0,3), new Vector(0,-8));  \
+   p = Line.get_intersection(l1, l2)')
