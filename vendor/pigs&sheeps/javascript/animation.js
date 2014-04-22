@@ -1,20 +1,30 @@
 Animation.prototype = new Gate
 Animation.prototype.constructor = Animation
 
-function Animation(source, element) {
+function Animation(element) {
 
-this.source = source
+	var that = this
 
-    try {
-if (element)
-Gate.call(this, element)	// Call to the super constructor (it does all the work).
-    } catch (e) {
-if ($K_debug_level >= $KC_dl.DEVELOPER)
-alert("No event handlers were found.\nException: " + e.toSource())
-    }
+	function initialize(){
+	    try {
+	        if (element) {
+	        	that.element = element
+	        	that[element] = {}
+	            Gate.call(that, element)	// Call to the super constructor (it does all the work).
+                //threadAutomata aqui
+	        }
+	    } catch (e) {
+	        if ($K_debug_level >= $KC_dl.DEVELOPER)
+	           alert("No event handlers were found.\nException: " + e.toSource())
+	    }
+	}
+
+	if (arguments.length)
+	    initialize()
 }
 
 
-Animation.prototype.do_onmouseover = function(event, element){
-    alert(this.source)
+
+Animation.prototype.do_onmouseover = function(ev, el){
+    alert(this.element)
 }
