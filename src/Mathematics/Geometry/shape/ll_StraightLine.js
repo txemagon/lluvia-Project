@@ -103,14 +103,14 @@
  /**
  * @method get_arc_length
  *
- * Description
+ * Calculates the distance from the origin to the point associated with lambda
  *
- * @param  {Number} lamba [Optional] Number type double between 0 and 1 
+ * @param  {Number} lamba [Optional] Number type double
  * 
- * @return {Vector} Returns the perpendicular Vector of the given one
+ * @return {Object} distance 
  */
  StraightLine.prototype.get_arc_length = function(lambda){
- 	var lambda = lambda | 1	
+ 	var lambda = lambda || 1	
  	var distance = lambda * this.director.module()
  	return distance
  }
@@ -118,34 +118,35 @@
  /**
  * @method get_arc_length
  *
- * Description
+ * Returns true if the squared distance between the point and the line is less than Line :: ERROR
  *
  * @param  {Vector} point  
  * 
  * @return {Boolean} 
  */
- // Modificar Line.distance para que acepte puntos ademas de lineas!!!!!!!!!
- StraightLine.prototype.belongs_to$U = function(point){  
+ StraightLine.prototype.belongs_to$U = function(point){ 
+
  	if(Math.pow(Line.distance(this, point),2) < this.ERROR)
  		return true
+
  	return false
  }
 
   /**
- * @method get_arc_length
+ * @method get_perpendicular
  *
- * Description
+ * Calculate a line perpendicular
  *
- * @param  {Vector} point  
+ * @param  {Number | Object} position_vector A number or vector to calculate the line  
  * 
- * @return {Boolean} 
+ * @return {Object} line_perpendicular The line perpendicular
  */
  StraightLine.prototype.get_perpendicular = function(position_vector){  
  	if(typeof position_vector === "number")
  		position_vector = this.at(position_vector)
 
- 	var line_perpendicular = new StraightLine(position_vector, 0,0)
-		line_perpendicular.director = this.normal()
+ 	var line_perpendicular = new StraightLine(position_vector, new Vector(0,0))
+		line_perpendicular.director = this.get_normal()
 
  	return line_perpendicular
  }

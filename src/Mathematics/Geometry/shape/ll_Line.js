@@ -12,30 +12,36 @@
 Line.prototype.constructor = new Line
 
 function Line() {
-	const ERROR = 0.00001
+	this.ERROR = 0.00001
 }
 
 /**
 * @method distance
 * @static
 *
-* Calculate the distance between two lines
+* Calculate the distance between two lines or one line and point
 *
 * @param {Object} line1 First line for calculations
-* @param {Object} line2 Second line for calculations
+* @param {Object | Object} StraightLine || Vector shape2 Second param for calculations
 *
-* @return {Number} d Distance between lines
+* @return {Number} d Distance between lines or one line and point
 *
 * ###Example
 *    |
 */
-Line.distance = function(line1, line2){
+Line.distance = function(line1, shape2){
+	// Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
+	if(shape2 instanceof Vector)
+		shape2 = new StraightLine(shape2, new Vector( shape2.get_coord(0) + (1*(line1.director.get_coord(0))), shape2.get_coord(1) + (1*(line1.director.get_coord(1)))))
+
 	var d = 0
-	if(!Line.intersects$U(line1, line2)){
+	if(!Line.intersects$U(line1, shape2)){
+		//if(shape2 instanceof Vector)
+		//	shape2 = new StraightLine(shape2, 0,0)
 		// Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
 		//                         __   _     _
 		//dist(P,r) = Area/Base = |RP x d| / |d|
-		var RP = new Vector(line1.get_initial_point().get_coord(0) - line2.get_initial_point().get_coord(0), line1.get_initial_point().get_coord(1) - line2.get_initial_point().get_coord(1), 0)
+		var RP = new Vector(line1.get_initial_point().get_coord(0) - shape2.get_initial_point().get_coord(0), line1.get_initial_point().get_coord(1) - shape2.get_initial_point().get_coord(1), 0)
 		var d = new Vector(line1.get_initial_point().get_coord(0) - line1.get_final_point().get_coord(0), line1.get_initial_point().get_coord(1) - line1.get_final_point().get_coord(1), 0)
 		var RP_module = RP.cross(d).module()
 		var d_module = d.module()
