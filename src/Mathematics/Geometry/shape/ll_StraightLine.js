@@ -99,3 +99,62 @@
  	return new Vector(-y, x)
 
  }
+
+ /**
+ * @method get_arc_length
+ *
+ * Description
+ *
+ * @param  {Number} lamba [Optional] Number type double between 0 and 1 
+ * 
+ * @return {Vector} Returns the perpendicular Vector of the given one
+ */
+ StraightLine.prototype.get_arc_length = function(lambda){
+ 	var lambda = lambda | 1	
+ 	var distance = lambda * this.director.module()
+ 	return distance
+ }
+
+ /**
+ * @method get_arc_length
+ *
+ * Description
+ *
+ * @param  {Vector} point  
+ * 
+ * @return {Boolean} 
+ */
+ // Modificar Line.distance para que acepte puntos ademas de lineas!!!!!!!!!
+ StraightLine.prototype.belongs_to$U = function(point){  
+ 	if(Math.pow(Line.distance(this, point),2) < this.ERROR)
+ 		return true
+ 	return false
+ }
+
+  /**
+ * @method get_arc_length
+ *
+ * Description
+ *
+ * @param  {Vector} point  
+ * 
+ * @return {Boolean} 
+ */
+ StraightLine.prototype.get_perpendicular = function(position_vector){  
+ 	if(typeof position_vector === "number")
+ 		position_vector = this.at(position_vector)
+
+ 	var line_perpendicular = new StraightLine(position_vector, 0,0)
+		line_perpendicular.director = this.normal()
+
+ 	return line_perpendicular
+ }
+
+
+
+
+
+
+
+
+
