@@ -31,7 +31,7 @@ function main(){
    $logger = new $Logger()
    world   = new World('screener')
    game    = new GameControl('screener')
-
+   new MenuHandler("menu")
 
    play = new Button("play_button",  { onclick: function(event, element){
       start_game()
