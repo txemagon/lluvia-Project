@@ -2,4 +2,4 @@ function BasicObject(){
 
 }
 
-BasicObject.prototype.alias("keys", "self_keys")
+//BasicObject.prototype.alias("keys", "self_keys")

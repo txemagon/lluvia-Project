@@ -8,22 +8,22 @@
  StraightLine.super = Line
 
  function StraightLine(initial_point, final_point) {
- 	this.initial_point = initial_point
  	var that = this
- 	this.director = new Vector( final_point.subs( new Vector(this.initial_point) ) )
+ 	this.initial_point = new Vector(initial_point)
+ 	this.director = new Vector(final_point).subs( this.initial_point )
 
  }
 
 /**
- * 
+ *
  * @method get_initial_point
  * @static
  *
  * Gets the initial coordinates of the defined vector
  *
- * @param  {} 
- * 
- * @return {Vector} Returns the initial coordinates of the direction Vector  
+ * @param  {}
+ *
+ * @return {Vector} Returns the initial coordinates of the direction Vector
  */
  StraightLine.prototype.get_initial_point = function(){
 
@@ -31,15 +31,15 @@
  }
 
 /**
- * 
+ *
  * @method get_final_point
  * @static
  *
  * Gets a new Vector with the final coordinates of the defined vector
  *
- * @param  {} 
- * 
- * @return {Vector} Returns the final coordinates of the direction Vector  
+ * @param  {}
+ *
+ * @return {Vector} Returns the final coordinates of the direction Vector
  */
  StraightLine.prototype.get_final_point = function(){
 
@@ -47,14 +47,14 @@
  }
 
 /**
- * 
+ *
  * @method at
  * @static
  *
  * Gets the coordinates of the defined vector at a given point represented by lambda
  *
  * @param  {Number} lamba Number type double between 0 and 1
- * 
+ *
  * @return {Vector} Returns the coordinates calculated according to variable lambda
  */
  StraightLine.prototype.at = function(lambda){
@@ -63,14 +63,14 @@
  }
 
 /**
- * 
+ *
  * @method get_tangent
  * @static
  *
  * Calculates the coordinates of the tangent to the straight line according to lambda
  *
- * @param  {Number} lamba [Optional] Number type double between 0 and 1 
- * 
+ * @param  {Number} lamba [Optional] Number type double between 0 and 1
+ *
  * @return {Vector} Returns a tangent Vector to the given one
  */
  StraightLine.prototype.get_tangent = function(lambda){
@@ -79,14 +79,14 @@
  }
 
 /**
- * 
+ *
  * @method get_normal
  * @static
  *
  * Calculates the coordinates of the normal Vector of the given one
  *
- * @param  {Number} lamba [Optional] Number type double between 0 and 1 
- * 
+ * @param  {Number} lamba [Optional] Number type double between 0 and 1
+ *
  * @return {Vector} Returns the perpendicular Vector of the given one
  */
  StraightLine.prototype.get_normal = function(lambda){
@@ -95,7 +95,7 @@
 
  	var x = t.get_coord(0)
  	var y = t.get_coord(1)
- 
+
  	return new Vector(-y, x)
 
  }
@@ -106,11 +106,11 @@
  * Calculates the distance from the origin to the point associated with lambda
  *
  * @param  {Number} lamba [Optional] Number type double
- * 
- * @return {Object} distance 
+ *
+ * @return {Object} distance
  */
  StraightLine.prototype.get_arc_length = function(lambda){
- 	var lambda = lambda || 1	
+ 	var lambda = lambda || 1
  	var distance = lambda * this.director.module()
  	return distance
  }
@@ -120,11 +120,11 @@
  *
  * Returns true if the squared distance between the point and the line is less than Line :: ERROR
  *
- * @param  {Vector} point  
- * 
- * @return {Boolean} 
+ * @param  {Vector} point
+ *
+ * @return {Boolean}
  */
- StraightLine.prototype.belongs_to$U = function(point){ 
+ StraightLine.prototype.belongs_to$U = function(point){
 
  	if(Math.pow(Line.distance(this, point),2) < this.ERROR)
  		return true
@@ -137,11 +137,11 @@
  *
  * Calculate a line perpendicular
  *
- * @param  {Number | Object} position_vector A number or vector to calculate the line  
- * 
+ * @param  {Number | Object} position_vector A number or vector to calculate the line
+ *
  * @return {Object} line_perpendicular The line perpendicular
  */
- StraightLine.prototype.get_perpendicular = function(position_vector){  
+ StraightLine.prototype.get_perpendicular = function(position_vector){
  	if(typeof position_vector === "number")
  		position_vector = this.at(position_vector)
 

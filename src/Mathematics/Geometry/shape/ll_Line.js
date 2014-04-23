@@ -9,8 +9,6 @@
  *
  */
 
-Line.prototype.constructor = new Line
-
 function Line() {
 	this.ERROR = 0.00001
 }

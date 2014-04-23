@@ -4,7 +4,7 @@
 * Line composed by a set of lines.
 *
 * @constructor Path
-* 
+*
 * @param {Array} lines Array of lines that form the path
 * @property {Array} summary Internal variable for mapping lambdas.
 * @property {Number} total_length Total length of the line.
@@ -19,6 +19,45 @@ function Path(lines){
 	this.summary = []
 	this.total_length = 0
 }
+/**
+ * @method lambda_to_line
+ * Given a lambda for the path returns de number of line and the lambda of that line
+ */
+Path.prototype.lambda_to_line = function(path_lambda){
+
+   if (path_lambda < 0 || path_lambda > 1)
+      throw "Invalid lambda: " + path_lambda + ". Must be in [0,1]."
+
+   var locator = {
+      line: 0,
+      lambda: 0
+   }
+
+   for (var i=0; i<this.length; i++)
+   if (this.summary[i].range.lambda1 < path_lambda)
+      locator.line = i
+
+   locator.lambda = ( path_lambda - this.summary[locator[line]].range.lambda0 ) / (this.summary[locator[line]].range.lambda1 - this.summary[locator[line]].range.lambda0)
+
+   return locator
+}
+
+/**
+ * @method at
+ * @static
+ *
+ *  Calculates the point of the path defined by lamba
+ *
+ * @param  {Number} lambda Parameter to calculate the point.
+ *
+ * @return {Object} Point of the curve as a Vector.
+ */
+Path.prototype.at = function(lambda){
+   lambda = lambda || 1
+   var local = lambda_to_line(lambda)
+
+   return this[local.line].at(local.lambda)
+}
 
 /**
  * @method update_summary
@@ -26,7 +65,7 @@ function Path(lines){
  * Paths a are composed by one or more lines. Thus it maps global
  * lambdas into line local ones. summary is an internal property to
  * perform this task fluently.
- * 
+ *
  * Every time a Line is added or removed this property ought to be updated.
  */
 Path.prototype.update_summary = function() {
@@ -50,59 +89,42 @@ Path.prototype.update_summary = function() {
    }
 }
 
+Path.overrided_functions = {
+   lines: ["push", "pop", "shift", "2splice", "unshift"],
+   paths: ["concat"]
+}
+
 /**
- * @method push
- * Adds a new Line to the Path. Updates internal parameters (as length).
- *
+ * @method lovely_extend_Array
+ * Overrides Array methods restricting its arguments to Lines or Paths.
  */
-Path.prototype.push = function(){
-   for (var i=0; i<arguments.length; i++){
+Path.lovely_extend_Array = function() {
 
-      if (!(arguments[i] instanceof Line))
-         throw "Path Error. Only lines can be pushed to paths. " + arguments[i].toSource()
+   var functions = Path.overrided_functions.lines
 
-      this.update_summary()
-      Array.prototype.push.call(this, arguments[i])
+   for (var i=0; i<functions.length; i++){
+      var fn_name  /* function name without numeric part */
+      /* Initial parameter to apply restricions on */
+       var init_param = parseInt(functions[i])
+       if (isNaN(init_param)){
+	  init_param = 0
+	  fn_name = functions[i]
+       } else
+	  fn_name = functions[i].replace(/\d+/, "")
+
+       /* Overrided function delegator definition */
+       Path.prototype[functions[i]] = function(){
+	  var return_value
+          for (var i=0; i<arguments.length; i++)
+             if (!(arguments[i] instanceof Line))
+                throw "Path#" + functions[i] + " Error: Only " + "lines" + " allowed as arguments.\n\n" + arguments[i].toSource()
+
+           return_value = Array.prototype[functions[i]].apply(this, arguments[i])
+           this.update_summary()
+
+	   return return_value
+       }
    }
 }
 
-/**
- * @method lambda_to_line
- * Given a lambda for the path returns de number of line and the lambda of that line
- */
-Path.prototype.lambda_to_line = function(path_lambda){
-
-   if (path_lambda < 0 || path_lambda > 1)
-      throw "Invalid lambda: " + path_lambda + ". Must be in [0,1]."
-
-   var locator = {
-      line: 0,
-      lambda: 0	
-   }
-
-   for (var i=0; i<this.length; i++)
-   if (this.summary[i].range.lambda1 < path_lambda)
-      locator.line = i
-
-   locator.lambda = ( path_lambda - this.summary[locator[line]].range.lambda0 ) / (this.summary[locator[line]].range.lambda1 - this.summary[locator[line]].range.lambda0)
-
-   return locator
-}
-/**
- * @method at
- * @static
- *
- *  Calculates the point of the path defined by lamba
- *
- * @param  {} 
- * 
- * @return {}    
- */
-Path.prototype.at = function(lambda){
-   lambda = lambda || 1
-   var local = lambda_to_line(lambda)
-
-   return this[local.line].at(local.lambda)
-}
-
-
+Path.lovely_extend_Array()
