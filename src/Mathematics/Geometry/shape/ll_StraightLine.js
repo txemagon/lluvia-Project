@@ -9,6 +9,8 @@
 
  function StraightLine(initial_point, final_point) {
  	var that = this
+	if (typeof (initial_point) === "undefined" || typeof(final_point) === "undefined")
+	 throw "StraightLine#new error: Not enough parameters"
  	this.initial_point = new Vector(initial_point)
  	this.director = new Vector(final_point).subs( this.initial_point )
 
