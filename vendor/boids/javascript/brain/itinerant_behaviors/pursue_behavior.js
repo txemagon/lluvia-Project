@@ -68,11 +68,17 @@ PursueBehavior.prototype.get_target = function(){
  *
  * @return {}
  */
-PursueBehavior.prototype.target_at = function(){
-  //=> X=X0 + V(t-t0)
-  var x = new Vector((this.get_target().position.add(new Vector(this.get_target().velocity))).scale(1))
-  this.X = x
-  return x.subs( this.me.geo_data.position )
+PursueBehavior.prototype.target_at = function() {
+  var boid_target_pos          = this.get_target().position
+  var boid_target_rel_pos      = boid_target_pos.subs(this.me.geo_data.position)
+  var boid_target_velocity     = this.get_target().velocity
+  var boid_target_acceleration = this.get_target().acceleration
+  var normal_acceleration      = this.target.localize(boid_target_acceleration).get_coord(1)
+  var impact_time              = boid_target_rel_pos.module() / this.me.geo_data.velocity.module()
+
+  normal_acceleration = this.target.globalize(0, normal_acceleration)
+
+  return boid_target_pos.add( boid_target_velocity.add(normal_acceleration.scale(impact_time/3)).scale(impact_time)).subs( this.me.geo_data.position )
 }
 
 
@@ -84,18 +90,8 @@ PursueBehavior.prototype.target_at = function(){
  * @return {Object} vector Vector velocity
  */
 PursueBehavior.prototype.desired_velocity = function(){
-  var arrival_distance
-  try{
-    arrival_distance = this.target_at().module()
-  }catch(err){
-    arrival_distance = 0
-  }
-  var scale = 1
-  /* Arrival behavior Modifier
-  if (this.approach_distance > arrival_distance)
-    scale = arrival_distance / this.approach_distance
-    */
-  return (new Vector(this.target_at().unit().scale(scale * this.me.vel_max)))
+
+  return new Vector( this.target_at().unit().scale( this.me.vel_max ) )
 }
 
 

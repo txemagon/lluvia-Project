@@ -136,6 +136,7 @@ Boid.prototype.delta_t = function(){
  * @method update_physics
  *
  * Calculates new position, velocity and acceleration depending on the ellapsed time.
+ *
  * @param  {Date} current_time Time for estimating coords.
  */
 Boid.prototype.update_physics = function(current_time){
@@ -146,6 +147,15 @@ Boid.prototype.update_physics = function(current_time){
   this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
 
+
+/**
+ * @method run
+ *
+ * Updates the time in the boid's variables
+ *
+ * @param {Date}   current_time Current time of the boid
+ * 
+ */ 
 Boid.prototype.run = function(current_time){
   if (!(current_time instanceof Date))
     return
@@ -153,6 +163,15 @@ Boid.prototype.run = function(current_time){
   this.update_physics(current_time)
 }
 
+
+/**
+ * @method draw
+ *
+ * Draws a boid into the world defined by the context
+ *
+ * @param {}   ctx Context in which to paint the Boid
+ * 
+ */ 
 Boid.prototype.draw = function(ctx){
 
   var p = this.geo_data.position;

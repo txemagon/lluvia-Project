@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * Event to message mapper.
+ *
+ * @author Txema
+ * @version 1.00 Aug, 2009
+ */
+
+/*
+ * lluvia devices run in the processor/s time/s, events occur in real time. Gates map
+ * human/HTML events to message system dynamics.
+ */
+
+
+function _stitchWorlds(gate, solicitor){
+	return function(e){
+		e = e || window.event
+		try{
+		 return gate[solicitor](e, this)
+		} catch (err) {
+			Exception.parse(err) }
+	}
+}
+
+<span id='Gate'>/**
+</span> * @class Gate
+ *
+ * A Gate is a lluvia (javascript) wrapper for html elements. They're conceived
+ * to respond to html events keeping the object scope.
+ *
+ * @param {String | HTMLElement} [element] (optional) HTML Element to wrap.
+ * @param {String | HTMLElement} [parent]  (optional) HTML container to place the Gate.
+ *
+ * ### Example
+ *
+ * Given this HTML:
+ *
+ *     &lt;div id=&quot;button_bar&quot;&gt;&amp;nbsp;&lt;/div&gt;
+ *
+ * We write:
+ *
+ *     var brush_button = new Gate(&quot;brush_btn&quot;, &quot;button_bar&quot;)
+ *
+ * That generates a div with id &quot;brush_btn&quot; and a javascript object that will respond to
+ * every html event whenever it defines the corresponding handler.
+ *
+ * Don't use this class directly, but subclassify it preferently as in the following example.
+ *
+ * ### Usage
+ *
+ *     Button.prototype = new Gate
+ *     Button.prototype.constructor = Button
+ *
+ *     function Button(element){
+ *
+ *     	try {
+ *     		if (arguments.length)
+ *     			Gate.call(this, element)	// Call to the super constructor (it does all the work).
+ *     	} catch (e) {
+ *     		if ($K_debug_level &gt;= $KC_dl.DEVELOPER)
+ *     			alert(&quot;No event handlers were found.\nException: &quot; + e.toSource())
+ *     	}
+ *     }
+ *
+ *     Button.prototype.do_onclick   = function(event, element){
+ *     	alert(&quot;You have made click.&quot;)
+ *     }
+ *
+ */
+function Gate(element, parent){
+	var that = this
+	function initialize(){
+		if (element)
+			if (typeof(element) === &quot;string&quot;)
+			 if (document.getElementById(element))
+				element = document.getElementById(element)
+			 else{
+			   var element_name = element
+			   element = document.createElement(&quot;div&quot;)
+			   element.setAttribute('id', element_name)
+			   if (parent){
+			     if (typeof (parent) === &quot;string&quot; )
+			       parent = document.getElementById(parent)
+			     if (parent) parent.appendChild(element)
+			     }
+			 }
+		that.panel = element
+		that.keys(/do_.*/).each(function(handler){
+				handler.match( /do_(.*)/ )
+				that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+			})
+		if (!element) {
+			if (parent)
+				parent.appendChild(that.panel)
+			else
+				document.body.appendChild(that.panel)
+		}
+
+		that.threads = []
+	}
+
+	if (arguments.length)
+		initialize()
+}
+
+Gate.prototype.listen = function(event, handler){
+	this.panel[event] = _stitchWorlds(this, handler)
+}
+//getCanvas not finish yet
+Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } // This is wrong
+
+Gate.prototype.applySkin = function(skin){
+	var div = document.createElement(&quot;div&quot;)
+	div.setAttribute(&quot;class&quot;, skin)
+	this.panel.appendChild(div)
+}
+
+<span id='Gate-method-run'>/**
+</span> * @method run
+ * @private
+ *
+ * Animates all the threads that depends on this gate.
+ * A gate is supposed to have threads in order to generate animations -Effects.
+ */
+Gate.prototype.run = function(now, before){
+	for (var i=0; i&lt;this.threads.length; i++)
+		this.threads[i].run(now, before)
+}
+
+<span id='Gate-method-new_effect'>/**
+</span> * @method new_effect
+ * 
+ * Registers a new effect for the Gate. An effect is a ThreadAutomata used to handle
+ * the gate html element (body of the gate) creating visual effects.
+ *
+ * @param {ThreadAutomata} eff  Visual effect to handle the div of the Gate.
+ *
+ * @return {Object}  ThreadAutomata created.
+ */ 
+Gate.prototype.new_effect = function(eff){
+	this.threads.push(eff)
+	return eff
+}
+</pre>
+</body>
+</html>

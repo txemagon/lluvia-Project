@@ -1,10 +1,12 @@
 /**
- * @classDescription Creates Itinerant Behavior: obstacle avoidance
+ * @class ObstacleAvoidanceBehavior
+ *
+ * Creates Itinerant Behavior: obstacleAvoidance. See {@link Behavior}
+ *
+ * @constructor Obstacle Avoidance Behavior
  *
  * @return {ObstacleAvoidanceBehavior}
- * @constructor
 */
-
 ObstacleAvoidanceBehavior.prototype = new Behavior
 ObstacleAvoidanceBehavior.prototype.constructor = ObstacleAvoidanceBehavior
 ObstacleAvoidanceBehavior.prototype.super = Behavior
@@ -14,12 +16,14 @@ function ObstacleAvoidanceBehavior(){
 }
 
 /**
- * @classDescription Creates Itinerant Behavior: containment
+ * @class ContainmentBehavior
+ *
+ * Creates Itinerant Behavior: containment. See {@link Behavior}
+ *
+ * @constructor Containment Behavior
  *
  * @return {ContainmentBehavior}
- * @constructor
 */
-
 ContainmentBehavior.prototype = new Behavior
 ContainmentBehavior.prototype.constructor = ContainmentBehavior
 ContainmentBehavior.prototype.super = Behavior
@@ -29,12 +33,14 @@ function ContainmentBehavior(){
 }
 
 /**
- * @classDescription Creates Itinerant Behavior: separation
+ * @class SeparationBehavior
+ *
+ * Creates Itinerant Behavior: separation. See {@link Behavior}
+ *
+ * @constructor Separation Behavior
  *
  * @return {SeparationBehavior}
- * @constructor
 */
-
 SeparationBehavior.prototype = new Behavior
 SeparationBehavior.prototype.constructor = SeparationBehavior
 SeparationBehavior.prototype.super = Behavior
@@ -43,6 +49,15 @@ function SeparationBehavior(){
   Behavior.apply(this, arguments)
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Calculates the acceleration the boid needs to change its position
+ *
+ * @param {} 
+ * 
+ * @return {Vector}  Returns a vector with the boid's desired acceleration
+ */
 SeparationBehavior.prototype.desired_acceleration = function(){
   var that = this
   var x = 0
@@ -58,22 +73,6 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   
   return new Vector(x/count, y/count).scale(-1)
 }
-
-/**
- * @classDescription Creates Itinerant Behavior: cohesion
- *
- * @return {CohesionBehavior}
- * @constructor
-*/
-
-CohesionBehavior.prototype = new Behavior
-CohesionBehavior.prototype.constructor = CohesionBehavior
-CohesionBehavior.prototype.super = Behavior
-
-function CohesionBehavior(){
-  Behavior.apply(this, arguments)
-}
-
 
 /**
  * @class AlignmentBehavior
@@ -93,6 +92,15 @@ function AlignmentBehavior(){
   Behavior.apply(this, arguments)
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Calculates the acceleration the boid needs to change its position
+ *
+ * @param {} 
+ * 
+ * @return {Vector}  Returns a vector with the boid's desired acceleration
+ */
 AlignmentBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
@@ -139,6 +147,15 @@ function CohesionBehavior(){
   Behavior.apply(this, arguments)
 }
 
+/**
+ * @method desired_acceleration
+ *
+ * Calculates the acceleration the boid needs to change its position
+ *
+ * @param {} 
+ * 
+ * @return {Vector}  Returns a vector with the boid's desired acceleration
+ */
 CohesionBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0

@@ -20,8 +20,13 @@ fi;
 
 sed "s/__input_image__/${name}/" image_template.tex | latex -output-directory=tmp > /dev/null
 
+case "$outputextension" in
+	"dvi" ) mv tmp/texput.dvi "$name.$outputextension"
+		;;
+    * ) "dvi$outputextension" tmp/texput.dvi ${options["$outputextension"]}
+		;;
+esac
 
-"dvi$outputextension" tmp/texput.dvi ${options["$outputextension"]}
 
 rm -rf tmp
 

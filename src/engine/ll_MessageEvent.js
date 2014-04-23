@@ -59,7 +59,7 @@ var systemEv = (function(){
 	 * 
 	 * systemEv("sync", {name: "activated", data: "no extra data available"}, new Date(), function(p){alert(p.toSource());})
 	 * 
-	 systemEv( "sync", {name: "activated", data: "no extra data     available"}, 
+	 systemEv( "sync", {name: "activated", data: "no extra data available"}, 
        new Date(), 
        function(msg){
          msg.event["activated"].data = "this is an activation message";    

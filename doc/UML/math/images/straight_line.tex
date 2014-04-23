@@ -1,24 +1,31 @@
-\setlength{\unitlength}{1mm}
+\coordinate (R0) at (1,4);
+\coordinate (S0) at (4,1);
+legend/.style={draw,rounded corners};
 
-\begin{picture}(50,50)
-    % axis
-    \put(10,10){\vector(1,0){40}}
-    \put(10,10){\vector(0,1){40}}
-    \put(47,7){$x$}
-    \put(7,47){$y$}
-    % straight line
-    \put(0,20){\line(2,1){60}}
-    \put(0,22){$r$}
-    \thicklines
 
-    % position vector
-    \put(10,10){\vector(1,2){10}}
-    \put(20,30){\circle*{1.5}}
-    \put(13,20){$\vec{r}$}
+% AXIS
+\draw [help lines] (0,0) grid (7,7);
+\draw [<->] (0,7) node [left] {$y$} -- (0,0) node [below left] {(0,0)} -- (7,0) node [below] {$x$};
 
-    % direction vector
-    \put(20,30){\vector(2,1){20}}
-    \put(40,40){\circle*{1.5}}
-    \put(26,37){$\vec{v_d}$}
-\end{picture}
+% First Line: (R)
+% Position Vector: r0
+\draw [->,>=latex,color=blue] (0,0) -- node[midway, above, sloped] {$ \vec{r}_0 $} (R0);
+\draw [fill] (R0) circle (0.05cm);
+% Direction vector: vr
+\draw [->,>=latex,color=blue] (R0) -- node[midway, above, sloped] {$ \vec{v}_d $} +(2,.5);
+% Line r
+\draw [color=blue, very thin] (R0) -- +(6,1.5);
+\draw [color=blue, very thin] (R0) -- +(-1,-.25);
 
+% Second Line: (S)
+% Position Vector: S0
+\draw [->,>=latex,color=red] (0,0) -- node[midway, above, sloped] {$ \vec{s}_0 $} (S0);
+\draw [fill] (S0) circle (0.05cm);
+% Direction vector: vs
+\draw [->,>=latex,color=red] (S0) -- node[midway, above, sloped] {$ \vec{v}_d $} +(.5,2);
+% Line s
+\draw [color=red, very thin] (S0) -- +(1.5,6);
+\draw [color=red, very thin] (S0) -- +(-.25,-1);
+
+% Intersection
+\draw [fill] (5,5) circle (0.05cm) node [above, yshift=10,fill=white, rounded corners, draw] {$ \vec{r}_0 + \lambda  \cdot \vec{v}_r = \vec{s}_0 + \beta \cdot \vec{v}_s $}; 

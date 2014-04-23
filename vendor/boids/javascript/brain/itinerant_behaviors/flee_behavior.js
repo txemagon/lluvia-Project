@@ -19,7 +19,7 @@ function FleeBehavior(){
 /**
  * @method set_target
  *
- * Search a target boid
+ * Searches for a target boid
  *
  * @param  {Object} boid Target boid
  *
@@ -59,7 +59,7 @@ FleeBehavior.prototype.get_target = function(){
 /**
  * @method target_at
  *
- * Description
+ * Get the distance between the given boid and its target
  *
  * @return {}
  */

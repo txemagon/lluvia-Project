@@ -83,6 +83,8 @@ Array.reflect = function(){
 Array.prototype.each = function(){
   for (var i = 0; i < this.length; i++)
     Array.prototype.each.yield(this[i])
+
+  return this
 }
 /**
  * @method  each_index
