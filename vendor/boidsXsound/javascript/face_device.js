@@ -20,7 +20,7 @@ function FaceDevice(view){
   
   function initialize(){
     Device.call(that, view)
-   // alert(that.solicitors)
+    that.newGate("face", FaceBoid)
   }
   
   if (arguments.length)
