@@ -367,7 +367,7 @@ function _simple_cross(vector1, vectorArray){
 							      vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2], 
 							      vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0] )
 								   
-		if (vectorArray.lenth == 0)
+		if (vectorArray.length == 0)
 		  return vectAux
 							 
 		return _simple_cross( vectAux, vectorArray) 
@@ -600,7 +600,7 @@ Vector.prototype.projection = function(vector1){
 	if(vector1.length != this.length && this.length < 1)
 		throw "Lengths of vectors are different"
 	else
-		return vector1.scale(this.dot(vector1)/vector1.dot(vector1))
+		return new Vector( vector1.scale(this.dot(vector1)/vector1.dot(vector1)) )
 	
 }
 

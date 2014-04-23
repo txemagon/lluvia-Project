@@ -2,7 +2,7 @@ Hash.prototype = new BasicObject
 Hash.prototype.constructor = Hash
 
 function Hash(){
-	
+
 }
 
 Hash.bang_methods = ["merge", "soft_merge"]
@@ -49,6 +49,6 @@ Hash.prototype.soft_merge = function(source){
 		that[key] = that[key] || source[key]
 	})
 	return this
-}	
+}
 
 Hash.reflect(Hash.bang_methods)
