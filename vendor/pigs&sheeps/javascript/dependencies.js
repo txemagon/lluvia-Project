@@ -4,9 +4,15 @@ $K_app_dependencies = [
 		description: "Boids Demo App.", 
 		path: "", 
 		files: [ 
+			{ name: "../../../src/kernel/ll_Processor.js",             description: "Gate for game menu." },
+			{ name: "../../../src/engine/ll_Device.js",                description: "Device for game menu." },
+			{ name: "../../../src/engine/ll_EventDispatcher.js",       description: "Gate for game menu." },
+			{ name: "../../../src/engine/ll_Gate.js",                  description: "Dispatcher for game menu." },
+			{ name: "../../../src/engine/ll_Lookup.js",                description: "Lookup for game menu." },
+			{ name: "../../../src/engine/ll_MessageEvent.js",          description: "Messanger for game menu." },
 			{ name: "brain/behavior_modifier.js",                      description: "Self protection behaviors." },
 			{ name: "brain/behavior.js",                               description: "Abstract Behavior." },
-			{ name: "behavior_group.js",     description: "Group of related behaviors." },
+			{ name: "behavior_group.js",                               description: "Group of related behaviors." },
 			{ name: "security_behavior.js",                            description: "Self protection behaviors." },
 	        { name: "itinerant_behaviors/seek_behavior.js",            description: "Seek" },
 	        { name: "itinerant_behaviors/flee_behavior.js",            description: "Flee" },
@@ -44,17 +50,12 @@ $K_app_dependencies = [
 			{ name: "sheep.js",               description: "The brain of a sheep." }
 		]
 	},
-	{	module: "Engige", 
-		description: "Particularization of the main Boid classes", 
+	{	module: "Engine", 
+		description: "Gates and Devices for application menu", 
 		path: "species/", 
 		files: [ 
-			{ name: "../../../src/engine/ll_Device.js",              description: "Device for game menu." },
-			{ name: "../../../src/engine/ll_EventDispatcher.js",     description: "Gate for game menu." },
-			{ name: "../../../src/engine/ll_Gate.js",                description: "Gate for game menu." },
-			{ name: "../../../src/engine/ll_Lookup.js",              description: "Gate for game menu." },
-			{ name: "../../../src/engine/ll_MessageEvent.js",        description: "Gate for game menu." }
+
 		]
-	},
-	
+	}
 ]
 
