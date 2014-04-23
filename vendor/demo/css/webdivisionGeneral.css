@@ -1,0 +1,337 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #000000;
+	background-image: url('../images/extensionFondo.png');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	text-align: center;
+	font-family: "Arial Narrow";
+	overflow:hidden;
+}
+
+a{
+	text-decoration: none;
+}
+
+#ventanaMascara{
+	margin: 0px auto 0px auto;
+	width: 1008px;
+	height: 574px;
+	overflow: hidden;
+}
+
+#fondo{
+		margin: 0px auto 0px auto;
+		text-align: left;
+		width: 6000px;
+		height: 490px;
+		overflow: hidden;
+		position: relative;
+}
+#home_App{
+	text-align: center;
+	margin: 0px auto 0px auto;
+	height: 490px;
+}
+
+#llaveEnMano_App{
+	color: #FFFFFF;
+}
+
+#calzoCielo{
+	width: 2008px;
+	background-color: #DADFE7;
+}
+
+.Cielo{
+	background-color: #DADFE7;
+	width: 1008px;
+	height: 364px;
+	background-image: url('../images/sol.png');
+	background-repeat: no-repeat;
+	background-position: top center;
+	text-align: left;
+}
+
+#logo{
+	width: 99px;
+	height: 41px;
+	background-image: url('../images/nova.png');
+	
+	position: relative;
+	top: 143px;
+	left: 130px;
+	
+}
+
+.Logo{
+	width: 113px;
+	height: 54px;
+	background-image: url('../images/nova1.png');
+	
+	position: relative;
+	top: 143px;
+	left: 130px;
+	
+}
+
+.Pavimento{
+	width: 1008px;
+	height: 134px;
+	background-repeat: repeat-x;
+	background-image: url('../images/pavimento.png');
+	border-style: solid none none none;
+	border-color: #FFFFFF;
+	border-width: 2px;
+	text-align: center;
+}
+
+#arbol{
+	width: 171px;
+	height: 309px;
+	
+	position: relative;
+	top: 140px;
+	left: 22px;
+	/* display: inline-block;
+	position: relative;
+	left: -657px;*/
+
+	background-image: url('../images/arbol.png');
+}
+
+.PanelCentral{
+	margin: 0px auto 0px auto;
+	position: relative;
+}
+
+#panelEdificios{
+	position: relative;
+	top: -217px;
+}
+
+.Edificio{
+	width: 94px;
+	display: inline-block;
+	margin-right: 20px;
+	background-position: center;
+}
+
+#panelEdificios .Edificio{
+	background-repeat: no-repeat;
+}
+
+#panelReflejos{
+  position: relative;
+  top: -220px;
+}
+
+#llaveEnMano{
+	height: 214px;
+	background-color: #FE7302;
+	background-image: url('../images/llaveEnMano.png');
+}
+#llaveEnManoR{
+	height: 39px;	
+	background-image: url('../images/narrefl.png');
+}
+
+#servicios{
+	height: 151px;
+	background-color: #65C001;
+	background-image: url('../images/servicios.png');	
+}
+
+#serviciosR{
+	height: 39px;	
+	background-image: url('../images/verrefl.png');	
+}
+
+#plantillas{
+	height: 172px;
+	background-color: #27A8DB;
+	background-image: url('../images/plantillas.png');
+	
+}
+
+#plantillasR{
+	height: 39px;	
+	background-image: url('../images/azulrefl.png');	
+}
+
+#portafolios{
+	height: 206px;
+	background-color: #DF349B;
+	background-image: url('../images/portafolio.png');
+}
+
+#portafoliosR{
+	height: 39px;	
+	background-image: url('../images/rosrefl.png');	
+}
+
+#panelControl{
+	background-image: url('../images/pc.png');
+	width: 1008px;
+	height: 74px;
+	border-style: solid none none none;
+	border-width: 1px 0px 0px 0px;
+	border-color: #F8F8F8;
+	border-width: 2px;
+	color: #CCCCCC;
+	font-family: "Arial Narrow";
+	font-size: 10pt;
+	text-align: left;
+	padding-top: 2mm;
+	padding-left: 2cm;
+	font-family: arial;
+}
+
+#panelControl a{
+	text-decoration: none;
+	color: #CCCCCC;
+}
+
+#menuGeneral{
+	margin-top: 2cm;
+	font-family: "Arial Narrow", Arial;
+}
+
+#copy{
+	width: 147px;
+	height: 32px;
+	background-image: url('../images/copy.png');
+	background-repeat: no-repeat;
+	position: relative;
+	top: 22px;
+	left: 742px;
+}
+
+.Aplicacion{
+	margin: 0px;
+	padding: 0px;
+	width: 1008px;  /* Dinamically calculated. Estimation*/
+	height: 490px;
+	overflow: hidden;
+	display: inline-block;	
+	position: relative;
+}
+
+.Aplicacion:first-child{
+	margin: 0px auto 0px auto;
+	text-align: center;
+	
+}
+
+#llaveEnManoBgd{
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/flem.jpg');
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	width: 916px;
+	height: 490px;
+	position: relative;
+	
+}
+
+#vlem{
+	top: 47px;
+	left: 76px;
+	width: 526px;
+	height: 363px;
+	background-image: url('../images/vlem.jpg');
+	text-align: justify;
+	padding: 90px 0px 0px  100px;
+}
+
+#vlemR{
+	top: 52px;
+	left: 76px;
+	width: 526px;
+	height: 363px;
+	background-image: url('../images/vlemR.jpg');
+	background-repeat: no-repeat;
+	text-align: justify;
+}
+
+#serviciosBgd{
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/fs.jpg');
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	width: 916px;
+	height: 501px;
+	position: relative;
+	top: 0px;
+}
+
+#vs{
+	top: 52px;
+	left: 80px;
+	width: 526px;
+	height: 363px;
+	background-image: url('../images/vs.jpg');
+	text-align: justify;
+
+}
+
+#vsR{
+	top: 56px;
+	left: 80px;
+	width: 526px;
+	height: 363px;
+	background-image: url('../images/vsR.jpg');
+	background-repeat: no-repeat;
+	text-align: justify;
+}
+
+#plantillasBgd{
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/fp.jpg');
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	width: 916px;
+	height: 501px;
+	position: relative;
+	top: 0px;
+}
+
+#vp{
+	top: 52px;
+	left: 80px;
+	width: 526px;
+	height: 363px;
+	background-image: url('../images/vp.jpg');
+	text-align: justify;
+	
+}
+
+#portafolioBgd{
+	margin: 0px;
+	padding: 0px;
+	background-image: url('../images/fpt.jpg');
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	width: 916px;
+	height: 501px;
+	position: relative;
+	top: 0px;
+}
+
+#vpt{
+	top: 0px;
+	left: 80px;
+	width: 526px;
+	height: 501px;
+	background-image: url('../images/vpt.png');
+	text-align: justify;
+	border-width: 0px 2px 0px 2px;
+	border-style: solid;
+	border-color: #0000FF;
+	
+}
+

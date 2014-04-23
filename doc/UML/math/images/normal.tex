@@ -1,0 +1,40 @@
+\setlength{\unitlength}{1mm}
+
+\begin{picture}(50,50)
+    % axis
+    \put(10,10){\vector(1,0){40}}
+    \put(10,10){\vector(0,1){40}}
+    \put(47,7){$x$}
+    \put(7,47){$y$}
+    % straight line
+    \color{blue}
+    \put(0,20){\line(2,1){60}}
+    \put(50,47){$r$}
+
+
+    % position vector
+    \color{Red}
+    \put(10,10){\vector(1,2){10}}
+    \put(20,30){\circle*{1.5}}
+    \put(13,20){$\vec{r}$}
+
+    \thicklines
+
+    % direction vector
+    \color{blue}
+    \put(20,30){\vector(2,1){20}}
+    \put(40,40){\circle*{1.5}}
+    \put(26,37){$\vec{v_d}$}
+
+
+    \color{black}
+    % direction vector at origin
+    \put(10,10){\vector(2,1){20}}
+    \put(19,18){$ \vec{v}_d $}
+
+    % normal vector at origin
+    \put(10,10){\vector(-1,2){10}}
+    \put(-5,25){$ \vec{N} $}
+
+\end{picture}
+

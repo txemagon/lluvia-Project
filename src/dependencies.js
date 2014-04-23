@@ -1,8 +1,8 @@
 $K_dependencies = [
-      {	module: "loader", 
-		description: "lluvia loader. User application loader. Booter.", 
-		path: "loader/", 
-		files: [ 
+      {	module: "loader",
+		description: "lluvia loader. User application loader. Booter.",
+		path: "loader/",
+		files: [
 		]
 	},
 	{	module: "utils",
@@ -17,10 +17,10 @@ $K_dependencies = [
 			{name: "ll_Webbrowser.js", description: ""}
 		]
 	},
-	{	module: "kernel", 
-		description: "Javascript extensions && global objects.", 
-		path: "kernel/", 
-		files: [ 
+	{	module: "kernel",
+		description: "Javascript extensions && global objects.",
+		path: "kernel/",
+		files: [
 			{name: "ll_Kernel.js",       description: "Core javascript for the global object."},
 			{name: "ll_Exception.js",    description: "Exceptions."},
 			{name: "ll_Object.js",       description: "Redefinition of Object class."},
@@ -61,10 +61,10 @@ $K_dependencies = [
 			{name: "ll_JavascriptSource.js", description: "Reading Javascript Files"}
 		]
 	},
-        {	module: "Mathematics", 
-		description: "Mathematics Types.", 
-		path: "Mathematics/", 
-		files: [ 
+        {	module: "Mathematics",
+		description: "Mathematics Types.",
+		path: "Mathematics/",
+		files: [
 			{name: "ll_Expression.js",   description: "Physics Vectors."},
 			{name: "ll_func.js",   description: "Physics Vectors."},
 			{name: "Geometry/ll_Vector.js",   description: "Physics Vectors."}

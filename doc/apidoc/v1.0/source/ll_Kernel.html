@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">$KC_dl = {
+    USER: 0,
+    PROGRAMMER: 25,
+    TESTING: 50,
+    DEVELOPER: 100,
+    INNERWORKING: 200
+}
+
+try {
+	$K_debug_level
+} 
+catch (e) {
+	$K_debug_level = $KC_dl.USER
+}	
+
+$K_logger = null
+
+$global_space = (function(){return this;}).call(null) 
+$global_space[&quot;$constants&quot;] = {}
+
+
+<span id='global-method-'>/**
+</span> * Creates wrapped objects for simple types.
+ * 
+ * @param {boolean | number | string} variable [description]
+ */
+function O(variable){
+  var t = typeof(variable)
+  if (t === &quot;boolean&quot; || t === &quot;number&quot; || t === &quot;string&quot;){
+    t = t.charAt(0).toUpperCase() + t.slice(1)
+    if (t !== &quot;String&quot;)
+      return eval(&quot;new &quot; + t + &quot;(&quot; + variable + &quot;)&quot;)
+    else
+      return eval(&quot;new &quot; + t + &quot;('&quot; + variable + &quot;')&quot;)
+  }
+  return variable
+}
+
+<span id='global-method-method_missing'>/**
+</span> * Dinamically called when a no existent function is invoked
+ * 
+ * @param  {Object} error  [The error that triggers method_missing call.]
+ * @param  {String} method [Name of the method that was invoked]
+ * @param  {Array}  params List of params in the invokation.
+ * @return {[type]}        [description]
+ *
+ * **NOTE:**
+ *
+ *  Class_&lt;Name&gt;() function calls generates a class with the 
+ *  scaffolding.
+ */
+function method_missing(error, method, params){
+  if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))
+    return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)
+  throw error
+}
+</pre>
+</body>
+</html>
