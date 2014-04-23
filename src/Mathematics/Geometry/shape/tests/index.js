@@ -18,10 +18,10 @@ var _test_index = [ /* We first bring lluvia */
 		  "../../ll_Vector.js",
 		  "../ll_Line.js",
 		  "../ll_StraightLine.js",
-		  //"../ll_Path.js",
+		  "../ll_Path.js",
 		  /* And we then bring asserts */
-		  //"line_tests.js",
-		  //"straight_line_test.js",
+		  "line_tests.js",
+		  "straight_line_test.js",
 		  //"path_tests.js"
 ]
 

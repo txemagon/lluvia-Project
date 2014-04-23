@@ -90,8 +90,8 @@ Path.prototype.update_summary = function() {
 }
 
 Path.overrided_functions = {
-   lines: ["push", "pop", "shift", "2splice", "unshift"],
-   paths: ["concat"]
+   Line: ["push", "pop", "shift", "2splice", "unshift"],
+   Path: ["concat"]
 }
 
 /**
@@ -100,31 +100,33 @@ Path.overrided_functions = {
  */
 Path.lovely_extend_Array = function() {
 
-   var functions = Path.overrided_functions.lines
+   Path.overrided_functions.self_keys().each(function(type) {
+       var functions = Path.overrided_functions[type]
 
-   for (var i=0; i<functions.length; i++){
-      var fn_name  /* function name without numeric part */
-      /* Initial parameter to apply restricions on */
-       var init_param = parseInt(functions[i])
-       if (isNaN(init_param)){
-	  init_param = 0
-	  fn_name = functions[i]
-       } else
-	  fn_name = functions[i].replace(/\d+/, "")
+       for (var i=0; i<functions.length; i++){
+          var fn_name  /* function name without numeric part */
+          /* Initial parameter to apply restricions on */
+           var init_param = parseInt(functions[i])
+           if (isNaN(init_param)){
+              init_param = 0
+              fn_name = functions[i]
+           } else
+              fn_name = functions[i].replace(/\d+/, "")
 
-       /* Overrided function delegator definition */
-       Path.prototype[functions[i]] = function(){
-	  var return_value
-          for (var i=0; i<arguments.length; i++)
-             if (!(arguments[i] instanceof Line))
-                throw "Path#" + functions[i] + " Error: Only " + "lines" + " allowed as arguments.\n\n" + arguments[i].toSource()
+           /* Overrided function delegator definition */
+           Path.prototype[functions[i]] = function(){
+              var return_value
+              for (var i=init_param; i<arguments.length; i++)
+                 if (!(arguments[i] instanceof eval(type)))
+                    throw "Path#" + functions[i] + " Error: Only type " + type + " allowed as argument.\n\n" + arguments[i].toSource()
 
-           return_value = Array.prototype[functions[i]].apply(this, arguments[i])
-           this.update_summary()
+               return_value = Array.prototype[functions[i]].apply(this, arguments[i])
+               this.update_summary()
 
-	   return return_value
+               return return_value
+           }
        }
-   }
+   })
 }
 
 Path.lovely_extend_Array()
