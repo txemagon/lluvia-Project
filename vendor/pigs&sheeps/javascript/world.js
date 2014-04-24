@@ -43,8 +43,7 @@ function World(screen, width, height){
   if ( screen && context)
     this.screen.push( { screen: screen, context: context } )
 
-    Device.call(that, null, null)
-  
+    Device.call(that, null, null, {previous: 0, current:0, requested: 0})
 }
 
 World.prototype.set_dashboard = function(name){
@@ -125,6 +124,7 @@ World.prototype.each_boid = function(){
 World.prototype.start = function(){
   var that = this
   this.start_time = new Date()
+  this.currentState.requested = Device.state.running
   this.get_boids().each( function(el) {
     el.start(that.start_time) 
   })
@@ -132,8 +132,12 @@ World.prototype.start = function(){
 
 World.prototype.draw = function(){
   var that = this
-  this.get_boids().each( function(el) {
-    el.draw(that.screen[0].context) 
+  var ctx  = that.screen[0].context
+  
+  ctx.clearRect(0,0,850,500)
+  this.draw_background(ctx)
+  this.each_boid(function(boid){
+    boid.draw(ctx)
   })
 }
 
@@ -170,16 +174,17 @@ World.prototype.show_boids = function(){
 }
 
 World.prototype.running_steady = function(processors_time){
+
   //this.show_boids()
   var that = this
   this.now = processors_time || new Date()
   //this.eventDispatcher.shift()
-  var ctx = this.screen[0].context
-  ctx.clearRect(0,0,850,500)
+
   this.each_boid(function(boid){
     boid.run(that.now)
-    boid.draw(ctx)
   })
+
+  this.draw()
   //setTimeout(this.run.bind(this), 100)
 }
 

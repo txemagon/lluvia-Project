@@ -100,7 +100,7 @@ function Device(view, state, currentState, parent){
 
 	var state = state
 	if (!state)
-		state = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+		Device.state = state = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 
       state.self_keys().each(function(key){  // Define overridable functions
 		   ["up", "steady", "down"].each(function(substate){
@@ -192,7 +192,7 @@ function Device(view, state, currentState, parent){
 		that.register(that.eventDispatcher, that.eventDispatcher.shift)
 		if (that.self_events)
 			that.eventDispatcher.joinPorts(that.self_events)
-		that.currentState.requested = state.running
+		//that.currentState.requested = state.running
 		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
 	}
 
