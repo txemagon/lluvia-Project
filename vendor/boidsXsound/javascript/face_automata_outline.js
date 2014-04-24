@@ -6,89 +6,17 @@ function FaceAutomataOutline(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("vanished", "vanishing", "appearing", "busted")
-	this.currentState = { previous: state.vanished,
-						  current: state.vanished,
-						  requested: state.vanished }
+	var state = this.state = new Enumeration("normal_outline")
+	this.currentState = { previous: state.normal_outline,
+						  current: state.normal_outline,
+						  requested: state.normal_outline }
 
 		this.solicitors = [
-			/* vanished */	
+			/* normal_outline */	
 			[
 				function(){
-					cxt.lineWidth = 2;
-					cxt.beginPath();
-
-					cxt.moveTo(47.5,45)
-					cxt.lineTo(102.5,45);
-
-					cxt.quadraticCurveTo(122.5, 45, 122.5, 70);
-					//cxt.moveTo(122.5,50)
-					cxt.lineTo(122.5,115);
-
-					cxt.quadraticCurveTo(122.5, 135, 102.5, 135);
-					//cxt.moveTo(112.5, 135)
-					cxt.lineTo(47.5,135);
-
-					cxt.quadraticCurveTo(27.5, 135, 27.5, 115);
-					//cxt.moveTo(27.5, 125)
-					cxt.lineTo(27.5, 70);
-
-					cxt.quadraticCurveTo(27.5, 45, 47.5, 45);
-
-					cxt.stroke();
-
-					cxt.lineWidth = 1;
-	
-					cxt.beginPath();
-					cxt.moveTo(75,45)
-					cxt.lineTo(75,40)
-					cxt.lineTo(80,38)
-					cxt.lineTo(70,36)
-					cxt.lineTo(80,34)
-					cxt.lineTo(75,32)
-					cxt.lineTo(75,30)
-					cxt.stroke();
-
-					cxt.beginPath();
-					cxt.arc(75, 28 ,3 , 0, Math.PI*2, false);
-					cxt.fill()
-
-					cxt.lineWidth = 2;
-					;
-				},
-				function(){
-					;
-				},
-				function(){
-					;
-				}
-			],
-			/* vanishing */ 
-			[
-				function(){
-					;
-				},
-				function (){
-					;
-				},
-				function(){
-					;
-				}
-			],
-			/* appearing */
-			[
-				function(){
-					;
-				},
-				function(){
-				},
-				function(){
-					;
-				}
-			],
-			/* busted */ 
-			[
-				function(){
+					this.draw_outline_face()
+					this.draw_outline_antenna()
 					;
 				},
 				function(){
@@ -113,4 +41,45 @@ function FaceAutomataOutline(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataOutline.prototype.draw_outline_face = function(){
+	cxt.lineWidth = 2;
+	cxt.beginPath();
+
+	cxt.moveTo(47.5,45)
+	cxt.lineTo(102.5,45);
+
+	cxt.quadraticCurveTo(122.5, 45, 122.5, 70);
+	cxt.lineTo(122.5,115);
+
+	cxt.quadraticCurveTo(122.5, 135, 102.5, 135);
+	cxt.lineTo(47.5,135);
+
+	cxt.quadraticCurveTo(27.5, 135, 27.5, 115);
+	cxt.lineTo(27.5, 70);
+
+	cxt.quadraticCurveTo(27.5, 45, 47.5, 45);
+
+	cxt.stroke();
+}
+
+FaceAutomataOutline.prototype.draw_outline_antenna = function(){
+	cxt.lineWidth = 1;
+
+	cxt.beginPath();
+	cxt.moveTo(75,45)
+	cxt.lineTo(75,40)
+	cxt.lineTo(80,38)
+	cxt.lineTo(70,36)
+	cxt.lineTo(80,34)
+	cxt.lineTo(75,32)
+	cxt.lineTo(75,30)
+	cxt.stroke();
+
+	cxt.beginPath();
+	cxt.arc(75, 28 ,3 , 0, Math.PI*2, false);
+	cxt.fill()
+
+	cxt.lineWidth = 2;
 }

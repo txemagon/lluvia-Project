@@ -6,59 +6,20 @@ function FaceAutomataMouth(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("vanished", "vanishing", "appearing", "busted")
-	this.currentState = { previous: state.vanished,
-						  current: state.vanished,
-						  requested: state.vanished }
+	var state = this.state = new Enumeration("closed")
+	this.currentState = { previous: state.closed,
+						  current: state.closed,
+						  requested: state.closed }
 
 		this.solicitors = [
-			/* vanished */	
+			/* closed */	
 			[
 				function(){
-					cxt.beginPath();
-					cxt.moveTo(48,110)
-					cxt.lineTo(102,110);
-					cxt.stroke();
+					this.draw_mouth_closed()
 					;
 				},
 				function(){
 
-					;
-				},
-				function(){
-					;
-				}
-			],
-			/* vanishing */ 
-			[
-				function(){
-					;
-				},
-				function (){
-
-					;
-				},
-				function(){
-					;
-				}
-			],
-			/* appearing */
-			[
-				function(){
-					;
-				},
-				function(){
-				},
-				function(){
-					;
-				}
-			],
-			/* busted */ 
-			[
-				function(){
-					;
-				},
-				function(){
 					;
 				},
 				function(){
@@ -80,4 +41,11 @@ function FaceAutomataMouth(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataMouth.prototype.draw_mouth_closed = function(){
+	cxt.beginPath();
+	cxt.moveTo(47,110)
+	cxt.lineTo(103,110);
+	cxt.stroke();
 }

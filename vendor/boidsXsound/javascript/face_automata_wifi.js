@@ -7,125 +7,98 @@ function FaceAutomataWifi(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("vanished", "vanishing", "appearing", "busted")
-	this.currentState = { previous: state.vanished,
-						  current: state.vanished,
-						  requested: state.vanished }
+	var state = this.state = new Enumeration("waves_state1", "waves_state2", "waves_state3", "waves_state4", "expected")
+	this.currentState = { previous: state.expected,
+						  current: state.expected,
+						  requested: state.expected }
 
 		this.solicitors = [
-			/* vanished */	
+			/* waves_state1 */	
 			[
 				function(){
 					time = 0
 
-					cxt.beginPath();
-					cxt.lineWidth = 3;
-					cxt.strokeStyle = 'white'
-					cxt.moveTo(60,20)
-					cxt.quadraticCurveTo(75, 7, 90, 20);
-					cxt.stroke();
-					cxt.lineWidth = 2;
-					cxt.strokeStyle = 'black'
-
-					cxt.beginPath();
-					cxt.lineWidth = 1;
-					cxt.moveTo(70,24)
-					cxt.quadraticCurveTo(75, 19, 80, 24);
-					cxt.stroke();
-					cxt.lineWidth = 2;
+					this.draw_wave_small()
 					;
 				},
 				function(){
 					time++
-					if(time == 5)
-						this.currentState.requested = this.state.vanishing	
+					if(time == 3)
+						this.currentState.requested = this.state.waves_state2	
 					;
 				},
 				function(){
+					this.erase_wave_small()
 					;
 				}
 			],
-			/* vanishing */ 
+			/* waves_state2 */ 
 			[
 				function(){
 					time = 0
 
-					cxt.beginPath();
-					cxt.lineWidth = 3;
-					cxt.strokeStyle = 'white'
-					cxt.moveTo(70,24)
-					cxt.quadraticCurveTo(75, 19, 80, 24);
-					cxt.stroke();
-					cxt.lineWidth = 2;
-					cxt.strokeStyle = 'black'
-
-					cxt.beginPath();
-					cxt.lineWidth = 1;
-					cxt.moveTo(65,22)
-					cxt.quadraticCurveTo(75, 14, 85, 22);
-					cxt.stroke();
-					cxt.lineWidth = 2;
+					this.draw_wave_small()
+					this.draw_wave_medium()
 					;
 				},
 				function (){
 					time++
-					if(time == 5)
-						this.currentState.requested = this.state.appearing	
+					if(time == 3)
+						this.currentState.requested = this.state.waves_state3	
 					;
 				},
 				function(){
+					this.erase_wave_small()
+					//this.erase_wave_medium()
 					;
 				}
 			],
-			/* appearing */
+			/* waves_state3 */
 			[
 				function(){
 					time = 0
 
-					cxt.beginPath();
-					cxt.lineWidth = 3;
-					cxt.strokeStyle = 'white'
-					cxt.moveTo(65,22)
-					cxt.quadraticCurveTo(75, 14, 85, 22);
-					cxt.stroke();
-					cxt.lineWidth = 2;
-					cxt.strokeStyle = 'black'
-
-					cxt.beginPath();
-					cxt.lineWidth = 1;
-					cxt.moveTo(60,20)
-					cxt.quadraticCurveTo(75, 7, 90, 20);
-					cxt.stroke();
-					cxt.lineWidth = 2;
+					this.draw_wave_medium()
+					this.draw_wave_big()
 					;
 				},
 				function(){
 					time++
-					if(time == 5)
-						this.currentState.requested = this.state.busted	
+					if(time == 3)
+						this.currentState.requested = this.state.waves_state4
 					;
 				},
 				function(){
+					this.erase_wave_medium()
 					;
 				}
 			],
-			/* busted */ 
+			/* waves_state4 */ 
 			[
 				function(){
-					cxt.beginPath();
-					cxt.lineWidth = 3;
-					cxt.strokeStyle = 'white'
-					cxt.moveTo(60,20)
-					cxt.quadraticCurveTo(75, 7, 90, 20);
-					cxt.stroke();
-					cxt.lineWidth = 2;
-					cxt.strokeStyle = 'black'
+					time = 0
 					;
 				},
 				function(){
 					time++
-					if(time == 50)
-						this.currentState.requested = this.state.vanished
+					if(time == 3)
+						this.currentState.requested = this.state.expected
+					;
+				},
+				function(){
+					this.erase_wave_big()
+					;
+				}
+			],
+			/* expected */ 
+			[
+				function(){
+					;
+				},
+				function(){
+					time++
+					if(time == 100)
+						this.currentState.requested = this.state.waves_state1
 					;
 				},
 				function(){
@@ -148,3 +121,72 @@ function FaceAutomataWifi(processor, gate) {
     if (arguments.length)
         initialize()
 }
+
+FaceAutomataWifi.prototype.draw_wave_small = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 1;
+	cxt.moveTo(70,24)
+	cxt.quadraticCurveTo(75, 19, 80, 24);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+}
+
+FaceAutomataWifi.prototype.erase_wave_small = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 3;
+	cxt.strokeStyle = 'white'
+	cxt.moveTo(70,24)
+	cxt.quadraticCurveTo(75, 19, 80, 24);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+	cxt.strokeStyle = 'black'
+
+}
+
+FaceAutomataWifi.prototype.draw_wave_medium = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 1;
+	cxt.moveTo(65,22)
+	cxt.quadraticCurveTo(75, 14, 85, 22);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+}
+
+FaceAutomataWifi.prototype.erase_wave_medium = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 3;
+	cxt.strokeStyle = 'white'
+	cxt.moveTo(65,22)
+	cxt.quadraticCurveTo(75, 14, 85, 22);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+	cxt.strokeStyle = 'black'
+}
+
+FaceAutomataWifi.prototype.draw_wave_big = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 1;
+	cxt.moveTo(60,20)
+	cxt.quadraticCurveTo(75, 7, 90, 20);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+}
+
+FaceAutomataWifi.prototype.erase_wave_big = function(){
+	cxt.beginPath();
+	cxt.lineWidth = 3;
+	cxt.strokeStyle = 'white'
+	cxt.moveTo(60,20)
+	cxt.quadraticCurveTo(75, 7, 90, 20);
+	cxt.stroke();
+	cxt.lineWidth = 2;
+	cxt.strokeStyle = 'black'
+}
+
+
+
+
+
+
+
+
