@@ -367,7 +367,7 @@ function _simple_cross(vector1, vectorArray){
 							      vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2], 
 							      vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0] )
 								   
-		if (vectorArray.lenth == 0)
+		if (vectorArray.length == 0)
 		  return vectAux
 							 
 		return _simple_cross( vectAux, vectorArray) 

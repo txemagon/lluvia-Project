@@ -57,7 +57,7 @@ function MenuAutomata(processor, gate) {
 			;
 			}
 	]
-
+]
 
     function initialize(){
      that.gate = gate
