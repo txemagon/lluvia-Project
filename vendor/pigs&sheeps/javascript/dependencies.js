@@ -4,33 +4,28 @@ $K_app_dependencies = [
 		description: "Boids Demo App.", 
 		path: "", 
 		files: [ 
-			{ name: "../../../src/kernel/ll_Processor.js",             description: "Gate for game menu." },
-			{ name: "../../../src/engine/ll_Device.js",                description: "Device for game menu." },
-			{ name: "../../../src/engine/ll_EventDispatcher.js",       description: "Gate for game menu." },
-			{ name: "../../../src/engine/ll_Gate.js",                  description: "Dispatcher for game menu." },
-			{ name: "../../../src/engine/ll_Lookup.js",                description: "Lookup for game menu." },
-			{ name: "../../../src/engine/ll_MessageEvent.js",          description: "Messanger for game menu." },
-			{ name: "brain/behavior_modifier.js",                      description: "Self protection behaviors." },
-			{ name: "brain/behavior.js",                               description: "Abstract Behavior." },
-			{ name: "behavior_group.js",                               description: "Group of related behaviors." },
-			{ name: "security_behavior.js",                            description: "Self protection behaviors." },
-	        { name: "itinerant_behaviors/seek_behavior.js",            description: "Seek" },
-	        { name: "itinerant_behaviors/flee_behavior.js",            description: "Flee" },
-	        { name: "itinerant_behaviors/pursue_behavior.js",          description: "Pursue" },
-	        //{ name: "herd_behaviors/alignment_behavior.js",          description: "Tries to keep the same direction" },
-	        { name: "itinerant_behaviors/wander_behavior.js",          description: "Wander" },
-	        { name: "itinerant_behaviors/wander_around_behaviour.js",  description: "Wander changing the target." },
-	        { name: "itinerant_behaviors/wall_following_behavior.js",  description: "Wall Following" },
-	        { name: "itinerant_behaviors/path_following_behavior.js",  description: "Path Following" },
-			{ name: "brain/brain.js",                                  description: "Boid Brain." },
-			{ name: "boid.js",                                         description: "One Boid." },
-			{ name: "MenuAutomata.js",                                 description: "ThreadAutomata." },
-			{ name: "MenuHandler.js",                                  description: "Device." },
-			{ name: "animation.js",                                    description: "Gate." },
-			{ name: "world_interface.js",                              description: "World Interface." },
-			{ name: "boid_editor.js",                                  description: "Boid panel editor." },
-			{ name: "world.js",                                        description: "The world where all boids live." },
-			{ name: "main.js",                                         description: "main function." }
+			{ name: "brain/behavior.js",                                     description: "Abstract Behavior." },
+			{ name: "brain/behavior_group.js",                               description: "Group of related behaviors." },
+			{ name: "brain/security_behavior.js",                            description: "Self protection behaviors." },
+			{ name: "brain/behavior_modifier.js",                            description: "Self protection behaviors." },
+	        { name: "brain/itinerant_behaviors/seek_behavior.js",            description: "Seek" },
+	        { name: "brain/itinerant_behaviors/flee_behavior.js",            description: "Flee" },
+	        { name: "brain/itinerant_behaviors/pursue_behavior.js",          description: "Pursue" },
+	        //{ name: "herd_behaviors/alignment_behavior.js",                description: "Tries to keep the same direction" },
+	        { name: "brain/itinerant_behaviors/wander_behavior.js",          description: "Wander" },
+	        { name: "brain/itinerant_behaviors/wander_around_behaviour.js",  description: "Wander changing the target." },
+	        { name: "brain/itinerant_behaviors/wall_following_behavior.js",  description: "Wall Following" },
+	        { name: "brain/itinerant_behaviors/path_following_behavior.js",  description: "Path Following" },
+			{ name: "brain/brain.js",                                        description: "Boid Brain." },
+			{ name: "boid.js",                                               description: "One Boid." },
+			{ name: "menu_animation.js",                                     description: "To draw the animation." },
+			{ name: "MenuAutomata.js",                                       description: "ThreadAutomata." },
+			{ name: "MenuHandler.js",                                        description: "Device." },
+			{ name: "animation.js",                                          description: "Gate." },
+			{ name: "world_interface.js",                                    description: "World Interface." },
+			{ name: "boid_editor.js",                                        description: "Boid panel editor." },
+			{ name: "world.js",                                              description: "The world where all boids live." },
+			{ name: "main.js",                                               description: "main function." }
 		]
 	},
 	{	module: "Interface", 
@@ -50,12 +45,5 @@ $K_app_dependencies = [
 			{ name: "sheep.js",               description: "The brain of a sheep." }
 		]
 	},
-	{	module: "Engine", 
-		description: "Gates and Devices for application menu", 
-		path: "species/", 
-		files: [ 
-
-		]
-	}
 ]
 

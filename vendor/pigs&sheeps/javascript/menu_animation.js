@@ -381,11 +381,6 @@ function countdown(){
 }
 function dibujarCanvas(){
 
-		countdown();
-
-        var boton=document.getElementById('play_button');
-        boton.style.display="none";
-
         var canvas = document.getElementById('screener');
         var contexto = canvas.getContext('2d');
 
@@ -404,7 +399,7 @@ function dibujarCanvas(){
         contexto.shadowColor="yellow"       
         contexto.fill();
 
-        //nubes
+	        //nubes
 		contexto.beginPath();
         contexto.arc(800,100,41,0,Math.PI*2, true);    
         contexto.fillStyle = 'white';    
@@ -1164,8 +1159,5 @@ function dibujarCanvas(){
         contexto.arc(300,300,62,0,Math.PI*2, true);
         contexto.fillStyle = 'white';  
         contexto.fill();
-		*/
-		
-		        
-		   
+		*/		 
 }

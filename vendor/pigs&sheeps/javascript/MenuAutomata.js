@@ -1,4 +1,4 @@
-MenuAutomata.prototype = new TheadAutomata
+MenuAutomata.prototype = new ThreadAutomata
 MenuAutomata.prototype.constructor = MenuAutomata
 
 function MenuAutomata(processor, gate) {

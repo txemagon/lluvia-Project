@@ -3,21 +3,17 @@ var world   = null
 var play    = null
 var $logger = null
 
-
 function start_game(){
+
 	var start_button = document.getElementById('main_screen')
 	start_button.style.display = 'none';
 
+  // var canvas_color = document.getElementById('canvas')
+  // canvas_color.style.backgroundColor = 'transparent';
+
     try{
-	var sheep = world.new_boid_as_sheep(function(boid, config){
-		config.colour = "pink" 
-		config.geo_data = {  
-		   position: new Vector(350, 250),
-		   velocity: new Vector(0, 0),
-		   acceleration: new Vector(0, 0) 
-		}
-		return config 
-	  })
+        setInterval(dibujarCanvas, 100)
+        countdown();
      } catch(err) {
      	// Catch the dynamic call and raise it to method_missing()
      	throw err
