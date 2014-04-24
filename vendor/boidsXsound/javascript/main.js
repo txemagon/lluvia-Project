@@ -19,7 +19,7 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 
-  setInterval(pintarCara, 100)
+ // setInterval(pintarCara, 100)
 
   for(var i = 0; i<10; i++){
     var b = w.new_wander()

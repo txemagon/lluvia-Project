@@ -11,7 +11,10 @@ function FaceBoid(element){
 				that.element = element
 				that[element] = {}
 				Gate.call(that, element)
-				that[element].face_automata = that.new_effect(new FaceAutomata(that.device, that))
+				that[element].face_automata_eyes    = that.newEffect(new FaceAutomataEyes(that.device, that))
+				that[element].face_automata_outline = that.newEffect(new FaceAutomataOutline(that.device, that))
+				that[element].face_automata_mouth   = that.newEffect(new FaceAutomataMouth(that.device, that))
+				that[element].face_automata_wifi    = that.newEffect(new FaceAutomataWifi(that.device, that))
 			}
 		} catch(e){
 				if ($K_debug_level >= $KC_dl.DEVELOPER)
@@ -23,6 +26,3 @@ function FaceBoid(element){
 		initialize()
 }
 
-FaceBoid.prototype.do_onmouseover = function (ev, el){
-		this[this.element].face_automata.currentState.requested = this[this.element].face_automata.state.appearing
-}

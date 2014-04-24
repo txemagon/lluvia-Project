@@ -10,14 +10,14 @@ function init(){
 
 function pintarCara(){
 	cxt.fillStyle="white";
-    cxt.fillRect(0, 0, c.height, c.width);  
+   // cxt.fillRect(0, 0, c.height, c.width);  
     cxt.fillStyle="black";
 
 /*
     no_boid()
 */	
 	contornoCara()
-	ojos()
+//	ojos()
 	boca(1)
 	antena()
 	onda_wifi()

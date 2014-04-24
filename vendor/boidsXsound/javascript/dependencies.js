@@ -14,10 +14,13 @@ $K_app_dependencies = [
 			{ name: "world_interface.js",          description: "World Interface." },
 			{ name: "boid_editor.js",              description: "Boid panel editor." },
 			{ name: "world.js",                    description: "The world where all boids live." },
-			{ name: "face_animation.js",           description: "" },
+//			{ name: "face_animation.js",           description: "" },
 			{ name: "face_device.js",              description: "" },
 			{ name: "face_gate.js",                description: "" },
-			{ name: "face_automata.js",            description: "" },
+			{ name: "face_automata_outline.js",    description: "" },
+			{ name: "face_automata_eyes.js",       description: "" },
+			{ name: "face_automata_mouth.js",      description: "" },
+			{ name: "face_automata_wifi.js",       description: "" },
 			{ name: "main.js",                     description: "main function." },
 		]
 	}
