@@ -5,7 +5,7 @@ function Hash(){
 
 }
 
-Hash.bang_methods = ["merge", "soft_merge"]
+Hash.bang_methods = ["merge", "soft_merge", "override"]
 
 Hash.prototype.self_keys = function(re){
 	var the_keys = []
@@ -49,6 +49,22 @@ Hash.prototype.soft_merge = function(source){
 		that[key] = that[key] || source[key]
 	})
 	return this
+}
+
+Hash.prototype.override = function(source){
+	if (!source.respond_to$U("self_keys"))
+		throw "Invalid source. Impossible to merge."
+	var that = this
+	source.self_keys().each(function(key){
+		if (that[key])
+			that[key] = source[key]
+	})
+	return this
+}
+
+Hash.prototype.each = function() {
+	for (var i in this)
+		Hash.prototype.each.yield(i, this[i])
 }
 
 Hash.reflect(Hash.bang_methods)
