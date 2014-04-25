@@ -3,16 +3,17 @@ MenuHandler.prototype.contructor = MenuHandler
 
 function MenuHandler(view) {
 	var that = this
-	   
+	this.self_events = ["get_panel_out"]
 
 	function initialize() {
 		Device.call(that, view)
-		that.newGate("desplegable", Animation)
-		that.newGate("start_option", Animation)
-		that.newGate("restart_option", Animation)
-		that.newGate("instructions_option", Animation)
+		that.newGate("menu", Animation)
+		that.newGate("start_option", Button)
+		that.newGate("restart_option", Button)
+		that.newGate("instructions_option", Button)
 	}
 
 	if (arguments.length)
 		initialize()
 }
+

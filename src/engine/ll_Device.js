@@ -272,12 +272,14 @@ Device.prototype.childRunner = function(){
  *
  * @param {String | HTMLElement} el See (@link Gate)
  * @param {Function} ClassCons Class constructor deriving from Gate.
+ * @param {Object} actions Config object as in { onclick: function(event, element){ alert('Someone made on click.') } }
  */
-Device.prototype.newGate = function(el, ClassCons){
+Device.prototype.newGate = function(el, ClassCons, actions){
+	actions = actions || {}
 	try {
 		var Cons = this.openDevice(ClassCons)
 		var view = this.view || null
-		var ob = new Cons(el, view)
+		var ob = new Cons(el, view, actions)
                 ob.device = this
 		this.gates.push( ob )
 		return ob
