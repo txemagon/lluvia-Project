@@ -9,32 +9,15 @@
 */
 function Brain(body){
 
+   var that  = this
    this.body = body
-   var that = this
-   this.behaviors = []
 
-     /* GOAL BEHAVIORS */
-   this.behaviors.push(
-     [ "seek>arrival" , "flee", "wander","wander around","pursue",
-       "alignment", "wall following", "path following"
-     ].inject( new BehaviorSet(), function(behavior, set){
-           var b_name = Behavior.decompose_name(behavior)
-           set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return set
-	 })
-     )
-// Arrival is a BehaviorModifier (not a Behavior anymore)
-// As long as  "pursue" and "evade" can be got with a BehaviorModifier now are part of named behaviors
+   /*  Behavior.catalog holds all known behaviors.
+    *  Lower this in brain derived classes to reduce skills.
+    */
+   this.possible_behaviors = Behavior.catalog
+   this.active_behaviors   = new Hash()
 
-     /* SECURITY BEHAVIORS */
-   this.behaviors.push(
-     [ "separation", "cohesion",
-       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){
-           var b_name = Behavior.decompose_name(behavior)
-	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return list
-	 })
-       )
 }
 
 /**
@@ -42,14 +25,11 @@ function Brain(body){
  *
  * Checks if the boid can activate an specific behavior
  *
- * @param {String}   behavior Name of the behavior to be checked
- *
- * @return {Boolean}  Returns true if the boid accepts the behavior. False if not
+ * @param  {String}   behavior Name of the behavior to be checked
+ * @return {Boolean}  Returns true if the boid accepts the behavior. False if not.
  */
 Brain.prototype.can$U = function(behavior){
-  return this.behaviors.inject(false, function(group, can){
-      return can || group.can$U(behavior)
-      })
+  return this.possible_behaviors[behavior] ? true : false
 }
 
 /**
@@ -57,9 +37,8 @@ Brain.prototype.can$U = function(behavior){
  *
  * Checks if a given behavior can be used by a certain boid
  *
- * @param {String}  behavior Name of the behavior to be checked
- *
- * @return {Boolean}  Returns true if the boid can use the behavior. False if not.
+ * @param  {String}  behavior Name of the behavior to be checked
+ * @return {Boolean} Returns true if the boid can use the behavior. False if not.
  */
 Brain.prototype.can_be_in$U = function(behavior){
   return Brain.prototype.can$U.apply(this, arguments)
@@ -68,13 +47,13 @@ Brain.prototype.can_be_in$U = function(behavior){
 /**
  * @method activate
  *
- * Activates the boid's behaviors
+ * Activates one boid behavior.
  *
- * @param {}
- * 
+ * @param {String} behavior Behavior name ('seek').
+ * @param {Object} target   Direct object of behavior verb.
  */
-Brain.prototype.activate = function(){
-  for (var i=0; i<arguments.length; i++){
+Brain.prototype.activate = function(behavior, target){
+  target = target || null
     do_something = arguments[i]
     this.behaviors.each(function(this_behavior){
         if (this_behavior.can$U(do_something))
@@ -86,10 +65,9 @@ Brain.prototype.activate = function(){
 /**
  * @method is_in$U
  *
- * Check if the boid's list of behaviors have the given behavior 
+ * Check if the boid's list of behaviors have the given behavior
  *
- * @param {String}  behavior Name of the behavior to check
- *
+ * @param  {String}  behavior Name of the behavior to check
  * @return {Boolean} Returns true if the behavior exists. False if not.
  */
 Brain.prototype.is_in$U = function(behavior){
@@ -104,9 +82,7 @@ Brain.prototype.is_in$U = function(behavior){
  *
  * Obtains all the behavior that are currently activated
  *
- * @param {}
- *
- * @return {}  Returns an array with the active behaviors
+ * @return {Array}  Returns an array with the active behaviors
  */
 Brain.prototype.active_behaviors = function(){
   return this.behaviors.inject([], function(el, behaviors){
@@ -119,8 +95,6 @@ Brain.prototype.active_behaviors = function(){
  * @method all_behaviors
  *
  * Obtains all the behaviors the boid can access
- *
- * @param {}
  *
  * @return {Array}  Returns an array with all the behaviors
  */
@@ -137,9 +111,8 @@ Brain.prototype.all_behaviors = function(){
  *
  * Obtains the behavior passed as parameter
  *
- * @param {String} b_name String that contains the name of the desired behavior
- *
- * @return {}  Returns the desired behavior if the boid can access to it
+ * @param  {String}  b_name String that contains the name of the desired behavior
+ * @return {Object}  Returns the desired behavior if the boid can access to it
  */
 Brain.prototype.get_behavior = function(b_name){
   b_name = Behavior.decompose_name(b_name)[1]
@@ -156,7 +129,6 @@ Brain.prototype.get_behavior = function(b_name){
  *
  * Gets all the desired accelerations of the given boid
  *
- * @param {}
  *
  * @return {Array}  Returns an array of vectors with the boid's accelerations
  */
@@ -173,8 +145,6 @@ Brain.prototype.desired_accelerations = function(){
  *
  * Calculates the acceleration the boid needs to change its position
  *
- * @param {}
- *
  * @return {Vector}  Returns a vector with the boid's desired acceleration
  */
 Brain.prototype.desired_acceleration = function(){ // This is the place for a neural net
@@ -185,8 +155,8 @@ Brain.prototype.desired_acceleration = function(){ // This is the place for a ne
 }
 
 /*
-Behaviors
-=========
+Behaviors Wish List
+===================
 
   1.  seek
   2.  flee
