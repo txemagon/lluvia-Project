@@ -8,33 +8,9 @@
  * @return {Brain}
 */
 function Brain(body){
-
    this.body = body
    var that = this
-   this.behaviors = []
-
-     /* GOAL BEHAVIORS */
-   this.behaviors.push(
-     [ "seek>arrival" , "flee", "wander","wander around","pursue",
-       "alignment", "wall following", "path following"
-     ].inject( new BehaviorSet(), function(behavior, set){
-           var b_name = Behavior.decompose_name(behavior)
-           set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return set
-	 })
-     )
-// Arrival is a BehaviorModifier (not a Behavior anymore)
-// As long as  "pursue" and "evade" can be got with a BehaviorModifier now are part of named behaviors
-
-     /* SECURITY BEHAVIORS */
-   this.behaviors.push(
-     [ "separation", "cohesion",
-       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){
-           var b_name = Behavior.decompose_name(behavior)
-	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return list
-	 })
-       )
+   this.behaviors = {}
 }
 
 /**
