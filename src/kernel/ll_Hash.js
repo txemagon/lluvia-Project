@@ -1,10 +1,10 @@
 Hash.prototype = new BasicObject
 Hash.prototype.constructor = Hash
 
-function Hash(){
-
+function Hash(initial_data){
+	if (initial_data)
+		this.merge$B(initial_data)
 }
-
 Hash.bang_methods = ["merge", "soft_merge", "override"]
 
 Hash.prototype.self_keys = function(re){
@@ -62,9 +62,11 @@ Hash.prototype.override = function(source){
 	return this
 }
 
+// Notice: Hash doesn't support inherited properties
 Hash.prototype.each = function() {
 	for (var i in this)
-		Hash.prototype.each.yield(i, this[i])
+		if ( this.hasOwnProperty(i) )
+		  Hash.prototype.each.yield(i, this[i])
 }
 
 /**
@@ -81,9 +83,19 @@ Hash.prototype.each = function() {
  */
 Hash.prototype.collect = function() {
 	var result = []
-		for (var in in this)
+		for (var i in this)
 			result.push( Hash.prototype.each.yield(i, this[i]) )
 	return result
+}
+
+/**
+ * @method size
+ * Returns the numbers of selk keys
+ *
+ * @return {Number}
+ */
+Hash.prototype.size = function(){
+   return this.self_keys().count()
 }
 
 Hash.reflect(Hash.bang_methods)
