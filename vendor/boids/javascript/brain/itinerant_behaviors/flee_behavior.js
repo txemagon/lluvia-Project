@@ -13,7 +13,6 @@ FleeBehavior.prototype.super = Behavior
 
 function FleeBehavior(){
   Behavior.apply(this, arguments)
-  this.target = null
 }
 
 /**
