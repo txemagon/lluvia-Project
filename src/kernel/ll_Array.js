@@ -211,7 +211,7 @@ Array.prototype.reverse_each = function(){
  *
  * @return  {Array} Returns the trasformed image of self
  *
- * ###Example
+ * ### Example
  *     var number     = [250, 500, 1143]
  *     var discount   = 0.25
  *     var discounted = number.collect(function(obj){
@@ -219,14 +219,23 @@ Array.prototype.reverse_each = function(){
  *                               })
  *     discounted
  *     //=>  [187.5, 375, 857.25]
+ *
+ * ### Example
+ *     var list = [ {name: "John", age:23}, {name: "Mary", age: 27 } ]
+ *     list.collect("age")
+ *     // => [23, 27]
  */
 Array.prototype.collect = function(){
-  var collectable = []
+    var collectable = []
 
-    for (var i = 0; i < this.length; i++)
-      collectable.push(Array.prototype.collect.yield(this[i]))
+    if ( String.is_string$U(arguments[0]) )
+	for (var i = 0; i < this.length; i++)
+          collectable.push(this[i][arguments[0]])
+    else
+	for (var i = 0; i < this.length; i++)
+          collectable.push(Array.prototype.collect.yield(this[i]))
 
-	return collectable
+    return collectable
 }
 
 /**

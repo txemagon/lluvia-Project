@@ -67,4 +67,23 @@ Hash.prototype.each = function() {
 		Hash.prototype.each.yield(i, this[i])
 }
 
+/**
+ * @method collect
+ * Collects into an Array all the values returned by a block.
+ *
+ * ### Example
+ *     var a = new Hash({"ramon", "pepe"})
+ *     a.collect(function(obj) {
+ *       return 1
+ *     })
+ *     // => [1, 1]
+ *
+ */
+Hash.prototype.collect = function() {
+	var result = []
+		for (var in in this)
+			result.push( Hash.prototype.each.yield(i, this[i]) )
+	return result
+}
+
 Hash.reflect(Hash.bang_methods)
