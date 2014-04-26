@@ -17,6 +17,7 @@ function FaceAutomataOutline(processor, gate) {
 				function(){
 					this.draw_outline_face()
 					this.draw_outline_antenna()
+					//this.draw_outline_frame()
 					;
 				},
 				function(){
@@ -41,6 +42,12 @@ function FaceAutomataOutline(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataOutline.prototype.draw_outline_frame = function(){
+	cxt.beginPath();
+	cxt.arc(75, 75 ,74 , 0, Math.PI*2, false); 
+	cxt.stroke();
 }
 
 FaceAutomataOutline.prototype.draw_outline_face = function(){
@@ -83,3 +90,5 @@ FaceAutomataOutline.prototype.draw_outline_antenna = function(){
 
 	cxt.lineWidth = 2;
 }
+
+

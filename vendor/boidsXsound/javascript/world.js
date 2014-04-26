@@ -205,6 +205,37 @@ World.prototype.new_boid = function(color, geo_data){
   return b
 }
 
+World.prototype.new_nanobot = function(color, geo_data, level_emotion, wave_lenght, image, gender){
+  color = color || "blue"
+  if (typeof(geo_data) === "undefined")
+    geo_data = { 
+          position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)), 
+          acceleration: new Vector(0,0)
+    }
+  var b = new Nanobot(geo_data, color)
+  this.boids++
+  b.id = this.boids
+  this.has_born(b)
+  return b
+}
+
+World.prototype.new_speaker = function(pos_x, pos_y, wave_lenght){
+  var pos_x = pos_x || Math.floor(Math.random()*400)
+  var pos_y = pos_y || Math.floor(Math.random()*400)
+  
+    geo_data = { 
+          position: new Vector(pos_x, pos_y),
+          velocity: new Vector(0,0), 
+          acceleration: new Vector(0,0)
+    }
+  var b = new Speaker(geo_data)
+  this.boids++
+  b.id = this.boids
+  this.has_born(b)
+  return b
+}
+
 World.prototype.new_seeker = function(target, color){
   var b = this.new_boid(color)
   b.brain.activate('seek')
