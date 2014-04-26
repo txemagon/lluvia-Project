@@ -13,12 +13,13 @@
  */
 
 
-function Behavior( brain, body, before_modifier, after_modifier ){
+function Behavior( brain, body, before_modifier, after_modifier,target ){
     var that = this
     this.before =  []
     this.after  =  []
     this.brain
     this.me
+    this.target = target
     before_modifier = before_modifier || false
     after_modifier  = after_modifier  || false
 
@@ -47,6 +48,33 @@ function Behavior( brain, body, before_modifier, after_modifier ){
     }
     if (arguments.length)
         initialize()
+}
+
+/**
+ * @method decompose_name
+ *
+ * Given a string representing the name of a behaviors and its modifiers,
+ * returns an Array with the list of premodifiers, the base name of the behavior
+ * and an array with the postmodifiers.
+ *
+ * @param  {String} Behavior Full name of the behavior.
+ * @return {Array}
+ *
+ * ### Example
+ *
+ *     Behavior.decompose_name("seek")
+ *     // => [[], "seek", []]
+ *     Behavior.decompose_name("pursue<seek>arrival>low speed>greeting")
+ *     // => [["pursue"], "seek", ["arrival", "low speed", "greeting"]]
+ */
+Behavior.decompose_name = function(behavior){
+    var pre_state = behavior.match(/\s*([^<]+)/g)
+    behavior = pre_state.pop()
+
+    var post_state = behavior.match(/([^>]+)/g)
+    behavior = post_state.shift()
+
+    return [pre_state.strip_all(), behavior.strip(), post_state.strip_all()]
 }
 
 /**
@@ -87,51 +115,26 @@ Behavior.catalog = (function(){
     })
 })()
 
-/**
- * @method decompose_name
- *
- * Given a string representing the name of a behaviors and its modifiers,
- * returns an Array with the list of premodifiers, the base name of the behavior
- * and an array with the postmodifiers.
- *
- * @param  {String} Behavior Full name of the behavior.
- * @return {Array}
- *
- * ### Example
- *
- *     Behavior.decompose_name("seek")
- *     // => [[], "seek", []]
- *     Behavior.decompose_name("pursue<seek>arrival>low speed>greeting")
- *     // => [["pursue"], "seek", ["arrival", "low speed", "greeting"]]
- */
-Behavior.decompose_name = function(behavior){
-    var pre_state = behavior.match(/\s*([^<]+)/g)
-    behavior = pre_state.pop()
-
-    var post_state = behavior.match(/([^>]+)/g)
-    behavior = post_state.shift()
-
-    return [pre_state.strip_all(), behavior.strip(), post_state.strip_all()]
-}
-
 Behavior.Scope = Enumeration("PRE", "POST", "ALL")
 
 /**
  * @method new
+ * @static
  * Creates a new behavior
  *
  * @param {String} name Name of the behavior. i.e. seek
  * @param {Object} target Target of the behavior.
  */
-Behavior.prototype.new = function(full_name, target) {
-    var b_name = Behavior.decompose_name(behavior)
-    return eval(
-        "new " + b_name[1].class_name() +
-        "Behavior(that, body, '" + b_name[0] +
-        "', '" + b_name[2] + "')"
-    )
+Behavior.new = function(brain, full_name, target) {
+    var b_name     = Behavior.decompose_name(full_name)
+    var class_name = eval (b_name[1].class_name() + "Behavior")
 
+    // return eval( "new " + b_name[1].class_name() +
+    //     "Behavior(that, body, '" + b_name[0] +
+    //     "', '" + b_name[2] + "', " + target + ")" )
+    return new class_name(brain, brain.body, b_name[0], b_name[2], target)
 }
+
 /**
  * @method type_of
  *
