@@ -6,35 +6,20 @@
  * @constructor Brain
  *
  * @return {Brain}
-*/
+ */
 function Brain(body){
 
+   var that  = this
    this.body = body
-   var that = this
-   this.behaviors = []
 
-     /* GOAL BEHAVIORS */
-   this.behaviors.push(
-     [ "seek>arrival" , "flee", "wander","wander around","pursue",
-       "alignment", "wall following", "path following"
-     ].inject( new BehaviorSet(), function(behavior, set){
-           var b_name = Behavior.decompose_name(behavior)
-           set.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return set
-	 })
-     )
-// Arrival is a BehaviorModifier (not a Behavior anymore)
-// As long as  "pursue" and "evade" can be got with a BehaviorModifier now are part of named behaviors
+   /*  Behavior.catalog holds all known behaviors.
+    *  Lower this in brain derived classes to reduce skills.
+    */
+   this.possible_behaviors = Behavior.catalog
+   this.active_behaviors   = new Hash(
+      { undefined: [{target:null, desired_acceleration: new Vector(0,0)}]
+   })
 
-     /* SECURITY BEHAVIORS */
-   this.behaviors.push(
-     [ "separation", "cohesion",
-       "obstacle avoidance", "containment" ].inject( new BehaviorList(), function(behavior, list){
-           var b_name = Behavior.decompose_name(behavior)
-	   list.append(behavior, eval("new " + b_name[1].class_name() + "Behavior(that, body, '" + b_name[0] + "', '" + b_name[2] + "')") )
-	   return list
-	 })
-       )
 }
 
 /**
@@ -42,14 +27,11 @@ function Brain(body){
  *
  * Checks if the boid can activate an specific behavior
  *
- * @param {String}   behavior Name of the behavior to be checked
- *
- * @return {Boolean}  Returns true if the boid accepts the behavior. False if not
+ * @param  {String}   behavior Name of the behavior to be checked
+ * @return {Boolean}  Returns true if the boid accepts the behavior. False if not.
  */
 Brain.prototype.can$U = function(behavior){
-  return this.behaviors.inject(false, function(group, can){
-      return can || group.can$U(behavior)
-      })
+   return this.possible_behaviors[behavior] ? true : false
 }
 
 /**
@@ -57,79 +39,57 @@ Brain.prototype.can$U = function(behavior){
  *
  * Checks if a given behavior can be used by a certain boid
  *
- * @param {String}  behavior Name of the behavior to be checked
- *
- * @return {Boolean}  Returns true if the boid can use the behavior. False if not.
+ * @param  {String}  behavior Name of the behavior to be checked
+ * @return {Boolean} Returns true if the boid can use the behavior. False if not.
  */
 Brain.prototype.can_be_in$U = function(behavior){
-  return Brain.prototype.can$U.apply(this, arguments)
+   return Brain.prototype.can$U.apply(this, arguments)
 }
 
 /**
  * @method activate
  *
- * Activates the boid's behaviors
+ * Activates one boid behavior. Intransitive behavior have an undefined target.
  *
- * @param {}
- * 
+ * @param {String} behavior Behavior name ('seek>arrival').
+ * @param {Object} [target]   Direct object of behavior verb.
  */
-Brain.prototype.activate = function(){
-  for (var i=0; i<arguments.length; i++){
-    do_something = arguments[i]
-    this.behaviors.each(function(this_behavior){
-        if (this_behavior.can$U(do_something))
-          this_behavior.activate(do_something)
-        })
-  }
+Brain.prototype.activate = function(behavior, target_after){
+   this.active_behaviors[behavior] = this.active_behaviors[behavior] || []
+   if (this.possible_behaviors[behavior])
+      this.active_behaviors[behavior].push( {
+	 target: target_after,
+	 behavior: Behavior.new(this, behavior, target_after)
+      })
+}
+
+/**
+ * @method deactivate
+ *
+ * Deactivates one boid behavior. Intransitive behavior have an undefined target.
+ *
+ * @param {String} behavior   Behavior name ('seek').
+ * @param {Object} [target]   Direct object of behavior verb.
+ */
+Brain.prototype.deactivate = function(behavior, target){
+   behavior = behavior || []
+   this.active_behaviors[behavior].erase_if$B(function(element) { element.target = target })
 }
 
 /**
  * @method is_in$U
  *
- * Check if the boid's list of behaviors have the given behavior 
+ * Check if the boid's list of behaviors have the given behavior
  *
- * @param {String}  behavior Name of the behavior to check
- *
+ * @param  {String}  behavior Name of the behavior to check
+ * @param  {Object}  [target]   Direct object of behavior verb.
  * @return {Boolean} Returns true if the behavior exists. False if not.
  */
-Brain.prototype.is_in$U = function(behavior){
-   behavior = Behavior.decompose_name(behavior)[1]
-   return this.behaviors.inject(false, function(group, is_in){
-      return is_in || group.is_active$U(behavior)
-      })
-}
-
-/**
- * @method active_behaviors
- *
- * Obtains all the behavior that are currently activated
- *
- * @param {}
- *
- * @return {}  Returns an array with the active behaviors
- */
-Brain.prototype.active_behaviors = function(){
-  return this.behaviors.inject([], function(el, behaviors){
-          behaviors.push(el.active_behaviors())
-	  return behaviors
-      }).flatten()
-}
-
-/**
- * @method all_behaviors
- *
- * Obtains all the behaviors the boid can access
- *
- * @param {}
- *
- * @return {Array}  Returns an array with all the behaviors
- */
-Brain.prototype.all_behaviors = function(){
-  return this.behaviors.inject([], function(group, behaviors){
-    return group.behavior.self_keys().collect(function(key){
-      return group.behavior[key]
-    })
-  }).flatten()
+Brain.prototype.is_in$U = function(behavior, target){
+   behavior = behavior || []
+   return this.active_behaviors[behavior].collect(function (obj) {
+      return obj.target
+   }).include$U(target)
 }
 
 /**
@@ -137,18 +97,41 @@ Brain.prototype.all_behaviors = function(){
  *
  * Obtains the behavior passed as parameter
  *
- * @param {String} b_name String that contains the name of the desired behavior
- *
- * @return {}  Returns the desired behavior if the boid can access to it
+ * @param  {String}  b_name String that contains the name of the desired behavior
+ * @param  {Object}  [target]   Direct object of behavior verb.
+ * @return {Object}  Returns the desired behavior if the boid can access to it
  */
-Brain.prototype.get_behavior = function(b_name){
-  b_name = Behavior.decompose_name(b_name)[1]
+Brain.prototype.get_behavior = function(b_name, target){
 
-  return this.behaviors.inject(null, function(group, requested){
-    if (group.can$U(b_name))
-      return group.behavior[b_name]
-    return requested
-  })
+   if ( !this.active_behaviors[b_name] )
+      return null
+
+   return this.active_behaviors[b_name].inject(null, function(possible, found) {
+      if ( possible.target == target )
+	 return possible.behavior
+      return found
+   })
+}
+
+Brain.prototype._$see_accelerations = function (){
+   var be = this.active_behaviors
+   var see = ""
+
+   if (this.body.name)
+      see += "name: " + this.body.name  + "\n"
+
+   see += "Behaviors: " + be.self_keys() + "\n"
+
+   be.each(function(key, value) {
+      see += "\n" + key + ": "
+      value.each(function(target) {
+	 see += target.desired_acceleration.Coord
+      })
+   })
+
+   see += "\n\n" + be.toSource()
+
+   return see
 }
 
 /**
@@ -156,16 +139,44 @@ Brain.prototype.get_behavior = function(b_name){
  *
  * Gets all the desired accelerations of the given boid
  *
- * @param {}
+ *    {
+ *      none:   new Vector(0,0),
+ *      seek:   [
+ *               {
+ *                target: boid1,
+ *                behavior: behavior_ptr,
+ *                desired_acceleration: new Vector(5,3)
+ *               },
+ *               {
+ *                target: boid2,
+ *                behavior: behavior_ptr,
+ *                desired_acceleration: new Vector(1,4)
+ *               }
+ *              ],
+ *      wander: [
+ *               {
+ *                target: undefined,
+ *                behavior: wander_behavior_ptr,
+ *                desired_acceleration: new Vector(2,3)
+ *               }
+ *              ]
+ *    }
  *
- * @return {Array}  Returns an array of vectors with the boid's accelerations
  */
 Brain.prototype.desired_accelerations = function(){
-  return this.behaviors.inject( { none: new Vector(0,0) }, function(el_group, accelerations){
-          var da = el_group.desired_accelerations() || {}
-	  da.self_keys().each(function(key){ accelerations[key] = da[key] })
-	  return accelerations
+   var result
+   try {
+
+      this.active_behaviors.each( function(name, behaviour){
+	 behaviour.each( function(target) {
+	    if (target && target.behavior)
+	       target.desired_acceleration =  target.behavior.desired_acceleration()  || target.desired_acceleration || new Vector(0,0)
+	 })
       })
+   } catch(err) {
+      throw "Error in Brain#desired_accelerations"
+   }
+
 }
 
 /**
@@ -173,47 +184,59 @@ Brain.prototype.desired_accelerations = function(){
  *
  * Calculates the acceleration the boid needs to change its position
  *
- * @param {}
- *
  * @return {Vector}  Returns a vector with the boid's desired acceleration
  */
 Brain.prototype.desired_acceleration = function(){ // This is the place for a neural net
-  var da = this.desired_accelerations()
-  return da.self_keys().inject(new Vector(0,0), function(behavior, sum){
-	  return sum.add(da[behavior])
-	})
+   this.desired_accelerations()
+   //alert(this._$see_accelerations())
+   var be = this.active_behaviors
+   var be_keys
+   var result = new Vector(0,0)
+
+   if (be && (be_keys = be.self_keys()) ) {
+      result= be_keys.inject(new Vector(0,0),
+        		     function(behavior, sum){
+        			var result =  be[behavior].inject(sum, function(target, sum){
+        			   return sum.add(target.desired_acceleration) || sum
+        			}) || new Vector(0,0)
+				return result
+        		     })
+
+   }
+
+   return result || new Vector(0,0)
 }
 
 /*
-Behaviors
-=========
+   Behaviors Wish List
+   ===================
 
-  1.  seek
-  2.  flee
-  3.  wander
-  4.  wall following
-  5.  path following
+   1.  seek
+   2.  flee
+   3.  wander
+   4.  wall following
+   5.  path following
 
 
-  flow field following (it isn't a behavior but an aditive force)
+   flow field following (it isn't a behavior but an aditive force)
 
-  Auxiliary Behaviors
-  ===================
+   Auxiliary Behaviors
+   ===================
 
-  1.  arrival (is a substate of seeking, and may be pursuing)
-  2.  obstacle avoidance
-  3.  containment
-  4.  Separation
-  5.  Alignment
-  6.  Cohesion
+   1.  arrival (is a substate of seeking, and may be pursuing)
+   2.  obstacle avoidance
+   3.  containment
+   4.  Separation
+   5.  Alignment
+   6.  Cohesion
 
-  Combined (named) behaviors
-  ==========================
-  1.  pursue
-  2.  evade
-  3.  flocking
-  4.  Crowd path following
-  5.  Leader following
-  6.  Unaligned collision avoidance
-  7.  Queuing
-*/
+   Combined (named) behaviors
+   ==========================
+   1.  pursue
+   2.  evade
+   3.  flocking
+   4.  Crowd path following
+   5.  Leader following
+   6.  Unaligned collision avoidance
+   7.  Queuing
+   */
