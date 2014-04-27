@@ -163,6 +163,31 @@ Boid.prototype.run = function(current_time){
     this.update_physics(current_time)
 }
 
+Boid.prototype.first_draw = function() {
+    var canvas = document.createElement('canvas');
+    canvas.width = 24;
+    canvas.height = 24;
+
+    // Get the drawing context
+    var ctx = canvas.getContext('2d');
+
+    var radius = 10
+
+    ctx.fillStyle = this.colour
+    ctx.strokeStyle = "black"
+    ctx.beginPath();
+    ctx.arc(12, 12, radius, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(12, 12, radius + 2, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.stroke()
+
+    this.shape = ctx.getImageData(0,0,24,24)
+    this.cached_canvas = canvas
+}
 
 /**
  * @method draw
@@ -174,125 +199,18 @@ Boid.prototype.run = function(current_time){
  */
 Boid.prototype.draw = function(ctx){
 
-    var p = this.geo_data.position;
-    var v = this.geo_data.velocity;
-    var a = this.geo_data.acceleration;
+    var p = this.geo_data.position
+    var v = this.geo_data.velocity
+    var a = this.geo_data.acceleration
+    var radius = 10
+    var scale = 1 - p.get_coord(1) / 3000
 
-    ctx.fillStyle = this.colour
-    ctx.strokeStyle = "black"
-    ctx.beginPath();
-    ctx.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fill();
+    ctx.save()
+    ctx.scale( scale, scale / 2 )
 
-    ctx.beginPath();
-    ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.stroke()
+    ctx.drawImage(this.cached_canvas, p.get_coord(0), p.get_coord(1))
 
-    if (this.focused){
-        ctx.strokeStyle = "red"
-        ctx.beginPath();
-        ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true);
-        ctx.closePath();
-        ctx.stroke()
-    }
-
-    // todo: Move this to another class
-
-    /* Speed */
-    ctx.strokeStyle = "black"
-    ctx.beginPath();
-    ctx.moveTo(p.get_coord(0), p.get_coord(1))
-    ctx.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
-    ctx.closePath();
-    ctx.stroke()
-
-    /* Acceleration */
-    ctx.strokeStyle = "red"
-    ctx.beginPath();
-    ctx.moveTo(p.get_coord(0), p.get_coord(1))
-    ctx.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
-    ctx.closePath();
-    ctx.stroke()
-
-    /* It makes nonsense since behaviors are targeted now */
-//    if (this.brain.is_in$U("seek") ){
-//    alert("Hola")
-//        var seek_behavior = this.brain.get_behavior("seek")
-//        if (seek_behavior.is_postmodified_by$U("arrival") &&
-//            seek_behavior.target && seek_behavior.target != this){
-//            /* Displacement to target */
-//        ctx.strokeStyle = "silver"
-//        ctx.beginPath();
-//        ctx.moveTo(p.get_coord(0), p.get_coord(1))
-//        ctx.lineTo(p.get_coord(0) + seek_behavior.target_at().get_coord(0),
-//                   p.get_coord(1) + seek_behavior.target_at().get_coord(1))
-//                   ctx.closePath();
-//                   ctx.stroke()
-//
-//                   var p_target = seek_behavior.target_data().position
-//                   /*          // Desired Velocity
-//                               ctx.strokeStyle = "black"
-//                               ctx.beginPath();
-//                               ctx.moveTo(p.get_coord(0), p.get_coord(1))
-//                               ctx.lineTo(p.get_coord(0) + seek_behavior.desired_velocity().get_coord(0),
-//                               p.get_coord(1) + seek_behavior.desired_velocity().get_coord(1))
-//                               ctx.closePath();
-//                               ctx.stroke()
-//                               */
-//
-//                   // Approach distance
-//                   ctx.strokeStyle = "silver"
-//                   ctx.beginPath();
-//                   ctx.arc(p_target.get_coord(0), p_target.get_coord(1),
-//                           seek_behavior.approach_distance, 0, Math.PI*2, true);
-//                           ctx.closePath();
-//                           ctx.stroke();
-//
-//                           // Arrival distance
-//                           var arrival_distance = seek_behavior.target_at().module()
-//                           if (seek_behavior.approach_distance > arrival_distance ){
-//                               ctx.strokeStyle = "teal"
-//                               ctx.beginPath();
-//                               ctx.arc(p_target.get_coord(0), p_target.get_coord(1), arrival_distance, 0, Math.PI*2, true);
-//                               ctx.closePath();
-//                               ctx.stroke();
-//                           }
-//
-//        }
-//    }
-//
-//    if (this.brain.is_in$U("wander")){
-//        var wander = this.brain.get_behavior("wander");
-//        ctx.strokeStyle = "silver"
-//        var xc = p.get_coord(0) + v.unit().get_coord(0) * wander.D
-//        var yc = p.get_coord(1) + v.unit().get_coord(1) * wander.D
-//        var xp = xc + wander.R * Math.cos(wander.theta)
-//        var yp = yc + wander.R * Math.sin(wander.theta)
-//
-//        ctx.beginPath();
-//        ctx.arc( xc, yc, wander.R, 0, Math.PI*2, true);
-//        /* Target  */
-//        ctx.moveTo( xp, yp )
-//        ctx.arc( xp,
-//                yp,
-//                4, 0, Math.PI*2, true);
-//
-//                ctx.closePath();
-//                ctx.stroke()
-//    }
-//
-//    if(this.brain.is_in$U("pursue")){
-//        var pursue = this.brain.get_behavior("pursue")
-//        var target_position = p.add(pursue.target_at())
-//        ctx.strokeStyle = "silver"
-//        ctx.beginPath();
-//        ctx.arc(target_position.get_coord(0), target_position.get_coord(1), 10, 0, Math.PI*2, false)
-//        ctx.arc(target_position.get_coord(0), target_position.get_coord(1), 12, 0, Math.PI*2, false)
-//        ctx.closePath();
-//        ctx.stroke()
-//    }
+    ctx.restore()
 }
 
 /**

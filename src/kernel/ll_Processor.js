@@ -94,7 +94,7 @@ Processor.prototype.run = function (date){
 
     }
 
-	setTimeout(this.run.bind(this), 50);
+	setTimeout(this.run.bind(this), 20);
 }
 
 Processor.prototype.start = function(){

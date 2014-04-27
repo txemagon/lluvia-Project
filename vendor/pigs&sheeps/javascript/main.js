@@ -9,14 +9,16 @@ function start_game(device){
 
 	countdown(device);
 
-	var pigs = []
-	pigs.push( device.new_boid( function(config) {
-		config.colour =  "pink"
-	}))
 
-	pigs.push( device.new_boid( function(config) {
+	device.new_boid( function(config) {
 		config.colour = "pink"
-		config.geo_data.position = new Vector(10, 100)
+	})
+
+
+	var cows = []
+	for (var i=0; i<10; i++)
+	cows.push( device.new_boid( function(config) {
+		config.colour = "white"
 	}))
 
 	device.start()

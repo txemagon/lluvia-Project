@@ -127,22 +127,26 @@ World.prototype.start = function(){
   this.draw_background(ctx)
   this.background = ctx.getImageData(0, 0, 850, 500)
 
+  // Change the origin to the middle x, bottom y,  and invert y axis
+  ctx.transform(1, 0, 0, -1, 425, 500)
   this.start_time = new Date()
   this.currentState.requested = Device.STATE.running
   this.get_boids().each( function(el) {
     el.start(that.start_time)
+    el.first_draw()
   })
+  /* Please don't add more boids */
+  this.boids_list = this.get_boids()
 }
 
 World.prototype.draw = function(){
   var that = this
   var ctx  = that.screen[0].context
 
-  //ctx.clearRect(0,0,850,500) // Mind this hardcode
   ctx.putImageData(this.background, 0, 0)
-  this.each_boid(function(boid){
-    boid.draw(ctx)
-  })
+
+  for (var i=0; i<this.boids_list.length; i++)
+     this.boids_list[i].draw(ctx)
 }
 
 World.prototype.step = function(current_time){

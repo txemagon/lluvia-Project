@@ -4,6 +4,7 @@ World.prototype.draw_background = function(ctx){
 	ctx.fillStyle = '#B5CDFF';
 	ctx.fillRect (0, 0, 852, 502);
 
+
 	// sol
 	ctx.beginPath();
 	ctx.arc(50,40,30,0,Math.PI*2, true);
