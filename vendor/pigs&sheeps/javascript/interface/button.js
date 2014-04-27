@@ -2,11 +2,8 @@ Button.prototype = new Gate
 Button.prototype.constructor = Button
 
 function Button(element, action){
-<<<<<<< HEAD
 	var that = this
-	
-=======
->>>>>>> b75996f65d421e6ee1a6f91d7d1cddada6995d89
+
 	try {
 		this.action = action || {}
 		if (arguments.length)
