@@ -15,10 +15,7 @@ function _stitchWorlds(gate, solicitor){
 	return function(e){
 		e = e || window.event
 		try{
-			if ( typeof(gate[solicitor]) !== "undefined" )
-		       return gate[solicitor](e, this)
-		   solicitor = solicitor.replace(/^do_/, "")
-		    return gate.do_(e, this, solicitor)
+		 return gate[solicitor](e, this)
 		} catch (err) {
 			Exception.parse(err) }
 	}
@@ -80,7 +77,6 @@ function _stitchWorlds(gate, solicitor){
 function Gate(element, parent, config){
 	var that = this
 	var args = arguments
-	this.actions = actions || {}
 
 	function initialize(){
 		if (element){
@@ -134,12 +130,6 @@ Gate.prototype.applySkin = function(skin){
 	var div = document.createElement("div")
 	div.setAttribute("class", skin)
 	this.panel.appendChild(div)
-}
-
-Gate.prototype.do_ = function(event, html_element, action){
-	if (typeof(this.actions[action]) == "function")
-		return this.actions[action](event, html_element)
-	return null
 }
 
 /**
