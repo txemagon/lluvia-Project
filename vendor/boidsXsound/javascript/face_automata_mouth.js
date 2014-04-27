@@ -6,12 +6,25 @@ function FaceAutomataMouth(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("closed")
-	this.currentState = { previous: state.closed,
-						  current: state.closed,
-						  requested: state.closed }
+	var state = this.state = new Enumeration("start_effect", "closed", "sleep")
+	this.currentState = { previous: state.sleep,
+						  current: state.sleep,
+						  requested: state.sleep }
 
 		this.solicitors = [
+			/* start_effect */
+			[
+				function(){
+					;
+				},
+				function(){
+					this.currentState.requested = this.state.closed	
+					;
+				},
+				function(){
+					;
+				}
+			],
 			/* closed */	
 			[
 				function(){
@@ -25,7 +38,19 @@ function FaceAutomataMouth(processor, gate) {
 				function(){
 					;
 				}
-			]
+			],
+			/* sleep */
+			[
+				function(){
+					;
+				},
+				function(){
+					;
+				},
+				function(){
+					;
+				}
+			],
 		]
 
     function initialize(){

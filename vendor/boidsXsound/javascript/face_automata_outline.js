@@ -6,12 +6,25 @@ function FaceAutomataOutline(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("normal_outline")
-	this.currentState = { previous: state.normal_outline,
-						  current: state.normal_outline,
-						  requested: state.normal_outline }
+	var state = this.state = new Enumeration("start_effect", "normal_outline", "sleep")
+	this.currentState = { previous: state.sleep,
+						  current: state.sleep,
+						  requested: state.sleep }
 
 		this.solicitors = [
+			/* start_effect */
+			[
+				function(){
+					;
+				},
+				function(){
+					this.currentState.requested = this.state.normal_outline	
+					;
+				},
+				function(){
+					;
+				}
+			],
 			/* normal_outline */	
 			[
 				function(){
@@ -26,7 +39,19 @@ function FaceAutomataOutline(processor, gate) {
 				function(){
 					;
 				}
-			]
+			],
+			/* sleep */
+			[
+				function(){
+					;
+				},
+				function(){
+					;
+				},
+				function(){
+					;
+				}
+			],
 		]
 
     function initialize(){

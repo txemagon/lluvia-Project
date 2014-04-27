@@ -20,14 +20,15 @@ function FaceDevice(view){
   
   function initialize(){
     Device.call(that, view)
-    that.newGate("face", FaceBoid)
+      that.newGate("face", FaceBoid)
   }
   
   if (arguments.length)
     initialize()
 
 }
-
-FaceDevice.prototype.attend_face_boid = function(date, mssg){
-	alert("Llega el mensaje, bien cojones!!!")
+// cambiar nombre del mensaje
+FaceDevice.prototype.attend_face_boid_animation = function(date, mssg){
+	//alert("Llega el mensaje, bien cojones!!!")
+  this.gates[0].init_animation()
 }

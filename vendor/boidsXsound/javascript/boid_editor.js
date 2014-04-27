@@ -36,7 +36,6 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
                         "Position Y: " + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*100)/100 + "<br/>" +
                         "Vision: " + mssg.event.focus_boid.data.vision + "<br/>" +
                         "Vision: " + mssg.event.focus_boid.data.vision + "<br/>" +
-
   mssg.current++
 }
 

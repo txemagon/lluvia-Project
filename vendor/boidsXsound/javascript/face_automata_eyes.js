@@ -6,12 +6,25 @@ function FaceAutomataEyes(processor, gate) {
 	var timer = 0
 	this.now = new Date()
 	this.before = new Date()
-	var state = this.state = new Enumeration("open", "close")
-	this.currentState = { previous: state.open,
-						  current: state.open,
-						  requested: state.open }
+	var state = this.state = new Enumeration("start_effect","open", "close","sleep")
+	this.currentState = { previous: state.sleep,
+						  current: state.sleep,
+						  requested: state.sleep }
 
 		this.solicitors = [
+			/* start_effect */
+			[
+				function(){
+					;
+				},
+				function(){
+					this.currentState.requested = this.state.open	
+					;
+				},
+				function(){
+					;
+				}
+			],
 			/* open */	
 			[
 				function(){
@@ -26,7 +39,7 @@ function FaceAutomataEyes(processor, gate) {
 					;
 				},
 				function(){
-					this.erase_eyes()
+					this.erase_eyes_open()
 					;
 				}
 			],
@@ -40,7 +53,20 @@ function FaceAutomataEyes(processor, gate) {
 				function (){
 					t++
 					if(t == 3)
-						this.currentState.requested = this.state.open	
+						this.currentState.requested = this.state.open
+					;
+				},
+				function(){
+					this.erase_eyes_close()
+					;
+				}
+			],
+			/* sleep */
+			[
+				function(){
+					;
+				},
+				function(){
 					;
 				},
 				function(){
@@ -88,7 +114,19 @@ FaceAutomataEyes.prototype.draw_eyes_close = function(){
 	cxt.stroke();
 }
 
-FaceAutomataEyes.prototype.erase_eyes = function(){
+FaceAutomataEyes.prototype.erase_eyes_close = function(){
+	cxt.strokeStyle = 'white'
+	cxt.beginPath();
+	cxt.moveTo(48, 75)
+	cxt.lineTo(62, 75)
+
+	cxt.moveTo(88, 75)
+	cxt.lineTo(102, 75)
+	cxt.stroke();
+	cxt.strokeStyle = 'black'
+}
+
+FaceAutomataEyes.prototype.erase_eyes_open = function(){
 	cxt.fillStyle = 'white'
 	cxt.beginPath();
 	cxt.arc(55, 75 ,9 , 0, Math.PI*2, false); 

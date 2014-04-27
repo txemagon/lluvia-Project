@@ -427,11 +427,9 @@ Nanobot.prototype.change_state = function(){
 
 Nanobot.prototype.update_behavior = function(){
 	this.change_state()
-	switch(this.level_emotion){
-		case 60:
+	if(this.level_emotion > 60){
 			this.brain.activate('seek')
  			this.brain.get_behavior('seek').set_target()
-			break
 	}
 }
 
@@ -443,14 +441,31 @@ Nanobot.prototype.get_instructions = function(){
 
 }
 
+Nanobot.prototype.draw = function(ctx){
+  var p = this.geo_data.position
 
+  ctx.fillStyle = this.colour
+  ctx.strokeStyle = "black"
+  ctx.beginPath();
+  ctx.arc(p.get_coord(0), p.get_coord(1), 10*escala, 0, Math.PI*2, true);      
+  ctx.closePath();
+  ctx.fill();
+  
+  ctx.beginPath();
+  ctx.arc(p.get_coord(0), p.get_coord(1), 12*escala, 0, Math.PI*2, true);
+  ctx.closePath();
+  ctx.stroke()
+
+  //ctx.fillStyle = "white"
+  //ctx.fillText(this.level_emotion, p.get_coord(0)-8, p.get_coord(1)+5);
+
+}
 
 
 
 
 Speaker.prototype = new Boid
 Speaker.prototype.constructor = Speaker
-
 
 function Speaker(geo_data, wave_lenght, src){
 	var that = this
@@ -480,7 +495,7 @@ Speaker.prototype.get_wave_lenght = function(){
 }
 
 Speaker.prototype.get_frequency = function(){
-	return 1
+	return 0.1
 }
 
 Speaker.prototype.draw = function(ctx){

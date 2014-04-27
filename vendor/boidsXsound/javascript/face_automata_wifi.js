@@ -7,12 +7,25 @@ function FaceAutomataWifi(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.ghost_opacity = 0
-	var state = this.state = new Enumeration("waves_state1", "waves_state2", "waves_state3", "waves_state4", "expected")
-	this.currentState = { previous: state.expected,
-						  current: state.expected,
-						  requested: state.expected }
+	var state = this.state = new Enumeration("start_effect","waves_state1", "waves_state2", "waves_state3", "waves_state4", "expected", "sleep")
+	this.currentState = { previous: state.sleep,
+						  current: state.sleep,
+						  requested: state.sleep }
 
 		this.solicitors = [
+			/* start_effect */
+			[
+				function(){
+					;
+				},
+				function(){
+					this.currentState.requested = this.state.waves_state1	
+					;
+				},
+				function(){
+					;
+				}
+			],
 			/* waves_state1 */	
 			[
 				function(){
@@ -104,7 +117,19 @@ function FaceAutomataWifi(processor, gate) {
 				function(){
 					;
 				}
-			]
+			],
+			/* sleep */
+			[
+				function(){
+					;
+				},
+				function(){
+					;
+				},
+				function(){
+					;
+				}
+			],
 		]
 
     function initialize(){

@@ -14,7 +14,7 @@ function main(){
   boid_list.addPort("focus_boid", boid_editor)
 
   var face_boids = new FaceDevice("boid_properties")
-  boid_list.addPort("face_boid", face_boids)
+  boid_list.addPort("face_boid_animation", face_boids)
 
   c=document.getElementById("face");
   cxt=c.getContext("2d");

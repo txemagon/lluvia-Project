@@ -13,9 +13,10 @@ WorldInterface.prototype.constructor = WorldInterface
 function WorldInterface(view){
   var that = this
   var args = arguments
-  
+  this.nanobot_id = 0
+  this.speaker_id = 0  
   /* Events */
-  this.self_events = ["focus_boid", "face_boid"]
+  this.self_events = ["focus_boid", "face_boid_animation"]
   
   function initialize(){
     Device.call(that, view)
@@ -31,11 +32,21 @@ WorldInterface.prototype.add_boid = function(boid){
   gate.boid = boid
 }
 
+
 WorldInterface.prototype.attend_new_boid = function(date, mssg){
   // logger.innerHTML += mssg.received.id + ": " + mssg.status[mssg.current] + " => " + mssg.event.new_boid.data.self_keys() + "<br/>"
   mssg.current++
   var boid = mssg.event.new_boid.data
-  var gate = this.newGate("Boid_" + boid.id, BoidCollector)
+  //if(boid instanceof Boid)
+    //var gate = this.newGate("Boid_" + boid.id, BoidCollector)
+  if(boid instanceof Nanobot){
+    this.nanobot_id++
+    var gate = this.newGate("Nanobot_" + this.nanobot_id, BoidCollector)
+  }
+  if(boid instanceof Speaker){
+    this.speaker_id++
+    var gate = this.newGate("Speaker_" + this.speaker_id, BoidCollector)
+  }
   gate.boid = boid
 }
 
@@ -61,7 +72,7 @@ function BoidCollector(el, parent){
 	
 BoidCollector.prototype.do_onclick = function(event, element){
   this.device.fireEvent(this.device.newMessage("sync", "focus_boid", this.boid))
-  this.device.fireEvent(this.device.newMessage("sync", "face_boid", this.boid))
+  this.device.fireEvent(this.device.newMessage("sync", "face_boid_animation", this.boid))
 }
 
 BoidCollector.prototype.do_onmouseover = function(event, element){
