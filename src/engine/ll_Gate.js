@@ -29,6 +29,7 @@ function _stitchWorlds(gate, solicitor){
  *
  * @param {String | HTMLElement} [element] (optional) HTML Element to wrap.
  * @param {String | HTMLElement} [parent]  (optional) HTML container to place the Gate.
+ * @param {Object}               [config]  (optional) Action responders.
  *
  * ### Example
  *
@@ -65,8 +66,15 @@ function _stitchWorlds(gate, solicitor){
  *		alert("You have made click.")
  *     }
  *
+ * ### Example
+ *
+ *     var b = new Button(id_of_html_element, null, {
+ *         do_onmouseover: function(event, element) {
+ *             alert("Hello")
+ *         }
+ *     })
  */
-function Gate(element, parent){
+function Gate(element, parent, config){
 	var that = this
 	var args = arguments
 
@@ -96,12 +104,16 @@ function Gate(element, parent){
 				document.body.appendChild(that.panel)
 		}
 
+		if (config)
+		   that.merge$B(config)
+
 		that.keys(/do_.*/).each(function(handler){
             handler.match( /do_(.*)/ )
             that.panel[RegExp.$1] = _stitchWorlds(that, handler)
 		})
 
 		that.threads = []
+
 	}
 
 	if (arguments.length)
