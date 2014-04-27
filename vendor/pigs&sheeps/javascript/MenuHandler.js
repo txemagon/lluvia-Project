@@ -8,9 +8,9 @@ function MenuHandler(view) {
 	function initialize() {
 		Device.call(that, view)
 		that.newGate("menu", Animation)
-		that.newGate("start_option", Button)
-		that.newGate("restart_option", Button)
 		that.newGate("instructions_option", Button)
+		that.newGate("restart_option", Button)
+		that.newGate("level_option", Button)
 	}
 
 	if (arguments.length)
