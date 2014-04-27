@@ -22,10 +22,10 @@ function World(screen, width, height){
 
   var that = this
   this.self_events = ["focus_boid", "new_boid"]
-  
+
   this.screen = []
   this.width   = width  || 100 //meters
-  this.height  = height || 100 
+  this.height  = height || 100
   this.start_time = null
   this.acceleration_max = 30
   this.velocity_max = 200
@@ -53,13 +53,13 @@ World.prototype.set_dashboard = function(name){
 World.prototype.width = function(){
   if (arguments.length == 0)
     return this.width
-  this.width = arguments[0] 
+  this.width = arguments[0]
 }
 
 World.prototype.height = function(){
   if (arguments.length == 0)
     return this.height
-  this.height = arguments[0] 
+  this.height = arguments[0]
 }
 
 World.prototype.screen_width = function(screen){
@@ -69,7 +69,7 @@ World.prototype.screen_width = function(screen){
    return  this.screen[0].screen.width
   if (typeof(screen) === "string" )
     screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++) 
+  for(i=0; i<this.screen.length; i++)
     if (this.screen[i].screen == screen)
       break;
   if (i < this.screen.length)
@@ -80,7 +80,7 @@ World.prototype.screen_width = function(screen){
 World.prototype.assert_screen = function(){
   if ( !this.screen.length )
     throw "No screens yet"
-} 
+}
 
 World.prototype.screen_height = function(screen){
   var i
@@ -89,7 +89,7 @@ World.prototype.screen_height = function(screen){
    return  this.screen[0].screen.height
   if (typeof(screen) === "string" )
     screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++) 
+  for(i=0; i<this.screen.length; i++)
     if (this.screen[i].screen == screen)
       break;
   if (i < this.screen.length)
@@ -124,16 +124,16 @@ World.prototype.each_boid = function(){
 World.prototype.start = function(){
   var that = this
   this.start_time = new Date()
-  this.currentState.requested = Device.state.running
+  this.currentState.requested = Device.STATE.running
   this.get_boids().each( function(el) {
-    el.start(that.start_time) 
+    el.start(that.start_time)
   })
 }
 
 World.prototype.draw = function(){
   var that = this
   var ctx  = that.screen[0].context
-  
+
   ctx.clearRect(0,0,850,500)
   this.draw_background(ctx)
   this.each_boid(function(boid){
@@ -154,7 +154,7 @@ World.prototype.is_one_second_from_begining = function(){
   var current_time = new Date( this.start_time.toString() )
   current_time.setSeconds( this.start_time.getSeconds() + 1 )
   current_time.setMilliseconds( this.start_time.getMilliseconds())
-  
+
   this.step(current_time)
 }
 
@@ -193,12 +193,12 @@ World.prototype.visible_for = function(position, heading, vision_object){
   var radius = vision_object.radius
   var vision =  radius * radius
   var visible = []
-  var x1 = position.get_coord(0) 
+  var x1 = position.get_coord(0)
   var y1 = position.get_coord(1)
   this.each_boid(function (boid){
     var dx = boid.geo_data.position.get_coord(0) - x1
     var dy = boid.geo_data.position.get_coord(1) - y1
-    if ( dx * dx + dy * dy < vision && 
+    if ( dx * dx + dy * dy < vision &&
          heading.angle(new Vector(dx, dy) < vision_object.angle ) )
       visible.push(boid)
   })
@@ -208,9 +208,9 @@ World.prototype.visible_for = function(position, heading, vision_object){
 World.prototype.new_boid = function(color, geo_data){
   color = color || "blue"
   if (typeof(geo_data) === "undefined")
-    geo_data = { 
+    geo_data = {
           position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
-          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)), 
+          velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
           acceleration: new Vector(0,0)
   }
   var b = new Boid( geo_data, color)
@@ -255,5 +255,5 @@ World.prototype.method_missing= function(method, obj, params){
     return this.new_boid_of(eval("" + subtype), params[0])
     //todo: This is dependant of bad ll_Exception params analysis
   }
-  return this.super.method_missing.apply(this, arguments) 
+  return this.super.method_missing.apply(this, arguments)
 }
