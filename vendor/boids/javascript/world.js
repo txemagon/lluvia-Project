@@ -394,10 +394,8 @@ World.prototype.running_steady = function(processors_time){
   //this.show_boids()
   var that = this
   this.now = processors_time || new Date()
+  /* Boid#run is called from the child runner */
   //this.eventDispatcher.shift()
-  this.each_boid(function(boid){
-    boid.run(that.now)
-  })
   this.draw()
 }
 

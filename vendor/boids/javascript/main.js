@@ -91,8 +91,8 @@ function main(){
      config.force_limits.thrust   = 40
      config.force_limits.steering = 80
      config.geo_data.position     = new Vector(0, 0)
-     config.brain.activate("seek", first)
-     //config.brain.activate("pursue<seek", first)
+     // config.brain.activate("seek", first)
+     config.brain.activate("pursue<seek", first)
      return config
    })
 
