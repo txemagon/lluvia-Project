@@ -12,6 +12,7 @@ function Animation(element) {
 	        	that[element] = {}
 	            Gate.call(that, element)	// Call to the super constructor (it does all the work).
                 //threadAutomata aqui
+                that[element].menu_automata = that.new_effect(new MenuAutomata(that.device, that))
 	        }
 	    } catch (e) {
 	        if ($K_debug_level >= $KC_dl.DEVELOPER)
@@ -26,5 +27,15 @@ function Animation(element) {
 
 
 Animation.prototype.do_onmouseover = function(ev, el){
-    alert(this.element)
+   // alert(this.element)
+    this[this.element].menu_automata.currentState.requested = this[this.element].menu_automata.state.getting_out
+
 }
+
+Animation.prototype.do_onmouseout = function(ev, el){
+    //alert(this.element)
+    this[this.element].menu_automata.currentState.requested = this[this.element].menu_automata.state.getting_in
+
+}
+
+
