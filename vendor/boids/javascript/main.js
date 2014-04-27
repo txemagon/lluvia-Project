@@ -1,5 +1,3 @@
-logger = document.getElementById("logger")
-
 function main(){
   var w = new World()
   var boid_list = new WorldInterface("boid_list_content")
@@ -9,7 +7,7 @@ function main(){
   boid_list.addPort("focus_boid", boid_editor)
 
   /* Example 1 of Boid creation */
-   var fixed_target = w.new_boid( { colour: "green",
+   var fixed_target = w.new_boid( { name: "fixed", colour: "green",
                  geo_data:  {
                                position: new Vector(220, 230),
                                velocity: new Vector(0, 0),
@@ -19,18 +17,15 @@ function main(){
 
 
 
-    w.new_boid( {colour: "yellow"}, function(config) {
+     w.new_boid( {name: "seeker", colour: "yellow"}, function(config) {
                            /* Here you can interact with the outer scope */
                            /* You can also access the already created brain */
                            config.geo_data = {
                               position: new Vector(100, 100),
-                              velocity: new Vector(0, 0),
+                              velocity: new Vector(10, 10),
                               acceleration: new Vector(0, 0)
                            }
-                           config.brain.activate("seek")
-                           var seek = config.brain.get_behavior("seek")
-                           seek.set_target(fixed_target)
-                           seek.activate_modifier("arrival")
+                           config.brain.activate("seek", fixed_target)
                            return config
     })
 
@@ -62,12 +57,10 @@ function main(){
 
    for(var i=0; i<5; i++)
      seeker.push( t = w.new_boid( function(config) {
-       config.brain.activate('seek')
-       config.brain.get_behavior('seek').set_target(t)
+       config.brain.activate('seek', t)
      }) )
 
-   first.brain.activate('seek')
-   first.brain.get_behavior('seek').set_target(t)
+   first.brain.activate('seek', t)
 
 
    /*  Example: flee behavior */
@@ -77,8 +70,7 @@ function main(){
      fleer.push( f = w.new_boid( function(config) {
        config.color = "silver"
        config.vel_max = 10
-       config.brain.activate("flee")
-       config.brain.get_behavior("flee").set_target( wanderer[i % wanderer.length] )
+       config.brain.activate("flee", wanderer[i % wanderer.length] )
      } ))
    }
 
@@ -89,8 +81,7 @@ function main(){
      config.force_limits.thrust   = 40
      config.force_limits.steering = 80
      config.geo_data.position     = new Vector(0, 0)
-     config.brain.activate("pursue")
-     config.brain.get_behavior("pursue").set_target(first)
+     config.brain.activate("pursue", first)
    })
 
    /*  Example: pursue behaviour*/
@@ -100,10 +91,8 @@ function main(){
      config.force_limits.thrust   = 40
      config.force_limits.steering = 80
      config.geo_data.position     = new Vector(0, 0)
-     config.brain.activate("seek")
-     var seek = config.brain.get_behavior("seek")
-     seek.set_target(first)
-     seek.activate_modifier("pursue")
+     config.brain.activate("seek", first)
+     //config.brain.activate("pursue<seek", first)
      return config
    })
 

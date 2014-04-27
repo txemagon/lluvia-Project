@@ -53,10 +53,10 @@ margin-right: 144px;
 	height:50px;
 	float:left;
 	background-color: #ffff99;
-	color:#ff33ff;	
+	color:#ff33ff;
 	font-size:24px;
 }
-#desplegable:hover {	
+#desplegable:hover {
 	cursor:pointer;
 }
 
@@ -66,7 +66,7 @@ margin-right: 144px;
 }
 
 #menu_image{
-	float:left;	
+	float:left;
 	margin-left:20px;
 	padding-top:5px;
 }
@@ -86,7 +86,7 @@ margin-right: 144px;
 	padding-top:10px;
 	text-align:center;
 	font-size:18px;
-	
+
 }
 .option:hover{
 	color:#ffff99;
@@ -136,7 +136,7 @@ border: 1px solid black;
 	padding-top:5px;
 	text-align:center;
 	margin-top:5px;
-	margin-left:5px;*/
+	margin-left:5px;
 }
 
 #main_screen{
@@ -159,7 +159,7 @@ margin: auto;
 }
 
 #play_button{
-	border:none;	
+	border:none;
 }
 #play_button:hover{
 	cursor:pointer;

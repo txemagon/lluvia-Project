@@ -13,7 +13,6 @@ PursueBehavior.prototype.super = Behavior
 
 function PursueBehavior(){
   Behavior.apply(this, arguments)
-  this.target = null
   this.X = 0
 }
 
