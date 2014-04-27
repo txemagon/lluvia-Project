@@ -1,8 +1,8 @@
 $K_dependencies = [
-      {	module: "loader", 
-		description: "lluvia loader. User application loader. Booter.", 
-		path: "loader/", 
-		files: [ 
+      {	module: "loader",
+		description: "lluvia loader. User application loader. Booter.",
+		path: "loader/",
+		files: [
 		]
 	},
 	{	module: "utils",
@@ -17,25 +17,26 @@ $K_dependencies = [
 			{name: "ll_Webbrowser.js", description: ""}
 		]
 	},
-	{	module: "kernel", 
-		description: "Javascript extensions && global objects.", 
-		path: "kernel/", 
-		files: [ 
-			{name: "ll_Kernel.js",      description: "Core javascript for the global object."},
-			{name: "ll_Exception.js",   description: "Exceptions."},
-			{name: "ll_Object.js",      description: "Redefinition of Object class."},
-			{name: "ll_Enumeration.js", description: "Define Enumerations."},
-			{name: "ll_Number.js",      description: "Something for Numbers."},
-			{name: "ll_Function.js",    description: "Adds functionality to objects (classes, functions, etc)."},
-			{name: "ll_Delegate.js",    description: "Adds Class delegation"},
-			{name: "ll_BasicObject.js", description: "Plain Object without keys."},
-			{name: "ll_Hash.js",        description: "Hash class."},
-			{name: "ll_String.js",      description: "String addons."},
-			{name: "ll_Array.js",       description: "Adds functionality to arrays."},
-			{name: "ll_Set.js",         description: "Adds functionality for sets."},
-			{name: "ll_Module.js",      description: "Redefinition of Module class."},
-			{name: "ll_Class.js",       description: "Redefinition of Class class."},
-			{name: "ll_Processor.js",   description: "Manage multiple threads."}
+	{	module: "kernel",
+		description: "Javascript extensions && global objects.",
+		path: "kernel/",
+		files: [
+			{name: "ll_Kernel.js",       description: "Core javascript for the global object."},
+			{name: "ll_Exception.js",    description: "Exceptions."},
+			{name: "ll_Object.js",       description: "Redefinition of Object class."},
+			{name: "ll_Enumeration.js",  description: "Define Enumerations."},
+			{name: "ll_Number.js",       description: "Something for Numbers."},
+			{name: "ll_Function.js",     description: "Adds functionality to objects (classes, functions, etc)."},
+			{name: "ll_Delegate.js",     description: "Adds Class delegation"},
+			{name: "ll_BasicObject.js",  description: "Plain Object without keys."},
+			{name: "ll_Hash.js",         description: "Hash class."},
+			{name: "ll_String.js",       description: "String addons."},
+			{name: "ll_Array.js",        description: "Adds functionality to arrays."},
+			{name: "ll_Set.js",          description: "Adds functionality for sets."},
+			{name: "ll_Module.js",       description: "Redefinition of Module class."},
+			{name: "ll_Class.js",        description: "Redefinition of Class class."},
+			{name: "ll_ClassFactory.js", description: "Facility for creating class."},
+			{name: "ll_Processor.js",    description: "Manage multiple threads."}
 		]
 	},
 	{   module: "engine",
@@ -60,10 +61,10 @@ $K_dependencies = [
 			{name: "ll_JavascriptSource.js", description: "Reading Javascript Files"}
 		]
 	},
-        {	module: "Mathematics", 
-		description: "Mathematics Types.", 
-		path: "Mathematics/", 
-		files: [ 
+        {	module: "Mathematics",
+		description: "Mathematics Types.",
+		path: "Mathematics/",
+		files: [
 			{name: "ll_Expression.js",   description: "Physics Vectors."},
 			{name: "ll_func.js",   description: "Physics Vectors."},
 			{name: "Geometry/ll_Vector.js",   description: "Physics Vectors."}

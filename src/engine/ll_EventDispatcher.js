@@ -1,5 +1,15 @@
 /**
- * @author txema
+ * @class EventDispatcher
+ * @extends ThreadAutomata
+ *
+ * Handle in and out asynchronous communications via a message queue
+ * and a listener mechanism (ports).
+ *
+ * @constructor
+ * Creates a EventDispatcher.
+ *
+ * @param {Object} lookup
+ *
  */
 
 EventDispatcher.prototype = new ThreadAutomata
@@ -12,28 +22,28 @@ function EventDispatcher(lookup){
 	this.ports = {
 		 // List event listeners. "app_down": []
 	}
-	
+
 	// Public vars
 	this.inqueue = []
 	this.clss = that	// Reference for static members to be used inside instances
-	
+
 	// Privileged methods
 	this.getId = function(){return ++that.ids;}
-	
+
 	// Initialization
 	lookup.add(this)
 }
 
 /**
- * 
  * @method enqueue
- * @static
  *
- * Gets the id of the event and push it to the array of event ids
+ * Receives incoming messages stamping the arrival number. The arrival
+ * order can be used to identificate messages.
  *
- * @param  {String} mssg Message sent by the fired event 
- * 
- * @return {Vector} Returns the id of the fired event
+ * @param {Object} mssg Message object pushed into the message queue.
+ *
+ * @return {Number} Order of arrival
+ *
  */
 EventDispatcher.prototype.enqueue = function(mssg){
 	var ev = this
@@ -43,32 +53,26 @@ EventDispatcher.prototype.enqueue = function(mssg){
 }
 
 /**
- * 
- * @method add_port
- * @static
+ * @method addPort
  *
- * Adds a new port to the array of ports
+ * Adds an specific device referer in the list of event listeners for a
+ * particular event.
  *
- * @param  {} event Event to be added to the port array
- * @param  {} funct Function that is called when the event is triggered
- * 
- * @return {}  
+ * @param {String} event Name of the event to listen
+ * @param {Object} device Device to be added to the ports array (dock).
+ *
  */
-EventDispatcher.prototype.addPort = function (event, funct){
+EventDispatcher.prototype.addPort = function (event, device){
 	if (this.ports[event])
-		this.ports[event].push(funct)
+		this.ports[event].push(device)
 }
 
 /**
- * 
- * @method join_ports
- * @static
+ * @method joinPorts
  *
- * Join two or more ports in a list of arrays
+ * Builds an empty dock (port array) for every event.
  *
- * @param  {Array} listArray Array that containts every port 
- * 
- * @return {}  
+ * @param {Array} listArray
  */
 EventDispatcher.prototype.joinPorts = function (listArray){
 	for (var i=0; i<listArray.length; i++)
@@ -76,34 +80,27 @@ EventDispatcher.prototype.joinPorts = function (listArray){
 }
 
 /**
- * 
- * @method del_port
- * @static
+ * @method delPort
  *
- * Deletes an specific port from the array of ports
+ * Removes a listener from the dock.
  *
- * @param  {} event Event to be deleted from the port array
- * @param  {} funct Function that is called when the event is triggered
- * 
- * @return {}  
+ * @param {Object} event Event that we were listening to
+ * @param {Object} device Device to be deleted to the ports array
+ *
  */
-EventDispatcher.prototype.delPort = function (event, funct){
+EventDispatcher.prototype.delPort = function (event, device){
 	if (this.clss.ports[event])
 		for (var i=0; i<this.clss.ports.length; i++)
-			if (this.clss.ports[i] === funct)
+			if (this.clss.ports[i] === device)
 				this.clss.ports[i].splice(i,1)
 }
 
 /**
- * 
- * @method fire_event
- * @static
+ * @method fireEvent
  *
- * Gets the next event in the queue
+ * Notifies to all the listeners that this device has generated an event.
  *
- * @param  {} event Event that will start next 
- * 
- * @return {}  
+ * @param {Object} event Event generated
  */
 EventDispatcher.prototype.fireEvent = function(event){
 	if (this.clss.ports[event.name])
@@ -112,15 +109,15 @@ EventDispatcher.prototype.fireEvent = function(event){
 }
 
 /**
- * 
  * @method shift
- * @static
  *
- * Attends the queue of events and gets the arguments needed to answer them
+ * Extract messages from the queue and send them
+ * to the device default dispatcher. If the dispatcher
+ * has closed the message being processed then it removes
+ * it from the message queue. Otherwise is kept until
+ * operations around this message are finished.
  *
- * @param  {} 
- * 
- * @return {Boolean} Returns true or shows an alert if an error occurs
+ * @return {Boolean} true Confirms removal
  */
 EventDispatcher.prototype.shift = function(){ //attend the inqueue
 	for (var i=0; i<this.inqueue.length; i++)
@@ -143,15 +140,11 @@ EventDispatcher.prototype.shift = function(){ //attend the inqueue
 }
 
 /**
- * 
  * @method run
- * @static
  *
- * Runs the next event 
+ * Drives the incoming message queue.
  *
- * @param  {} 
- * 
- * @return {}  
+ * @return {Boolean} true
  */
 EventDispatcher.prototype.run = function(){
 	return shift.apply(this, arguments)

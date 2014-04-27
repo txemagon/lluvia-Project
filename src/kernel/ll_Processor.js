@@ -6,13 +6,13 @@
 
 Processor.prototype.constructor = Processor;
 
-/** 
+/**
  * @classDescription 	create a Processor to run threads.
  * @return 				{Processor}	retuns a new processor.
- * @constructor 
+ * @constructor
  */
 function Processor(){
-	
+
 	// Variables member
 	this.now 	 = new Date();
 	this.events  = new Event();
@@ -20,7 +20,7 @@ function Processor(){
 }
 
 
-// Operations 
+// Operations
 
 /**
  * Add a thread in the execution queue
@@ -40,11 +40,11 @@ Processor.prototype.register = function(cObject, solicitorF){
 			fun = cObject.run
 		if (!fun)
 			throw "The current processor can´t get a valid solicitor"
-			
+
 	}
-	
+
 	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
-	
+
 }
 
 /**
@@ -63,38 +63,38 @@ Processor.prototype.kill = function(rObject, solicitorF){
 
 /**
  * Execute all threads one step.
- * 
+ *
  * @memberOf 	{Processor}
- * @method 		run
+ * @method 		step
  */
 Processor.prototype.step = function (date){
-	
+
 	this.now = date || new Date();
 	try {
 	  for (var i=0; i<this.threads.length; i++)
             this.threads[i].solicitor.call(this.threads[i].object, this.now);
-    } 
+    }
     catch (e) {
-    
+
     }
 }
 
 /**
  * Execute all threads.
- * 
+ *
  * @memberOf 	{Processor}
  * @method 		run
- */ 
+ */
 Processor.prototype.run = function (date){
 	this.now =  new Date();
 	try {
 	  this.step(this.now)
-    } 
+    }
     catch (e) {
-    
+
     }
 
-	setTimeout(this.run.bind(this), 50); 	
+	setTimeout(this.run.bind(this), 50);
 }
 
 Processor.prototype.start = function(){
@@ -104,7 +104,7 @@ Processor.prototype.start = function(){
 
 Processor.prototype.newThread = function(){
 	var t = new Thread(null, this)
-	t.run = function(){ 
+	t.run = function(){
 		t.run.yield(); // Yield smthg in near future. Not tested yet.
 	}
 	return t;
@@ -125,24 +125,24 @@ Thread.prototype.constructor = Thread;
 function Thread(solicitor, processor){
 	this.before = new Date()
 	this.now = processor? processor.now: new Date();
-	if (!solicitor) 
+	if (!solicitor)
 		solicitor = this.run;
-	
-	if (processor && processor instanceof Processor) 
-		processor.register(this, solicitor); 
+
+	if (processor && processor instanceof Processor)
+		processor.register(this, solicitor);
 }
-	
-	
+
+
 
 /**
  * Thread execution step. Is an abstract method.
- * 
+ *
  * @memberOf  {Thread}
  * @method    run	State machine manager.
  */
 Thread.prototype.run = function(processors_time){
 	this.now = processors_time
-	throw "The solicitor function remains still undefined." 
+	throw "The solicitor function remains still undefined."
 }
 
 Automata.prototype.constructor = Automata;
@@ -152,7 +152,7 @@ Automata.prototype.constructor = Automata;
  * made of the previous, the current and the requested one. During state transition, several solicitor functions
  * get executed: down function of the current state, up solicitor of the requested state and finally we arrive to the
  * steady state.
- * 
+ *
  * @param  {Object}   states	     Possibles states of an automata.
  * @param  {Object}   initialState	 Initial state of the automata.
  * @param  {Array}    solicitor		 State Manager functions. An array with three functions (up, steady, down).
@@ -160,13 +160,13 @@ Automata.prototype.constructor = Automata;
  * @constructor
  */
 function Automata(states, initialState, solicitor){
-	
+
 	this.state = states == null? {none: -1}: states;
-	
+
 	this.stateChange  = {	up: 0, steady:1, down: 2};
-	this.currentState = initialState != null? initialState: 
-						{	previous :this.state.none, 
-							current  :this.state.none, 
+	this.currentState = initialState != null? initialState:
+						{	previous :this.state.none,
+							current  :this.state.none,
 							requested:this.state.none};
 	this.solicitor = (solicitor || solicitor != null)? solicitor: new Array(new Array(null, null, null));
 }
@@ -174,7 +174,7 @@ function Automata(states, initialState, solicitor){
 /**
  * Behavior of the automata according to its internal state.
  * This function takes care of state transitions.
- * 
+ *
  * @memberOf {Automata}
  * @method	  run
  */
@@ -187,6 +187,7 @@ Automata.prototype.run = function(){
 		this.currentState.current   = this.currentState.requested;
 		this.currentState.requested = this.state.none;
 	}
+	this.solicitor[this.currentState.current][this.stateChange.steady].call(this);
 }
 
 ThreadAutomata.prototype  = new Thread;
@@ -196,7 +197,7 @@ ThreadAutomata.prototype.constructor = ThreadAutomata;
 
 /**
  * @classDescription Creates an automata for atomic processing.
- * 
+ *
  * @param {Object} state			Available automata states.
  * @param {Object} currentState	    Initial automata state.
  * @param {Object} solicitor		Functions state managers.
@@ -216,10 +217,10 @@ function ThreadAutomata(state, currentState, solicitor, processor){
  * for the state of the object. It is responsible of state transitions through Automata#run.
  * The main difference between ThreadAutomata#run and Automata#run lies on
  * the type of the solicitor functions, designed to make atomic operations.
- * 
+ *
  * @memberOf {ThreadAutomata}
  * @method	  run
- * 
+ *
  */
 
 ThreadAutomata.prototype.run = function(processors_time){
@@ -227,8 +228,8 @@ ThreadAutomata.prototype.run = function(processors_time){
 		this.before = this.now
 	this.now    = processors_time
 	Automata.prototype.run.call(this, this.now);
-	
-	if (this.solicitor[this.currentState.current][this.stateChange.steady]) 
+
+	if (this.solicitor[this.currentState.current][this.stateChange.steady])
 		this.solicitor[this.currentState.current][this.stateChange.steady].call(this, this.now, this.before);
 }
 
