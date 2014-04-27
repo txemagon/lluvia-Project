@@ -100,7 +100,7 @@ function Device(view, state, currentState, parent){
 
 	var state = state
 	if (!state)
-	  state = DEVICE.STATE
+	  state = Device.STATE
 
       state.self_keys().each(function(key){  // Define overridable functions
 		   ["up", "steady", "down"].each(function(substate){
