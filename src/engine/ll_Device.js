@@ -100,7 +100,7 @@ function Device(view, state, currentState, parent){
 
 	var state = state
 	if (!state)
-		Device.state = state = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+	  state = DEVICE.STATE
 
       state.self_keys().each(function(key){  // Define overridable functions
 		   ["up", "steady", "down"].each(function(substate){
@@ -192,7 +192,6 @@ function Device(view, state, currentState, parent){
 		that.register(that.eventDispatcher, that.eventDispatcher.shift)
 		if (that.self_events)
 			that.eventDispatcher.joinPorts(that.self_events)
-		//that.currentState.requested = state.running
 		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
 	}
 
@@ -201,6 +200,12 @@ function Device(view, state, currentState, parent){
 
 
 }
+
+/**
+ * Device default states
+ */
+
+Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 
 /**
 * @method state_substate
@@ -272,14 +277,12 @@ Device.prototype.childRunner = function(){
  *
  * @param {String | HTMLElement} el See (@link Gate)
  * @param {Function} ClassCons Class constructor deriving from Gate.
- * @param {Object} actions Config object as in { onclick: function(event, element){ alert('Someone made on click.') } }
  */
-Device.prototype.newGate = function(el, ClassCons, actions){
-	actions = actions || {}
+Device.prototype.newGate = function(el, ClassCons){
 	try {
 		var Cons = this.openDevice(ClassCons)
 		var view = this.view || null
-		var ob = new Cons(el, view, actions)
+		var ob = new Cons(el, view)
                 ob.device = this
 		this.gates.push( ob )
 		return ob

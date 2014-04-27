@@ -251,6 +251,7 @@ World.prototype.get_boids = function(){
  */
 World.prototype.each_boid = function(){
   var that = this
+
   this.get_boids().each(function(el){
       World.prototype.each_boid.yield(el)
       })
@@ -294,8 +295,10 @@ World.prototype.start = function(){
  */
 World.prototype.draw = function(){
   var that = this
+  var ctx = this.screen[0].context
+  ctx.clearRect(0,0,400,400)
   this.get_boids().each( function(el) {
-    el.draw(that.screen[0].context)
+    el.draw(ctx)
   })
 }
 
@@ -392,13 +395,10 @@ World.prototype.running_steady = function(processors_time){
   var that = this
   this.now = processors_time || new Date()
   //this.eventDispatcher.shift()
-  var ctx = this.screen[0].context
-  ctx.clearRect(0,0,400,400)
   this.each_boid(function(boid){
     boid.run(that.now)
-    boid.draw(ctx)
   })
-  //setTimeout(this.run.bind(this), 100)
+  this.draw()
 }
 
 /**
@@ -418,17 +418,17 @@ World.prototype.running_steady = function(processors_time){
  */
 World.prototype.visible_for = function(position, heading, vision){
  var that = this
-  vision = vision.radius * vision.radius
-  var visible = []
-  this.each_boid(function (boid){
-    var x1 = position.get_coord(0)
-    var y1 = position.get_coord(1)
-    var dx = boid.geo_data.position.get_coord(0) - x1
-    var dy = boid.geo_data.position.get_coord(1) - y1
-    if (dx * dx + dy * dy < vision )
-      visible.push(boid)
-  })
-  return visible
+ vision = vision.radius * vision.radius
+ var visible = []
+ this.each_boid(function (boid){
+  var x1 = position.get_coord(0)
+  var y1 = position.get_coord(1)
+  var dx = boid.geo_data.position.get_coord(0) - x1
+  var dy = boid.geo_data.position.get_coord(1) - y1
+  if (dx * dx + dy * dy < vision )
+   visible.push(boid)
+ })
+ return visible
 }
 
 /**
@@ -448,12 +448,12 @@ World.prototype.visible_for = function(position, heading, vision){
  */
 World.prototype.new_boid = function(config, block){
 
-  var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
+ var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
 
-  this.boids++
+ this.boids++
   b.id = this.boids
-  this.has_born(b)
-  return b
+ this.has_born(b)
+ return b
 }
 
 /**
@@ -471,8 +471,8 @@ World.prototype.new_boid = function(config, block){
  *
  */
 World.prototype.start_and_run = function(){
-  this.start()
-  this.run()
+ this.start()
+ this.run()
 }
 
 /**
@@ -491,7 +491,7 @@ World.prototype.start_and_run = function(){
  *
  */
 World.prototype.attend_focus_boid = function(date, mssg){
-  mssg.current++;
+ mssg.current++;
 }
 
 /**
@@ -503,14 +503,14 @@ World.prototype.attend_focus_boid = function(date, mssg){
  *
  */
 World.prototype.new_boid_of = function(class_name, config){
-    var b = new class_name(config)
-    if (this[class_name])
-        this[class_name]++
-        else
-    this[class_name] = 1
-    this.boids.total++
-        this.has_born(b)
-    return b
+ var b = new class_name(config)
+ if (this[class_name])
+  this[class_name]++
+  else
+ this[class_name] = 1
+ this.boids.total++
+  this.has_born(b)
+ return b
 }
 
 /**
@@ -519,10 +519,10 @@ World.prototype.new_boid_of = function(class_name, config){
  */
 World.prototype.method_missing= function(method, obj, params){
 
-    if ( /new_boid_as_/.test(method) ){
-        var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
-        return this.new_boid_of(eval("" + subtype), params[0])
-        //todo: This is dependant of bad ll_Exception params analysis
-    }
-    return this.super.method_missing.apply(this, arguments)
+ if ( /new_boid_as_/.test(method) ){
+  var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
+  return this.new_boid_of(eval("" + subtype), params[0])
+  //todo: This is dependant of bad ll_Exception params analysis
+ }
+ return this.super.method_missing.apply(this, arguments)
 }

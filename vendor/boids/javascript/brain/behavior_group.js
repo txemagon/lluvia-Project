@@ -27,7 +27,7 @@ BehaviorGroup.valid_types = Enumeration("set", "list")
  * Checks if the type of behavior is a group behavior
  *
  * @param {} type Behavior to be checked
- * 
+ *
  * @return {} Returns false if type is not a group behavior or is not defined
  */
 BehaviorGroup.invalid_type$U = function(type){
@@ -42,8 +42,8 @@ BehaviorGroup.invalid_type$U = function(type){
  *
  * @param {String} name Name of the behavior to be added
  * @param {Object} obj Object to which the behavior is addded
- * 
- * @return {} Returns the added behavior 
+ *
+ * @return {} Returns the added behavior
  */
 BehaviorGroup.prototype.append = function(name, obj){
   this.behavior[Behavior.decompose_name(name)[1]] = obj
@@ -55,8 +55,8 @@ BehaviorGroup.prototype.append = function(name, obj){
  *
  * Asks if the given behavior can be a group behavior
  *
- * @param {String} behavior Name of the behavior to be checked 
- * 
+ * @param {String} behavior Name of the behavior to be checked
+ *
  * @return {Boolean} Returns true if behavior is a group behavior. False if not
  */
 BehaviorGroup.prototype.can$U = function(behavior){
@@ -72,8 +72,8 @@ BehaviorGroup.prototype.can$U = function(behavior){
  * Activates the group behavior if it isn't active already
  *
  * @param {String} state State of the behavior
- * 
- * @return {} 
+ *
+ * @return {}
  */
 BehaviorGroup.prototype.activate = function(state){
   if (this.type == BehaviorGroup.valid_types.set)
@@ -93,8 +93,8 @@ BehaviorGroup.prototype.activate = function(state){
  *
  * Gets the behavior that is active at the moment
  *
- * @param {} 
- * 
+ * @param {}
+ *
  * @return {} Returns the behavior currently activated
  */
 BehaviorGroup.prototype.active_behavior = function(){
@@ -110,9 +110,9 @@ BehaviorGroup.prototype.active_behavior = function(){
  *
  * Gets a list of all the current active behaviors
  *
- * @param {} 
- * 
- * @return {} Returns a list of active behaviors 
+ * @param {}
+ *
+ * @return {} Returns a list of active behaviors
  */
 BehaviorGroup.prototype.active_behaviors = function(){
   return this.active_behavior()
@@ -124,7 +124,7 @@ BehaviorGroup.prototype.active_behaviors = function(){
  * Checks if the given behavior is active
  *
  * @param {String} state Current state of the behavior
- * 
+ *
  * @return {Boolean} Returns true if behavior is active. False if not
  */
 BehaviorGroup.prototype.is_active$U = function(state){
@@ -139,8 +139,8 @@ BehaviorGroup.prototype.is_active$U = function(state){
  *
  * Gets a list of all the acceleration used by the behavior
  *
- * @param {} 
- * 
+ * @param {}
+ *
  * @return {Array} Returns a list of desired accelerations
  */
 BehaviorGroup.prototype.desired_accelerations = function(){
@@ -165,7 +165,7 @@ BehaviorGroup.prototype.desired_accelerations = function(){
  * Gets a specific behavior
  *
  * @param {String} b_name Name of the desired behavior
- * 
+ *
  * @return {} Returns the requested behavior
  */
 BehaviorGroup.prototype.get_behavior = function( b_name ){
@@ -178,8 +178,8 @@ BehaviorGroup.prototype.get_behavior = function( b_name ){
  * Actives a behavior modifier of the current behavior
  *
  * @param {String} c_name Name of the modifier
- * 
- * @return {} 
+ *
+ * @return {}
  */
 BehaviorGroup.prototype.activate_modifier = function( c_name ){
   var that = this
@@ -229,9 +229,9 @@ function BehaviorList(behavior){
  *
  * Turns off a specific behavior from the Behavior List
  *
- * @param {} 
- * 
- * @return {} 
+ * @param {}
+ *
+ * @return {}
  */
 BehaviorList.prototype.deactivate = function(){
   if (arguments[0] instanceof Array)
@@ -247,8 +247,8 @@ BehaviorList.prototype.deactivate = function(){
  * Reset the list of behaviors and adds the behavior passed as parameter
  *
  * @param {} behavior Behavior to include in the lis of behavior
- * 
- * @return {} 
+ *
+ * @return {}
  */
 BehaviorList.prototype.reset_to = function(behavior){
   this._active_behaviors.clear$B()
