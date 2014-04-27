@@ -8,6 +8,17 @@ function start_game(device){
 	start_button.style.display = 'none';
 
 	countdown(device);
+
+	var pigs = []
+	pigs.push( device.new_boid( function(config) {
+		config.colour =  "pink"
+	}))
+
+	pigs.push( device.new_boid( function(config) {
+		config.colour = "pink"
+		config.geo_data.position = new Vector(10, 100)
+	}))
+
 	device.start()
 }
 

@@ -13,7 +13,6 @@ SeekBehavior.prototype.super = Behavior
 
 function SeekBehavior(){
   Behavior.apply(this, arguments)
-  this.target = null
   this.approach_distance = 100 // Default approach distance
 }
 
@@ -106,6 +105,7 @@ SeekBehavior.prototype.desired_velocity = function(){
  *
  */
 SeekBehavior.prototype.desired_acceleration = function(){
-  return this.desired_velocity().subs(this.me.velocity())
+  var response = this.desired_velocity().subs(this.me.velocity())
+  return response
 }
 

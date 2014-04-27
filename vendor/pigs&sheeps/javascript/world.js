@@ -123,6 +123,10 @@ World.prototype.each_boid = function(){
 
 World.prototype.start = function(){
   var that = this
+  var ctx  = that.screen[0].context
+  this.draw_background(ctx)
+  this.background = ctx.getImageData(0, 0, 850, 500)
+
   this.start_time = new Date()
   this.currentState.requested = Device.STATE.running
   this.get_boids().each( function(el) {
@@ -134,8 +138,8 @@ World.prototype.draw = function(){
   var that = this
   var ctx  = that.screen[0].context
 
-  ctx.clearRect(0,0,850,500)
-  this.draw_background(ctx)
+  //ctx.clearRect(0,0,850,500) // Mind this hardcode
+  ctx.putImageData(this.background, 0, 0)
   this.each_boid(function(boid){
     boid.draw(ctx)
   })
@@ -179,10 +183,6 @@ World.prototype.running_steady = function(processors_time){
   var that = this
   this.now = processors_time || new Date()
   //this.eventDispatcher.shift()
-
-  this.each_boid(function(boid){
-    boid.run(that.now)
-  })
 
   this.draw()
   //setTimeout(this.run.bind(this), 100)
