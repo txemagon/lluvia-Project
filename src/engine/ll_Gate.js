@@ -108,8 +108,8 @@ function Gate(element, parent, config){
 	    that.merge$B(config)
 
 	that.keys(/do_.*/).each(function(handler){
-handler.match( /do_(.*)/ )
-that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+        handler.match( /do_(.*)/ )
+        that.panel[RegExp.$1] = _stitchWorlds(that, handler)
 	})
 
 	that.threads = []

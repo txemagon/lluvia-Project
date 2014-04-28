@@ -21,7 +21,7 @@ World.prototype.super = Device
 function World(screen, width, height){
 
   var that = this
-  this.self_events = ["focus_boid", "new_boid"]
+  this.self_events = ["focus_boid", "new_boid", "restart_game"]
 
   this.screen = []
   this.width   = width  || 100 //meters
@@ -122,6 +122,7 @@ World.prototype.each_boid = function(){
 }
 
 World.prototype.start = function(){
+  start_game(this)
   var that = this
   var ctx  = that.screen[0].context
   this.draw_background(ctx)
@@ -137,7 +138,22 @@ World.prototype.start = function(){
   })
   /* Please don't add more boids */
   this.boids_list = this.get_boids()
+
 }
+
+// World.prototype.restart = function(){
+//   start_game(this)  //nota mental: refactor
+//   var that = this
+//   var ctx  = this.screen[0].context
+
+//   this.start_time = new Date()
+//   this.currentState.requested = Device.STATE.running
+//   this.get_boids().each( function(el) {
+//     el.start(that.start_time)
+//   })
+//   /* Please don't add more boids */
+//   this.boids_list = this.get_boids()
+// }
 
 World.prototype.draw = function(){
   var that = this
@@ -237,8 +253,13 @@ World.prototype.start_and_run = function(){
 }
 
 
-World.prototype.attend_focus_boid = function(date, mssg){
+World.prototype.attend_focus_boid = function(date, mssg) {
   mssg.current++;
+}
+
+World.prototype.attend_restart_game = function(date, mssg) {
+  //Aqui o en start_game() de main habria que limpiar la pantalla de los datos que ya pueda contener
+  start_game(this)
 }
 
 World.prototype.new_boid_of = function(class_name, config){

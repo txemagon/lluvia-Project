@@ -278,12 +278,12 @@ Device.prototype.childRunner = function(){
  * @param {String | HTMLElement} el See (@link Gate)
  * @param {Function} ClassCons Class constructor deriving from Gate.
  */
-Device.prototype.newGate = function(el, ClassCons){
+Device.prototype.newGate = function(el, ClassCons, config){
 	try {
 		var Cons = this.openDevice(ClassCons)
 		var view = this.view || null
-		var ob = new Cons(el, view)
-                ob.device = this
+		var ob = new Cons(el, view, config)
+        ob.device = this
 		this.gates.push( ob )
 		return ob
 	} catch (e) {
