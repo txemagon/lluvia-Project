@@ -456,9 +456,16 @@ Nanobot.prototype.draw = function(ctx){
   ctx.closePath();
   ctx.stroke()
 
-  //ctx.fillStyle = "white"
-  //ctx.fillText(this.level_emotion, p.get_coord(0)-8, p.get_coord(1)+5);
+  ctx.fillStyle = "white"
+  ctx.fillText(this.level_emotion, p.get_coord(0)-8, p.get_coord(1)+5);
 
+  if (this.focused){
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.arc(p.get_coord(0), p.get_coord(1), 18*escala, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.stroke()
+  }
 }
 
 
@@ -474,7 +481,7 @@ function Speaker(geo_data, wave_lenght, src){
 		that.image.src = src || "images/altavoz.png"
 		that.wave_lenght = wave_lenght || 100
 		that.wave_aux = 0
-		that.this_on = true
+		that.this_on = false
 		Boid.call(that, geo_data)
 	}
 
@@ -488,6 +495,14 @@ Speaker.prototype.on = function(){
 
 Speaker.prototype.off = function(){
 	this.this_on = false
+}
+
+Speaker.prototype.subir_volumen = function(increase){
+  this.wave_lenght += increase
+}
+
+Speaker.prototype.bajar_volumen = function(decrement){
+  this.wave_lenght -= decrement
 }
 
 Speaker.prototype.get_wave_lenght = function(){
@@ -512,4 +527,11 @@ Speaker.prototype.draw = function(ctx){
   	else
   		this.wave_aux = 0
   	}
+  if (this.focused){
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.arc(p.get_coord(0), p.get_coord(1), 22*escala, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.stroke()
+  }
 }
