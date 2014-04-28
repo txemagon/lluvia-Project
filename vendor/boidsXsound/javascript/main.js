@@ -9,9 +9,10 @@ function main(){
 
   var boid_list = new WorldInterface("boid_list_content")
   w.addPort("new_boid", boid_list)
-    
+  
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
+  
 
   var face_boids = new FaceDevice("boid_properties")
   boid_list.addPort("face_boid_animation", face_boids)

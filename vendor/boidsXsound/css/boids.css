@@ -29,3 +29,8 @@ body{
 .Panel div{
   cursor: pointer;
 }
+
+#on_button{
+  border: solid 1px red;
+
+}

@@ -437,7 +437,7 @@ Nanobot.prototype.stop = function(){
 
 }
 
-Nanobot.prototype.get_instructions = function(){
+Nanobot.prototype.set_instructions = function(){
 
 }
 
