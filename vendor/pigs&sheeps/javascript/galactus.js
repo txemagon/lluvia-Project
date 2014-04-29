@@ -11,7 +11,6 @@ function Galactus(view, handler){
 
 	function initialize() {
 		Device.call(that, view)
-		var it = that
 
 		that.newGate ("main_screen", Gate, {do_onclick: function(event, element) {
             var start_button = document.getElementById('main_screen')
@@ -19,7 +18,7 @@ function Galactus(view, handler){
         } })
 
 	    that.newGate ("play_button", Gate, {do_onclick: function(event, element) {
-			it.attend_new_world()
+			this.device.start_world()
 		} })
 	}
 
@@ -52,22 +51,23 @@ Galactus.prototype.destroy_world = function() {
 	this.world = new World(this.view)
 }
 
-// Galactus.prototype.start_world = function() {
-// 	//Fires an event that calls the worldś start function
-// 	alert("Galactus lives!")
-// 	//alert(dev.toSource())
-// 	handler.addPort("restart_game", this.world)
-// 	countdown(this.world);
+Galactus.prototype.start_world = function() {
+	this.world   = new World(this.view)
+	//Fires an event that calls the worldś start function
+	alert("Galactus lives!")
+	//alert(dev.toSource())
+	this.handler.addPort("restart_game", this.world)
+	countdown(this.world);
 
-// 	this.world.new_boid( function(config) {
-// 		config.colour = "pink"
-// 	})
+	this.world.new_boid( function(config) {
+		config.colour = "pink"
+	})
 
-// 	var sheeps = []
-// 	for (var i=0; i<10; i++)
-// 	sheeps.push( this.world.new_boid( function(config) {
-// 		config.colour = "white"
-// 	}))
+	var sheeps = []
+	for (var i=0; i<10; i++)
+	sheeps.push( this.world.new_boid( function(config) {
+	    config.colour = "white"
+	}))
 
-//     this.world.start()
-// }
+	this.world.start()
+}
