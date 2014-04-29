@@ -391,7 +391,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 }
 
 Nanobot.prototype.talk = function(){
-
+  
 }
 
 Nanobot.prototype.audible_objects = function(){

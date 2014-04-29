@@ -76,12 +76,6 @@ body{
   float: left;
 }
 
-#speaker_buttons{
- width: 200px;
- height: 135px; 
- margin: -135px 0 0 210px;
-}
-
 #separation_line{
   background-color: red;
   margin: 0 0 0 185px;
@@ -89,6 +83,18 @@ body{
   height: 135px;
 }
 
+#speaker_buttons{
+  visibility: hidden;
+ width: 200px;
+ height: 135px; 
+ margin: -135px 0 0 210px;
+}
 
+#nanobot_buttons{
+  visibility: hidden;
+  width: 200px;
+ height: 135px; 
+ margin: -135px 0 0 210px;
+}
 
 

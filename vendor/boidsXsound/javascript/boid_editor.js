@@ -11,7 +11,8 @@ BoidEditor.prototype = new Device
 BoidEditor.prototype.constructor = BoidEditor
 
 function BoidEditor(view){
-  var properties = document.getElementById("properties")
+  var speaker_buttons = document.getElementById("speaker_buttons")
+  var nanobot_buttons = document.getElementById("nanobot_buttons")
   var that = this
   var args = arguments
   var actual_boid
@@ -48,6 +49,17 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
                          "Position X: " +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]*100)/100 + "<br/>" + 
                          "Position Y: " + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*100)/100 + "<br/>" +
                          "Wave lenght: " + mssg.event.focus_boid.data.wave_lenght
+
+  if(actual_boid instanceof Speaker){
+    speaker_buttons.style.visibility = "visible"
+    nanobot_buttons.style.visibility = "hidden"
+  }
+  if(actual_boid instanceof Nanobot){
+    speaker_buttons.style.visibility = "hidden"
+    nanobot_buttons.style.visibility = "visible"
+  }
+
+
   mssg.current++
 }
 
