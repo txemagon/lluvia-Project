@@ -6,7 +6,7 @@ GameControl.prototype = new Device
 GameControl.prototype.constructor = GameControl
 
 function GameControl() {
-	
+
 	var that = this
 	var args = arguments
 
