@@ -1,4 +1,4 @@
-Clock.prototype = new ThreadAutomata
+Clock.prototype = new Device
 Clock.prototype.constructor = Clock
 
 

@@ -8,7 +8,7 @@ function MenuHandler(view) {
 
 	function initialize() {
 		Device.call(that, view)
-		that.newGate("menu", Animation)
+		that.menu_effects = that.newGate("menu", Animation)
 		
 		that.newGate("instructions_option", Gate, {do_onclick: function(event, element) {
             alert("Move the little pig to place sheeps into the barnyard")
@@ -20,16 +20,7 @@ function MenuHandler(view) {
 		
 		that.newGate("level_option", Gate, {do_onclick: function(event, element){
             var levels_container= document.getElementById('level_option_container')
-            if(levels_in==0){
-                levels_in+=1
-                levels_container.style.display='inline'
-                levels_container.style.left='200px'
-        // menu_desplegable.style.height='210px'
-            }
-            else{
-                levels_in-=1
-                levels_container.style.display='none'
-            }
+            levels_container.style.display='inline'
         } })
 	}
 
@@ -37,3 +28,12 @@ function MenuHandler(view) {
 		initialize()
 }
 
+MenuHandler.prototype.attend_keep_menu_out = function(date, msg) {
+    //alert("Me ze oye, me ze cusha??")
+    this.menu_effects.menu_automata.currentState.requested = this[this.element].menu_automata.state.out
+}
+
+MenuHandler.prototype.attend_get_menu_in = function(date, msg) {
+    //this[this.element].menu_automata.currentState.requested = this[this.element].menu_automata.state.getting_in
+    alert("aqui llego")
+}

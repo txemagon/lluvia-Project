@@ -29,12 +29,20 @@ margin-top: 30px;
 margin-right: 144px;
 }
 
+#menu_container{
+	border: solid 1px red;
+	position: relative;
+	float: right;
+	width: 327px;
+	height: 320px;
+}
+
 #menu{
 	border:3px solid #bdae68;
 	width:150px;
 	position:absolute;
-	margin-left:865px;
-	margin-top:5px;
+	/*margin-left:865px;
+	margin-top:5px;*/
 	height:50px;
 	/*-webkit-transition: all 1s ease-in-out 1s;
 	-moz-transition: all 1s ease-in-out 1s;
@@ -99,13 +107,13 @@ margin-right: 144px;
 
 #level_option_container{
 	/*overflow:hidden;*/
+	width:150px;
+	height:156px;
+	position:absolute;
+	left: 153px;
+	top:160px;
 	display:none;
 	border:3px solid #bdae68;
-	width:150px;
-	position:absolute;
-	margin-left:865px;
-	margin-top:220px;
-	height:160px;
 /*	-webkit-transition: all 1s ease-in-out 1s;
 	-moz-transition: all 1s ease-in-out 1s;
 	-ms-transition: all 1s ease-in-out 1s;
@@ -186,4 +194,6 @@ margin-top: -42px;
 margin-right: 20px;
 }
 
-
+#ll_logger{
+	display: none;
+}

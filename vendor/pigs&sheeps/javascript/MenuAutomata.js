@@ -19,6 +19,7 @@ function MenuAutomata(processor, gate) {
 			;
 			},
 			function(){
+				this.gate.panel.style.height = "" + 250 +"px"
 			;
 			},
 			function(){
