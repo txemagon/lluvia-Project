@@ -122,7 +122,7 @@ World.prototype.each_boid = function(){
 }
 
 World.prototype.start = function(){
-  start_game(this)
+  //attend_new_world(this)
   var that = this
   var ctx  = that.screen[0].context
   this.draw_background(ctx)

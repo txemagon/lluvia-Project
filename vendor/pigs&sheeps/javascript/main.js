@@ -14,7 +14,7 @@ function main(){
 	var option_handler = new OptionHandler("level_option_container")
 	option_handler.addPort("keep_menu_out", menu_handler)
 	
-	var maker = new Galactus('screener')
+	var maker = new Galactus('screener', menu_handler)
 	//maker.attend_new_world()
 }
 

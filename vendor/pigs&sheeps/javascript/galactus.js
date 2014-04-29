@@ -1,9 +1,10 @@
 Galactus.prototype = new Device
 Galactus.prototype.contructor = Galactus
 
-function Galactus(view){
+function Galactus(view, handler){
 	var that = this
 	this.view = view
+	this.handler = handler
 
 	this.self_events = [ "restart_clock", "restart_game" ]
 	Device.apply(this, arguments)
@@ -19,7 +20,7 @@ function Galactus(view){
 
 	    that.newGate ("play_button", Gate, {
 		do_onclick: function(event, element) {
-			it.start_world(view)
+			it.attend_new_world(view)
 		}
 	})
 	}
@@ -28,23 +29,24 @@ function Galactus(view){
 		initialize()
 }
 
-Galactus.prototype.attend_new_world = function() {
+Galactus.prototype.attend_new_world = function(dev) {
 	//Comprueba si hay un mundo creado. Si lo hay, lo destruye y crea uno nuevo. Si no, solo lo crea
-	handler.addPort("restart_game", dev)
-	countdown(dev);
+	this.world   = new World(dev)
+	this.handler.addPort("restart_game", this.world)
+	countdown(this.world);
 
 
-	dev.new_boid( function(config) {
+	this.world.new_boid( function(config) {
 		config.colour = "pink"
 	})
 
 	var sheeps = []
 	for (var i=0; i<10; i++)
-	sheeps.push( dev.new_boid( function(config) {
+	sheeps.push( this.world.new_boid( function(config) {
 		config.colour = "white"
 	}))
 
-    dev.start()
+    this.world.start()
 }
 
 Galactus.prototype.destroy_world = function() {

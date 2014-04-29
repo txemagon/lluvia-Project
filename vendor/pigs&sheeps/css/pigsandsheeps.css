@@ -30,30 +30,18 @@ margin-right: 144px;
 }
 
 #menu_container{
-	border: solid 1px red;
 	position: relative;
 	float: right;
-	width: 327px;
-	height: 320px;
+	left:-328px;
 }
 
 #menu{
 	border:3px solid #bdae68;
 	width:150px;
 	position:absolute;
-	/*margin-left:865px;
-	margin-top:5px;*/
 	height:50px;
-	/*-webkit-transition: all 1s ease-in-out 1s;
-	-moz-transition: all 1s ease-in-out 1s;
-	-ms-transition: all 1s ease-in-out 1s;
-	-o-transition: all 1s ease-in-out 1s;*/
 	overflow:hidden;
 }
-
-/*#menu:hover{
-	height:210px;
-}*/
 
 #desplegable{
 	border-bottom:3px solid #bdae68;
@@ -96,17 +84,14 @@ margin-right: 144px;
 	font-size:18px;
 
 }
+
 .option:hover{
 	color:#ffff99;
 	background-color:#ff33ff;
 	cursor:pointer;
 }
-#level_option{
-	
-}
 
 #level_option_container{
-	/*overflow:hidden;*/
 	width:150px;
 	height:156px;
 	position:absolute;
@@ -114,14 +99,7 @@ margin-right: 144px;
 	top:160px;
 	display:none;
 	border:3px solid #bdae68;
-/*	-webkit-transition: all 1s ease-in-out 1s;
-	-moz-transition: all 1s ease-in-out 1s;
-	-ms-transition: all 1s ease-in-out 1s;
-	-o-transition: all 1s ease-in-out 1s;
-	overflow:hidden;*/
-	/*background-color: red;*/
 }
-
 
 #canvas{
 width: 852px;
@@ -129,9 +107,6 @@ height: 502px;
 margin: auto;
 background-color: #ffff99;
 border: 1px solid black;
-}
-
-#screener{
 }
 
 #timer{
