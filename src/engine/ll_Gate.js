@@ -12,13 +12,13 @@
 
 
 function _stitchWorlds(gate, solicitor){
-    return function(e){
-	e = e || window.event
-	try{
-	    return gate[solicitor](e, this)
-	} catch (err) {
-	    Exception.parse(err) }
-    }
+	return function(e){
+		e = e || window.event
+		try{
+		 return gate[solicitor](e, this)
+		} catch (err) {
+			Exception.parse(err) }
+	}
 }
 
 /**
@@ -91,6 +91,7 @@ function Gate(element, parent, config){
 		    if (typeof (parent) === "string" )
 			parent = document.getElementById(parent)
 		    if (parent) parent.appendChild(element)
+
 		}
 	    }
 	    that.panel = element
@@ -146,14 +147,14 @@ Gate.prototype.run = function(now, before){
 
 /**
  * @method new_effect
- * 
+ *
  * Registers a new effect for the Gate. An effect is a ThreadAutomata used to handle
  * the gate html element (body of the gate) creating visual effects.
  *
  * @param {ThreadAutomata} eff  Visual effect to handle the div of the Gate.
  *
  * @return {Object}  ThreadAutomata created.
- */ 
+ */
 Gate.prototype.new_effect = function(eff){
     this.threads.push(eff)
     return eff
