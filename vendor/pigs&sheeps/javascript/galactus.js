@@ -1,25 +1,28 @@
 Galactus.prototype = new Device
 Galactus.prototype.contructor = Galactus
 
-function Galactus(view, handler){
+function Galactus(handler, view){
 	var that = this
-	this.view = view
-	this.handler = handler
+
+	var args = []
+	for (var i=0; i<arguments.length; i++)
+	  args.push(arguments[i])
+
+	this.handler = args.shift()
+	this.view = args[0]
 
 	this.self_events = [ "restart_clock", "restart_game" ]
-	Device.apply(this, arguments)
 
 	function initialize() {
-		Device.call(that, view)
 
-		that.newGate ("main_screen", Gate, {do_onclick: function(event, element) {
-            var start_button = document.getElementById('main_screen')
-	        start_button.style.display = 'none'
-        } })
+	    Device.call(that, null, null, {previous: 0, current:0, requested: 1})
 
 	    that.newGate ("play_button", Gate, {do_onclick: function(event, element) {
+		        this.panel.style.display = 'none'
 			this.device.start_world()
 		} })
+
+
 	}
 
 	if (arguments.length)
