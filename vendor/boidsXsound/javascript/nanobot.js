@@ -387,6 +387,8 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 		Boid.call(that, geo_data, color)
     that.msg_hello = new Image()
     that.msg_hello.src = "images/hola_vectorial.svg"
+
+    that.is_listening = false
 	}
 
 	if(arguments.length)
@@ -399,6 +401,17 @@ Nanobot.prototype.talk = function(mssg){
 
 }
 
+Nanobot.prototype.listen = function(){
+  //that.is_listening = true
+
+}
+// 1- En speaker ver quien puede escuchar al altavoz --> HECHO
+//    1.2- Cuidado si el que escucha es otro speaker(sacarlo del array) --> HECHO
+// 2º) En speaker decir a ese nanobot que esta escuchando y el que
+// 3º) En nanobot analizar lo escuchado 
+// 4º) Comprobar que puede escuchar al mismo tiempo de diferentes fuentes de sonido
+
+/*
 Nanobot.prototype.audible_objects = function(){
 	return this.my_world.visible_for(this.geo_data.position, this.wave_lenght)
 }
@@ -415,7 +428,7 @@ Nanobot.prototype.analyze_sound = function(){
 	var a = this.audible_objects()
 	var result = 0
 	for(var i=0; i<a.length; i++){
-		if(i != a.length-1 )
+		if(i != a.length-1 )                             //<---- El error de que desaparezcan los boids esta aqui
 			result += a[i].get_frequency()
 	}
 	
@@ -437,7 +450,7 @@ Nanobot.prototype.update_behavior = function(){
  			this.brain.get_behavior('seek').set_target()
 	}
 }
-
+*/
 Nanobot.prototype.stop = function(){
 
 }
@@ -470,10 +483,14 @@ Nanobot.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), 18*escala, 0, Math.PI*2, true); 
     ctx.closePath();
     ctx.stroke()
+    ctx.strokeStyle = "black"
   }
 
   if(this.talking){
-   ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
+   //ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
+   ctx.font = "bold 15px ubuntu";
+   ctx.fillStyle = "black"
+  ctx.fillText("hola", p.get_coord(0)+5, p.get_coord(1)-15);
   }
 
 }
@@ -521,6 +538,25 @@ Speaker.prototype.get_wave_lenght = function(){
 
 Speaker.prototype.get_frequency = function(){
 	return 0.1
+}
+
+// CAmbiar nombre 
+Speaker.prototype.audible_objects = function(){
+  var audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
+  for(var i=0; i < audible_objects.length; i++){
+    if(audible_objects[i] instanceof Speaker)
+      audible_objects.splice(i, 1)
+  }
+
+  return audible_objects
+}
+
+Speaker.prototype.run = function(current_time){
+  if (!(current_time instanceof Date))
+    return
+  current_time = current_time || new Date()
+  this.update_physics(current_time)
+  this.audible_objects()
 }
 
 Speaker.prototype.draw = function(ctx){
