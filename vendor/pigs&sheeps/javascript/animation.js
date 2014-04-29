@@ -11,8 +11,7 @@ function Animation(element) {
 	        	that.element = element
 	        	that[element] = {}
 	            Gate.call(that, element)	// Call to the super constructor (it does all the work).
-                //threadAutomata aqui
-                that[element].menu_automata = that.new_effect(new MenuAutomata(that.device, that))
+                that[element].menu_automata = that.new_effect(new MenuAutomata(that.device, that)) //ThreadAutomata
 	        }
 	    } catch (e) {
 	        if ($K_debug_level >= $KC_dl.DEVELOPER)

@@ -18,23 +18,20 @@ function Galactus(view, handler){
 	        start_button.style.display = 'none'
         } })
 
-	    that.newGate ("play_button", Gate, {
-		do_onclick: function(event, element) {
-			it.attend_new_world(view)
-		}
-	})
+	    that.newGate ("play_button", Gate, {do_onclick: function(event, element) {
+			it.attend_new_world()
+		} })
 	}
 
 	if (arguments.length)
 		initialize()
 }
 
-Galactus.prototype.attend_new_world = function(dev) {
+Galactus.prototype.attend_new_world = function() {
 	//Comprueba si hay un mundo creado. Si lo hay, lo destruye y crea uno nuevo. Si no, solo lo crea
-	this.world   = new World(dev)
+	this.world   = new World(this.view)
 	this.handler.addPort("restart_game", this.world)
 	countdown(this.world);
-
 
 	this.world.new_boid( function(config) {
 		config.colour = "pink"
@@ -51,26 +48,26 @@ Galactus.prototype.attend_new_world = function(dev) {
 
 Galactus.prototype.destroy_world = function() {
 	//Destroys a world if there is one created
+	this.world.state.requested = this.world.state.suspended
+	this.world = new World(this.view)
 }
 
-Galactus.prototype.start_world = function(dev) {
-	//Fires an event that calls the worldś start function
-	alert("Galactus lives!")
-	this.world   = new World(dev)
-	//alert(dev.toSource())
-	handler.addPort("restart_game", this.world)
-	countdown(this.world);
+// Galactus.prototype.start_world = function() {
+// 	//Fires an event that calls the worldś start function
+// 	alert("Galactus lives!")
+// 	//alert(dev.toSource())
+// 	handler.addPort("restart_game", this.world)
+// 	countdown(this.world);
 
+// 	this.world.new_boid( function(config) {
+// 		config.colour = "pink"
+// 	})
 
-	this.world.new_boid( function(config) {
-		config.colour = "pink"
-	})
+// 	var sheeps = []
+// 	for (var i=0; i<10; i++)
+// 	sheeps.push( this.world.new_boid( function(config) {
+// 		config.colour = "white"
+// 	}))
 
-	var sheeps = []
-	for (var i=0; i<10; i++)
-	sheeps.push( this.world.new_boid( function(config) {
-		config.colour = "white"
-	}))
-
-    this.world.start()
-}
+//     this.world.start()
+// }

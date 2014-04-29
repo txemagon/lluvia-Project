@@ -32,25 +32,26 @@ margin-right: 144px;
 #menu_container{
 	position: relative;
 	float: right;
-	left:-328px;
+	left:-333px;
+	top: 5px;
 }
 
 #menu{
-	border:3px solid #bdae68;
 	width:150px;
-	position:absolute;
 	height:50px;
+	position:absolute;
 	overflow:hidden;
+	border:3px solid #bdae68;
 }
 
 #desplegable{
-	border-bottom:3px solid #bdae68;
+	background-color: #ffff99;
 	width:150px;
 	height:50px;
 	float:left;
-	background-color: #ffff99;
-	color:#ff33ff;
 	font-size:24px;
+	color:#ff33ff;
+	border-bottom:3px solid #bdae68;
 }
 #desplegable:hover {
 	cursor:pointer;
