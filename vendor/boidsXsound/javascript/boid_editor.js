@@ -21,10 +21,14 @@ function BoidEditor(view){
   
   function initialize(){
     Device.call(that, view)
+    // speaker options
     that.newGate("on_button", OnOptions)
     that.newGate("off_button", OffOptions)
     that.newGate("plus_button", PlusOptions)
     that.newGate("less_button", LessOptions)
+
+    // Nanaobot options
+    that.newGate("hello_button", HelloOptions)
   }
   
   if (arguments.length)
@@ -179,7 +183,33 @@ LessOptions.prototype.do_onclick = function(){
 }
 
 
+HelloOptions.prototype = new Gate
+HelloOptions.prototype.constructor = HelloOptions
 
+function HelloOptions(element){
+  var that = this
+  this.name = element
+
+  function initialize(){
+    try{
+      if(element){
+        that.element = element
+        that[element] = {}
+        Gate.call(that, element)
+      }
+    } catch(e){
+        if ($K_debug_level >= $KC_dl.DEVELOPER)
+          alert("No event handlers were found.\nException: " + e.toSource())
+    }
+  }
+
+  if(arguments.length)
+    initialize()
+}
+
+HelloOptions.prototype.do_onclick = function(){
+  actual_boid.talk("Hola")
+}
 
 
 

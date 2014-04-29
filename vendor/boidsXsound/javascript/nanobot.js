@@ -383,15 +383,20 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 		that.wave_lenght = wave_lenght || 100
 		that.image = image
 		that.gender = gender 
+    that.talking = false
 		Boid.call(that, geo_data, color)
+    that.msg_hello = new Image()
+    that.msg_hello.src = "images/hola_vectorial.svg"
 	}
 
 	if(arguments.length)
 		initialize()
 }
 
-Nanobot.prototype.talk = function(){
-  
+Nanobot.prototype.talk = function(mssg){
+  this.talking = true
+
+
 }
 
 Nanobot.prototype.audible_objects = function(){
@@ -466,6 +471,11 @@ Nanobot.prototype.draw = function(ctx){
     ctx.closePath();
     ctx.stroke()
   }
+
+  if(this.talking){
+   ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
+  }
+
 }
 
 
