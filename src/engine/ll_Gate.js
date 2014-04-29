@@ -75,61 +75,62 @@ function _stitchWorlds(gate, solicitor){
  *     })
  */
 function Gate(element, parent, config){
-	var that = this
-	var args = arguments
+    var that = this
+    var args = arguments
 
-	function initialize(){
-		if (element){
-			if (typeof(element) === "string")
-				if (document.getElementById(element))
-					element = document.getElementById(element)
-			else{
-				var element_name = element
-				element = document.createElement("div")
-				element.setAttribute('id', element_name)
-				if (parent){
-					if (typeof (parent) === "string" )
-						parent = document.getElementById(parent)
-					if (parent) parent.appendChild(element)
-				}
-			}
-			that.panel = element
+    function initialize(){
+	if (element){
+	    if (typeof(element) === "string")
+		if (document.getElementById(element))
+		    element = document.getElementById(element)
+	    else{
+		var element_name = element
+		element = document.createElement("div")
+		element.setAttribute('id', element_name)
+		if (parent){
+		    if (typeof (parent) === "string" )
+			parent = document.getElementById(parent)
+		    if (parent) parent.appendChild(element)
+
 		}
-
-		if (!element) {
-			that.panel = document.createElement("div")
-			if (parent)
-				parent.appendChild(that.panel)
-			else
-				document.body.appendChild(that.panel)
-		}
-
-		if (config)
-		   that.merge$B(config)
-
-		that.keys(/do_.*/).each(function(handler){
-            handler.match( /do_(.*)/ )
-            that.panel[RegExp.$1] = _stitchWorlds(that, handler)
-		})
-
-		that.threads = []
-
+	    }
+	    that.panel = element
 	}
 
-	if (arguments.length)
-		initialize()
+	if (!element) {
+	    that.panel = document.createElement("div")
+	    if (parent)
+		parent.appendChild(that.panel)
+	    else
+		document.body.appendChild(that.panel)
+	}
+
+	if (config)
+	    that.merge$B(config)
+
+	that.keys(/do_.*/).each(function(handler){
+        handler.match( /do_(.*)/ )
+        that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+	})
+
+	that.threads = []
+
+    }
+
+    if (arguments.length)
+	initialize()
 }
 
 Gate.prototype.listen = function(event, handler){
-	this.panel[event] = _stitchWorlds(this, handler)
+    this.panel[event] = _stitchWorlds(this, handler)
 }
 //getCanvas not finish yet
 Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } // This is wrong
 
 Gate.prototype.applySkin = function(skin){
-	var div = document.createElement("div")
-	div.setAttribute("class", skin)
-	this.panel.appendChild(div)
+    var div = document.createElement("div")
+    div.setAttribute("class", skin)
+    this.panel.appendChild(div)
 }
 
 /**
@@ -140,21 +141,21 @@ Gate.prototype.applySkin = function(skin){
  * A gate is supposed to have threads in order to generate animations -Effects.
  */
 Gate.prototype.run = function(now, before){
-	for (var i=0; i<this.threads.length; i++)
-	this.threads[i].run(now, before)
+    for (var i=0; i<this.threads.length; i++)
+    this.threads[i].run(now, before)
 }
 
 /**
  * @method new_effect
- * 
+ *
  * Registers a new effect for the Gate. An effect is a ThreadAutomata used to handle
  * the gate html element (body of the gate) creating visual effects.
  *
  * @param {ThreadAutomata} eff  Visual effect to handle the div of the Gate.
  *
  * @return {Object}  ThreadAutomata created.
- */ 
+ */
 Gate.prototype.new_effect = function(eff){
-	this.threads.push(eff)
-	return eff
+    this.threads.push(eff)
+    return eff
 }
