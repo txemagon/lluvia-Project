@@ -238,7 +238,7 @@ function Device(view, state, currentState, parent){
  */
 Device.prototype.gateRunner = function(){
 
-		for (var i=0; i<this.gates.length; i++) 
+		for (var i=0; i<this.gates.length; i++)
 			this.gates[i].run( this.now, this.before )
 
 }
@@ -352,7 +352,9 @@ Device.prototype.x_calc = function(){
  */
 Device.prototype.fireEvent = function (mssg){
 	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
-		this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg)
+	  /* Attending a mssg in one queue remains different from another queue */
+	  this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg.clone())
+
 }
 
 /**
