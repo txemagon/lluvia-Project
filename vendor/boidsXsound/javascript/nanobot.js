@@ -389,6 +389,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
     that.msg_hello.src = "images/hola_vectorial.svg"
 
     that.is_listening = false
+    that.array_frequency = []
 	}
 
 	if(arguments.length)
@@ -407,8 +408,9 @@ Nanobot.prototype.listen = function(){
 }
 // 1- En speaker ver quien puede escuchar al altavoz --> HECHO
 //    1.2- Cuidado si el que escucha es otro speaker(sacarlo del array) --> HECHO
-// 2º) En speaker decir a ese nanobot que esta escuchando y el que
-// 3º) En nanobot analizar lo escuchado 
+// 2- Mandar al nanobot la frecuencia aun array de frecuancias para que los vaya analizando cuando pueda -->HECHO
+// 3- En nanobot analizar lo escuchado --> HECHO
+//    3.2- Tanto el nanobot como el speaker deben estar escuchando todo el rato
 // 4º) Comprobar que puede escuchar al mismo tiempo de diferentes fuentes de sonido
 
 /*
@@ -451,6 +453,29 @@ Nanobot.prototype.update_behavior = function(){
 	}
 }
 */
+
+Nanobot.prototype.get_frequency = function(new_value){
+  if(new_value)
+    this.array_frequency.push(new_value)
+  
+}
+
+Nanobot.prototype.analyze_sound = function(){
+ // alert(this.array_frequency.length
+  if(this.array_frequency.length > 0)
+    this.level_emotion += this.array_frequency.shift() 
+}
+
+Nanobot.prototype.run = function(current_time){
+  if (!(current_time instanceof Date))
+    return
+  current_time = current_time || new Date()
+  this.update_physics(current_time)
+ // this.get_frequency()
+  this.analyze_sound()
+}
+
+
 Nanobot.prototype.stop = function(){
 
 }
@@ -536,19 +561,28 @@ Speaker.prototype.get_wave_lenght = function(){
 	return this.wave_lenght * escala
 }
 
-Speaker.prototype.get_frequency = function(){
-	return 0.1
+Speaker.prototype.get_frequency_music = function(){
+	return 1
 }
 
 // CAmbiar nombre 
 Speaker.prototype.audible_objects = function(){
-  var audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
-  for(var i=0; i < audible_objects.length; i++){
-    if(audible_objects[i] instanceof Speaker)
-      audible_objects.splice(i, 1)
+  var audible_objects = []
+  if(this.this_on){
+    audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
+    for(var i=0; i < audible_objects.length; i++){
+     if(audible_objects[i] instanceof Speaker)
+        audible_objects.splice(i, 1)
+    }
   }
-
   return audible_objects
+}
+
+Speaker.prototype.nanobot_is_listening = function(){
+  var array_boids = this.audible_objects()
+  for(var i=0; i<array_boids.length; i++){
+    array_boids[i].get_frequency(this.get_frequency_music()) 
+  }
 }
 
 Speaker.prototype.run = function(current_time){
@@ -556,7 +590,7 @@ Speaker.prototype.run = function(current_time){
     return
   current_time = current_time || new Date()
   this.update_physics(current_time)
-  this.audible_objects()
+  this.nanobot_is_listening()
 }
 
 Speaker.prototype.draw = function(ctx){
