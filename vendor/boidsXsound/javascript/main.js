@@ -25,8 +25,10 @@ function main(){
   // }
 
  var speaker1 = w.new_speaker(300,300)
+ var speaker2 = w.new_speaker()
 
  var nano1 = w.new_nanobot()
+ var nano2 = w.new_nanobot()
 // var nano2 = w.new_nanobot()
  nano1.brain.activate('wander')
  nano1.brain.get_behavior('wander').set_target()

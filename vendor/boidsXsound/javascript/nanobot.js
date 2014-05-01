@@ -515,7 +515,7 @@ Nanobot.prototype.draw = function(ctx){
    //ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
    ctx.font = "bold 15px ubuntu";
    ctx.fillStyle = "black"
-  ctx.fillText("hola", p.get_coord(0)+5, p.get_coord(1)-15);
+   ctx.fillText("hola", p.get_coord(0)+5, p.get_coord(1)-15);
   }
 
 }
@@ -533,7 +533,7 @@ function Speaker(geo_data, wave_lenght, src){
 		that.image.src = src || "images/altavoz.png"
 		that.wave_lenght = wave_lenght || 100
 		that.wave_aux = 0
-		that.this_on = false
+		that.this_on = true
 		Boid.call(that, geo_data)
 	}
 
@@ -581,7 +581,8 @@ Speaker.prototype.audible_objects = function(){
 Speaker.prototype.nanobot_is_listening = function(){
   var array_boids = this.audible_objects()
   for(var i=0; i<array_boids.length; i++){
-    array_boids[i].get_frequency(this.get_frequency_music()) 
+    if(array_boids[i].level_emotion)
+      array_boids[i].get_frequency(this.get_frequency_music()) 
   }
 }
 
