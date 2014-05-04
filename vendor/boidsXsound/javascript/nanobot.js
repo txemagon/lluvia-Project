@@ -369,11 +369,8 @@ function integrate(primitive, diff, delta){
 
 
 
-
- Nanobot.prototype = new Boid
- Nanobot.prototype.constructor = Nanobot
-
-
+Nanobot.prototype = new Boid
+Nanobot.prototype.constructor = Nanobot
 
 function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 	var that = this
@@ -381,6 +378,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 	function initialize(){
 		that.level_emotion = level_emotion || 50
 		that.wave_lenght = wave_lenght || 100
+    that.wave_aux = 0
 		that.image = image
 		that.gender = gender 
     that.talking = false
@@ -390,98 +388,94 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
 
     that.is_listening = false
     that.array_frequency = []
+
+    that.array_msg = []
+    this.word_msg = ""
+    that.replying = false
+    this.word_reply = ""
 	}
 
 	if(arguments.length)
 		initialize()
 }
 
-Nanobot.prototype.talk = function(mssg){
-  this.talking = true
-
-
-}
-
-Nanobot.prototype.listen = function(){
-  //that.is_listening = true
-
-}
-// 1- En speaker ver quien puede escuchar al altavoz --> HECHO
-//    1.2- Cuidado si el que escucha es otro speaker(sacarlo del array) --> HECHO
-// 2- Mandar al nanobot la frecuencia aun array de frecuancias para que los vaya analizando cuando pueda -->HECHO
-// 3- En nanobot analizar lo escuchado --> HECHO
-//    3.2- Tanto el nanobot como el speaker deben estar escuchando todo el rato
-// 4º) Comprobar que puede escuchar al mismo tiempo de diferentes fuentes de sonido
-
-/*
 Nanobot.prototype.audible_objects = function(){
-	return this.my_world.visible_for(this.geo_data.position, this.wave_lenght)
+  var audible_objects = []
+    audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
+    for(var i=0; i < audible_objects.length; i++){
+      if(audible_objects[i] instanceof Speaker)
+        audible_objects.splice(i, 1)
+      if(audible_objects[i].id == this.id)  //--> Combinarlo con el if de arriba!!!!
+        audible_objects.splice(i, 1)
+  }
+  return audible_objects
 }
 
-Nanobot.prototype.run = function(current_time){
-  if (!(current_time instanceof Date))
-    return
-  current_time = current_time || new Date()
-  this.update_physics(current_time)
-  this.update_behavior()
-}
-
-Nanobot.prototype.analyze_sound = function(){
-	var a = this.audible_objects()
-	var result = 0
-	for(var i=0; i<a.length; i++){
-		if(i != a.length-1 )                             //<---- El error de que desaparezcan los boids esta aqui
-			result += a[i].get_frequency()
-	}
-	
-	return 	result/a.length	
-}
-
-Nanobot.prototype.get_state = function(){
-	return this.level_emotion
-}
-
-Nanobot.prototype.change_state = function(){
-	this.level_emotion += this.analyze_sound()
-}
-
-Nanobot.prototype.update_behavior = function(){
-	this.change_state()
-	if(this.level_emotion > 60){
-			this.brain.activate('seek')
- 			this.brain.get_behavior('seek').set_target()
-	}
-}
-*/
-
-Nanobot.prototype.get_frequency = function(new_value){
+Nanobot.prototype.set_frequency = function(new_value){
   if(new_value)
     this.array_frequency.push(new_value)
-  
+}
+
+Nanobot.prototype.talk = function(mssg){
+  this.talking = true
+  this.word_msg = mssg
+  var nanobots_listening = this.audible_objects()
+
+  if(nanobots_listening.length > 0){
+    for(var i=0; i<nanobots_listening.length; i++){
+      var msg = { word: mssg , 
+                  transmitter: this
+                } 
+      nanobots_listening[i].set_msg(msg)
+    }
+  }
+}
+
+Nanobot.prototype.set_msg = function(new_msg){
+  if(new_msg)
+    this.array_msg.push(new_msg)
+}
+
+Nanobot.prototype.analyze_msg = function(){
+  if(this.array_msg.length > 0){
+    switch (this.array_msg[0].word){
+      case "hola":
+        this.replying = true
+        this.word_reply = "hola"
+        break
+      case "seguirme":
+        this.replying = true
+        this.word_reply = "voy"
+        this.brain.activate('seek')
+        this.brain.get_behavior('seek').set_target(this.array_msg[0].transmitter)
+        break
+      case "iros":
+        this.replying = true
+        this.word_reply = "vale"
+        this.brain.activate('flee')
+        this.brain.get_behavior('flee').set_target(this.array_msg[0].transmitter)
+        break
+    }
+    this.array_msg.shift()
+  }
 }
 
 Nanobot.prototype.analyze_sound = function(){
- // alert(this.array_frequency.length
   if(this.array_frequency.length > 0)
     this.level_emotion += this.array_frequency.shift() 
 }
 
+Nanobot.prototype.listen = function(){
+  this.analyze_sound()
+  this.analyze_msg()
+}
+
 Nanobot.prototype.run = function(current_time){
   if (!(current_time instanceof Date))
     return
   current_time = current_time || new Date()
   this.update_physics(current_time)
- // this.get_frequency()
-  this.analyze_sound()
-}
-
-
-Nanobot.prototype.stop = function(){
-
-}
-
-Nanobot.prototype.set_instructions = function(){
-
+  this.listen()
 }
 
 Nanobot.prototype.draw = function(ctx){
@@ -515,11 +509,32 @@ Nanobot.prototype.draw = function(ctx){
    //ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
    ctx.font = "bold 15px ubuntu";
    ctx.fillStyle = "black"
-   ctx.fillText("hola", p.get_coord(0)+5, p.get_coord(1)-15);
+   ctx.fillText(this.word_msg, p.get_coord(0)+5, p.get_coord(1)-15);
+
+      ctx.beginPath();
+    ctx.arc(p.get_coord(0), p.get_coord(1), this.wave_aux, 0, Math.PI*2, true);
+      ctx.closePath();
+      ctx.stroke()
+    if(this.wave_aux < this.wave_lenght)
+      this.wave_aux+=20
+    else{
+      this.talking = false
+      this.wave_aux = 0
+    }
   }
 
+  if(this.replying){
+   ctx.font = "bold 15px ubuntu";
+   ctx.fillStyle = "black"
+   ctx.fillText(this.word_reply, p.get_coord(0)+5, p.get_coord(1)-15);
+     if(this.wave_aux < this.wave_lenght)
+       this.wave_aux+=20
+     else{
+       this.replying = false
+       this.wave_aux = 0
+     }
+  }
 }
-
 
 
 
@@ -533,7 +548,7 @@ function Speaker(geo_data, wave_lenght, src){
 		that.image.src = src || "images/altavoz.png"
 		that.wave_lenght = wave_lenght || 100
 		that.wave_aux = 0
-		that.this_on = true
+		that.this_on = false
 		Boid.call(that, geo_data)
 	}
 
@@ -581,8 +596,8 @@ Speaker.prototype.audible_objects = function(){
 Speaker.prototype.nanobot_is_listening = function(){
   var array_boids = this.audible_objects()
   for(var i=0; i<array_boids.length; i++){
-    if(array_boids[i].level_emotion)
-      array_boids[i].get_frequency(this.get_frequency_music()) 
+    if(array_boids[i].level_emotion) //--> Mejorar esta linea!!!
+      array_boids[i].set_frequency(this.get_frequency_music()) 
   }
 }
 
@@ -614,5 +629,6 @@ Speaker.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), 22*escala, 0, Math.PI*2, true); 
     ctx.closePath();
     ctx.stroke()
+    ctx.strokeStyle = "black"
   }
 }

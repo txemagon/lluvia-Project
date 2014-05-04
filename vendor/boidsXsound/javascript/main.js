@@ -28,10 +28,12 @@ function main(){
  var speaker2 = w.new_speaker()
 
  var nano1 = w.new_nanobot()
- var nano2 = w.new_nanobot()
-// var nano2 = w.new_nanobot()
  nano1.brain.activate('wander')
  nano1.brain.get_behavior('wander').set_target()
+
+var nano2 = w.new_nanobot()
+ nano2.brain.activate('seek')
+ nano2.brain.get_behavior('seek').set_target(nano1)
  //nano1.brain.get_behavior('seek').set_target(speaker1)
 
   w.start()
