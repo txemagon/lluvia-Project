@@ -20,10 +20,6 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 
-  // for(var i = 0; i<10; i++){
-  //   var b = w.new_wander()
-  // }
-
  var speaker1 = w.new_speaker(300,300)
  var speaker2 = w.new_speaker()
 
@@ -34,7 +30,6 @@ function main(){
 var nano2 = w.new_nanobot()
  nano2.brain.activate('seek')
  nano2.brain.get_behavior('seek').set_target(nano1)
- //nano1.brain.get_behavior('seek').set_target(speaker1)
 
   w.start()
 }

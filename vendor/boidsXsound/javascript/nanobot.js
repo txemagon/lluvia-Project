@@ -366,39 +366,51 @@ function integrate(primitive, diff, delta){
 }
 
  
-
-
-
+/**
+* @class Nanobot
+*
+* Creates a Nanobot, personal autonomous character. 
+*
+* @constructor Nanobot
+*
+* @param {Object} geo_data      Position, speed and acceleration
+* @param {String} color         css color to paint nanobot 
+* @param {Number} level_emotion Nanobot emotional level
+* @param {number} wave_length   Audition wave_length
+* @param {String} gender        Gender nanobot
+*/
 Nanobot.prototype = new Boid
 Nanobot.prototype.constructor = Nanobot
 
-function Nanobot(geo_data, color,level_emotion, wave_lenght, image, gender){
+function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 	var that = this
 
 	function initialize(){
 		that.level_emotion = level_emotion || 50
 		that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
-		that.image = image
 		that.gender = gender 
     that.talking = false
-		Boid.call(that, geo_data, color)
-    that.msg_hello = new Image()
-    that.msg_hello.src = "images/hola_vectorial.svg"
-
     that.is_listening = false
     that.array_frequency = []
-
     that.array_msg = []
     this.word_msg = ""
     that.replying = false
     this.word_reply = ""
+    Boid.call(that, geo_data, color)
 	}
 
 	if(arguments.length)
 		initialize()
 }
 
+/**
+* @method audible_objects
+*
+* Ask the world if something is audible with my geo_data and wave length.
+*
+* @return {Array} The nanobots audibles
+*/
 Nanobot.prototype.audible_objects = function(){
   var audible_objects = []
     audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
@@ -411,11 +423,25 @@ Nanobot.prototype.audible_objects = function(){
   return audible_objects
 }
 
+/**
+* @method set_frequency
+*
+* Send frequency an array
+*
+* @param {Number} new_value The new value to save.
+*/
 Nanobot.prototype.set_frequency = function(new_value){
   if(new_value)
     this.array_frequency.push(new_value)
 }
 
+/**
+* @method talk
+*
+* Nanobot speaks with their environment.
+*
+* @param {String} mssg Message to transmit.
+*/
 Nanobot.prototype.talk = function(mssg){
   this.talking = true
   this.word_msg = mssg
@@ -431,11 +457,23 @@ Nanobot.prototype.talk = function(mssg){
   }
 }
 
+/**
+* @method set_msg
+*
+* Send a message an array.
+*
+* @param {String} new_msg Send the message to transmit.
+*/
 Nanobot.prototype.set_msg = function(new_msg){
   if(new_msg)
     this.array_msg.push(new_msg)
 }
 
+/**
+* @method analyze_msg
+*
+* Analyze the message.
+*/
 Nanobot.prototype.analyze_msg = function(){
   if(this.array_msg.length > 0){
     switch (this.array_msg[0].word){
@@ -460,16 +498,33 @@ Nanobot.prototype.analyze_msg = function(){
   }
 }
 
+/**
+* @method analyze_sound
+*
+* Analyze the sound.
+*/
 Nanobot.prototype.analyze_sound = function(){
   if(this.array_frequency.length > 0)
     this.level_emotion += this.array_frequency.shift() 
 }
 
+/**
+* @method listen
+*
+* Nanobot analyzy sounds and messages.
+*/
 Nanobot.prototype.listen = function(){
   this.analyze_sound()
   this.analyze_msg()
 }
 
+/**
+* @method run
+*
+* Updates the time in the boid's variables
+*
+* @param {Date}   current_time Current time of the boid
+*/
 Nanobot.prototype.run = function(current_time){
   if (!(current_time instanceof Date))
     return
@@ -478,6 +533,13 @@ Nanobot.prototype.run = function(current_time){
   this.listen()
 }
 
+/**
+* @method draw
+*
+* Draws a nanobot into the world defined by the context
+*
+* @param {Object} ctx Context in which to paint the Boid
+*/
 Nanobot.prototype.draw = function(ctx){
   var p = this.geo_data.position
 
@@ -537,7 +599,17 @@ Nanobot.prototype.draw = function(ctx){
 }
 
 
-
+/**
+* @class Speaker
+*
+* Creates a Speaker. 
+*
+* @constructor Speaker
+*
+* @param {Object} geo_data      Position, speed and acceleration
+* @param {number} wave_length   Audition wave_length
+* @param {String} src           Image path
+*/
 Speaker.prototype = new Boid
 Speaker.prototype.constructor = Speaker
 
@@ -556,31 +628,68 @@ function Speaker(geo_data, wave_lenght, src){
 		initialize()
 }
 
+/**
+* @method on
+*
+* Turn on the speaker
+*/
 Speaker.prototype.on = function(){
 	this.this_on = true
 }
 
+/**
+* @method off
+*
+* Turn off the speaker
+*/
 Speaker.prototype.off = function(){
 	this.this_on = false
 }
 
-Speaker.prototype.subir_volumen = function(increase){
+/**
+* @method volume_up
+*
+* Increase the volume of the speaker
+*/
+Speaker.prototype.volume_up = function(increase){
   this.wave_lenght += increase
 }
 
-Speaker.prototype.bajar_volumen = function(decrement){
+/**
+* @method volume_down
+*
+* Decrement the volume of the speaker
+*
+*/
+Speaker.prototype.volume_down = function(decrement){
   this.wave_lenght -= decrement
 }
 
+/**
+* @method get_wave_lenght
+*
+* Returns wave length
+*/
 Speaker.prototype.get_wave_lenght = function(){
 	return this.wave_lenght * escala
 }
 
+/**
+* @method get_frequency_music
+*
+* Returns frequency music
+*/
 Speaker.prototype.get_frequency_music = function(){
 	return 1
 }
 
-// CAmbiar nombre 
+/**
+* @method audible_objects
+*
+* Ask the world if something is audible with my geo_data and wave length.
+*
+* @return {Array} The nanobots audibles
+*/
 Speaker.prototype.audible_objects = function(){
   var audible_objects = []
   if(this.this_on){
@@ -593,6 +702,11 @@ Speaker.prototype.audible_objects = function(){
   return audible_objects
 }
 
+/**
+* @method nanobot_is_listening
+*
+* description
+*/
 Speaker.prototype.nanobot_is_listening = function(){
   var array_boids = this.audible_objects()
   for(var i=0; i<array_boids.length; i++){
@@ -601,6 +715,13 @@ Speaker.prototype.nanobot_is_listening = function(){
   }
 }
 
+/**
+* @method run
+*
+* Updates the time in the boid's variables
+*
+* @param {Date}   current_time Current time of the boid
+*/
 Speaker.prototype.run = function(current_time){
   if (!(current_time instanceof Date))
     return
@@ -609,6 +730,13 @@ Speaker.prototype.run = function(current_time){
   this.nanobot_is_listening()
 }
 
+/**
+* @method draw
+*
+* Draws a nanobot into the world defined by the context
+*
+* @param {Object} ctx Context in which to paint the Boid
+*/
 Speaker.prototype.draw = function(ctx){
 	var p = this.geo_data.position
 	var image_size = 35

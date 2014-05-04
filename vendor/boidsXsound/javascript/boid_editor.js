@@ -142,7 +142,7 @@ function PlusOptions(element){
 }
 
 PlusOptions.prototype.do_onclick = function(){
-  actual_boid.subir_volumen(10)
+  actual_boid.volume_up(10)
 }
 
 
@@ -171,7 +171,7 @@ function LessOptions(element){
 }
 
 LessOptions.prototype.do_onclick = function(){
-  actual_boid.bajar_volumen(10)
+  actual_boid.volume_down(10)
 }
 
 
