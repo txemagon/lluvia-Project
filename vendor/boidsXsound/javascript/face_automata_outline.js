@@ -5,7 +5,7 @@ function FaceAutomataOutline(processor, gate) {
 	var that = this
 	this.now = new Date()
 	this.before = new Date()
-	this.ghost_opacity = 0
+	this.level_emotion = 0
 	var state = this.state = new Enumeration("start_effect", "normal_outline", "sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
@@ -67,6 +67,10 @@ function FaceAutomataOutline(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataOutline.prototype.set_level_emotion = function(level_emotion){
+	this.level_emotion = level_emotion
 }
 
 FaceAutomataOutline.prototype.draw_outline_frame = function(){

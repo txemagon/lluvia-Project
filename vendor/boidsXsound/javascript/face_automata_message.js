@@ -6,6 +6,7 @@ function FaceAutomataMessage(processor, gate) {
 	var timer = 0
 	this.now = new Date()
 	this.before = new Date()
+	this.level_emotion = 0
 	var state = this.state = new Enumeration("start_effect", "show_message","sleep")
 	this.currentState = { previous: state.start_effect,
 						  current: state.start_effect,
@@ -78,6 +79,10 @@ FaceAutomataMessage.prototype.erase_message = function(){
 	cxt.fillStyle="white";
 	cxt.fillRect(0,0, 150,150);
 	cxt.fillStyle="black";
+}
+
+FaceAutomataMessage.prototype.set_level_emotion = function(level_emotion){
+	this.level_emotion = level_emotion
 }
 
 

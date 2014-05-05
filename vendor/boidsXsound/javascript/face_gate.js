@@ -27,7 +27,8 @@ function FaceBoid(element){
 		initialize()
 }
 
-FaceBoid.prototype.init_animation = function(){
+FaceBoid.prototype.init_animation = function(level_emotion){
+	this.set_level_emotion(level_emotion)
 	this[this.element].face_automata_message.currentState.requested = this[this.element].face_automata_message.state.sleep
 	this[this.element].face_automata_eyes.currentState.requested    = this[this.element].face_automata_eyes.state.start_effect
 	this[this.element].face_automata_outline.currentState.requested = this[this.element].face_automata_outline.state.start_effect
@@ -41,5 +42,13 @@ FaceBoid.prototype.finish_animation = function(){
 	this[this.element].face_automata_outline.currentState.requested = this[this.element].face_automata_outline.state.sleep
 	this[this.element].face_automata_mouth.currentState.requested   = this[this.element].face_automata_mouth.state.sleep
 	this[this.element].face_automata_wifi.currentState.requested    = this[this.element].face_automata_wifi.state.sleep
+}
+// Mejorar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FaceBoid.prototype.set_level_emotion = function(level_emotion){
+	this[this.element].face_automata_message.set_level_emotion(level_emotion)
+	this[this.element].face_automata_eyes.set_level_emotion(level_emotion)
+	this[this.element].face_automata_outline.set_level_emotion(level_emotion)
+	this[this.element].face_automata_mouth.set_level_emotion(level_emotion)
+	this[this.element].face_automata_wifi.set_level_emotion(level_emotion)
 }
 

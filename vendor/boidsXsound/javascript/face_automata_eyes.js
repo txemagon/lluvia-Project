@@ -6,6 +6,7 @@ function FaceAutomataEyes(processor, gate) {
 	var timer = 0
 	this.now = new Date()
 	this.before = new Date()
+	this.level_emotion = 0
 	var state = this.state = new Enumeration("start_effect","open", "close","sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
@@ -89,6 +90,11 @@ function FaceAutomataEyes(processor, gate) {
     if (arguments.length)
         initialize()
 }
+
+FaceAutomataEyes.prototype.set_level_emotion = function(level_emotion){
+	this.level_emotion = level_emotion
+}
+
 
 // No funciona!!!!!!!
 FaceAutomataEyes.prototype.sleep = function(milliseconds){

@@ -5,7 +5,7 @@ function FaceAutomataMouth(processor, gate) {
 	var that = this
 	this.now = new Date()
 	this.before = new Date()
-	this.ghost_opacity = 0
+	this.level_emotion = 0
 	var state = this.state = new Enumeration("start_effect", "closed", "sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
@@ -28,11 +28,10 @@ function FaceAutomataMouth(processor, gate) {
 			/* closed */	
 			[
 				function(){
-					this.draw_mouth_closed()
+					this.draw_mouth()
 					;
 				},
 				function(){
-
 					;
 				},
 				function(){
@@ -68,9 +67,29 @@ function FaceAutomataMouth(processor, gate) {
         initialize()
 }
 
+FaceAutomataMouth.prototype.draw_mouth = function(){
+	if(this.level_emotion > 51){
+		this.draw_mouth_smiley()
+	}
+	else{
+		this.draw_mouth_closed()
+	}
+}
+
 FaceAutomataMouth.prototype.draw_mouth_closed = function(){
 	cxt.beginPath();
 	cxt.moveTo(47,110)
 	cxt.lineTo(103,110);
 	cxt.stroke();
+}
+
+FaceAutomataMouth.prototype.draw_mouth_smiley = function(){
+	cxt.beginPath();
+	cxt.moveTo(47,110)
+	cxt.lineTo(103,10);
+	cxt.stroke();
+}
+
+FaceAutomataMouth.prototype.set_level_emotion = function(level_emotion){
+	this.level_emotion = level_emotion
 }

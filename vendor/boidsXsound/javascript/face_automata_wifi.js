@@ -6,7 +6,7 @@ function FaceAutomataWifi(processor, gate) {
 	var time = 0
 	this.now = new Date()
 	this.before = new Date()
-	this.ghost_opacity = 0
+	this.level_emotion = 0
 	var state = this.state = new Enumeration("start_effect","waves_state1", "waves_state2", "waves_state3", "waves_state4", "expected", "sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
@@ -145,6 +145,10 @@ function FaceAutomataWifi(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataWifi.prototype.set_level_emotion = function(level_emotion){
+	this.level_emotion = level_emotion
 }
 
 FaceAutomataWifi.prototype.draw_wave_small = function(){
