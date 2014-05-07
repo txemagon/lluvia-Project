@@ -30,7 +30,7 @@ function FaceAutomataOutline(processor, gate) {
 				function(){
 					this.draw_outline_face()
 					this.draw_outline_antenna()
-					//this.draw_outline_frame()
+					this.draw_outline_frame()
 					;
 				},
 				function(){
@@ -46,6 +46,7 @@ function FaceAutomataOutline(processor, gate) {
 					;
 				},
 				function(){
+					this.draw_outline_frame()
 					;
 				},
 				function(){

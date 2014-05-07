@@ -30,6 +30,7 @@ function FaceAutomataMessage(processor, gate) {
 			[
 				function(){
 					this.draw_message()	
+
 					;
 				},
 				function(){
@@ -76,8 +77,12 @@ FaceAutomataMessage.prototype.draw_message = function(){
 }
 
 FaceAutomataMessage.prototype.erase_message = function(){
+	// cxt.fillStyle="white";
+	// cxt.fillRect(0,0, 150,150);
 	cxt.fillStyle="white";
-	cxt.fillRect(0,0, 150,150);
+	cxt.beginPath();
+	cxt.arc(75, 75 ,73 , 0, Math.PI*2, false); 
+	cxt.fill();
 	cxt.fillStyle="black";
 }
 
