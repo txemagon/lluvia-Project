@@ -1,0 +1,100 @@
+body{
+  font-family: sans, Arial, helvetica;
+}
+
+#lluvia_load{
+  display: none;
+}
+/*
+#canvas{
+  float: left;
+}
+
+#screen{
+  width: 400px;
+  height: 400px;
+}
+
+#panels{
+  margin-right: 1cm;
+}
+
+.Panel{
+  color: white;
+  background-image: url('../images/panel.png');
+  padding: 2em;
+  display: inline-block;
+}
+
+.Panel div{
+  cursor: pointer;
+}
+
+
+
+#speaker_buttons{
+  border: solid 1px red;
+  display: none
+}
+*/
+
+#canvas{
+  float: left;
+
+}
+
+#face_canvas{
+  width: 153px;
+  height: 153px;
+
+  margin: 0 0 0 450px;
+}
+
+#boid_list_content{
+  padding: 2em;
+  width: 75px;
+  height: 135px;
+  background-color: black;
+  margin: 50px 0 0 457px;
+  cursor: pointer;
+  color: white;
+}
+
+#boid_properties{
+  background-color: black;
+  color: white;
+  width: 375px;
+  height: 135px;
+  margin: -198px 0 0 650px;
+  cursor: pointer;
+  padding: 2em;
+}
+
+#properties{
+  width: 180px;
+  height: 135px; 
+  float: left;
+}
+
+#separation_line{
+  background-color: red;
+  margin: 0 0 0 185px;
+  width: 1px;
+  height: 135px;
+}
+
+#speaker_buttons{
+  visibility: hidden;
+ width: 200px;
+ height: 135px; 
+ margin: -135px 0 0 210px;
+}
+
+#nanobot_buttons{
+  visibility: hidden;
+  width: 200px;
+ height: 135px; 
+ margin: -135px 0 0 210px;
+}
+
+

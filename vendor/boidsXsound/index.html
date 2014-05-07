@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Boids</title>
+    <script type="text/javascript" src="javascript/dependencies.js" ></script>
+    <script type="text/javascript" src="../../src/lluvia.js" ></script>
+    <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
+  </head>
+  <body onload="bringLLuvia();">
+    <h1>BOIDS</h1>
+      <div id="canvas">
+        <canvas id="screener" width="400" height="400" style="border:1px solid #000000;"> </canvas>
+      </div>
+
+      <div id="face_canvas">
+            <canvas id="face" width="150" height="150" style="border:2px solid #000000;"> </canvas>
+      </div>
+
+      <div id="boid_list_content" class="Panel">
+          </div>
+
+      <div id="boid_properties" class="Panel">
+        <div id="properties"> Boid Information
+        </div>
+        <div id="separation_line"></div>
+
+        <div id="speaker_buttons">  <br>
+          <button id="on_button">ON</button>
+          <button id="off_button">OFF</button> <br><br>
+          <button id="plus_button">Vol. +</button>
+          <button id="less_button">Vol. -</button>
+        </div>
+        <div id="nanobot_buttons">  <br>
+          <button id="hello_button">Hola</button>
+          <button id="follow_me_button">Seguirme</button> <br><br>
+          <button id="go_away_button">Iros</button>
+        </div>
+      </div>
+
+    <div id="logger"></div>
+  </body>
+</html>
