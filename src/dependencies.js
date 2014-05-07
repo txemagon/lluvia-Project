@@ -35,18 +35,21 @@ $K_dependencies = [
 			{name: "ll_Set.js",          description: "Adds functionality for sets."},
 			{name: "ll_Module.js",       description: "Redefinition of Module class."},
 			{name: "ll_Class.js",        description: "Redefinition of Class class."},
-			{name: "ll_ClassFactory.js", description: "Facility for creating class."},
-			{name: "ll_Processor.js",    description: "Manage multiple threads."}
+			{name: "ll_ClassFactory.js", description: "Facility for creating class."}
 		]
 	},
 	{   module: "engine",
 		description: "Event and execution control.",
 		path: "engine/",
 		files: [
-			{name: "ll_Device.js", description: "App thread with queue mechanism"},
-			{name: "ll_EventDispatcher.js", description: "Event dispatcher."},
-			{name: "ll_Gate.js", description: "HTML mapping in lluvia."},
-			{name: "ll_Lookup.js", description: ""},
+			{name: "ll_Processor.js",    description: "Manage multiple threads."},
+			{name: "ll_Thread.js",       description: "Thread functionality."},
+			{name: "ll_Automata.js",     description: "Finite automaton."},
+			{name: "ll_ThreadAutomata.js",    description: "Diferential automata."},
+			{name: "ll_Device.js",       description: "App thread with queue mechanism"},
+			{name: "ll_EventDispatcher.js",   description: "Event dispatcher."},
+			{name: "ll_Gate.js",         description: "HTML mapping in lluvia."},
+			{name: "ll_Lookup.js",       description: ""},
 			{name: "ll_MessageEvent.js", description: "Message generator."}
 		]
 	},

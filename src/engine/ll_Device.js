@@ -126,8 +126,6 @@ function Device(view, state, currentState, parent){
 				/* TO DO */ ;
 				this.gateRunner(this.now)
 				this.childRunner(this.now);
-				if (this.running_steady)
-				  this.running_steady(this.now)
 			},
 			function(){
 				;
@@ -182,8 +180,8 @@ function Device(view, state, currentState, parent){
 	this.gates		   = []
 
 	/* privileged functions (mainly public static accessors)*/
-	this.getSolicitors = function(){return that.solicitors;}
-	this.getStates	   = function(){return state;}
+	this.getSolicitors = function() { return that.solicitors; }
+	this.getStates	   = function() { return state; }
 	this.openDevice	   = _$innerObject(this, "device")
 	/* construction */
 	function initialize(){ // Use that. This would refer to the function object.
