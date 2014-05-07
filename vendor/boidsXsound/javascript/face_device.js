@@ -30,6 +30,6 @@ function FaceDevice(view){
 
 FaceDevice.prototype.attend_face_boid_animation = function(date, mssg){
   //alert(mssg.event.face_boid_animation.data.level_emotion)
-  var level_emotion = mssg.event.face_boid_animation.data.level_emotion
-  this.gates[0].init_animation(level_emotion)
+  var actual_boid = mssg.event.face_boid_animation.data
+  this.gates[0].init_animation(actual_boid)
 }

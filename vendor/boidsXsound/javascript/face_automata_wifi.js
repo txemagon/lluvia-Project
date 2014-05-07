@@ -62,7 +62,6 @@ function FaceAutomataWifi(processor, gate) {
 				},
 				function(){
 					this.erase_wave_small()
-					//this.erase_wave_medium()
 					;
 				}
 			],

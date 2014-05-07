@@ -1,4 +1,3 @@
-alert("")
 var escala = 1
 logger = document.getElementById("logger")
 

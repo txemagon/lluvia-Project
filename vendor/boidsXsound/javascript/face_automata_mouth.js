@@ -28,10 +28,10 @@ function FaceAutomataMouth(processor, gate) {
 			/* closed */	
 			[
 				function(){
-					this.draw_mouth()
 					;
 				},
 				function(){
+					this.draw_mouth()
 					;
 				},
 				function(){
@@ -68,7 +68,7 @@ function FaceAutomataMouth(processor, gate) {
 }
 
 FaceAutomataMouth.prototype.draw_mouth = function(){
-	if(this.level_emotion > 51){
+	if(this.level_emotion.level_emotion > 51){
 		this.draw_mouth_smiley()
 	}
 	else{
@@ -86,10 +86,9 @@ FaceAutomataMouth.prototype.draw_mouth_closed = function(){
 FaceAutomataMouth.prototype.draw_mouth_smiley = function(){
 	cxt.beginPath();
 	cxt.moveTo(47,110)
-	cxt.lineTo(103,10);
-	cxt.stroke();
+	cxt.fillText("smiley", 25, 70);
 }
 
-FaceAutomataMouth.prototype.set_level_emotion = function(level_emotion){
-	this.level_emotion = level_emotion
+FaceAutomataMouth.prototype.set_actual_boid = function(actual_boid){
+	this.level_emotion = actual_boid
 }

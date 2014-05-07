@@ -21,7 +21,7 @@ $K_app_dependencies = [
 			{ name: "face_automata_eyes.js",       description: "" },
 			{ name: "face_automata_mouth.js",      description: "" },
 			{ name: "face_automata_wifi.js",       description: "" },
-//			{ name: "boid.js",                     description: "One Boid." },
+			{ name: "boid.js",                     description: "One Boid." },
 			{ name: "nanobot.js",                  description: "" },
 			{ name: "speaker.js",                  description: "" },
 			{ name: "main.js",                     description: "main function." },
