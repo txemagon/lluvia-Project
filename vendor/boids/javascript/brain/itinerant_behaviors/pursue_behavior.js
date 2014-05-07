@@ -14,6 +14,7 @@ PursueBehavior.prototype.super = Behavior
 function PursueBehavior(){
   Behavior.apply(this, arguments)
   this.X = 0
+  this.cached_target = new Vector(0,0)
 }
 
 
@@ -77,7 +78,7 @@ PursueBehavior.prototype.target_at = function() {
 
   normal_acceleration = this.target.globalize(0, normal_acceleration)
 
-  return boid_target_pos.add( boid_target_velocity.add(normal_acceleration.scale(impact_time/3)).scale(impact_time)).subs( this.me.geo_data.position )
+  return this.cached_target = boid_target_pos.add( boid_target_velocity.add(normal_acceleration.scale(impact_time/3)).scale(impact_time)).subs( this.me.geo_data.position )
 }
 
 

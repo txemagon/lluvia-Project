@@ -17,7 +17,7 @@ function BehaviorModifier(behavior){
  * Checks the modifier passed as parameter
  *
  * @param {String} mod_name Name of the modifier
- * 
+ *
  * @return {String}  Returns the name of the behavior modifier
  */
 BehaviorModifier.type_of = function(mod_name){
@@ -30,7 +30,7 @@ BehaviorModifier.type_of = function(mod_name){
  * Checks if a behavior has the given modifier
  *
  * @param {String} mod_name Name of the modifier
- * 
+ *
  * @return {Boolean} Returns true if the behavior is a modifier. False if not
  */
 BehaviorModifier.prototype.is_a$U = function(mod_name){
@@ -46,9 +46,9 @@ BehaviorModifier.prototype.is_a$U = function(mod_name){
  *
  * Changes a behavior modifier to active
  *
- * @param {} 
- * 
- * @return {} 
+ * @param {}
+ *
+ * @return {}
  */
 BehaviorModifier.prototype.unfreeze = function(){
   this._FROZEN = false
@@ -67,7 +67,7 @@ BeforeBehaviorModifier.prototype = new BehaviorModifier;
 BeforeBehaviorModifier.prototype.constructor = BeforeBehaviorModifier
 BeforeBehaviorModifier.prototype.super = BehaviorModifier
 
-function BeforeBehaviorModifier(){ 
+function BeforeBehaviorModifier(){
   BehaviorModifier.apply(this, arguments)
 }
 
@@ -84,7 +84,7 @@ AfterBehaviorModifier.prototype = new BehaviorModifier
 AfterBehaviorModifier.prototype.constructor = AfterBehaviorModifier
 AfterBehaviorModifier.prototype.super = BehaviorModifier
 
-function AfterBehaviorModifier(){ 
+function AfterBehaviorModifier(){
   BehaviorModifier.apply(this, arguments)
 }
 

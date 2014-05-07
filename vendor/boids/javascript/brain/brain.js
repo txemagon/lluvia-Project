@@ -56,11 +56,11 @@ Brain.prototype.can_be_in$U = function(behavior){
  */
 Brain.prototype.activate = function(behavior, target_after){
    var verbose_behavior = Behavior.decompose_name(behavior)
-   behavior = verbose_behavior[1]
+   var behavior_class = verbose_behavior[1]
 
-   this.active_behaviors[behavior] = this.active_behaviors[behavior] || []
-   if (this.possible_behaviors[behavior])
-      this.active_behaviors[behavior].push( {
+   this.active_behaviors[behavior_class] = this.active_behaviors[behavior_class] || []
+   if (this.possible_behaviors[behavior_class])
+      this.active_behaviors[behavior_class].push( {
 	 target: target_after,
 	 behavior: Behavior.new(this, behavior, target_after)
       })

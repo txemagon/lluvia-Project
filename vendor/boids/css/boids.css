@@ -20,6 +20,7 @@ body{
   background-image: url('../images/panel.png');
   padding: 2em;
   display: inline-block;
+  border-radius: 5px;
 }
 
 .Panel div{

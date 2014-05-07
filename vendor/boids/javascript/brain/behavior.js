@@ -36,13 +36,13 @@ function Behavior( brain, body, before_modifier, after_modifier,target ){
         if (before_modifier && ( before_modifier instanceof Array) )
             before_modifier.each( function(el){
                 var m = eval("new " + el.class_name().capitalize() + "BehaviorModifier(that)")
-                m.freeze()
+                m.unfreeze()
                 that.before.push( m )
             })
             if ( after_modifier && (after_modifier instanceof Array))
                 after_modifier.each( function(el){
                     var m = eval("new " + el.class_name().capitalize() + "BehaviorModifier(that)")
-                    m.freeze()
+                    m.unfreeze()
                     that.after.push( m )
                 })
     }
