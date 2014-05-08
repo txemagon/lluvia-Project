@@ -5,49 +5,33 @@ body{
 #lluvia_load{
   display: none;
 }
-/*
-#canvas{
-  float: left;
+
+#container{
+  width: 1200px;
+  border: solid 1px orange;
+  position: relative;
+  margin: auto;
 }
 
-#screen{
+.Panel{
+  display: inline-block;
+}
+
+#canvas{
+  border: solid 1px red;
   width: 400px;
   height: 400px;
 }
 
-#panels{
-  margin-right: 1cm;
-}
-
-.Panel{
-  color: white;
-  background-image: url('../images/panel.png');
-  padding: 2em;
-  display: inline-block;
-}
-
-.Panel div{
-  cursor: pointer;
-}
-
-
-
-#speaker_buttons{
-  border: solid 1px red;
-  display: none
-}
-*/
-
-#canvas{
-  float: left;
-
+#logger{
+  border: solid 1px blue;
 }
 
 #face_canvas{
-  width: 153px;
-  height: 153px;
-
-  margin: 0 0 0 450px;
+  border: solid 1px green;
+  width: 150px;
+  height: 150px;
+  position: absolute;
 }
 
 #boid_list_content{
@@ -55,10 +39,18 @@ body{
   width: 75px;
   height: 135px;
   background-color: black;
-  margin: 50px 0 0 457px;
   cursor: pointer;
   color: white;
+
 }
+/*
+  width: 150px;
+  height: 150px;
+
+  margin: 0 0 0 450px;
+}
+
+
 
 #boid_properties{
   background-color: black;
@@ -112,3 +104,4 @@ background-image:url('../images/c2.svg');
 background-size: 100% 100%;
   margin: -444px 0 0 400px;
 }
+*/

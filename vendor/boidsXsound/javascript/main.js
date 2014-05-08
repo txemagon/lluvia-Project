@@ -4,7 +4,7 @@ logger = document.getElementById("logger")
 var c = null, cxt = null;
 
 function main(){ 
-  var w = new World()
+  var w = new World("screener")
 
   var boid_list = new WorldInterface("boid_list_content")
   w.addPort("new_boid", boid_list)

@@ -10,16 +10,17 @@
   </head>
   <body onload="bringLLuvia();">
     <h1>BOIDS</h1>
-      <div id="canvas">
+<div id="container">
+      <div id="">
+        <div id="face_canvas" class="Panel">
+              <canvas id="face" width="150" height="150"> </canvas>
+        </div>
+
+        <div id="boid_list_content" class="Panel">
+        </div>
+      <div id="canvas" class="Panel">
         <canvas id="screener" width="400" height="400" style="border:1px solid #000000;"> </canvas>
       </div>
-
-      <div id="face_canvas">
-            <canvas id="face" width="150" height="150"> </canvas>
-      </div>
-
-      <div id="boid_list_content" class="Panel">
-          </div>
 
       <div id="boid_properties" class="Panel">
         <div id="properties"> Boid Information
@@ -41,5 +42,6 @@
 
     <div id="logger"></div>
     <div id="c2"></div>
+</div>
   </body>
 </html>
