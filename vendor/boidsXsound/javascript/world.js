@@ -169,7 +169,7 @@ World.prototype.running_steady = function(processors_time){
   this.now = processors_time || new Date()
   //this.eventDispatcher.shift()
   var ctx = this.screen[0].context
-  ctx.clearRect(0,0,400,400)
+  ctx.clearRect(0,0,550,400)
   this.each_boid(function(boid){
     boid.run(that.now)
     boid.draw(ctx)

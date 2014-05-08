@@ -8,30 +8,23 @@ body{
 
 #container{
   width: 1200px;
+  height: 800px;
   border: solid 1px orange;
   position: relative;
   margin: auto;
+  background-image:url('../images/fondo_circuito.svg');
+  background-size: 100% 100%;
 }
 
 .Panel{
   display: inline-block;
 }
 
-#canvas{
-  border: solid 1px red;
-  width: 400px;
-  height: 400px;
-}
-
-#logger{
-  border: solid 1px blue;
-}
-
 #face_canvas{
-  border: solid 1px green;
   width: 150px;
   height: 150px;
   position: absolute;
+  margin: 50px 0 0 75px;
 }
 
 #boid_list_content{
@@ -41,8 +34,71 @@ body{
   background-color: black;
   cursor: pointer;
   color: white;
-
+  border-radius:5px;
+  position: absolute;
+  margin: 250px 0 0 82px;
 }
+
+#canvas{
+  border: solid 2px black;
+  width: 550px;
+  height: 400px;
+  position: absolute;
+  margin: 0 0 0 300px;
+  border-radius:10px;
+}
+
+
+#boid_properties{
+  background-color: black;
+  color: white;
+  width: 150px;
+  height: 335px;
+  margin: 50px 0 0 925px;
+  cursor: pointer;
+  padding: 2em;
+  border-radius:5px;
+}
+
+#properties{
+  width: 180px;
+  height: 135px; 
+}
+
+#speaker_buttons{
+  visibility: hidden;
+ width: 200px;
+ height: 135px; 
+ 
+}
+
+#nanobot_buttons{
+  visibility: hidden;
+  width: 200px;
+ height: 135px; 
+}
+
+/*
+#sub-contaniner1{
+  width: 300px;
+  background-color: red;
+  position: absolute;
+}
+
+#sub-contaniner2{
+  width: 400px;
+  background-color: orange;
+  margin: 0 0 0 300px;
+  position: absolute;
+}
+
+#sub-contaniner3{
+  width: 380px;
+  background-color: green;
+  margin: 0 0 0 810px;
+  position: absolute; 
+}
+*/
 /*
   width: 150px;
   height: 150px;
@@ -51,43 +107,6 @@ body{
 }
 
 
-
-#boid_properties{
-  background-color: black;
-  color: white;
-  width: 375px;
-  height: 135px;
-  margin: -198px 0 0 650px;
-  cursor: pointer;
-  padding: 2em;
-}
-
-#properties{
-  width: 180px;
-  height: 135px; 
-  float: left;
-}
-
-#separation_line{
-  background-color: red;
-  margin: 0 0 0 185px;
-  width: 1px;
-  height: 135px;
-}
-
-#speaker_buttons{
-  visibility: hidden;
- width: 200px;
- height: 135px; 
- margin: -135px 0 0 210px;
-}
-
-#nanobot_buttons{
-  visibility: hidden;
-  width: 200px;
- height: 135px; 
- margin: -135px 0 0 210px;
-}
 
 #c1{
   width: 200px;
