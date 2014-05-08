@@ -407,7 +407,7 @@ World.prototype.running_steady = function(processors_time){
  * ###Example
  *      //
  *
- *
+ * todo: Add a type of boid to see. I want to see sheeps
  *
  */
 World.prototype.visible_for = function(position, heading, vision){

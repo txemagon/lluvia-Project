@@ -1,6 +1,3 @@
-requires('Behavior')
-alert("Waiting for Behavior")
-
 /**
  * @class AlignmentBehavior
  *
@@ -48,9 +45,6 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
     return new Vector(0, 0)
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
-  //alert(velocity.Coord)
-  //alert(desired_velocity.subs(velocity))
 
   return desired_velocity.subs(velocity)
-  //return new Vector(0, 0)
 }
