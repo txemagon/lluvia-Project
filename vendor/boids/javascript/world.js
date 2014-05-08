@@ -228,11 +228,7 @@ World.prototype.has_born = function (){
  *
  */
 World.prototype.get_boids = function(){
-  var boids = []
-  boids = this.threads.select_if( function(el){
-                                    return (el.object instanceof Boid)
-                                })
-  return boids.collect( function(el){ return el.object; })
+  return this.get(Boid)
 }
 
 /**

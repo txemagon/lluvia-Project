@@ -18,9 +18,9 @@ Function.prototype.yield = function(){
 
 Function.prototype.block_given$U = function(){
      var given = false
-     for (var i=this.arguments.length-1; i>=0; i--)
+     for (var i=this.arguments.length-1; !given && i>=0; i--)
         if (typeof(this.arguments[i]) === "function")
-           given = true
+           given = this.arguments[i]
      return given
 }
 
