@@ -93,7 +93,7 @@ function AfterBehaviorModifier(){
  *
  * Creates Itinerant BehaviorModifier: arrival
  *
- * @constructor Arrival Behavior Modifier
+ * @constructor ArrivalBehaviorModifier
  *
  * @return {ArrivalBehaviorModifier}
 */
@@ -107,4 +107,20 @@ function ArrivalBehaviorModifier(){
 }
 
 
+/**
+ * @class ForeseeBehaviorModifier
+ *
+ * Creates Itinerant BehaviorModifier: Foresee
+ *
+ * @constructor ForeseeBehaviorModifier
+ *
+ * @return {ForeseeBehaviorModifier}
+*/
+ForeseeBehaviorModifier.prototype = new BehaviorModifier
+ForeseeBehaviorModifier.prototype.constructor = ForeseeBehaviorModifier
+ForeseeBehaviorModifier.prototype.super = BehaviorModifier
+
+function ForeseeBehaviorModifier(){
+  BehaviorModifier.apply(this, arguments)
+}
 

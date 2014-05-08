@@ -15,6 +15,7 @@ function SeekBehavior(){
   Behavior.apply(this, arguments)
   this.approach_distance = 100 // Default approach distance
   this.arrival_distance = 0
+  this.cached_target = this.target || new Vector(0,0)
 }
 
 
@@ -69,6 +70,19 @@ SeekBehavior.prototype.get_target = function(){
  * @return {}
  */
 SeekBehavior.prototype.target_at = function(){
+  if  (this.is_premodified_by$U("foresee")) {
+    var boid_target_pos          = this.get_target().position
+    var boid_target_rel_pos      = boid_target_pos.subs(this.me.geo_data.position)
+    var boid_target_velocity     = this.get_target().velocity
+    var boid_target_acceleration = this.get_target().acceleration
+    var normal_acceleration      = this.target.localize(boid_target_acceleration).get_coord(1)
+    var impact_time              = boid_target_rel_pos.module() / this.me.geo_data.velocity.module()
+
+    normal_acceleration = this.target.globalize(0, normal_acceleration)
+
+    return this.cached_target = boid_target_pos.add( boid_target_velocity.add(normal_acceleration.scale(impact_time/3)).scale(impact_time)).subs( this.me.geo_data.position )
+
+  }
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
@@ -90,7 +104,7 @@ SeekBehavior.prototype.desired_velocity = function(){
   this.arrival_distance = arrival_distance
   var scale = 1
   /* Arrival behavior Modifier */
-  if (this.is_modified_by$U("arrival"))
+  if (this.is_postmodified_by$U("arrival"))
     if (this.approach_distance > arrival_distance)
       scale = arrival_distance / this.approach_distance
 

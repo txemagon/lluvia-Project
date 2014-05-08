@@ -84,16 +84,24 @@ function main(){
     config.brain.activate("pursue", first)
   })
 
-  /*  Example: pursue behaviour*/
+  /*  Example: foresee < seek == pursue behaviour*/
   var b3 = w.new_boid( function (config) {
     config.colour  = "fuchsia"
     config.vel_max = 80
     config.force_limits.thrust   = 40
     config.force_limits.steering = 80
-    config.geo_data.position     = new Vector(0, 0)
-    // config.brain.activate("seek", first)
-    config.brain.activate("seek", first)
-    return config
+    config.geo_data.position     = new Vector(200, 0)
+    config.brain.activate("foresee<seek", first)
+  })
+
+  /*  Example: foresee < seek > arrival */
+  var b4 = w.new_boid( function (config) {
+    config.colour  = "maroon"
+    config.vel_max = 180
+    config.force_limits.thrust   = 40
+    config.force_limits.steering = 80
+    config.geo_data.position     = new Vector(200, 0)
+    config.brain.activate("foresee<seek>arrival", first)
   })
 
 
