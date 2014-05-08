@@ -148,8 +148,9 @@ Processor.prototype.newThread = function(){
 Processor.prototype.get = Processor.prototype.get = function (object) {
     var collect = []
 
-    for (var i=0; i<this.threads.length; i++) {
-	var candidate = candidate
+    var len = this.threads.length
+    for (var i=0; i<len; i++) {
+	var candidate = this.threads[i].object
        if ( candidate && !collect.include$U(candidate) &&
 	    ( candidate == object ||  candidate instanceof object )
 	  )
