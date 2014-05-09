@@ -211,7 +211,7 @@ World.prototype.new_nanobot = function(color, geo_data, level_emotion, wave_leng
   color = color || "blue"
   if (typeof(geo_data) === "undefined")
     geo_data = { 
-          position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+          position: new Vector(Math.floor(Math.random()*550), Math.floor(Math.random()*400)),
           velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)), 
           acceleration: new Vector(0,0)
     }
@@ -223,7 +223,7 @@ World.prototype.new_nanobot = function(color, geo_data, level_emotion, wave_leng
 }
 
 World.prototype.new_speaker = function(pos_x, pos_y, wave_lenght){
-  var pos_x = pos_x || Math.floor(Math.random()*400)
+  var pos_x = pos_x || Math.floor(Math.random()*550)
   var pos_y = pos_y || Math.floor(Math.random()*400)
   
     geo_data = { 
