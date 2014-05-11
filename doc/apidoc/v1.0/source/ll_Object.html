@@ -15,250 +15,506 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">if (typeof Object.extend !== 'function') {
-    Object.extend = function (o) {
-        function $F() {}
-        $F.prototype = o;
-        return new $F();
-    };
-}
-
-Object.prototype.to_a = function(){
-  return [this]
-}
-<span id='global-method-alias'>/**
-</span> * @method alias
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**  Note: Extending Object's prototype will address you
+</span> *  to the hub of hell (hellHub) in programmer's
+ *  collective mind, but freedom is the rider of
+ *  love. Bear it in your mind and practice:
  *
- * Creates a reference to an original method. Changing 
- * the original one behavior, the alias is also changing.
- *  
- * @param  {string} alias_name      Name of the new method.
- * @param  {string} original_method Name of the original method.
+ *      Object.defineProperty(this, &quot;nonEnum&quot;, {
+ *              enumerable: false,
+ *              value: 'noEnum'
+ *      });
+ *
+ *  as much as you can.
  */
-Object.prototype.alias = function(alias_name, original_method){
-  this[alias_name] = function(){
-    return this[original_method].apply(this, arguments)
-  }
-}
+
 /*
- * 
+ *
  * a = {a: 2, b:3}
  * b = Object.extend(a)
  * alert(b.a)
  * b.a++
  * alert(a.a)
  * alert(b.a)
- * 
+ *
  * RESULTS
  * 2,2,3
- * 
+ *
  * CONCLUSIONS
- * 
- * As long as the constructor $F is an inner function each time we extend/create an object 
+ *
+ * As long as the constructor $F is an inner function each time we extend/create an object
  * we get a different object, and, thus, a different prototype. In this way we don't share the
  * prototipical attribute a and b.
  */
 
 
- 
+
+// Conflicts with ECMAScript 5
+// if (typeof Object.extend !== 'function') {
+//     Object.extend = function (o) {
+// 	function $F() {}
+// 	$F.prototype = o;
+// 	return new $F();
+//     };
+// }
+
+<span id='global-method-to_a'>/**
+</span> * @method to_a
+ * Returns this object inside an array.
+ *
+ * ## Example
+ *
+ *    var a = { name: &quot;superman&quot; }
+ *    a.to_a()
+ *    // =&gt; [{ name: &quot;superman&quot; }]
+ *
+ * @return {Array}
+ */
+Object.prototype.to_a = function(){
+    return [this]
+}
+
+<span id='global-method-alias'>/**
+</span> * @method alias
+ *
+ * Creates a reference to an original method. Changing
+ * the original one behavior, the alias is also changing.
+ *
+ * @param  {string} alias_name      Name of the new method.
+ * @param  {string} original_method Name of the original method.
+ */
+Object.prototype.alias = function(alias_name, original_method){
+    this[alias_name] = function(){
+	return this[original_method].apply(this, arguments)
+    }
+}
+
 Object._$NUM_ERR = 0.000001
 
+<span id='global-method-inspect'>/**
+</span> * @method inspect
+ * Shows an object pretty printed. Is an improved version of toSource()
+ *
+ * @param {Array} sp Used to add information recursively by calling Object#inspect on inner elements.
+ * @return {String}
+ */
 Object.prototype.inspect = function(sp){
-	sp = sp || [&quot;&quot;]
-	var output = &quot;{\n&quot;
-	sp.push(&quot;&quot;)
-	if (sp.length &gt; 3) 
-		return &quot;&quot;
-	for (var i in this){
-		output += sp.join(&quot;\t&quot;) + i + &quot;: \t&quot; 
-		
-		if (this[i] != null)
-			if (typeof(this[i]) == &quot;object&quot;)
-				output += (this[i].toSource? this[i].toSource(sp): this[i])
-			else	
-				output += this[i]
-		else
-			output += &quot;null&quot;
-		output += &quot; \n &quot;
-	
-	}	
-	sp.pop()
-	output += sp.join(&quot;\t&quot;) + &quot;}&quot;
-	return output
+    sp = sp || [&quot;&quot;]
+    var output = &quot;{\n&quot;
+    sp.push(&quot;&quot;)
+    if (sp.length &gt; 3)
+	return &quot;&quot;
+    for (var i in this){
+	output += sp.join(&quot;\t&quot;) + i + &quot;: \t&quot;
+
+	if (this[i] != null)
+	    if (typeof(this[i]) == &quot;object&quot;)
+		output += (this[i].toSource? this[i].toSource(sp): this[i])
+	else
+	    output += this[i]
+	else
+	    output += &quot;null&quot;
+	output += &quot; \n &quot;
+
+    }
+    sp.pop()
+    output += sp.join(&quot;\t&quot;) + &quot;}&quot;
+    return output
 }
 
+<span id='global-method-keys'>/**
+</span> * @method keys
+ * Yields all the accesible attributes of an object.
+ *
+ * ### Example
+ *
+ *    function Arachnid() {
+ *       this.limbs = 8
+ *       this.lips  = false
+ *       this.lap   = true
+ *    }
+ *
+ *    Tarantula.prototype = new Arachnid
+ *    Tarantula.prototype.constructor = Tarantula
+ *    function Tarantula() {
+ *       this.poisson = true
+ *    }
+ *
+ *    var venom = new Tarantula()
+ *    venom.keys()
+ *    // =&gt; [&quot;poisson&quot;, &quot;lap&quot;, &quot;lips&quot;, &quot;limbs&quot;]
+ *
+ * A regular expression is accepted to filter output.
+ *
+ * ### Example
+ *
+ *     venom.keys(/^l.*s$/)
+ *     // =&gt; [&quot;lips&quot;, &quot;limbs&quot;]
+ *
+ * @param {RegExp} re A regular expression to filter output.
+ * @return {Array} An array with the keys of the object.
+ */
 Object.prototype.keys = function(re){
-	var the_keys = []
-	for (var i in this)
-		if (!re || re.test(i))
-			if (i !== &quot;keys&quot;)
-				the_keys.push(i)
-	return the_keys
+    var the_keys = []
+    for (var i in this)
+	if (!re || re.test(i))
+	    if (i !== &quot;keys&quot;)
+		the_keys.push(i)
+    return the_keys
 }
 
+
+<span id='global-method-self_keys'>/**
+</span> * @method self_keys
+ * Return the attributes defined in this object. This method excludes further seeking via
+ * the prototype chain. See Object#keys for usage.
+ *
+ * @param {RegExp} re A Regular Expression to filter output.
+ * @return
+ */
 Object.prototype.self_keys = function(re){
-	var the_keys = []
-	for (var i in this)
-		if (!re || re.test(i))
-			if (i !== &quot;keys&quot; &amp;&amp; this.hasOwnProperty(i) )
-				the_keys.push(i)
-	return the_keys
+    var the_keys = []
+    for (var i in this)
+	if (!re || re.test(i))
+	    if (i !== &quot;keys&quot; &amp;&amp; this.hasOwnProperty(i) )
+		the_keys.push(i)
+    return the_keys
 }
 
+<span id='global-method-'>/**
+</span> * own_keys
+ * Alias of Object#self_keys.
+ *
+ * @param re
+ * @return
+ */
 Object.prototype.own_keys = function(re){
-  return this.self_keys(re)
+    return this.self_keys(re)
 }
 
-// Masking the prototype
-Object.prototype.plain = function(){
-  var pojo = new Object()
-  for (var i in pojo){
-    this[i] = null
-  }
-  return this
-}
-
+<span id='global-method-clone'>/**
+</span> * @method clone
+ * Shallow copy of an object.
+ *
+ * #Example
+ *
+ *     var me = new Person()
+ *     var one = {first: 1, second: me }
+ *     var two = one.clone()
+ *     // =&gt; { first: 1, second: me }
+ *
+ * Notice that changing two.second affects one.second as long as they're
+ * pointers to the same object.
+ *
+ * @return {Object} Shallow copy of the given object.
+ */
 Object.prototype.clone = function(){
     var the_clone = {}
     for (var i in this)
-       the_clone[i] = this[i]
+	the_clone[i] = this[i]
     return the_clone
 }
 
-Object.prototype.eql$U = function(model){
-  if (typeof(model) === &quot;undefined&quot; )
-    return false
-
-  /* End of support */
-  return model.toSource() == this.toSource()
-}
-// Ruby no tiene esta clase. to_a solamente está en String y Array...
-/*Object.prototype.to_a = function(){
-  var that = [] 
-  that.push(this)
-  return that
-}*/
-////////////////////////////////////////////////////////////////////
-
+<span id='global-method-_S-innerObject'>/**
+</span> * @method _$innerObject
+ * Class augmentation. Creates a constructor based on another. This let us
+ * to add extra attributes.
+ *
+ * ### Example
+ *
+ * Godman inherits from Device
+ *
+ *  Godman calls the Device contructor that executes:
+ *
+ *      this.openDevice    = _$innerObject(this, &quot;device&quot;)
+ *  So for _$innerObject:
+ *      me = that = Godman device object
+ *      parentName = device
+ *
+ *  Anywhere inside person we can read:
+ *
+ *      var AHuman = this.openDevice(Human)
+ *      var person = new AHuman(name)
+ *
+ *  openDevice returns an anonymous function that redirects all its calls
+ *  to Human (the innerObject) but this function (used as a constructor)
+ *  appends this.device = Godman through:
+ *
+ *      this[parentName] = me
+ *
+ * The price to be paid in exchange for this benefit is that:
+ *
+ *    AHuman instanceof Human == false
+ *
+ * So to fix this
+ *
+ *     $F_innerObj.prototype = new arguments[0]
+ *     $F_innerObj.prototype.constructor = arguments[0]
+ *
+ * is added. Now
+ *    AHuman instanceof Human == true
+ *
+ *    todo: One single property is taken into account now. A better design
+ *    will accept an outer object like this: _$innerObject({device: Godman, other_key: value})
+ *
+ * @param {Object} that
+ * @param {String} parentName
+ */
 function _$innerObject(that, parentName){
-	var me = that
-	return function(){
-		var clss = arguments[0]
-		var args = []
-		for (var i = 1; i &lt; arguments.length; i++) 
-			args.push(arguments[i])
-		function $F_innerObj(){
-			if (parentName)
-				this[parentName] = me;
-			else
-				this.that = me
-			clss.apply(this, arguments);
-		}
-		$F_innerObj.prototype = new arguments[0]
-		$F_innerObj.prototype.constructor = arguments[0]
-		
-		return $F_innerObj
+    var me = that
+    return function(){
+	var clss = arguments[0]
+	var args = []
+	for (var i = 1; i &lt; arguments.length; i++)
+	args.push(arguments[i])
+	function $F_innerObj(){
+	    if (parentName)
+		this[parentName] = me;
+	    else
+		this.that = me
+	    clss.apply(this, arguments);
 	}
+	$F_innerObj.prototype = new arguments[0]
+	$F_innerObj.prototype.constructor = arguments[0]
+
+	return $F_innerObj
+    }
 }
 
 
+<span id='global-method-implement'>/**
+</span> * @method implement
+ * Defines all the interface mentods in a object
+ *
+ * @param iface
+ * @param obj
+ * @return
+ */
 function implement(iface, obj){
-	if (iface.iface)
-		for (var i in iface.iface)
-			obj.prototype[i] = iface.iface[i]
+    if (iface.iface)
+	for (var i in iface.iface)
+	    obj.prototype[i] = iface.iface[i]
 }
 
+/* Warning this are static methods */
 Object.prototype.tainted = false
 Object.prototype._trust = true
+/* Carefull ECMAScript 5 defines similar freeze */
 Object.prototype._FROZEN = false
 
+<span id='global-method-taint'>/**
+</span> * @method taint
+ * Marks an object as tainted.
+ *
+ */
 Object.prototype.taint  = function (){
-  this.tainted = true  
+    this.tainted = true
 }
 
+<span id='global-method-untaint'>/**
+</span> * @method untaint
+ * Removes the tainted mark from an object.
+ *
+ */
 Object.prototype.untaint  = function (){
-  this.tainted = false  
+    this.tainted = false
 }
 
+<span id='global-method-taintedS-U'>/**
+</span> * @method tainted$U
+ * tainted predicate.
+ *
+ * @return {Boolean}
+ */
 Object.prototype.tainted$U  = function (){
-  return !this.tainted
+    return !this.tainted
 }
 
+<span id='global-method-trust'>/**
+</span> * @method trust
+ * Set an object as trustable.
+ *
+ */
 Object.prototype.trust  = function (){
-  this._trust = true  
+    this._trust = true
 }
 
+<span id='global-method-untrust'>/**
+</span> * @method untrust
+ * Mark an object as untrustable.
+ *
+ */
 Object.prototype.untrust  = function (){
-  this._trust = false  
+    this._trust = false
 }
 
+<span id='global-method-untrustedS-U'>/**
+</span> * @method untrusted$U
+ * trustable predicate.
+ *
+ * @return {Boolean}
+ */
 Object.prototype.untrusted$U = function (){
-  return !this._trust
+    return !this._trust
 }
 
 Object.prototype.trusted$U = function (){
-  return this._trust
+    return this._trust
 }
 
+<span id='global-method-freeze'>/**
+</span> * @method freeze
+ * @deprecated
+ * Mark an object as frozen.
+ *
+ */
 Object.prototype.freeze = function (){
-  this._FROZEN = true
+    this._FROZEN = true
 }
 
+<span id='global-method-frozenS-U'>/**
+</span> * @method frozen$U
+ * @deprecated
+ * Frozen predicate
+ *
+ * @return {Boolean}
+ *
+ */
 Object.prototype.frozen$U  = function(){
-  return this._FROZEN || false
+    return this._FROZEN || false
 }
 
+<span id='global-method-respond_to'>/**
+</span> * @method respond_to
+ * Checks for the existence of a method. Use it
+ * for Duck typing.
+ *
+ * @param function_name
+ * @return
+ */
 Object.prototype.respond_to = function(function_name){
-  return typeof(this[function_name]) == &quot;function&quot;
+    return typeof(this[function_name]) === &quot;function&quot;
 }
+<span id='global-method-respond_toS-U'>/**
+</span> * @method respond_to$U
+ * Alias of Object#respond_to
+ */
+Object.prototype.alias(&quot;respond_to$U&quot;, &quot;respond_to&quot;)
 
-Object.prototype.respond_to$U = function(function_name){
-  return this.respond_to(function_name)
-}
-
-Object.prototype.equals = function(model){
-  return this == model
-}
-
+<span id='global-method-eqlS-U'>/**
+</span> * @method eql$U
+ * Compares two objects. Returns true when Object#toSource() is the same on both
+ * objects.
+ *
+ * @param model
+ * @return
+ */
 Object.prototype.eql$U = function(model){
-  return this.equals(model)
+    if (typeof(model) === &quot;undefined&quot; )
+	return false
+
+    /* End of support */
+    return model.toSource() == this.toSource()
 }
 
-Object.prototype.identic = function( model ){
-  if (model.respond_to(&quot;valueOf&quot;))
-    return this.value_of() == model.valueOf()
-  return this === model
+
+<span id='global-method-equals'>/**
+</span> * @method equals
+ * Alias of ==
+ *
+ * @param model
+ * @return
+ */
+Object.prototype.equals = function(model){
+    return this == model
 }
 
-Object.prototype.to_s = function (){
-  return this.toString()
-}
+// Object.prototype.eql$U = function(model){
+//     return this.equals(model)
+// }
 
-Object.prototype.to_str = function (){
-  return this.to_str()
-}
-
+<span id='global-method-value_of'>/**
+</span> * @method value_of
+ * Gets the inner value of an object whenever is possible.  If not a
+ * Object#toSource() representation is taken.
+ *
+ * @return {Object} Best representation for an object.
+ */
 Object.prototype.value_of = function (){
-  if (this.respond_to(&quot;valueOf&quot;) )
-    return this.valueOf()
-  return this.toSource()
+    if (this.respond_to(&quot;valueOf&quot;) )
+	return this.valueOf()
+    return this.toSource()
 }
 
-Object.prototype.value = function (){
-  return this.value_of()
+<span id='global-method-identic'>/**
+</span> * @method identic
+ * Check if the best representation of two objects are identical.
+ *
+ * @param model
+ * @return
+ */
+Object.prototype.identic = function( model ){
+    if (model.respond_to(&quot;valueOf&quot;))
+	return this.value_of() == model.valueOf()
+    return this === model
 }
+
+<span id='global-method-to_s'>/**
+</span> * @method to_s
+ * Object#toString alias
+ *
+ * @return
+ */
+Object.prototype.to_s = function (){
+    return this.toString()
+}
+
+<span id='global-method-to_str'>/**
+</span> * @method to_str
+ * Object#to_s alias.
+ *
+ * @return
+ */
+Object.prototype.to_str = function (){
+    return this.to_s()
+}
+
+<span id='global-method-is_aS-U'>/**
+</span> * @method is_a$U
+ *
+ * Check if an object is descendant of a class
+ *
+ * ### Example
+ *
+ * Imagine that line inhetits from Shape.
+ *
+ *     var l = new Line()
+ *     l.is_a$U(Shape)
+ *     // =&gt; true
+ *
+ * @param {Function} clss Class to check belonging
+ * @return {Boolean}
+ */
 
 Object.prototype.is_a$U = function (clss){
- return this instanceof clss 
+    return this instanceof clss
 }
 
-Object.prototype.kind_of$U = function (clss){
-  return this.is_a$U(clss)
-}
+<span id='global-method-kind_ofS-U'>/**
+</span> * @method kind_of$U
+ * Object#is_a$U alias.
+ *
+ * @return
+ */
+Object.prototype.alias( &quot;kind_of$U&quot;, &quot;is_a$U&quot; )
 
-Object.prototype.instance_of$U = function (clss){
-  return this.constructor == clss
-}
+<span id='global-method-kind_ofS-U'>/**
+</span> * @method kind_of$U
+ * Object#is_a$U alias.
+ *
+ * @return
+ */
+Object.prototype.alias( &quot;instance_of$U&quot;, &quot;is_a$U&quot; )
 
 <span id='global-method-'>/**
 </span> * @method_missing
@@ -270,69 +526,200 @@ Object.prototype.instance_of$U = function (clss){
  *      function N(){
  *         this.a = 2;
  *      }
- *      
+ *
  *      n = new N()
  *      n.set_a(3)
  *      n.get_a()
- *      //=&gt; 3     
- *       
+ *      //=&gt; 3
+ *
  * @param  {string} method Method name
  * @param  {Object} obj   Scope of the method call
  * @param  {Array} params List of params of the method call
  */
 Object.prototype.method_missing = function (method, obj, params){
-  var that = this
-  function bad_function(){
-    throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(', ') )) 
-  }
+    var that = this
+    function bad_function(){
+	throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(', ') ))
+    }
 
-  function is_in(list, word){
-     var is = false
-     for (var i=0; i&lt;list.length; i++)
+    function is_in(list, word){
+	var is = false
+	for (var i=0; i&lt;list.length; i++)
 	if (list[i] == word)
-	   is = true
-     return is
-   }
+	    is = true
+	return is
+    }
 
-  obj = obj || &quot;&quot;
-  params = params || []
+    obj = obj || &quot;&quot;
+    params = params || []
 
-  if (/get_/.test(method)){
+    if (/get_/.test(method)){
 	var attr = method.match(/get_(\w*)/)[1]
 	if (!is_in(eval(&quot;&quot; + obj + &quot;.attr_readers&quot;), attr))
-	   bad_function()
+	    bad_function()
 	return eval(&quot;&quot; + obj + &quot;.&quot; + attr)
-  }
+    }
 
-  if (/set_/.test(method)){
+    if (/set_/.test(method)){
 	var attr  = method.match(/set_(\w*)/)[1]
 	if (!is_in(eval(&quot;&quot; + obj + &quot;.attr_writers&quot;), attr))
-	   bad_function()
+	    bad_function()
 	var ob = eval(&quot;&quot; + obj )
-        ob[attr] = params[0]
+	ob[attr] = params[0]
 	return ob[attr]
-  }
-  //todo: Provide camel case getter and setters
-  bad_function()
+    }
+    //todo: Provide camel case getter and setters
+    bad_function()
 }
 
-/* Borrowed from Hash */
-// todo: Make it dynamic
-Object.prototype.merge = function(){
-  return Hash.prototype.merge.apply(this, arguments)
+<span id='global-method-merge'>/**
+</span> * @method merge
+ * Merges all the self keys of an object _source_ whith this.
+ * This method is actually a bang method. Further discussion is needed.
+ *
+ * Shall we merge only self keys?
+ * Aren't self_keys part of a behaviour to enjail in Hash?
+ * Shall we clone objects?
+ *
+ * @return
+ */
+Object.prototype.merge = function(source){
+    if (!source.respond_to$U(&quot;self_keys&quot;))
+        throw &quot;Invalid source. Impossible to merge.&quot;
+    var that = this
+    source.self_keys().each(function(key){
+        that[key] = source[key]
+    })
+    return this
 }
 
-Object.prototype.merge$B = function(){
-  return Hash.prototype.merge$B.apply(this, arguments)
+<span id='global-method-soft_merge'>/**
+</span> * @method soft_merge
+ * Works as Object#merge, but source can not override already
+ * existing keys.
+ *
+ * @param {Object} source Object to read from.
+ * @return
+ */
+Object.prototype.soft_merge = function(source){
+    if (!source.respond_to$U(&quot;self_keys&quot;))
+        throw &quot;Invalid source. Impossible to merge.&quot;
+    var that = this
+    source.self_keys().each(function(key){
+        that[key] = that[key] || source[key]
+    })
+    return this
 }
 
-Object.prototype.soft_merge = function(){
-  return Hash.prototype.soft_merge.apply(this, arguments)
+<span id='global-method-override'>/**
+</span> * @method override
+ * Works as Object#merge but cannot augment this object.
+ *
+ * @param {Object} source Object to read from.
+ * @return
+ */
+Object.prototype.override = function(source){
+    if (!source.respond_to$U(&quot;self_keys&quot;))
+        throw &quot;Invalid source. Impossible to merge.&quot;
+    var that = this
+    source.self_keys().each(function(key){
+        if (that[key])
+            that[key] = source[key]
+    })
+    return this
 }
 
-Object.prototype.soft_merge$B = function(){
-  return Hash.prototype.soft_merge$B.apply(this, arguments)
+
+<span id='global-method-reflect'>/**
+</span> * @method reflect
+ * Creates a bang version of a given method. It reflects the response changes over
+ * the _this_ object.
+ *
+ * @return
+ */
+Object.reflect = function(){
+    var result
+    var return_value = {}
+    var calling_class = eval(this.name)
+
+    function duplicate(original_method){
+        calling_class.prototype[original_method + &quot;$B&quot;] = function(){
+            var substitute = calling_class.prototype[original_method].apply(this, arguments)
+
+            //this.clear()
+            for (var i=0; i&lt;substitute.length; i++)
+            this[i] = substitute[i]
+
+            return this
+        }
+        return [ original_method + &quot;$B&quot;, calling_class.prototype[original_method + &quot;$B&quot;] ]
+    }
+
+    for(var i=0; i&lt;arguments.length; i++)
+    if (arguments[i] instanceof Array)
+        for(var j=0; j&lt;arguments[i].length; j++){
+            result = duplicate(arguments[i][j])
+            return_value[result[0]] = result[1]
+        }
+        else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+        return return_value
+
 }
+
+<span id='global-method-mergeS-B'>/**
+</span> * @method merge$B
+ * See Object#merge
+ */
+
+<span id='global-method-soft_mergeS-B'>/**
+</span> * @method soft_merge$B
+ * See Object#soft_merge
+ */
+
+<span id='global-method-overrideS-B'>/**
+</span> * @method override$B
+ * See Object#override
+ */
+Object.bang_methods = [&quot;merge&quot;, &quot;soft_merge&quot;, &quot;override&quot;]
+Object.reflect(Object.bang_methods)
+
+delete(Object.reflect)
+
+<span id='global-method-own_keys'>/**
+</span> * @method own_keys
+ * Alias of Object#self_keys
+ */
+Object.prototype.alias(&quot;own_keys&quot;, &quot;self_keys&quot;)
+
+/* Non enumerable properties */
+
+var $$_$$ = [ &quot;to_a&quot;, &quot;alias&quot;, &quot;inspect&quot;, &quot;own_keys&quot;,
+    &quot;plain&quot;, &quot;clone&quot;, &quot;eql$U&quot;, &quot;taint&quot;, &quot;untaint&quot;, &quot;tainted$U&quot;, &quot;trust&quot;,
+    &quot;untrust&quot;, &quot;untrusted$U&quot;, &quot;trusted$U&quot;, &quot;freeze&quot;, &quot;frozen$U&quot;,
+    &quot;equals&quot;, &quot;eql$U&quot;, &quot;identic&quot;,
+    &quot;to_s&quot;, &quot;to_string&quot;, &quot;to_str&quot;, &quot;is_a$U&quot;, &quot;kind_of$U&quot;,
+    &quot;instance_of$U&quot;,
+    &quot;bang_methods&quot;,
+    &quot;merge&quot;, &quot;merge$B&quot;,
+    &quot;keys&quot;, &quot;self_keys&quot;, &quot;respond_to&quot;, &quot;respond_to$U&quot;,
+    &quot;soft_merge&quot;, &quot;soft_merge$B&quot;, &quot;override&quot;, &quot;override$B&quot;,
+    &quot;method_missing&quot;
+]
+
+for (var i=0; i&lt;$$_$$.length; i++)
+   Object.defineProperty(Object.prototype, $$_$$[i], { enumerable: false })
+
+delete($$_$$)
+
+/* Value property has to be defined at the end, as long as
+ * it is used by defined property */
+Object.defineProperty( Object.prototype, &quot;value&quot;, { value: function (){
+    return this.value_of()
+}, enumerable: false })
+
 </pre>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Thread.prototype.constructor = Thread;
+
+<span id='Thread-method-constructor'><span id='Thread'>/**
+</span></span> * @classDescription abstract class (future interface/module) to instantiate executions threads.
+ *
+ * @param  {Function} 	    solicitor Function attending processor calls.
+ * @return {Thread} 		New execution thread
+ * @constructor
+ */
+function Thread(solicitor, processor){
+	this.before = new Date()
+	this.now = processor? processor.now: new Date();
+	if (!solicitor)
+		solicitor = this.run;
+
+	if (processor &amp;&amp; processor instanceof Processor)
+		processor.register(this, solicitor);
+}
+
+
+
+<span id='Thread-method-run'>/**
+</span> * Thread execution step. Is an abstract method.
+ *
+ * @memberOf  {Thread}
+ * @method    run	State machine manager.
+ */
+Thread.prototype.run = function(processors_time){
+	this.now = processors_time
+	throw &quot;The solicitor function remains still undefined.&quot;
+}
+
+</pre>
+</body>
+</html>

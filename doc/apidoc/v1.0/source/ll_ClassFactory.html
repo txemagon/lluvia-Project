@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-method-_ClassFactory'>/**
+</span> * @method _ClassFactory
+ *
+ * Creates a new class
+ *
+ * @param  {String} class name
+ * @param  {String} initial functions
+ *
+ * @return {String} new_class
+ *
+ * ###Example
+ *    // Create class MyClass
+ *    Class_MyClass()  // _ClassFactory is internally call and make the class.
+ *
+ *    // Create class Person
+ *    _ClassFactory('Person', 'function initialize(name){ this.name = name }, function greet(name){ return class_name }')
+ *
+ */
+function _ClassFactory(class_name, initial_functions){
+  var whole_class_name = class_name
+  class_name           = whole_class_name.split(/\$\$/)[0]
+  var parent_class     = whole_class_name.split(/\$\$/)[1] || &quot;Class&quot;
+
+  function parse_arguments(){
+    for (var i=1; i&lt;initial_functions.length; i++){
+      if (typeof(initial_functions[i]) === &quot;function&quot; )
+        initial_functions[i] = initial_functions[i].toSource()
+      initial_functions[i].match(/function\s*([^(]*)\(/)
+      if (RegExp.$1 != &quot;&quot;){
+        var fn_name = RegExp.$1
+
+        var class_method = /^self_/.test(fn_name)
+        if (class_method)
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, &quot;function &quot;)
+
+        var f = eval(&quot;$F$ = &quot; + initial_functions[i]).deconstruct()
+
+        var fun = []
+        if (f.params != &quot;&quot;)
+          fun = f.params.clone()
+        fun.push(f.body.replace(/self\./g, class_name + &quot;.&quot;))
+        if (class_method)
+          try {
+            eval(class_name)[f.name] = ( function(){
+                                                   var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name);
+                                                   with(this)
+                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n &quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.&quot; + f.name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.&quot; + f.name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )}
+                                               )()
+          } catch (err) {
+            alert(&quot;Impossible to create the function.\n&quot; + err + &quot;\n&quot; + fun)
+          }
+        else
+          eval(class_name).prototype[f.name] = ( function(){
+                                                   var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name);
+                                                   var Self =  function(){ return self }
+                                                   var aux_body = f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this.constructor'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;&quot;
+
+                                                   eval(class_name + &quot;.prototype._&quot; + f.name +&quot; = function(&quot; + f.params + &quot;){&quot;+aux_body+&quot;}&quot;)
+                                                   with(this)
+                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){\n var return_value;\nthis.call_before('&quot; + f.name + &quot;');\n&quot; + &quot;return_value = this._&quot;+ f.name +&quot;(&quot; + f.params + &quot;); \nthis.call_after('&quot; + f.name + &quot;');\nreturn return_value;\n}&quot; )}
+                                                   //Original--&gt;//return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n&quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this.constructor'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )}
+                                               )()
+       }
+     }
+  }
+
+  /* eval only works properly when in expressions so we've added the = sign */
+  var initializer = initial_functions[0] || &quot;function (){ }&quot;
+  if (typeof(initializer) === &quot;function&quot; )
+     initializer = initializer.toSource()
+  initializer = initializer.replace(
+      /function\s*\(([^\)]*)\)\s*{(.*)/m,
+      &quot;function &quot; + class_name + &quot;($1){ \n \
+        this.inheritance_level = this.inheritance_level || 0 \n\
+        this.inheritance_level++ \n\
+        try{&quot; + parent_class + &quot;.apply(this, arguments);}catch(err){;};\n\
+        this.inheritance_level-- \n\
+        var self = &quot; + class_name + &quot; \n\
+	var that = this \n\
+	$2\n\
+	&quot;).replace(/}$/m,
+	&quot; \n\
+        if (!&quot; + class_name + &quot;.initialized ){ \n\
+          if (typeof(arguments[0]) != 'undefined' &amp;&amp; arguments[0].initialize)\n\
+            try{&quot; + class_name + &quot;.initialize()}catch(err){;}\n\
+          &quot; + class_name + &quot;.initialized = true \n\
+        }\n\
+        else if (this instanceof &quot; + class_name + &quot; &amp;&amp; this.inheritance_level == 0 )\n\
+         try{this.initialize.apply(this, arguments)}catch(err){;} \n\
+        }; \n\
+      &quot;)
+   eval(class_name + &quot;= new Function();&quot;)
+
+  function basic_proto(){
+
+	  eval.call(null, class_name + &quot;.prototype = new &quot; + parent_class + &quot;;&quot;)
+	  eval.call(null, class_name + &quot;.prototype.constructor = &quot; + class_name +&quot;;&quot; )
+	  eval.call(null, class_name + &quot;.prototype.super_class = &quot; + parent_class + &quot;;&quot;)
+	}
+  basic_proto()
+  var initialize = eval.call(null, &quot;$$NeWCLaSs = &quot; + initializer  )
+
+  var new_class = $global_space[class_name] = initialize
+basic_proto()
+
+  parse_arguments()
+
+  eval.call(null, class_name + &quot;.prototype.class = &quot; + class_name + &quot;;&quot;)
+  eval.call(null, class_name + &quot;.superclass = function (){ return &quot; + parent_class + &quot;};&quot;)
+  eval.call(null, class_name + &quot;.ancestors = function (){ \n\
+    var ancestor  = &quot; + class_name + &quot;\n\
+    var ancestors = [] \n\
+    while( (ancestor = ancestor.superclass()) )\n\
+      ancestors.push(ancestor);\n\
+    return ancestors\n\
+    };&quot;)
+
+  eval.call(null, class_name + &quot;.Self = function (){ \n\
+     return this.prototype.constructor };&quot;)
+  eval.call(null, class_name + &quot;.prototype.Self = function (){ \n\
+     return this.constructor };&quot;)
+  eval.call(null, class_name + &quot;.method_missing = function(method, object, argument){ \n\
+                                                     var ancestors = this.ancestors();\n\
+                                                     for (var i=0; i&lt; ancestors.length; i++)\n\
+                                                       try{ return ancestors[i][method].apply(object, argument) } catch(err){;}\n\
+                                                       throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
+                                                     return &quot; + parent_class + &quot;[method].apply(object, argument) \n\
+                                                  }; &quot;)
+
+  $global_space[class_name].call(eval(class_name + &quot;({initialize: true})&quot;)) // Execute as a function (class initialization)
+  $classes.push(new_class)
+  alert(new_class)
+  return new_class
+}
+
+
+// todo: copy argument into arguments = [] to support inner functions
+
+</pre>
+</body>
+</html>

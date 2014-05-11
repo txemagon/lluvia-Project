@@ -37,7 +37,7 @@ function O(variable){
 }
 
 /**
- * @metod requires
+ * @method requires
  *
  * Waits until a list of classes or objects are fully parsed by the browser.
  * It doesn't actually fetch any code from the server

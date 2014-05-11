@@ -15,205 +15,367 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">var $classes = []
+  <pre class="prettyprint lang-js"><span id='global-static-css_var-S-classes'>/**
+</span> * @var $classes
+ * @static
+ *
+ * All classes created.
+ */
+var $classes = []
 
-Class.prototype = new Module
+<span id='Class'>/**
+</span> * @class Class
+ *
+ * Base class of all lluvia classes.
+ *
+ * @property {Object} before_filters Hash with all the functions to be called before a particular method.
+ * @property {Object} after_filters  Hash with all the functions to be called after a particular method.
+ *
+ * ###Example
+ *
+ * The greet method would be called after _introduce_ and _prepare_
+ *
+ *     this.before_filters = { greet: [ function introduce(){ alert(&quot;introduce&quot;) },
+ *                                      function prepare()  { alert(&quot;prepare&quot;)   } ]
+ *
+ * Do not handle theses properties directly. Use add _ before _ filter and add _ after _ filter instead.
+ *
+ * @property [Array] attr_readers list of getters.
+ * @property [Array] attr_writers list of setters.
+ */
+//Class.prototype = new Module
 Class.prototype.constructor = Class
+
 function Class(){
-  var self = this instanceof Function ? this : eval(this.constructor.name)
-  var that = this
-  this.before_filters = {}
-  this.after_filters  = {}
-  this.attr_readers = []
-  this.attr_writers = []
+   var self = this instanceof Function ? this : eval(this.constructor.name)
+   var that = this
+   this.before_filters = {}
+   this.after_filters  = {}
+   this.attr_readers = []
+   this.attr_writers = []
 }
 
-Class.prototype.create_attr = function(attr){
-   if (typeof(this[attr]) == &quot;undefined&quot;)
-  this[attr] = null
-}
+<span id='Class-method-create_attr'>/**
+</span> * @method create_attr
+ *
+ * Creates an attribute.
+ *
+ * @param  {String} attr attribute to be created.
+ * @param  initial_value Inital value for attr.
+ * @return {Array} List of newly created attributes names.
+ *
+ * ###Example
+ *
+ *     Person.prototype = new Class
+ *     Person.prototype.constructor = Person
+ *
+ *     function Person() {;}
+ *
+ *     var me = new Person()
+ *     me.create_attr( 'name' )
+ *     me.create_attr( 'age', 'height' )
+ *     me.create_attr( ['age', 'height'] )
+ *     me.create_attr( ['age', 'height'], name, ['money', 'studies'] )
+ *     me.create_attr( {name: 'james', age: 22} )
+ *
+ */
+Class.prototype.create_attr = function(attributes){
 
-Class.prototype.attr_reader = function (names){
+   var that = this
+   var effective_attributes = []
+
+   function add_value(attr, initial_value) {
+	  if (typeof(that[attr]) == &quot;undefined&quot;) {
+		 initial_value = initial_value || null
+		 that[attr] = initial_value
+		 effective_attributes.push( attr )
+	  }
+   }
+
    for (var i=0; i&lt;arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_readers.push(name) 
-        this[&quot;get&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;get_&quot; + name] = function(){ return eval(&quot;this.&quot; + name) }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_reader is not supported.
-      }
+	  var attr = arguments[i]
+	  if ( String.is_string$U(attr) )
+		 attr = [attr]
+
+	  if (attr instanceof Array)
+		 for (var j=0; j&lt;attr.length; j++)
+	  add_value(attr[j])
+	  else if (attr instanceof Object)
+		 attr.self_keys().each( function(key) {
+			add_value( key, attr[key] )
+		 })
+   }
+
+   return effective_attributes
+}
+
+<span id='Class-method-attr_reader'>/**
+</span> * @method attr_reader
+ *
+ * Decorator function that creates attribute getters along with the attribute itself.
+ * It doesn't do anything if attribute exists.
+ *
+ * @param  { String | Array | Object } attr_names Arrays are parsed element by element.
+ *         Default values are possible passing an Object as a parameter.
+ *         See Class#create_attr for further details
+ *
+ * ###Example
+ *
+ *     Person.prototype = new Class
+ *     Person.prototype.constructor = Person
+ *
+ *     function Person() {;}
+ *     me = new Person()
+ *     me.attr_reader('name')
+ *     me.attr_reader('age', 'height')
+ *
+ *  Then camelcased and undescored getters are provided.
+ *
+ *     me.get_name()
+ *     me.getName()
+ *
+ *
+ * A big todo is to achieve the class inside usage.
+ *
+ *     function Person() {
+ *         this.attr_reader('name')
+ *     }
+ *
+ *
+ */
+Class.prototype.attr_reader = function (attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+
+	  for(var i=0; i&lt;attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_readers.push(name)
+		 this[&quot;get&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;get_&quot; + name] = function(){ return eval(&quot;this.&quot; + name) }
+	  }
+   }catch(err){
+	  //todo: Warn something on upper debug levels if attr_reader is not supported.
    }
 }
 
-
-Class.prototype.attr_writer = function (names){
-for (var i=0; i&lt;arguments.length; i++){
-      name = arguments[i]
-      try{
-        this.create_attr(name)
-        this.attr_writers.push(name) 
-        this[&quot;set&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;set_&quot; + name] = function(value){ this[name] = value }
-      }catch(err){
-         //todo: Warn something on upper debug levels if attr_writer is not supported.
-      }
-  }
+<span id='Class-method-attr_writer'>/**
+</span> * @method attr_writer
+ *
+ * Decorator function that creates attribute setters along with the attribute itself.
+ * It doesn't do anything if attribute exists.
+ *
+ * @param  { String | Array | Object } attr_names Arrays are parsed element by element.
+ *         Default values are possible passing an Object as a parameter.
+ *         See Class#create_attr for further details
+ *
+ * ###Example
+ *
+ *     Person.prototype = new Class
+ *     Person.prototype.constructor = Person
+ *
+ *     function Person() {;}
+ *     me = new Person()
+ *     me.attr_writer('name')
+ *     me.attr_writer('age', 'height')
+ *
+ *  Then camelcased and undescored getters are provided.
+ *
+ *     me.set_name('james')
+ *     me.setName('jim')
+ *
+ */
+Class.prototype.attr_writer = function (attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+	  for(var i=0; i&lt;attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_writers.push(name)
+		 this[&quot;set&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;set_&quot; + name] = function(value){ this[name] = value }
+	  }
+   } catch(err) {
+	  //todo: Warn something on upper debug levels if attr_writer is not supported.
+   }
 }
 
-Class.prototype.attr_accessor = function(name){
-     this.attr_reader(name) 
-     this.attr_writer(name) 
+<span id='Class-method-attr_accessor'>/**
+</span> * @method attr_accessor
+ *
+ * Creates an attribute along with a setter and a getter. See Class#attr_reader or Class#attr_writer.
+ **
+ * @param  { String | Array | Object } attr_names Arrays are parsed element by element.
+ *         Default values are possible passing an Object as a parameter.
+ *         See Class#create_attr for further details
+ *
+ * ###Example
+ *
+ *     Person.prototype = new Class
+ *     Person.prototype.constructor = Person
+ *
+ *     function Person() {;}
+ *     me = new Person()
+ *     me.attr_accessor('name')
+ *     me.attr_accessor('age', 'height')
+ *
+ */
+Class.prototype.attr_accessor = function(attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+	  for(var i=0; i&lt;attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_readers.push(name)
+		 this.attr_writers.push(name)
+		 this[&quot;get&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;get_&quot; + name] = function(){ return eval(&quot;this.&quot; + name) }
+		 this[&quot;set&quot; + name.replace(name[0], name[0].toUpperCase())] = this[&quot;set_&quot; + name] = function(value){ this[name] = value }
+	  }
+   } catch(err) {
+	  //todo: Warn something on upper debug levels if attr_writer is not supported.
+   }
 }
 
-
+/*
+ * Auxiliar method.
+ *
+ */
 function _$_add_filter(where, single_param){
-  if (!(single_param instanceof Array))
-    single_param = [single_param]
-  for (var i=0; i&lt;single_param.length; i++)
-    where.push(single_param[i])
+   if (!(single_param instanceof Array))
+	  single_param = [single_param]
+   for (var i=0; i&lt;single_param.length; i++)
+   where.push(single_param[i])
 }
 
 Class.superclass = function() { return null }
 Class.ancestors  = function() { return [] }
 Class.prototype.get_this   = function() { return this }
-  
+
+<span id='Class-method-add_before_filter'>/**
+</span> * @method add_before_filter
+ *
+ * Adds a function to be called before a particular method invocation..
+ *
+ * @param  {String} observed_function Name of the method to be wrapped.
+ * @param  {function()} filters Function or functions to be called before the observed one.
+ *
+ * ###Example
+ *
+ *    var a = false;
+ *    var b = 0;
+ *
+ *    function change(){
+ *      a = true;
+ *    };
+ *    function Person() {;}
+ *
+ *    Person.prototype.greet = function (name){ return class_name };
+ *
+ *    me = new Person('Txema');
+ *    me.add_before_filter('greet', change, function(){ b = 2 } );
+ *    me.greet();
+ *    a //=&gt; true
+ *    b //=&gt; 2
+ *
+ * todo: When defined inside class it should keep track of scope. For this purpose
+ * use Function#bind nowadays.
+ *
+ */
 //todo: accept strings as argument names. Accept blocks, too.
 Class.prototype.add_before_filter   = function(observed_function, filters) {
    if (typeof(this.before_filters[observed_function]) == &quot;undefined&quot;)
-      this.before_filters[observed_function] = []
+	  this.before_filters[observed_function] = []
    for (var i=1; i&lt;arguments.length; i++)
-      _$_add_filter(this.before_filters[observed_function], arguments[i])
+   _$_add_filter(this.before_filters[observed_function], arguments[i])
 }
 
+<span id='Class-method-add_after_filter'>/**
+</span> * @method add_after_filter
+ * Adds a function to be called before a particular method invocation..
+ *
+ * @param  {String} observed_function Name of the method to be wrapped.
+ * @param  {function()} filters Function or functions to be called after the observed one.
+ *
+ * ###Example
+ *
+ *    var a = false;
+ *    var b = 0;
+ *
+ *    function change(){
+ *      a = true;
+ *    };
+ *    function Person() {;}
+ *
+ *    Person.prototype.greet = function (name){ return class_name };
+ *
+ *    me = new Person('Txema');
+ *    me.add_after_filter('greet', change, function(){ b = 2 } );
+ *    me.greet();
+ *    a //=&gt; true
+ *    b //=&gt; 2
+ *
+ * todo: When defined inside class it should keep track of scope. For this purpose
+ * use Function#bind nowadays.
+ *
+ */
 Class.prototype.add_after_filter   = function(observed_function, filters) {
 
    if (typeof(this.after_filters[observed_function]) == &quot;undefined&quot;)
-      this.after_filters[observed_function] = []
+	  this.after_filters[observed_function] = []
    for (var i=1; i&lt;arguments.length; i++)
-      _$_add_filter(this.after_filters[observed_function], arguments[i])
+   _$_add_filter(this.after_filters[observed_function], arguments[i])
 }
 
+<span id='Class-method-call_before'>/**
+</span> * @method call_before
+ *
+ * Executes all the before filters for a given function. Filters
+ * are executed automatically when _ClassFactory is used
+ *
+ * @param  {String} function_name Name of the observed method.
+ *
+ */
 Class.prototype.call_before = function(fn_name){
-  for (var i=0; i&lt;this.before_filters[fn_name].length; i++)
-    this.before_filters[fn_name][i]();
+   this.before_filters[fn_name] = this.before_filters[fn_name] || []
+   for (var i=0; i&lt;this.before_filters[fn_name].length; i++)
+   this.before_filters[fn_name][i]();
 }
+/* todo: define a notation in _ClassFactory to avoid filters' call by default */
 
+<span id='Class-method-call_after'>/**
+</span> * @method call_after
+ *
+ * Executes all the after filters for a given function.
+ *
+ * @param  {String} function_name Name of the observed method.
+ */
 Class.prototype.call_after = function(fn_name){
-   alert(&quot;hello&quot;)
-    for (var i=0; i&lt;this.after_filters[fn_name].length; i++)
-       this.after_filters[fn_name][i]();
+   this.after_filters[fn_name] = this.after_filters[fn_name] || []
+   for (var i=0; i&lt;this.after_filters[fn_name].length; i++)
+   this.after_filters[fn_name][i]();
 }
 
+<span id='Class-method-method_missing'>/**
+</span> * @method method_missing
+ *
+ * Throws an exception when a method is not defined.
+ *
+ * provides the following dynamic method:
+ *
+ * Class_&lt;ClassName&gt;()
+ *
+ * ###Example:
+ *     // Create class MyClass
+ *     Class_MyClass()
+ *
+ *     // Create class Person
+ *     Class_Person(function(name){this.name = 'juan'},
+ *                  function initialize(name){ this.name = name },
+ *                  function(){this.name = 'luis'});
+ *
+ *
+ * @param  {String} method
+ * @param  {String} object
+ * @param  {String} arguments
+ *
+ */
 Class.method_missing = function(method, object, args){ throw object + &quot;.&quot; + method + &quot;(&quot; + args + &quot;) invalid method call.&quot; }
 
-function _ClassFactory(class_name, initial_functions){
-  
-  var whole_class_name = class_name
-  class_name           = whole_class_name.split(/\$\$/)[0] 
-  var parent_class     = whole_class_name.split(/\$\$/)[1] || &quot;Class&quot;
-
-  function parse_arguments(){
-    for (var i=1; i&lt;initial_functions.length; i++){
-      initial_functions[i].match(/function\s*([^(]*)\(/)
-      if (RegExp.$1 != &quot;&quot;){
-        var fn_name = RegExp.$1
-        var class_method = /^self_/.test(fn_name)
-        if (class_method)
-          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, &quot;function &quot;)          
-        var f = eval(&quot;$F$ = &quot; + initial_functions[i]).deconstruct()
-        
-        var fun = []
-        if (f.params != &quot;&quot;)
-          fun = f.params.clone()
-        fun.push(f.body.replace(/self\./g, class_name + &quot;.&quot;))
-        if (class_method)
-          try {
-            eval(class_name)[f.name] = ( function(){ 
-                                                   var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name);  
-                                                   with(this)
-                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n &quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.&quot; + f.name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.&quot; + f.name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )} 
-                                               )()
-          } catch (err) {
-            alert(&quot;Impossible to create the function.\n&quot; + err + &quot;\n&quot; + fun)
-          }
-        else
-          eval(class_name).prototype[f.name] = ( function(){ 
-                                                   var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name); 
-                                                   var Self =  function(){ return &quot;hello&quot; }
-                                                   with(this)
-                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n&quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this.constructor'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )} 
-                                               )()
-       }
-     }
-  }
-
-  /* eval only works properly when in expressions so we've added the = sign */
-  var initializer = initial_functions[0] || &quot;function (){ }&quot;
-  initializer = initializer.replace(
-      /function\s*\(([^\)]*)\)\s*{(.*)/m,
-      &quot;function &quot; + class_name + &quot;($1){ \n \
-        this.inheritance_level = this.inheritance_level || 0 \n\
-        this.inheritance_level++ \n\
-        try{&quot; + parent_class + &quot;.apply(this, arguments);}catch(err){;};\n\
-        this.inheritance_level-- \n\
-        var self = &quot; + class_name + &quot; \n\
-	var that = this \n\
-	$2\n\
-	&quot;).replace(/}$/m,
-	&quot; \n\
-        if (!&quot; + class_name + &quot;.initialized ){ \n\
-          if (typeof(arguments[0]) != 'undefined' &amp;&amp; arguments[0].initialize)\n\
-            try{&quot; + class_name + &quot;.initialize()}catch(err){;}\n\
-            &quot; + class_name + &quot;.initialized = true \n\
-        }\n\
-        else if (this instanceof &quot; + class_name + &quot; &amp;&amp; this.inheritance_level == 0 )\n\
-         try{this.initialize.apply(this, arguments)}catch(err){;} \n\
-        }; \n\
-      &quot;)
-   eval(class_name + &quot;= new Function();&quot;)
-	function basic_proto(){
-	 
-	  eval.call(null, class_name + &quot;.prototype = new &quot; + parent_class + &quot;;&quot;)
-	  eval.call(null, class_name + &quot;.prototype.constructor = &quot; + class_name +&quot;;&quot; )      
-	  eval.call(null, class_name + &quot;.prototype.super_class = &quot; + parent_class + &quot;;&quot;)
-	}
-  basic_proto()
-  var initialize = eval.call(null, &quot;$$NeWCLaSs = &quot; + initializer  )  
-
-  var new_class = $global_space[class_name] = initialize
-basic_proto()
-
-  parse_arguments()
-
-  eval.call(null, class_name + &quot;.prototype.class = &quot; + class_name + &quot;;&quot;)
-  eval.call(null, class_name + &quot;.superclass = function (){ return &quot; + parent_class + &quot;};&quot;)
-  eval.call(null, class_name + &quot;.ancestors = function (){ \n\
-    var ancestor  = &quot; + class_name + &quot;\n\
-    var ancestors = [] \n\
-    while( (ancestor = ancestor.superclass()) )\n\
-      ancestors.push(ancestor);\n\
-    return ancestors\n\
-    };&quot;)
-
-  eval.call(null, class_name + &quot;.Self = function (){ \n\
-     return this.prototype.constructor };&quot;)
-  eval.call(null, class_name + &quot;.prototype.Self = function (){ \n\
-     return this.constructor };&quot;)
-  eval.call(null, class_name + &quot;.method_missing = function(method, object, argument){ \n\
-                                                     var ancestors = this.ancestors();\n\
-                                                     for (var i=0; i&lt; ancestors.length; i++)\n\
-                                                       try{ return ancestors[i][method].apply(object, argument) } catch(err){;}\n\
-                                                       throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
-                                                     return &quot; + parent_class + &quot;[method].apply(object, argument) \n\
-                                                  }; &quot;)
-
-  $global_space[class_name].call(eval(class_name + &quot;({initialize: true})&quot;)) // Execute as a function (class initialization)
-  $classes.push(new_class)
-  return new_class
-}
-
-
-// todo: copy argument into arguments = [] to support inner functions
 
 </pre>
 </body>
