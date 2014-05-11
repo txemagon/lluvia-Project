@@ -10,31 +10,7 @@
  *
  *  as much as you can.
  */
-if (typeof Object.extend !== 'function') {
-    Object.extend = function (o) {
-	function $F() {}
-	$F.prototype = o;
-	return new $F();
-    };
-}
 
-Object.prototype.to_a = function(){
-    return [this]
-}
-/**
- * @method alias
- *
- * Creates a reference to an original method. Changing
- * the original one behavior, the alias is also changing.
- *
- * @param  {string} alias_name      Name of the new method.
- * @param  {string} original_method Name of the original method.
- */
-Object.prototype.alias = function(alias_name, original_method){
-    this[alias_name] = function(){
-	return this[original_method].apply(this, arguments)
-    }
-}
 /*
  *
  * a = {a: 2, b:3}
@@ -56,8 +32,55 @@ Object.prototype.alias = function(alias_name, original_method){
 
 
 
+// Conflicts with ECMAScript 5
+// if (typeof Object.extend !== 'function') {
+//     Object.extend = function (o) {
+// 	function $F() {}
+// 	$F.prototype = o;
+// 	return new $F();
+//     };
+// }
+
+/**
+ * @method to_a
+ * Returns this object inside an array.
+ *
+ * ## Example
+ *
+ *    var a = { name: "superman" }
+ *    a.to_a()
+ *    // => [{ name: "superman" }]
+ *
+ * @return {Array}
+ */
+Object.prototype.to_a = function(){
+    return [this]
+}
+
+/**
+ * @method alias
+ *
+ * Creates a reference to an original method. Changing
+ * the original one behavior, the alias is also changing.
+ *
+ * @param  {string} alias_name      Name of the new method.
+ * @param  {string} original_method Name of the original method.
+ */
+Object.prototype.alias = function(alias_name, original_method){
+    this[alias_name] = function(){
+	return this[original_method].apply(this, arguments)
+    }
+}
+
 Object._$NUM_ERR = 0.000001
 
+/**
+ * @method inspect
+ * Shows an object pretty printed. Is an improved version of toSource()
+ *
+ * @param {Array} sp Used to add information recursively by calling Object#inspect on inner elements.
+ * @return {String}
+ */
 Object.prototype.inspect = function(sp){
     sp = sp || [""]
     var output = "{\n"
@@ -82,6 +105,38 @@ Object.prototype.inspect = function(sp){
     return output
 }
 
+/**
+ * @method keys
+ * Yields all the accesible attributes of an object.
+ *
+ * ### Example
+ *
+ *    function Arachnid() {
+ *       this.limbs = 8
+ *       this.lips  = false
+ *       this.lap   = true
+ *    }
+ *
+ *    Tarantula.prototype = new Arachnid
+ *    Tarantula.prototype.constructor = Tarantula
+ *    function Tarantula() {
+ *       this.poisson = true
+ *    }
+ *
+ *    var venom = new Tarantula()
+ *    venom.keys()
+ *    // => ["poisson", "lap", "lips", "limbs"]
+ *
+ * A regular expression is accepted to filter output.
+ *
+ * ### Example
+ *
+ *     venom.keys(/^l.*s$/)
+ *     // => ["lips", "limbs"]
+ *
+ * @param {RegExp} re A regular expression to filter output.
+ * @return {Array} An array with the keys of the object.
+ */
 Object.prototype.keys = function(re){
     var the_keys = []
     for (var i in this)
@@ -91,6 +146,15 @@ Object.prototype.keys = function(re){
     return the_keys
 }
 
+
+/**
+ * @method self_keys
+ * Return the attributes defined in this object. This method excludes further seeking via
+ * the prototype chain. See Object#keys for usage.
+ *
+ * @param {RegExp} re A Regular Expression to filter output.
+ * @return
+ */
 Object.prototype.self_keys = function(re){
     var the_keys = []
     for (var i in this)
@@ -100,19 +164,33 @@ Object.prototype.self_keys = function(re){
     return the_keys
 }
 
+/**
+ * own_keys
+ * Alias of Object#self_keys.
+ *
+ * @param re
+ * @return
+ */
 Object.prototype.own_keys = function(re){
     return this.self_keys(re)
 }
 
-// Masking the prototype
-Object.prototype.plain = function(){
-    var pojo = new Object()
-    for (var i in pojo){
-	this[i] = null
-    }
-    return this
-}
-
+/**
+ * @method clone
+ * Shallow copy of an object.
+ *
+ * #Example
+ *
+ *     var me = new Person()
+ *     var one = {first: 1, second: me }
+ *     var two = one.clone()
+ *     // => { first: 1, second: me }
+ *
+ * Notice that changing two.second affects one.second as long as they're
+ * pointers to the same object.
+ *
+ * @return {Object} Shallow copy of the given object.
+ */
 Object.prototype.clone = function(){
     var the_clone = {}
     for (var i in this)
@@ -120,23 +198,10 @@ Object.prototype.clone = function(){
     return the_clone
 }
 
-Object.prototype.eql$U = function(model){
-    if (typeof(model) === "undefined" )
-	return false
-
-    /* End of support */
-    return model.toSource() == this.toSource()
-}
-// Ruby no tiene esta clase. to_a solamente está en String y Array...
-/*Object.prototype.to_a = function(){
-  var that = []
-  that.push(this)
-  return that
-  }*/
-////////////////////////////////////////////////////////////////////
-
 /**
  * @method _$innerObject
+ * Class augmentation. Creates a constructor based on another. This let us
+ * to add extra attributes.
  *
  * ### Example
  *
@@ -145,7 +210,7 @@ Object.prototype.eql$U = function(model){
  *  Godman calls the Device contructor that executes:
  *
  *      this.openDevice    = _$innerObject(this, "device")
- *  So:
+ *  So for _$innerObject:
  *      me = that = Godman device object
  *      parentName = device
  *
@@ -200,6 +265,14 @@ function _$innerObject(that, parentName){
 }
 
 
+/**
+ * @method implement
+ * Defines all the interface mentods in a object
+ *
+ * @param iface
+ * @param obj
+ * @return
+ */
 function implement(iface, obj){
     if (iface.iface)
 	for (var i in iface.iface)
@@ -209,28 +282,61 @@ function implement(iface, obj){
 /* Warning this are static methods */
 Object.prototype.tainted = false
 Object.prototype._trust = true
+/* Carefull ECMAScript 5 defines similar freeze */
 Object.prototype._FROZEN = false
 
+/**
+ * @method taint
+ * Marks an object as tainted.
+ *
+ */
 Object.prototype.taint  = function (){
     this.tainted = true
 }
 
+/**
+ * @method untaint
+ * Removes the tainted mark from an object.
+ *
+ */
 Object.prototype.untaint  = function (){
     this.tainted = false
 }
 
+/**
+ * @method tainted$U
+ * tainted predicate.
+ *
+ * @return {Boolean}
+ */
 Object.prototype.tainted$U  = function (){
     return !this.tainted
 }
 
+/**
+ * @method trust
+ * Set an object as trustable.
+ *
+ */
 Object.prototype.trust  = function (){
     this._trust = true
 }
 
+/**
+ * @method untrust
+ * Mark an object as untrustable.
+ *
+ */
 Object.prototype.untrust  = function (){
     this._trust = false
 }
 
+/**
+ * @method untrusted$U
+ * trustable predicate.
+ *
+ * @return {Boolean}
+ */
 Object.prototype.untrusted$U = function (){
     return !this._trust
 }
@@ -239,61 +345,159 @@ Object.prototype.trusted$U = function (){
     return this._trust
 }
 
+/**
+ * @method freeze
+ * @deprecated
+ * Mark an object as frozen.
+ *
+ */
 Object.prototype.freeze = function (){
     this._FROZEN = true
 }
 
+/**
+ * @method frozen$U
+ * @deprecated
+ * Frozen predicate
+ *
+ * @return {Boolean}
+ *
+ */
 Object.prototype.frozen$U  = function(){
     return this._FROZEN || false
 }
 
+/**
+ * @method respond_to
+ * Checks for the existence of a method. Use it
+ * for Duck typing.
+ *
+ * @param function_name
+ * @return
+ */
 Object.prototype.respond_to = function(function_name){
     return typeof(this[function_name]) === "function"
 }
+/**
+ * @method respond_to$U
+ * Alias of Object#respond_to
+ */
+Object.prototype.alias("respond_to$U", "respond_to")
 
-Object.prototype.respond_to$U = function(function_name){
-    return this.respond_to(function_name)
+/**
+ * @method eql$U
+ * Compares two objects. Returns true when Object#toSource() is the same on both
+ * objects.
+ *
+ * @param model
+ * @return
+ */
+Object.prototype.eql$U = function(model){
+    if (typeof(model) === "undefined" )
+	return false
+
+    /* End of support */
+    return model.toSource() == this.toSource()
 }
 
+
+/**
+ * @method equals
+ * Alias of ==
+ *
+ * @param model
+ * @return
+ */
 Object.prototype.equals = function(model){
     return this == model
 }
 
-Object.prototype.eql$U = function(model){
-    return this.equals(model)
-}
+// Object.prototype.eql$U = function(model){
+//     return this.equals(model)
+// }
 
-Object.prototype.identic = function( model ){
-    if (model.respond_to("valueOf"))
-	return this.value_of() == model.valueOf()
-    return this === model
-}
-
-Object.prototype.to_s = function (){
-    return this.toString()
-}
-
-Object.prototype.to_str = function (){
-    return this.to_str()
-}
-
+/**
+ * @method value_of
+ * Gets the inner value of an object whenever is possible.  If not a
+ * Object#toSource() representation is taken.
+ *
+ * @return {Object} Best representation for an object.
+ */
 Object.prototype.value_of = function (){
     if (this.respond_to("valueOf") )
 	return this.valueOf()
     return this.toSource()
 }
 
+/**
+ * @method identic
+ * Check if the best representation of two objects are identical.
+ *
+ * @param model
+ * @return
+ */
+Object.prototype.identic = function( model ){
+    if (model.respond_to("valueOf"))
+	return this.value_of() == model.valueOf()
+    return this === model
+}
+
+/**
+ * @method to_s
+ * Object#toString alias
+ *
+ * @return
+ */
+Object.prototype.to_s = function (){
+    return this.toString()
+}
+
+/**
+ * @method to_str
+ * Object#to_s alias.
+ *
+ * @return
+ */
+Object.prototype.to_str = function (){
+    return this.to_s()
+}
+
+/**
+ * @method is_a$U
+ *
+ * Check if an object is descendant of a class
+ *
+ * ### Example
+ *
+ * Imagine that line inhetits from Shape.
+ *
+ *     var l = new Line()
+ *     l.is_a$U(Shape)
+ *     // => true
+ *
+ * @param {Function} clss Class to check belonging
+ * @return {Boolean}
+ */
+
 Object.prototype.is_a$U = function (clss){
     return this instanceof clss
 }
 
-Object.prototype.kind_of$U = function (clss){
-    return this.is_a$U(clss)
-}
+/**
+ * @method kind_of$U
+ * Object#is_a$U alias.
+ *
+ * @return
+ */
+Object.prototype.alias( "kind_of$U", "is_a$U" )
 
-Object.prototype.instance_of$U = function (clss){
-    return this.constructor == clss
-}
+/**
+ * @method kind_of$U
+ * Object#is_a$U alias.
+ *
+ * @return
+ */
+Object.prototype.alias( "instance_of$U", "is_a$U" )
 
 /**
  * @method_missing
@@ -351,6 +555,17 @@ Object.prototype.method_missing = function (method, obj, params){
     bad_function()
 }
 
+/**
+ * @method merge
+ * Merges all the self keys of an object _source_ whith this.
+ * This method is actually a bang method. Further discussion is needed.
+ *
+ * Shall we merge only self keys?
+ * Aren't self_keys part of a behaviour to enjail in Hash?
+ * Shall we clone objects?
+ *
+ * @return
+ */
 Object.prototype.merge = function(source){
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
@@ -361,6 +576,14 @@ Object.prototype.merge = function(source){
     return this
 }
 
+/**
+ * @method soft_merge
+ * Works as Object#merge, but source can not override already
+ * existing keys.
+ *
+ * @param {Object} source Object to read from.
+ * @return
+ */
 Object.prototype.soft_merge = function(source){
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
@@ -371,6 +594,13 @@ Object.prototype.soft_merge = function(source){
     return this
 }
 
+/**
+ * @method override
+ * Works as Object#merge but cannot augment this object.
+ *
+ * @param {Object} source Object to read from.
+ * @return
+ */
 Object.prototype.override = function(source){
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
@@ -383,6 +613,13 @@ Object.prototype.override = function(source){
 }
 
 
+/**
+ * @method reflect
+ * Creates a bang version of a given method. It reflects the response changes over
+ * the _this_ object.
+ *
+ * @return
+ */
 Object.reflect = function(){
     var result
     var return_value = {}
@@ -415,11 +652,29 @@ Object.reflect = function(){
 
 }
 
+/**
+ * @method merge$B
+ * See Object#merge
+ */
+
+/**
+ * @method soft_merge$B
+ * See Object#soft_merge
+ */
+
+/**
+ * @method override$B
+ * See Object#override
+ */
 Object.bang_methods = ["merge", "soft_merge", "override"]
 Object.reflect(Object.bang_methods)
 
 delete(Object.reflect)
 
+/**
+ * @method own_keys
+ * Alias of Object#self_keys
+ */
 Object.prototype.alias("own_keys", "self_keys")
 
 /* Non enumerable properties */
