@@ -28,15 +28,41 @@ body{
 }
 
 #boid_list_content{
-  padding: 2em;
-  width: 75px;
-  height: 135px;
-  /*background-color: black;*/
-  background-image:url('../images/fondo_placa.png');
-  background-size: 100% 100%;
-  cursor: pointer;
+  width: 150px;
   position: absolute;
-  margin: 250px 0 0 82px;
+  margin: 250px 0 0 75px;
+}
+
+#chip_parte_alta{
+  width: 150px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_alta2.png');
+  background-size: 100% 100%;
+}
+
+#chip_parte_media{
+  width: 150px;
+  /*color: #424242;*/
+  background-image:url('../images/pantalla_parte_media3.png');
+  background-repeat:repeat-y;
+
+}
+
+#text_lcd{
+  width: 100%;
+  /*padding: 0 0 0 30px;*/
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+  line-height: 22px; 
+  font-size: 15px;
+  cursor: pointer;  
+}
+
+#chip_parte_baja{
+  width: 150px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_baja.png');
+  background-size: 100% 100%;
 }
 
 #canvas{
@@ -50,32 +76,182 @@ body{
 
 
 #boid_properties{
-  background-image:url('../images/fondo_placa.png');
+/*  background-image:url('../images/fondo_placa.png');
   background-size: 100% 100%;
-  width: 150px;
-  height: 335px;
+*/
+  width: 220px;
+  height: 380px;
   margin: 50px 0 0 925px;
   cursor: pointer;
-  padding: 2em;
-  border-radius:5px;
+  position: absolute;
 }
 
-#properties{
-  width: 180px;
-  height: 135px; 
+#properties_up{
+  width: 220px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_alta2.png');
+  background-size: 100% 100%;
+}
+
+#properties_center{
+  width: 220px;
+  height: 320px;
+  background-image:url('../images/pantalla_parte_media3.png');
+  background-size: 100%;
+  background-repeat:repeat-y;
+}
+
+#text_lcd2{
+  width: 100%;
+  padding: 0px 0 0 35px;
+  font-family: Verdana, Geneva, sans-serif;
+  line-height: 32px; 
+  font-size: 15px;
+  cursor: pointer;  
+}
+
+#properties_down{
+  width: 220px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_baja.png');
+  background-size: 100% 100%;
+
 }
 
 #speaker_buttons{
   visibility: hidden;
- width: 200px;
- height: 135px; 
- 
+  width: 200px;
+  height: 135px; 
+}
+
+#button_on{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -20px 0 0 28px;
+}
+
+#button_off{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -20px 0 0 110px;
+}
+
+#button_plus{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 44px 0 0 28px;
+}
+
+#button_less{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 44px 0 0 110px;
 }
 
 #nanobot_buttons{
   visibility: hidden;
   width: 200px;
  height: 135px; 
+}
+
+#button_talk{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -155px 0 0 28px;
+}
+
+    #talk_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #talk_initial_msg{
+            width: 100%;
+            padding: 13px 0 0 45px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }        
+
+        #hello_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #back_button{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 194px 0 0 28px;
+        }
+
+    #orders_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #orders_initial_msg{
+            width: 100%;
+            padding: 12px 0 0 27px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }        
+
+        #follow_me_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #go_away_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer; 
+        }
+
+        #back_button_orders{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 163px 0 0 28px;
+        }
+
+#button_games{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -155px 0 0 110px;
+}
+
+#button_orders{
+  width: 167px;
+  height: 60px;
+  position: absolute;
+  margin: -92px 0 0 28px;
 }
 
 /*

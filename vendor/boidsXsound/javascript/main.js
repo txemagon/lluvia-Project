@@ -6,7 +6,7 @@ var c = null, cxt = null;
 function main(){ 
   var w = new World("screener")
 
-  var boid_list = new WorldInterface("boid_list_content")
+  var boid_list = new WorldInterface("text_lcd")
   w.addPort("new_boid", boid_list)
   
   var boid_editor = new BoidEditor("boid_properties")
@@ -22,7 +22,7 @@ function main(){
  var speaker1 = w.new_speaker(300,300)
  var speaker2 = w.new_speaker()
 
-for(var i=0;i<5;i++){
+for(var i=0;i<10;i++){
 	var nanobot = w.new_nanobot()
 	nanobot.brain.activate('wander')
  	nanobot.brain.get_behavior('wander').set_target()

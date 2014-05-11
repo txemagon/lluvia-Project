@@ -131,7 +131,7 @@ function WanderBehavior(){
 
 WanderBehavior.prototype.set_target = function(boid){
   this.target = boid || new Boid({
-                          position:      new Vector(Math.floor(Math.random()*400),Math.floor(Math.random()*400)),
+                          position:      new Vector(Math.floor(Math.random()*540),Math.floor(Math.random()*400)),
                           velocity:      new Vector(0,0),
                           acceleration:  new Vector(0,0)
       }, "red")

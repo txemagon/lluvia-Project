@@ -41,11 +41,20 @@ WorldInterface.prototype.attend_new_boid = function(date, mssg){
     //var gate = this.newGate("Boid_" + boid.id, BoidCollector)
   if(boid instanceof Nanobot){
     this.nanobot_id++
-    var gate = this.newGate("Nanobot_" + this.nanobot_id, BoidCollector)
+    // if(this.nanobot_id<10){
+    //   if(this.nanobot_id == 1){
+    //  //   text_lcd.innerHTML += "-------- <br>" 
+    //     text_lcd.innerHTML += "Nanobot list:" 
+    //   }
+    //   var gate = this.newGate("Nanobot_0" + this.nanobot_id, BoidCollector)
+    // }
+    // else
+      var gate = this.newGate("Nanobot_" + this.nanobot_id, BoidCollector)
   }
   if(boid instanceof Speaker){
     this.speaker_id++
-    var gate = this.newGate("Speaker_" + this.speaker_id, BoidCollector)
+
+      var gate = this.newGate("Speaker_" + this.speaker_id, BoidCollector)
   }
   gate.boid = boid
 }
@@ -76,11 +85,13 @@ BoidCollector.prototype.do_onclick = function(event, element){
 }
 
 BoidCollector.prototype.do_onmouseover = function(event, element){
-  this.panel.style.color = "grey"
+//  this.panel.style.color = "white"
+  this.panel.style.fontSize = "18px"
   this.boid.focused = true
 }
 
 BoidCollector.prototype.do_onmouseout = function(event, element){
-  this.panel.style.color = "white"
-  this.boid.focused = false
+//  this.panel.style.color = "black"
+this.panel.style.fontSize = "15px"
+this.boid.focused = false
 }
