@@ -175,9 +175,11 @@ Nanobot.prototype.run = function(current_time){
 * @param {Object} ctx Context in which to paint the Boid
 */
 Nanobot.prototype.draw = function(ctx){
-  var p = this.geo_data.position
+  var hue = (this.level_emotion * 2.4)+120
 
-  ctx.fillStyle = this.colour
+  var p = this.geo_data.position
+  var a = 'hsl(' + hue + ', 100%, 36%)';
+  ctx.fillStyle = a
   ctx.strokeStyle = "black"
   ctx.beginPath();
   ctx.arc(p.get_coord(0), p.get_coord(1), 10*escala, 0, Math.PI*2, true);      
@@ -190,7 +192,7 @@ Nanobot.prototype.draw = function(ctx){
   ctx.stroke()
 
   ctx.fillStyle = "white"
-  ctx.fillText(this.level_emotion, p.get_coord(0)-8, p.get_coord(1)+5);
+  ctx.fillText(Math.round(this.level_emotion), p.get_coord(0)-7, p.get_coord(1)+5);
 
   if (this.focused){
     ctx.strokeStyle = "red"

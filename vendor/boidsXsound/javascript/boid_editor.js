@@ -46,12 +46,13 @@ function BoidEditor(view){
 
 BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   actual_boid = mssg.event.focus_boid.data
+
   if(actual_boid instanceof Speaker){
   text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" + 
                          "Pos (x,y): (" +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]*10)/10 + "," + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*10)/10 + ") <br/>" +
                          "This on: " + mssg.event.focus_boid.data.this_on + "<br/>" +
                          "Wave lenght: " + mssg.event.focus_boid.data.wave_lenght + "<br/>" +
-                         "Frequency: " + actual_boid.get_frequency_music() + "<br/>" +
+                         "Frequency: " + Math.round(actual_boid.get_frequency_music()*100)/100 + "<br/>" +
                          "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
 
     text_lcd2.style.visibility = "visible"
@@ -60,6 +61,7 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
     nanobot_buttons.style.visibility = "hidden"
     orders_options.style.visibility = "hidden"
   }
+
   if(actual_boid instanceof Nanobot){
       text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" +
                              //"Id: " + mssg.event.focus_boid.data.id + "<br/>" +
@@ -223,7 +225,6 @@ LessOptions.prototype.do_onmouseover = function(){
 LessOptions.prototype.do_onmouseout = function(){
   button_less.src = "images/button_less.png"
 }
-
 
 
 

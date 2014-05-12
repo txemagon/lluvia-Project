@@ -20,6 +20,7 @@ function Speaker(geo_data, wave_lenght, src){
 		that.wave_lenght = wave_lenght || 100
 		that.wave_aux = 0
 		that.this_on = false
+    that.frequency = 0
 		Boid.call(that, geo_data)
 	}
 
@@ -74,12 +75,23 @@ Speaker.prototype.get_wave_lenght = function(){
 }
 
 /**
+* @method set_frequency_music
+*
+* Returns frequency music
+*/
+var variable_global_ivan = 3000
+Speaker.prototype.set_frequency_music = function(new_value){
+  var new_frequency = Math.log(new_value/1000)/100
+  this.frequency = new_frequency
+}
+
+/**
 * @method get_frequency_music
 *
 * Returns frequency music
 */
 Speaker.prototype.get_frequency_music = function(){
-	return 1
+	return this.frequency
 }
 
 /**
@@ -126,6 +138,7 @@ Speaker.prototype.run = function(current_time){
     return
   current_time = current_time || new Date()
   this.update_physics(current_time)
+  this.set_frequency_music(variable_global_ivan)
   this.nanobot_is_listening()
 }
 
