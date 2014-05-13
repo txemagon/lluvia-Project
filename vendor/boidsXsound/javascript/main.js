@@ -22,7 +22,7 @@ function main(){
  var speaker1 = w.new_speaker(300,300)
  var speaker2 = w.new_speaker()
 
-for(var i=0;i<10;i++){
+for(var i=0;i<15;i++){
 	var nanobot = w.new_nanobot()
 	nanobot.brain.activate('wander')
  	nanobot.brain.get_behavior('wander').set_target()

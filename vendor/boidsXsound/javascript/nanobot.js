@@ -136,10 +136,16 @@ Nanobot.prototype.analyze_msg = function(){
 * Analyze the sound.
 */
 Nanobot.prototype.analyze_sound = function(){
-  if(this.array_frequency.length > 0)
-    this.level_emotion += this.array_frequency.shift()
-  else if(this.level_emotion >= 0.0)
-    this.level_emotion -= 0.01
+  if(this.array_frequency.length > 0){
+    if(this.level_emotion < 100 || this.array_frequency[0] < 0)
+      this.level_emotion += this.array_frequency.shift()
+    else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
+      this.array_frequency.shift()
+    }
+  }
+  else if(this.level_emotion >= 0.0){
+    this.level_emotion -= 0.1
+  }
 }
 
 /**

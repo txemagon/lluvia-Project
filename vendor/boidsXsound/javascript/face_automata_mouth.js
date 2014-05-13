@@ -6,7 +6,7 @@ function FaceAutomataMouth(processor, gate) {
 	this.now = new Date()
 	this.before = new Date()
 	this.actual_boid = 0
-	var state = this.state = new Enumeration("start_effect", "normal", "happy", "sleep")
+	var state = this.state = new Enumeration("start_effect", "normal", "happy", "angry", "sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
 						  requested: state.sleep }
@@ -55,6 +55,21 @@ function FaceAutomataMouth(processor, gate) {
 					;
 				}
 			],
+			/* angry */	
+			[
+				function(){
+					this.draw_mouth_angry()
+					;
+				},
+				function(){
+					this.change_state()
+					;
+				},
+				function(){
+					this.erase_mouth_angry()
+					;
+				}
+			],
 			/* sleep */
 			[
 				function(){
@@ -88,11 +103,12 @@ function FaceAutomataMouth(processor, gate) {
 FaceAutomataMouth.prototype.change_state = function(){
 	var level = this.actual_boid.level_emotion
 
-	if(level<33){
+	if(level<33)
 		this.currentState.requested = this.state.happy
-	}
 	if(level>33 && level<66)
 		this.currentState.requested = this.state.normal
+	if(level>66)
+		this.currentState.requested = this.state.angry
 }
 
 FaceAutomataMouth.prototype.draw_mouth_normal = function(){
@@ -121,6 +137,24 @@ FaceAutomataMouth.prototype.draw_mouth_smiley = function(){
 	cxt.stroke();
 }
 
+FaceAutomataMouth.prototype.draw_mouth_angry = function(){
+	cxt.lineWidth = 1
+	cxt.beginPath()
+	cxt.moveTo(47,110)
+	cxt.quadraticCurveTo(75,90,103,105)
+	cxt.stroke();
+}
+
+FaceAutomataMouth.prototype.erase_mouth_angry = function(){
+	cxt.strokeStyle = 'white'
+	cxt.lineWidth = 3
+	cxt.beginPath()
+	cxt.moveTo(47,110)
+	cxt.quadraticCurveTo(75,90,103,105)
+	cxt.stroke();
+	cxt.lineWidth = 1
+	cxt.strokeStyle = 'black'
+}
 
 FaceAutomataMouth.prototype.erase_mouth_smiley = function(){
 	cxt.strokeStyle = 'white'

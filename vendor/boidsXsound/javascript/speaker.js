@@ -81,7 +81,7 @@ Speaker.prototype.get_wave_lenght = function(){
 */
 var variable_global_ivan = 3000
 Speaker.prototype.set_frequency_music = function(new_value){
-  var new_frequency = Math.log(new_value/1000)/100
+  var new_frequency = Math.log(new_value/1000)/10
   this.frequency = new_frequency
 }
 

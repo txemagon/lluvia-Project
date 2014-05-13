@@ -6,8 +6,8 @@ function FaceAutomataEyes(processor, gate) {
 	var timer = 0
 	this.now = new Date()
 	this.before = new Date()
-	this.level_emotion = 0
-	var state = this.state = new Enumeration("start_effect","open", "close","sleep")
+	this.actual_boid = 0
+	var state = this.state = new Enumeration("start_effect","open", "close", "happy", "angry", "sleep")
 	this.currentState = { previous: state.sleep,
 						  current: state.sleep,
 						  requested: state.sleep }
@@ -62,6 +62,42 @@ function FaceAutomataEyes(processor, gate) {
 					;
 				}
 			],
+			/* happy */ 
+			[
+				function(){
+					t = 0
+					this.draw_eyes_close()
+					;
+				},
+				function (){
+					t++
+					if(t == 3)
+						this.currentState.requested = this.state.open
+					;
+				},
+				function(){
+					this.erase_eyes_close()
+					;
+				}
+			],
+			/* angry */ 
+			[
+				function(){
+					t = 0
+					this.draw_eyes_close()
+					;
+				},
+				function (){
+					t++
+					if(t == 3)
+						this.currentState.requested = this.state.open
+					;
+				},
+				function(){
+					this.erase_eyes_close()
+					;
+				}
+			],
 			/* sleep */
 			[
 				function(){
@@ -91,11 +127,6 @@ function FaceAutomataEyes(processor, gate) {
         initialize()
 }
 
-FaceAutomataEyes.prototype.set_level_emotion = function(level_emotion){
-	this.level_emotion = level_emotion
-}
-
-
 // No funciona!!!!!!!
 FaceAutomataEyes.prototype.sleep = function(milliseconds){
 	var time_limit = this.now.getTime() + milliseconds
@@ -104,10 +135,13 @@ FaceAutomataEyes.prototype.sleep = function(milliseconds){
 
 
 FaceAutomataEyes.prototype.draw_eyes_open = function(){
+	var level = this.actual_boid.level_emotion
 	cxt.beginPath();
 	cxt.arc(55, 75 ,8 , 0, Math.PI*2, false); 
 	cxt.arc(95, 75 ,8 , 0, Math.PI*2, false); 
 	cxt.fill();
+
+
 }
 
 FaceAutomataEyes.prototype.draw_eyes_close = function(){
