@@ -112,6 +112,7 @@ Nanobot.prototype.analyze_msg = function(){
       case "hola":
         this.replying = true
         this.word_reply = "hola"
+        this.level_emotion -= 20
         break
       case "seguirme":
         this.replying = true

@@ -343,7 +343,18 @@ function GamesOptions(element){
 }
 
 GamesOptions.prototype.do_onclick = function(){
-  alert("games")
+  var original_vision = actual_boid.vision
+  actual_boid.vision = 100000
+  var array_boids = actual_boid.visible_objects()
+
+  for(var i=0; i<array_boids.length; i++){
+    array_boids[i].brain.activate('seek')
+    array_boids[i].brain.get_behavior('seek').set_target(array_boids[i+1])
+}
+ array_boids[16].brain.activate('seek')
+    array_boids[16].brain.get_behavior('seek').set_target(array_boids[0])
+
+  actual_boid.vision = original_vision
 }
 
 GamesOptions.prototype.do_onmouseover = function(){
