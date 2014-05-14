@@ -19,52 +19,11 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 
-  var b1 = w.new_boid_of(Nanobot, function(config){})
 
-  var b2 = w.new_boid_of(Nanobot, function(config){
-  	config.brain.activate("seek")
-  	config.brain.get_behavior('seek').set_target(b1)
+  for(var i=0; i<20; i++)
+	  w.new_boid_of(Nanobot, function(config){
+	  	config.brain.activate("wander")
   })
 
-  var s1 = w.new_boid_of(Speaker, function(config){
-  	config.geo_data.velocity = new Vector(0,0)
-
-  })
-/*
- var speaker1 = w.new_speaker(300,300)
- var speaker2 = w.new_speaker()
-
-for(var i=0;i<15;i++){
-	var nanobot = w.new_nanobot()
-	nanobot.brain.activate('wander')
- 	nanobot.brain.get_behavior('wander').set_target()
-
-}
-*/
-/*
- var nano1 = w.new_nanobot()
- nano1.brain.activate('wander')
- nano1.brain.get_behavior('wander').set_target()
-
-
-var nano2 = w.new_nanobot()
- nano2.brain.activate('seek')
- nano2.brain.get_behavior('seek').set_target(nano1)
-*/
   w.start()
 }
-/*
-function change_scale(operation){
-
-	switch(operation){
-		case '+':
-		if(escala < 2)
-			escala +=0.5
-		break;
-		case '-':
-		if(escala > 0.5)
-			escala -=0.5
-		break;
-	}
-}
-*/

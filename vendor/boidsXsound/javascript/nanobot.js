@@ -18,7 +18,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 	var that = this
 
 	function initialize(){
-		that.level_emotion = level_emotion || 50
+		that.level_emotion = level_emotion || 100
 		that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
 		that.gender = gender 
@@ -138,14 +138,15 @@ Nanobot.prototype.analyze_msg = function(){
 */
 Nanobot.prototype.analyze_sound = function(){
   if(this.array_frequency.length > 0){
-    if(this.level_emotion < 100 || this.array_frequency[0] < 0)
+ //   if(this.level_emotion < 100 || this.array_frequency[0] < 0)
       this.level_emotion += this.array_frequency.shift()
-    else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
-      this.array_frequency.shift()
-    }
+  //  else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
+  //    this.array_frequency.shift()
+  //  }
   }
-  else if(this.level_emotion >= 0.0){
+  else {
     this.level_emotion -= 0.1
+  
   }
 }
 
