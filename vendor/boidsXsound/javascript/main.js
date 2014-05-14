@@ -19,10 +19,9 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 
-
-  for(var i=0; i<20; i++)
+  for(var i=0; i<10; i++)
 	  w.new_boid_of(Nanobot, function(config){
-	  	config.brain.activate("wander")
+      config.brain.activate("wander")
   })
 
   w.start()
