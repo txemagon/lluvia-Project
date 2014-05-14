@@ -19,6 +19,18 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 
+  var b1 = w.new_boid_of(Nanobot, function(config){})
+
+  var b2 = w.new_boid_of(Nanobot, function(config){
+  	config.brain.activate("seek")
+  	config.brain.get_behavior('seek').set_target(b1)
+  })
+
+  var s1 = w.new_boid_of(Speaker, function(config){
+  	config.geo_data.velocity = new Vector(0,0)
+
+  })
+/*
  var speaker1 = w.new_speaker(300,300)
  var speaker2 = w.new_speaker()
 
@@ -28,7 +40,7 @@ for(var i=0;i<15;i++){
  	nanobot.brain.get_behavior('wander').set_target()
 
 }
-
+*/
 /*
  var nano1 = w.new_nanobot()
  nano1.brain.activate('wander')
@@ -41,7 +53,7 @@ var nano2 = w.new_nanobot()
 */
   w.start()
 }
-
+/*
 function change_scale(operation){
 
 	switch(operation){
@@ -55,3 +67,4 @@ function change_scale(operation){
 		break;
 	}
 }
+*/

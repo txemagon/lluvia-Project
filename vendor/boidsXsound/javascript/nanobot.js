@@ -45,7 +45,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 */
 Nanobot.prototype.audible_objects = function(){
   var audible_objects = []
-    audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
+    audible_objects = this.my_world.audible_for(this.geo_data.position, this.wave_lenght)
     for(var i=0; i < audible_objects.length; i++){
       if(audible_objects[i] instanceof Speaker)
         audible_objects.splice(i, 1)

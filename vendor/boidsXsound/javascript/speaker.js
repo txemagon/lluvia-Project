@@ -17,7 +17,7 @@ function Speaker(geo_data, wave_lenght, src){
 	function initialize(){
 		that.image = new Image()
 		that.image.src = src || "images/altavoz.png"
-		that.wave_lenght = wave_lenght || 100
+		that.wave_lenght = wave_lenght || 1000
 		that.wave_aux = 0
 		that.this_on = false
     that.frequency = 0
@@ -104,12 +104,13 @@ Speaker.prototype.get_frequency_music = function(){
 Speaker.prototype.audible_objects = function(){
   var audible_objects = []
   if(this.this_on){
-    audible_objects = this.my_world.visible_for(this.geo_data.position, this.wave_lenght) 
+    audible_objects = this.my_world.audible_for(this.geo_data.position, this.wave_lenght) 
     for(var i=0; i < audible_objects.length; i++){
      if(audible_objects[i] instanceof Speaker)
         audible_objects.splice(i, 1)
     }
   }
+
   return audible_objects
 }
 
