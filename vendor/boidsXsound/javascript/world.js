@@ -296,7 +296,7 @@ World.prototype.start = function(){
 World.prototype.draw = function(){
   var that = this
   var ctx = this.screen[0].context
-  ctx.clearRect(0,0,0,0)
+  ctx.clearRect(0,0,550,400)
   this.get_boids().each( function(el) {
     el.draw(ctx)
   })
