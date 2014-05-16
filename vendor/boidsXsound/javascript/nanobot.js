@@ -136,7 +136,7 @@ Nanobot.prototype.analyze_msg = function(){
         this.word_reply = replys[Math.floor(Math.random() * replys.length)]
         this.level_emotion -= 5
         break
-      case "teach":
+      case "2+2=4":
         var replys = ["oooh", "you are so smart", "genius!!", "witchcraft!!"]           // 2+2=4; oooh, your are so smart
         this.replying = true
         this.word_reply = replys[Math.floor(Math.random() * replys.length)]
@@ -148,17 +148,19 @@ Nanobot.prototype.analyze_msg = function(){
         this.word_reply = replys[Math.floor(Math.random() * replys.length)]
         this.level_emotion -= 50
         break
-      case "argue":          
+      case "bu!!!":  
+        var replys = ["¡Ahh!", "What a shock!", "huy", "oh"]        
         this.replying = true
-        this.word_reply = "hola"
-        this.level_emotion += 5
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
+        this.level_emotion += 15
         break
-      case "insult": //==> Idiot,           
+      case "idiot": //==> Idiot,
+        var replys = ["not you!!", ":(", "Why?", "joo"]           
         this.replying = true
-        this.word_reply = "hola"
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
         this.level_emotion += 30
         break
-      case "threaten":  //==> I kill you!! 
+      case "i kill you!":  //==> I kill you!! 
         var replys = ["No please!!", "Nooo", "Help!"]        
         this.replying = true
         this.word_reply = replys[Math.floor(Math.random() * replys.length)]

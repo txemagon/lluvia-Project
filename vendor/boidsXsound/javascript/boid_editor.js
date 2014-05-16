@@ -19,7 +19,7 @@ function BoidEditor(view){
   function initialize(){
     Device.call(that, view)
 
-    // speaker options    
+    // Speaker options    
     that.newGate("button_on", Gate, {
       do_onclick     : function(){ actual_boid.on()},
       do_onmouseover : function(){ button_on.src = "images/button_on_select.png"},
@@ -53,7 +53,7 @@ function BoidEditor(view){
                                    greet_button.innerHTML     = "1. Greet"
                                    teach_button.innerHTML     = "2. Teach"
                                    joke_button.innerHTML      = "3. Joke"
-                                   argue_button.innerHTML     = "4. Argue"
+                                   argue_button.innerHTML     = "4. Scare"
                                    insult_button.innerHTML    = "5. Insult"
                                    threaten_button.innerHTML  = "6. Threaten" },
 
@@ -63,13 +63,13 @@ function BoidEditor(view){
 
 
     that.newGate("greet_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("greet") },
+      do_onclick     : function(){ actual_boid.talk("hello") },
       do_onmouseover : function(){ greet_button.style.fontSize = "18px" },
       do_onmouseout  : function(){ greet_button.style.fontSize = "15px" }
     })
 
     that.newGate("teach_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("teach") },
+      do_onclick     : function(){ actual_boid.talk("2+2=4") },
       do_onmouseover : function(){ teach_button.style.fontSize = "18px" },
       do_onmouseout  : function(){ teach_button.style.fontSize = "15px" }
     })
@@ -81,19 +81,19 @@ function BoidEditor(view){
     })
 
     that.newGate("argue_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("argue") },
+      do_onclick     : function(){ actual_boid.talk("bu!!!") },
       do_onmouseover : function(){ argue_button.style.fontSize = "18px" },
       do_onmouseout  : function(){ argue_button.style.fontSize = "15px" }
     })
 
     that.newGate("insult_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("insult") },
+      do_onclick     : function(){ actual_boid.talk("idiot") },
       do_onmouseover : function(){ insult_button.style.fontSize = "18px" },
       do_onmouseout  : function(){ insult_button.style.fontSize = "15px" }
     })
 
     that.newGate("threaten_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("threaten") },
+      do_onclick     : function(){ actual_boid.talk("i kill you!") },
       do_onmouseover : function(){ threaten_button.style.fontSize = "18px" },
       do_onmouseout  : function(){ threaten_button.style.fontSize = "15px" }
     })
