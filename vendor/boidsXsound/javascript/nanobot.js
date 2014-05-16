@@ -17,24 +17,45 @@ Nanobot.prototype.constructor = Nanobot
 function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 	var that = this
 
-	function initialize(){
-		that.level_emotion = level_emotion || 50
-		that.wave_lenght = wave_lenght || 100
+  function initialize(){
+    Boid.call(that, geo_data, color)
+    that.level_emotion = level_emotion || 50
+    that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
-		that.gender = gender 
+    that.gender = gender 
     that.talking = false
     that.is_listening = false
     that.array_frequency = []
     that.array_msg = []
-    this.word_msg = ""
+    that.word_msg = ""
     that.replying = false
-    this.word_reply = ""
-    Boid.call(that, geo_data, color)
+    that.word_reply = ""
+/*
+    that.head = that
+    that.body = []
+    that.create_body()
+*/
 	}
 
 	if(arguments.length)
 		initialize()
 }
+
+/*
+Nanobot.prototype.create_body = function(){
+  for(var i=0; i<5; i++){
+    var body_part = { position: this.geo_data.position, last_position: this.geo_data.position}
+    this.body.push(body_part)
+  }
+}
+
+Nanobot.prototype.update_body = function(){
+  this.body[this.body.length-1].position = this.geo_data.position
+
+  var aux_body = this.body.pop()
+  this.body.unshift(aux_body)
+}
+*/
 
 /**
 * @method audible_objects
@@ -117,14 +138,14 @@ Nanobot.prototype.analyze_msg = function(){
       case "seguirme":
         this.replying = true
         this.word_reply = "voy"
-        this.brain.activate('seek')
-        this.brain.get_behavior('seek').set_target(this.array_msg[0].transmitter)
+        this.brain.activate('seek',this.array_msg[0].transmitter)
+        //this.brain.get_behavior('seek').set_target(this.array_msg[0].transmitter)
         break
       case "iros":
         this.replying = true
         this.word_reply = "vale"
-        this.brain.activate('flee')
-        this.brain.get_behavior('flee').set_target(this.array_msg[0].transmitter)
+        this.brain.activate('flee', this.array_msg[0].transmitter)
+        //this.brain.get_behavior('flee').set_target(this.array_msg[0].transmitter)
         break
     }
     this.array_msg.shift()
@@ -149,6 +170,11 @@ Nanobot.prototype.analyze_sound = function(){
   }
 }
 
+// Nanobot.prototype.analyze_level_emotion = function(){
+//   var level = this.level_emotion
+//   if(level )
+// }
+
 /**
 * @method listen
 *
@@ -172,6 +198,7 @@ Nanobot.prototype.run = function(current_time){
   current_time = current_time || new Date()
   this.update_physics(current_time)
   this.listen()
+  //this.update_body()
 }
 
 /**
@@ -189,12 +216,25 @@ Nanobot.prototype.draw = function(ctx){
   ctx.fillStyle = a
   ctx.strokeStyle = "black"
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 10*escala, 0, Math.PI*2, true);      
+  ctx.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);      
   ctx.closePath();
   ctx.fill();
-  
+
+/*  
+  // Pintar cuerpo
+  var b = this.body
+  ctx.fillStyle = a
+  ctx.strokeStyle = "black"
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 12*escala, 0, Math.PI*2, true);
+  for(var i=0; i<this.body.length; i++){
+    ctx.arc(b[i].position.get_coord(0), b[i].position.get_coord(1), 10, 0, Math.PI*2, true);     
+  }
+  ctx.closePath();
+  ctx.fill();  
+  // Fin pintar cuerpo
+*/
+  ctx.beginPath();
+  ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
   ctx.closePath();
   ctx.stroke()
 
@@ -211,7 +251,6 @@ Nanobot.prototype.draw = function(ctx){
   }
 
   if(this.talking){
-   //ctx.drawImage(this.msg_hello, p.get_coord(0)-10, p.get_coord(1)-45, 80, 50)
    ctx.font = "bold 15px ubuntu";
    ctx.fillStyle = "black"
    ctx.fillText(this.word_msg, p.get_coord(0)+5, p.get_coord(1)-15);
