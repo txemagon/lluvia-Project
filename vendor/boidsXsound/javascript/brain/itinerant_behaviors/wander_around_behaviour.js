@@ -6,11 +6,11 @@
  *
  * @constructor
  */
-WanderAroundBehavior.prototype = new Behavior
-WanderAroundBehavior.prototype.constructor = WanderAroundBehavior
-WanderAroundBehavior.prototype.super = Behavior
+WalkBehavior.prototype = new Behavior
+WalkBehavior.prototype.constructor = WalkBehavior
+WalkBehavior.prototype.super = Behavior
 
-function WanderAroundBehavior(){
+function WalkBehavior(){
   Behavior.apply(this, arguments)
   this.target = null
   this.timer = (Math.random()* (300 - 200 +1)) + 200 
@@ -26,7 +26,7 @@ function WanderAroundBehavior(){
  * @param  {Object} boid Target boid
  *
  */
-WanderAroundBehavior.prototype.set_target = function(boid){
+WalkBehavior.prototype.set_target = function(boid){
   this.target = boid || new Boid({
                           position:      new Vector(Math.floor(Math.random()*400),Math.floor(Math.random()*400)),
                           velocity:      new Vector(0,0),
@@ -41,10 +41,10 @@ WanderAroundBehavior.prototype.set_target = function(boid){
  *
  * @return {Object} this.target.geo_data Position information of boid
  */
-WanderAroundBehavior.prototype.target_data = function(){
+WalkBehavior.prototype.target_data = function(){
   //timer = (Math.random()* 300) + 200
   if (!this.target)
-    throw "WanderAroundBehavior Disabled. Still no target."
+    throw "WalkBehavior Disabled. Still no target."
   else if(this.aux >= this.timer){
     this.set_target()
     this.aux = 0
@@ -61,7 +61,7 @@ WanderAroundBehavior.prototype.target_data = function(){
  *
  * @return {Object} this.target_data() Position information of boid
  */
-WanderAroundBehavior.prototype.get_target = function(){
+WalkBehavior.prototype.get_target = function(){
   return this.target_data()
 }
 
@@ -72,7 +72,7 @@ WanderAroundBehavior.prototype.get_target = function(){
  *
  * @return {}
  */
-WanderAroundBehavior.prototype.target_at = function(){
+WalkBehavior.prototype.target_at = function(){
   return this.get_target().position.subs( this.me.geo_data.position )
 }
 
@@ -83,7 +83,7 @@ WanderAroundBehavior.prototype.target_at = function(){
  *
  * @return {Object} vector Vector velocity
  */
-WanderAroundBehavior.prototype.desired_velocity = function(){
+WalkBehavior.prototype.desired_velocity = function(){
   var arrival_distance
   try{ 
     arrival_distance = this.target_at().module()
@@ -103,7 +103,7 @@ WanderAroundBehavior.prototype.desired_velocity = function(){
  * @return {Object} vector Vector acceleration
  *
  */
-WanderAroundBehavior.prototype.desired_acceleration = function(){
+WalkBehavior.prototype.desired_acceleration = function(){
   return this.desired_velocity().subs(this.me.velocity())
 }
 

@@ -182,7 +182,52 @@ body{
             cursor: pointer;
         }        
 
-        #hello_button{
+        #greet_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #teach_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #joke_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #argue_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #insult_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #threaten_button{
             width: 100%;
             padding: 0px 0 0 35px;
             font-family: Verdana, Geneva, sans-serif;
@@ -195,7 +240,7 @@ body{
             width: 167px;
             height: 61px;
             position: absolute;
-            margin: 194px 0 0 28px;
+            margin: 34px 0 0 28px;
         }
 
     #orders_options{

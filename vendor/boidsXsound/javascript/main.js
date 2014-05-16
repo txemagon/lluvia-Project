@@ -59,10 +59,14 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
        config.brain.activate('seek', speaker)
      })
 */
+
+
 for(var i=0;i<10; i++)
-  w.new_boid_of(Nanobot, function(config) {
-       config.brain.activate('wander')
-     })
+  w.new_boid_of(Nanobot, function(config){ config.geo_data = {
+                                        position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+                                        velocity: new Vector(0, 0),
+                                        acceleration: new Vector(0, 0)
+                                      }})
 
 
   w.start()

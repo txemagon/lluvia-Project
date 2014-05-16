@@ -50,21 +50,53 @@ function BoidEditor(view){
                                    talk_options.style.visibility = "visible"
 
                                    talk_initial_msg.innerHTML = "<big><big>Talk options</big></big>"
-                                   hello_button.innerHTML = "1. Greet" },
+                                   greet_button.innerHTML     = "1. Greet"
+                                   teach_button.innerHTML     = "2. Teach"
+                                   joke_button.innerHTML      = "3. Joke"
+                                   argue_button.innerHTML     = "4. Argue"
+                                   insult_button.innerHTML    = "5. Insult"
+                                   threaten_button.innerHTML  = "6. Threaten" },
+
       do_onmouseover : function(){ button_talk.src = "images/button_talk_select.png" }, 
       do_onmouseout  : function(){ button_talk.src = "images/talk.png" }
     })
 
 
-    that.newGate("hello_button", Gate, {
-      do_onclick     : function(){ actual_boid.talk("hola") },
-      do_onmouseover : function(){ hello_button.style.fontSize = "18px" },
-      do_onmouseout  : function(){ hello_button.style.fontSize = "15px" }
+    that.newGate("greet_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("greet") },
+      do_onmouseover : function(){ greet_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ greet_button.style.fontSize = "15px" }
     })
 
+    that.newGate("teach_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("teach") },
+      do_onmouseover : function(){ teach_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ teach_button.style.fontSize = "15px" }
+    })
 
+    that.newGate("joke_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("joke") },
+      do_onmouseover : function(){ joke_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ joke_button.style.fontSize = "15px" }
+    })
 
+    that.newGate("argue_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("argue") },
+      do_onmouseover : function(){ argue_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ argue_button.style.fontSize = "15px" }
+    })
 
+    that.newGate("insult_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("insult") },
+      do_onmouseover : function(){ insult_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ insult_button.style.fontSize = "15px" }
+    })
+
+    that.newGate("threaten_button", Gate, {
+      do_onclick     : function(){ actual_boid.talk("threaten") },
+      do_onmouseover : function(){ threaten_button.style.fontSize = "18px" },
+      do_onmouseout  : function(){ threaten_button.style.fontSize = "15px" }
+    })
 
     that.newGate("back_button", Gate, {
       do_onclick     : function(){ text_lcd2.style.visibility = "visible"
@@ -77,9 +109,10 @@ function BoidEditor(view){
 
     that.newGate("button_games", Gate, {
       do_onclick     : function(){},
-      do_onmouseover : function(){},
-      do_onmouseout  : function(){}
+      do_onmouseover : function(){ button_games.src = "images/button_games_select.png" },
+      do_onmouseout  : function(){ button_games.src = "images/button_games.png" }
     })
+
     that.newGate("button_orders", Gate, {
       do_onclick     : function(){ text_lcd2.style.visibility       = "hidden"
                               nanobot_buttons.style.visibility = "hidden"
@@ -129,6 +162,7 @@ function BoidEditor(view){
     initialize()
   
 }
+
 
 BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   actual_boid = mssg.event.focus_boid.data

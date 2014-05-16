@@ -19,7 +19,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 
   function initialize(){
     Boid.call(that, geo_data, color)
-    that.level_emotion = level_emotion || 50
+    that.level_emotion = level_emotion || 100
     that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
     that.gender = gender 
@@ -130,11 +130,43 @@ Nanobot.prototype.set_msg = function(new_msg){
 Nanobot.prototype.analyze_msg = function(){
   if(this.array_msg.length > 0){
     switch (this.array_msg[0].word){
-      case "hola":
+      case "greet": 
+        var replys = ["hello", "hi", "what's up", "how are you", "nice to meet you"]
+        this.replying = true
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
+        this.level_emotion -= 5
+        break
+      case "teach":
+        var replys = ["oooh", "you are so smart", "genius!!", "witchcraft!!"]           // 2+2=4; oooh, your are so smart
+        this.replying = true
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
+        this.level_emotion -= 15
+        break
+      case "joke": //==> Why did the boy bury his flashligth? because the baterries were dead; jajaja, :), it's funny!
+        var replys = ["jajaja", ":)", "it's funny!"]
+        this.replying = true
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
+        this.level_emotion -= 50
+        break
+      case "argue":          
         this.replying = true
         this.word_reply = "hola"
-        this.level_emotion -= 20
+        this.level_emotion += 5
         break
+      case "insult": //==> Idiot,           
+        this.replying = true
+        this.word_reply = "hola"
+        this.level_emotion += 30
+        break
+      case "threaten":  //==> I kill you!! 
+        var replys = ["No please!!", "Nooo", "Help!"]        
+        this.replying = true
+        this.word_reply = replys[Math.floor(Math.random() * replys.length)]
+        this.level_emotion += 100
+        break
+
+
+
       case "seguirme":
         this.replying = true
         this.word_reply = "voy"
@@ -157,7 +189,7 @@ Nanobot.prototype.analyze_msg = function(){
 *
 * Analyze the sound.
 */
-Nanobot.prototype.analyze_sound = function(){
+Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de las ultimas cuatro lineas no hace falta las mitad de las cosas
   if(this.array_frequency.length > 0){
     if(this.level_emotion < 100 || this.array_frequency[0] < 0)
       this.level_emotion += this.array_frequency.shift()
@@ -168,6 +200,11 @@ Nanobot.prototype.analyze_sound = function(){
   else if(this.level_emotion >= 0.0){
     this.level_emotion -= 0.1
   }
+
+  if(this.level_emotion > 100)
+    this.level_emotion = 100
+  if(this.level_emotion < 0)
+    this.level_emotion = 0
 }
 
 // Nanobot.prototype.analyze_level_emotion = function(){
@@ -260,7 +297,8 @@ Nanobot.prototype.draw = function(ctx){
       ctx.closePath();
       ctx.stroke()
     if(this.wave_aux < this.wave_lenght)
-      this.wave_aux+=20
+      this.wave_aux+=10
+
     else{
       this.talking = false
       this.wave_aux = 0
@@ -268,11 +306,14 @@ Nanobot.prototype.draw = function(ctx){
   }
 
   if(this.replying){
-   ctx.font = "bold 15px ubuntu";
-   ctx.fillStyle = "black"
-   ctx.fillText(this.word_reply, p.get_coord(0)+5, p.get_coord(1)-15);
-     if(this.wave_aux < this.wave_lenght)
-       this.wave_aux+=20
+    if(this.wave_aux>50){
+      ctx.font = "bold 15px ubuntu";
+      ctx.fillStyle = "black"
+      ctx.fillText(this.word_reply, p.get_coord(0)+5, p.get_coord(1)-15)
+    }
+     if(this.wave_aux < this.wave_lenght*1.5){
+       this.wave_aux+=5
+      }
      else{
        this.replying = false
        this.wave_aux = 0
