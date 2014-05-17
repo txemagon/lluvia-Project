@@ -54,7 +54,7 @@ function Boid(config_object, block){
 
                 force_limits: {
                     thrust: 20,
-                    steering: 50,
+                    steering: 250,
                     braking: 70
                 }
             }
@@ -379,8 +379,7 @@ Boid.prototype.globalize = function(){
  *
  * @return {}
  */
-Boid.prototype.visible_objects = function(){
-  alert(this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision).length) 
+Boid.prototype.visible_objects = function(){ 
     return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
 }
 

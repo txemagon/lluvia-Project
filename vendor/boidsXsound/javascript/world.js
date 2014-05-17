@@ -35,6 +35,7 @@ function World(screen, width, height){
   this.acceleration_max = 30
   this.velocity_max = 200
   this.boids = 0
+  this.path = []
 
   /* We have a HTMLElement, a string holding the id, or the page has a canvas */
 

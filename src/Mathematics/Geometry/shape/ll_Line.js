@@ -86,7 +86,7 @@ Line.get_intersection = function(line1, line2){
 		var ß = ((r1 - s1) + (vr1*(s0-r0))) / (vs1 - (vr1*(vs0/vr0)))
 
 		var intersection = line2.initial_point.add(line2.director.scale(ß))
-		
+		alert(intersection.toSource())
 		return intersection
 	}
 }
@@ -110,6 +110,126 @@ Line.intersects$U = function(line1, line2){
     if(line1.director.get_coord(0) / line1.director.get_coord(1) == line2.director.get_coord(0) / line2.director.get_coord(1))
         return false // Son paralelas    
     return true
+}
+
+/**
+* @method intersects_segment$U
+* @static
+*
+* Check if two lines intersect
+*
+* @param {Object} line1 First line for calculations
+* @param {Object} line2 Second line for calculations
+*
+* @return {Boolean}
+*
+* ###Example
+*    |
+*/
+Line.intersects_segment$U = function(line1, line2){
+	var line3 = new StraightLine(new Vector(3,5), new Vector(4,4))
+	var x_s1_max = 0
+	var x_s1_min = 0
+	var x_s2_max = 0
+	var x_s2_min = 0
+ 
+	var y_s1_max = 0
+	var y_s1_min = 0
+	var y_s2_max = 0
+	var y_s2_min = 0
+
+	if(line1.get_initial_point().get_coord(0) > line1.get_final_point().get_coord(0)){
+		x_s1_max = line1.get_initial_point().get_coord(0)
+		x_s1_min = line1.get_final_point().get_coord(0)
+	}
+	else{
+		x_s1_min = line1.get_initial_point().get_coord(0)
+		x_s1_max = line1.get_final_point().get_coord(0)
+	}
+
+
+	if(line1.get_initial_point().get_coord(1) > line1.get_final_point().get_coord(1)){
+		y_s1_max = line1.get_initial_point().get_coord(1)
+		y_s1_min = line1.get_final_point().get_coord(1)
+	}
+	else{
+		y_s1_min = line1.get_initial_point().get_coord(1)
+		y_s1_max = line1.get_final_point().get_coord(1)
+	}
+
+	if(line2.get_initial_point().get_coord(0) > line2.get_final_point().get_coord(0)){
+		x_s2_max = line2.get_initial_point().get_coord(0)
+		x_s2_min = line2.get_final_point().get_coord(0)
+	}
+	else{
+		x_s2_min = line2.get_initial_point().get_coord(0)
+		x_s2_max = line2.get_final_point().get_coord(0)
+	}
+
+	if(line2.get_initial_point().get_coord(1) > line2.get_final_point().get_coord(1)){
+		y_s2_max = line2.get_initial_point().get_coord(1)
+		y_s2_min = line2.get_final_point().get_coord(1)
+	}
+	else{
+		y_s2_min = line2.get_initial_point().get_coord(1)
+		y_s2_max = line2.get_final_point().get_coord(1)
+	}
+
+	if(x_s1_max < x_s2_min)
+		return false
+	else if(x_s1_min > x_s2_max)
+		return false
+	else if(y_s1_max < y_s2_min)
+		return false
+	else if(y_s1_min > y_s2_max)
+		return false
+
+	return true
+
+	//alert("Max: "+ x_s2_max +"; Min: "+ x_s2_min)
+
+
+	/*
+	// v(x,y,z)
+	var p1 = new Vector(line1.get_initial_point().get_coord(0), line1.get_initial_point().get_coord(1), 1)
+	var p2 = new Vector(line1.get_final_point().get_coord(0), line1.get_final_point().get_coord(1), 1)
+	var p3 = new Vector(line2.get_initial_point().get_coord(0), line2.get_initial_point().get_coord(1), 1)
+	var p4 = new Vector(line2.get_final_point().get_coord(0), line2.get_final_point().get_coord(1), 1)
+
+	var r1 = p3.subs(p1)
+	var r2 = p2.subs(p1)
+	var r = r1.cross(r2)
+	alert(r.toSource())
+*/
+	/*
+    if(Line.intersects$U(line1, line2)){
+    	var intersect_point = Line.get_intersection(line1, line2)
+    	//alert(intersect_point.toSource())
+    	if(point_in_segment(line2, intersect_point)){
+    		return true
+    	}
+    }
+    return false
+*/
+}
+
+function point_in_segment(line1, point){ // Solo funciona si todas las coordenadas son positivas, mejorar!!
+	var x1 = line1.get_initial_point().get_coord(0)
+	var x2 = line1.get_final_point().get_coord(0)
+	var xc = point.get_coord(0)
+	var y1 = line1.get_initial_point().get_coord(1)
+	var y2 = line1.get_final_point().get_coord(1)
+	var yc = point.get_coord(1)
+	//if(line1.get_initial_point().get_coord(0) <= point.get_coord(0) && line1.get_initial_point().get_coord(1) <= point.get_coord(1) && line1.get_final_point().get_coord(0) >= point.get_coord(0) && line1.get_final_point().get_coord(1) >= point.get_coord(1))
+	//alert(xc)
+	if(x1 <= xc && x2 >= xc || y1 <= yc && y2 >= yc)
+	//alert(x1 +";,;"+xc)
+	//if(xc < x1 && xc < x2 || xc > x1  && xc > x2)
+		return true
+	return false
+
+	// Si xc < x1  && xc < x2     ||    xc > x1  && xc > x2 => no hay corte
+	// Caso contrario => Hay corte.
 }
 
 /**

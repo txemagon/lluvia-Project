@@ -32,6 +32,23 @@ function ContainmentBehavior(){
   Behavior.apply(this, arguments)
 }
 
+ContainmentBehavior.prototype.desired_acceleration = function(){
+  var p = this.me.geo_data.position
+  var v = this.me.geo_data.velocity
+  var path = this.me.my_world.path
+  v = v.scale(2)
+  var l2 = new StraightLine(new Vector(p.get_coord(0), p.get_coord(1)), new Vector(p.get_coord(0) + v[0], p.get_coord(1) + v[1])) 
+
+  for(var i=0; i<path.length; i++){
+    var l1 = path[i]
+    if(Line.intersects_segment$U(l1,l2)){
+      var acceleration = new Vector(v[1]*(-1), v[0]).scale(5)
+      return acceleration
+  }
+}
+  return new Vector(0,0)
+}
+
 /**
  * @class SeparationBehavior
  *
@@ -70,7 +87,7 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     y += target_at.get_coord(1)
     count++
   })
-  
+
   return new Vector(x/count, y/count).scale(-1)
 }
 

@@ -67,7 +67,10 @@ $K_dependencies = [
 		files: [
 			{name: "ll_Expression.js",   description: "Physics Vectors."},
 			{name: "ll_func.js",   description: "Physics Vectors."},
-			{name: "Geometry/ll_Vector.js",   description: "Physics Vectors."}
+			{name: "Geometry/ll_Vector.js",   description: "Physics Vectors."},
+			{name: "Geometry/shape/ll_Line.js",   description: ""},
+			{name: "Geometry/shape/ll_StraightLine.js",   description: ""},
+			{name: "Geometry/shape/ll_Path.js",   description: ""},
 		]
 	}
 

@@ -18,6 +18,7 @@ function main(){
 
   c=document.getElementById("face");
   cxt=c.getContext("2d");
+  /*
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(200, 200),
                                         velocity: new Vector(0, 0),
@@ -25,11 +26,11 @@ var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                       }})
 
 var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
-                                        position: new Vector(200, 200),
+                                        position: new Vector(400, 200),
                                         velocity: new Vector(0, 0),
                                         acceleration: new Vector(0, 0)
                                       }})
-
+*/
 /*
      var seeker = []
     var t = w.new_boid_of(Nanobot, function(config) {
@@ -53,21 +54,34 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
 
    first.brain.activate('seek', t)
 */
+  var l1 = new StraightLine(new Vector(0,0), new Vector(550,0))
+  var l2 = new StraightLine(new Vector(550,0), new Vector(550,400))
+  var l3 = new StraightLine(new Vector(0,400), new Vector(550,400))
+  var l4 = new StraightLine(new Vector(0,400), new Vector(0,0))
+  
+  w.path.push(l1,l2,l3,l4)
+
+
+for(var i=0; i<6;i++){
+  w.new_boid_of(Nanobot, function(config) {
+    config.geo_data = {
+                                        position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+                                        velocity: new Vector(30,0),
+                                        acceleration: new Vector(0, 0)}
+       config.brain.activate('containment')
+       config.brain.activate('wander')
+     })
+}
+
 
 /*
-  var t = w.new_boid_of(Nanobot, function(config) {
-       config.brain.activate('seek', speaker)
-     })
-*/
-
-
 for(var i=0;i<10; i++)
   w.new_boid_of(Nanobot, function(config){ config.geo_data = {
                                         position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
                                         velocity: new Vector(0, 0),
                                         acceleration: new Vector(0, 0)
                                       }})
-
+*/
 
   w.start()
 }
