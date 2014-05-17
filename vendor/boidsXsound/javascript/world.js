@@ -298,6 +298,37 @@ World.prototype.draw = function(){
   var that = this
   var ctx = this.screen[0].context
   ctx.clearRect(0,0,550,400)
+  ctx.beginPath()
+  // Cuadrado1
+  ctx.moveTo(75,75)
+  ctx.lineTo(175,75)
+  ctx.lineTo(175,175)
+  ctx.lineTo(75,175)
+  ctx.lineTo(75,75)
+
+  // Cuadrado2
+  ctx.moveTo(75,225)
+  ctx.lineTo(175,225)
+  ctx.lineTo(175,325)
+  ctx.lineTo(75,325)
+  ctx.lineTo(75,225)
+
+  // Cuadrado3
+  ctx.moveTo(375, 75)
+  ctx.lineTo(475, 75)
+  ctx.lineTo(475,175)
+  ctx.lineTo(375,175)
+  ctx.lineTo(375, 75)
+  
+  // Cuadrado4
+  ctx.moveTo(375,225)
+  ctx.lineTo(475,225)
+  ctx.lineTo(475,325)
+  ctx.lineTo(375,325)
+  ctx.lineTo(375,225)
+
+  ctx.closePath()
+  ctx.stroke()
   this.get_boids().each( function(el) {
     el.draw(ctx)
   })
