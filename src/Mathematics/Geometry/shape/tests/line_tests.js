@@ -1,3 +1,12 @@
+assert("Calcular si dos segmentos se cortan.", 
+  "Line.intersects_segment$U(l1, l2)", 'true',
+  'l1 = new StraightLine(new Vector(1,1), new Vector(3,1));  \
+   l2 = new StraightLine(new Vector(1,0), new Vector(1,2));')
+
+assert("Calcular si dos segmentos no se cortan.", 
+  "Line.intersects_segment$U(l1, l2)", 'false',
+  'l1 = new StraightLine(new Vector(1,5), new Vector(3,5));  \
+   l2 = new StraightLine(new Vector(1,0), new Vector(1,2));')
 
 assert("Calculate the slope of a line.",
     "m", '-0.5',

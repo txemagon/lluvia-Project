@@ -113,6 +113,38 @@ Line.intersects$U = function(line1, line2){
 }
 
 /**
+* @method intersects_segment$U
+* @static
+*
+* Check if two lines intersect
+*
+* @param {Object} line1 First line for calculations
+* @param {Object} line2 Second line for calculations
+*
+* @return {Boolean}
+*
+* ###Example
+*    |
+*/
+Line.intersects_segment$U = function(line1, line2){
+    //Primero saber si se cortan - HECHO
+    //Averiguar donde se cortan - HECHO
+    //Comprobar si ese punto esta dentro de los ssegmentos - HECHO
+    if(Line.intersects$U(line1, line2)){
+    	var intersect_point = Line.get_intersection(line1, line2)
+    	if(point_in_segment(line1, intersect_point) && point_in_segment(line2, intersect_point))
+    		return true
+    }
+    return false
+}
+
+function point_in_segment(line1, point){ // Solo funciona si todas las coordenadas son positivas, mejorar!!
+	if(line1.get_initial_point().get_coord(0) <= point.get_coord(0) && line1.get_initial_point().get_coord(1) <= point.get_coord(1) && line1.get_final_point().get_coord(0) >= point.get_coord(0) && line1.get_final_point().get_coord(1) >= point.get_coord(1))
+		return true
+	return false
+}
+
+/**
 * @method slope line
 * @static
 *
