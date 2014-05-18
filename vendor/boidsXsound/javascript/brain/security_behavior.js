@@ -36,13 +36,13 @@ ContainmentBehavior.prototype.desired_acceleration = function(){
   var p = this.me.geo_data.position
   var v = this.me.geo_data.velocity
   var path = this.me.my_world.path
-  v = v.scale(2)
-  var l2 = new StraightLine(new Vector(p.get_coord(0), p.get_coord(1)), new Vector(p.get_coord(0) + v[0], p.get_coord(1) + v[1])) 
+  //v = v.scale(1)
+  var l2 = new StraightLine(new Vector(p.get_coord(0), p.get_coord(1)), new Vector(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))) 
 
   for(var i=0; i<path.length; i++){
     var l1 = path[i]
     if(Line.intersects_segment$U(l1,l2)){
-      var acceleration = new Vector(v[1]*(-1), v[0]).scale(5)
+      var acceleration = new Vector(-v.get_coord(1), v.get_coord(0)).scale(5)
       return acceleration
   }
 }

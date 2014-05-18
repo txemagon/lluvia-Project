@@ -39,32 +39,34 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
 
   // Primer cuadrado
   var a1 = new StraightLine(new Vector(75,75), new Vector(175,75))
-  var a2 = new StraightLine(new Vector(175,75), new Vector(175,175))
-  var a3 = new StraightLine(new Vector(175,175), new Vector(75,175))
-  var a4 = new StraightLine(new Vector(75,175), new Vector(75,75))
+  var a2 = new StraightLine(new Vector(175,75), new Vector(75,175))
+  var a3 = new StraightLine(new Vector(75,175), new Vector(75,75))
 
-  var b1 = new StraightLine(new Vector(75,225), new Vector(175,225))
-  var b2 = new StraightLine(new Vector(175,225), new Vector(175,325))
-  var b3 = new StraightLine(new Vector(175,325), new Vector(75,325))
-  var b4 = new StraightLine(new Vector(75,325), new Vector(75,225))
+  var b1 = new StraightLine(new Vector(75,225), new Vector(175,325))
+  var b2 = new StraightLine(new Vector(175,325), new Vector(75,325))
+  var b3 = new StraightLine(new Vector(75,325), new Vector(75,225))
 
   var c1 = new StraightLine(new Vector(375, 75), new Vector(475, 75))
   var c2 = new StraightLine(new Vector(475, 75), new Vector(475,175))
-  var c3 = new StraightLine(new Vector(475,175), new Vector(375,175))
-  var c4 = new StraightLine(new Vector(375,175), new Vector(375, 75))
+  var c3 = new StraightLine(new Vector(475,175), new Vector(375, 75))
 
-  var d1 = new StraightLine(new Vector(375,225), new Vector(475,225))
-  var d2 = new StraightLine(new Vector(475,225), new Vector(475,325))
-  var d3 = new StraightLine(new Vector(475,325), new Vector(375,325))
-  var d4 = new StraightLine(new Vector(375,325), new Vector(375,225))
-  
-  w.path.push(l1,l2,l3,l4, a1,a2,a3,a4, b1,b2,b3,b4, c1,c2,c3,c4, d1,d2,d3,d4)
+  var d1 = new StraightLine(new Vector(475,225), new Vector(475,325))
+  var d2 = new StraightLine(new Vector(475,325), new Vector(375,325))
+  var d3 = new StraightLine(new Vector(375,325), new Vector(475,225))
+
+  var r1 = new StraightLine(new Vector(275,125), new Vector(225,200))
+  var r2 = new StraightLine(new Vector(225,200), new Vector(275,275))
+  var r3 = new StraightLine(new Vector(275,275), new Vector(325,200)) 
+  var r4 = new StraightLine(new Vector(325,200), new Vector(275,125))
+
+
+  w.path.push(l1,l2,l3,l4, a1,a2,a3, b1,b2,b3, c1,c2,c3, d1,d2,d3, r1,r2,r3,r4)
 
 
 for(var i=0; i<5;i++){
   w.new_boid_of(Nanobot, function(config) {
     config.geo_data = {
-                                        position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+                                        position: new Vector(200, 200),
                                         velocity: new Vector(30,0),
                                         acceleration: new Vector(0, 0)}
        config.brain.activate('containment')

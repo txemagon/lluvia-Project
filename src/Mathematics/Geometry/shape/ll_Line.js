@@ -89,6 +89,24 @@ Line.get_intersection = function(line1, line2){
 		alert(intersection.toSource())
 		return intersection
 	}
+
+	// var x1 = line1.get_initial_point().get_coord(0) - 0.0001
+	// var y1 = line1.get_initial_point().get_coord(1)
+	// var x2 = line1.get_final_point().get_coord(0)
+	// var y2 = line1.get_final_point().get_coord(1)
+	
+	// var A1 = (y2-y1)/(x2-x1)
+	// var B1 =  line1.get_initial_point().get_coord(1) - (A1*line1.get_initial_point().get_coord(0))
+
+	// var A2 = (line2.get_final_point().get_coord(1)-line2.get_initial_point().get_coord(1))/(line2.get_final_point().get_coord(0)-line2.get_initial_point().get_coord(0))
+	// var B2 =  line2.get_initial_point().get_coord(1) - (A2*line2.get_initial_point().get_coord(0))
+
+
+	// var Xc = (B2-B1)/(A1-A2)
+	// var Yc = (A1*Xc) + B1
+
+	// return new Vector(Xc, Yc)
+
 }
 
 

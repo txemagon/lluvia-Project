@@ -302,13 +302,11 @@ World.prototype.draw = function(){
   // Cuadrado1
   ctx.moveTo(75,75)
   ctx.lineTo(175,75)
-  ctx.lineTo(175,175)
   ctx.lineTo(75,175)
   ctx.lineTo(75,75)
 
   // Cuadrado2
   ctx.moveTo(75,225)
-  ctx.lineTo(175,225)
   ctx.lineTo(175,325)
   ctx.lineTo(75,325)
   ctx.lineTo(75,225)
@@ -317,15 +315,24 @@ World.prototype.draw = function(){
   ctx.moveTo(375, 75)
   ctx.lineTo(475, 75)
   ctx.lineTo(475,175)
-  ctx.lineTo(375,175)
   ctx.lineTo(375, 75)
   
   // Cuadrado4
-  ctx.moveTo(375,225)
-  ctx.lineTo(475,225)
+  ctx.moveTo(475,225)
   ctx.lineTo(475,325)
   ctx.lineTo(375,325)
-  ctx.lineTo(375,225)
+  ctx.lineTo(475,225)
+
+
+ctx.moveTo(275,125)
+//ctx.lineTo(275,325)
+ctx.lineTo(225,200)
+ctx.lineTo(275,275)
+ctx.lineTo(325,200)
+ctx.lineTo(275,125)
+
+
+
 
   ctx.closePath()
   ctx.stroke()

@@ -54,7 +54,7 @@ function Boid(config_object, block){
 
                 force_limits: {
                     thrust: 20,
-                    steering: 250,
+                    steering: 550,
                     braking: 70
                 }
             }
