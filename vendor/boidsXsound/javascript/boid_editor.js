@@ -1,4 +1,4 @@
-/**
+/*
  * @classDescription Creates a dashboard for handling one boid.
  *
  * @param  {view} Button holder panel.
@@ -13,12 +13,14 @@ BoidEditor.prototype.constructor = BoidEditor
 function BoidEditor(view){
   var that = this
   var args = arguments
+
   /* Events */
   this.self_events = []
   
   function initialize(){
     Device.call(that, view)
 
+    that.newGate("text_lcd2", LcdText)
     // Speaker options    
     that.newGate("button_on", Gate, {
       do_onclick     : function(){ actual_boid.on()},
@@ -168,12 +170,12 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   actual_boid = mssg.event.focus_boid.data
 
   if(actual_boid instanceof Speaker){
-  text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" + 
-                         "Pos (x,y): (" +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]*10)/10 + "," + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*10)/10 + ") <br/>" +
-                         "This on: " + mssg.event.focus_boid.data.this_on + "<br/>" +
-                         "Wave lenght: " + mssg.event.focus_boid.data.wave_lenght + "<br/>" +
-                         "Frequency: " + Math.round(actual_boid.get_frequency_music()*100)/100 + "<br/>" +
-                         "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
+  // text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" + 
+  //                        "Pos (x,y): (" +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]*10)/10 + "," + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1]*10)/10 + ") <br/>" +
+  //                        "This on: " + mssg.event.focus_boid.data.this_on + "<br/>" +
+  //                        "Wave lenght: " + mssg.event.focus_boid.data.wave_lenght + "<br/>" +
+  //                        "Frequency: " + Math.round(actual_boid.get_frequency_music()*100)/100 + "<br/>" +
+  //                        "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
 
     text_lcd2.style.visibility       = "visible"
     talk_options.style.visibility    = "hidden"
@@ -183,12 +185,12 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   }
 
   if(actual_boid instanceof Nanobot){
-      text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" +
-                             //"Id: " + mssg.event.focus_boid.data.id + "<br/>" +
-                             "Level emotion: " + Math.round(mssg.event.focus_boid.data.level_emotion) + "<br/>" +
-                             "Behaviour: " + mssg.event.focus_boid.data.brain + "<br/>" + 
-                             "Pos (x,y): (" +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]) + "," + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1])+ ")" + "<br/>" + "<br/>" +
-                             "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
+      // text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" +
+      //                        //"Id: " + mssg.event.focus_boid.data.id + "<br/>" +
+      //                        "Level emotion: " + Math.round(mssg.event.focus_boid.data.level_emotion) + "<br/>" +
+      //                        "Behaviour: " + mssg.event.focus_boid.data.brain + "<br/>" + 
+      //                        "Pos (x,y): (" +  Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[0]) + "," + Math.round(mssg.event.focus_boid.data.geo_data.position.Coord[1])+ ")" + "<br/>" + "<br/>" +
+      //                        "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
 
     text_lcd2.style.visibility       = "visible"
     talk_options.style.visibility    = "hidden"
@@ -198,6 +200,32 @@ BoidEditor.prototype.attend_focus_boid = function(date, mssg){
   }
 
   mssg.current++
+}
+
+
+LcdText.prototype = new Gate
+LcdText.prototype.constructor = LcdText
+
+function LcdText(element){
+  var that = this
+  this.name = element
+
+  function initialize(){
+    try{
+      if(element){
+        that.element = element
+        that[element] = {}
+        Gate.call(that, element)
+        that[element].lcd_automata = that.new_effect(new LcdAutomata(that.device, that))
+      }
+    } catch(e){
+        if ($K_debug_level >= $KC_dl.DEVELOPER)
+          alert("No event handlers were found.\nException: " + e.toSource())
+    }
+  }
+
+  if(arguments.length)
+    initialize()
 }
 
 /*

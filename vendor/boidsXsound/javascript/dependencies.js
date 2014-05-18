@@ -35,6 +35,7 @@ files: [
 //			{ name: "face_animation.js",           description: "" },
 			{ name: "face_device.js",              description: "" },
 			{ name: "face_gate.js",                description: "" },
+			{ name: "lcd_automata.js",    description: "" },
 			{ name: "face_automata_message.js",    description: "" },
 			{ name: "face_automata_outline.js",    description: "" },
 			{ name: "face_automata_eyes.js",       description: "" },

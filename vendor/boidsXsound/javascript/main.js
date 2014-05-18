@@ -18,12 +18,12 @@ function main(){
 
   c=document.getElementById("face");
   cxt=c.getContext("2d");
-  /*
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(200, 200),
                                         velocity: new Vector(0, 0),
                                         acceleration: new Vector(0, 0)
                                       }})
+  /*
 
 var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(400, 200),
