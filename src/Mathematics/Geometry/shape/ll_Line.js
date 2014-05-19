@@ -145,63 +145,88 @@ Line.intersects$U = function(line1, line2){
 *    |
 */
 Line.intersects_segment$U = function(line1, line2){
-	var x_s1_max = 0
-	var x_s1_min = 0
-	var x_s2_max = 0
-	var x_s2_min = 0
+	var x1 = line1.get_initial_point().get_coord(0) 
+	var y1 = line1.get_initial_point().get_coord(1)
+	var x2 = line1.get_final_point().get_coord(0)
+	var y2 = line1.get_final_point().get_coord(1)
+	var x3 = line2.get_initial_point().get_coord(0)
+	var y3 = line2.get_initial_point().get_coord(1)
+	var x4 = line2.get_final_point().get_coord(0)
+	var y4 = line2.get_final_point().get_coord(1)
+
+    var s1_x = x2-x1
+    var s1_y = y2-y1
+    var s2_x = x4-x3
+    var s2_y = y4-y3
  
-	var y_s1_max = 0
-	var y_s1_min = 0
-	var y_s2_max = 0
-	var y_s2_min = 0
+    var s = (-s1_y*(x1-x3)+s1_x*(y1-y3))/(-s2_x*s1_y+s1_x*s2_y)
+    var t = (s2_x*(y1-y3)-s2_y*(x1-x3))/(-s2_x*s1_y+s1_x*s2_y)
 
-	if(line1.get_initial_point().get_coord(0) > line1.get_final_point().get_coord(0)){
-		x_s1_max = line1.get_initial_point().get_coord(0)
-		x_s1_min = line1.get_final_point().get_coord(0)
-	}
-	else{
-		x_s1_min = line1.get_initial_point().get_coord(0)
-		x_s1_max = line1.get_final_point().get_coord(0)
-	}
+    if (s >= 0 && s <= 1 && t >= 0 && t <= 1){
+        var X = x1+(t*s1_x)
+        var Y = y1+(t*s1_y)
+        //alert(X+","+Y)
+        return new Vector(X, Y)
+    }
+    return false
+
+	// var x_s1_max = 0
+	// var x_s1_min = 0
+	// var x_s2_max = 0
+	// var x_s2_min = 0
+ 
+	// var y_s1_max = 0
+	// var y_s1_min = 0
+	// var y_s2_max = 0
+	// var y_s2_min = 0
+
+	// if(line1.get_initial_point().get_coord(0) > line1.get_final_point().get_coord(0)){
+	// 	x_s1_max = line1.get_initial_point().get_coord(0)
+	// 	x_s1_min = line1.get_final_point().get_coord(0)
+	// }
+	// else{
+	// 	x_s1_min = line1.get_initial_point().get_coord(0)
+	// 	x_s1_max = line1.get_final_point().get_coord(0)
+	// }
 
 
-	if(line1.get_initial_point().get_coord(1) > line1.get_final_point().get_coord(1)){
-		y_s1_max = line1.get_initial_point().get_coord(1)
-		y_s1_min = line1.get_final_point().get_coord(1)
-	}
-	else{
-		y_s1_min = line1.get_initial_point().get_coord(1)
-		y_s1_max = line1.get_final_point().get_coord(1)
-	}
+	// if(line1.get_initial_point().get_coord(1) > line1.get_final_point().get_coord(1)){
+	// 	y_s1_max = line1.get_initial_point().get_coord(1)
+	// 	y_s1_min = line1.get_final_point().get_coord(1)
+	// }
+	// else{
+	// 	y_s1_min = line1.get_initial_point().get_coord(1)
+	// 	y_s1_max = line1.get_final_point().get_coord(1)
+	// }
 
-	if(line2.get_initial_point().get_coord(0) > line2.get_final_point().get_coord(0)){
-		x_s2_max = line2.get_initial_point().get_coord(0)
-		x_s2_min = line2.get_final_point().get_coord(0)
-	}
-	else{
-		x_s2_min = line2.get_initial_point().get_coord(0)
-		x_s2_max = line2.get_final_point().get_coord(0)
-	}
+	// if(line2.get_initial_point().get_coord(0) > line2.get_final_point().get_coord(0)){
+	// 	x_s2_max = line2.get_initial_point().get_coord(0)
+	// 	x_s2_min = line2.get_final_point().get_coord(0)
+	// }
+	// else{
+	// 	x_s2_min = line2.get_initial_point().get_coord(0)
+	// 	x_s2_max = line2.get_final_point().get_coord(0)
+	// }
 
-	if(line2.get_initial_point().get_coord(1) > line2.get_final_point().get_coord(1)){
-		y_s2_max = line2.get_initial_point().get_coord(1)
-		y_s2_min = line2.get_final_point().get_coord(1)
-	}
-	else{
-		y_s2_min = line2.get_initial_point().get_coord(1)
-		y_s2_max = line2.get_final_point().get_coord(1)
-	}
+	// if(line2.get_initial_point().get_coord(1) > line2.get_final_point().get_coord(1)){
+	// 	y_s2_max = line2.get_initial_point().get_coord(1)
+	// 	y_s2_min = line2.get_final_point().get_coord(1)
+	// }
+	// else{
+	// 	y_s2_min = line2.get_initial_point().get_coord(1)
+	// 	y_s2_max = line2.get_final_point().get_coord(1)
+	// }
 
-	if(x_s1_max < x_s2_min)
-		return false
-	else if(x_s1_min > x_s2_max)
-		return false
-	else if(y_s1_max < y_s2_min)
-		return false
-	else if(y_s1_min > y_s2_max)
-		return false
+	// if(x_s1_max < x_s2_min)
+	// 	return false
+	// else if(x_s1_min > x_s2_max)
+	// 	return false
+	// else if(y_s1_max < y_s2_min)
+	// 	return false
+	// else if(y_s1_min > y_s2_max)
+	// 	return false
 
-	return true
+	// return true
 }
 
 /**

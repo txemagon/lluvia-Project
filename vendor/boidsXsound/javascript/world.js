@@ -299,7 +299,8 @@ World.prototype.draw = function(){
   var ctx = this.screen[0].context
   ctx.clearRect(0,0,550,400)
   ctx.beginPath()
-  // Cuadrado1
+ 
+ // Cuadrado1  
   ctx.moveTo(75,75)
   ctx.lineTo(175,75)
   ctx.lineTo(75,175)
