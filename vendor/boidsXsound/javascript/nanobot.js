@@ -130,7 +130,7 @@ Nanobot.prototype.set_msg = function(new_msg){
 Nanobot.prototype.analyze_msg = function(){
   if(this.array_msg.length > 0){
     switch (this.array_msg[0].word){
-      case "greet": 
+      case "hello": 
         var replys = ["hello", "hi", "what's up", "how are you", "nice to meet you"]
         this.replying = true
         this.word_reply = replys[Math.floor(Math.random() * replys.length)]
