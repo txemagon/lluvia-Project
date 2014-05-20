@@ -84,7 +84,7 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     count++
   })
 
-  return new Vector(x/count, y/count).scale(-1)
+  return new Vector(x/count, y/count).scale(-1/Math.pow(this.me.vision.radius,2))
 }
 
 /**
@@ -134,11 +134,8 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
     return new Vector(0, 0)
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
-  //alert(velocity.Coord)
-  //alert(desired_velocity.subs(velocity))
 
   return desired_velocity.subs(velocity)
-  //return new Vector(0, 0)
 }
 
 
@@ -170,18 +167,37 @@ function CohesionBehavior(){
  * @return {Vector}  Returns a vector with the boid's desired acceleration
  */
 CohesionBehavior.prototype.desired_acceleration = function(){
+    var that = this
+  var x = 0
+  var y = 0
+  var count = 0
+  
+  this.me.visible_objects().each( function(boid){
+    var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
+    x += target_at.get_coord(0)
+    y += target_at.get_coord(1)
+    count++
+  })
+ 
+  return new Vector(x/count, y/count)
+/*
   var x = 0
   var y = 0
   var count = 0
   this.me.visible_objects().each( function(boid){
-   var direction = boid.position
-      x += direction.get_cord(0)
-      y += direction.get_cord(1)
-      count++
+   try {
+    var direction = boid.geo_data.position
+    x += direction.get_coord(0)
+    y += direction.get_coord(1)
+    count++
+ }catch(e){
+    alert("Something went wrong when calculating heading for boid " + boid.id)
+ }
   })
   var velocity = this.me.geo_data.velocity
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 
   return desired_velocity.subs(velocity)
+  */
 }
 
