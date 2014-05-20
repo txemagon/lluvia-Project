@@ -55,6 +55,7 @@ Brain.prototype.can_be_in$U = function(behavior){
  * @param {Object} [target]   Direct object of behavior verb.
  */
 Brain.prototype.activate = function(behavior, target_after){
+   this.behavior = behavior
    var verbose_behavior = Behavior.decompose_name(behavior)
    behavior = verbose_behavior[1]
 

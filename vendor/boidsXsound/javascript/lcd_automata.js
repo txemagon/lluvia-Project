@@ -80,7 +80,7 @@ if(actual_boid instanceof Nanobot){
 text_lcd2.innerHTML =  "<div style='margin:0px 0 0 10px;'><big><big>Information</big></big>" + "<br/></div>" +
                              //"Id: " + mssg.event.focus_boid.data.id + "<br/>" +
                              "Level emotion: " + Math.round(actual_boid.level_emotion) + "<br/>" +
-                             "Behaviour: " + actual_boid.brain + "<br/>" + 
+                             "Behaviour: " + actual_boid.brain.behavior + "<br/>" + 
                              "Pos (x,y): (" +  Math.round(actual_boid.geo_data.position.Coord[0]) + "," + Math.round(actual_boid.geo_data.position.Coord[1])+ ")" + "<br/>" + "<br/>" +
                              "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
 }
