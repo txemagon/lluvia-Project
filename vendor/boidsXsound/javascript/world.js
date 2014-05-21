@@ -454,6 +454,7 @@ World.prototype.running_steady = function(processors_time){
  *
  *
  */
+ /*
 World.prototype.visible_for = function(position, heading, vision){
  var that = this
 
@@ -468,6 +469,24 @@ World.prototype.visible_for = function(position, heading, vision){
    visible.push(boid)
  })
  return visible
+}
+*/
+World.prototype.visible_for = function(position, heading, vision_object){
+    var that = this
+    var radius = vision_object.radius
+    var vision =  radius * radius
+    var visible = []
+    var x1 = position.get_coord(0)
+    var y1 = position.get_coord(1)
+    this.each_boid(function (boid){
+        var dx = boid.geo_data.position.get_coord(0) - x1
+        var dy = boid.geo_data.position.get_coord(1) - y1
+          //alert(heading.angle(new Vector(dx, dy) < vision_object.angle)
+        if ( dx * dx + dy * dy < vision && heading.angle(new Vector(dx, dy)) < vision_object.angle ) 
+            visible.push(boid)
+    })
+
+    return visible
 }
 
 /**

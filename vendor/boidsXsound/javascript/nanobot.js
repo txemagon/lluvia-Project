@@ -251,6 +251,7 @@ Nanobot.prototype.draw = function(ctx){
   var hue = (this.level_emotion * 2.4)+120
 
   var p = this.geo_data.position
+  var v = this.geo_data.velocity
   var a = 'hsl(' + hue + ', 100%, 36%)';
   ctx.fillStyle = a
   ctx.strokeStyle = "black"
@@ -272,6 +273,9 @@ Nanobot.prototype.draw = function(ctx){
   ctx.fill();  
   // Fin pintar cuerpo
 */
+
+
+
   ctx.beginPath();
   ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
   ctx.closePath();
@@ -287,6 +291,13 @@ Nanobot.prototype.draw = function(ctx){
     ctx.closePath();
     ctx.stroke()
     ctx.strokeStyle = "black"
+
+     ctx.beginPath();
+     ctx.moveTo(p.get_coord(0), p.get_coord(1))
+     ctx.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
+
+      // set line color
+      ctx.stroke();
   }
 
   if(this.talking){

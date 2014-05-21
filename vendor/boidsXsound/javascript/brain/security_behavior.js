@@ -80,13 +80,13 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     var r = target_at.module() || 1
-    r /= 20
+    r /= 60
     x += target_at.get_coord(0) / r
     y += target_at.get_coord(1) / r
     count++
   })
 
-  return new Vector(-x/count, -y/count) // .scale(-1/Math.pow(this.me.vision.radius,2))
+  return new Vector(-x/count, -y/count) 
 }
 
 /**
@@ -182,24 +182,5 @@ CohesionBehavior.prototype.desired_acceleration = function(){
   })
  
   return new Vector(x/count, y/count)
-/*
-  var x = 0
-  var y = 0
-  var count = 0
-  this.me.visible_objects().each( function(boid){
-   try {
-    var direction = boid.geo_data.position
-    x += direction.get_coord(0)
-    y += direction.get_coord(1)
-    count++
- }catch(e){
-    alert("Something went wrong when calculating heading for boid " + boid.id)
- }
-  })
-  var velocity = this.me.geo_data.velocity
-  var desired_velocity = velocity.projection(new Vector(x/count, y/count))
-
-  return desired_velocity.subs(velocity)
-  */
 }
 
