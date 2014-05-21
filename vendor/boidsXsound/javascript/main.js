@@ -72,12 +72,12 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                           velocity: new Vector(30,30),
                                           acceleration: new Vector(0, 0)}
 
-        config.brain.activate('containment')
-        //config.brain.activate('wander')
+        // config.brain.activate('containment')
+        // //config.brain.activate('wander')
 
-        config.brain.activate('alignment')
-        config.brain.activate('separation')
-        config.brain.activate('cohesion')
+        // config.brain.activate('alignment')
+        // config.brain.activate('separation')
+        // config.brain.activate('cohesion')
 
        })
   }

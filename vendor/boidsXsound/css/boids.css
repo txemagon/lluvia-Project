@@ -336,6 +336,13 @@ body{
             cursor: pointer;
         }
 
+        #back_button_games{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 130px 0 0 28px;
+        }
+
 #button_orders{
   width: 168px;
   height: 60px;
