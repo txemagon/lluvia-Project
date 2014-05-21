@@ -79,12 +79,14 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
-    x += target_at.get_coord(0)
-    y += target_at.get_coord(1)
+    var r = target_at.module() || 1
+    r /= 20
+    x += target_at.get_coord(0) / r
+    y += target_at.get_coord(1) / r
     count++
   })
 
-  return new Vector(x/count, y/count).scale(-1/Math.pow(this.me.vision.radius,2))
+  return new Vector(-x/count, -y/count) // .scale(-1/Math.pow(this.me.vision.radius,2))
 }
 
 /**
