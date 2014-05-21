@@ -292,6 +292,50 @@ body{
   margin: -155px 0 0 110px;
 }
 
+    #games_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #games_initial_msg{
+            width: 100%;
+            padding: 13px 0 0 34px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 14px;
+            cursor: pointer;
+        }        
+
+        #ring_around_the_rosey{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #conga{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #tag{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
 #button_orders{
   width: 168px;
   height: 60px;

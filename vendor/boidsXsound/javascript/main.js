@@ -64,17 +64,17 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
  w.path.push(l1,l2,l3,l4, a1,a2,a3, b1,b2,b3, c1,c2,c3, d1,d2,d3, r1,r2,r3,r4)
 
 
-  for(var i=0; i<6;i++){
+  for(var i=0; i<10;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                                           position: new Vector(Math.random()*50, Math.random()*100), // 210, 100
                                           velocity: new Vector(20,20),
                                           acceleration: new Vector(0, 0)}
-         config.brain.activate('containment')
-        //config.brain.activate('wander')
+        // config.brain.activate('containment')
+        // config.brain.activate('wander')
         //config.brain.activate('alignment')
-        // config.brain.activate('separation')
-        // config.brain.activate('cohesion')
+        config.brain.activate('separation')
+        //config.brain.activate('cohesion')
        })
   }
   w.start()

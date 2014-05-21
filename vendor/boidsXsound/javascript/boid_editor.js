@@ -49,6 +49,7 @@ function BoidEditor(view){
     that.newGate("button_talk", Gate, {
       do_onclick     : function(){ text_lcd2.style.visibility = "hidden"
                                    nanobot_buttons.style.visibility = "hidden"
+                                   games_options.style.visibility = "hidden"
                                    talk_options.style.visibility = "visible"
 
                                    talk_initial_msg.innerHTML = "<big><big>Talk options</big></big>"
@@ -103,16 +104,56 @@ function BoidEditor(view){
     that.newGate("back_button", Gate, {
       do_onclick     : function(){ text_lcd2.style.visibility = "visible"
                                    nanobot_buttons.style.visibility = "visible"
-                                   talk_options.style.visibility = "hidden" },
+                                   talk_options.style.visibility = "hidden"
+                                   games_options.style.visibility = "hidden" },
       do_onmouseover : function(){ back_button.src = "images/button_back_select.png" },
       do_onmouseout  : function(){ back_button.src = "images/button_back.png" }
     })
 
 
     that.newGate("button_games", Gate, {
-      do_onclick     : function(){},
+      do_onclick     : function(){ text_lcd2.style.visibility = "hidden"
+                                   nanobot_buttons.style.visibility = "hidden"
+                                   talk_options.style.visibility = "hidden" 
+                                   games_options.style.visibility = "visible"
+
+                                   games_initial_msg.innerHTML = "<big><big>Orders options</big></big>"
+                                   ring_around_the_rosey.innerHTML = "1. Ring around"
+                                   conga.innerHTML                 = "2. Conga"
+                                   tag.innerHTML                   = "3. Tag" 
+
+                                   },
       do_onmouseover : function(){ button_games.src = "images/button_games_select.png" },
       do_onmouseout  : function(){ button_games.src = "images/button_games.png" }
+    })
+
+    that.newGate("ring_around_the_rosey", Gate, {
+      do_onclick     : function(){  var original_vision = actual_boid.vision.radius
+                                    actual_boid.vision.radius = 100000
+                                    var array_boids = actual_boid.visible_objects()
+
+                                    for(var i=0; i<array_boids.length; i++){
+                                      //array_boids[i].brain.activate('seek', array_boids[0])
+                                      array_boids[i].activate('seek',array_boids[0])
+                                    }
+                                    //alert(2)
+                                   // array_boids[array_boids.length-1].brain.activate('seek', array_boids[0])
+                                    //actual_boid.vision.radius = original_vision
+                                  },
+      do_onmouseover : function(){ ring_around_the_rosey.style.fontSize = "18px" },
+      do_onmouseout  : function(){ ring_around_the_rosey.style.fontSize = "15px" }
+    })
+
+    that.newGate("conga", Gate, {
+      do_onclick     : function(){ },
+      do_onmouseover : function(){ conga.style.fontSize = "18px" },
+      do_onmouseout  : function(){ conga.style.fontSize = "15px" }
+    })
+
+    that.newGate("tag", Gate, {
+      do_onclick     : function(){ },
+      do_onmouseover : function(){ tag.style.fontSize = "18px" },
+      do_onmouseout  : function(){ tag.style.fontSize = "15px" }
     })
 
     that.newGate("button_orders", Gate, {
