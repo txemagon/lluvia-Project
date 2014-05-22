@@ -1575,6 +1575,86 @@ Array.prototype.sort_by = function(){
  * (see Array#sort_by)
  */
 
+/**
+ * @method compose
+ * Creates combinations via cartesian product.
+ *
+ * ## Example
+ *
+ *    var a = ["teki", ["anal", "hypnot"], "izer"]
+ *    a.compose("_", "")
+ *    // => ["teki_analizer", "teki_hypnotizer"]
+ *    
+ *    
+ *    var a = [["teki", "woman"], ["anal", "hypnot"], "izer"]
+ *    a.compose("_", "")
+ *    // => [["teki_analizer", "teki_hypnotizer"], ["woman_analizer", "woman_hypnotizer"]]
+ *    
+ *    
+ *    var a = ["prefix", [["hyper", "super"], "memo", ["person", "rocket"] ], "izer"]
+ *    a.compose("_", ["-", ">"], "")
+ *    // => [ ["prefix_hyper-memo>personizer", "prefix_super-memo>personizer"], 
+ *    //      ["prefix_hyper-memo>rocketizer", "prefix_super-memo>rocketizer"] ]
+ */
+Array.prototype.compose = function(){    
+    
+    var args = []
+    var join = string_join  // Reference to the join function to 
+                            // be used for this separator (default)
+    var that = this
+    var lcj                 // Last composer join
+    var result = ""
+    
+    for (var i=0; i<arguments.length; i++)
+        args.push(arguments[i])
+        
+    /* Extra needed composers are the same as the last param*/        
+    if (!("last_composer_join" in this))
+        this.last_composer_join = null
+    
+    if (typeof(args[0]) !== "undefined"){
+        if (args.length > 1)
+            lcj = args.shift()
+        else /* last join used many times */
+            lcj = args[0]
+       this.last_composer_join = lcj
+    }
+
+       alert(this.last_composer_join + "\n" + this.toSource())
+    if (!this.last_composer_join && this.last_composer_join != ""){
+        result = []
+        join = array_join
+    }
+    
+    if (!this.length)
+        return result
+    
+    function array_join(element){
+       if (element instanceof Array)
+           result.push(Array.prototype.compose.apply(element, args))
+       else // Adding a String
+          result.push(element)
+    }
+
+   function string_join(element){
+       if (element instanceof Array){
+           var poke = Array.prototype.compose.apply(element, args)
+           if (poke instanceof Array){
+               alert(element + " : " + args + "\n" + poke)
+               throw "Invalid matcher " + that.last_composer_join +
+                   " for " + element
+               }
+           else
+               result += element + that.last_composer_join + poke
+       }
+           
+    }
+
+    for (var i=0; i<this.length; i++)
+        join(this[i])    
+
+    return result
+}
 //Internal simple functions
 function includes(el, array){
   for (var i=0; i<array.length; i++)
@@ -1644,62 +1724,3 @@ function _transpose(pos, nary){
 
 Array.reflect(Array.bang_methods)
 
-Array.prototype.compose = function(){    
-    
-    var args = []
-    var join = string_join  // Reference to the join function to 
-                            // be used for this separator (default)
-    var that = this
-    var lcj                 // Last composer join
-    var result = ""
-    
-    for (var i=0; i<arguments.length; i++)
-        args.push(arguments[i])
-        
-    /* Extra needed composers are the same as the last param*/        
-    if (!("last_composer_join" in this))
-        this.last_composer_join = null
-    
-    if (typeof(args[0]) !== "undefined"){
-        if (args.length > 1)
-            lcj = args.shift()
-        else /* last join used many times */
-            lcj = args[0]
-       this.last_composer_join = lcj
-    }
-
-       alert(this.last_composer_join + "\n" + this.toSource())
-    if (!this.last_composer_join && this.last_composer_join != ""){
-        result = []
-        join = array_join
-    }
-    
-    if (!this.length)
-        return result
-    
-    function array_join(element){
-       if (element instanceof Array)
-           result.push(Array.prototype.compose.apply(element, args))
-       else // Adding a String
-          result.push(element)
-    }
-
-   function string_join(element){
-       if (element instanceof Array){
-           var poke = Array.prototype.compose.apply(element, args)
-           if (poke instanceof Array){
-               alert(element + " : " + args + "\n" + poke)
-               throw "Invalid matcher " + that.last_composer_join +
-                   " for " + element
-               }
-           else
-               result += element + that.last_composer_join + poke
-       }
-           
-    }
-
-    for (var i=0; i<this.length; i++)
-        join(this[i])    
-
-    return result
-}
