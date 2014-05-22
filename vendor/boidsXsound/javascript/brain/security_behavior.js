@@ -86,7 +86,10 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     count++
   })
 
-  return new Vector(-x/count, -y/count) 
+  if(count != 0)
+    return new Vector(-x/count, -y/count) 
+  else
+    return new Vector(0,0) 
 }
 
 /**
@@ -137,7 +140,11 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 
-  return new Vector(1,1)
+  if(count != 0)
+    return desired_velocity.subs(velocity) 
+  else
+    return new Vector(0,0) 
+  
 }
 
 
@@ -180,7 +187,10 @@ CohesionBehavior.prototype.desired_acceleration = function(){
     y += target_at.get_coord(1)
     count++
   })
- 
-  return new Vector(x/count, y/count)
+  if(count != 0)
+    return new Vector(x/count, y/count) 
+  else
+    return new Vector(0,0) 
+  
 }
 

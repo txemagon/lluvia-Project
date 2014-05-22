@@ -38,6 +38,7 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
   var l2 = new StraightLine(new Vector(550,0), new Vector(550,400))
   var l3 = new StraightLine(new Vector(550, 400), new Vector(0,400))
   var l4 = new StraightLine(new Vector(0,400), new Vector(0,0))
+/*
 
   // Primer triangulo
   var a1 = new StraightLine(new Vector(175,75), new Vector(75,75))
@@ -61,23 +62,33 @@ var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
   var r3 = new StraightLine(new Vector(275,275), new Vector(325,200)) 
   var r4 = new StraightLine(new Vector(325,200), new Vector(275,125))
 
- w.path.push(l1,l2,l3,l4)//, a1,a2,a3, b1,b2,b3, c1,c2,c3, d1,d2,d3, r1,r2,r3,r4)
+ w.path.push(l1,l2,l3,l4, a1,a2,a3, b1,b2,b3, c1,c2,c3, d1,d2,d3, r1,r2,r3,r4)
+*/
 
+var a1 = new StraightLine(new Vector(328,147), new Vector(275,125))
+var a2 = new StraightLine(new Vector(350,200), new Vector(328,147))
+var a3 = new StraightLine(new Vector(328,253), new Vector(350,200))
+var a4 = new StraightLine(new Vector(275,275), new Vector(328,253))
+var a5 = new StraightLine(new Vector(222,253), new Vector(275,275))
+var a6 = new StraightLine(new Vector(200,200), new Vector(222,253))
+var a7 = new StraightLine(new Vector(222,147), new Vector(200,200))
+var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
+w.path.push(l1, l2, l3, l4, a1,a2,a3,a4,a5,a6,a7,a8)
 
-  for(var i=1; i<10;i++){
+  for(var i=0; i<15;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                                           position: new Vector(Math.random()*210, Math.random()*100), // 210, 100
                                           velocity: new Vector(15,15),
                                           acceleration: new Vector(0, 0)}
 
-         //config.brain.activate('containment')
-        // //config.brain.activate('wander')
+         config.brain.activate('containment')
+         config.brain.activate('wander')
 
-         config.brain.activate('alignment')
-         //config.brain.activate('separation')
-         //config.brain.activate('cohesion')
+//         config.brain.activate('alignment')
+//         config.brain.activate('separation')
+//         config.brain.activate('cohesion')
 
        })
   }

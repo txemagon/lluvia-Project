@@ -224,6 +224,19 @@ Nanobot.prototype.listen = function(){
   this.analyze_msg()
 }
 
+Nanobot.prototype.infinity_move = function (){
+  if(this.geo_data.position.get_coord(1) > 412)
+    this.geo_data.position.Coord[1] = -12
+  if(this.geo_data.position.get_coord(1) < -12)
+    this.geo_data.position.Coord[1] = 412
+  if(this.geo_data.position.get_coord(0) > 562)
+    this.geo_data.position.Coord[0] = -12
+  if(this.geo_data.position.get_coord(0) < -12)
+    this.geo_data.position.Coord[0] = 562
+   
+}
+
+
 /**
 * @method run
 *
@@ -237,6 +250,7 @@ Nanobot.prototype.run = function(current_time){
   current_time = current_time || new Date()
   this.update_physics(current_time)
   this.listen()
+  //this.infinity_move()
   //this.update_body()
 }
 
@@ -252,11 +266,12 @@ Nanobot.prototype.draw = function(ctx){
 
   var p = this.geo_data.position
   var v = this.geo_data.velocity
-  var a = 'hsl(' + hue + ', 100%, 36%)';
-  ctx.fillStyle = a
+  var a = this.geo_data.acceleration;
+  var c = 'hsl(' + hue + ', 100%, 36%)';
+  ctx.fillStyle = c
   ctx.strokeStyle = "black"
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);      
+  ctx.arc(p.get_coord(0), p.get_coord(1), 5, 0, Math.PI*2, true);      
   ctx.closePath();
   ctx.fill();
 
@@ -277,17 +292,25 @@ Nanobot.prototype.draw = function(ctx){
 
 
   ctx.beginPath();
-  ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
+  ctx.arc(p.get_coord(0), p.get_coord(1), 7, 0, Math.PI*2, true);
   ctx.closePath();
   ctx.stroke()
 
-  ctx.fillStyle = "white"
-  ctx.fillText(Math.round(this.level_emotion), p.get_coord(0)-7, p.get_coord(1)+5);
+//  ctx.fillStyle = "white"
+//  ctx.fillText(Math.round(this.level_emotion), p.get_coord(0)-7, p.get_coord(1)+5);
 
   if (this.focused){
     ctx.strokeStyle = "red"
     ctx.beginPath();
-    ctx.arc(p.get_coord(0), p.get_coord(1), 18*escala, 0, Math.PI*2, true); 
+    ctx.arc(p.get_coord(0), p.get_coord(1), 11, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.stroke()
+
+    /* Acceleration */
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.moveTo(p.get_coord(0), p.get_coord(1))
+    ctx.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
     ctx.closePath();
     ctx.stroke()
 
