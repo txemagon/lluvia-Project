@@ -30,6 +30,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
     that.word_msg = ""
     that.replying = false
     that.word_reply = ""
+    that.visible_object = []
 /*
     that.head = that
     that.body = []

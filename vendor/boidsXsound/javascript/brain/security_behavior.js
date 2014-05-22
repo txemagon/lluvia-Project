@@ -76,7 +76,7 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  
+  /*
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     var r = target_at.module() || 1
@@ -85,11 +85,21 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     y += target_at.get_coord(1) / r
     count++
   })
+*/
+var visible_object = this.me.visible_object
+  for(var i=0; i<visible_object.length; i++){
+    var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
+    var r = target_at.module() || 1
+    r /= 60
+    x += target_at.get_coord(0) / r
+    y += target_at.get_coord(1) / r
+    count++
+  }
 
-  if(count != 0)
-    return new Vector(-x/count, -y/count) 
-  else
+  if(count == 0)
     return new Vector(0,0) 
+
+  return new Vector(-x/count, -y/count) 
 }
 
 /**
@@ -123,6 +133,7 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
+  /*
   this.me.visible_objects().each( function(boid){
    try {
    var direction = boid.heading()
@@ -133,6 +144,19 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
     alert("Something went wrong when calculating heading for boid " + boid.id)
  }
   })
+  */
+var visible_object = this.me.visible_object
+
+  for(var i=0; i<visible_object.length; i++){
+       var direction = visible_object[i].heading()
+   x += direction.get_coord(0)
+   y += direction.get_coord(1)
+   count++
+  }
+
+
+
+
   var velocity = this.me.geo_data.velocity
   
   if(count == 0)
@@ -140,11 +164,10 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 
-  if(count != 0)
-    return desired_velocity.subs(velocity) 
-  else
+  if(count == 0)
     return new Vector(0,0) 
   
+  return desired_velocity.subs(velocity)   
 }
 
 
@@ -180,17 +203,24 @@ CohesionBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  
+  /*
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     x += target_at.get_coord(0)
     y += target_at.get_coord(1)
     count++
   })
-  if(count != 0)
-    return new Vector(x/count, y/count) 
-  else
+*/
+var visible_object = this.me.visible_object
+  for(var i=0; i<visible_object.length; i++){
+    var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
+    x += target_at.get_coord(0)
+    y += target_at.get_coord(1)
+    count++
+  }
+
+  if(count == 0)
     return new Vector(0,0) 
-  
+  return new Vector(x/count, y/count) 
 }
 

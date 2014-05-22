@@ -36,6 +36,7 @@ function World(screen, width, height){
   this.velocity_max = 200
   this.boids = 0
   this.path = []
+  this.array_boids = []
 
   /* We have a HTMLElement, a string holding the id, or the page has a canvas */
 
@@ -211,6 +212,7 @@ World.prototype.has_born = function (){
     this.register(arguments[i])
     //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
     this.fireEvent(this.newMessage("sync", "new_boid", arguments[i]))
+    this.array_boids.push(arguments[i])
    }
 }
 
@@ -467,6 +469,7 @@ World.prototype.running_steady = function(processors_time){
   this.now = processors_time || new Date()
   /* Boid#run is called from the child runner */
   //this.eventDispatcher.shift()
+  this.visible_for_each() 
   this.draw()
 }
 
@@ -518,6 +521,21 @@ World.prototype.visible_for = function(position, heading, vision_object){
     })
 
     return visible
+}
+
+World.prototype.visible_for_each = function(){
+  for(var i=0; i<this.array_boids.length; i++){
+    var vision =  this.array_boids[i].vision.radius * this.array_boids[i].vision.radius
+    var visible = []
+    for(var a=0; a<this.array_boids.length; a++){
+       var heading = this.array_boids[a].heading()
+        var dx = this.array_boids[a].geo_data.position.get_coord(0) - this.array_boids[i].geo_data.position.get_coord(0)
+        var dy = this.array_boids[a].geo_data.position.get_coord(1) - this.array_boids[i].geo_data.position.get_coord(1)
+        if ( dx * dx + dy * dy < vision) 
+            visible.push(this.array_boids[a])
+    }
+    this.array_boids[i].visible_object = visible
+  }
 }
 
 /**
