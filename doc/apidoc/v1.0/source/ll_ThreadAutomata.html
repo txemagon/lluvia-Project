@@ -21,14 +21,18 @@ extend(ThreadAutomata, Automata);
 
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 
-<span id='ThreadAutomata-method-constructor'><span id='ThreadAutomata'>/**
-</span></span> * @classDescription Creates an automata for atomic processing.
- *
+<span id='Engine-ThreadAutomata'>/**
+</span> * @class Engine.ThreadAutomata
+ * Creates an automata for atomic processing.
+ */
+
+<span id='Engine-ThreadAutomata-method-constructor'>/**
+</span> * @method constructor
+ * 
  * @param {Object} state			Available automata states.
  * @param {Object} currentState	    Initial automata state.
  * @param {Object} solicitor		Functions state managers.
  * @return {ThreadAutomata}			Newly created automata.
- * @constructor
  */
 function ThreadAutomata(state, currentState, solicitor, processor){
 	if (arguments.length){
@@ -38,7 +42,7 @@ function ThreadAutomata(state, currentState, solicitor, processor){
 }
 
 
-<span id='ThreadAutomata-method-run'>/**
+<span id='Engine-ThreadAutomata-method-run'>/**
 </span> * Calls a function that manages the next activity in function
  * for the state of the object. It is responsible of state transitions through Automata#run.
  * The main difference between ThreadAutomata#run and Automata#run lies on

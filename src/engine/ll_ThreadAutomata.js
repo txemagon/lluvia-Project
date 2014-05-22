@@ -5,13 +5,17 @@ extend(ThreadAutomata, Automata);
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 
 /**
- * @classDescription Creates an automata for atomic processing.
- *
+ * @class Engine.ThreadAutomata
+ * Creates an automata for atomic processing.
+ */
+
+/**
+ * @method constructor
+ * 
  * @param {Object} state			Available automata states.
  * @param {Object} currentState	    Initial automata state.
  * @param {Object} solicitor		Functions state managers.
  * @return {ThreadAutomata}			Newly created automata.
- * @constructor
  */
 function ThreadAutomata(state, currentState, solicitor, processor){
 	if (arguments.length){

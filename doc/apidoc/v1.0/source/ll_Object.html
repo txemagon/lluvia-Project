@@ -15,14 +15,14 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-property-'>/**  Note: Extending Object's prototype will address you
-</span> *  to the hub of hell (hellHub) in programmer's
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**  Note: Extending Object&#39;s prototype will address you
+</span> *  to the hub of hell (hellHub) in programmer&#39;s
  *  collective mind, but freedom is the rider of
  *  love. Bear it in your mind and practice:
  *
  *      Object.defineProperty(this, &quot;nonEnum&quot;, {
  *              enumerable: false,
- *              value: 'noEnum'
+ *              value: &#39;noEnum&#39;
  *      });
  *
  *  as much as you can.
@@ -43,14 +43,14 @@
  * CONCLUSIONS
  *
  * As long as the constructor $F is an inner function each time we extend/create an object
- * we get a different object, and, thus, a different prototype. In this way we don't share the
+ * we get a different object, and, thus, a different prototype. In this way we don&#39;t share the
  * prototipical attribute a and b.
  */
 
 
 
 // Conflicts with ECMAScript 5
-// if (typeof Object.extend !== 'function') {
+// if (typeof Object.extend !== &#39;function&#39;) {
 //     Object.extend = function (o) {
 // 	function $F() {}
 // 	$F.prototype = o;
@@ -203,7 +203,7 @@ Object.prototype.own_keys = function(re){
  *     var two = one.clone()
  *     // =&gt; { first: 1, second: me }
  *
- * Notice that changing two.second affects one.second as long as they're
+ * Notice that changing two.second affects one.second as long as they&#39;re
  * pointers to the same object.
  *
  * @return {Object} Shallow copy of the given object.
@@ -539,7 +539,7 @@ Object.prototype.alias( &quot;instance_of$U&quot;, &quot;is_a$U&quot; )
 Object.prototype.method_missing = function (method, obj, params){
     var that = this
     function bad_function(){
-	throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(', ') ))
+	throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + that.constructor.name +&quot;. Params: &quot; + params.join(&#39;, &#39;) ))
     }
 
     function is_in(list, word){
@@ -578,7 +578,7 @@ Object.prototype.method_missing = function (method, obj, params){
  * This method is actually a bang method. Further discussion is needed.
  *
  * Shall we merge only self keys?
- * Aren't self_keys part of a behaviour to enjail in Hash?
+ * Aren&#39;t self_keys part of a behaviour to enjail in Hash?
  * Shall we clone objects?
  *
  * @return

@@ -1,5 +1,5 @@
 /**
- * @class EventDispatcher
+ * @class Engine.EventDispatcher
  * @extends ThreadAutomata
  *
  * Handle in and out asynchronous communications via a message queue

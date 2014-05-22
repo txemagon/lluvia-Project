@@ -1,11 +1,15 @@
 Thread.prototype.constructor = Thread;
 
 /**
- * @classDescription abstract class (future interface/module) to instantiate executions threads.
- *
+ * @class Engine.Thread 
+ * abstract class (future interface/module) to instantiate executions threads.
+ */
+
+/**
+ * @method constructor
+ *  
  * @param  {Function} 	    solicitor Function attending processor calls.
  * @return {Thread} 		New execution thread
- * @constructor
  */
 function Thread(solicitor, processor){
 	this.before = new Date()

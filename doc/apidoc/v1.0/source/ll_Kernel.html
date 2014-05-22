@@ -48,16 +48,16 @@ function O(variable){
     if (t !== &quot;String&quot;)
       return eval(&quot;new &quot; + t + &quot;(&quot; + variable + &quot;)&quot;)
     else
-      return eval(&quot;new &quot; + t + &quot;('&quot; + variable + &quot;')&quot;)
+      return eval(&quot;new &quot; + t + &quot;(&#39;&quot; + variable + &quot;&#39;)&quot;)
   }
   return variable
 }
 
 <span id='global-method-requires'>/**
-</span> * @metod requires
+</span> * @method requires
  *
  * Waits until a list of classes or objects are fully parsed by the browser.
- * It doesn't actually fetch any code from the server
+ * It doesn&#39;t actually fetch any code from the server
  *
  * @param {String} list_of_objects list of elements required to proceed with the execution.
  */

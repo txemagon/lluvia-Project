@@ -1,18 +1,41 @@
-Automata.prototype.constructor = Automata;
-
 /**
- * @classDescription creates a state machine. A lluvia state machine has a continous and derivable state,
+ * @class Engine.Automata
+ * 
+ * Creates a state machine. A lluvia state machine has a continous and derivable state,
  * made of the previous, the current and the requested one. During state transition, several solicitor functions
  * get executed: down function of the current state, up solicitor of the requested state and finally we arrive to the
  * steady state.
+ */
+
+/**
+ * @method constructor 
  *
- * @param  {Object}   states		 Possibles states of an automata.
+ * ## Example 
+ *
+ *     var state = new Enumeration("initial", "running", "sleeping")
+ *     var a = new Automata( states, 
+ *                          {previous:  state.initial,
+ *                           current:   state.initial,
+ *                           requested: state.running })
+ *
+ *
+ * or, for nested states:
+ *
+ *     var a = new Automata(["killing", ["running", ["phase1", "phase2"], "supended" ]])
+ *
+ * 
+ * @param  {Object | Array}   states Possibles states of an automata (Enumeration).
+ *                                   Array is an extesnsion for Hierarchical State Machines.
  * @param  {Object}   initialState	 Initial state of the automata.
  * @param  {Array}    solicitor		 State Manager functions. An array with three functions (up, steady, down).
  * @return {Automata}				 New created state machine automata..
  * @constructor
  */
+Automata.prototype.constructor = Automata;
 function Automata(states, initialState, solicitor){
+
+	if (states instanceof Array)
+		
 
 	this.state = states == null ? { none: -1 } : states;
 	this.state_name = []

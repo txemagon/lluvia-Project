@@ -17,12 +17,16 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">Thread.prototype.constructor = Thread;
 
-<span id='Thread-method-constructor'><span id='Thread'>/**
-</span></span> * @classDescription abstract class (future interface/module) to instantiate executions threads.
- *
+<span id='Engine-Thread'>/**
+</span> * @class Engine.Thread 
+ * abstract class (future interface/module) to instantiate executions threads.
+ */
+
+<span id='Engine-Thread-method-constructor'>/**
+</span> * @method constructor
+ *  
  * @param  {Function} 	    solicitor Function attending processor calls.
  * @return {Thread} 		New execution thread
- * @constructor
  */
 function Thread(solicitor, processor){
 	this.before = new Date()
@@ -36,7 +40,7 @@ function Thread(solicitor, processor){
 
 
 
-<span id='Thread-method-run'>/**
+<span id='Engine-Thread-method-run'>/**
 </span> * Thread execution step. Is an abstract method.
  *
  * @memberOf  {Thread}

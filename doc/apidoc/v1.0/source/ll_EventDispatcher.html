@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='EventDispatcher-method-constructor'><span id='EventDispatcher'>/**
-</span></span> * @class EventDispatcher
+  <pre class="prettyprint lang-js"><span id='Engine-EventDispatcher-method-constructor'><span id='Engine-EventDispatcher'>/**
+</span></span> * @class Engine.EventDispatcher
  * @extends ThreadAutomata
  *
  * Handle in and out asynchronous communications via a message queue
@@ -51,7 +51,7 @@ function EventDispatcher(lookup){
 	lookup.add(this)
 }
 
-<span id='EventDispatcher-method-enqueue'>/**
+<span id='Engine-EventDispatcher-method-enqueue'>/**
 </span> * @method enqueue
  *
  * Receives incoming messages stamping the arrival number. The arrival
@@ -69,7 +69,7 @@ EventDispatcher.prototype.enqueue = function(mssg){
 	return mssg.received.id
 }
 
-<span id='EventDispatcher-method-addPort'>/**
+<span id='Engine-EventDispatcher-method-addPort'>/**
 </span> * @method addPort
  *
  * Adds an specific device referer in the list of event listeners for a
@@ -84,7 +84,7 @@ EventDispatcher.prototype.addPort = function (event, device){
 		this.ports[event].push(device)
 }
 
-<span id='EventDispatcher-method-joinPorts'>/**
+<span id='Engine-EventDispatcher-method-joinPorts'>/**
 </span> * @method joinPorts
  *
  * Builds an empty dock (port array) for every event.
@@ -96,7 +96,7 @@ EventDispatcher.prototype.joinPorts = function (listArray){
 		this.ports[listArray[i]] = []
 }
 
-<span id='EventDispatcher-method-delPort'>/**
+<span id='Engine-EventDispatcher-method-delPort'>/**
 </span> * @method delPort
  *
  * Removes a listener from the dock.
@@ -112,7 +112,7 @@ EventDispatcher.prototype.delPort = function (event, device){
 				this.clss.ports[i].splice(i,1)
 }
 
-<span id='EventDispatcher-method-fireEvent'>/**
+<span id='Engine-EventDispatcher-method-fireEvent'>/**
 </span> * @method fireEvent
  *
  * Notifies to all the listeners that this device has generated an event.
@@ -125,7 +125,7 @@ EventDispatcher.prototype.fireEvent = function(event){
 			this.clss.ports[event.name][i](event);
 }
 
-<span id='EventDispatcher-method-shift'>/**
+<span id='Engine-EventDispatcher-method-shift'>/**
 </span> * @method shift
  *
  * Extract messages from the queue and send them
@@ -156,7 +156,7 @@ EventDispatcher.prototype.shift = function(){ //attend the inqueue
 	return true;
 }
 
-<span id='EventDispatcher-method-run'>/**
+<span id='Engine-EventDispatcher-method-run'>/**
 </span> * @method run
  *
  * Drives the incoming message queue.

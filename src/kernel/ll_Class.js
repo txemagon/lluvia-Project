@@ -7,7 +7,7 @@
 var $classes = []
 
 /**
- * @class Class
+ * @class Kernel.Class
  *
  * Base class of all lluvia classes.
  *

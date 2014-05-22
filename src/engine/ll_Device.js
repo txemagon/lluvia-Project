@@ -1,7 +1,7 @@
 /**
- * @class Device
+ * @class Engine.Device
  * @extends Processor
- * @extends ThreadAutomata
+ * @mixins Engine.ThreadAutomata
  *
  * Provides an asynchronous mechanism for communicating with another devices.
  * In practical terms, it uses a message queue and fires events.
@@ -74,8 +74,15 @@
  * @property currentState.requested   State to change in the next run.
  *
  * @property {Array} gates List of all attached Gates.
- *
- * @constructor
+ */
+
+Device.prototype = new Processor
+extend(Device, ThreadAutomata)  // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
+Device.prototype.constructor = Device
+
+
+/** 
+ * @method constructor
  * Creates a Device.
  *
  * @param {String | HTMLElement} [view] (optional) A possible view associated with the Device.
@@ -84,11 +91,6 @@
  * @param {Object} [parent=Processor] Parent Device or processor this Device belongs to.
  *
  */
-
-Device.prototype = new Processor
-extend(Device, ThreadAutomata)  // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
-Device.prototype.constructor = Device
-
 
 function Device(view, state, currentState, parent){
 	/* Inheritance initialization */
@@ -167,6 +169,7 @@ function Device(view, state, currentState, parent){
 			}
 		]
 	]
+
 	/* Instance vars */
 	if (view)
 		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
@@ -200,8 +203,8 @@ function Device(view, state, currentState, parent){
 
 /**
  * Device default states
+ * @property {Object} Device.STATE Enumeration constant.
  */
-
 Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 
 /**

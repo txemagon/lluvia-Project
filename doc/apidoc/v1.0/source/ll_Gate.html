@@ -38,10 +38,10 @@ function _stitchWorlds(gate, solicitor){
 	}
 }
 
-<span id='Gate'>/**
-</span> * @class Gate
+<span id='Engine-Gate'>/**
+</span> * @class Engine.Gate
  *
- * A Gate is a lluvia (javascript) wrapper for html elements. They're conceived
+ * A Gate is a lluvia (javascript) wrapper for html elements. They&#39;re conceived
  * to respond to html events keeping the object scope.
  *
  * @param {String | HTMLElement} [element] (optional) HTML Element to wrap.
@@ -61,7 +61,7 @@ function _stitchWorlds(gate, solicitor){
  * That generates a div with id &quot;brush_btn&quot; and a javascript object that will respond to
  * every html event whenever it defines the corresponding handler.
  *
- * Don't use this class directly, but subclassify it preferently as in the following example.
+ * Don&#39;t use this class directly, but subclassify it preferently as in the following example.
  *
  * ### Usage
  *
@@ -103,7 +103,7 @@ function Gate(element, parent, config){
 	    else{
 		var element_name = element
 		element = document.createElement(&quot;div&quot;)
-		element.setAttribute('id', element_name)
+		element.setAttribute(&#39;id&#39;, element_name)
 		if (parent){
 		    if (typeof (parent) === &quot;string&quot; )
 			parent = document.getElementById(parent)
@@ -150,7 +150,7 @@ Gate.prototype.applySkin = function(skin){
     this.panel.appendChild(div)
 }
 
-<span id='Gate-method-run'>/**
+<span id='Engine-Gate-method-run'>/**
 </span> * @method run
  * @private
  *
@@ -162,7 +162,7 @@ Gate.prototype.run = function(now, before){
     this.threads[i].run(now, before)
 }
 
-<span id='Gate-method-new_effect'>/**
+<span id='Engine-Gate-method-new_effect'>/**
 </span> * @method new_effect
  *
  * Registers a new effect for the Gate. An effect is a ThreadAutomata used to handle

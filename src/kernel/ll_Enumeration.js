@@ -1,5 +1,5 @@
 /**
- * @class Enumeration
+ * @class Kernel.Enumeration
  *
  * Creates several symbolic constants
  *

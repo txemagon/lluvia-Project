@@ -22,7 +22,7 @@ function _stitchWorlds(gate, solicitor){
 }
 
 /**
- * @class Gate
+ * @class Engine.Gate
  *
  * A Gate is a lluvia (javascript) wrapper for html elements. They're conceived
  * to respond to html events keeping the object scope.

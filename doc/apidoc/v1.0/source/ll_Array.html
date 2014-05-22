@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Array'>/**
-</span> * @class Array
+  <pre class="prettyprint lang-js"><span id='Kernel-CoreExt-Array'>/**
+</span> * @class Kernel.CoreExt.Array
  *
  */
 
@@ -29,7 +29,7 @@
                       &quot;sort_by&quot;
                     ]
 
-<span id='Array-static-method-reflect'>/**
+<span id='Kernel-CoreExt-Array-static-method-reflect'>/**
 </span> * @method reflect
  * @static
  *
@@ -81,7 +81,7 @@ Array.reflect = function(){
   return return_value
 }
 
-<span id='Array-method-each'>/**
+<span id='Kernel-CoreExt-Array-method-each'>/**
 </span> * @method  each
  *
  * Calls the block once for each element of the Array.
@@ -103,7 +103,7 @@ Array.prototype.each = function(){
 
   return this
 }
-<span id='Array-method-each_index'>/**
+<span id='Kernel-CoreExt-Array-method-each_index'>/**
 </span> * @method  each_index
  *
  * Calls the block once for each item with the element and its index.
@@ -124,7 +124,7 @@ Array.prototype.each_index = function(){
     Array.prototype.each_index.yield(i)
 }
 
-<span id='Array-method-each_with_index'>/**
+<span id='Kernel-CoreExt-Array-method-each_with_index'>/**
 </span> * @method  each_with_index
  *
  * Calls the block with the element and its index.
@@ -152,7 +152,7 @@ Array.prototype.each_with_index = function(){
     Array.prototype.each_with_index.yield(this[i], i)
 }
 
-<span id='Array-method-count'>/**
+<span id='Kernel-CoreExt-Array-method-count'>/**
 </span> * @method  count
  *
  * Counts all the elements of the array matching a particular criteria, if given.
@@ -194,7 +194,7 @@ Array.prototype.count = function(obj){
 	    return count
 }
 
-<span id='Array-method-reverse_each'>/**
+<span id='Kernel-CoreExt-Array-method-reverse_each'>/**
 </span> * @method reverse_each
  *
  * Traverse every element of the array through the block in reverse order.
@@ -205,12 +205,12 @@ Array.prototype.count = function(obj){
  *
  * ###Example
  *     var sentence   = &quot;&quot;
- *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\'t&quot;, &quot;I&quot;]
+ *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\&#39;t&quot;, &quot;I&quot;]
  *     to_my_boss.reverse_each(function(element){
  *                                sentence += (element + &quot; &quot;).toUpperCase()
  *                             })
  *     sentence
- *     //=&gt; &quot;I DON'T LIKE THIS JOB &quot;
+ *     //=&gt; &quot;I DON&#39;T LIKE THIS JOB &quot;
  */
 
 Array.prototype.reverse_each = function(){
@@ -219,7 +219,7 @@ Array.prototype.reverse_each = function(){
       Array.prototype.reverse_each.yield(this[i])
 }
 
-<span id='Array-method-collect'>/**
+<span id='Kernel-CoreExt-Array-method-collect'>/**
 </span> * @method  collect
  *
  * Maps array elements using a block for the transfomation.
@@ -255,7 +255,7 @@ Array.prototype.collect = function(){
     return collectable
 }
 
-<span id='Array-method-collectS-B'>/**
+<span id='Kernel-CoreExt-Array-method-collectS-B'>/**
 </span> * @method  collect$B
  * @chainable
  *
@@ -263,7 +263,7 @@ Array.prototype.collect = function(){
  * (see Array#collect)
  */
 
-<span id='Array-method-map'>/**
+<span id='Kernel-CoreExt-Array-method-map'>/**
 </span> * @method  map
  *
  * Alias of {@link Array#collect Array#collect}
@@ -271,7 +271,7 @@ Array.prototype.collect = function(){
  */
 Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
 
-<span id='Array-method-mapS-B'>/**
+<span id='Kernel-CoreExt-Array-method-mapS-B'>/**
 </span> * @method  map$B
  * @chainable
  *
@@ -279,14 +279,14 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
  * (see Array#collect)
  */
 
-<span id='Array-method-select_if'>/**
+<span id='Kernel-CoreExt-Array-method-select_if'>/**
 </span> * @method  select_if
  *
  * Collects the element or elements that pass a given condition.
  *
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array.
  * If not, it will be deleted.
- * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
+ * @return  {Array} Returns all items that have passed the condition. If an item can&#39;t pass the condition, it is deleted.
  *
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
@@ -301,7 +301,7 @@ Array.prototype.select_if = function(){
 	  return collectable
 }
 
-<span id='Array-method-indexOf'>/**
+<span id='Kernel-CoreExt-Array-method-indexOf'>/**
 </span> * @method  indexOf
  *
  * Searches for an object in every position of the array, starting at position parsed as parameter.
@@ -323,7 +323,7 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
     return i
 }
 
-<span id='Array-method-clone'>/**
+<span id='Kernel-CoreExt-Array-method-clone'>/**
 </span> * @method  clone
  *
  * Clones an array.
@@ -342,7 +342,7 @@ Array.prototype.clone = function(){
 	return ary
 }
 
-<span id='Array-method-cloneS-B'>/**
+<span id='Kernel-CoreExt-Array-method-cloneS-B'>/**
 </span> * @method  clone$B
  * @chainable
  *
@@ -350,7 +350,7 @@ Array.prototype.clone = function(){
  * (see Array#clone)
  */
 
-<span id='Array-method-clear'>/**
+<span id='Kernel-CoreExt-Array-method-clear'>/**
 </span> * @method  clear
  * Clears an Array from the elements that it contains.
  *
@@ -366,7 +366,7 @@ Array.prototype.clear = function(){
     this.pop()
 }
 
-<span id='Array-method-equalsS-U'>/**
+<span id='Kernel-CoreExt-Array-method-equalsS-U'>/**
 </span> * @method  equals$U
  *
  * Compares two arrays.
@@ -394,7 +394,7 @@ Array.prototype.equals$U = function(other){
 	      return same
 }
 
-<span id='Array-method-uniq'>/**
+<span id='Kernel-CoreExt-Array-method-uniq'>/**
 </span> * @method  uniq
  *
  * Searches repeated items in an array and deletes them.
@@ -429,7 +429,7 @@ Array.prototype.uniq = function(){
   return uniq
 }
 
-<span id='Array-method-uniqS-B'>/**
+<span id='Kernel-CoreExt-Array-method-uniqS-B'>/**
 </span> * @method  uniq$B
  * @chainable
  *
@@ -452,7 +452,7 @@ Array.prototype.uniq$B = function(){
   return this
 }
 
-<span id='Array-method-first'>/**
+<span id='Kernel-CoreExt-Array-method-first'>/**
 </span> * @method  first
  *
  * Returns the first element or elements of the array -it will depend on the number of elements meeting the parameters.
@@ -475,7 +475,7 @@ Array.prototype.first = function(){
 	      return ary
 }
 
-<span id='Array-method-last'>/**
+<span id='Kernel-CoreExt-Array-method-last'>/**
 </span> * @method  last
  *
  * Returns the element or elements of an array starting from the end. It will depend on the number of elements meeting the parameters.
@@ -507,7 +507,7 @@ Array.prototype.last = function(){
 	      return ary
 }
 
-<span id='Array-method-eraseS-B'>/**
+<span id='Kernel-CoreExt-Array-method-eraseS-B'>/**
 </span> * @method  erase$B
  *
  * Deletes the element especify in parenthesis.
@@ -535,7 +535,7 @@ Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin m
   return find? this: null
 }
 
-<span id='Array-method-erase_atS-B'>/**
+<span id='Kernel-CoreExt-Array-method-erase_atS-B'>/**
 </span> * @method  erase_at$B
  *
  * Deletes the element on an specific position.
@@ -564,7 +564,7 @@ Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin 
   return this
 }
 
-<span id='Array-method-erase_if'>/**
+<span id='Kernel-CoreExt-Array-method-erase_if'>/**
 </span> * @method  erase_if
  *
  * Deletes all the array elements that meet the condition specified by the block..
@@ -591,7 +591,7 @@ Array.prototype.erase_if = function(){
 	    return ary.compact()
 }
 
-<span id='Array-method-erase_ifS-B'>/**
+<span id='Kernel-CoreExt-Array-method-erase_ifS-B'>/**
 </span> * @method  erase_if$B
  *
  * Deletes all the array elements that meet the condition specified by the block..
@@ -618,7 +618,7 @@ Array.prototype.erase_if$B = function(){
   return this
 }
 
-<span id='Array-method-replace'>/**
+<span id='Kernel-CoreExt-Array-method-replace'>/**
 </span> * @method  replace
  *
  * Replaces the array content with the array passed as parameter.
@@ -654,7 +654,7 @@ Array.prototype.replace = function(){
 		  return this
 }
 
-<span id='Array-method-deleteS-B'>/**
+<span id='Kernel-CoreExt-Array-method-deleteS-B'>/**
 </span> * @method delete$B
  *
  * Eliminates an object from the array that meets the parameter passed as position. The object can also be returned
@@ -702,7 +702,7 @@ Array.prototype.delete$B = function(obj){
   return obj
 }
 
-<span id='Array-method-includeS-U'>/**
+<span id='Kernel-CoreExt-Array-method-includeS-U'>/**
 </span> * @method include$U
  *
  * Searches every item of the array for the object passed as parameter.
@@ -716,7 +716,7 @@ Array.prototype.delete$B = function(obj){
  *     // =&gt; true
  *
  *     var names = [&quot;carlos&quot;,&quot;jordan&quot;,&quot;david&quot;,&quot;susan&quot;]
- *     newName = names.include$U('susan')
+ *     newName = names.include$U(&#39;susan&#39;)
  *     // =&gt; true
  */
 Array.prototype.include$U = function(){
@@ -730,7 +730,7 @@ Array.prototype.include$U = function(){
 	    return find
 }
 
-<span id='Array-method-assoc'>/**
+<span id='Kernel-CoreExt-Array-method-assoc'>/**
 </span> * @method  assoc
  *
  * Checks the first element of each array and compares it with the passed parameter. If found, returns the array that contains it.
@@ -756,7 +756,7 @@ Array.prototype.assoc = function(){
 	    return null
 }
 
-<span id='Array-method-at'>/**
+<span id='Kernel-CoreExt-Array-method-at'>/**
 </span> * @method  at
  *
  * Returns the element corresponding to the index passed as parameter.
@@ -782,7 +782,7 @@ Array.prototype.at = function(){
 		return arguments[0]&gt;=0? this[arguments[0]] : this[this.length+(arguments[0])]
 }
 
-<span id='Array-method-compact'>/**
+<span id='Kernel-CoreExt-Array-method-compact'>/**
 </span> * @method  compact
  *
  * Deletes the null elements of an array.
@@ -806,7 +806,7 @@ Array.prototype.compact = function(){
 	  return ary
 }
 
-<span id='Array-method-compactS-B'>/**
+<span id='Kernel-CoreExt-Array-method-compactS-B'>/**
 </span> * @method  compact$B
  * @chainable
  *
@@ -814,7 +814,7 @@ Array.prototype.compact = function(){
  * (see Array#compact)
  */
 
-<span id='Array-method-merge'>/**
+<span id='Kernel-CoreExt-Array-method-merge'>/**
 </span> * @method merge
  *
  * Merges two arrays in one
@@ -837,13 +837,13 @@ Array.prototype.merge = function(ary2){
 	    return ary
 }
 
-<span id='Array-method-drop'>/**
+<span id='Kernel-CoreExt-Array-method-drop'>/**
 </span> * @method  drop
  *
  * Deletes elements from position 0 of the array to the possition passed as parameter.
  *
  * @param {Number} Position to stop deleting data of the array.
- * @return {Array} Returns the array elements that haven't been deleted.
+ * @return {Array} Returns the array elements that haven&#39;t been deleted.
  *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
@@ -870,7 +870,7 @@ Array.prototype.drop = function(){
 		  return ary
 }
 
-<span id='Array-method-drop_while'>/**
+<span id='Kernel-CoreExt-Array-method-drop_while'>/**
 </span> * @method  drop_while
  *
  * Executes a block passed as parameter that returns either an
@@ -901,7 +901,7 @@ Array.prototype.drop_while = function(){
 	  return ary.compact()
 }
 
-<span id='Array-method-flatten'>/**
+<span id='Kernel-CoreExt-Array-method-flatten'>/**
 </span> * @method  flatten
  *
  * Transforms an array that contains other arrays in a single array with the data of all of them
@@ -929,7 +929,7 @@ Array.prototype.flatten = function(level){
       return unpack(this, [], level)
 }
 
-<span id='Array-method-index'>/**
+<span id='Kernel-CoreExt-Array-method-index'>/**
 </span> * @method  index
  *
  * Finds the first position of a given object or the position of the first matching
@@ -953,7 +953,7 @@ Array.prototype.index = function(){
 	return null
 }
 
-<span id='Array-property-'>/**
+<span id='Kernel-CoreExt-Array-property-'>/**
 </span> * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
  */
 Array.prototype.product = function(){
@@ -974,7 +974,7 @@ Array.prototype.product = function(){
       }
 }
 
-<span id='Array-property-'>/**
+<span id='Kernel-CoreExt-Array-property-'>/**
 </span> * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????
  */
 Array.prototype.rassoc = function(){
@@ -996,7 +996,7 @@ Array.prototype.rassoc = function(){
   return null
 }
 
-<span id='Array-method-rindex'>/**
+<span id='Kernel-CoreExt-Array-method-rindex'>/**
 </span> * @method  rindex
  *
  * Searches an array to find the element passed as parameter and returns the position of this element,
@@ -1020,7 +1020,7 @@ Array.prototype.rindex = function(){
 	    return null
 }
 
-<span id='Array-method-rotate'>/**
+<span id='Kernel-CoreExt-Array-method-rotate'>/**
 </span> * @method  rotate
  *
  * Rotates the array elements stablishing as amount of rotation an index passed as parameter.
@@ -1076,7 +1076,7 @@ Array.prototype.rotate = function(obj){
   return _rotate(this.length-1, this, ary)
 }
 
-<span id='Array-method-take'>/**
+<span id='Kernel-CoreExt-Array-method-take'>/**
 </span> * @method  take
  *
  * Takes the elements of an array from the first position to the position passed as parameter.
@@ -1105,7 +1105,7 @@ Array.prototype.take = function(){
 		  return ary
 }
 
-<span id='Array-method-take_while'>/**
+<span id='Kernel-CoreExt-Array-method-take_while'>/**
 </span> * @method take_while
  *
  * Takes the first elements of an array while the condition is met.
@@ -1131,7 +1131,7 @@ Array.prototype.take_while = function(){
     return ary
 }
 
-<span id='Array-method-shuffle'>/**
+<span id='Kernel-CoreExt-Array-method-shuffle'>/**
 </span> * @method  shuffle
  *
  * Shuffles the array items randomly.
@@ -1169,7 +1169,7 @@ Array.prototype.shuffle = function()
   return randomizedArray;
 }
 
-<span id='Array-method-transpose'>/**
+<span id='Kernel-CoreExt-Array-method-transpose'>/**
 </span> * @method   transpose
  *
  * Assumes that self is an array of arrays and transposes the rows to columns.
@@ -1186,12 +1186,12 @@ Array.prototype.shuffle = function()
  *     numbers.transpose()
  *     //=&gt; [[1,1,1],[2,2,2],[3,3,3]]
  *
- *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
+ *     var words = [[&#39;hola&#39;,&#39;pedro&#39;,&#39;cristobal&#39;],[&#39;adios&#39;,&#39;juan&#39;,&#39;colon&#39;]]
  *     words.transpose()
  *     //=&gt; [[hola, adios], [pedro, juan], [cristobal, colon]]
  */
 Array.prototype.transpose = function(){
-<span id='Array-property-'>  /**
+<span id='Kernel-CoreExt-Array-property-'>  /**
 </span>   * VALID INPUT!
    *
    *  PARAMETER TYPES
@@ -1234,7 +1234,7 @@ Array.prototype.transpose = function(){
       return ary
 }
 
-<span id='Array-method-zip'>/**
+<span id='Kernel-CoreExt-Array-method-zip'>/**
 </span> * @method  zip
  *
  * Takes the elements of two or more arrays passed as parameter and copies their content in a single array.
@@ -1262,7 +1262,7 @@ Array.prototype.zip = function(){
   return ary;
 }
 
-<span id='Array-method-emptyS-U'>/**
+<span id='Kernel-CoreExt-Array-method-emptyS-U'>/**
 </span> * @method  empty$U
  *
  * Checks if the array is empty.
@@ -1280,7 +1280,7 @@ Array.prototype.empty$U = function(){
       return this.length==0? true: false
 }
 
-<span id='Array-method-eqlS-U'>/**
+<span id='Kernel-CoreExt-Array-method-eqlS-U'>/**
 </span> * @method  eql$U
  *
  * Checks if the arrays are equals.
@@ -1313,7 +1313,7 @@ Array.prototype.eql$U = function(model){
 
 }
 
-<span id='Array-property-'>/**
+<span id='Kernel-CoreExt-Array-property-'>/**
 </span> *    ¿??????????
 [1,2,3].inject(0, function(element, acumulator) { return element + acumulator });
 
@@ -1327,7 +1327,7 @@ Array.prototype.inject = function(init_value){
       return init_value
 }
 
-<span id='Array-property-'>/**
+<span id='Kernel-CoreExt-Array-property-'>/**
 </span> *
  * ###Example:
  * [2, 2, 2, 2, 2].inject_with_index(0, function(element, index, acumulator) {
@@ -1340,7 +1340,7 @@ Array.prototype.inject_with_index = function(init_value){
       return init_value
 }
 
-<span id='Array-method-reverse'>/**
+<span id='Kernel-CoreExt-Array-method-reverse'>/**
 </span> * @method  reverse
  *
  * Reverses all array elements.
@@ -1362,7 +1362,7 @@ Array.prototype.reverse = function(){
   return ary
 }
 
-<span id='Array-method-values_at'>/**
+<span id='Kernel-CoreExt-Array-method-values_at'>/**
 </span> * @method  values_at
  *
  * Returns the value of an index passed as parameter.
@@ -1402,7 +1402,7 @@ Array.prototype.values_at = function(){
   return ary
 }
 
-<span id='Array-method-to_a'>/**
+<span id='Kernel-CoreExt-Array-method-to_a'>/**
 </span> * @method  to_a
  *
  * Returns self. If called on a subclass of Array, converts the receiver into an Array object.
@@ -1417,7 +1417,7 @@ Array.prototype.to_a = function(){
   return this
 }
 
-<span id='Array-method-Cycle'>/**
+<span id='Kernel-CoreExt-Array-method-Cycle'>/**
 </span> * @method  Cycle
  *
  * Calls block for each element n times or forever if none or null is given.
@@ -1444,7 +1444,7 @@ Array.prototype.cycle = function(times){
   return null
 }
 
-<span id='Array-method-strip_all'>/**
+<span id='Kernel-CoreExt-Array-method-strip_all'>/**
 </span> * @method strip_all
  *
  * Searches for strings in an array. Strips each of the string elements of an array.
@@ -1462,7 +1462,7 @@ Array.prototype.strip_all = function(){
   })
 }
 
-<span id='Array-method-combination'>/**
+<span id='Kernel-CoreExt-Array-method-combination'>/**
 </span> * @method combination
  *
  * Generates all the possible combinations grouped by *number*.
@@ -1537,7 +1537,7 @@ Array.prototype.__secure_combination = function(number, base, initial){
   return result.clone()
 }
 
-<span id='Array-method-sort_by'>/**
+<span id='Kernel-CoreExt-Array-method-sort_by'>/**
 </span> * @method sort_by
  *
  * Returns a sorted array using the mapped value returned by the block.
@@ -1548,19 +1548,19 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * @return {Array} Sorted Array
  *
  * ###Example
- *      var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']
+ *      var cities = [&#39;Madrid&#39;, &#39;barcelona&#39;, &#39;Valencia&#39;, &#39;alicante&#39;]
  *      cities.sort_by()
  *      //=&gt; [Madrid,Valencia,alicante,barcelona]
  *
  *      cities.sort_by( function(el){
  *                        return el.toLowerCase()
  *                       })
- *      //=&gt; ['alicante', 'barcelona', 'Madrid', 'Valencia']
+ *      //=&gt; [&#39;alicante&#39;, &#39;barcelona&#39;, &#39;Madrid&#39;, &#39;Valencia&#39;]
  *
  *      cities.sort_by( function(el){
  *                        return el.length
  *                       })
- *      //=&gt; ['Madrid', 'Valencia', 'Barcelona']
+ *      //=&gt; [&#39;Madrid&#39;, &#39;Valencia&#39;, &#39;Barcelona&#39;]
  *
  */
 Array.prototype.sort_by = function(){
@@ -1584,7 +1584,7 @@ Array.prototype.sort_by = function(){
 
 }
 
-<span id='Array-method-sort_byS-B'>/**
+<span id='Kernel-CoreExt-Array-method-sort_byS-B'>/**
 </span> * @method  sort_by$B
  * @chainable
  *

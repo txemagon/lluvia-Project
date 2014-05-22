@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Enumeration'>/**
-</span> * @class Enumeration
+  <pre class="prettyprint lang-js"><span id='Kernel-Enumeration'>/**
+</span> * @class Kernel.Enumeration
  *
  * Creates several symbolic constants
  *
@@ -29,10 +29,8 @@
  *
  */
 function Enumeration(){
-	var en = {};
 	for (var i=0; i&lt;arguments.length; i++)
-		en[arguments[i]] = i	
-	return en;
+		this[arguments[i]] = i	
 }
 </pre>
 </body>
