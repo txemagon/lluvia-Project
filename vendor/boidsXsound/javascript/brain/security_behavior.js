@@ -137,7 +137,7 @@ AlignmentBehavior.prototype.desired_acceleration = function(){
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 
-  return desired_velocity.subs(velocity)
+  return new Vector(1,1)
 }
 
 

@@ -290,6 +290,17 @@ Nanobot.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), 18*escala, 0, Math.PI*2, true); 
     ctx.closePath();
     ctx.stroke()
+
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.moveTo(p.get_coord(0), p.get_coord(1))
+
+    var a0 = this.heading().angle(1,0)
+    
+    ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
+    ctx.closePath();
+      ctx.stroke();
+
     ctx.strokeStyle = "black"
 
      ctx.beginPath();
