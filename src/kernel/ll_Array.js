@@ -9,7 +9,8 @@
                       "map",
                       "clone",
                       "compact",
-                      "sort_by"
+                      "sort_by",
+		      "distribute"
                     ]
 
 /**
@@ -889,7 +890,7 @@ Array.prototype.drop_while = function(){
  *
  * Transforms an array that contains other arrays in a single array with the data of all of them
  *
- * @param {Numeber} The level to stop flatting objects
+ * @param {Number} level The level to stop flatting objects
  * @return {Array} Returns an array with the elements
  *
  * ###Example
@@ -1401,7 +1402,7 @@ Array.prototype.to_a = function(){
 }
 
 /**
- * @method  Cycle
+ * @method  cycle
  *
  * Calls block for each element n times or forever if none or null is given.
  * If a non-positive number is given or the array is empty, does nothing.
@@ -1576,6 +1577,31 @@ Array.prototype.sort_by = function(){
  */
 
 /**
+ * @method distribute
+ * Distributive property
+ *
+ * ### Example
+ *
+ *     var a = [2, 3]
+ *     a.distribute([5, 6])
+ *     // => [ [[2, 5], [2, 6]], [[3, 5], [3,6]]]
+ */
+Array.prototype.distribute = function(op2) {
+    var result = []
+
+    for (var i=0; i<this.length; i++)
+      for (var j=0; j<op2.length; j++)
+         result.push( [this[i], op2[j]] )
+
+    return result
+}
+
+/**
+ * @method distribute$B
+ * Bang method. See Array#distribute
+ */
+
+/**
  * @method compose
  * Creates combinations via cartesian product.
  *
@@ -1584,142 +1610,113 @@ Array.prototype.sort_by = function(){
  *    var a = ["teki", ["anal", "hypnot"], "izer"]
  *    a.compose("_", "")
  *    // => ["teki_analizer", "teki_hypnotizer"]
- *    
- *    
+ *
+ *
  *    var a = [["teki", "woman"], ["anal", "hypnot"], "izer"]
  *    a.compose("_", "")
- *    // => [["teki_analizer", "teki_hypnotizer"], ["woman_analizer", "woman_hypnotizer"]]
- *    
- *    
+ *    // => ["teki_analizer", "teki_hypnotizer", "woman_analizer", "woman_hypnotizer"]
+ *
+ *
  *    var a = ["prefix", [["hyper", "super"], "memo", ["person", "rocket"] ], "izer"]
  *    a.compose("_", ["-", ">"], "")
- *    // => [ ["prefix_hyper-memo>personizer", "prefix_super-memo>personizer"], 
- *    //      ["prefix_hyper-memo>rocketizer", "prefix_super-memo>rocketizer"] ]
+ *    // => [ "prefix_hyper-memo>personizer", "prefix_super-memo>personizer",
+ *    //      "prefix_hyper-memo>rocketizer", "prefix_super-memo>rocketizer" ]
  */
-Array.prototype.compose = function(){    
-    
-    var args = []
-    var join = string_join  // Reference to the join function to 
-                            // be used for this separator (default)
-    var that = this
-    var lcj                 // Last composer join
-    var result = ""
-    
+
+
+Array.prototype.compose = function(){
+    var copy = this.clone()
+
+    if (this.length < 2)
+	return copy
+
+    var args   = []
     for (var i=0; i<arguments.length; i++)
-        args.push(arguments[i])
-        
-    /* Extra needed composers are the same as the last param*/        
-    if (!("last_composer_join" in this))
-        this.last_composer_join = null
-    
-    if (typeof(args[0]) !== "undefined"){
-        if (args.length > 1)
-            lcj = args.shift()
-        else /* last join used many times */
-            lcj = args[0]
-       this.last_composer_join = lcj
-    }
+      args[i] = arguments[i]
 
-       alert(this.last_composer_join + "\n" + this.toSource())
-    if (!this.last_composer_join && this.last_composer_join != ""){
-        result = []
-        join = array_join
-    }
-    
-    if (!this.length)
-        return result
-    
-    function array_join(element){
-       if (element instanceof Array)
-           result.push(Array.prototype.compose.apply(element, args))
-       else // Adding a String
-          result.push(element)
-    }
+    var roller = copy.shift().to_a()
 
-   function string_join(element){
-       if (element instanceof Array){
-           var poke = Array.prototype.compose.apply(element, args)
-           if (poke instanceof Array){
-               alert(element + " : " + args + "\n" + poke)
-               throw "Invalid matcher " + that.last_composer_join +
-                   " for " + element
-               }
-           else
-               result += element + that.last_composer_join + poke
-       }
-           
+    for(var i=0; copy.length; i++){
+	var next = copy.shift().to_a()
+	var inner_arrays = false
+	for (var h=0; h<next.length; h++)
+	   if (next[h] instanceof Array)
+	       inner_arrays = true
+	if (inner_arrays){
+	    next = Array.prototype.compose.apply(next, args[i+1])
+	    args.splice(i+1,1)
+	}
+	var result = roller.distribute(next)
+	roller = result.collect(function(el) { return el.join(args[i]) })
     }
-
-    for (var i=0; i<this.length; i++)
-        join(this[i])    
-
-    return result
+    return roller
 }
+
 //Internal simple functions
 function includes(el, array){
-  for (var i=0; i<array.length; i++)
+    for (var i=0; i<array.length; i++)
     if (array[i] == el)
-      return true
-	return false
+	return true
+    return false
 }
 
 function unpack(model, array, level){
-  var l = level;
+    var l = level;
 
-  for (var i=0; i<model.length; i++){
-    if ( (model[i] instanceof Array) && (l > 0)){
-      unpack(model[i], array, l-1)
+    for (var i=0; i<model.length; i++){
+	if ( (model[i] instanceof Array) && (l > 0)){
+	    unpack(model[i], array, l-1)
+	}
+	else{
+	    array.push(model[i])
+	}
     }
-    else{
-      array.push(model[i])
-    }
-  }
-  return array
+    return array
 }
 
 function aproduct(array1, array2){
-  var nary = []
+    var nary = []
     var arrays = array1.length * array2.length
     for(var i = 0; i < arrays; i++){
-      nary[i] = []
+	nary[i] = []
     }
-  var pos = 0
+    var pos = 0
     for(var i = 0; i < array1.length; i++)
-      for(var j = 0; j < array2.length; j++){
+    for(var j = 0; j < array2.length; j++){
 	nary[pos][0] = array1[i]
-	  nary[pos][1] = array2[j]
-	  pos++
-      }
-  return nary
+	nary[pos][1] = array2[j]
+	pos++
+    }
+	return nary
 }
 
 function _rotate(number, array1, array2){
-  var pos = 1
+    var pos = 1
     array2[number] = array1[0]
     var arg = number
     if(arg == array1.length-1)
-      arg = 0
+	arg = 0
     else
-      arg++
+	arg++
 	for(var i = arg; i != number;i++){
-	  array2[i] = array1[pos]
+	    array2[i] = array1[pos]
 	    if(i == (array1.length-1))
-	      i = -1;
-	  pos++
+		i = -1;
+	    pos++
 	}
-  return array2
+	    return array2
 }
 
 function getRandomArbitary (min, max) {
-  return Math.random() * (max - min) + min;
+    return Math.random() * (max - min) + min;
 }
 
 function _transpose(pos, nary){
-  //This function returns a transpose array. (Used by Array#transpose method when it receives non-square matrices).
-  var array = []
+    //This function returns a transpose array. (Used by Array#transpose method when it receives non-square matrices).
+    var array = []
     for(var i = 0; i < nary.length; i++)
-      array[i] = nary[i][pos]
-	return array
+    array[i] = nary[i][pos]
+    return array
 }
 
 Array.reflect(Array.bang_methods)
