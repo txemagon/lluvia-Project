@@ -79,7 +79,6 @@ Speaker.prototype.get_wave_lenght = function(){
 *
 * Returns frequency music
 */
-var variable_global_ivan = 3000
 Speaker.prototype.set_frequency_music = function(new_value){
   var new_frequency = Math.log(new_value/1000)/10
   this.frequency = new_frequency
@@ -139,7 +138,8 @@ Speaker.prototype.run = function(current_time){
     return
   current_time = current_time || new Date()
   this.update_physics(current_time)
-  this.set_frequency_music(variable_global_ivan)
+  if(ff)
+    this.set_frequency_music(ff)
   this.nanobot_is_listening()
 }
 

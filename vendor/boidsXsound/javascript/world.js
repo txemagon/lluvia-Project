@@ -528,7 +528,6 @@ World.prototype.visible_for_each = function(){
     var vision =  this.array_boids[i].vision.radius * this.array_boids[i].vision.radius
     var visible = []
     for(var a=0; a<this.array_boids.length; a++){
-       var heading = this.array_boids[a].heading()
         var dx = this.array_boids[a].geo_data.position.get_coord(0) - this.array_boids[i].geo_data.position.get_coord(0)
         var dy = this.array_boids[a].geo_data.position.get_coord(1) - this.array_boids[i].geo_data.position.get_coord(1)
         if ( dx * dx + dy * dy < vision) 

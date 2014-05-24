@@ -35,7 +35,7 @@ files: [
 //			{ name: "face_animation.js",           description: "" },
 			{ name: "face_device.js",              description: "" },
 			{ name: "face_gate.js",                description: "" },
-			{ name: "lcd_automata.js",    description: "" },
+			{ name: "lcd_automata.js",             description: "" },
 			{ name: "face_automata_message.js",    description: "" },
 			{ name: "face_automata_outline.js",    description: "" },
 			{ name: "face_automata_eyes.js",       description: "" },
@@ -44,7 +44,12 @@ files: [
 			{ name: "boid.js",                     description: "One Boid." },
 			{ name: "nanobot.js",                  description: "" },
 			{ name: "speaker.js",                  description: "" },
+			{ name: "audio/WebAudio.js",           description: "" },
+			{ name: "audio/class_BufferLoader.js", description: "" },
+			{ name: "audio/requestAnimFrame.js",   description: "" },
 			{ name: "main.js",                     description: "main function." },
+			{ name: "audio/main_audio.js",                  description: "" },
+
 		]
         }
 ]

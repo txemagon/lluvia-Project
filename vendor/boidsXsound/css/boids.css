@@ -350,49 +350,7 @@ body{
   margin: -92px 0 0 28px;
 }
 
-/*
-#sub-contaniner1{
-  width: 300px;
-  background-color: red;
-  position: absolute;
+#canvas_sound{
+  background-color: black;
+  margin: 450px 0 0 300px;
 }
-
-#sub-contaniner2{
-  width: 400px;
-  background-color: orange;
-  margin: 0 0 0 300px;
-  position: absolute;
-}
-
-#sub-contaniner3{
-  width: 380px;
-  background-color: green;
-  margin: 0 0 0 810px;
-  position: absolute; 
-}
-*/
-/*
-  width: 150px;
-  height: 150px;
-
-  margin: 0 0 0 450px;
-}
-
-
-
-#c1{
-  width: 200px;
- height: 135px; 
-background-image:url('../images/c1.svg');
-background-size: 100% 100%;
-  
-}
-
-#c2{
-  width: 250px;
- height: 250px; 
-background-image:url('../images/c2.svg');
-background-size: 100% 100%;
-  margin: -444px 0 0 400px;
-}
-*/

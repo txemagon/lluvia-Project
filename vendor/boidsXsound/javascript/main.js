@@ -19,12 +19,12 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
   /*
+*/
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
-                                        position: new Vector(200, 200),
-                                        velocity: new Vector(0, 0),
+                                        position: new Vector(275, 200),
+                                        velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
                                         acceleration: new Vector(0, 0)
                                       }})
-*/
   /*
 
 var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
@@ -76,7 +76,7 @@ var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
 w.path.push(l1, l2, l3, l4, a1,a2,a3,a4,a5,a6,a7,a8)
 
-  for(var i=0; i<30;i++){
+  for(var i=0; i<20;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                                           position: new Vector(Math.random()*210, Math.random()*100), // 210, 100
@@ -86,12 +86,17 @@ w.path.push(l1, l2, l3, l4, a1,a2,a3,a4,a5,a6,a7,a8)
          config.brain.activate('containment')
 //         config.brain.activate('wander')
 
-         config.brain.activate('alignment')
-         config.brain.activate('separation')
-         config.brain.activate('cohesion')
+          config.brain.activate('alignment')
+          config.brain.activate('separation')
+          config.brain.activate('cohesion')
 
 
        })
   }
   w.start()
+
+
+  init_setup()
+  playSound()
+
 }
