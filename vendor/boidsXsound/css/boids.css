@@ -350,7 +350,44 @@ body{
   margin: -92px 0 0 28px;
 }
 
-#canvas_sound{
+
+#canvas_sound_body{
+  width: 650px;
+  height: 191px;
+  margin: 450px 0 0 250px;
+  /*
   background-color: #85ab34;
-  margin: 450px 0 0 300px;
+  */
 }
+
+#canvas_sound_left{
+  width: 40px;
+  height: 100%;
+  background-image:url('../images/lcd_left.png');
+  background-size: 100% 100%;
+  /*background-repeat:repeat-y;*/
+  float: left;
+}
+
+#canvas_sound_center{
+  width: 570px;
+  height: 100%;
+  background-image:url('../images/lcd_center.png');
+  background-size: 7% 100%;
+  background-repeat:repeat-x;
+  margin: 0 0 0 40px;
+}
+
+#canvas_sound{
+  position: absolute;
+  margin: -165px 0 0 51px;
+}
+
+#canvas_sound_right{
+  width: 40px;
+  height: 100%;
+  background-image:url('../images/lcd_right.png');
+  background-size: 100% 100%;
+  margin: -191px 0 0 610px;
+}
+

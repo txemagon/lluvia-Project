@@ -76,7 +76,7 @@ var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
 w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
-  for(var i=0; i<20;i++){
+  for(var i=0; i<40;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                                           position: new Vector(Math.random()*550, Math.random()*400), // 210, 100
@@ -86,9 +86,9 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.brain.activate('containment')
       config.brain.activate('wander')
 
-//      config.brain.activate('alignment')
-//          config.brain.activate('separation')
-//          config.brain.activate('cohesion')
+      //config.brain.activate('alignment')
+         config.brain.activate('separation')
+      //             config.brain.activate('cohesion')
 
 
        })
@@ -98,5 +98,6 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
   init_setup()
   playSound()
+
 
 }
