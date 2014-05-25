@@ -32,7 +32,7 @@ function draw(){
 	var max_cell = OFFSET
 
   drawContext.clearRect(0, 0, WIDTH, HEIGHT)
-  drawContext.fillStyle ='#00FFCC'
+  drawContext.fillStyle ='#000000'
 
   for(var i = 0; i < results.length-OFFSET; i++){
     var magnitude = results[i + OFFSET]

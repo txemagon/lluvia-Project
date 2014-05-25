@@ -73,7 +73,7 @@ LcdAutomata.prototype.refresh = function(){
                          "Pos (x,y): (" +  Math.round(actual_boid.geo_data.position.Coord[0]*10)/10 + "," + Math.round(actual_boid.geo_data.position.Coord[1]*10)/10 + ") <br/>" +
                          "This on: " + actual_boid.this_on + "<br/>" +
                          "Wave lenght: " + actual_boid.wave_lenght + "<br/>" +
-                         "Frequency: " + Math.round(actual_boid.get_frequency_music()*100)/100 + "<br/>" +
+                         "Frequency: " + Math.round(actual_boid.frequency) + "Hz <br/>" +
                          "<div style='margin:0px 0 0 27px;'><big><big>Controls</big></big><br/></div>"
 }
 if(actual_boid instanceof Nanobot){

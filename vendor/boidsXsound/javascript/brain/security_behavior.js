@@ -40,7 +40,7 @@ ContainmentBehavior.prototype.desired_acceleration = function(){
 
   for(var i=0; i<path.length; i++){
     if(Line.intersects_segment$U(path[i],l2))
-      return new Vector(path[i].get_normal()).scale(100)
+      return new Vector(path[i].get_normal()).scale(200)
 }
   return new Vector(0,0)
 }
@@ -86,20 +86,26 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     count++
   })
 */
+var scale = 1
 var visible_object = this.me.visible_object
   for(var i=0; i<visible_object.length; i++){
     var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
-    var r = target_at.module() || 1
-    r /= 60
-    x += target_at.get_coord(0) / r
-    y += target_at.get_coord(1) / r
+    if(target_at.module() <= 15){
+      scale = 50
+    }
+    else{
+      scale = 0
+  }
+
+    x += target_at.get_coord(0) * scale
+    y += target_at.get_coord(1) * scale
     count++
   }
 
   if(count == 0)
     return new Vector(0,0) 
 
-  return new Vector(-x/count, -y/count) 
+  return new Vector(-x/count, -y/count)
 }
 
 /**
@@ -164,7 +170,7 @@ var visible_object = this.me.visible_object
 
   var desired_velocity = velocity.projection(new Vector(x/count, y/count))
 
-  if(count == 0)
+  if(count == 0 || velocity.module() == 0)
     return new Vector(0,0) 
   
   return desired_velocity.subs(velocity)   
@@ -214,13 +220,15 @@ CohesionBehavior.prototype.desired_acceleration = function(){
 var visible_object = this.me.visible_object
   for(var i=0; i<visible_object.length; i++){
     var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
-    x += target_at.get_coord(0)
-    y += target_at.get_coord(1)
+    var r = target_at.module() || 1
+    r /= 5
+    x += target_at.get_coord(0) / r
+    y += target_at.get_coord(1) / r
     count++
   }
 
   if(count == 0)
     return new Vector(0,0) 
-  return new Vector(x/count, y/count) 
+  return new Vector(x/count, y/count)
 }
 

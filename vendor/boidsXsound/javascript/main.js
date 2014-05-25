@@ -12,12 +12,12 @@ function main(){
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
   
-
+/*
   var face_boids = new FaceDevice("boid_properties")
   boid_list.addPort("face_boid_animation", face_boids)
-
   c=document.getElementById("face");
   cxt=c.getContext("2d");
+*/
   /*
 */
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
@@ -74,21 +74,21 @@ var a6 = new StraightLine(new Vector(200,200), new Vector(222,253))
 var a7 = new StraightLine(new Vector(222,147), new Vector(200,200))
 var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
-w.path.push(l1, l2, l3, l4, a1,a2,a3,a4,a5,a6,a7,a8)
+w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
   for(var i=0; i<20;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                                          position: new Vector(Math.random()*210, Math.random()*100), // 210, 100
-                                          velocity: new Vector(40,40),
+                                          position: new Vector(Math.random()*550, Math.random()*400), // 210, 100
+                                          velocity: new Vector((Math.random()*100)-50,(Math.random()*100)-50),
                                           acceleration: new Vector(0, 0)}
 
-         config.brain.activate('containment')
-//         config.brain.activate('wander')
+      config.brain.activate('containment')
+      config.brain.activate('wander')
 
-          config.brain.activate('alignment')
-          config.brain.activate('separation')
-          config.brain.activate('cohesion')
+//      config.brain.activate('alignment')
+//          config.brain.activate('separation')
+//          config.brain.activate('cohesion')
 
 
        })

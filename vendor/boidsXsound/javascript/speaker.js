@@ -17,9 +17,10 @@ function Speaker(geo_data, wave_lenght, src){
 	function initialize(){
 		that.image = new Image()
 		that.image.src = src || "images/altavoz.png"
-		that.wave_lenght = wave_lenght || 100
+		that.wave_lenght = wave_lenght || 1000
 		that.wave_aux = 0
 		that.this_on = false
+    that.array_frequency = []
     that.frequency = 0
 		Boid.call(that, geo_data)
 	}
@@ -77,11 +78,26 @@ Speaker.prototype.get_wave_lenght = function(){
 /**
 * @method set_frequency_music
 *
-* Returns frequency music
+* Set frequency music
 */
 Speaker.prototype.set_frequency_music = function(new_value){
+  this.frequency = new_value
+  //var new_frequency = Math.log(new_value/1000)/10
+  //this.array_frequency.push(new_frequency)
+
+
+  /*
   var new_frequency = Math.log(new_value/1000)/10
-  this.frequency = new_frequency
+  var media = 0
+  this.array_frequency.push(new_frequency)
+  for(var i=0; i<this.array_frequency.length; i++){
+    media += this.array_frequency[i]
+  }
+
+  media = media / this.array_frequency.length
+
+  //this.frequency = new_frequency
+*/
 }
 
 /**
@@ -89,8 +105,15 @@ Speaker.prototype.set_frequency_music = function(new_value){
 *
 * Returns frequency music
 */
-Speaker.prototype.get_frequency_music = function(){
-	return this.frequency
+Speaker.prototype.get_frequency_music = function(){ // cambiar para que si llega a un numero muy alto limpiarlo
+/*  var media = 0
+  for(var i=0; i<this.array_frequency.length; i++){
+    media += this.array_frequency[i]
+  }
+  media = media / this.array_frequency.length
+*/
+
+  return Math.log(this.frequency/1000)/10
 }
 
 /**
