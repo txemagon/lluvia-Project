@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">assert(&quot;Object#attr_reader creates the getter function.&quot;,
+       &quot;me.get_name()&quot; , &quot;'Txema'&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_reader('name');  }); me = new Person('Txema')&quot;)
+
+assert(&quot;Object#attr_reader creates the getter function in its own camel case version.&quot;,
+       &quot;me.getName()&quot; , &quot;'Txema'&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_reader('name');  }); me = new Person('Txema')&quot;)
+
+
+assert(&quot;Object#attr_writer creates the setter function.&quot;,
+       &quot;me.name&quot; , &quot;'Juan'&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_writer('name');  }); me = new Person('Txema'); me.set_name('Juan')&quot;)
+
+assert(&quot;Object#attr_accessor creates the setter and the getter functions.&quot;,
+       &quot;me.get_name()&quot; , &quot;'Juan'&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor('name');  });\
+        me = new Person('Txema'); \
+	me.set_name('Juan')&quot;)
+
+assert(&quot;Object#attr_reader, Object#attr_writer and Object#attr_accessor create the class variable if it doesn't exist.&quot;,
+       &quot;me.get_name()&quot; , &quot;null&quot;,
+       &quot;Class_Person(function(){ this.attr_reader('name');  }); me = new Person();&quot;)
+
+assert(&quot;Object#attr_accessor works with something different of strings.&quot;,
+       &quot;me.get_age() + 2;&quot; , &quot;39&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor('age'); });\
+        me = new Person('Txema'); \
+	me.set_age(37);&quot;)
+
+</pre>
+</body>
+</html>

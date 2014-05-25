@@ -1,7 +1,7 @@
 /**
- * @classDescription Creates a World
+ * @class World Creates a World
  *
- * @param  {canvas}  A string or HTMLNode with a canvas element.
+ * @param  {HTMLElement} canvas  A string or HTMLNode with a canvas element.
  * @return {World}
  * @constructor
  */

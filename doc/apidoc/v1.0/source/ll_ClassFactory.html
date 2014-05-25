@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-method-_ClassFactory'>/**
-</span> * @method _ClassFactory
+  <pre class="prettyprint lang-js"><span id='global-method-Kernel'>/**
+</span> * @method Kernel.Facilities.Class._ClassFactory
  *
  * Creates a new class
  *
@@ -30,7 +30,7 @@
  *    Class_MyClass()  // _ClassFactory is internally call and make the class.
  *
  *    // Create class Person
- *    _ClassFactory(&#39;Person&#39;, &#39;function initialize(name){ this.name = name }, function greet(name){ return class_name }&#39;)
+ *    _ClassFactory('Person', 'function initialize(name){ this.name = name }, function greet(name){ return class_name }')
  *
  */
 function _ClassFactory(class_name, initial_functions){
@@ -61,7 +61,7 @@ function _ClassFactory(class_name, initial_functions){
             eval(class_name)[f.name] = ( function(){
                                                    var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name);
                                                    with(this)
-                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before(&#39;&quot; + f.name + &quot;&#39;);\n &quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval(&#39;this&#39;))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.&quot; + f.name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.&quot; + f.name + &quot;( &quot;) + &quot;;\nthis.call_after(&#39;&quot; + f.name + &quot;&#39;);\n}&quot; )}
+                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n &quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.&quot; + f.name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.&quot; + f.name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )}
                                                )()
           } catch (err) {
             alert(&quot;Impossible to create the function.\n&quot; + err + &quot;\n&quot; + fun)
@@ -70,18 +70,18 @@ function _ClassFactory(class_name, initial_functions){
           eval(class_name).prototype[f.name] = ( function(){
                                                    var super_mthd = eval(parent_class + &quot;.prototype.&quot; + f.name);
                                                    var Self =  function(){ return self }
-                                                   var aux_body = f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval(&#39;this.constructor&#39;))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;&quot;
+                                                   var aux_body = f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this.constructor'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;&quot;
 
                                                    eval(class_name + &quot;.prototype._&quot; + f.name +&quot; = function(&quot; + f.params + &quot;){&quot;+aux_body+&quot;}&quot;)
                                                    with(this)
-                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){\n var return_value;\nthis.call_before(&#39;&quot; + f.name + &quot;&#39;);\n&quot; + &quot;return_value = this._&quot;+ f.name +&quot;(&quot; + f.params + &quot;); \nthis.call_after(&#39;&quot; + f.name + &quot;&#39;);\nreturn return_value;\n}&quot; )}
-                                                   //Original--&gt;//return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before(&#39;&quot; + f.name + &quot;&#39;);\n&quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval(&#39;this.constructor&#39;))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;\nthis.call_after(&#39;&quot; + f.name + &quot;&#39;);\n}&quot; )}
+                                                   return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){\n var return_value;\nthis.call_before('&quot; + f.name + &quot;');\n&quot; + &quot;return_value = this._&quot;+ f.name +&quot;(&quot; + f.params + &quot;); \nthis.call_after('&quot; + f.name + &quot;');\nreturn return_value;\n}&quot; )}
+                                                   //Original--&gt;//return eval(&quot;$$F$$ = function &quot; + f.name + &quot;(&quot; + f.params + &quot;){ this.call_before('&quot; + f.name + &quot;');\n&quot; + f.body.replace(/self\./g, class_name + &quot;.&quot;).replace(/Self(?!\s*\()/g, &quot;(eval('this.constructor'))&quot;).replace(/Super\(\s*\)/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;.apply(this, arguments)&quot;).replace(/Super\(/, parent_class + &quot;.prototype.&quot; + fn_name + &quot;( &quot;) + &quot;;\nthis.call_after('&quot; + f.name + &quot;');\n}&quot; )}
                                                )()
        }
      }
   }
 
-  /* eval only works properly when in expressions so we&#39;ve added the = sign */
+  /* eval only works properly when in expressions so we've added the = sign */
   var initializer = initial_functions[0] || &quot;function (){ }&quot;
   if (typeof(initializer) === &quot;function&quot; )
      initializer = initializer.toSource()
@@ -98,7 +98,7 @@ function _ClassFactory(class_name, initial_functions){
 	&quot;).replace(/}$/m,
 	&quot; \n\
         if (!&quot; + class_name + &quot;.initialized ){ \n\
-          if (typeof(arguments[0]) != &#39;undefined&#39; &amp;&amp; arguments[0].initialize)\n\
+          if (typeof(arguments[0]) != 'undefined' &amp;&amp; arguments[0].initialize)\n\
             try{&quot; + class_name + &quot;.initialize()}catch(err){;}\n\
           &quot; + class_name + &quot;.initialized = true \n\
         }\n\
@@ -140,7 +140,7 @@ basic_proto()
                                                      var ancestors = this.ancestors();\n\
                                                      for (var i=0; i&lt; ancestors.length; i++)\n\
                                                        try{ return ancestors[i][method].apply(object, argument) } catch(err){;}\n\
-                                                       throw (&#39;Method missing: &#39; + object + &#39;.&#39; + method + &#39;(&#39; + argument + &#39;)&#39; )\n\
+                                                       throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
                                                      return &quot; + parent_class + &quot;[method].apply(object, argument) \n\
                                                   }; &quot;)
 

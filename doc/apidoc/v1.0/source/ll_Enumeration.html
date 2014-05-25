@@ -15,22 +15,40 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Kernel-Enumeration'>/**
-</span> * @class Kernel.Enumeration
+  <pre class="prettyprint lang-js"><span id='Kernel-Facilities-Enumeration'>/**
+</span> * @class Kernel.Facilities.Enumeration
  *
  * Creates several symbolic constants
  *
  *    ###Example:
+ *
  *    Suit = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, &quot;diamonds&quot;, &quot;clovers&quot;)
- *    // =&gt; Object { spades=0, hearts=1, diamonds=2, clovers=3}
+ *    // { spades: 0, hearts: 1, diamonds: 2, clovers: 3}
  *
  *    Suit.hearts == 1
  *    // =&gt; true
  *
+ *     var a = new Enumeration(&quot;spades&quot;, [&quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;]], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *     Object.keys(a.hearts)
+ *     // =&gt; red,black
+ *
+ *     a.hearts
+ *     // =&gt; 1
+ *
+ *     a.hearts.red
+ *     // =&gt; 0
+ *
  */
 function Enumeration(){
-	for (var i=0; i&lt;arguments.length; i++)
-		this[arguments[i]] = i	
+    for (var i=0; i&lt;arguments.length; i++)
+        if (arguments[i] instanceof Array){
+            this[arguments[i][0]] = new Number(i)
+            var subcases = new (ApplyProxyConstructor(Enumeration, arguments[i][1]))
+            for (var key in subcases)
+                Object.defineProperty(this[arguments[i][0]], key, {value: subcases[key], enumerable: true})
+        } else
+            this[arguments[i]] = i
+
 }
 </pre>
 </body>

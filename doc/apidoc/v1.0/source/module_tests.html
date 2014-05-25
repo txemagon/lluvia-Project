@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">assert( &quot;Module #1. Creating Modules&quot;,
+        &quot;a&quot;, &quot;Module&quot;,
+        &quot;Module('MyModule'); a = MyModule.constructor&quot;
+      )
+
+assert( &quot;Module.constants #1. List of all available constants&quot;,
+        &quot;list&quot;, &quot;['MyModule', 'YourModule']&quot;,
+        &quot;Module('MyModule'); Module('YourModule'); \
+        list = Module.constant_names();&quot;
+      )
+
+assert( &quot;Module#alias_method #1. Creates a copy of a function&quot;,
+        &quot;r&quot;, &quot;'hello'&quot;,
+        &quot;Module('MyModule'); \
+         MyModule.greet = function(){;\
+            return 'hello';\
+          };\
+          MyModule.alias_method('hello', 'greet'); \
+          r = MyModule.hello();\
+         &quot;
+      )
+</pre>
+</body>
+</html>

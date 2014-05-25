@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">
+function get_log_load(){
+    return lluvia_load = document.getElementById(&quot;lluvia_load&quot;)
+}
+
+function explain(div, title, text){
+    var whole_html_text = &quot;&quot;
+    if (div) {
+        whole_html_text += title + &quot;: &quot; + text + &quot;&lt;br/&gt;\n&quot;
+        div.innerHTML += whole_html_text
+    }
+}
+
+function ll_module_to_include(module_source){
+    explain(get_log_load(), &quot;About to load module&quot;, module_source.module)
+    module_loading[module_source.module] = new LogModuleLoad(module_source)
+}
+
+function ll_module_included(module_source){
+    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
+}
+
+function ll_file_included(file_source, module_source, last_file, last_module){
+    module_loading[module_source.module].addFile(file_source)
+    if (last_file) 
+        ll_module_included(module_source)
+    if (last_file &amp;&amp; last_module) 
+        ll_start()
+}
+
+function highlight(language){
+    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
+    code = document.getElementsByTagName('pre')
+    for (var i = 0; i &lt; code.length; i++) 
+        if (code[i].className == language) 
+            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
+}
+
+function ll_start(){
+    highlight('javascript')
+}
+
+function sanitize(code){
+    return code.replace(&quot;&amp;lt;&quot;, &quot;&lt;&quot;)
+}
+
+function run(code_fragment){
+    var snippets = document.getElementsByName(code_fragment)	
+    for (var i = 0; i &lt; snippets.length; i++) 	    
+        eval(sanitize(snippets[i].innerHTML))
+}
+
+function clear(){
+    document.getElementById(&quot;debug&quot;).innerHTML = &quot;&quot;
+}
+
+
+</pre>
+</body>
+</html>

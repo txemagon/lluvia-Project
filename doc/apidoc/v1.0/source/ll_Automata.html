@@ -51,7 +51,8 @@
 Automata.prototype.constructor = Automata;
 function Automata(states, initialState, solicitor){
 
-	if (states)
+	if (states instanceof Array)
+		
 
 	this.state = states == null ? { none: -1 } : states;
 	this.state_name = []

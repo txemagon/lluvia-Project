@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">var _test_panel_name = '_testResults'
+var $LLGvn // It's necessary to hold the evaluation in a globlal variable to keep garbage collector's hands out of the code
+
+        function _test_equals(value1, value2){
+           var ERROR = 0.00001
+
+           if (typeof(value1) == &quot;number&quot; &amp;&amp; typeof(value2) == &quot;number&quot;)
+             return (value2 &gt; (value1 - ERROR)) &amp;&amp; (value2 &lt; (value1 + ERROR))
+           else if ( value1 &amp;&amp; value1.respond_to(&quot;eql$U&quot;) )
+             return value1.eql$U(value2)              
+           
+           else
+             return value1 == value2        
+        }
+      
+      function sanitize(text){
+         return text.replace(/;;/g, &quot;;&quot;)
+      }
+      
+      function beautify(text){
+         return text.replace(/(;){2}/g, &quot;PPPPP___###&quot;).replace(/&lt;/g, &quot;&amp;lt;&quot;).replace(/;/g, &quot;\n&lt;br/&gt;&quot;).replace(/PPPPP___###/g, &quot;;&quot;)
+      }
+
+     function replace_function_call(code, fn_name, return_value){
+       var last_name_pos = -1
+       while ( (last_name_pos = code.indexOf(fn_name, last_name_pos + 1) ) != -1 ){
+         var opened_par = 0
+         var start_index = 0
+           do{
+            start_index++
+           }while(code.charAt(last_name_pos + start_index) != '(' )           
+           opened_par++
+           do{
+             start_index++
+             if (code.charAt(last_name_pos + start_index) == '(' )
+               opened_par++
+             if (code.charAt(last_name_pos + start_index) == ')' )
+               opened_par--
+           }while(opened_par)
+           code = code.replace(code.substr(last_name_pos, start_index + 1), return_value)
+       }
+
+       return code
+     }
+
+	function eval_value(testing, depth){
+     depth = depth || 0
+
+     try{
+       return eval.call(null, sanitize(testing)) 
+     } catch(err){ 
+             if (Exception.is$U(err, &quot;method call&quot;) || Exception.is$U(err, &quot;singleton method&quot;)){
+               return Exception.parse(err, &quot;method call&quot;)
+             }
+       if (Exception.is$U(err, &quot;function call&quot;)){
+         if (depth &gt;= 10 ) 
+           throw err
+	       return eval_value( replace_function_call(testing, Exception.is$U(err, &quot;function call&quot;), Exception.parse(err, testing).toSource() ), depth + 1 )
+	     }
+	     return Exception.parse(err) // todo: this is actually a problem because we only rescue the problematic snippet (the problem rises in the eval not in the real code, so it affects the whole expression).
+	   }
+	}
+      
+
+function _make_test(kind){
+        var res = [&quot;Ok&quot;, &quot;Failed&quot;]
+        var test_text = &quot;Testing: &quot;
+        var test_res = &quot;\n&lt;br/&gt;\n&quot;
+	var sep = &quot;: &quot;
+        var test_panel = document.getElementById(_test_panel_name)
+        
+        
+///
+      if (kind == &quot;assert&quot;)
+	  return function (sentence, testing, waited, before_test, post_condition){
+	     
+	      eval_value(before_test)
+	      var _testing = testing
+	      var _test_value = eval_value(testing)
+	      if (_test_value &amp;&amp; _test_value.toSource() )
+		 _test_value = _test_value.value_of()
+	      var _waited = waited
+	      testing = eval_value(testing)
+	      waited = eval_value(waited)
+	      eval_value(post_condition || &quot;;&quot; )
+          var i = _test_equals(testing, waited)? 0 : 1
+          
+	  var this_sample = &quot;&quot; 
+          this_sample += &quot;&lt;div class='TestSample'&gt;&quot;
+          this_sample += &quot;&lt;h3 class='TestSample_&quot; + res[i] + &quot;'&gt;&quot;
+          this_sample += test_res + test_text + sentence + sep + res[i] + test_res
+          this_sample += &quot;&lt;/h3&gt;&quot;
+          this_sample += &quot;&lt;p class='TestCode'&gt;&quot;
+          this_sample += &quot;Given: &lt;br/&gt;&quot;
+          this_sample += beautify(before_test)
+          this_sample += &quot;&lt;/p&gt;&quot;
+          this_sample += &quot;&lt;p class='TestDescription'&gt;&quot;
+          this_sample += &quot;&lt;b&gt;The results were:&lt;/b&gt; &lt;br/&gt;&quot;
+          this_sample += &quot;Real Value: &quot; + _testing + &quot; =&gt; &quot; +  _test_value || &quot;null&quot;
+          this_sample += &quot;&lt;br/&gt;Waited Value: &quot; + _waited + &quot;&lt;br/&gt;&quot;
+          this_sample += &quot;&lt;/p&gt;&quot;
+          this_sample += &quot;&lt;/div&gt;&quot;
+
+
+          test_panel.innerHTML += this_sample          
+        }	  
+        
+        if (kind == &quot;given&quot;)
+          return function(title, given_block){
+            
+            var this_sample = &quot;&quot; 
+            this_sample += &quot;&lt;div class='TestGiven'&gt;&quot;
+            this_sample += &quot;&lt;h3&gt;Given: &quot; + title + &quot;&lt;/h3&gt;&quot;
+            this_sample += &quot;&lt;p&gt;&quot;
+            this_sample += beautify(given_block)
+            this_sample += &quot;&lt;/p&gt;&quot;            
+            this_sample += &quot;&lt;/div&gt;&quot;
+            test_panel.innerHTML += this_sample
+            return eval_value(given_block)
+          }
+}
+
+var _clean_tests = function(){
+  document.getElementById(_test_panel_name).innerHTML = ''
+}
+
+
+var assert
+
+function init_testframework(){
+ assert = _make_test(&quot;assert&quot;)
+ given  = _make_test(&quot;given&quot;)
+ 
+ for (var i=0; i&lt;_test_index.length; i++){
+	    var script = document.createElement('script')
+	    script.setAttribute('type', 'text/javascript')
+	    script.setAttribute('src', _test_index[i] )
+	    document.getElementsByTagName('head')[0].appendChild(script)
+	}
+}
+
+
+</pre>
+</body>
+</html>

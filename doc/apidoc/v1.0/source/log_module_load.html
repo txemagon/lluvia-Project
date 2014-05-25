@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">var module_loading = {}
+
+function $timeStamp(){
+  var dat = new Date()
+  var timestamp = &quot;&quot;
+  timestamp += dat.getHours() + &quot; : &quot; + dat.getMinutes() + &quot; : &quot; + dat.getSeconds()
+  return timestamp
+}
+
+function LogFileIncluded(file_source){
+  this.template = [
+    &quot;&lt;div class='_LogFile'&gt;&quot;,
+    file_source.name,
+    &quot; [&quot; + $timeStamp() + &quot;]&quot;,
+    &quot;: &quot;,
+    file_source.description,
+    &quot;&lt;/div&gt;&quot;
+  ]
+}
+
+LogFileIncluded.prototype.toString = function(){
+  return this.template.join(&quot;&quot;)
+}
+
+function LogModuleLoad(module_source){
+  this.template = [
+      &quot;&lt;div class='_LogModule'&gt;&quot;,
+      &quot;&lt;h3 class='_LogModuleName'&gt; MODULE: &quot;,
+      &quot;I02:Module Name&quot;,
+      &quot;&lt;/h3&gt;\n&quot;,
+      &quot;&lt;span class='_LogModulePath'&gt;&amp;nbsp;&amp;nbsp;(&quot;,
+      &quot;I05: Module Path&quot;,
+      &quot;)&lt;/span&gt;\n&lt;br/&gt;&quot;,
+      &quot;&lt;span class='_LogModuleDescription'&gt;&quot;,
+      &quot;I08: Module Description&quot;,
+      &quot;&lt;/span&gt;\n&lt;br/&gt;&quot;,
+      &quot;Load Start Time: &quot;,
+      &quot;I11: start Time&quot;,
+      &quot;&lt;br/&gt;\n&quot;,
+      &quot;Load Finish Time: &quot;,
+      &quot;I14: Finish Time: &quot;,
+      &quot;&lt;br/&gt;\n&quot;,
+      &quot;Load Time: &quot;,
+      &quot;I17: Elapsed Time: &quot;,
+      &quot; s.&lt;br/&gt;&quot;,
+      &quot;FILES:&lt;br/&gt;&quot;,
+      &quot;I20: FILES&quot;,
+      &quot;&lt;br/&gt;&quot;,
+      &quot;&lt;/div&gt;&quot;
+    ]
+
+ this.start = new Date().getTime()
+ this.end   = new Date().getTime()
+ this.template[11] = $timeStamp()
+ this.template[2]  = module_source.module
+ this.template[5]  = module_source.path
+ this.template[8]  = module_source.description
+ this.files = []
+}
+
+LogModuleLoad.prototype.addFile = function(file_source){
+ this.files.push(new LogFileIncluded(file_source))
+}
+
+LogModuleLoad.prototype.endLoad = function(){
+  this.end   = new Date().getTime()
+  this.template[14] = $timeStamp()     
+  this.template[17] = &quot;&quot; + ( Math.round((this.end - this.start) / 10) / 100);
+  return this.toString()
+}
+
+LogModuleLoad.prototype.toString = function(){  
+  this.template[20] = &quot;&quot;
+  for (var i=0; i&lt;this.files.length; i++)
+    this.template[20] += this.files[i].toString()
+  return this.template.join('\n')
+}
+</pre>
+</body>
+</html>
