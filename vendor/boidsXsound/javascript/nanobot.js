@@ -19,7 +19,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 
   function initialize(){
     Boid.call(that, geo_data, color)
-    that.level_emotion = level_emotion || 50
+    that.level_emotion = level_emotion || 0
     that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
     that.gender = gender 
@@ -193,6 +193,11 @@ Nanobot.prototype.analyze_msg = function(){
 * Analyze the sound.
 */
 Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de las ultimas cuatro lineas no hace falta las mitad de las cosas
+  if(this.level_emotion > 100)
+    this.level_emotion = 100
+  if(this.level_emotion < 0)
+    this.level_emotion = 0
+
   if(this.array_frequency.length > 0){
     if(this.level_emotion < 100 || this.array_frequency[0] < 0)
       this.level_emotion += this.array_frequency.shift()
@@ -200,25 +205,19 @@ Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de 
       this.array_frequency.shift()
     }
   }
-  else if(this.level_emotion >= 0.0){
+  else if(this.level_emotion >= 0.0)//{
     this.level_emotion -= 0.1
-  }
+//  }else if(this.level_emotion < 50)
+//    this.level_emotion += 0.1
 
-  if(this.level_emotion > 100)
-    this.level_emotion = 100
-  if(this.level_emotion < 0)
-    this.level_emotion = 0
 }
 
 Nanobot.prototype.analyze_level_emotion = function(){
-  var level = this.level_emotion
-    this.vel_max = this.level_emotion
-  if(level < 33){
-    //this.force_limits.thrust = 1
-    //this.force_limits.steering = 1
-    //this.force_limits.braking = 1
-  }
-
+  /*
+  this.force_limits.thrust = (20/100)*this.level_emotion
+  this.force_limits.steering = (550/100)*this.level_emotion
+  this.force_limits.braking = (70/100)*this.level_emotion
+  */
 }
 
 /**
@@ -322,6 +321,8 @@ Nanobot.prototype.draw = function(ctx){
     ctx.closePath();
     ctx.stroke()
 
+/*Angle vision*/
+/*
     ctx.strokeStyle = "red"
     ctx.beginPath();
     ctx.moveTo(p.get_coord(0), p.get_coord(1))
@@ -331,7 +332,7 @@ Nanobot.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
     ctx.closePath();
       ctx.stroke();
-
+*/
     ctx.strokeStyle = "black"
 
      ctx.beginPath();

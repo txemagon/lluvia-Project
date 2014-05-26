@@ -94,11 +94,18 @@ var visible_object = this.me.visible_object
       scale = 50
     }
     else{
-      scale = 0
+      scale = (0.2/100)*this.me.level_emotion
   }
-
-    x += target_at.get_coord(0) * scale
-    y += target_at.get_coord(1) * scale
+    var r = target_at.module() || 1
+    r /= 3
+    if(scale != 0){
+      x += target_at.get_coord(0) * scale
+      y += target_at.get_coord(1) * scale
+    }
+    else{
+      x += target_at.get_coord(0) * scale
+      y += target_at.get_coord(1) * scale
+    }
     count++
   }
 
