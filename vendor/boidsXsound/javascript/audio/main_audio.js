@@ -35,7 +35,7 @@ function draw(){
   drawContext.fillStyle ='#000000'
 
   for(var i = 0; i < results.length-OFFSET; i++){
-    var magnitude = results[i + OFFSET]
+    var magnitude = results[i + OFFSET]/2
     drawContext.fillRect(i * SPACING, HEIGHT, SPACING/2, -magnitude)
     if ( results[max_cell] < results[ i + OFFSET] )
 	    max_cell = i + OFFSET

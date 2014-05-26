@@ -352,16 +352,16 @@ body{
 
 
 #canvas_sound_body{
-  width: 650px;
+  width: 550px;
   height: 191px;
-  margin: 450px 0 0 250px;
+  margin: 450px 0 0 300px;
   /*
   background-color: #85ab34;
   */
 }
 
 #canvas_sound_left{
-  width: 40px;
+  width: 25px;
   height: 100%;
   background-image:url('../images/lcd_left.png');
   background-size: 100% 100%;
@@ -370,24 +370,24 @@ body{
 }
 
 #canvas_sound_center{
-  width: 570px;
+  width: 510px;
   height: 100%;
   background-image:url('../images/lcd_center.png');
   background-size: 7% 100%;
   background-repeat:repeat-x;
-  margin: 0 0 0 40px;
+  margin: 0 0 0 20px;
 }
 
 #canvas_sound{
   position: absolute;
-  margin: -165px 0 0 51px;
+  margin: -165px 0 0 31px;
 }
 
 #canvas_sound_right{
-  width: 40px;
+  width: 25px;
   height: 100%;
   background-image:url('../images/lcd_right.png');
   background-size: 100% 100%;
-  margin: -191px 0 0 610px;
+  margin: -191px 0 0 530px;
 }
 
