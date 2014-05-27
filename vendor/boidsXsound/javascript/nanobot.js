@@ -213,11 +213,8 @@ Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de 
 }
 
 Nanobot.prototype.analyze_level_emotion = function(){
-  /*
-  this.force_limits.thrust = (20/100)*this.level_emotion
-  this.force_limits.steering = (550/100)*this.level_emotion
-  this.force_limits.braking = (70/100)*this.level_emotion
-  */
+
+
 }
 
 /**
@@ -322,7 +319,7 @@ Nanobot.prototype.draw = function(ctx){
     ctx.stroke()
 
 /*Angle vision*/
-/*
+
     ctx.strokeStyle = "red"
     ctx.beginPath();
     ctx.moveTo(p.get_coord(0), p.get_coord(1))
@@ -332,7 +329,7 @@ Nanobot.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
     ctx.closePath();
       ctx.stroke();
-*/
+
     ctx.strokeStyle = "black"
 
      ctx.beginPath();

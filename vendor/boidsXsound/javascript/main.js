@@ -19,12 +19,12 @@ function main(){
   cxt=c.getContext("2d");
 */
   /*
-*/
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(275, 200),
                                         velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
                                         acceleration: new Vector(0, 0)
                                       }})
+*/
   /*
 
 var speaker2 = w.new_boid_of(Speaker, function(config){ config.geo_data = {
@@ -75,12 +75,20 @@ var a7 = new StraightLine(new Vector(222,147), new Vector(200,200))
 var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
 w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
+/*
+for(var i=0; i<3;i++)
+ w.new_boid_of(Nanobot, function(config){
+    config.brain.activate("wander")
+    config.brain.activate("containment")
+    config.vel_max = 25
+  })
+*/
 
   for(var i=0; i<20;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                                          position: new Vector(Math.random()*100, Math.random()*100), // 210, 100
-                                          velocity: new Vector(20,20),
+                                          position: new Vector(Math.random()*550, Math.random()*400), // 210, 100
+                                          velocity: new Vector(Math.random()*20-10, Math.random()*20-10),
                                           acceleration: new Vector(0, 0)}
 
       config.brain.activate('containment')
@@ -89,6 +97,11 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.brain.activate('alignment')
          config.brain.activate('separation')
       config.brain.activate('cohesion')
+
+      config.force_limits.thrust = 250
+      config.force_limits.steering = 20
+      config.mass = 20
+      config.vel_max = 40
 
 
        })

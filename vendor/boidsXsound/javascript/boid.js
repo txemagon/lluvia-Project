@@ -48,14 +48,14 @@ function Boid(config_object, block){
                 colour: "blue",
 
                 brain: new Brain(that),
-                vel_max: 50,
-                mass: 2,
-                vision: {radius: 100, angle: 80 * Math.PI / 180},
+                vel_max: 100,
+                mass: 20,
+                vision: {radius: 100, angle: 120 * Math.PI / 180},
 
                 force_limits: {
-                    thrust: 20,
-                    steering: 550,
-                    braking: 70
+                    thrust: 220,
+                    steering: 200,
+                    braking: 40
                 }
             }
 

@@ -76,22 +76,21 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  /*
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     var r = target_at.module() || 1
-    r /= 60
-    x += target_at.get_coord(0) / r
-    y += target_at.get_coord(1) / r
+    r *= r
+    x += 20 * target_at.get_coord(0) / r
+    y += 20 * target_at.get_coord(1) / r
     count++
   })
-*/
+  /*
 var scale = 1
 var visible_object = this.me.visible_object
   for(var i=0; i<visible_object.length; i++){
     var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
-    if(target_at.module() <= 15){
-      scale = 50
+    if(target_at.module() <= 30){
+      scale = 1
     }
     else{
       scale = (0.2/100)*this.me.level_emotion
@@ -108,11 +107,13 @@ var visible_object = this.me.visible_object
     }
     count++
   }
+*/
 
   if(count == 0)
     return new Vector(0,0) 
 
-  return new Vector(-x/count, -y/count)
+   var strength = 10
+  return new Vector(-x / count * strength, -y / count * strength)
 }
 
 /**
@@ -162,9 +163,12 @@ var visible_object = this.me.visible_object
 
   for(var i=0; i<visible_object.length; i++){
        var direction = visible_object[i].heading()
-   x += direction.get_coord(0)
-   y += direction.get_coord(1)
-   count++
+       var target_at = visible_object[i].geo_data.position.subs( this.me.geo_data.position ) 
+       var target_module = target_at.module()
+       var r = target_at.module() || 1
+       x += direction.get_coord(0) / r / target_module
+       y += direction.get_coord(1) / r / target_module
+       count++
   }
 
 
