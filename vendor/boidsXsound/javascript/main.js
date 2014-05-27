@@ -83,31 +83,69 @@ for(var i=0; i<3;i++)
     config.vel_max = 25
   })
 */
-
+/*
   for(var i=0; i<20;i++){
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                                          position: new Vector(Math.random()*550, Math.random()*400), // 210, 100
-                                          velocity: new Vector(Math.random()*20-10, Math.random()*20-10),
-                                          acceleration: new Vector(0, 0)}
+                          position: new Vector(Math.random()*250, Math.random()*100), // 210, 100
+                          velocity: new Vector(Math.random()*10-10, Math.random()*10-10),
+                          acceleration: new Vector(0, 0)}
 
       config.brain.activate('containment')
       //config.brain.activate('wander')
 
       config.brain.activate('alignment')
-         config.brain.activate('separation')
+      config.brain.activate('separation')
       config.brain.activate('cohesion')
 
       config.force_limits.thrust = 250
       config.force_limits.steering = 20
       config.mass = 20
       config.vel_max = 40
-
-
-       })
+    })
   }
+*/
+
+    w.new_boid_of(Nanobot, function(config) {
+      config.geo_data = {
+                          position: new Vector(200,200),
+                          velocity: new Vector(0, 1),
+                          acceleration: new Vector(0, 0)}
+
+      config.brain.activate('containment')
+      //config.brain.activate('wander')
+
+      config.brain.activate('alignment')
+      config.brain.activate('separation')
+      config.brain.activate('cohesion')
+
+      config.force_limits.thrust = 250
+      config.force_limits.steering = 20
+      config.mass = 20
+      config.vel_max = 40
+    })
+
+    w.new_boid_of(Boid, function(config) {
+      config.geo_data = {
+                          position: new Vector(200,149),
+                          velocity: new Vector(20, 0),
+                          acceleration: new Vector(0, 0)}
+
+      config.brain.activate('containment')
+      //config.brain.activate('wander')
+
+      config.brain.activate('alignment')
+      config.brain.activate('separation')
+      config.brain.activate('cohesion')
+
+      config.force_limits.thrust = 250
+      config.force_limits.steering = 20
+      config.mass = 20
+      config.vel_max = 40
+    })
+  /*
   init_setup()
   playSound()
-
+*/
   w.start()
 }

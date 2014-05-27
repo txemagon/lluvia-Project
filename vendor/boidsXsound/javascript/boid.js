@@ -50,7 +50,7 @@ function Boid(config_object, block){
                 brain: new Brain(that),
                 vel_max: 100,
                 mass: 20,
-                vision: {radius: 100, angle: 120 * Math.PI / 180},
+                vision: {radius: 100, angle: 20 * Math.PI / 180},
 
                 force_limits: {
                     thrust: 220,

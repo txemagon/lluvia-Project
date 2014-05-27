@@ -366,10 +366,11 @@ ctx.lineTo(275,125)
 */
   ctx.closePath()
   ctx.stroke()
-
+/*
 ctx.moveTo(347,200)
 ctx.arc(275,200 ,71 , 0, Math.PI*2, false)
 ctx.stroke()
+*/
   this.get_boids().each( function(el) {
     el.draw(ctx)
   })
@@ -533,6 +534,7 @@ World.prototype.visible_for_each = function(){
         if ( dx * dx + dy * dy < vision && Math.abs(this.array_boids[i].heading().angle(new Vector(dx, dy))) < this.array_boids[i].vision.angle ) 
             visible.push(this.array_boids[a])
     }
+    
     this.array_boids[i].visible_object = visible
   }
 }

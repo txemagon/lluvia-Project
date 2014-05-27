@@ -302,6 +302,18 @@ Nanobot.prototype.draw = function(ctx){
 
 //  ctx.fillStyle = "white"
 //  ctx.fillText(Math.round(this.level_emotion), p.get_coord(0)-7, p.get_coord(1)+5);
+/*Angle vision*/
+
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.moveTo(p.get_coord(0), p.get_coord(1))
+
+    var a0 = this.heading().angle(1,0)
+    
+    ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
+    ctx.closePath();
+      ctx.stroke();
+/**/
 
   if (this.focused){
     ctx.strokeStyle = "red"
@@ -317,18 +329,6 @@ Nanobot.prototype.draw = function(ctx){
     ctx.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
     ctx.closePath();
     ctx.stroke()
-
-/*Angle vision*/
-
-    ctx.strokeStyle = "red"
-    ctx.beginPath();
-    ctx.moveTo(p.get_coord(0), p.get_coord(1))
-
-    var a0 = this.heading().angle(1,0)
-    
-    ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
-    ctx.closePath();
-      ctx.stroke();
 
     ctx.strokeStyle = "black"
 
