@@ -49,13 +49,13 @@ function Boid(config_object, block){
 
                 brain: new Brain(that),
                 vel_max: 100,
-                mass: 20,
-                vision: {radius: 100, angle: 20 * Math.PI / 180},
+                mass: 2,
+                vision: {radius: 100, angle: 10 * Math.PI / 180},
 
                 force_limits: {
-                    thrust: 220,
-                    steering: 200,
-                    braking: 40
+                    thrust: 20,
+                    steering: 50,
+                    braking: 70
                 }
             }
 
@@ -189,6 +189,18 @@ Boid.prototype.draw = function(ctx){
     ctx.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.stroke()
+
+    ctx.strokeStyle = "red"
+    ctx.beginPath();
+    ctx.moveTo(p.get_coord(0), p.get_coord(1))
+
+    //var a0 = this.heading().angle(1,0)
+    
+    //alert(180*a0/Math.PI)
+    
+    ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0, false); 
+    ctx.closePath();
+      ctx.stroke();
 
     if (this.focused){
         ctx.strokeStyle = "red"

@@ -75,14 +75,7 @@ var a7 = new StraightLine(new Vector(222,147), new Vector(200,200))
 var a8 = new StraightLine(new Vector(275,125), new Vector(222,147))
 
 w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
-/*
-for(var i=0; i<3;i++)
- w.new_boid_of(Nanobot, function(config){
-    config.brain.activate("wander")
-    config.brain.activate("containment")
-    config.vel_max = 25
-  })
-*/
+
 /*
   for(var i=0; i<20;i++){
     w.new_boid_of(Nanobot, function(config) {
@@ -105,44 +98,24 @@ for(var i=0; i<3;i++)
     })
   }
 */
-
+  for(var i=0; i<10; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                          position: new Vector(200,200),
-                          velocity: new Vector(0, 1),
+                          position: new Vector(Math.random()*100+100,Math.random()*100),
+                          //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
+                          velocity: new Vector(0, Math.random()*30),
                           acceleration: new Vector(0, 0)}
 
-      config.brain.activate('containment')
+      //config.brain.activate('containment')
       //config.brain.activate('wander')
 
       config.brain.activate('alignment')
       config.brain.activate('separation')
       config.brain.activate('cohesion')
 
-      config.force_limits.thrust = 250
-      config.force_limits.steering = 20
-      config.mass = 20
-      config.vel_max = 40
+
     })
 
-    w.new_boid_of(Boid, function(config) {
-      config.geo_data = {
-                          position: new Vector(200,149),
-                          velocity: new Vector(20, 0),
-                          acceleration: new Vector(0, 0)}
-
-      config.brain.activate('containment')
-      //config.brain.activate('wander')
-
-      config.brain.activate('alignment')
-      config.brain.activate('separation')
-      config.brain.activate('cohesion')
-
-      config.force_limits.thrust = 250
-      config.force_limits.steering = 20
-      config.mass = 20
-      config.vel_max = 40
-    })
   /*
   init_setup()
   playSound()
