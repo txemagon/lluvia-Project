@@ -98,6 +98,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
     })
   }
 */
+/* Pruebas angulo de vision
   for(var i=0; i<1; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
@@ -123,7 +124,24 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
                           acceleration: new Vector(0, 0)}
                           config.vision.angle = 5 * Math.PI / 180
     })
+*/
+  for(var i=0; i<10; i++)
+    w.new_boid_of(Nanobot, function(config) {
+      config.geo_data = {
+                          position: new Vector(Math.random()*550,Math.random()*400),
+                          //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
+                          velocity: new Vector(Math.random()*10-10, Math.random()*10-10),
+                          acceleration: new Vector(0, 0)}
+      config.vision.angle = 130 * Math.PI / 180  
 
+      config.brain.activate('containment')
+      //config.brain.activate('wander')
+      //config.brain.activate('alignment')
+      //config.brain.activate('separation')
+      config.brain.activate('cohesion')
+
+
+    })
   /*
   init_setup()
   playSound()

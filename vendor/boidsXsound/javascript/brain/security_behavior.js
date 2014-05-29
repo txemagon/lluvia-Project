@@ -80,8 +80,8 @@ SeparationBehavior.prototype.desired_acceleration = function(){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     var r = target_at.module() || 1
     r *= r
-    x += 20 * target_at.get_coord(0) / r
-    y += 20 * target_at.get_coord(1) / r
+    x += 20 * target_at.get_coord(0)
+    y += 20 * target_at.get_coord(1)
     count++
   })
   /*
@@ -113,7 +113,7 @@ var visible_object = this.me.visible_object
     return new Vector(0,0) 
 
    var strength = 10
-  return new Vector(-x / count * strength, -y / count * strength)
+  return new Vector(-x / count, -y / count)
 }
 
 /**
@@ -166,8 +166,8 @@ var visible_object = this.me.visible_object
        var target_at = visible_object[i].geo_data.position.subs( this.me.geo_data.position ) 
        var target_module = target_at.module()
        var r = target_at.module() || 1
-       x += direction.get_coord(0) / r / target_module
-       y += direction.get_coord(1) / r / target_module
+       x += direction.get_coord(0) // r / target_module
+       y += direction.get_coord(1) // r / target_module
        count++
   }
 
@@ -216,11 +216,26 @@ function CohesionBehavior(){
  * @return {Vector}  Returns a vector with the boid's desired acceleration
  */
 CohesionBehavior.prototype.desired_acceleration = function(){
+  var perceived_centre = new Vector(0,0)
+  var count = 0
+  this.me.visible_objects().each( function(boid){
+    if(boid.id != this.id){
+      perceived_centre.add(boid.geo_data.position)
+      count++
+    }
+
+    perceived_centre /= count-1
+
+    return (perceived_centre.subs(this.geo_data.position)) / 100
+  }
+
+}
+
+  /*
     var that = this
   var x = 0
   var y = 0
   var count = 0
-  /*
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position ) 
     x += target_at.get_coord(0)
@@ -228,13 +243,14 @@ CohesionBehavior.prototype.desired_acceleration = function(){
     count++
   })
 */
+/*
 var visible_object = this.me.visible_object
   for(var i=0; i<visible_object.length; i++){
     var target_at = visible_object[i].geo_data.position.subs( that.me.geo_data.position ) 
-    var r = target_at.module() || 1
-    r /= 5
-    x += target_at.get_coord(0) / r
-    y += target_at.get_coord(1) / r
+    //var r = target_at.module() || 1
+    //r /= 5
+    x += target_at.get_coord(0) // r
+    y += target_at.get_coord(1) // r
     count++
   }
 
@@ -242,4 +258,5 @@ var visible_object = this.me.visible_object
     return new Vector(0,0) 
   return new Vector(x/count, y/count)
 }
+  */
 

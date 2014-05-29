@@ -778,17 +778,25 @@ Vector.prototype.coplanar$U = function(vector){
  * @return		{Number}		Angle
  */
 Vector.prototype.angle = function(){
-       v1 = new Vector(1,1,1)
+       var v1 = new Vector(1,1,1)
        Vector.apply(v1, arguments) // Pasarle los argumentos de angle a new Vector
-	if(v1.Coord.length == this.Coord.length )
-	  if (this.Coord.length == 2){
-	   var angle2 = Math.acos( v1.Coord[0] / v1.module() ) // Returns dot product with versor i ( first director angle)
-	   var angle1 = Math.acos( this.Coord[0] / this.module() ) // The same
-		return angle2 - angle1
-	  } else
+	if(v1.Coord.length == this.Coord.length ){
+      if (this.Coord.length == 2){
+	   var angle1 = Math.abs( Math.acos( v1.Coord[0] / v1.module() ) ) * (  v1.Coord[1] < 0 ? -1 : 1)
+	   var angle2 = Math.abs( Math.acos( this.Coord[0] / this.module() )) * (this.Coord[1] < 0 ? -1 : 1)
+        return angle2 - angle1
+	   } else
 	     return Math.acos( this.dot(v1) / this.module() / v1.module() )
+        }
 	else 
 		throw "Invalid Input, angle() method needs/recives a vector of dimension " + this.Coord.length + "." 
+}
+
+Vector.prototype.signed_angle = function (reference_vector) {
+    var v1 = reference_vector || new Vector(1,0)
+    var angle1 = Math.abs( Math.acos( v1.Coord[0]   /   v1.module() )) * (  v1.Coord[1] < 0 ? -1 : 1)
+    var angle2 = Math.abs( Math.acos( this.Coord[0] / this.module() )) * (this.Coord[1] < 0 ? -1 : 1)
+    return angle2 - angle1
 }
 
 /**
