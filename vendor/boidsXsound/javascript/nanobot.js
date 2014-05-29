@@ -307,7 +307,7 @@ Nanobot.prototype.draw = function(ctx){
     ctx.beginPath();
     ctx.moveTo(p.get_coord(0), p.get_coord(1))
 
-    var a0 = this.heading().angle(1,0)
+    var a0 = -this.heading().angle(1,0)
     //var a0 = p.get_coord(0)/p.module()
     ctx.arc(p.get_coord(0), p.get_coord(1), this.vision.radius + a0, -this.vision.angle - a0 , this.vision.angle - a0); 
     ctx.closePath();

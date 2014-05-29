@@ -98,12 +98,12 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
     })
   }
 */
-  for(var i=0; i<10; i++)
+  for(var i=0; i<1; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                          position: new Vector(Math.random()*100+100,Math.random()*100),
+                          position: new Vector(250,100),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
-                          velocity: new Vector(0, Math.random()*30),
+                          velocity: new Vector(-1, 1),
                           acceleration: new Vector(0, 0)}
 
       //config.brain.activate('containment')
@@ -114,6 +114,14 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.brain.activate('cohesion')
 
 
+    })
+
+    w.new_boid_of(Nanobot, function(config) {
+      config.geo_data = {
+                          position: new Vector(400,50),
+                          velocity: new Vector(-40, 0),
+                          acceleration: new Vector(0, 0)}
+                          config.vision.angle = 5 * Math.PI / 180
     })
 
   /*

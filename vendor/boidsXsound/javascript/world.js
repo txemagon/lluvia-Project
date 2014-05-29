@@ -520,7 +520,8 @@ World.prototype.visible_for = function(position, heading, vision_object){
         if ( dx * dx + dy * dy < vision && Math.abs(heading.angle(new Vector(dx, dy))) < vision_object.angle ) 
             visible.push(boid)
     })
-    
+    //if(visible.length != 0)
+    //  alert("te veo")
     return visible
 }
 
