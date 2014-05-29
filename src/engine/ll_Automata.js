@@ -15,6 +15,7 @@ Automata.prototype.constructor = Automata;
 function Automata(states, initialState, solicitor){
 
 	this.state = states == null ? { none: -1 } : states;
+	this.state.none = -1
 	this.state_name = []
 	for (var key in this.state)
 		if (this.state.hasOwnProperty(key))
