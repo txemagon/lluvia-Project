@@ -130,10 +130,12 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.geo_data = {
                           position: new Vector(Math.random()*550,Math.random()*400),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
-                          velocity: new Vector(Math.random()*20-20, Math.random()*20-20),
+                          velocity: new Vector(Math.random()*20-10, Math.random()*20-10),
                           acceleration: new Vector(0, 0)}
-      config.vision.angle = 130 * Math.PI / 180  
-
+      config.vision.angle = 150 * Math.PI / 180  
+      config.vision.radius = 150
+      config.vel_max = 40
+      //config.force_limits.steering = 500
       //config.brain.activate('containment')
       //config.brain.activate('wander')
       config.brain.activate('alignment')
