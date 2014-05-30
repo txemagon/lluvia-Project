@@ -48,7 +48,7 @@ function Boid(config_object, block){
                 colour: "blue",
 
                 brain: new Brain(that),
-                vel_max: 100,
+                vel_max: 20,
                 mass: 2,
                 vision: {radius: 100, angle: 20 * Math.PI / 180},
 
@@ -414,18 +414,23 @@ Boid.prototype.requested_acceleration = function(){
  * @return {Vector}
  */
 Boid.prototype.clip = function(){
-    var v = new Vector(1,1,1)
-    Vector.apply(v, arguments)
-    v = this.localize(v)
-    if (v.Coord[0] > this.force_limits.thrust)
-        v.Coord[0] = this.force_limits.thrust
-    if (v.Coord[0] < -this.force_limits.brake)
-        v.Coord[0] = -this.force_limits.brake
-    if (v.Coord[1] > this.force_limits.steering)
-        v.Coord[1] = this.force_limits.steering
-    if (v.Coord[1] < -this.force_limits.steering)
-        v.Coord[1] = -this.force_limits.steering
-    return this.globalize(new Vector(v.Coord[0], v.Coord[1])) // Ensure the module is correct
+    var a = new Vector(1,1,1)
+    Vector.apply(a, arguments)
+    a = this.localize(a)
+    var v = this.localize(this.geo_data.velocity)
+    if (v.module() > this.vel_max){
+        a.Coord[0] = 0
+        this.geo_data.velocity = new Vector(this.geo_data.velocity.unit().scale(this.vel_max))
+    }
+    if (a.Coord[0] > this.force_limits.thrust)
+        a.Coord[0] = this.force_limits.thrust
+    if (a.Coord[0] < -this.force_limits.brake)
+        a.Coord[0] = -this.force_limits.brake
+    if (a.Coord[1] > this.force_limits.steering)
+        a.Coord[1] = this.force_limits.steering
+    if (a.Coord[1] < -this.force_limits.steering)
+        a.Coord[1] = -this.force_limits.steering
+    return this.globalize(new Vector(a.Coord[0], a.Coord[1])) // Ensure the module is correct
 }
 
 /**

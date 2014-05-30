@@ -532,7 +532,7 @@ World.prototype.visible_for_each = function(){
     for(var a=0; a<this.array_boids.length; a++){
         var dx = this.array_boids[a].geo_data.position.get_coord(0) - this.array_boids[i].geo_data.position.get_coord(0)
         var dy = this.array_boids[a].geo_data.position.get_coord(1) - this.array_boids[i].geo_data.position.get_coord(1)
-        if ( dx * dx + dy * dy < vision && Math.abs(this.array_boids[i].heading().angle(new Vector(dx, dy))) < this.array_boids[i].vision.angle ) 
+        if ( dx * dx + dy * dy < vision)// && Math.abs(this.array_boids[i].heading().angle(new Vector(dx, dy))) < this.array_boids[i].vision.angle ) 
             visible.push(this.array_boids[a])
     }
     
