@@ -12,11 +12,11 @@ function main(){
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
   
-/*
   var face_boids = new FaceDevice("boid_properties")
   boid_list.addPort("face_boid_animation", face_boids)
   c=document.getElementById("face");
   cxt=c.getContext("2d");
+/*
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(275, 200),
                                         velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
@@ -125,7 +125,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
                           config.vision.angle = 5 * Math.PI / 180
     })
 */
-  for(var i=0; i<15; i++)
+  for(var i=0; i<10; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                           position: new Vector(Math.random()*550,Math.random()*400),

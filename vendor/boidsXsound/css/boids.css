@@ -6,10 +6,15 @@ body{
   display: none;
 }
 
+#heading{
+  width: auto;
+  height: 50px;
+}
+
 #container{
   width: 1200px;
   height: 800px;
-  border: solid 1px orange;
+  border: solid 1px white;
   position: relative;
   margin: auto;
   background-image:url('../images/fondo_circuito.svg');
