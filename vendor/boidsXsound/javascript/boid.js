@@ -49,6 +49,8 @@ function Boid(config_object, block){
 
                 brain: new Brain(that),
                 vel_max: 20,
+                vel_min: 5, 
+                cruising_speed: 10,
                 mass: 20,
                 vision: {radius: 100, angle: 20 * Math.PI / 180},
 
@@ -143,10 +145,18 @@ Boid.prototype.update_physics = function(current_time){
     this.last_time = this.current_time
     this.current_time = current_time
     this.geo_data.acceleration = this.requested_acceleration()
+    this.check_acceleration()
     this.geo_data.velocity = integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
 
+
+Boid.prototype.check_acceleration = function(){
+    if(this.geo_data.acceleration.module()){
+
+    }
+
+}
 
 /**
  * @method run
@@ -418,10 +428,22 @@ Boid.prototype.clip = function(){
     Vector.apply(a, arguments)
     a = this.localize(a)
     var v = this.localize(this.geo_data.velocity)
-    if (v.module() > this.vel_max){
+    var v_module = v.module()
+    if (v_module > this.vel_max){
         a.Coord[0] = 0
         this.geo_data.velocity = new Vector(this.geo_data.velocity.unit().scale(this.vel_max))
     }
+    if(v_module > this.cruising_speed){
+        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(0.99))
+    }
+    if(v_module < this.cruising_speed){
+        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(1.05))
+    }
+    /*
+    if(v_module < this.vel_min){
+        this.geo_data.velocity = this.geo_data.velocity.add(this.geo_data.velocity.scale(+0.1))
+    }
+    */
     if (a.Coord[0] > this.force_limits.thrust)
         a.Coord[0] = this.force_limits.thrust
     if (a.Coord[0] < -this.force_limits.brake)

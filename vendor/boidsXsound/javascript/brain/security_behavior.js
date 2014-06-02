@@ -76,11 +76,10 @@ SeparationBehavior.prototype.desired_acceleration = function(){
   var x = 0
   var y = 0
   var count = 0
-  
   this.me.visible_objects().each( function(boid){
     var target_at = boid.geo_data.position.subs( that.me.geo_data.position )
     var r = target_at.module() || 1
-    r /= 25
+    r /= 28
     x += target_at.get_coord(0) / r
     y += target_at.get_coord(1) / r
     count++

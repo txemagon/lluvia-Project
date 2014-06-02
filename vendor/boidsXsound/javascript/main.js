@@ -17,13 +17,13 @@ function main(){
   boid_list.addPort("face_boid_animation", face_boids)
   c=document.getElementById("face");
   cxt=c.getContext("2d");
-*/
-  /*
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(275, 200),
                                         velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
                                         acceleration: new Vector(0, 0)
                                       }})
+*/
+  /*
 */
   /*
 
@@ -130,11 +130,14 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.geo_data = {
                           position: new Vector(Math.random()*550,Math.random()*400),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
-                          velocity: new Vector(Math.random()*20-10, Math.random()*20-10),
+                          velocity: new Vector(0.1, 0.1),
                           acceleration: new Vector(0, 0)}
-      config.vision.angle = 150 * Math.PI / 180  
+      config.vision.angle = 120 * Math.PI / 180  
       config.vision.radius = 150
       config.vel_max = 40
+      config.vel_min = 5
+      config.cruising_speed = 20
+
       //config.force_limits.steering = 500
       //config.brain.activate('containment')
       //config.brain.activate('wander')
