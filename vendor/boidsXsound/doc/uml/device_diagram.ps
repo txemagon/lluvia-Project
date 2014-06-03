@@ -1,0 +1,645 @@
+%!PS-Adobe-3.0
+%%Creator: graphviz version 2.26.3 (20100126.1600)
+%%Title: G
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+save
+%%BeginProlog
+/DotDict 200 dict def
+DotDict begin
+
+/setupLatin1 {
+mark
+/EncodingVector 256 array def
+ EncodingVector 0
+
+ISOLatin1Encoding 0 255 getinterval putinterval
+EncodingVector 45 /hyphen put
+
+% Set up ISO Latin 1 character encoding
+/starnetISO {
+        dup dup findfont dup length dict begin
+        { 1 index /FID ne { def }{ pop pop } ifelse
+        } forall
+        /Encoding EncodingVector def
+        currentdict end definefont
+} def
+/Times-Roman starnetISO def
+/Times-Italic starnetISO def
+/Times-Bold starnetISO def
+/Times-BoldItalic starnetISO def
+/Helvetica starnetISO def
+/Helvetica-Oblique starnetISO def
+/Helvetica-Bold starnetISO def
+/Helvetica-BoldOblique starnetISO def
+/Courier starnetISO def
+/Courier-Oblique starnetISO def
+/Courier-Bold starnetISO def
+/Courier-BoldOblique starnetISO def
+cleartomark
+} bind def
+
+%%BeginResource: procset graphviz 0 0
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+       dup 1 exch div /InvScaleFactor exch def
+       scale
+} bind def
+
+% styles
+/solid { [] 0 setdash } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+
+% hooks for setting color 
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw text fitted to its expected width
+/alignedtext {			% width text
+	/text exch def
+	/width exch def
+	gsave
+		width 0 gt {
+			[] 0 setdash
+			text stringwidth pop width exch sub text length div 0 text ashow
+		} if
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+/showpage { } def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/layerlen layercolorseq length def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer 1 sub layerlen mod get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+14 default-font-family set_font
+1 setmiterlimit
+% /arrowlength 10 def
+% /arrowwidth 5 def
+
+% make sure pdfmark is harmless for PS-interpreters other than Distiller
+/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse
+% make '<<' and '>>' safe on PS Level 1 devices
+/languagelevel where {pop languagelevel}{1} ifelse
+2 lt {
+    userdict (<<) cvn ([) cvn load put
+    userdict (>>) cvn ([) cvn load put
+} if
+
+%%EndSetup
+setupLatin1
+%%Page: 1 1
+%%PageBoundingBox: 36 36 562 622
+%%PageOrientation: Portrait
+0 0 1 beginpage
+gsave
+36 36 526 586 boxprim clip newpath
+1 1 set_scale 0 rotate 40 41 translate
+% Device
+gsave
+1 setlinewidth
+0 0 0 nodecolor
+newpath 177.5 403 moveto
+350.5 403 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 350.5 403 moveto
+356.5 403 362.5 409 362.5 415 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 362.5 415 moveto
+362.5 565 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 362.5 565 moveto
+362.5 571 356.5 577 350.5 577 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 350.5 577 moveto
+177.5 577 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 177.5 577 moveto
+171.5 577 165.5 571 165.5 565 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 165.5 565 moveto
+165.5 415 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 165.5 415 moveto
+165.5 409 171.5 403 177.5 403 curveto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+251.5 565.8 moveto 25 (Device) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 165.5 559 moveto
+362.5 559 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+228 547.8 moveto 72 (state : Enumeration ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+232 537.8 moveto 64 ( solicitors : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+199 527.8 moveto 130 ( eventDispatcher : EventDispatcher ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+213.5 517.8 moveto 101 ( currentState : Enumeration ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+239 507.8 moveto 50 ( gates : Array) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 165.5 501 moveto
+362.5 501 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+229 489.8 moveto 70 (gateRunner\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+227.5 479.8 moveto 73 ( childRunner\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+190 469.8 moveto 148 ( newGate\(String, Function, Object\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+215.5 459.8 moveto 97 ( attend\(Time, Object\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+221 449.8 moveto 86 ( fireEvent\(Object\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+208.5 439.8 moveto 111 ( addPort\(Object, Device\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+184 429.8 moveto 160 ( newMessage\(String, String, String\) : Object) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+173.5 419.8 moveto 181 ( sendMessage\(String, String, String, Object\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+184 409.8 moveto 160 ( method_missing\(String, String, Array\) : void) alignedtext
+grestore
+% World
+gsave
+1 setlinewidth
+0 0 0 nodecolor
+newpath 12 1 moveto
+156 1 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 156 1 moveto
+162 1 168 7 168 13 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 168 13 moveto
+168 353 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 168 353 moveto
+168 359 162 365 156 365 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 156 365 moveto
+12 365 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 12 365 moveto
+6 365 0 359 0 353 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 0 353 moveto
+0 13 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 0 13 moveto
+0 7 6 1 12 1 curveto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+73 353.8 moveto 22 (World) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 0 347 moveto
+168 347 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+47.5 335.8 moveto 73 (self_events : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+55 325.8 moveto 58 ( screen : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+54 315.8 moveto 60 ( width : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+53.5 305.8 moveto 61 ( height : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+52 295.8 moveto 64 ( start_time : Time ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+32.5 285.8 moveto 103 ( acceleration_max : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+40.5 275.8 moveto 87 ( velocity_max : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+54.5 265.8 moveto 59 ( boids : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+60 255.8 moveto 48 ( path : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+46 245.8 moveto 76 ( array_boids : Array ) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 0 239 moveto
+168 239 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+31 227.8 moveto 106 (set_dashboard\(String\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+57.5 217.8 moveto 53 ( width\(\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+56.5 207.8 moveto 55 ( height\(\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+26.5 197.8 moveto 115 ( screen_width\(String\) : Number) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+42 187.8 moveto 84 ( assert_screen\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+26 177.8 moveto 116 ( screen_height\(String\) : Number) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+50.5 167.8 moveto 67 ( has_born\(\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+47.5 157.8 moveto 73 ( get_boids\(\) : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+50 147.8 moveto 68 ( each_boid\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+59.5 137.8 moveto 49 ( start\(\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+52.5 127.8 moveto 63 ( step\(Time\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+12 117.8 moveto 144 ( is_one_second_from_begining\(\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+46 107.8 moveto 76 ( show_boids\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+32.5 97.8 moveto 103 ( running_steady\(Time\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+8 87.8 moveto 152 ( visible_for\(Vector, Vector, Object\) : Array) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+36 77.8 moveto 96 ( visible_for_each\(\) : Array) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+18.5 67.8 moveto 131 ( audible_for\(vector, Number\) : Array) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+35 57.8 moveto 98 ( new_boid\(Function\) : Boid) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+43 47.8 moveto 82 ( start_and_run\(\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+13 37.8 moveto 142 ( attend_focus_boid\(Time, Object\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+15 27.8 moveto 138 ( new_boid_of\(Function, Object\) : Boid) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+45 17.8 moveto 78 ( draw\(Canvas\) : void) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+32 7.8 moveto 104 ( method_missing\(\) : Function) alignedtext
+grestore
+% Device->World
+gsave
+1 setlinewidth
+0 0 0 edgecolor
+newpath 195.08 394.61 moveto
+188.78 385.06 182.66 375.42 177 366 curveto
+174.06 361.11 171.13 356.12 168.21 351.06 curveto
+stroke
+0 0 0 edgecolor
+newpath 192.18 396.58 moveto
+200.64 402.96 lineto
+198.01 392.7 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0 edgecolor
+newpath 192.18 396.58 moveto
+200.64 402.96 lineto
+198.01 392.7 lineto
+closepath stroke
+grestore
+% World_interface
+gsave
+1 setlinewidth
+0 0 0 nodecolor
+newpath 198 141 moveto
+330 141 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 330 141 moveto
+336 141 342 147 342 153 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 342 153 moveto
+342 213 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 342 213 moveto
+342 219 336 225 330 225 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 330 225 moveto
+198 225 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 198 225 moveto
+192 225 186 219 186 213 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 186 213 moveto
+186 153 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 186 153 moveto
+186 147 192 141 198 141 curveto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+236 213.8 moveto 56 (World Interface) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 186 207 moveto
+342 207 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+227.5 195.8 moveto 73 (self_events : Array ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+224.5 185.8 moveto 79 ( nanobot_id : Number ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+224.5 175.8 moveto 79 ( speaker_id : Number ) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 186 169 moveto
+342 169 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+224.5 157.8 moveto 79 (add_boid\(Boid\) : void ) alignedtext
+0 0 0 nodecolor
+8 /Arial set_font
+194 147.8 moveto 140 ( attend_new_boid\(Time, Object\) : void ) alignedtext
+grestore
+% Device->World_interface
+gsave
+1 setlinewidth
+0 0 0 edgecolor
+newpath 264 392.82 moveto
+264 336.42 264 268.25 264 225.24 curveto
+stroke
+0 0 0 edgecolor
+newpath 260.5 392.85 moveto
+264 402.85 lineto
+267.5 392.85 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0 edgecolor
+newpath 260.5 392.85 moveto
+264 402.85 lineto
+267.5 392.85 lineto
+closepath stroke
+grestore
+% Boid_editor
+gsave
+1 setlinewidth
+0 0 0 nodecolor
+newpath 372 156 moveto
+506 156 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 506 156 moveto
+512 156 518 162 518 168 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 518 168 moveto
+518 198 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 518 198 moveto
+518 204 512 210 506 210 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 506 210 moveto
+372 210 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 372 210 moveto
+366 210 360 204 360 198 curveto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 360 198 moveto
+360 168 lineto
+stroke
+1 setlinewidth
+0 0 0 nodecolor
+newpath 360 168 moveto
+360 162 366 156 372 156 curveto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+419.5 198.8 moveto 39 (Boid editor) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 360 192 moveto
+518 192 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+402.5 180.8 moveto 73 (self_events : Array ) alignedtext
+1 setlinewidth
+0 0 0 nodecolor
+newpath 360 174 moveto
+518 174 lineto
+stroke
+0 0 0 nodecolor
+8 /Arial set_font
+368 162.8 moveto 142 (attend_focus_boid\(Time, Object\) : void ) alignedtext
+grestore
+% Device->Boid_editor
+gsave
+1 setlinewidth
+0 0 0 edgecolor
+newpath 333.5 394.18 moveto
+339.62 384.79 345.55 375.29 351 366 curveto
+382.28 312.62 412.03 246.42 427.65 210.07 curveto
+stroke
+0 0 0 edgecolor
+newpath 330.42 392.5 moveto
+327.84 402.77 lineto
+336.27 396.35 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0 edgecolor
+newpath 330.42 392.5 moveto
+327.84 402.77 lineto
+336.27 396.35 lineto
+closepath stroke
+grestore
+endpage
+showpage
+grestore
+%%PageTrailer
+%%EndPage: 1
+%%Trailer
+%%Pages: 1
+%%BoundingBox: 36 36 562 622
+end
+restore
+%%EOF

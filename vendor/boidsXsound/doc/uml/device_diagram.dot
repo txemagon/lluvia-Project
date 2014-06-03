@@ -1,0 +1,96 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+                style= "rounded"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+                dir = "back"
+                arrowhead = "empty"
+        ]
+
+        Device [
+                label = "{Device| state : Enumeration \n \
+                                  solicitors : Array \n \
+                                  eventDispatcher : EventDispatcher \n \
+                                  currentState : Enumeration \n \
+                                  gates :  Array\n \
+                                |\
+                                  gateRunner() : void\n \
+                                  childRunner() : void\n \
+                                  newGate(String, Function, Object) : void\n \
+                                  attend(Time, Object) : void\n \
+                                  fireEvent(Object) : void\n \
+                                  addPort(Object, Device) : void\n \
+                                  newMessage(String, String, String) : Object\n \
+                                  sendMessage(String, String, String, Object) : void\n \
+                                  method_missing(String, String, Array) : void\n \
+                        }"
+        ]
+
+        World [
+        		label = "{World| self_events : Array \n \
+                                 screen : Array \n \
+                                 width : Number \n \
+                                 height : Number \n \
+                                 start_time : Time \n \
+                                 acceleration_max : Number \n \
+                                 velocity_max : Number \n \
+                                 boids : Number \n \
+                                 path : Array \n \
+                                 array_boids : Array \n \
+                               |\
+                                set_dashboard(String) : void \n \
+                                width() : void \n \
+                                height() : void \n \
+                                screen_width(String) : Number\n \
+                                assert_screen() : void\n \
+                                screen_height(String) : Number\n \
+                                has_born() : void \n \
+                                get_boids() : Array \n \
+                                each_boid() :  void\n \
+                                start() : void \n \
+                                step(Time) : void\n \
+                                is_one_second_from_begining() : void \n \
+                                show_boids() : void\n \
+                                running_steady(Time) : void\n \
+                                visible_for(Vector, Vector, Object) : Array\n \
+                                visible_for_each() : Array\n \
+                                audible_for(vector, Number) : Array\n \
+                                new_boid(Function) : Boid\n \
+                                start_and_run() : void\n \
+                                attend_focus_boid(Time, Object) : void\n \
+                                new_boid_of(Function, Object) : Boid\n \
+                                draw(Canvas) : void\n \
+                                method_missing() : Function\n \
+                        }"
+        ]
+
+        World_interface [
+                label = "{World Interface| self_events : Array \n \
+                                           nanobot_id : Number \n \
+                                           speaker_id : Number \n \
+                                         |\
+                                           add_boid(Boid) : void \n \
+                                           attend_new_boid(Time, Object) : void \n \
+                        }"
+        ]
+
+        Boid_editor [
+                label = "{Boid editor| self_events : Array \n \
+                                     |\
+                                       attend_focus_boid(Time, Object) : void \n \
+                        }"
+        ]
+
+        Device -> World_interface
+        Device -> Boid_editor
+        Device -> World 
+}
