@@ -316,13 +316,13 @@ Nanobot.prototype.draw = function(ctx){
       ctx.stroke();
       
 /*
-*/
     ctx.strokeStyle = "red"
     ctx.beginPath();
     ctx.arc(p.get_coord(0), p.get_coord(1), 11, 0, Math.PI*2, true); 
     ctx.closePath();
     ctx.stroke()
 
+*/
     /* Acceleration */
     ctx.strokeStyle = "red"
     ctx.beginPath();

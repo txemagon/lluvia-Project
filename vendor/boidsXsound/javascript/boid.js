@@ -52,7 +52,7 @@ function Boid(config_object, block){
                 vel_min: 5, 
                 cruising_speed: 10,
                 mass: 20,
-                vision: {radius: 100, angle: 20 * Math.PI / 180},
+                vision: {radius: 100, angle: 140 * Math.PI / 180},
 
                 force_limits: {
                     thrust: 20,
@@ -437,7 +437,7 @@ Boid.prototype.clip = function(){
         this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(0.99))
     }
     if(v_module < this.cruising_speed){
-        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(1.05))
+        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(1.005))
     }
     /*
     if(v_module < this.vel_min){

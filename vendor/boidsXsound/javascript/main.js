@@ -1,7 +1,3 @@
-var escala = 1
-logger = document.getElementById("logger")
-
-var c = null, cxt = null;
 
 function main(){ 
   var w = new World("screener")
@@ -98,25 +94,25 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
     })
   }
 */
-/* Pruebas angulo de vision
+// Pruebas angulo de vision
   for(var i=0; i<1; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                          position: new Vector(250,100),
+                          position: new Vector(250,200),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
-                          velocity: new Vector(-1, 1),
+                          velocity: new Vector(-0.001, 0),
                           acceleration: new Vector(0, 0)}
 
       //config.brain.activate('containment')
       //config.brain.activate('wander')
 
-      config.brain.activate('alignment')
-      config.brain.activate('separation')
-      config.brain.activate('cohesion')
+      //nfig.brain.activate('alignment')
+      //config.brain.activate('separation')
+      //config.brain.activate('cohesion')
 
 
     })
-
+/*
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                           position: new Vector(400,50),
@@ -125,6 +121,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
                           config.vision.angle = 5 * Math.PI / 180
     })
 */
+/*
   for(var i=0; i<10; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
@@ -147,6 +144,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
 
     })
+*/
   /*
   init_setup()
   playSound()
