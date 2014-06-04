@@ -1,0 +1,135 @@
+\section{Análisis}
+\label{section:analisis}
+
+\subsection{El mundo}
+Siendo el objetivo principal del proyecto crear un banco de pruebas para la medición del estrés en manadas de entidades autónomas por medio del sistema auditivo reproduciremos el modelo propuesto por Craig W. Reynolds en su trabajo “Steering Behaviors For Autonomous Characters” para la creación de dichos agentes autónomos.
+ 
+Para que las entidades puedan existir es necesario crear previamente un espacio con ciertas características donde puedan cohabitar grupos de dichas entidades.
+ 
+Para ello, se creará un mundo en dos dimensiones (x,y) con una perspectiva de planta para su representación gráfica. La coordenada (0,0) se situará en la esquina superior izquierda del canvas.
+ 
+El mundo contará con un tiempo inicial y actual, esta magnitud medible es necesaria para el correcto funcionamiento del sistema. Con ella la velocidad máxima de ciclos de procesamiento dependerá del aumento del tiempo y no de la velocidad propia que pueda alcanzar el procesador principal del sistema. Esto es de suma importancia porque proporciona una independencia a la hora de ejecutar la aplicación en diferentes sistemas con diferentes capacidades de calculo.
+ 
+Dispondrá de un largo y ancho para su representación gráfica pero en la práctica y a la hora de realizar cálculos no tendrá ninguna limitación de tamaño. esto permite una gran libertad a la hora de realizar diferentes comportamientos por las entidades. La representación gráfica solo es una ventana donde poder observar todo lo que ocurre en el sistema.
+ 
+Se podrán marcar algunas reglas físicas para adecuar el mundo virtual al real o caracterizarlo de cierta manera. Se puede acotar la velocidad máxima y la aceleración máxima que pueden alcanzar las entidades, entre otras cosas.
+ 
+El mundo dispondrá de una lista de todas las entidades y objetos que se encuentren dentro del mismo. Gracias a esto, será más fácil el cálculo y programación de comportamientos, además de, para labores de optimización de la aplicación.
+ 
+Los objetos u obstáculos se definirán con líneas rectas y se podrán formar figuras geométricas con ellas.  Dando la posibilidad desde crear recintos para acotar el espacio de movimiento de las entidades a crear obstáculos para definir caminos o simplemente para que sean evitados.
+ 
+ 
+//Poner que en el mundo se pueden tranitir ondas de sonido o algo asi.
+//Dispondra de un metodo para crear el mismo los boids
+
+\subsection{Nanobot}
+\label{sec:nanobot}
+
+Cada nanobot sera una entidad que percibe su entorno y que podrá ser capaz de actuar en consecuencia decidiendo que hacer por medio de unas reglas de logica propias del modelo. [Figura 1]
+
+Dibujo de:
+  percepcion->->reglas de logica(toma de decisiones)-> accion
+
+Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera capaz de actuar de manera autonoma y  tener un nivel complejo de predictibilidad  a largo plazo. Al no tratarse de un sistema ideal toda la informacion que le llegue sera acotada para simular un entorno real, es decir, tanto su sistema visual y auditivo seran finitos y acordes a los animales que representen, es decir, solo seran conscientes de las entidades proximas a ellos.
+
+\subsubsection{Caracterísicas básicas}
+\label{sec:caracteristicas_basicas}
+
+\noindent Las principales características de los Nanobots son:  
+\begin{itemize}
+ \item  Cerebro: En el cerebro se gestionan todos los comportamientos. Se dispondra de una lista de la cual se podra elegir el comportamiento adecuado en cada momento para el correcto funcionamiento del modelo. Tambien se podran activar mas de un comportamiento dando lugar a otros comportamientos mas complejos e impredecibles. Sera capaz de saber cual es la aceleracion adecuada para poder variar la velocidad de manera correcta. Esto se realizara haciendo la media de todas las aceleraciones devueltas por los comportamientos y en funcion de esa aceleracion la velocidad de la entidad se adecuara a la situacion actual.
+ \item Geo\_data: Se debe conocer en todo momento la posicion de la entidad, asi como, su velocidad y aceleraccion. Imprescindible para poder realizar todos los calculos de los comportamientos y de su representacion grafica. Estas tres magnitudes seran representadas por vectores de dos dimensiones al igual que el mundo.
+ \item Masa: Es la cantidad de materia que posee cada entidad. Necesaria para calcular la inercia mecánica del movil. 
+ \item  Vision: Define el ángulo y radio de vision con ello se podra calcular todas las entidades que son susceptibles a ser vistas.
+ \item Direccion en la que mira: Con ella se podrá determinar la dirección en la que mira, será calculada como el vector unitario del vector velocidad.
+ \item Límites de la fuerzas: Cada entidad poseerá unos límites físicos para la correcta simulación del modelo, se busca con estos límites dotar de realismo a la simulación. Estos limites son:
+ \begin{itemize}
+   \item Aceleración: Sólo sera posible una aceleración máxima. Superada esa aceleración se volverá inmediatamente a la aceleración máxima.
+   \item Giro: Sólo se podra girar hsta un determinado angulo.
+   \item Frenado: Sólo se podra frenar una determinada cantidad. 
+ \end{itemize}	
+ \item Velocidad máxima: En todo momento se debe revisar el valor de la velocidad, si el módulo del vector velocidad es mayor que la velocidad máxima impuesta, esta se reducira inmediatamente.
+ \item Nivel de estres: Se dispone de un sistema para medir el estres del sujeto. Con el se podra definir un nivel de estres en funcion de todo lo que escuche desde musica a otros nanobots.
+ \item Distancia que recorre la onda de sonido: al poder producir sonido, se define una distancia maxima a la que el sonido producido puede llegar.
+\end{itemize}
+
+
+\subsubsection{Visión}
+\label{sec:vision}
+
+Cada entidad posee un campo de vision que esta determinado por un radio de vision desde su propio centro y un angulo[Figura 2]. Estos dos valores podran ser parametrizados para observar diferentes reacciones y comportamientos. 
+
+Para la obtencion de las entidades locales que es capaz de visualizar se realizara una resta de los vectores de posicion en el espacio desde el origen de coordenadas de cada integrante del grupo con respecto al observador, si la distancia es menor al radio de vision es un objeto o entidad susceptible a ser observada , para asegurarlo se realizara ademas una segunda comprobacion con respecto al angulo que forma con la otra entidad, si este  es menor al angulo de vision es un objeto que es visualizado por la entidad.
+
+
+\subsubsection{Audición}
+\label{sec:audicion}
+
+Cada entidad poseerá un sistema auditivo que hará posible el sentido del oido, es decir, lo faculta para ser sensible a los sonidos. La funcion principal de esto sera transformar las ondas sonoras que se propagan por el aire en informacion que capta la entidad y transmite al cerebro para su procesamiento y posterior reacción.
+
+
+\subsubsection{Sistema de comportamientos}
+\label{sec:sistema_comportamientos}
+
+La principal regla en el sistema de comportamientos se basa en la ausencia de una inteligencia que domine a todas las entidades o sobresalga del grupo. Lo contrario invalida el modelo computacional y lo hace carente de sentido para su estudio. Al tener todos los nanobots un nivel similar de inteligencia ayuda a la hora de calcular, estudiar y medir los patrones de bandadas que pueden llegar a formar con las diferentes  ponderaciones que se pueden realizar a sus atributos basicos. Siendo este el motivo principal de estudio del presente proyecto.
+
+\paragraph{Comportamientos de manada}
+
+Son las reglas básicas por las que entidades independientes se comportarán de manera similar a manadas de animales reales. Estas reglas son:
+\begin{itemize}
+ \item Alineacion: Se busca que todas las entidades tengan una direccion común, para ello, se obtiene la velocidad de todas las entidades vecinas y se calcula su promedio, dicho promedio será la velocidad deseada.[Figura 3]
+ \item Cohesion: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia maxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguira cada nanobot para mantener la unidad. [Figura 4]
+ \item Separacion: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separacion de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsion sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande. [Figura 5]
+\end{itemize}
+
+\paragraph{Comportamientos individuale}
+
+Seguir: 
+
+Imagen de seguir
+
+Alejarse:
+
+Imagen de seguir
+
+Perseguir:
+
+Imagen de perseguir
+
+Huir:
+
+Imagen de huir
+
+Evitar obstaculos:
+
+Imagen de eviar obstuclos
+
+Vagar:
+
+Imagen de vagar
+
+Arrival:
+
+
+
+Toma de decisiones
+La aplicacion de cada uno de los comportamientos nos indicara hacia donde se debe dirigir el nanobot, al darse la posibilidad de  tener activados tantos comportamientos como se deseen o necesiten, la toma de decision que se realizara será la media de la suma de cada uno de los comportamientos, dando como resultado una aceleración vectorial que influirá en la velocidad de la entidad. [Figura 6]
+
+Imagen de la toma de decisiones
+
+
+
+Comunicacion oral:
+Cada entidad sera capaz de comunicarse con sus semejantes en un determiando radio.  Cada nanobot podra mandar mensajes, siendo así el emisor, susceptibles a ser recibidos por todos los nanobot que se encuentre en el radio de la onda sonora, convirtiéndolos en los receptores del mensaje. Se debe diferenciar el receptor del emisor para que al responder no se produzca un efecto en cadena si otro esta escuchando. 
+
+Existen dos tipos diferentes de comunicaciones:
+Comunicación simple: donde solo se intercambian palabras para poder modificar de manera muy rápida el nivel de estrés del receptor. No hay posibilidad de una segunda réplica por parte del emisor. 
+
+Comunicación ligada a una orden: se trata de comunicar una orden directa a todas los nanobots que esten escuchando. Estas entidades la procesaran y la llevaran a cabo inmediatamente después.  
+
+ De esta forma estarán capacitados para poder comunicarse de una manera simple. 
+
+
+Nivel de estres
+Cada nanobot poseera un nivel de estres para reaccionar de acuerdo a el. Segun el nivel de estres ciertos valores basicos del nanobot cambiaran. Estos valores son:
+poner losvalores cuando los sepa…

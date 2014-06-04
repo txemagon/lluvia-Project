@@ -1,0 +1,23 @@
+\chapter{Introducción}
+\label{chap:introduccion}
+
+\section{El Panorama de la ciruela}
+\label{sec:panorama_ciruela}
+
+
+La ciruela en agosto está espectacular
+
+
+\tikzstyle{level 1}=[sibling angle=120]
+\tikzstyle{level 2}=[sibling angle=60]
+\tikzstyle{level 3}=[sibling angle=30]
+\tikzstyle{every node}=[fill]
+\tikzstyle{edge from parent}=[snake=expanding waves,segment length=1mm,segment angle=10,draw]
+
+\tikz [grow cyclic,shape=circle,very thick,level distance=13mm,cap=round]
+  \node {} child [color=\A] foreach \A in {red,green,blue}
+     { node {} child [color=\A!50!\B] foreach \B in {red,green,blue}
+        { node {} child [color=\A!50!\B!50!\C] foreach \C in {black,gray,white}
+           { node {} }
+        }
+     };
