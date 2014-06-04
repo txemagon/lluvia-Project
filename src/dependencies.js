@@ -1,11 +1,12 @@
 $K_package = {
   	package: "lluvia",
-      description: "lluvia loader. User application loader. Booter.",
+        description: "lluvia loader. User application loader. Booter.",
 	path: "/",
 	files: [
 		]
-      uses: ["loader", "utils", "kernel", "engine", "browser", "mathematics"],
-      provides: []
+      requires: ["loader"],
+      provides: ["utils", "kernel", "engine", "browser", "mathematics"],
+      offers:   []
 }
 
 $K_dependencies = [
