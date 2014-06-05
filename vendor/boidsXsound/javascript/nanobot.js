@@ -19,7 +19,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
 
   function initialize(){
     Boid.call(that, geo_data, color)
-    that.level_emotion = level_emotion || 0
+    that.level_emotion = level_emotion || 50
     that.wave_lenght = wave_lenght || 100
     that.wave_aux = 0
     that.gender = gender 

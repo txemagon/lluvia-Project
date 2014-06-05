@@ -13,12 +13,12 @@ function main(){
   c=document.getElementById("face");
   cxt=c.getContext("2d");
 /*
+*/
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(275, 200),
                                         velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
                                         acceleration: new Vector(0, 0)
                                       }})
-*/
   /*
 */
   /*
@@ -95,10 +95,10 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
   }
 */
 // Pruebas angulo de vision
-  for(var i=0; i<1; i++)
+  for(var i=0; i<15; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
-                          position: new Vector(250,200),
+                          position: new Vector(Math.random()*550,Math.random()*400),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
                           velocity: new Vector(-0.001, 0),
                           acceleration: new Vector(0, 0)}
@@ -145,9 +145,9 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
     })
 */
-  /*
+  
   init_setup()
   playSound()
-*/
+
   w.start()
 }
