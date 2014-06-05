@@ -19,6 +19,13 @@ Otra característica del desarrollo guiado por pruebas de software es que requie
 
 A pesar de los elevados requisitos iniciales de aplicar esta metodología, el desarrollo guiado por pruebas (TDD) puede proporcionar un gran valor añadido en la creación de software, produciendo aplicaciones de más calidad y en menos tiempo. Ofrece más que una simple validación del cumplimiento de los requisitos, también puede guiar el diseño de un programa. Centrándose en primer lugar en los casos de prueba uno debe imaginarse cómo los clientes utilizarán la funcionalidad (en este caso, los casos de prueba). Por lo tanto, al programador solo le importa la interfaz y no la implementación. Esta ventaja es similar al diseño por convenio pero se parece a él por los casos de prueba más que por las aserciones matemáticas.
 
+\begin{figure}[h]
+\centering
+\subfigure{\includegraphics[width=40mm]{../images/alineacion.png}}
+\subfigure{\includegraphics[width=40mm]{../images/cohesion.png}}
+\subfigure{\includegraphics[width=40mm]{../images/separation.png}}
+\caption{Alineación, cohesión y separación.}\label{fig:comp_manada}
+\end{figure}
 
 \subsection{Tecnología utilizada}
 \label{sec:tecnologia_utilizada}
@@ -316,6 +323,232 @@ La instancia provee a este objeto, un método open que permite hacer una petici�
 Mediante el método responseType se indica el tipo de respuesta que se desea obtener, en este caso, un arraybuffer.
 
 En la función de carga se añade al objeto loader el contexto de audio y a continuación el método decodeAudiodata, que pasa el flujo de bytes que son números en un buffer de audio reconocible por el audio context. decodeAudioData requiere de tres argumentos:
+
+\begin{itemize}
+ \item resquest.response 
+ \item Una función en caso de haya ido todo bien, que recibiría el 'buffer'.
+ \item Una función que nos indique 'error'
+\end{itemize}
+
+La función que recibe el buffer se encarga de crear la fuente de audio. Se asigna esa fuente de audio al buffer que se haya cargado. Lógicamente se conecta al primer nodo de la cadena de conexión que se hizo previamente, en este caso un gainNode. Mediante el método start(), la fuente de sonido comenzaría a sonar.
+
+Por último se envía la petición.
+
+\begin{verbatim}
+ /* =========================================================== 
+                         CLASE SONGLOADER               
+   ============================================================ */
+
+//  ----------------------- Constructor -----------------------
+
+/* Se sobrecarga el constructor con el audioContext, 
+   y la llamada XMLHttpRequest */
+
+function SongLoader(context, callback) {
+  this.context = context
+  this.onload = callback
+}
+
+SongLoader.prototype.playNewSong = function(track) {
+  var loader  = this
+  // crear objeto 
+  var request = new XMLHttpRequest()
+  /* Petición GET. Al decir "true", 
+     la carga del buffer se hace de 
+     forma asíncrona. */
+  request.open("GET", track, true)
+  /* Indicarle (responseType) el tipo de respuesta 
+     que queremos obtener.                              
+     'arraybuffer': Conjunto de bytes que no se
+                    pueden modificar(solo lectura) */
+  request.responseType = "arraybuffer"
+  request.onload = function() {
+  /* 'decodeAudioData': Pasa del flujo de bytes, que son 
+      números y no los podemos interpretar, en un buffer 
+      de audio a fin de que nuestro audioContext lo pueda
+      usar. Requiere de tres argumentos:
+            - resquest.response            
+            - Una función en caso de haya ido todo bien,
+              que recibiría el 'buffer'.                               
+            - Una función que nos indique 'error' . */
+      loader.context.decodeAudioData(request.response,
+	function(buffer) {
+          if (!buffer){
+             alert('Error al decodificar los datos del archivo: ' + path)
+             return;
+          }
+			var source = WebAudio.ctx.createBufferSource()
+			WebAudio.source = source
+          source.buffer = buffer
+			source.connect(WebAudio.gainNode)						
+			source.start(0)
+			WebAudio.isPlaying = true
+			loader.onload()
+      },
+      function(error) {
+	 console.error('Error en la decodificación de datos de audio', error)
+      }
+    )
+  }
+
+  request.onerror = function() {
+     alert('Error en la petición al cargador')
+  }
+\end{verbatim}
+
+\subsubsection{requestAnimFrame.js}
+\label{sec:request_anim}
+Si se desea construir una visualización para una forma de onda determinada, se necesita consultar periódicamente el analizador, procesar los resultados, y ejecutarlos. Se pude realizar esta tarea mediante la creación de un temporizador de JavaScript como setInterval o setTimeout, pero hay una mejor manera: requestAnimationFrame. Es una gran mejora en el rendimiento, al llamar al fotograma de animación cuando el sistema está preparado para dibujarlo.
+
+En el pasado, para crear temporizadores en general, se utilizaba la función setTimeout. Esta función ha servido desde hace muchos años para toda clase de acciones por temporizador para las páginas web, sin embargo, no fue contemplada para animaciones, que requiere múltiples llamadas por segundo, consumiendo muchos recursos de nuestra computadora, aun si no estamos haciendo uso de la aplicación en cuestión.
+
+Las compañías desarrolladoras de navegadores web han estado consciente de ello, y por tanto han ideado una mejor solución para esta tarea: la función requestAnimationFrame.
+
+Esta función optimiza el uso de información, actualizándose de forma automática tan pronto el CPU le permite (Comúnmente, 60 cuadros por segundo en computadoras de escritorio), mejorando la capacidad del manejo de información en animaciones, consumiendo menos recursos, e incluso mandando a dormir el ciclo cuando la aplicación deja de tener enfoque, dando como resultado, un mejor manejo de las animaciones.
+
+En el tiempo que esta memoria está siendo escrita, requestAnimationFrame es una función relativamente nueva, por lo que los navegadores que no estén actualizados podrían no soportarla, o usar una función experimental no-estándar de ella. Para saber más sobre la versión cuando esta función fue implementada, visitar http://caniuse.com/requestanimationframe , dónde muestran el avance de su soporte.
+
+Para poder usar requestAnimationFrame en estos navegadores antiguos, existen muchas soluciones posibles. La más simple y popular, es agregar esta función al código:
+
+\begin{verbatim}
+ var requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+        };
+})();
+\end{verbatim}
+
+\subsubsection{class\_Speaker.js}
+\label{sec:speaker_ivan}
+En un principio la clase Speaker.js era en realidad un programa principal llamado main.js que integraba todas las clases y ejecutaba el código en conjunto.
+
+La construcción de la clase Speaker surge de la necesidad de introducir todo el código referente al audio en clases, para facilitar la labor de integración con los boids.  La idea es aprovechar el objeto WebAudio introducido en un contexto de audio y que tiene una cadena de conexión determinada, junto con la clase SongLoader que permitirá decodificar el flujo de bytes en un buffer de audio. De esta manera la clase Speaker contiene todo lo necesario, para que se pueda reproducir el sonido decodificado, pintar el analizador de espectros y lógicamente RETORNAR EL VALOR de la frecuencia fundamental del audio que esté sonando en ese momento.
+
+Lo primero es diseñar el constructor Speaker.
+
+Inmediatamente después se introduce en la clase, el primer método llamado ‘init\_setup’ que permitirá ubicar todos los componentes de la aplicación, y elegir correctamente los elementos del  DOM a través de su identificador (getElementById). 
+
+La  variable  SPACING es la distancia entre las barras dibujadas en el analizador. 
+
+La variable OFFSET,  se comporta como un filtro anti-aliasing, es decir, los errores producidos por una frecuencia de muestreo por debajo de Nyquist,  generan que las frecuencias muy altas se “dupliquen” en frecuencias bajas en el espectro. Estas frecuencias bajas (que en realidad no existen, son copias periódicas de altas frecuencias), no se desean pintar, por lo que OFFSET definido en 100, equivale a decir que frecuencias menores de 100Hz no sean pintadas. De este modo aseguramos que el analizador no está pintando frecuencias “fantasma” no deseadas.  
+
+Canvas (lienzo en inglés) es un elemento HTML incorporado en HTML5 que permite la generación de gráficos dinámicamente por medio del scripting. Permite generar gráficos estáticos y animaciones. Se hará uso de este elemento y se introducirá en su contexto mediante getContext('2d'). También se definirá el alto (HEIGHT)  y ancho (WIDTH) de este lienzo o canvas.
+
+Por último, se hace una instancia de la clase SongLoader, y se crea el objeto songLoader
+
+Dentro de la clase Speaker se encuentra la función pintar ‘draw’. Es quizás la función más compleja de entender.  Antes de comentar  como funciona, es importante recordar que para animar un dibujo es necesario llamar a un temporizador que en este caso es requestAnimFrame al que se le va a pasar como argumento la misma función draw. De este modo se pintará una y otra vez.
+
+Se define el estilo de relleno y el tamaño de las barras analizadoras.
+Se recorren con un bucle for las frecuencias resultantes, y se pintan las barras.
+
+La frecuencia fundamental es la frecuencia más baja del espectro de frecuencias tal que las frecuencias dominantes pueden expresarse como múltiplos de esta frecuencia fundamental.
+
+Por tanto si se divide por un lado la celda del array que contiene esta frecuencia máxima, entre la longitud del array de frecuencias(results.length), y todo esto se multiplica por la frecuencia de muestreo/2 (nyquist),  se puede hallar la frecuencia máxima de una canción determinada.
+
+Los métodos playSound y stopSound, como su propio nombre indica, se encargan de la reproducción y parada de una canción determinada.
+
+El método playSound es el encargado de llamar a la función draw para que cada vez que se pretenda reproducir una canción, automáticamente se pinte su análisis espectral de frecuencias en el canvas. 
+
+Como se comentó en apartados anteriores, en el diseño se tuvo en cuenta la posibilidad de que el usuario pueda elegir una canción diferente en plena reproducción, que esta nueva canción se cargase en el buffer, y pudiese ser reproducida a tiempo real, sin necesidad de recargar el navegador nuevamente.
+
+Es necesario indicar mediante una sentencia condicional, que si el audio esta reproduciéndose, y se desea cargar una nueva canción en plena reproducción,   pare la anterior fuente de sonido, y que suene exclusivamente la nueva elección del usuario.  Para ello, se llama al método stopSound().
+
+Los métodos playSound y stopSound son ‘disparados’ mediante el evento onclick al pinchar el usuario sobre los dos botones existentes en el archivo index.html
+
+El método changeVolumen, como su propio nombre indica, se encarga de fijar la ganancia de la fuente de sonido que se esté reproduciendo en ese momento, según el parámetro que se le pase.
+
+Simplemente se llama al objeto WebAudio y a su método obtener los datos de las frecuencias. Una vez teniendo esta información, sólo falta llamar al método gain del objeto WebAudio y pasarle el volumen establecido por el usuario como argumento.
+
+Se construye con la etiqueta <input> un deslizador (type = ‘range’), que representará los valores que puede tomar la ganancia que en este caso oscilará entre 0 y 100. Mediante el evento onchange es posible que el usuario pueda cambiar la ganancia de la fuente, arrastrando con el ratón en el deslizador. Solo hay que asegurarse de que como parámetro changeVolumen recibe  este nuevo valor  dividido entre 100. 
+
+\begin{verbatim}
+ //CONSTRUCTOR
+
+function Speaker() {
+      
+}
+
+//MÉTODOS
+
+Speaker.prototype.init_setup = function() {	
+   this.loader = document.getElementById('loader')
+   this.cvs = document.getElementById('canvas')
+   this.ff = document.getElementById('ff')
+   this.WIDTH = this.cvs.width
+   this.HEIGHT = this.cvs.height
+   this.SPACING = 5
+   this.OFFSET = 100
+   this.drawContext = this.cvs.getContext('2d')
+   this.tracklist = document.getElementById("lista")
+   this.songLoader = new SongLoader(WebAudio.ctx, function(){})
+   
+}	
+
+draw = function() {
+   requestAnimFrame(draw)
+   WebAudio.frequencyData()
+   var results = WebAudio.freqs
+   var cvs = document.getElementById('canvas')
+   
+   var drawContext = cvs.getContext('2d')
+   var ff = document.getElementById('ff')
+   var WIDTH = cvs.width
+   var HEIGHT = cvs.height
+   var SPACING = 5
+   var OFFSET = 100
+   var max_cell = OFFSET
+   drawContext.clearRect(0, 0, WIDTH, HEIGHT)
+   drawContext.fillStyle ='#00FFCC'
+   
+   for(var i = 0; i < results.length-OFFSET; i++){
+		var magnitude = results[i + OFFSET]
+		drawContext.fillRect(i * SPACING, HEIGHT,\\
+		                     SPACING/2, -magnitude)
+		if ( results[max_cell] < results[ i + OFFSET] )
+			max_cell = i + OFFSET
+   }
+   
+   drawContext.fillStyle ='#CCFF00'
+   drawContext.fillRect((max_cell - OFFSET) * SPACING,\\
+                         HEIGHT, SPACING/2, -results[max_cell])
+
+   // VALOR DE LA FRECUENCIA FUNDAMENTAL
+   if(WebAudio.isFinished)
+	ff.innerHTML = 0 + " Hz"
+   else		
+	ff.innerHTML = max_cell / results.length * \\
+	           (WebAudio.sampleFrequency() / 2) + " Hz"
+}  
+
+Speaker.prototype.playSound = function() {
+   this.songLoader.playNewSong(this.tracklist.value)
+   if(WebAudio.isPlaying)
+		this.stopSound()
+   WebAudio.isPlaying = true
+   WebAudio.isFinished = false
+   draw()
+}	
+
+
+
+Speaker.prototype.stopSound = function() {
+   WebAudio.isFinished = true
+   WebAudio.isPlaying = false
+   WebAudio.source.stop()
+}
+
+
+
+Speaker.prototype.changeVolumen = function(_volumen) {
+   WebAudio.frequencyData()
+   WebAudio.gain(_volumen)
+}
+\end{verbatim}
 
 
 

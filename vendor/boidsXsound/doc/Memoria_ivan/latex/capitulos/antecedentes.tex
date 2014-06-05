@@ -21,6 +21,15 @@ Algunas de las características más importantes del modelo son: la falta de pre
 que no estan planeados y que pueden sorprender al propio creador.\\
 
 \noindent\textbf{Audio}\\
-Ha habido varios intentos de crear una potente API de audio para la Web y así,  hacer frente a algunas de las limitaciones que se han descrito anteriormente.  Un ejemplo notable es el Audio Data API,  que fue diseñado y prototipo en Mozilla Firefox.  El enfoque de Mozilla comenzó con un elemento $<$audio$>$, y amplió su API de JavaScript con características adicionales. Esta API tiene un gráfico de audio limitado, y no se ha adoptado más allá de su primera aplicación. Se ha quedado en desuso en la actualidad en Firefox a favor de la Web Audio API [Figura 1].
+Ha habido varios intentos de crear una potente API de audio para la Web y así,  hacer frente a algunas de las limitaciones que se han descrito anteriormente.  Un ejemplo notable es el Audio Data API,  que fue diseñado y prototipo en Mozilla Firefox.  El enfoque de Mozilla comenzó con un elemento $<$audio$>$, y amplió su API de JavaScript con características adicionales. Esta API tiene un gráfico de audio limitado, y no se ha adoptado más allá de su primera aplicación. Se ha quedado en desuso en la actualidad en Firefox a favor de la Web Audio API [Figura \ref{fig:../images/versiones_navegadores.png}].
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{../images/versiones_navegadores.png}
+ \caption{Comparativa de las versiones de los navegadores que soportan a Web Audio API}
+ % versiones_navegadores.png: 936x429 pixel, 72dpi, 33.02x15.13 cm, bb=0 0 936 429
+ \label{fig:../images/versiones_navegadores.png}
+\end{figure}
+
 
 En contraste con Audio Data API, la Web Audio API es un nuevo modelo de la marca, totalmente independiente de la etiqueta $<$audio$>$,  aunque hay puntos de integración con otras API de Web. Se trata de una API de alto nivel JavaScript para la transformación y síntesis de audio en aplicaciones web. El objetivo de esta API,  es incluir capacidades que se encuentran en los motores de juego modernos,  y algunas de las tareas de mezcla, tratamiento y filtrado que se encuentran en aplicaciones de producción de audio de escritorio modernos. El resultado es una API versátil que se puede utilizar en una variedad de tareas relacionadas con el audio y visualizaciones de síntesis de música muy avanzadas.

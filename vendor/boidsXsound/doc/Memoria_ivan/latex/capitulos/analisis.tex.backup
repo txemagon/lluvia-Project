@@ -21,7 +21,14 @@ Los objetos u obstáculos se definirán con líneas rectas y se podrán formar f
 \subsection{Nanobot}
 \label{sec:nanobot}
 
-Cada nanobot sera una entidad que percibe su entorno y que podrá ser capaz de actuar en consecuencia decidiendo que hacer por medio de unas reglas de logica propias del modelo. [Figura 1]
+Cada nanobot sera una entidad que percibe su entorno y que podrá ser capaz de actuar en consecuencia decidiendo que hacer por medio de unas reglas de logica propias del modelo[Figura \ref{fig:../images/procesoNanobot.png}].
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.3]{../images/procesoNanobot.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Proceso de la toma de decisiones de las entidades}
+ \label{fig:../images/procesoNanobot.png}
+\end{figure}
 
 Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera capaz de actuar de manera autonoma y  tener un nivel complejo de predictibilidad  a largo plazo. Al no tratarse de un sistema ideal toda la informacion que le llegue sera acotada para simular un entorno real, es decir, tanto su sistema visual y auditivo seran finitos y acordes a los animales que representen.
 
@@ -35,24 +42,42 @@ Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera
  \item Masa: Es la cantidad de materia que posee cada entidad. Necesaria para calcular la inercia mecánica del movil. 
  \item Visión: Define el ángulo y radio de vision. Con ello se podra calcular todas las entidades que son susceptibles a ser vistas.
  \item Dirección: Con ella se podrá determinar la dirección en la que mira el nanobot, será calculada como el vector unitario del vector velocidad.
- \item Límites de la fuerzas: Cada entidad poseerá unos límites físicos para la correcta simulación del modelo, se busca con estos límites dotar de realismo a la simulación [Figura ]. Estos limites son:
+ \item Límites de la fuerzas: Cada entidad poseerá unos límites físicos para la correcta simulación del modelo, se busca con estos límites dotar de realismo a la simulación [Figura \ref{fig:../images/fuerzas_limite.png}]. 
+ Estos limites son:
  \begin{itemize}
    \item Aceleración: Sólo sera posible una aceleración máxima. Superada esa aceleración se volverá inmediatamente a la aceleración máxima.
    \item Giro: Determina el angulo máximo de giro.
    \item Frenado: Máxima fuerza de frenado que podrá ejercer el nanobot. 
  \end{itemize}	
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.3]{../images/fuerzas_limite.png}
+ % fuerzas_limite.png: 360x656 pixel, 90dpi, 10.16x18.52 cm, bb=0 0 288 525
+ \caption{Esquema de las fuerzas límite.}
+ \label{fig:../images/fuerzas_limite.png}
+\end{figure}
  \item Velocidad máxima: En todo momento se debe revisar el valor de la velocidad, si el módulo del vector velocidad es mayor que la velocidad máxima impuesta, esta se reducira inmediatamente.
  \item Nivel de estres: Se dispone de un sistema para medir el estres del sujeto. Con él, se podra definir un nivel de estres en funcion de todo lo que escuche, desde musica a otros nanobots.
  \item Distancia que recorre la onda de sonido: al poder producir sonido, se define una distancia maxima a la que el sonido producido puede llegar.
 \end{itemize}
 
 
+
+
 \subsubsection{Visión}
 \label{sec:vision}
 
-Cada entidad posee un campo de vision que esta determinado por un radio de vision y un angulo[Figura 2]. Estos dos valores podran ser parametrizados para observar diferentes reacciones y comportamientos. 
+Cada entidad posee un campo de vision que esta determinado por un radio de vision y un angulo[Figura \ref{fig:../images/angulo_vision.png}]. Estos dos valores podran ser parametrizados para observar diferentes reacciones y comportamientos. 
 
 Para la obtencion de las entidades locales que es capaz de visualizar se realizara una resta de los vectores de posicion desde el origen de coordenadas de cada integrante del mundo con respecto al observador, si la distancia es menor al radio de vision es un objeto o entidad susceptible a ser observada , para asegurarlo se realizara ademas una segunda comprobacion con respecto al angulo que forma con la otra entidad, si este  es menor al angulo de vision es un objeto que es visualizado por la entidad.
+
+\begin{figure}[h]
+ \centering
+ \includegraphics{../images/angulo_vision.png}
+ % angulo_vision.png: 304x267 pixel, 90dpi, 8.58x7.54 cm, bb=0 0 243 214
+ \caption{Visión.}
+ \label{fig:../images/angulo_vision.png}
+\end{figure}
 
 
 \subsubsection{Audición}
@@ -74,6 +99,14 @@ Son las reglas básicas por las que entidades independientes se comportarán de 
  \item Cohesión: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia maxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguira cada nanobot para mantener la unidad [Figura 4].
  \item Separación: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separacion de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsion sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande [Figura 5].
 \end{itemize}
+
+\begin{figure}
+ \includegraphics[scale=0.3]{../images/alineacion.png}
+ % alineacion.png: 822x688 pixel, 90dpi, 23.20x19.42 cm, bb=0 0 658 550
+\end{figure}
+
+
+
 
 \paragraph{Comportamientos individuales}
 Se basan en acciones específicas para cada entidad en particular, son:  
@@ -262,31 +295,6 @@ Copia los datos de frecuencia actual en la matriz. Si la matriz tiene menos elem
 Analyser.getByteTimeDomainData()
 
 Copia la forma de onda actual, o el dominio del tiempo. Si la matriz tiene menos elementos que el fftSize, el exceso de elementos se borra. Si tiene más elementos de los necesarios, se ignora el exceso de elementos.
-
-\begin{verbatim}
- RESUMEN:
-
-Datos De la Frecuencia (Frequency data)
-nyquist:  1/2  sample rate
-BinCount:  1/2 FFT size
-El resultado de los datos obtenidos son un Typed Array del tamaño de BinCount
-Los datos obtenidos tienen un rango de 0 a nyquist(datos de frecuencias)
-
-Ejemplo:
-sampleRate = 44100
-nyquist = 44100/2
-bins = 1024/2
-frequencies_per_bin = nyquist/bin
-(rango de 43066 frecuencias)
-
-
-
-Analyser Node
-
-analyser.getByteFrequencyData(array)
-analyser.getByteTimeDomainData(array)
-
-\end{verbatim}
 
 
 
