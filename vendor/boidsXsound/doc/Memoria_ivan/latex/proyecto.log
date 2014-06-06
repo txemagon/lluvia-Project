@@ -1,20 +1,14 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2014.5.13)  5 JUN 2014 14:23
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.20)  6 JUN 2014 00:53
 entering extended mode
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **proyecto.tex
 (./proyecto.tex
-LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
-ak, danish, dutch, finnish, french, basque, ngerman, german, german-x-2009-06-1
-9, ngerman-x-2009-06-19, ibycus, monogreek, greek, ancientgreek, hungarian, san
-skrit, italian, latin, latvian, lithuanian, mongolian2a, mongolian, bokmal, nyn
-orsk, romanian, irish, coptic, serbian, turkish, welsh, esperanto, uppersorbian
-, estonian, indonesian, interlingua, icelandic, kurmanji, slovenian, polish, po
-rtuguese, spanish, galician, catalan, swedish, ukenglish, pinyin, loaded.
-(/usr/share/texmf-texlive/tex/latex/base/article.cls
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texmf-texlive/tex/latex/base/size12.clo
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -29,19 +23,19 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
-(/usr/share/texmf-texlive/tex/latex/base/utf8.def
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-(/usr/share/texmf-texlive/tex/latex/base/t1enc.dfu
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
 File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -191,7 +185,7 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-(/usr/share/texmf-texlive/tex/latex/base/ot1enc.dfu
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
 File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
@@ -222,7 +216,7 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-(/usr/share/texmf-texlive/tex/latex/base/omsenc.dfu
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
 File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
@@ -246,66 +240,58 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/var/lib/texmf/tex/generic/babel/babel.sty
-Package: babel 2008/07/06 v3.8l The Babel package
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2013/12/03 3.9h The Babel package
 
-(/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
-Language: spanish.ldf 2009/01/02 v5.0h Spanish support from the babel system
+(/usr/share/texlive/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+Language: spanish.ldf 2014/01/29 v5.0m Spanish support from the babel system
 
-(/usr/share/texmf-texlive/tex/generic/babel/babel.def
-File: babel.def 2008/07/06 v3.8l Babel common definitions
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2013/12/03 3.9h Babel common definitions
 \babel@savecnt=\count87
 \U@D=\dimen103
 )
 \es@datefmt=\count88
 \es@quottoks=\toks16
 \es@quotdepth=\count89
-Package babel Info: Making " an active character on input line 492.
-Package babel Info: Making . an active character on input line 585.
-Package babel Info: Making < an active character on input line 630.
-Package babel Info: Making > an active character on input line 630.
+Package babel Info: Making " an active character on input line 496.
+Package babel Info: Making . an active character on input line 599.
+Package babel Info: Making < an active character on input line 644.
+Package babel Info: Making > an active character on input line 644.
 ))
-(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks17
 )
-(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-
-! Package pdftex.def Error: PDF mode expected, but DVI mode detected!
-(pdftex.def)                If you are using `latex', then call `pdflatex'.
-(pdftex.def)                Otherwise check and correct the driver options.
-(pdftex.def)                Error recovery by switching to PDF mode.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.414     }\@ehc
-                
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
 \Gread@gobject=\count90
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
-) (/usr/share/texmf/tex/latex/pgf/frontendlayer/tikz.sty
+)
+(/usr/share/texmf/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texmf/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texmf/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-common.tex
@@ -314,7 +300,7 @@ If that doesn't work, type  X <return>  to quit.
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfutil-latex.def
 \pgfutil@abb=\box26
 
-(/usr/share/texmf-texlive/tex/latex/ms/everyshi.sty
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 ))
 (/usr/share/texmf/tex/generic/pgf/utilities/pgfrcs.code.tex
@@ -371,7 +357,7 @@ File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
 (/usr/share/texmf/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
-(/etc/texmf/tex/latex/config/color.cfg
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
@@ -544,35 +530,39 @@ File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopat
 hs.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
-))) (/usr/share/texmf-texlive/tex/latex/caption/subcaption.sty
-Package: subcaption 2008/08/31 v1.0b Adding subcaptions (AR)
+))) (/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-! Package subcaption Error: `caption' package not loaded
-(subcaption)                (which is needed by this package)
-
-See the subcaption package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38   \endinput}{}
-                   
-If you do not understand this error, please take a closer look
-at the documentation of the `subcaption' package.
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-) (/usr/share/texmf-texlive/tex/latex/placeins/placeins.sty
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen149
+\captionmargin@=\dimen150
+\captionwidth=\dimen151
+\caption@tempdima=\dimen152
+\caption@indent=\dimen153
+\caption@parindent=\dimen154
+\caption@hangindent=\dimen155
+)
+\c@ContinuedFloat=\count110
+)
+\c@subfigure=\count111
+\c@subtable=\count112
+)
+(/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
 )
-(/usr/share/texmf-texlive/tex/latex/graphics/epsfig.sty
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/epsfig.sty
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
-\epsfxsize=\dimen149
-\epsfysize=\dimen150
+\epsfxsize=\dimen156
+\epsfysize=\dimen157
 )
-(/usr/share/texmf-texlive/tex/latex/float/float.sty
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count110
+\c@float@type=\count113
 \float@exts=\toks27
 \float@box=\box35
 \@float@everytoks=\toks28
@@ -592,14 +582,14 @@ ations.pathmorphing.code.tex
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecor
 ations.code.tex
 (/usr/share/texmf/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen151
-\pgfdecoratedremainingdistance=\dimen152
-\pgfdecoratedinputsegmentcompleteddistance=\dimen153
-\pgfdecoratedinputsegmentremainingdistance=\dimen154
-\pgf@decorate@distancetomove=\dimen155
-\pgf@decorate@repeatstate=\count111
-\pgfdecorationsegmentamplitude=\dimen156
-\pgfdecorationsegmentlength=\dimen157
+\pgfdecoratedcompleteddistance=\dimen158
+\pgfdecoratedremainingdistance=\dimen159
+\pgfdecoratedinputsegmentcompleteddistance=\dimen160
+\pgfdecoratedinputsegmentremainingdistance=\dimen161
+\pgf@decorate@distancetomove=\dimen162
+\pgf@decorate@repeatstate=\count114
+\pgfdecorationsegmentamplitude=\dimen163
+\pgfdecorationsegmentlength=\dimen164
 )
 \tikz@lib@dec@box=\box37
 )
@@ -613,6 +603,9 @@ athreplacing.code.tex))
 ations.shapes.code.tex
 (/usr/share/texmf/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.s
 hapes.code.tex))) (./proyecto.aux (./capitulos/prologo.aux)
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+
 (./capitulos/introduccion.aux) (./capitulos/antecedentes.aux)
 (./capitulos/analisis.aux
 
@@ -632,7 +625,8 @@ LaTeX Warning: Label `sec:nanobot' multiply defined.
 LaTeX Warning: Label `sec:speaker' multiply defined.
 
 ) (./capitulos/resultados.aux) (./capitulos/conclusiones.aux)
-(./capitulos/manual.aux) (./capitulos/presentacion.aux))
+(./capitulos/bibliografia.aux) (./capitulos/manual.aux)
+(./capitulos/presentacion.aux))
 \openout1 = `proyecto.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -647,31 +641,85 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
+LaTeX Info: Redefining \. on input line 18.
+LaTeX Info: Redefining \% on input line 18.
 
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count112
-\scratchdimen=\dimen158
+\scratchcounter=\count115
+\scratchdimen=\dimen165
 \scratchbox=\box38
-\nofMPsegments=\count113
-\nofMParguments=\count114
+\nofMPsegments=\count116
+\nofMParguments=\count117
 \everyMPshowfont=\toks29
-\MPscratchCnt=\count115
-\MPscratchDim=\dimen159
-\MPnumerator=\count116
+\MPscratchCnt=\count118
+\MPscratchDim=\dimen166
+\MPnumerator=\count119
+\makeMPintoPDFobject=\count120
 \everyMPtoPDFconversion=\toks30
-) ABD: EveryShipout initializing macros
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.jpeg,.png,.jpg,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+ABD: EveryShipout initializing macros
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
 \openout2 = `./capitulos/prologo.aux'.
 
- (./capitulos/prologo.tex)
-(./proyecto.toc
+ (./capitulos/prologo.tex) (./proyecto.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 5.
- [1
+[1
 
 
 
@@ -679,11 +727,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write4
 \openout4 = `proyecto.toc'.
 
-
-[2]
+ [2]
 \openout2 = `./capitulos/introduccion.aux'.
 
- (./capitulos/introduccion.tex
+
+(./capitulos/introduccion.tex
 Underfull \hbox (badness 10000) in paragraph at lines 4--6
 
  []
@@ -704,91 +752,138 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--22
 
  []
 
-<images/../images/versiones_navegadores.png, id=16, 939.51pt x 430.60875pt>
+<images/../images/versiones_navegadores.png, id=17, 939.51pt x 430.60875pt>
 File: images/../images/versiones_navegadores.png Graphic file (type png)
 
-<use images/../images/versiones_navegadores.png>) [4
+<use images/../images/versiones_navegadores.png>
+Package pdftex.def Info: images/../images/versiones_navegadores.png used on inp
+ut line 29.
+(pdftex.def)             Requested size: 390.0pt x 178.74529pt.
+) [4
 
 
 ] [5 <./images/../images/versiones_navegadores.png (PNG copy)>]
 \openout2 = `./capitulos/analisis.aux'.
 
  (./capitulos/analisis.tex
-<images/../images/procesoNanobot.png, id=24, 678.535pt x 295.1025pt>
+<images/../images/procesoNanobot.png, id=25, 678.535pt x 295.1025pt>
 File: images/../images/procesoNanobot.png Graphic file (type png)
 
-<use images/../images/procesoNanobot.png> [6
+<use images/../images/procesoNanobot.png>
+Package pdftex.def Info: images/../images/procesoNanobot.png used on input line
+ 27.
+(pdftex.def)             Requested size: 203.56207pt x 88.53142pt.
+ [6
 
 
 ] [7 <./images/../images/procesoNanobot.png>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 48.
- (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 48.
 
-<images/../images/fuerzas_limite.png, id=34, 289.08pt x 526.768pt>
+<images/../images/fuerzas_limite.png, id=35, 289.08pt x 526.768pt>
 File: images/../images/fuerzas_limite.png Graphic file (type png)
 
-<use images/../images/fuerzas_limite.png> [8 <./images/../images/fuerzas_limite
-.png>] <images/../images/angulo_vision.png, id=40, 244.112pt x 214.401pt>
+<use images/../images/fuerzas_limite.png>
+Package pdftex.def Info: images/../images/fuerzas_limite.png used on input line
+ 54.
+(pdftex.def)             Requested size: 86.72466pt x 158.03162pt.
+ [8 <./images/../images/fuerzas_limite.png>] <images/../images/angulo_vision.pn
+g, id=41, 244.112pt x 214.401pt>
 File: images/../images/angulo_vision.png Graphic file (type png)
 
 <use images/../images/angulo_vision.png>
+Package pdftex.def Info: images/../images/angulo_vision.png used on input line 
+76.
+(pdftex.def)             Requested size: 170.87721pt x 150.07967pt.
+
 Underfull \hbox (badness 10000) in paragraph at lines 92--93
 
  []
 
 [9 <./images/../images/angulo_vision.png>]
-
-LaTeX Warning: Reference `fig:comp_manada' on page 10 undefined on input line 9
-6.
-
-<images/../images/alineacion.png, id=45, 660.066pt x 552.464pt>
+<images/../images/alineacion.png, id=46, 660.066pt x 552.464pt>
 File: images/../images/alineacion.png Graphic file (type png)
 
 <use images/../images/alineacion.png>
-File: images/../images/alineacion.png Graphic file (type png)
- <use images/../images/alineacion.png>
-[10 <./images/../images/alineacion.png>]
-File: images/../images/alineacion.png Graphic file (type png)
- <use images/../images/alineacion.png>
-<images/../images/seek.png, id=50, 309.155pt x 244.915pt>
+Package pdftex.def Info: images/../images/alineacion.png used on input line 102
+.
+(pdftex.def)             Requested size: 132.01085pt x 110.49083pt.
+
+<images/../images/cohesion.png, id=47, 660.066pt x 552.464pt>
+File: images/../images/cohesion.png Graphic file (type png)
+
+<use images/../images/cohesion.png>
+Package pdftex.def Info: images/../images/cohesion.png used on input line 111.
+(pdftex.def)             Requested size: 132.01085pt x 110.49083pt.
+ [10 <./images/../images/alineacion.png> <./images/../images/cohesion.png>]
+<images/../images/separation.png, id=53, 660.066pt x 552.464pt>
+File: images/../images/separation.png Graphic file (type png)
+
+<use images/../images/separation.png>
+Package pdftex.def Info: images/../images/separation.png used on input line 120
+.
+(pdftex.def)             Requested size: 132.01085pt x 110.49083pt.
+
+<images/../images/seek.png, id=54, 309.155pt x 244.915pt>
 File: images/../images/seek.png Graphic file (type png)
 
 <use images/../images/seek.png>
-<images/../images/flee.png, id=51, 453.695pt x 330.836pt>
+Package pdftex.def Info: images/../images/seek.png used on input line 134.
+(pdftex.def)             Requested size: 123.6598pt x 97.96425pt.
+
+<images/../images/flee.png, id=55, 453.695pt x 330.836pt>
 File: images/../images/flee.png Graphic file (type png)
 
-<use images/../images/flee.png> [11 <./images/../images/seek.png>]
-<images/../images/pursuit.png, id=56, 520.344pt x 360.547pt>
+<use images/../images/flee.png>
+Package pdftex.def Info: images/../images/flee.png used on input line 143.
+(pdftex.def)             Requested size: 181.47478pt x 132.33205pt.
+ [11 <./images/../images/separation.png> <./images/../images/seek.png>]
+<images/../images/pursuit.png, id=61, 520.344pt x 360.547pt>
 File: images/../images/pursuit.png Graphic file (type png)
 
 <use images/../images/pursuit.png>
-<images/../images/evasion.png, id=57, 520.344pt x 360.547pt>
+Package pdftex.def Info: images/../images/pursuit.png used on input line 152.
+(pdftex.def)             Requested size: 208.1339pt x 144.21623pt.
+
+<images/../images/evasion.png, id=62, 520.344pt x 360.547pt>
 File: images/../images/evasion.png Graphic file (type png)
 
-<use images/../images/evasion.png> [12 <./images/../images/flee.png> <./images/
-../images/pursuit.png>]
+<use images/../images/evasion.png>
+Package pdftex.def Info: images/../images/evasion.png used on input line 163.
+(pdftex.def)             Requested size: 208.1339pt x 144.21623pt.
+ [12 <./images/../images/flee.png> <./images/../images/pursuit.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 168--169
 
  []
 
-<images/../images/containment.png, id=63, 501.875pt x 537.207pt>
+<images/../images/containment.png, id=68, 501.875pt x 537.207pt>
 File: images/../images/containment.png Graphic file (type png)
 
-<use images/../images/containment.png> [13 <./images/../images/evasion.png> <./
-images/../images/containment.png>]
-<images/../images/wander.png, id=70, 182.281pt x 266.596pt>
+<use images/../images/containment.png>
+Package pdftex.def Info: images/../images/containment.png used on input line 17
+2.
+(pdftex.def)             Requested size: 200.74643pt x 214.87898pt.
+ [13 <./images/../images/evasion.png> <./images/../images/containment.png>]
+<images/../images/wander.png, id=75, 182.281pt x 266.596pt>
 File: images/../images/wander.png Graphic file (type png)
 
 <use images/../images/wander.png>
-<images/../images/toma_decisiones.png, id=71, 1063.975pt x 248.93pt>
+Package pdftex.def Info: images/../images/wander.png used on input line 181.
+(pdftex.def)             Requested size: 72.9111pt x 106.63649pt.
+
+<images/../images/toma_decisiones.png, id=76, 1063.975pt x 248.93pt>
 File: images/../images/toma_decisiones.png Graphic file (type png)
 
-<use images/../images/toma_decisiones.png> [14 <./images/../images/wander.png> 
-<./images/../images/toma_decisiones.png>] [15]
+<use images/../images/toma_decisiones.png>
+Package pdftex.def Info: images/../images/toma_decisiones.png used on input lin
+e 195.
+(pdftex.def)             Requested size: 319.19496pt x 74.67957pt.
+ [14 <./images/../images/wander.png> <./images/../images/toma_decisiones.png>] 
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
@@ -837,10 +932,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 340--342
 
  []
 
-<images/../images/muestreo.png, id=90, 245.91875pt x 206.7725pt>
+<images/../images/muestreo.png, id=95, 245.91875pt x 206.7725pt>
 File: images/../images/muestreo.png Graphic file (type png)
 
 <use images/../images/muestreo.png>
+Package pdftex.def Info: images/../images/muestreo.png used on input line 345.
+(pdftex.def)             Requested size: 172.14194pt x 144.73975pt.
+
 Underfull \hbox (badness 10000) in paragraph at lines 350--352
 
  []
@@ -851,27 +949,37 @@ Underfull \hbox (badness 10000) in paragraph at lines 353--355
  []
 
 [19 <./images/../images/muestreo.png (PNG copy)>]
-<images/../images/fidelidad_sonido.png, id=95, 514.17094pt x 242.40562pt>
+<images/../images/fidelidad_sonido.png, id=100, 514.17094pt x 242.40562pt>
 File: images/../images/fidelidad_sonido.png Graphic file (type png)
 
 <use images/../images/fidelidad_sonido.png>
+Package pdftex.def Info: images/../images/fidelidad_sonido.png used on input li
+ne 358.
+(pdftex.def)             Requested size: 308.50494pt x 145.44447pt.
+
 Underfull \hbox (badness 10000) in paragraph at lines 363--365
 
  []
 
-<images/../images/fouries.png, id=96, 335.2525pt x 207.77625pt>
+<images/../images/fouries.png, id=101, 335.2525pt x 207.77625pt>
 File: images/../images/fouries.png Graphic file (type png)
 
-<use images/../images/fouries.png> [20 <./images/../images/fidelidad_sonido.png
- (PNG copy)> <./images/../images/fouries.png (PNG copy)>]) [21]
+<use images/../images/fouries.png>
+Package pdftex.def Info: images/../images/fouries.png used on input line 368.
+(pdftex.def)             Requested size: 201.15305pt x 124.6667pt.
+ [20 <./images/../images/fidelidad_sonido.png (PNG copy)> <./images/../images/f
+ouries.png (PNG copy)>]) [21]
 \openout2 = `./capitulos/diseno.aux'.
 
 
 (./capitulos/diseno.tex
-<images/../images/tdd.png, id=103, 797.379pt x 603.856pt>
+<images/../images/tdd.png, id=108, 797.379pt x 603.856pt>
 File: images/../images/tdd.png Graphic file (type png)
 
 <use images/../images/tdd.png>
+Package pdftex.def Info: images/../images/tdd.png used on input line 24.
+(pdftex.def)             Requested size: 159.47298pt x 120.76906pt.
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -879,9 +987,9 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ] [23 <./images/../images/tdd.png>] [24] [25]
-Overfull \hbox (65.37749pt too wide) in paragraph at lines 103--104
-[]\OT1/cmr/m/n/12 La fre-cuen-cia a la que emi-te se pue-de ob-te-ner a tra-ves
- del me-to-do set[]frequency[]music()
+Overfull \hbox (65.70387pt too wide) in paragraph at lines 103--104
+[]\OT1/cmr/m/n/12 La fre-cuen-cia a la que emi-te se pue-de ob-te-ner a trav^^S
+es del m^^Seto-do set[]frequency[]music()
  []
 
 [26] [27] [28] [29] [30]
@@ -932,48 +1040,160 @@ Overfull \hbox (36.07521pt too wide) in paragraph at lines 396--396
 dio', error)[] 
  []
 
-[35] [36] [37] [38] [39] [40]) [41]
+[35] [36] [37] [38] [39] [40]
+<images/../images/diseno_general.png, id=170, 1254.6875pt x 749.80125pt>
+File: images/../images/diseno_general.png Graphic file (type png)
+
+<use images/../images/diseno_general.png>
+Package pdftex.def Info: images/../images/diseno_general.png used on input line
+ 589.
+(pdftex.def)             Requested size: 351.3101pt x 209.94292pt.
+
+<images/../images/boid_editor.png, id=171, 546.04pt x 428.60126pt>
+File: images/../images/boid_editor.png Graphic file (type png)
+
+<use images/../images/boid_editor.png>
+Package pdftex.def Info: images/../images/boid_editor.png used on input line 59
+8.
+(pdftex.def)             Requested size: 163.81326pt x 128.58136pt.
+ [41 <./images/../images/diseno_general.png>] <images/../images/canvas_sound.pn
+g, id=176, 614.295pt x 218.8175pt>
+File: images/../images/canvas_sound.png Graphic file (type png)
+
+<use images/../images/canvas_sound.png>
+Package pdftex.def Info: images/../images/canvas_sound.png used on input line 6
+07.
+(pdftex.def)             Requested size: 245.71364pt x 87.52544pt.
+
+<images/../images/world_interface.png, id=177, 172.645pt x 427.5975pt>
+File: images/../images/world_interface.png Graphic file (type png)
+
+<use images/../images/world_interface.png>
+Package pdftex.def Info: images/../images/world_interface.png used on input lin
+e 616.
+(pdftex.def)             Requested size: 51.79388pt x 128.28023pt.
+) [42 <./images/../images/boid_editor.png> <./images/../images/canvas_sound.png
+> <./images/../images/world_interface.png>]
 \openout2 = `./capitulos/resultados.aux'.
 
  (./capitulos/resultados.tex)
 \openout2 = `./capitulos/conclusiones.aux'.
 
+ (./capitulos/conclusiones.tex
+Overfull \hbox (13.40831pt too wide) in paragraph at lines 9--10
+[]\OT1/cmr/m/n/12 Al tra-tar-se de com-por-ta-mien-tos emer-gen-tes, aun-que se
+ re-pi-tan los par^^Same-
+ []
 
-(./capitulos/conclusiones.tex)
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--26
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--31
+
+ []
+
+[43
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 34--35
+
+ []
+
+) [44]
+\openout2 = `./capitulos/bibliografia.aux'.
+
+ (./capitulos/bibliografia.tex) [45
+
+
+]
 \openout2 = `./capitulos/manual.aux'.
 
- (./capitulos/manual.tex)
+ (./capitulos/manual.tex
+<images/../images/device_diagram.png, id=196, 703.62875pt x 717.68124pt>
+File: images/../images/device_diagram.png Graphic file (type png)
+
+<use images/../images/device_diagram.png>
+Package pdftex.def Info: images/../images/device_diagram.png used on input line
+ 6.
+(pdftex.def)             Requested size: 351.8135pt x 358.83974pt.
+
+<images/../images/boid_diagram.png, id=197, 396.48125pt x 751.80875pt>
+File: images/../images/boid_diagram.png Graphic file (type png)
+
+<use images/../images/boid_diagram.png>
+Package pdftex.def Info: images/../images/boid_diagram.png used on input line 1
+4.
+(pdftex.def)             Requested size: 198.24013pt x 375.90344pt.
+ [46
+
+
+ <./images/../images/device_diagram.png>] <images/../images/brain_diagram.png, 
+id=202, 184.69pt x 189.70876pt>
+File: images/../images/brain_diagram.png Graphic file (type png)
+
+<use images/../images/brain_diagram.png>
+Package pdftex.def Info: images/../images/brain_diagram.png used on input line 
+22.
+(pdftex.def)             Requested size: 92.34476pt x 94.85414pt.
+
+<images/../images/behavior_diagram.png, id=203, 489.83pt x 1626.075pt>
+File: images/../images/behavior_diagram.png Graphic file (type png)
+
+<use images/../images/behavior_diagram.png>
+Package pdftex.def Info: images/../images/behavior_diagram.png used on input li
+ne 30.
+(pdftex.def)             Requested size: 171.44305pt x 569.13478pt.
+ [47 <./images/../images/boid_diagram.png> <./images/../images/brain_diagram.pn
+g>]
+<images/../images/line_diagram.png, id=208, 197.73875pt x 342.27875pt>
+File: images/../images/line_diagram.png Graphic file (type png)
+
+<use images/../images/line_diagram.png>
+Package pdftex.def Info: images/../images/line_diagram.png used on input line 3
+8.
+(pdftex.def)             Requested size: 118.64417pt x 205.36882pt.
+) [48 <./images/../images/behavior_diagram.png>] [49 <./images/../images/line_d
+iagram.png>]
 \openout2 = `./capitulos/presentacion.aux'.
 
 
 (./capitulos/presentacion.tex) (./proyecto.aux (./capitulos/prologo.aux)
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+
 (./capitulos/introduccion.aux) (./capitulos/antecedentes.aux)
 (./capitulos/analisis.aux) (./capitulos/diseno.aux) (./capitulos/resultados.aux
-) (./capitulos/conclusiones.aux) (./capitulos/manual.aux)
-(./capitulos/presentacion.aux))
-
-LaTeX Warning: There were undefined references.
-
+) (./capitulos/conclusiones.aux) (./capitulos/bibliografia.aux)
+(./capitulos/manual.aux) (./capitulos/presentacion.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 10955 strings out of 493849
- 213381 string characters out of 1152846
- 247842 words of memory out of 3000000
- 13928 multiletter control sequences out of 15000+50000
- 8063 words of font info for 29 fonts, out of 3000000 for 9000
- 714 hyphenation exceptions out of 8191
- 56i,8n,65p,795b,324s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/publi
-c/amsfonts/cm/cmtt12.pfb>
-Output written on proyecto.pdf (41 pages, 964692 bytes).
+ 12787 strings out of 493304
+ 246727 string characters out of 6139871
+ 289892 words of memory out of 5000000
+ 15879 multiletter control sequences out of 15000+600000
+ 8410 words of font info for 30 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 56i,8n,65p,795b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on proyecto.pdf (49 pages, 1423556 bytes).
 PDF statistics:
- 187 PDF objects out of 1000 (max. 8388607)
+ 243 PDF objects out of 1000 (max. 8388607)
+ 136 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 93 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 148 words of extra memory for PDF output out of 10000 (max. 10000000)
 

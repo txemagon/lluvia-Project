@@ -3,7 +3,7 @@
 
 \subsection{Metodología de desarrollo}
 \label{sec:metodologia_desarrollo}
-Para el desarrollo de la aplicacion se ha utilizado el desarrollo guiado por pruebas de software, o Test-driven development (TDD)[Figura 14]. Sus dos reglas principales son:
+Para el desarrollo de la aplicación se ha utilizado el desarrollo guiado por pruebas de software, o Test-driven development (TDD)[Figura 14]. Sus dos reglas principales son:
 \begin{itemize}
  \item Escribir las pruebas primero.
  \item Refactorización.
@@ -19,26 +19,25 @@ Otra característica del desarrollo guiado por pruebas de software es que requie
 
 A pesar de los elevados requisitos iniciales de aplicar esta metodología, el desarrollo guiado por pruebas (TDD) puede proporcionar un gran valor añadido en la creación de software, produciendo aplicaciones de más calidad y en menos tiempo. Ofrece más que una simple validación del cumplimiento de los requisitos, también puede guiar el diseño de un programa. Centrándose en primer lugar en los casos de prueba uno debe imaginarse cómo los clientes utilizarán la funcionalidad (en este caso, los casos de prueba). Por lo tanto, al programador solo le importa la interfaz y no la implementación. Esta ventaja es similar al diseño por convenio pero se parece a él por los casos de prueba más que por las aserciones matemáticas.
 
-\begin{figure}[h]
-\centering
-\subfigure{\includegraphics[width=40mm]{../images/alineacion.png}}
-\subfigure{\includegraphics[width=40mm]{../images/cohesion.png}}
-\subfigure{\includegraphics[width=40mm]{../images/separation.png}}
-\caption{Alineación, cohesión y separación.}\label{fig:comp_manada}
-\end{figure}
+ \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.2]{../images/tdd.png}
+ \caption{Test-driven development (TDD).}
+ \label{fig:../images/tdd.png}
+ \end{figure}
 
 \subsection{Tecnología utilizada}
 \label{sec:tecnologia_utilizada}
 \
-Para la codificación de la aplicacion se ha utilizado el Framework de desarrollo Lluvia basado en el lenguaje de programación JavaScript. 
+Para la codificación de la aplicación se ha utilizado el Framework de desarrollo Lluvia basado en el lenguaje de programación JavaScript. 
 
 Lluvia es una API Open Source que incorpora gran parte de las funciones nativas de Ruby. Soporta multihilo a pequeña escala y provee de un sistema de mensajería asíncrono gestionado por señales. 
 
-En Lluvia, los Devices son los encargados de proporcionar el mecanismo asincrono de comunicacion. Estan preparados para disparar eventos y recibir mensajes de otros Devices, estos mesajes se almacenan en una cola de mensajes para que sean procesados cuando llege su turno. A efectos practicos, cada Device se comporta como una aplicacion independiente del resto.
+En Lluvia, los Devices son los encargados de proporcionar el mecanismo asíncrono de comunicación. Están preparados para disparar eventos y recibir mensajes de otros Devices, estos mensajes se almacenan en una cola de mensajes para que sean procesados cuando llegue su turno. A efectos prácticos, cada Device se comporta como una aplicación independiente del resto.
 
-Para gestionar los eventos del DOM de HTML se utilizan los Gates de Lluvia que estan capacitados para mantener el campo de visibilidad del objeto. 
+Para gestionar los eventos del DOM de HTML se utilizan los Gates de Lluvia que están capacitados para mantener el campo de visibilidad del objeto. 
 
-La conjunción de los Devices y los Gates proporciona un metodo dinamico y agil para la creacion de la aplicación web. 
+La conjunción de los Devices y los Gates proporciona un método dinámico y ágil para la creación de la aplicación web. 
 \subsection{Clases principales de la aplicación}
 \label{sec:clases_principlaes}
 
@@ -577,10 +576,46 @@ Con todos estos controles se podrá realizar el estudio del comportamiento de lo
 
 \subsection{Descripción de la interface}
 \label{sec:descricion_interface}
-El diseño general de la aplicacion se ha basado en una tarjeta de circuito impreso donde cada elemento simula estar conectado por pistas del material conductor de la tarjeta.
+El diseño general de la aplicacion se ha basado en una tarjeta de circuito impreso donde cada elemento simula estar conectado por pistas del material conductor de la tarjeta [Figura 19].
 
-Los dispositivos world interface, boid editor y sound  simulan pantallas LCD monocromo tipicas de las tarjetas electronicas. El tamaño de la pantalla del world interface se adapta a la cantidad de nanobots que estén en el mundo, la del boid editor es de tamaño fijo pero imita el comportamiento de una pantalla tactil,por ultimo, la pantalla de sound tambien es de tamaño fijo y muestra el ecualizador de sonido.
+Los dispositivos Boid Editor[Figura 20], Canvas Sound[Figura 21] y World Interface[Figura 22] simulan pantallas LCD monocromo tipicas de las tarjetas electronicas. El tamaño de la pantalla del world interface se adapta a la cantidad de nanobots que estén en el mundo, la del boid editor es de tamaño fijo pero imita el comportamiento de una pantalla tactil,por ultimo, la pantalla de sound tambien es de tamaño fijo y muestra el ecualizador de sonido.
 
 Los dispositivo zoom y world simulan pantallas LCD a color, de tamaño fijo y no reaccionan si se seleccionan. 
 
 La disposición general de los elementos da prioridad al mundo que se coloca en el centro de la aplicacion con el tamaño mas grande de todos los dispositivos. Lo flanquean el resto de los elementos resultando un conjunto proporcionado.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.28]{../images/diseno_general.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Diseño general de la aplicación}
+
+ \label{fig:../images/diseno_general.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.3]{../images/boid_editor.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle Boid Editor}
+
+ \label{fig:../images/boid_editor.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/canvas_sound.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle Canvas Sound}
+
+ \label{fig:../images/canvas_sound.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.3]{../images/world_interface.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle World Interface}
+
+ \label{fig:../images/world_interface.png}
+\end{figure}

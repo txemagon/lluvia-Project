@@ -93,7 +93,6 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.vel_max = 40
     })
   }
-*/
 // Pruebas angulo de vision
   for(var i=0; i<15; i++)
     w.new_boid_of(Nanobot, function(config) {
@@ -104,7 +103,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
                           acceleration: new Vector(0, 0)}
 
       //config.brain.activate('containment')
-      //config.brain.activate('wander')
+      config.brain.activate('wander')
 
       //nfig.brain.activate('alignment')
       //config.brain.activate('separation')
@@ -112,6 +111,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
 
 
     })
+*/
 /*
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
@@ -121,7 +121,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
                           config.vision.angle = 5 * Math.PI / 180
     })
 */
-/*
+
   for(var i=0; i<10; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
@@ -141,13 +141,11 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.brain.activate('alignment')
       config.brain.activate('separation')
       config.brain.activate('cohesion')
-
-
     })
-*/
-  
+
+  /*
   init_setup()
   playSound()
-
+*/
   w.start()
 }

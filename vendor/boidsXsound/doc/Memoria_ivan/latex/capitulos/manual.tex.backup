@@ -1,0 +1,10 @@
+\section{Diagramas de clases}
+\label{section:diagramas}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.5]{../images/device_diagram.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{}
+ \label{fig:../images/device_diagram.png}
+\end{figure}

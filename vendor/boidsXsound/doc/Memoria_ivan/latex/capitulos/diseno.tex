@@ -3,7 +3,7 @@
 
 \subsection{Metodología de desarrollo}
 \label{sec:metodologia_desarrollo}
-Para el desarrollo de la aplicacion se ha utilizado el desarrollo guiado por pruebas de software, o Test-driven development (TDD)[Figura 14]. Sus dos reglas principales son:
+Para el desarrollo de la aplicación se ha utilizado el desarrollo guiado por pruebas de software, o Test-driven development (TDD)[Figura 18]. Sus dos reglas principales son:
 \begin{itemize}
  \item Escribir las pruebas primero.
  \item Refactorización.
@@ -21,7 +21,7 @@ A pesar de los elevados requisitos iniciales de aplicar esta metodología, el de
 
  \begin{figure}[h]
  \centering
- \includegraphics[scale=0.3]{../images/tdd.png}
+ \includegraphics[scale=0.2]{../images/tdd.png}
  \caption{Test-driven development (TDD).}
  \label{fig:../images/tdd.png}
  \end{figure}
@@ -29,15 +29,15 @@ A pesar de los elevados requisitos iniciales de aplicar esta metodología, el de
 \subsection{Tecnología utilizada}
 \label{sec:tecnologia_utilizada}
 \
-Para la codificación de la aplicacion se ha utilizado el Framework de desarrollo Lluvia basado en el lenguaje de programación JavaScript. 
+Para la codificación de la aplicación se ha utilizado el Framework de desarrollo Lluvia basado en el lenguaje de programación JavaScript. 
 
 Lluvia es una API Open Source que incorpora gran parte de las funciones nativas de Ruby. Soporta multihilo a pequeña escala y provee de un sistema de mensajería asíncrono gestionado por señales. 
 
-En Lluvia, los Devices son los encargados de proporcionar el mecanismo asincrono de comunicacion. Estan preparados para disparar eventos y recibir mensajes de otros Devices, estos mesajes se almacenan en una cola de mensajes para que sean procesados cuando llege su turno. A efectos practicos, cada Device se comporta como una aplicacion independiente del resto.
+En Lluvia, los Devices son los encargados de proporcionar el mecanismo asíncrono de comunicación. Están preparados para disparar eventos y recibir mensajes de otros Devices, estos mensajes se almacenan en una cola de mensajes para que sean procesados cuando llegue su turno. A efectos prácticos, cada Device se comporta como una aplicación independiente del resto.
 
-Para gestionar los eventos del DOM de HTML se utilizan los Gates de Lluvia que estan capacitados para mantener el campo de visibilidad del objeto. 
+Para gestionar los eventos del DOM de HTML se utilizan los Gates de Lluvia que están capacitados para mantener el campo de visibilidad del objeto. 
 
-La conjunción de los Devices y los Gates proporciona un metodo dinamico y agil para la creacion de la aplicación web. 
+La conjunción de los Devices y los Gates proporciona un método dinámico y ágil para la creación de la aplicación web. 
 \subsection{Clases principales de la aplicación}
 \label{sec:clases_principlaes}
 
@@ -45,7 +45,7 @@ La conjunción de los Devices y los Gates proporciona un metodo dinamico y agil 
 \label{sec:world}
 La clase World deriva de Device y es la encargada de generar el mundo donde coexisten los nanobots y speakers. Es necesario indicarle el canvas(elemento HTML incorporado en HMTL5 que permite la generación de gráficos dinámicamente por medio del scripting) donde se realizará la representación gráfica y optativo el ancho y largo del mismo. 
 
-En la clase World se almacena un array con todos los nanobot y speakers que se hayan generado  para su facil manipulacion. Para ir almacenandolos se llama al metodo has\_born() que se encarga de almacenar el nanobot creado y disparar el evento new\_boid.
+En la clase World se almacena un array con todos los nanobot y speakers que se hayan generado  para su fácil manipulación. Para ir almacenándolos se llama al método has\_born() que se encarga de almacenar el nanobot creado y disparar el evento new\_boid.
 
 Dispone de un método run() que es llamado cada cierto tiempo para su ejecución. En él,  se actualiza el tiempo del procesador y se pinta el mundo.
 
@@ -63,15 +63,15 @@ La clase Boid es clase padre tanto de Nanobot como de Speaker. Es la encargada d
  
 Un boid se puede inicializar con un objeto de configuración capaz de sobrescribir todos los  valores por defecto de los atributos.
 
-Se crea un objeto donde se almacena toda la información de la posicion, velocidad y aceleración del boid, este objeto se llama geo\_data. Además, se dota al boid de una masa, color, visión y cerebro por defecto.
+Se crea un objeto donde se almacena toda la información de la posición, velocidad y aceleración del boid, este objeto se llama geo\_data. Además, se dota al boid de una masa, color, visión y cerebro por defecto.
  
-Se crea un puntero al mundo donde vivirá, especialmente útil para poder utilizar los metodos visible\_for() y audible\_for() de la clase World.
+Se crea un puntero al mundo donde vivirá, especialmente útil para poder utilizar los métodos visible\_for() y audible\_for() de la clase World.
 
 También se crean tres variables que almacenan las fuerzas limites de cada boids: thrust, steering, braking (aceleración, ángulo de giro y frenado).
  
-Dispone de un metodo run() que es llamado cada interacción del programa para poder actualizar su aceleración en función de la media de todas las aceleraciones que devuelvan los comportamientos activos, además de, actualizar su tiempo actual.
+Dispone de un método run() que es llamado cada interacción del programa para poder actualizar su aceleración en función de la media de todas las aceleraciones que devuelvan los comportamientos activos, además de, actualizar su tiempo actual.
  
-El método clip() se encarga de adecuar la aceleración y velocidad actual para que se cumplan las fuerzas limite de cada boid. Si se pasa de aceleración o velocidad aqui se vuelve al estado anterior de dicha magnitud.
+El método clip() se encarga de adecuar la aceleración y velocidad actual para que se cumplan las fuerzas limite de cada boid. Si se pasa de aceleración o velocidad aquí se vuelve al estado anterior de dicha magnitud.
  
 Por último, dispone de los clásicos métodos para poder acceder de manera segura a distintas variables de la clase.
 
@@ -86,7 +86,7 @@ El nanobot es capaz de comunicarse con otros por medio de su método talk(). Par
 
 Hay instrucciones que son órdenes que activan comportamientos directamente, para estas es necesario tener un objetivo para el comportamiento, para ello se utiliza el puntero al emisor. A la hora de crear la réplica se elegirá al azar de un array de réplicas que existen para cada caso.
  
-El nanobot es capaz de recibir frecuencias, con el metodo set\_frequency(), de una onda de sonido. En el método analyze\_sound() se comprobara el valor de la frecuencia y en funcion de su valor aumentara o disminuirá el nivel de estrés del nanobot.
+El nanobot es capaz de recibir frecuencias, con el método set\_frequency(), de una onda de sonido. En el método analyze\_sound() se comprobara el valor de la frecuencia y en función de su valor aumentara o disminuirá el nivel de estrés del nanobot.
 
 
 El método listen() encapsula todo lo relacionado con el sistema auditivo del nanobot.
@@ -96,11 +96,11 @@ El método listen() encapsula todo lo relacionado con el sistema auditivo del na
 
 La clase Speaker deriva de la clase Boid y es la encargada de crear nuevos speakers en el mundo.
 
-Para su creación es necesario pasarle un bloque de configuración, que este a su vez pasará a la clase padre para asignarle los valores. Ademas, se crea un radio para la longitud que tendrá la música que reproduzca el speaker, variables para saber la frecuencia a la que emite, conocer si esta apagado o encendido, así como, para conocer su volumen.
+Para su creación es necesario pasarle un bloque de configuración, que este a su vez pasará a la clase padre para asignarle los valores. Además, se crea un radio para la longitud que tendrá la música que reproduzca el speaker, variables para saber la frecuencia a la que emite, conocer si esta apagado o encendido, así como, para conocer su volumen.
 
-El speaker se podrá encender o apagar con los métodos on() y off(). Si esta apagado la música parará y no se reproducirá nada. Se podra aumentar y disminuir el volumen con los métodos voluemn\_up() y volumen\_down().
+El speaker se podrá encender o apagar con los métodos on() y off(). Si esta apagado la música parará y no se reproducirá nada. Se podrá aumentar y disminuir el volumen con los métodos voluemn\_up() y volumen\_down().
 
-La frecuencia a la que emite se puede obtener a traves del metodo set\_frequency\_music() y se podrá mandar a quien escuche con get\_frequency\_music().
+La frecuencia a la que emite se puede obtener a través del método set\_frequency\_music() y se podrá mandar a quien escuche con get\_frequency\_music().
 
 \subsubsection{World interface}
 \label{sec:world_interface}
@@ -110,11 +110,11 @@ Es capaz de atender el mensaje new\_boid que se encarga de añadir un nuevo nano
 
 \subsubsection{Boid editor}
 \label{sec:boid_editor}
-La clase Boid editor deriva de Device y es la encargada de mostrar toda la informacion u opciones para el speaker o nanobot que este selecionado en el World\_interface. 
+La clase Boid editor deriva de Device y es la encargada de mostrar toda la información u opciones para el speaker o nanobot que este seleccionado en el World\_interface. 
 
 Si se trata de un nanobot mostrara la posicion actual, el comportamiento activo en ese momento y su nivel de estrés. Además, mostrará una serie de controles para el manejo independiente de cada uno de los boids.
 
-Si el seleccionado es un speaker mostrará los controles para manipular el speaker, que son: boton de apagado y encendido, subir y bajar volumen, cambiar cancion y la canción que actualmente se está reproduciendo.  
+Si el seleccionado es un speaker mostrará los controles para manipular el speaker, que son: botón de apagado y encendido, subir y bajar volumen, cambiar canción y la canción que actualmente se está reproduciendo.  
 
 \subsubsection{Brain}
 \label{sec:brain}
@@ -134,13 +134,13 @@ Al ser una clase abstracta, no permite crear instancias, de manera que para crea
 \label{sec:separation}
 La clase Separation deriva de Behavior y es la encargada del comportamiento de separación entre nanobots.
 
-Calcula  los vectores de distancia entre todos los nanobots visibles y realiza su media para posteriormente dividir cada término del vector por un radio de aproximación mínimo. El vector opuesto a ese resultado será devuelto como aceleración vectorial deseada por el metodo desired\_acceleration().
+Calcula  los vectores de distancia entre todos los nanobots visibles y realiza su media para posteriormente dividir cada término del vector por un radio de aproximación mínimo. El vector opuesto a ese resultado será devuelto como aceleración vectorial deseada por el método desired\_acceleration().
 
 \subsubsection{Cohesion}
 \label{sec:cohesion}
 La clase Cohesion deriva de Behavior y es la encargada del comportamiento de cohesión entre nanobots.
 
-Teniendo en cuenta el vector posicion de cada nanobot visible por el nanobot observador calcula su media. El vector resultante de dicha operación será devuelto como la aceleración vectorial deseada por el metodo desired\_acceleration().
+Teniendo en cuenta el vector posición de cada nanobot visible por el nanobot observador calcula su media. El vector resultante de dicha operación será devuelto como la aceleración vectorial deseada por el método desired\_acceleration().
 
 \subsubsection{Alignment}
 \label{sec:alignment}
@@ -150,7 +150,7 @@ Teniendo en cuenta el vector de velocidad de cada nanobot vecino por el nanobot 
 
 \subsubsection{Containment}
 \label{sec:containment}
-La clase Containment deriva de Behavior y es la encargada del comportamiento de contención y evitado de obstaculos en el mundo.
+La clase Containment deriva de Behavior y es la encargada del comportamiento de contención y evitado de obstáculos en el mundo.
 
 Al inicio del programa se crea un array de líneas que serán las encargadas de poner límites al mundo y señalar los obstáculos. Además, cada nanobot posee una línea imaginaria que se corresponde con la velocidad que lleva en ese momento.
 
@@ -160,23 +160,23 @@ Se debe comprobar en cada iteración del programa si hay alguna intersección en
 \label{sec:seek}
 La clase Seek deriva de Behavior y es la encargada del comportamiento de seguimiento entre nanobots. En la llamada se le debe pasar el objetivo a seguir. 
 
-Primero se obtendrá la velocidad deseada, para ello se calculara el vector unitario del vector posicion que separa al objetivo del nanobot perseguidor, para que, a ese vector resultante escalarlo por la  velocidad máxima.
+Primero se obtendrá la velocidad deseada, para ello se calculara el vector unitario del vector posición que separa al objetivo del nanobot perseguidor, para que, a ese vector resultante escalarlo por la  velocidad máxima.
 
-Finalmente, el metodo desired\_acceleration() devolvera como aceleración deseada la resta de la velocidad actual con la velocidad deseada.
+Finalmente, el método desired\_acceleration() devolverá como aceleración deseada la resta de la velocidad actual con la velocidad deseada.
 
 \subsubsection{Flee}
 \label{sec:flee}
 La clase Flee deriva de Behavior y es la encargada del comportamiento de escapar entre nanobots. En la llamada se le debe pasar el objetivo del que se huye. Al tratarse del contrario de seek solo se debe cambiar de signo la velocidad deseada.
 
-Primero se obtendrá la velocidad deseada, para ello se calculara el vector unitario del vector posicion que separa al objetivo del nanobot perseguidor, para que, a ese vector resultante escalarlo por la  velocidadmáximaa, que estara con signo negativo.
+Primero se obtendrá la velocidad deseada, para ello se calculara el vector unitario del vector posición que separa al objetivo del nanobot perseguidor, para que, a ese vector resultante escalarlo por la  velocidad máxima, que estará con signo negativo.
 
-Finalmente, el metodo desired\_acceleration() devolvera como aceleración deseada la resta de la velocidad actual con la velocidad deseada.
+Finalmente, el método desired\_acceleration() devolverá como aceleración deseada la resta de la velocidad actual con la velocidad deseada.
 
 \subsubsection{Pursue}
 \label{sec:pursue}
 La clase Separation deriva de Behavior es la encargada del comportamiento de persecución entre nanobots.  En la llamada se le debe pasar el objetivo a perseguir.
 
-Inicialmente se calculara la posicion del objetivo en un tiempo futuro cercano. Para ello, se calculará la velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual. Dicha aceleracion deseada la devolvera el método desired\_acceleration().
+Inicialmente se calculara la posición del objetivo en un tiempo futuro cercano. Para ello, se calculará la velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual. Dicha aceleración deseada la devolverá el método desired\_acceleration().
 
 
 
@@ -219,7 +219,7 @@ Las posibilidad de usar funciones anónimas va de la mano con otros conceptos im
 \begin{itemize}
  \item Todo es un objeto: (incluidas las funciones), Permite asignar funciones a variables, y hacer referencia a ellas utilizando la variable, además permite pasar funciones como parámetros a otras funciones, y obtener funciones como resultados de la ejecución de una función. 
  \item Closures: Gracias a los Closures se tiene la ventaja de poder enlazar funciones con variables de otros entornos de ejecución (diferentes ámbitos de variables).
- \item Objetos dinamicos: A la hora de modificar el comportamiento de un objeto en particular, podemos definir una función y asignarla inmediatamente a un método de un objeto, sobreescribiendo su comportamiento inicial, o extendiendo su interfaz para agregar comportamiento nuevo.
+ \item Objetos dinámicos: A la hora de modificar el comportamiento de un objeto en particular, podemos definir una función y asignarla inmediatamente a un método de un objeto, sobrescribiendo su comportamiento inicial, o extendiendo su interfaz para agregar comportamiento nuevo.
 \end{itemize}
 
 Teniendo todo esto presente y analizando las necesidades del actual proyecto se ideó WebAudio atendiendo a las siguientes consideraciones:
@@ -556,7 +556,7 @@ Speaker.prototype.changeVolumen = function(_volumen) {
 \label{sec:funcionamiento_aplicacion}
 La aplicación comienza generando un número determinado de nanobots y speakers en el mundo con una velocidad aleatoria y los comportamientos de manada activados. 
 
-Al seleccionar un nanobot se despliega en el device boid editor la información más relevante del nanobot: nivel de estrés, comportamiento activado y posicion. Tambien se muestra los controles del nanobot: 
+Al seleccionar un nanobot se despliega en el device boid editor la información más relevante del nanobot: nivel de estrés, comportamiento activado y posición. También se muestra los controles del nanobot: 
 \begin{itemize}
  \item Habla: Listado de palabras para la comunicación entre nanobot.
  \item Órdenes: Conjunto de órdenes que un nanobot puede dar a otros nanobots.
@@ -567,7 +567,7 @@ Al seleccionar un speaker se mostrará en el device boid editor los controles pa
 \begin{itemize}
  \item Comenzar: Comienza a reproducirse la canción seleccionada.
  \item Parar: Para la reproducción de la canción en curso.
- \item Siguiente canción: Cambia la cancion que esta seleccionada por la siguiente en la lista.
+ \item Siguiente canción: Cambia la canción que esta seleccionada por la siguiente en la lista.
  \item Subir volumen: Sube el volumen de la música y aumenta el radio de emisión del speaker.
  \item Bajar volumen: Baja el volumen de la música y reduce el radio de emisión del speaker.
 \end{itemize}
@@ -576,10 +576,46 @@ Con todos estos controles se podrá realizar el estudio del comportamiento de lo
 
 \subsection{Descripción de la interface}
 \label{sec:descricion_interface}
-El diseño general de la aplicacion se ha basado en una tarjeta de circuito impreso donde cada elemento simula estar conectado por pistas del material conductor de la tarjeta.
+El diseño general de la aplicación se ha basado en una tarjeta de circuito impreso donde cada elemento simula estar conectado por pistas del material conductor de la tarjeta [Figura 19].
 
-Los dispositivos world interface, boid editor y sound  simulan pantallas LCD monocromo tipicas de las tarjetas electronicas. El tamaño de la pantalla del world interface se adapta a la cantidad de nanobots que estén en el mundo, la del boid editor es de tamaño fijo pero imita el comportamiento de una pantalla tactil,por ultimo, la pantalla de sound tambien es de tamaño fijo y muestra el ecualizador de sonido.
+Los dispositivos Boid Editor[Figura 20], Canvas Sound[Figura 21] y World Interface[Figura 22] simulan pantallas LCD monocromo típicas de las tarjetas electrónicas. El tamaño de la pantalla del World Interface se adapta a la cantidad de nanobots que estén en el mundo, la del Boid Editor es de tamaño fijo pero imita el comportamiento de una pantalla táctil,por ultimo, la pantalla de Sound también es de tamaño fijo y muestra el ecualizador de sonido.
 
-Los dispositivo zoom y world simulan pantallas LCD a color, de tamaño fijo y no reaccionan si se seleccionan. 
+Los dispositivo Zoom y World simulan pantallas LCD a color, de tamaño fijo y no reaccionan si se seleccionan. 
 
-La disposición general de los elementos da prioridad al mundo que se coloca en el centro de la aplicacion con el tamaño mas grande de todos los dispositivos. Lo flanquean el resto de los elementos resultando un conjunto proporcionado.
+La disposición general de los elementos da prioridad al mundo que se coloca en el centro de la aplicación con el tamaño mas grande de todos los dispositivos. Lo flanquean el resto de los elementos resultando un conjunto proporcionado.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.28]{../images/diseno_general.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Diseño general de la aplicación}
+
+ \label{fig:../images/diseno_general.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.3]{../images/boid_editor.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle Boid Editor}
+
+ \label{fig:../images/boid_editor.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/canvas_sound.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle Canvas Sound}
+
+ \label{fig:../images/canvas_sound.png}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.3]{../images/world_interface.png}
+ % procesoNanobot.png: 676x294 pixel, 72dpi, 23.85x10.37 cm, bb=0 0 676 294
+ \caption{Detalle World Interface}
+
+ \label{fig:../images/world_interface.png}
+\end{figure}

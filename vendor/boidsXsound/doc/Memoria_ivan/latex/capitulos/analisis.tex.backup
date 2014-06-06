@@ -73,7 +73,7 @@ Para la obtencion de las entidades locales que es capaz de visualizar se realiza
 
 \begin{figure}[h]
  \centering
- \includegraphics{../images/angulo_vision.png}
+ \includegraphics[scale=0.7]{../images/angulo_vision.png}
  % angulo_vision.png: 304x267 pixel, 90dpi, 8.58x7.54 cm, bb=0 0 243 214
  \caption{Visión.}
  \label{fig:../images/angulo_vision.png}
@@ -93,35 +93,109 @@ La principal regla en el sistema de comportamientos se basa en la ausencia de un
 
 \noindent\textbf{Comportamientos de manada}
 
-Son las reglas básicas por las que entidades independientes se comportarán de manera similar a manadas de animales reales. Estas reglas son:
+Son las reglas básicas por las que entidades independientes se comportarán de manera similar a manadas de animales reales[Figura \ref{fig:comp_manada}]. Estas reglas son:
 \begin{itemize}
- \item Alineación: Se busca que todas las entidades tengan una direccion común. Para ello, se obtiene la velocidad de todas las entidades vecinas y se calcula su promedio, dicho promedio será la velocidad deseada [Figura 3].
- \item Cohesión: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia maxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguira cada nanobot para mantener la unidad [Figura 4].
- \item Separación: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separacion de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsion sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande [Figura 5].
-\end{itemize}
+ \item Alineación: Se busca que todas las entidades tengan una direccion común. Para ello, se obtiene la velocidad de todas las entidades vecinas y se calcula su promedio, dicho promedio será la velocidad deseada.
+ 
+  \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.2]{../images/alineacion.png}
+ \caption{Alineación.}
+ \label{fig:../images/flee.png}
+ \end{figure}
+ 
+ \item Cohesión: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia maxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguira cada nanobot para mantener la unidad.
+ 
+   \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.2]{../images/cohesion.png}
+ \caption{Alineación.}
+ \label{fig:../images/flee.png}
+ \end{figure}
+ 
+ \item Separación: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separacion de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsion sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande.
 
-\begin{figure}
- \includegraphics[scale=0.3]{../images/alineacion.png}
- % alineacion.png: 822x688 pixel, 90dpi, 23.20x19.42 cm, bb=0 0 658 550
-\end{figure}
-
-
-
+   \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.2]{../images/separation.png}
+ \caption{Alineación.}
+ \label{fig:../images/flee.png}
+ \end{figure}
+ 
+ \end{itemize}
 
 \paragraph{Comportamientos individuales}
 Se basan en acciones específicas para cada entidad en particular, son:  
 \begin{itemize}
  \item Seguir: El nanobot buscará la última posición en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 6]. 
- \item Alejarse: Se trata del comportamiento inverso a seguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 7]. 
- \item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8].
- \item Huir: Se trata del comportamiento inverso a perseguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 9]. 
- \item Evitar obstaculos: Cada nanobot será capaz de evitar obstáculos que se encuentre en su camino. Para ello, se creará una línea imaginaria que es idéntica al vector velocidad que lleve en ese momento. Si esa línea imaginaria intersecta con cualquier línea que esté definida en el mundo para crear obstáculos, la aceleración deseada será el vector normal a la velocidad [Figura 10]. 
+ 
+ \begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/seek.png}
+ \caption{Seguir.}
+ \label{fig:../images/seek.png}
+ \end{figure}
+
+\item Alejarse: Se trata del comportamiento inverso a seguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 7]. 
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/flee.png}
+ \caption{Alejarse.}
+ \label{fig:../images/flee.png}
+ \end{figure}
+
+\item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8].
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/pursuit.png}
+ \caption{Perseguir.}
+ \label{fig:../images/pursuit.png}
+ \end{figure}
+
+ \item Huir: Se trata del comportamiento inverso a perseguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 9]\\. 
+% \item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8].
+
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/evasion.png}
+ \caption{Huir.}
+ \label{fig:../images/evasion.png}
+ \end{figure}
+
+\item Evitar obstaculos: Cada nanobot será capaz de evitar obstáculos que se encuentre en su camino. Para ello, se creará una línea imaginaria que es idéntica al vector velocidad que lleve en ese momento. Si esa línea imaginaria intersecta con cualquier línea que esté definida en el mundo para crear obstáculos, la aceleración deseada será el vector normal a la velocidad [Figura 10]. \\
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{../images/containment.png}
+ \caption{Evitar obstaculos.}
+ \label{fig:../images/containment.png}
+ \end{figure}
+
  \item Vagar: Permite a los nanobots vagar libremente por el mundo sin un rumbo fijo y sin dar cambios bruscos de dirección. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre el nanobot y  un punto aleatorio  por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 11].  
-\end{itemize}
+
+  \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.4]{../images/wander.png}
+ \caption{Vagar.}
+ \label{fig:../images/wander.png}
+ \end{figure}
+ 
+ \end{itemize}
+
 
 \subsubsection{Toma de decisiones}
 \label{sec:toma_decisiones}
 La aplicación de cada uno de los comportamientos nos indicará hacia donde se debe dirigir el nanobot, al darse la posibilidad de tener activados tantos comportamientos como se deseen o necesiten, la toma de decision que se realizará será la media de la suma de cada uno de los comportamientos, dando como resultado una aceleración vectorial que influirá en la velocidad de la entidad [Figura 12].
+
+ \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.3]{../images/toma_decisiones.png}
+ \caption{Toma de decisiones.}
+ \label{fig:../images/toma_decisiones.png}
+ \end{figure}
 
 \subsubsection{Comunicación oral}
 \label{sec:comunicacion_oral}
@@ -155,7 +229,7 @@ La idea de esta API de alto nivel, para poder procesar y sintetizar audio en apl
 
 La forma de crear el contexto sería así:
 \begin{verbatim}
-var context;
+var context;\end{minipage}
 window.addEventListener('load', init, false);
 
 function init() {
@@ -262,8 +336,16 @@ Para la resolución del análisis de audio y la obtención de la frecuencia fund
 \noindent\textbf{¿Qué es la Frecuencia de Muestreo?}\\
 Número de muestras por unidad de tiempo que se toman de una señal continua para producir una señal discreta, durante el proceso necesario para convertirla de analógica en digital[Figura 16].
 
+
 Según el Teorema de Nyquist, para poder replicar con exactitud la forma  de una onda es necesario que la frecuencia de muestreo sea superior al doble de la máxima frecuencia  a  muestrear.
 El aliasing se produce cuando la frecuencia de muestreo es inferior a la frecuencia Nyquist y por lo tanto insuficiente para hacer  el muestreo correctamente con lo cual inventa frecuencias fantasmas que no tiene nada que ver con la original.\\
+
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.7]{../images/muestreo.png}
+ \caption{Frecuencia de Muestreo.}
+ \label{fig:../images/muestreo.png}
+ \end{figure}
 
 \noindent\textbf{¿Qué es la Profundidad de bit?}\\
 Resolución de captura de una señal de audio en relación a la amplitud (volumen). La Profundidad de Bits determina el rango dinámico de una señal de audio, es decir, determina el máximo y mínimo de decibelios que una señal puede tener al ser grabada.\\
@@ -271,8 +353,22 @@ Resolución de captura de una señal de audio en relación a la amplitud (volume
 \noindent\textbf{¿Qué es la Calidad/Fidelidad del sonido?}\\
 Para los sistemas de audio, esta medida va ha estar determinada por el número de bits por muestra y la tasa de muestreo[Figura 17].\\
 
+ \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.6]{../images/fidelidad_sonido.png}
+ \caption{Calidad/Fidelidad del sonido.}
+ \label{fig:../images/fidelidad_sonido.png}
+ \end{figure}
+
 \noindent\textbf{¿Qué es la FFT o transformada de Fourier?}\\
 La transformada de Fourier se utiliza para conocer las características frecuenciales de las señales y el comportamiento de los sistemas lineales ante estas señales [Figura 18].\\
+
+ \begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.6]{../images/fouries.png}
+ \caption{Seguir.}
+ \label{fig:../images/fouries.png}
+ \end{figure}
 
 La interfaz AnalyserNode representa un nodo capaz de proporcionar la frecuencia en tiempo real y análisis de la información de dominio en el tiempo. Es un AudioNode que pasa el flujo de audio sin cambios desde la entrada a la salida. El nodo funciona incluso si la salida no está conectada.
 

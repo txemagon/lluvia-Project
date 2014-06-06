@@ -30,23 +30,23 @@ Cada nanobot sera una entidad que percibe su entorno y que podrá ser capaz de a
  \label{fig:../images/procesoNanobot.png}
 \end{figure}
 
-Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera capaz de actuar de manera autonoma y  tener un nivel complejo de predictibilidad  a largo plazo. Al no tratarse de un sistema ideal toda la informacion que le llegue sera acotada para simular un entorno real, es decir, tanto su sistema visual y auditivo seran finitos y acordes a los animales que representen.
+Gracias a esto cada nanobot del grupo poseerá cierto nivel de inteligencia, sera capaz de actuar de manera autónoma y  tener un nivel complejo de predictibilidad  a largo plazo. Al no tratarse de un sistema ideal toda la información que le llegue sera acotada para simular un entorno real, es decir, tanto su sistema visual y auditivo serán finitos y acordes a los animales que representen.
 
-\subsubsection{Caracterísicas básicas}
+\subsubsection{Características básicas}
 \label{sec:caracteristicas_basicas}
 
 \noindent Las principales características de los Nanobots son:  
 \begin{itemize}
- \item  Cerebro: En el cerebro se gestionan todos los comportamientos. Se dispondra de una lista de la cual se podra elegir el comportamiento adecuado en cada momento para el correcto funcionamiento del modelo. Tambien se podran activar mas de un comportamiento dando lugar a otros comportamientos mas complejos e impredecibles. Sera capaz de saber cual es la aceleracion adecuada para poder variar la velocidad de manera correcta. Esto se realizara haciendo la media de todas las aceleraciones devueltas por los comportamientos y en funcion de esa aceleracion la velocidad de la entidad se adecuara a la situacion actual.
- \item Geo data: Se debe conocer en todo momento la posicion del nanobot, asi como, su velocidad y aceleraccion. Imprescindible para poder realizar todos los calculos de los comportamientos y de su representacion grafica. Estas tres magnitudes seran representadas por vectores de dos dimensiones al igual que el mundo.
- \item Masa: Es la cantidad de materia que posee cada entidad. Necesaria para calcular la inercia mecánica del movil. 
- \item Visión: Define el ángulo y radio de vision. Con ello se podra calcular todas las entidades que son susceptibles a ser vistas.
+ \item  Cerebro: En el cerebro se gestionan todos los comportamientos. Se dispondrá de una lista de la cual se podrá elegir el comportamiento adecuado en cada momento para el correcto funcionamiento del modelo. También se podrán activar mas de un comportamiento dando lugar a otros comportamientos mas complejos e impredecibles. Sera capaz de saber cual es la aceleración adecuada para poder variar la velocidad de manera correcta. Esto se realizara haciendo la media de todas las aceleraciones devueltas por los comportamientos y en función de esa aceleración la velocidad de la entidad se adecuara a la situación actual.
+ \item Geo data: Se debe conocer en todo momento la posición del nanobot, así como, su velocidad y aceleración. Imprescindible para poder realizar todos los cálculos de los comportamientos y de su representación gráfica. Estas tres magnitudes serán representadas por vectores de dos dimensiones al igual que el mundo.
+ \item Masa: Es la cantidad de materia que posee cada entidad. Necesaria para calcular la inercia mecánica del móvil. 
+ \item Visión: Define el ángulo y radio de visión. Con ello se podrá calcular todas las entidades que son susceptibles a ser vistas.
  \item Dirección: Con ella se podrá determinar la dirección en la que mira el nanobot, será calculada como el vector unitario del vector velocidad.
  \item Límites de la fuerzas: Cada entidad poseerá unos límites físicos para la correcta simulación del modelo, se busca con estos límites dotar de realismo a la simulación [Figura \ref{fig:../images/fuerzas_limite.png}]. 
  Estos limites son:
  \begin{itemize}
    \item Aceleración: Sólo sera posible una aceleración máxima. Superada esa aceleración se volverá inmediatamente a la aceleración máxima.
-   \item Giro: Determina el angulo máximo de giro.
+   \item Giro: Determina el ángulo máximo de giro.
    \item Frenado: Máxima fuerza de frenado que podrá ejercer el nanobot. 
  \end{itemize}	
 \begin{figure}[h]
@@ -56,9 +56,9 @@ Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera
  \caption{Esquema de las fuerzas límite.}
  \label{fig:../images/fuerzas_limite.png}
 \end{figure}
- \item Velocidad máxima: En todo momento se debe revisar el valor de la velocidad, si el módulo del vector velocidad es mayor que la velocidad máxima impuesta, esta se reducira inmediatamente.
- \item Nivel de estres: Se dispone de un sistema para medir el estres del sujeto. Con él, se podra definir un nivel de estres en funcion de todo lo que escuche, desde musica a otros nanobots.
- \item Distancia que recorre la onda de sonido: al poder producir sonido, se define una distancia maxima a la que el sonido producido puede llegar.
+ \item Velocidad máxima: En todo momento se debe revisar el valor de la velocidad, si el módulo del vector velocidad es mayor que la velocidad máxima impuesta, esta se reducirá inmediatamente.
+ \item Nivel de estrés: Se dispone de un sistema para medir el estrés del sujeto. Con él, se podrá definir un nivel de estrés en función de todo lo que escuche, desde musica a otros nanobots.
+ \item Distancia que recorre la onda de sonido: al poder producir sonido, se define una distancia máxima a la que el sonido producido puede llegar.
 \end{itemize}
 
 
@@ -67,13 +67,13 @@ Gracias a esto cada nanobot del grupo poseera cierto nivel de inteligencia, sera
 \subsubsection{Visión}
 \label{sec:vision}
 
-Cada entidad posee un campo de vision que esta determinado por un radio de vision y un angulo[Figura \ref{fig:../images/angulo_vision.png}]. Estos dos valores podran ser parametrizados para observar diferentes reacciones y comportamientos. 
+Cada entidad posee un campo de visión que esta determinado por un radio de visión y un ángulo[Figura \ref{fig:../images/angulo_vision.png}]. Estos dos valores podrán ser parametrizados para observar diferentes reacciones y comportamientos. 
 
-Para la obtencion de las entidades locales que es capaz de visualizar se realizara una resta de los vectores de posicion desde el origen de coordenadas de cada integrante del mundo con respecto al observador, si la distancia es menor al radio de vision es un objeto o entidad susceptible a ser observada , para asegurarlo se realizara ademas una segunda comprobacion con respecto al angulo que forma con la otra entidad, si este  es menor al angulo de vision es un objeto que es visualizado por la entidad.
+Para la obtención de las entidades locales que es capaz de visualizar se realizara una resta de los vectores de posición desde el origen de coordenadas de cada integrante del mundo con respecto al observador, si la distancia es menor al radio de visión es un objeto o entidad susceptible a ser observada , para asegurarlo se realizara además una segunda comprobación con respecto al ángulo que forma con la otra entidad, si este  es menor al ángulo de visión es un objeto que es visualizado por la entidad.
 
 \begin{figure}[h]
  \centering
- \includegraphics[scale=0.8]{../images/angulo_vision.png}
+ \includegraphics[scale=0.7]{../images/angulo_vision.png}
  % angulo_vision.png: 304x267 pixel, 90dpi, 8.58x7.54 cm, bb=0 0 243 214
  \caption{Visión.}
  \label{fig:../images/angulo_vision.png}
@@ -83,19 +83,19 @@ Para la obtencion de las entidades locales que es capaz de visualizar se realiza
 \subsubsection{Audición}
 \label{sec:audicion}
 
-Cada entidad poseerá un sistema auditivo que hará posible el sentido del oido, es decir, lo faculta para ser sensible a los sonidos. La funcion principal de esto sera transformar las ondas sonoras que se propagan por el aire en informacion que capta la entidad y transmite al cerebro para su procesamiento y posterior reacción.
+Cada entidad poseerá un sistema auditivo que hará posible el sentido del oído, es decir, lo faculta para ser sensible a los sonidos. La función principal de esto sera transformar las ondas sonoras que se propagan por el aire en información que capta la entidad y transmite al cerebro para su procesamiento y posterior reacción.
 
 
 \subsubsection{Sistema de comportamientos}
 \label{sec:sistema_comportamientos}
 
-La principal regla en el sistema de comportamientos se basa en la ausencia de una inteligencia que domine a todas las entidades o sobresalga del grupo. Lo contrario invalida el modelo computacional y lo hace carente de sentido para su estudio. Al tener todos los nanobots un nivel similar de inteligencia ayuda a la hora de calcular, estudiar y medir los patrones de bandadas que pueden llegar a formar con las diferentes  ponderaciones que se pueden realizar a sus atributos basicos. Siendo este el motivo principal de estudio del presente proyecto.\\
+La principal regla en el sistema de comportamientos se basa en la ausencia de una inteligencia que domine a todas las entidades o sobresalga del grupo. Lo contrario invalida el modelo computacional y lo hace carente de sentido para su estudio. Al tener todos los nanobots un nivel similar de inteligencia ayuda a la hora de calcular, estudiar y medir los patrones de bandadas que pueden llegar a formar con las diferentes  ponderaciones que se pueden realizar a sus atributos básicos. Siendo este el motivo principal de estudio del presente proyecto.\\
 
 \noindent\textbf{Comportamientos de manada}
 
-Son las reglas básicas por las que entidades independientes se comportarán de manera similar a manadas de animales reales[Figura \ref{fig:comp_manada}]. Estas reglas son:
+Son las reglas básicas por las que entidades independientes se comportarán de manera similar a manadas de animales reales. Estas reglas son:
 \begin{itemize}
- \item Alineación: Se busca que todas las entidades tengan una direccion común. Para ello, se obtiene la velocidad de todas las entidades vecinas y se calcula su promedio, dicho promedio será la velocidad deseada.
+ \item Alineación: Se busca que todas las entidades tengan una dirección común. Para ello, se obtiene la velocidad de todas las entidades vecinas y se calcula su promedio, dicho promedio será la velocidad deseada[Figura 5].
  
   \begin{figure}[h]
  \centering
@@ -104,21 +104,21 @@ Son las reglas básicas por las que entidades independientes se comportarán de 
  \label{fig:../images/flee.png}
  \end{figure}
  
- \item Cohesión: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia maxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguira cada nanobot para mantener la unidad.
+ \item Cohesión: Las entidades se mantienen unidas, es decir, se busca que los nanobots no se separen con respecto a una distancia máxima. Para ello, se buscan las posiciones de las entidades vecinas y el promedio de esas posiciones sera el punto que seguirá cada nanobot para mantener la unidad [Figura 6].
  
    \begin{figure}[h]
  \centering
- \includegraphics[scale=0.2]{../images/alineacion.png}
- \caption{Alineación.}
+ \includegraphics[scale=0.2]{../images/cohesion.png}
+ \caption{Cohesión.}
  \label{fig:../images/flee.png}
  \end{figure}
  
- \item Separación: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separacion de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsion sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande.
+ \item Separación: Las entidades buscan una separación mínima con su vecinas. Por eso se busca la distancia de separación de las entidades con respecto al observador. Mientras esa distancia sea grande la fuerza de repulsión sera pequeña y viceversa, a una distancia muy pequeña la fuerza sera muy grande [Figura 7].
 
    \begin{figure}[h]
  \centering
- \includegraphics[scale=0.2]{../images/alineacion.png}
- \caption{Alineación.}
+ \includegraphics[scale=0.2]{../images/separation.png}
+ \caption{Separación.}
  \label{fig:../images/flee.png}
  \end{figure}
  
@@ -127,7 +127,7 @@ Son las reglas básicas por las que entidades independientes se comportarán de 
 \paragraph{Comportamientos individuales}
 Se basan en acciones específicas para cada entidad en particular, son:  
 \begin{itemize}
- \item Seguir: El nanobot buscará la última posición en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 6]. 
+ \item Seguir: El nanobot buscará la última posición en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8]. 
  
  \begin{figure}[H]
  \centering
@@ -136,7 +136,7 @@ Se basan en acciones específicas para cada entidad en particular, son:
  \label{fig:../images/seek.png}
  \end{figure}
 
-\item Alejarse: Se trata del comportamiento inverso a seguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 7]. 
+\item Alejarse: Se trata del comportamiento inverso a seguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 9]. 
 
  \begin{figure}[H]
  \centering
@@ -145,7 +145,7 @@ Se basan en acciones específicas para cada entidad en particular, son:
  \label{fig:../images/flee.png}
  \end{figure}
 
-\item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8].
+\item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 10].
 
  \begin{figure}[H]
  \centering
@@ -154,7 +154,7 @@ Se basan en acciones específicas para cada entidad en particular, son:
  \label{fig:../images/pursuit.png}
  \end{figure}
 
- \item Huir: Se trata del comportamiento inverso a perseguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 9]\\. 
+ \item Huir: Se trata del comportamiento inverso a perseguir. Se realizará el mismo cálculo pero al resultado se le cambiara el signo [Figura 11]\\. 
 % \item Perseguir: El nanobot buscará una futura posición en el tiempo en la que se encuentre su objetivo. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre perseguidor y la posición futura del objetivo por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 8].
 
 
@@ -165,16 +165,16 @@ Se basan en acciones específicas para cada entidad en particular, son:
  \label{fig:../images/evasion.png}
  \end{figure}
 
-\item Evitar obstaculos: Cada nanobot será capaz de evitar obstáculos que se encuentre en su camino. Para ello, se creará una línea imaginaria que es idéntica al vector velocidad que lleve en ese momento. Si esa línea imaginaria intersecta con cualquier línea que esté definida en el mundo para crear obstáculos, la aceleración deseada será el vector normal a la velocidad [Figura 10]. \\
+\item Evitar obstáculos: Cada nanobot será capaz de evitar obstáculos que se encuentre en su camino. Para ello, se creará una línea imaginaria que es idéntica al vector velocidad que lleve en ese momento. Si esa línea imaginaria intersecta con cualquier línea que esté definida en el mundo para crear obstáculos, la aceleración deseada será el vector normal a la velocidad [Figura 12]. \\
 
 \begin{figure}[H]
  \centering
  \includegraphics[scale=0.4]{../images/containment.png}
- \caption{Huir.}
+ \caption{Evitar obstáculos.}
  \label{fig:../images/containment.png}
  \end{figure}
 
- \item Vagar: Permite a los nanobots vagar libremente por el mundo sin un rumbo fijo y sin dar cambios bruscos de dirección. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre el nanobot y  un punto aleatorio  por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 11].  
+ \item Vagar: Permite a los nanobots vagar libremente por el mundo sin un rumbo fijo y sin dar cambios bruscos de dirección. Se calculará una velocidad deseada que será el resultado de escalar el vector unitario de la distancia entre el nanobot y  un punto aleatorio  por la velocidad máxima. Para posteriormente calcular la aceleración deseada restando a la velocidad deseada la velocidad actual [Figura 13].  
 
   \begin{figure}[h]
  \centering
@@ -188,7 +188,7 @@ Se basan en acciones específicas para cada entidad en particular, son:
 
 \subsubsection{Toma de decisiones}
 \label{sec:toma_decisiones}
-La aplicación de cada uno de los comportamientos nos indicará hacia donde se debe dirigir el nanobot, al darse la posibilidad de tener activados tantos comportamientos como se deseen o necesiten, la toma de decision que se realizará será la media de la suma de cada uno de los comportamientos, dando como resultado una aceleración vectorial que influirá en la velocidad de la entidad [Figura 12].
+La aplicación de cada uno de los comportamientos nos indicará hacia donde se debe dirigir el nanobot, al darse la posibilidad de tener activados tantos comportamientos como se deseen o necesiten, la toma de decisión que se realizará será la media de la suma de cada uno de los comportamientos, dando como resultado una aceleración vectorial que influirá en la velocidad de la entidad [Figura 14].
 
  \begin{figure}[h]
  \centering
@@ -205,14 +205,14 @@ Cada entidad será capaz de comunicarse con sus semejantes en un determinado rad
 Existen dos tipos diferentes de comunicaciones:
 \begin{itemize}
  \item Comunicación simple: Donde solo se intercambian palabras para poder modificar de manera muy rápida el nivel de estrés del receptor. No hay posibilidad de una segunda réplica por parte del emisor. 
- \item Comunicación ligada a una orden: Se trata de comunicar una orden directa a todas los nanobots que esten escuchando. Estas entidades la procesaran y la llevaran a cabo inmediatamente después.  
+ \item Comunicación ligada a una orden: Se trata de comunicar una orden directa a todas los nanobots que estén escuchando. Estas entidades la procesaran y la llevaran a cabo inmediatamente después.  
 \end{itemize}
 
 De esta forma estarán capacitados para poder comunicarse de una manera simple. 
 
 \subsubsection{Nivel de estrés}
 \label{sec:nivel_estres}
-Cada nanobot poseera un nivel de estrés para reaccionar de acuerdo a el. Según el nivel de estrés  ciertos valores basicos del nanobot cambiaran. Los valores susceptibles a ser modificados son:  ángulo de visión, capacidad de giro, frenado, aceleración y velocidad máxima. 
+Cada nanobot poseerá un nivel de estrés para reaccionar de acuerdo a el. Según el nivel de estrés  ciertos valores básicos del nanobot cambiaran. Los valores susceptibles a ser modificados son:  ángulo de visión, capacidad de giro, frenado, aceleración y velocidad máxima. 
 
 \subsection{Speaker}
 \label{sec:speaker}
@@ -334,7 +334,7 @@ La función start(tiempo) hace que sea fácil programar la reproducción precisa
 Para la resolución del análisis de audio y la obtención de la frecuencia fundamental de un audio en concreto, es necesario conocer algunos aspectos técnicos.\\
 
 \noindent\textbf{¿Qué es la Frecuencia de Muestreo?}\\
-Número de muestras por unidad de tiempo que se toman de una señal continua para producir una señal discreta, durante el proceso necesario para convertirla de analógica en digital[Figura 16].
+Número de muestras por unidad de tiempo que se toman de una señal continua para producir una señal discreta, durante el proceso necesario para convertirla de analógica en digital[Figura 15].
 
 
 Según el Teorema de Nyquist, para poder replicar con exactitud la forma  de una onda es necesario que la frecuencia de muestreo sea superior al doble de la máxima frecuencia  a  muestrear.
@@ -351,7 +351,7 @@ El aliasing se produce cuando la frecuencia de muestreo es inferior a la frecuen
 Resolución de captura de una señal de audio en relación a la amplitud (volumen). La Profundidad de Bits determina el rango dinámico de una señal de audio, es decir, determina el máximo y mínimo de decibelios que una señal puede tener al ser grabada.\\
 
 \noindent\textbf{¿Qué es la Calidad/Fidelidad del sonido?}\\
-Para los sistemas de audio, esta medida va ha estar determinada por el número de bits por muestra y la tasa de muestreo[Figura 17].\\
+Para los sistemas de audio, esta medida va ha estar determinada por el número de bits por muestra y la tasa de muestreo[Figura 16].\\
 
  \begin{figure}[h]
  \centering
@@ -361,7 +361,7 @@ Para los sistemas de audio, esta medida va ha estar determinada por el número d
  \end{figure}
 
 \noindent\textbf{¿Qué es la FFT o transformada de Fourier?}\\
-La transformada de Fourier se utiliza para conocer las características frecuenciales de las señales y el comportamiento de los sistemas lineales ante estas señales [Figura 18].\\
+La transformada de Fourier se utiliza para conocer las características frecuenciales de las señales y el comportamiento de los sistemas lineales ante estas señales [Figura 17].\\
 
  \begin{figure}[h]
  \centering

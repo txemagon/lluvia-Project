@@ -1,0 +1,28 @@
+\section{Conclusiones}
+\label{section:conclusiones}
+
+La intención de realizar un trabajo como este, era la de recrear un sistema  capaz de simular comportamientos emergentes capaces de imitar la conducta de manada de ciertos animales según diferentes contextos. 
+
+Las conclusiones a las que se han llegado con respecto a este tema son : 
+\begin{enumerate}
+ \item Al tratarse de comportamientos emergentes, aunque se repitan los parámetros de la simulación rara vez se repiten situaciones.
+ \item Los tres compartimientos principales de manada(alineación, separación y cohesión) deben estar en perfecto equilibrio entre ellos. Cualquier pequeño desajuste echa por tierra todo el modelo computacional. 
+ \item Modificando solo algunos parámetros de los nanobots se pueden simular distintos tipos de manada: bancos de peces, bandadas de aves...
+ \item El campo de visión es el parámetro mas influyente a la hora de estudiar los comportamientos, si se reduce el ángulo se tienden a agrupar en hileras, mientras que, si se amplia se agrupan en bancos.   
+ \item Se añadió, al final del desarrollo, la variable velocidad de crucero mejorando considerablemente el funcionamiento de las manadas.
+ \item Dados los malos resultados obtenidos con la lista de dinámica para la selección de nanobots y speakers se desaconseja su utilización para otros proyectos de carácter similar.
+\end{enumerate}
+
+En cuanto a la parte de audio se refiere, ha tenido un trabajo de estudio y documentación
+exigente. Era necesario poder hacerlo pensando en programación web, e intentar aplicar las
+últimas tecnologías que proporciona: HTML5, CSS3 y Javascript.
+Web Audio API, es una biblioteca JS relativamente novedosa, y específicamente en Mozilla
+Firefox se han incorporado nuevas funciones que antes no eran compatibles con este
+navegador
+https://blog.mozilla.org/blog/2014/04/29/mozilla-introduces-the-most-
+customizable-firefox-ever-with-an-elegant-new-design/\\
+
+Web Audio API es una biblioteca muy potente que cuenta con infinidad de posibilidades. Esto
+implica, que no hay una sola manera de poder hacer las cosas. La documentación se encuentra
+en su mayoría en inglés, pero es muy orientativo, y acerca al poder que tiene esta API, y 
+como empezar a tomar ideas.
