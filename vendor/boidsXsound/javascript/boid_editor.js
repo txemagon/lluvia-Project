@@ -24,23 +24,33 @@ function BoidEditor(view){
     // Speaker options    
     that.newGate("button_on", Gate, {
       do_onclick     : function(){ actual_boid.on()},
-      do_onmouseover : function(){ button_on.src = "images/button_on_select.png"},
-      do_onmouseout  : function(){ button_on.src = "images/button_on.png"}
+      do_onmouseover : function(){ button_on.src = "images/button_play_select.png"},
+      do_onmouseout  : function(){ button_on.src = "images/button_play.png"}
     })
     that.newGate("button_off", Gate, {
       do_onclick     : function(){ actual_boid.off()},
-      do_onmouseover : function(){ button_off.src = "images/button_off_select.png"},
-      do_onmouseout  : function(){ button_off.src = "images/button_off.png"}
+      do_onmouseover : function(){ button_off.src = "images/button_stop_select.png"},
+      do_onmouseout  : function(){ button_off.src = "images/button_stop.png"}
     })
     that.newGate("button_plus", Gate, {
       do_onclick     : function(){ actual_boid.volume_up(10)},
-      do_onmouseover : function(){ button_plus.src = "images/button_plus_select.png"},
-      do_onmouseout  : function(){ button_plus.src = "images/button_plus.png"}
+      do_onmouseover : function(){ button_plus.src = "images/button_plus2_select.png"},
+      do_onmouseout  : function(){ button_plus.src = "images/button_plus2.png"}
     })
     that.newGate("button_less", Gate, {
       do_onclick     : function(){ actual_boid.volume_down(10)},
-      do_onmouseover : function(){ button_less.src = "images/button_less_select.png"},
-      do_onmouseout  : function(){ button_less.src = "images/button_less.png"}
+      do_onmouseover : function(){ button_less.src = "images/button_less2_select.png"},
+      do_onmouseout  : function(){ button_less.src = "images/button_less2.png"}
+    })
+    that.newGate("button_next_track", Gate, {
+      do_onclick     : function(){ actual_boid.nextTrack()},
+      do_onmouseover : function(){ button_next_track.src = "images/button_next_select.png"},
+      do_onmouseout  : function(){ button_next_track.src = "images/button_next.png"}
+    })
+    that.newGate("button_previous_track", Gate, {
+      do_onclick     : function(){ actual_boid.previousTrack()},
+      do_onmouseover : function(){ button_previous_track.src = "images/button_previous_select.png"},
+      do_onmouseout  : function(){ button_previous_track.src = "images/button_previous.png"}
     })
 
 

@@ -44,11 +44,11 @@ files: [
 			{ name: "boid.js",                     description: "One Boid." },
 			{ name: "nanobot.js",                  description: "" },
 			{ name: "speaker.js",                  description: "" },
-			{ name: "audio/WebAudio.js",           description: "" },
-			{ name: "audio/class_BufferLoader.js", description: "" },
-			{ name: "audio/requestAnimFrame.js",   description: "" },
+			{ name: "WebAudio.js",           description: "" },
+			{ name: "class_SongLoader.js",   description: "" },
+			{ name: "requestAnimFrame.js",   description: "" },
+			{ name: "class_Speaker.js",      description: "" },
 			{ name: "main.js",                     description: "main function." },
-			{ name: "audio/main_audio.js",                  description: "" },
 
 		]
         }

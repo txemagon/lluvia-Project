@@ -8,17 +8,20 @@ function main(){
   var boid_editor = new BoidEditor("boid_properties")
   boid_list.addPort("focus_boid", boid_editor)
   
+/*
   var face_boids = new FaceDevice("boid_properties")
   boid_list.addPort("face_boid_animation", face_boids)
   c=document.getElementById("face");
   cxt=c.getContext("2d");
-/*
 */
+
 var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
                                         position: new Vector(275, 200),
                                         velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
                                         acceleration: new Vector(0, 0)
-                                      }})
+                                      }
+                                    config.cruising_speed = 0
+                            })
   /*
 */
   /*
@@ -122,7 +125,7 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
     })
 */
 
-  for(var i=0; i<10; i++)
+  for(var i=0; i<15; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                           position: new Vector(Math.random()*550,Math.random()*400),
@@ -135,12 +138,11 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
       config.vel_min = 5
       config.cruising_speed = 20
 
-      //config.force_limits.steering = 500
-      //config.brain.activate('containment')
-      //config.brain.activate('wander')
-      config.brain.activate('alignment')
-      config.brain.activate('separation')
-      config.brain.activate('cohesion')
+      // config.brain.activate('alignment')
+      // config.brain.activate('separation')
+      // config.brain.activate('cohesion')
+
+
     })
 
   /*

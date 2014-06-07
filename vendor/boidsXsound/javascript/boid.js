@@ -437,7 +437,7 @@ Boid.prototype.clip = function(){
         this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(0.99))
     }
     if(v_module < this.cruising_speed){
-        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(1.005))
+        this.geo_data.velocity = new Vector(this.geo_data.velocity.scale(1.05))
     }
     /*
     if(v_module < this.vel_min){

@@ -17,12 +17,13 @@ function Speaker(geo_data, wave_lenght, src){
 	function initialize(){
 		that.image = new Image()
 		that.image.src = src || "images/altavoz.png"
-		that.wave_lenght = wave_lenght || 1000
+		that.wave_lenght = wave_lenght || 125
 		that.wave_aux = 0
 		that.this_on = false
     that.array_frequency = []
     that.frequency = 0
 		Boid.call(that, geo_data)
+    that.monitor = new Monitor()
 	}
 
 	if(arguments.length)
@@ -36,6 +37,7 @@ function Speaker(geo_data, wave_lenght, src){
 */
 Speaker.prototype.on = function(){
 	this.this_on = true
+  this.monitor.playSound()
 }
 
 /**
@@ -45,6 +47,7 @@ Speaker.prototype.on = function(){
 */
 Speaker.prototype.off = function(){
 	this.this_on = false
+  this.monitor.stopSound()
 }
 
 /**
@@ -54,6 +57,7 @@ Speaker.prototype.off = function(){
 */
 Speaker.prototype.volume_up = function(increase){
   this.wave_lenght += increase
+  this.monitor.changeVolumen(1)
 }
 
 /**
@@ -64,6 +68,15 @@ Speaker.prototype.volume_up = function(increase){
 */
 Speaker.prototype.volume_down = function(decrement){
   this.wave_lenght -= decrement
+  this.monitor.changeVolumen(5)
+}
+
+Speaker.prototype.nextTrack = function(decrement){
+  this.monitor.next()
+}
+
+Speaker.prototype.previousTrack = function(decrement){
+  this.monitor.previous()
 }
 
 /**
@@ -72,7 +85,7 @@ Speaker.prototype.volume_down = function(decrement){
 * Returns wave length
 */
 Speaker.prototype.get_wave_lenght = function(){
-	return this.wave_lenght * escala
+	return this.wave_lenght
 }
 
 /**
@@ -176,7 +189,7 @@ Speaker.prototype.run = function(current_time){
 Speaker.prototype.draw = function(ctx){
 	var p = this.geo_data.position
 	var image_size = 35
-	ctx.drawImage(this.image, p.get_coord(0)-(image_size/2)*escala, p.get_coord(1)-(image_size/2)*escala, image_size*escala, image_size*escala)
+	ctx.drawImage(this.image, p.get_coord(0)-(image_size/2), p.get_coord(1)-(image_size/2), image_size, image_size)
 	if(this.this_on == true){
   		ctx.beginPath();
  		ctx.arc(p.get_coord(0), p.get_coord(1), this.wave_aux, 0, Math.PI*2, true);
@@ -190,7 +203,7 @@ Speaker.prototype.draw = function(ctx){
   if (this.focused){
     ctx.strokeStyle = "red"
     ctx.beginPath();
-    ctx.arc(p.get_coord(0), p.get_coord(1), 22*escala, 0, Math.PI*2, true); 
+    ctx.arc(p.get_coord(0), p.get_coord(1), 22, 0, Math.PI*2, true); 
     ctx.closePath();
     ctx.stroke()
     ctx.strokeStyle = "black"

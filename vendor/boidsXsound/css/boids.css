@@ -143,18 +143,32 @@ body{
   margin: -20px 0 0 110px;
 }
 
-#button_plus{
+#button_next_track{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 44px 0 0 110px;
+}
+
+#button_previous_track{
   width: 85px;
   height: 60px;
   position: absolute;
   margin: 44px 0 0 28px;
 }
 
+#button_plus{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 110px 0 0 28px;
+}
+
 #button_less{
   width: 85px;
   height: 60px;
   position: absolute;
-  margin: 44px 0 0 110px;
+  margin: 110px 0 0 110px;
 }
 
 #nanobot_buttons{
