@@ -193,28 +193,49 @@ Nanobot.prototype.analyze_msg = function(){
 * Analyze the sound.
 */
 Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de las ultimas cuatro lineas no hace falta las mitad de las cosas
-  if(this.level_emotion > 100)
-    this.level_emotion = 100
-  if(this.level_emotion < 0)
-    this.level_emotion = 0
+  var baremo = 3000
 
   if(this.array_frequency.length > 0){
-    if(this.level_emotion < 100 || this.array_frequency[0] < 0)
-      this.level_emotion += this.array_frequency.shift()
+    if(this.level_emotion < 100 || this.array_frequency[0] < 0){
+      if(this.array_frequency[0] >= baremo){
+        this.level_emotion += 0.1
+        this.array_frequency.shift()
+      }
+      else{
+        this.level_emotion -= 0.1
+        this.array_frequency.shift()
+      }
+    }
     else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
-      this.array_frequency.shift()
+      this.array_frequency.length = 0
     }
   }
-  else if(this.level_emotion >= 0.0)//{
+  else if(this.level_emotion >= 50.0){
     this.level_emotion -= 0.1
-//  }else if(this.level_emotion < 50)
-//    this.level_emotion += 0.1
+  }else if(this.level_emotion < 50.0)
+    this.level_emotion += 0.1
+
+  if(this.level_emotion < 0)
+    this.level_emotion = 0
 
 }
 
 Nanobot.prototype.analyze_level_emotion = function(){
+  var stress = this.level_emotion/100
+  if(this.level_emotion > 80){
+    this.vision.angle = 50
+
+  }
 
 
+  if(this.level_emotion > 40 && this.level_emotion < 90){
+    this.vision.angle = 0.5
+  }
+
+
+  if(this.level_emotion < 40){
+    this.vision.angle = 0.1
+  }
 }
 
 /**

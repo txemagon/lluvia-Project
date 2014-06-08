@@ -125,22 +125,22 @@ w.path.push(l1, l2, l3, l4)//, a1,a2,a3,a4,a5,a6,a7,a8)
     })
 */
 
-  for(var i=0; i<15; i++)
+  for(var i=0; i<5; i++)
     w.new_boid_of(Nanobot, function(config) {
       config.geo_data = {
                           position: new Vector(Math.random()*550,Math.random()*400),
                           //velocity: new Vector(20, 20 * Math.PI / 180, "pol"),
-                          velocity: new Vector(0.1, 0.1),
+                          velocity: new Vector((Math.random()*10)-5, (Math.random()*10)-5),
                           acceleration: new Vector(0, 0)}
-      config.vision.angle = 120 * Math.PI / 180  
+      config.vision.angle = 30 * Math.PI / 180  
       config.vision.radius = 150
       config.vel_max = 40
       config.vel_min = 5
       config.cruising_speed = 20
 
-      // config.brain.activate('alignment')
-      // config.brain.activate('separation')
-      // config.brain.activate('cohesion')
+       config.brain.activate('alignment')
+       config.brain.activate('separation')
+       config.brain.activate('cohesion')
 
 
     })

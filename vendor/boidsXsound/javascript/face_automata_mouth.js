@@ -28,15 +28,15 @@ function FaceAutomataMouth(processor, gate) {
 			/* normal */	
 			[
 				function(){
-					this.draw_mouth_normal()
+					
 					;
 				},
 				function(){
-					this.change_state()
+					this.zoom_nanobot()
 					;
 				},
 				function(){
-					this.erase_mouth_normal()
+					
 					;
 				}
 			],
@@ -97,6 +97,51 @@ function FaceAutomataMouth(processor, gate) {
 
     if (arguments.length)
         initialize()
+}
+
+FaceAutomataMouth.prototype.zoom_nanobot = function(){
+	var hue = (this.actual_boid.level_emotion * 2.4)+120
+	var c = 'hsl(' + hue + ', 100%, 36%)'
+	var a = this.actual_boid.geo_data.acceleration
+	var v = this.actual_boid.geo_data.velocity
+
+	cxt.fillStyle = "white"
+	cxt.beginPath();
+	cxt.arc(75, 75, 75, 0, Math.PI*2, true);      
+	cxt.closePath();
+	cxt.fill();
+
+
+	cxt.beginPath();
+	cxt.arc(75, 75 ,74 , 0, Math.PI*2, false); 
+	cxt.stroke();
+
+	cxt.fillStyle = c
+	cxt.beginPath();
+	cxt.arc(75, 75, 20, 0, Math.PI*2, true);      
+	cxt.closePath();
+	cxt.fill();
+
+	cxt.strokeStyle = "black"
+	cxt.beginPath()
+	cxt.arc(75, 75, 27, 0, Math.PI*2, true);      
+	cxt.closePath();
+	cxt.stroke();
+
+	cxt.lineWidth = 3;
+	cxt.strokeStyle = "red"
+    cxt.beginPath();
+    cxt.moveTo(75, 75)
+    cxt.lineTo(75 + a.get_coord(0), 75 + a.get_coord(1))
+    cxt.closePath();
+    cxt.stroke()
+
+    cxt.strokeStyle = "black"
+    cxt.beginPath();
+    cxt.moveTo(75, 75)
+    cxt.lineTo(75 + v.get_coord(0), 75 + v.get_coord(1))
+    cxt.stroke();
+    cxt.lineWidth = 2;
 }
 
 

@@ -51,6 +51,16 @@ draw = function() {
 		this.ff = 0
    else		
 		this.ff = max_cell / results.length * (WebAudio.sampleFrequency() / 2)
+
+
+
+   drawContext.fillStyle ='black'
+   drawContext.fillRect(390, 5, 101, 31)
+   drawContext.fillStyle ='#7c9e31'
+   drawContext.fillRect(390, 5, 100, 30)
+   drawContext.fillStyle ='black'
+   drawContext.font = "bold 15px ubuntu";
+   drawContext.fillText("ff: " + Math.round(this.ff*100)/100, 400,25)
 }  
 
 
