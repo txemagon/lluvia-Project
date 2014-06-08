@@ -53,7 +53,7 @@
  *
  * @return {Array}
  */
-Object.prototype.to_a = function(){
+Object.prototype.to_a = function() {
     return [this]
 }
 
@@ -66,10 +66,13 @@ Object.prototype.to_a = function(){
  * @param  {string} alias_name      Name of the new method.
  * @param  {string} original_method Name of the original method.
  */
-Object.prototype.alias = function(alias_name, original_method){
-    this[alias_name] = function(){
-	return this[original_method].apply(this, arguments)
+Object.prototype.alias = function(alias_name, original_method) {
+    this[alias_name] = function() {
+        return this[original_method].apply(this, arguments)
     }
+
+    if (!this.propertyIsEnumerable(original_method))
+        this.stop_enumerating(alias_name)
 }
 
 Object._$NUM_ERR = 0.000001
@@ -81,23 +84,23 @@ Object._$NUM_ERR = 0.000001
  * @param {Array} sp Used to add information recursively by calling Object#inspect on inner elements.
  * @return {String}
  */
-Object.prototype.inspect = function(sp){
+Object.prototype.inspect = function(sp) {
     sp = sp || [""]
     var output = "{\n"
     sp.push("")
     if (sp.length > 3)
-	return ""
-    for (var i in this){
-	output += sp.join("\t") + i + ": \t"
+        return ""
+    for (var i in this) {
+        output += sp.join("\t") + i + ": \t"
 
-	if (this[i] != null)
-	    if (typeof(this[i]) == "object")
-		output += (this[i].toSource? this[i].toSource(sp): this[i])
-	else
-	    output += this[i]
-	else
-	    output += "null"
-	output += " \n "
+        if (this[i] != null)
+            if (typeof(this[i]) == "object")
+                output += (this[i].toSource ? this[i].toSource(sp) : this[i])
+            else
+                output += this[i]
+            else
+                output += "null"
+        output += " \n "
 
     }
     sp.pop()
@@ -137,12 +140,12 @@ Object.prototype.inspect = function(sp){
  * @param {RegExp} re A regular expression to filter output.
  * @return {Array} An array with the keys of the object.
  */
-Object.prototype.keys = function(re){
+Object.prototype.keys = function(re) {
     var the_keys = []
     for (var i in this)
-	if (!re || re.test(i))
-	    if (i !== "keys")
-		the_keys.push(i)
+        if (!re || re.test(i))
+            if (i !== "keys")
+                the_keys.push(i)
     return the_keys
 }
 
@@ -155,12 +158,12 @@ Object.prototype.keys = function(re){
  * @param {RegExp} re A Regular Expression to filter output.
  * @return
  */
-Object.prototype.self_keys = function(re){
+Object.prototype.self_keys = function(re) {
     var the_keys = []
     for (var i in this)
-	if (!re || re.test(i))
-	    if (i !== "keys" && this.hasOwnProperty(i) )
-		the_keys.push(i)
+        if (!re || re.test(i))
+            if (i !== "keys" && this.hasOwnProperty(i))
+                the_keys.push(i)
     return the_keys
 }
 
@@ -171,7 +174,7 @@ Object.prototype.self_keys = function(re){
  * @param re
  * @return
  */
-Object.prototype.own_keys = function(re){
+Object.prototype.own_keys = function(re) {
     return this.self_keys(re)
 }
 
@@ -191,10 +194,10 @@ Object.prototype.own_keys = function(re){
  *
  * @return {Object} Shallow copy of the given object.
  */
-Object.prototype.clone = function(){
+Object.prototype.clone = function() {
     var the_clone = {}
     for (var i in this)
-	the_clone[i] = this[i]
+        the_clone[i] = this[i]
     return the_clone
 }
 
@@ -243,24 +246,25 @@ Object.prototype.clone = function(){
  * @param {Object} that
  * @param {String} parentName
  */
-function _$innerObject(that, parentName){
+function _$innerObject(that, parentName) {
     var me = that
-    return function(){
-	var clss = arguments[0]
-	var args = []
-	for (var i = 1; i < arguments.length; i++)
-	args.push(arguments[i])
-	function $F_innerObj(){
-	    if (parentName)
-		this[parentName] = me;
-	    else
-		this.that = me
-	    clss.apply(this, arguments);
-	}
-	$F_innerObj.prototype = new arguments[0]
-	$F_innerObj.prototype.constructor = arguments[0]
+    return function() {
+        var clss = arguments[0]
+        var args = []
+        for (var i = 1; i < arguments.length; i++)
+            args.push(arguments[i])
 
-	return $F_innerObj
+        function $F_innerObj() {
+            if (parentName)
+                this[parentName] = me;
+            else
+                this.that = me
+            clss.apply(this, arguments);
+        }
+        $F_innerObj.prototype = new arguments[0]
+        $F_innerObj.prototype.constructor = arguments[0]
+
+        return $F_innerObj
     }
 }
 
@@ -273,10 +277,10 @@ function _$innerObject(that, parentName){
  * @param obj
  * @return
  */
-function implement(iface, obj){
+function implement(iface, obj) {
     if (iface.iface)
-	for (var i in iface.iface)
-	    obj.prototype[i] = iface.iface[i]
+        for (var i in iface.iface)
+            obj.prototype[i] = iface.iface[i]
 }
 
 /* Warning this are static methods */
@@ -290,7 +294,7 @@ Object.prototype._FROZEN = false
  * Marks an object as tainted.
  *
  */
-Object.prototype.taint  = function (){
+Object.prototype.taint = function() {
     this.tainted = true
 }
 
@@ -299,7 +303,7 @@ Object.prototype.taint  = function (){
  * Removes the tainted mark from an object.
  *
  */
-Object.prototype.untaint  = function (){
+Object.prototype.untaint = function() {
     this.tainted = false
 }
 
@@ -309,7 +313,7 @@ Object.prototype.untaint  = function (){
  *
  * @return {Boolean}
  */
-Object.prototype.tainted$U  = function (){
+Object.prototype.tainted$U = function() {
     return !this.tainted
 }
 
@@ -318,7 +322,7 @@ Object.prototype.tainted$U  = function (){
  * Set an object as trustable.
  *
  */
-Object.prototype.trust  = function (){
+Object.prototype.trust = function() {
     this._trust = true
 }
 
@@ -327,7 +331,7 @@ Object.prototype.trust  = function (){
  * Mark an object as untrustable.
  *
  */
-Object.prototype.untrust  = function (){
+Object.prototype.untrust = function() {
     this._trust = false
 }
 
@@ -337,11 +341,11 @@ Object.prototype.untrust  = function (){
  *
  * @return {Boolean}
  */
-Object.prototype.untrusted$U = function (){
+Object.prototype.untrusted$U = function() {
     return !this._trust
 }
 
-Object.prototype.trusted$U = function (){
+Object.prototype.trusted$U = function() {
     return this._trust
 }
 
@@ -351,7 +355,7 @@ Object.prototype.trusted$U = function (){
  * Mark an object as frozen.
  *
  */
-Object.prototype.freeze = function (){
+Object.prototype.freeze = function() {
     this._FROZEN = true
 }
 
@@ -363,7 +367,7 @@ Object.prototype.freeze = function (){
  * @return {Boolean}
  *
  */
-Object.prototype.frozen$U  = function(){
+Object.prototype.frozen$U = function() {
     return this._FROZEN || false
 }
 
@@ -375,7 +379,7 @@ Object.prototype.frozen$U  = function(){
  * @param function_name
  * @return
  */
-Object.prototype.respond_to = function(function_name){
+Object.prototype.respond_to = function(function_name) {
     return typeof(this[function_name]) === "function"
 }
 /**
@@ -392,9 +396,9 @@ Object.prototype.alias("respond_to$U", "respond_to")
  * @param model
  * @return
  */
-Object.prototype.eql$U = function(model){
-    if (typeof(model) === "undefined" )
-	return false
+Object.prototype.eql$U = function(model) {
+    if (typeof(model) === "undefined")
+        return false
 
     /* End of support */
     return model.toSource() == this.toSource()
@@ -408,7 +412,7 @@ Object.prototype.eql$U = function(model){
  * @param model
  * @return
  */
-Object.prototype.equals = function(model){
+Object.prototype.equals = function(model) {
     return this == model
 }
 
@@ -423,9 +427,9 @@ Object.prototype.equals = function(model){
  *
  * @return {Object} Best representation for an object.
  */
-Object.prototype.value_of = function (){
-    if (this.respond_to("valueOf") )
-	return this.valueOf()
+Object.prototype.value_of = function() {
+    if (this.respond_to("valueOf"))
+        return this.valueOf()
     return this.toSource()
 }
 
@@ -436,9 +440,9 @@ Object.prototype.value_of = function (){
  * @param model
  * @return
  */
-Object.prototype.identic = function( model ){
+Object.prototype.identic = function(model) {
     if (model.respond_to("valueOf"))
-	return this.value_of() == model.valueOf()
+        return this.value_of() == model.valueOf()
     return this === model
 }
 
@@ -448,7 +452,7 @@ Object.prototype.identic = function( model ){
  *
  * @return
  */
-Object.prototype.to_s = function (){
+Object.prototype.to_s = function() {
     return this.toString()
 }
 
@@ -458,7 +462,7 @@ Object.prototype.to_s = function (){
  *
  * @return
  */
-Object.prototype.to_str = function (){
+Object.prototype.to_str = function() {
     return this.to_s()
 }
 
@@ -479,7 +483,7 @@ Object.prototype.to_str = function (){
  * @return {Boolean}
  */
 
-Object.prototype.is_a$U = function (clss){
+Object.prototype.is_a$U = function(clss) {
     return this instanceof clss
 }
 
@@ -489,7 +493,7 @@ Object.prototype.is_a$U = function (clss){
  *
  * @return
  */
-Object.prototype.alias( "kind_of$U", "is_a$U" )
+Object.prototype.alias("kind_of$U", "is_a$U")
 
 /**
  * @method kind_of$U
@@ -497,7 +501,7 @@ Object.prototype.alias( "kind_of$U", "is_a$U" )
  *
  * @return
  */
-Object.prototype.alias( "instance_of$U", "is_a$U" )
+Object.prototype.alias("instance_of$U", "is_a$U")
 
 /**
  * @method method_missing
@@ -519,37 +523,38 @@ Object.prototype.alias( "instance_of$U", "is_a$U" )
  * @param  {Object} obj   Scope of the method call
  * @param  {Array} params List of params of the method call
  */
-Object.prototype.method_missing = function (method, obj, params){
+Object.prototype.method_missing = function(method, obj, params) {
     var that = this
-    function bad_function(){
-	throw(new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name +". Params: " + params.join(', ') ))
-    }
 
-    function is_in(list, word){
-	var is = false
-	for (var i=0; i<list.length; i++)
-	if (list[i] == word)
-	    is = true
-	return is
-    }
+        function bad_function() {
+            throw (new MethodMissingError(method + " missing in " + obj + "::" + that.constructor.name + ". Params: " + params.join(', ')))
+        }
+
+        function is_in(list, word) {
+            var is = false
+            for (var i = 0; i < list.length; i++)
+                if (list[i] == word)
+                    is = true
+            return is
+        }
 
     obj = obj || ""
     params = params || []
 
-    if (/get_/.test(method)){
-	var attr = method.match(/get_(\w*)/)[1]
-	if (!is_in(eval("" + obj + ".attr_readers"), attr))
-	    bad_function()
-	return eval("" + obj + "." + attr)
+    if (/get_/.test(method)) {
+        var attr = method.match(/get_(\w*)/)[1]
+        if (!is_in(eval("" + obj + ".attr_readers"), attr))
+            bad_function()
+        return eval("" + obj + "." + attr)
     }
 
-    if (/set_/.test(method)){
-	var attr  = method.match(/set_(\w*)/)[1]
-	if (!is_in(eval("" + obj + ".attr_writers"), attr))
-	    bad_function()
-	var ob = eval("" + obj )
-	ob[attr] = params[0]
-	return ob[attr]
+    if (/set_/.test(method)) {
+        var attr = method.match(/set_(\w*)/)[1]
+        if (!is_in(eval("" + obj + ".attr_writers"), attr))
+            bad_function()
+        var ob = eval("" + obj)
+        ob[attr] = params[0]
+        return ob[attr]
     }
     //todo: Provide camel case getter and setters
     bad_function()
@@ -566,11 +571,11 @@ Object.prototype.method_missing = function (method, obj, params){
  *
  * @return
  */
-Object.prototype.merge = function(source){
+Object.prototype.merge = function(source) {
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
     var that = this
-    source.self_keys().each(function(key){
+    source.self_keys().each(function(key) {
         that[key] = source[key]
     })
     return this
@@ -584,11 +589,11 @@ Object.prototype.merge = function(source){
  * @param {Object} source Object to read from.
  * @return
  */
-Object.prototype.soft_merge = function(source){
+Object.prototype.soft_merge = function(source) {
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
     var that = this
-    source.self_keys().each(function(key){
+    source.self_keys().each(function(key) {
         that[key] = that[key] || source[key]
     })
     return this
@@ -601,17 +606,33 @@ Object.prototype.soft_merge = function(source){
  * @param {Object} source Object to read from.
  * @return
  */
-Object.prototype.override = function(source){
+Object.prototype.override = function(source) {
     if (!source.respond_to$U("self_keys"))
         throw "Invalid source. Impossible to merge."
     var that = this
-    source.self_keys().each(function(key){
+    source.self_keys().each(function(key) {
         if (that[key])
             that[key] = source[key]
     })
     return this
 }
 
+/**
+ * @method stop_enumeratng
+ * Make a property not enumerable.
+ *
+ * @param  {String | Array } methods List of methods/properties to be hidden.
+ */
+Object.prototype.stop_enumerating = function(methods) {
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            Object.prototype.stop_enumerating.apply(this, arguments[i])
+        else
+            Object.defineProperty(this, arguments[i], {
+                value: this[arguments[i]],
+                enumerable: false
+            })
+}
 
 /**
  * @method reflect
@@ -620,35 +641,34 @@ Object.prototype.override = function(source){
  *
  * @return
  */
-Object.reflect = function(){
+Object.reflect = function() {
     var result
     var return_value = {}
     var calling_class = eval(this.name)
 
-    function duplicate(original_method){
-        calling_class.prototype[original_method + "$B"] = function(){
-            var substitute = calling_class.prototype[original_method].apply(this, arguments)
+        function duplicate(original_method) {
+            calling_class.prototype[original_method + "$B"] = function() {
+                var substitute = calling_class.prototype[original_method].apply(this, arguments)
 
-            //this.clear()
-            for (var i=0; i<substitute.length; i++)
-            this[i] = substitute[i]
+                //this.clear()
+                for (var i = 0; i < substitute.length; i++)
+                    this[i] = substitute[i]
 
-            return this
+                return this
+            }
+            return [original_method + "$B", calling_class.prototype[original_method + "$B"]]
         }
-        return [ original_method + "$B", calling_class.prototype[original_method + "$B"] ]
-    }
 
-    for(var i=0; i<arguments.length; i++)
-    if (arguments[i] instanceof Array)
-        for(var j=0; j<arguments[i].length; j++){
-            result = duplicate(arguments[i][j])
-            return_value[result[0]] = result[1]
-        }
-        else {
-            result = duplicate(arguments[i])
-            return_value[result[0]] = result[1]
-        }
-        return return_value
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j < arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+                result = duplicate(arguments[i])
+                return_value[result[0]] = result[1]
+            }
+    return return_value
 
 }
 
@@ -669,7 +689,6 @@ Object.reflect = function(){
 Object.bang_methods = ["merge", "soft_merge", "override"]
 Object.reflect(Object.bang_methods)
 
-delete(Object.reflect)
 
 /**
  * @method own_keys
@@ -679,7 +698,7 @@ Object.prototype.alias("own_keys", "self_keys")
 
 /* Non enumerable properties */
 
-var $$_$$ = [ "to_a", "alias", "inspect", "own_keys",
+Object.prototype.stop_enumerating(["to_a", "alias", "inspect", "own_keys",
     "plain", "clone", "eql$U", "taint", "untaint", "tainted$U", "trust",
     "untrust", "untrusted$U", "trusted$U", "freeze", "frozen$U",
     "equals", "eql$U", "identic",
@@ -689,17 +708,18 @@ var $$_$$ = [ "to_a", "alias", "inspect", "own_keys",
     "merge", "merge$B",
     "keys", "self_keys", "respond_to", "respond_to$U",
     "soft_merge", "soft_merge$B", "override", "override$B",
-    "method_missing"
-]
+    "method_missing", "stop_enumerating"
+])
 
-for (var i=0; i<$$_$$.length; i++)
-   Object.defineProperty(Object.prototype, $$_$$[i], { enumerable: false })
+Object.stop_enumerating("reflect")
 
-delete($$_$$)
 
+// remove value property. Now is widely used by Harmony.
 /* Value property has to be defined at the end, as long as
  * it is used by defined property */
-Object.defineProperty( Object.prototype, "value", { value: function (){
-    return this.value_of()
-}, enumerable: false })
-
+Object.defineProperty(Object.prototype, "value", {
+    value: function() {
+        return this.value_of()
+    },
+    enumerable: false
+})

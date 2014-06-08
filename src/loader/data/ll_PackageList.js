@@ -16,16 +16,17 @@
  *    }
  */
 
+
+PackageList.prototype = new AutoHash
+PackageList.prototype.constructor = PackageList
 /**
  * @method constructor
  *
  */
-PackageList.prototype = new AutoHash
-PackageList.prototype.constructor = PackageList
-
 function PackageList() {
 
 }
+
 
 /**
  * @method to_a
@@ -33,22 +34,25 @@ function PackageList() {
  *
  * @return {Array} List with all packages.
  */
-Object.defineProperty(PackageList.prototype, "to_a", {
-        value: function() {
-            var packages = []
-            for (var i in this)
-                packages.push(this[i])
-            return packages
-        },
-        enumerable: false
-    }
+PackageList.prototype.to_a = function() {
+    var packages = []
+    for (var i in this)
+        packages.push(this[i])
+    return packages
 }
+PackageList.prototype.stop_enumerating("to_a")
 
-Object.defineProperty(PackageList.prototype, "add", {
-    value: function(package) {
-        if (!package["package"])
-            throw "Can't find package name."
-        this[package["package"]] = package
-    },
-    enumerable: false
-})
+
+/**
+ * @method add
+ * Adds a package to the package list.
+ *
+ * @param  {Object} package    A Hash with package attribute
+ *                             containing the name of the package.
+ */
+PackageList.prototype.add = function(package) {
+    if (!package["package"])
+        throw "Can't find package name."
+    this[package["package"]] = package
+}
+PackageList.prototype.stop_enumerating("add")

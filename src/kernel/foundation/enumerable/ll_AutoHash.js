@@ -21,6 +21,8 @@
  *     // => "Me"
  */
 
+AutoHash.prototype = new Hash
+AutoHash.prototype.constructor = AutoHash
 /**
  * @method constructor
  *
@@ -37,7 +39,7 @@ function AutoHash(intial_data, block) {
             block = function() {};
 
     var that = this
-    this.data = new ଳHashData()
+    this.data = newଳ HashData()
 
     if (initial_data && typeof(initial_data) !== "function")
         this.data.merge$B(initial_data)
@@ -55,16 +57,3 @@ function AutoHash(intial_data, block) {
         return that.data[id]
     }
 }
-
-/**
- * @method each
- * Iterates over the data attributes rather than this ones.
- */
-Object.defineProperty(AutoHash.prototype, "each", {
-    value: function() {
-        for (var i in this.data)
-            if (this.data.hasOwnProperty(i))
-                AutoHash.prototype.each.yield(i, this[i])
-    },
-    enumerable: false
-})
