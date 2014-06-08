@@ -366,11 +366,13 @@ ctx.lineTo(275,125)
 */
   ctx.closePath()
   ctx.stroke()
-/*
-ctx.moveTo(347,200)
-ctx.arc(275,200 ,71 , 0, Math.PI*2, false)
-ctx.stroke()
-*/
+
+  if(escenario == 5){
+    ctx.moveTo(347,200)
+    ctx.arc(275,200 ,71 , 0, Math.PI*2, false)
+    ctx.stroke()
+  }
+
   this.get_boids().each( function(el) {
     el.draw(ctx)
   })

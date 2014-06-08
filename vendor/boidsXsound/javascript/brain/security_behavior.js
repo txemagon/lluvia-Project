@@ -40,7 +40,7 @@ ContainmentBehavior.prototype.desired_acceleration = function(){
 
   for(var i=0; i<path.length; i++){
     if(Line.intersects_segment$U(path[i],l2))
-      return new Vector(path[i].get_normal()).scale(100)
+      return new Vector(path[i].get_normal()).scale(200)
 }
   return new Vector(0,0)
 }

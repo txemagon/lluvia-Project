@@ -50,7 +50,7 @@ function Boid(config_object, block){
                 brain: new Brain(that),
                 vel_max: 20,
                 vel_min: 5, 
-                cruising_speed: 10,
+                cruising_speed: 40,
                 mass: 20,
                 vision: {radius: 100, angle: 140 * Math.PI / 180},
 

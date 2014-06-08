@@ -31,6 +31,7 @@ function Nanobot(geo_data, color,level_emotion, wave_lenght, gender){
     that.replying = false
     that.word_reply = ""
     that.visible_object = []
+    that.example = false
 /*
     that.head = that
     that.body = []
@@ -194,30 +195,30 @@ Nanobot.prototype.analyze_msg = function(){
 */
 Nanobot.prototype.analyze_sound = function(){ // Mirar esta parte xq despues de las ultimas cuatro lineas no hace falta las mitad de las cosas
   var baremo = 3000
+  if(!this.example){
+    if(this.array_frequency.length > 0){
+      if(this.level_emotion < 100 || this.array_frequency[0] < 0){
+        if(this.array_frequency[0] >= baremo){
+          this.level_emotion += 0.1
+          this.array_frequency.shift()
+        }
+        else{
+          this.level_emotion -= 0.1
+          this.array_frequency.shift()
+        }
+      }
+      else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
+        this.array_frequency.length = 0
+      }
+    }
+    else if(this.level_emotion >= 50.0){
+      this.level_emotion -= 0.1
+    }else if(this.level_emotion < 50.0)
+      this.level_emotion += 0.1
 
-  if(this.array_frequency.length > 0){
-    if(this.level_emotion < 100 || this.array_frequency[0] < 0){
-      if(this.array_frequency[0] >= baremo){
-        this.level_emotion += 0.1
-        this.array_frequency.shift()
-      }
-      else{
-        this.level_emotion -= 0.1
-        this.array_frequency.shift()
-      }
-    }
-    else if(this.level_emotion >= 100 && this.array_frequency[0] > 0){
-      this.array_frequency.length = 0
-    }
+    if(this.level_emotion < 0)
+      this.level_emotion = 0
   }
-  else if(this.level_emotion >= 50.0){
-    this.level_emotion -= 0.1
-  }else if(this.level_emotion < 50.0)
-    this.level_emotion += 0.1
-
-  if(this.level_emotion < 0)
-    this.level_emotion = 0
-
 }
 
 Nanobot.prototype.analyze_level_emotion = function(){
