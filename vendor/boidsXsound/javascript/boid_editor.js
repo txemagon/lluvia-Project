@@ -174,25 +174,6 @@ function BoidEditor(view){
       do_onmouseout  : function(){ conga.style.fontSize = "15px" }
     })
 
-    that.newGate("tag", Gate, {
-      do_onclick     : function(){  var original_vision = actual_boid.wave_lenght
-                                    actual_boid.wave_lenght = 100000
-                                    var array_boids = actual_boid.audible_objects()
-                                    actual_boid.wave_lenght = original_vision
-                                    var first = actual_boid 
-                                    
-                                    for(var i=0; i<array_boids.length; i++){
-                                      
-                                        array_boids[i].brain.activate('pursue', first)
-                                     // else
-                                     //   array_boids[i].brain.activate('seek', first)
-                                    }
-                                    first.brain.activate(flee, array_boids[1])
-                                },
-      do_onmouseover : function(){ tag.style.fontSize = "18px" },
-      do_onmouseout  : function(){ tag.style.fontSize = "15px" }
-    })
-
     that.newGate("button_orders", Gate, {
       do_onclick     : function(){ text_lcd2.style.visibility       = "hidden"
                               nanobot_buttons.style.visibility = "hidden"

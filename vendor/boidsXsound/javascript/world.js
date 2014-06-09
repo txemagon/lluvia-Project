@@ -301,7 +301,7 @@ World.prototype.draw = function(){
   var ctx = this.screen[0].context
   ctx.clearRect(0,0,550,400)
   ctx.beginPath()
- /*
+if(escenario == 7){
  // Cuadrado1  
   ctx.moveTo(75,75)
   ctx.lineTo(175,75)
@@ -333,7 +333,7 @@ ctx.lineTo(225,200)
 ctx.lineTo(275,275)
 ctx.lineTo(325,200)
 ctx.lineTo(275,125)
-*/
+}
 
 /*
 ctx.moveTo(275,125)
@@ -353,7 +353,8 @@ ctx.lineTo(328,253)
 ctx.lineTo(222,253)
 ctx.lineTo(222,147)
 */
-/*
+
+if(escenario == 6){
 ctx.moveTo(275,125)
 ctx.lineTo(328,147)
 ctx.lineTo(350,200)
@@ -363,10 +364,10 @@ ctx.lineTo(222,253)
 ctx.lineTo(200,200)
 ctx.lineTo(222,147)
 ctx.lineTo(275,125)
-*/
+
+}
   ctx.closePath()
   ctx.stroke()
-
   if(escenario == 5){
     ctx.moveTo(347,200)
     ctx.arc(275,200 ,71 , 0, Math.PI*2, false)

@@ -17,7 +17,7 @@ function Speaker(geo_data, wave_lenght, src){
 	function initialize(){
 		that.image = new Image()
 		that.image.src = src || "images/altavoz.png"
-		that.wave_lenght = wave_lenght || 1000
+		that.wave_lenght = wave_lenght || 300
 		that.wave_aux = 0
 		that.this_on = false
     that.array_frequency = []

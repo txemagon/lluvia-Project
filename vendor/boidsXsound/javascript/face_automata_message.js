@@ -71,9 +71,12 @@ function FaceAutomataMessage(processor, gate) {
 }
 
 FaceAutomataMessage.prototype.draw_message = function(){
+		cxt.beginPath();
+	cxt.arc(75, 75 ,74 , 0, Math.PI*2, false); 
+	cxt.stroke();
 	cxt.font = '25px sans-serif';
 	cxt.fillText("Select a", 25, 70);
-	cxt.fillText("nanorobot", 10, 90);
+	cxt.fillText("nanobot", 23, 95);
 }
 
 FaceAutomataMessage.prototype.erase_message = function(){
