@@ -1,0 +1,41 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{3}
+\contentsline {section}{\numberline {2}Antecedentes}{4}
+\contentsline {section}{\numberline {3}An\IeC {\'a}lisis}{5}
+\contentsline {subsection}{\numberline {3.1}El mundo}{5}
+\contentsline {subsection}{\numberline {3.2}Nanobot}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}Caracter\IeC {\'\i }sicas b\IeC {\'a}sicas}{6}
+\contentsline {subsubsection}{\numberline {3.2.2}Visi\IeC {\'o}n}{7}
+\contentsline {subsubsection}{\numberline {3.2.3}Audici\IeC {\'o}n}{7}
+\contentsline {subsubsection}{\numberline {3.2.4}Sistema de comportamientos}{7}
+\contentsline {paragraph}{Comportamientos individuales}{8}
+\contentsline {subsubsection}{\numberline {3.2.5}Toma de decisiones}{9}
+\contentsline {subsubsection}{\numberline {3.2.6}Comunicaci\IeC {\'o}n oral}{9}
+\contentsline {subsubsection}{\numberline {3.2.7}Nivel de estr\IeC {\'e}s }{10}
+\contentsline {subsection}{\numberline {3.3}Speaker}{10}
+\contentsline {subsection}{\numberline {3.4}Flujo de trabajo de la aplicaci\IeC {\'o}n}{10}
+\contentsline {section}{\numberline {4}Dise\IeC {\~n}o}{12}
+\contentsline {subsection}{\numberline {4.1}Metodolog\IeC {\'\i }a de desarrollo}{12}
+\contentsline {subsection}{\numberline {4.2}Tecnolog\IeC {\'\i }a utilizada}{13}
+\contentsline {subsection}{\numberline {4.3}Clases principales de la aplicaci\IeC {\'o}n}{13}
+\contentsline {subsubsection}{\numberline {4.3.1}World}{13}
+\contentsline {subsubsection}{\numberline {4.3.2}Boid}{14}
+\contentsline {subsubsection}{\numberline {4.3.3}Nanobot}{14}
+\contentsline {subsubsection}{\numberline {4.3.4}Speaker}{15}
+\contentsline {subsubsection}{\numberline {4.3.5}World interface}{15}
+\contentsline {subsubsection}{\numberline {4.3.6}Boid editor}{16}
+\contentsline {subsubsection}{\numberline {4.3.7}Brain}{16}
+\contentsline {subsubsection}{\numberline {4.3.8}Beahavior}{16}
+\contentsline {subsubsection}{\numberline {4.3.9}Separation}{17}
+\contentsline {subsubsection}{\numberline {4.3.10}Cohesion}{17}
+\contentsline {subsubsection}{\numberline {4.3.11}Alignment}{17}
+\contentsline {subsubsection}{\numberline {4.3.12}Containment}{17}
+\contentsline {subsubsection}{\numberline {4.3.13}Seek}{18}
+\contentsline {subsubsection}{\numberline {4.3.14}Flee}{18}
+\contentsline {subsubsection}{\numberline {4.3.15}Pursue}{18}
+\contentsline {subsubsection}{\numberline {4.3.16}Wander}{18}
+\contentsline {subsubsection}{\numberline {4.3.17}Line}{19}
+\contentsline {subsubsection}{\numberline {4.3.18}Stringhline}{19}
+\contentsline {subsection}{\numberline {4.4}Funcionamiento detallado de la aplicaci\IeC {\'o}n}{19}
+\contentsline {subsection}{\numberline {4.5}Descripci\IeC {\'o}n de la interface}{20}
+\contentsline {section}{\numberline {A}El Interfaz}{21}

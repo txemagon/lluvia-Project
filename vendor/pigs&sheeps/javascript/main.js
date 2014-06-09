@@ -1,41 +1,22 @@
 var game    = null
-var world   = null
 var play    = null
 var $logger = null
 
+var levels_in=0
+var menu_desplegable = document.getElementById('menu')
 
-function start_game(){
-	var start_button = document.getElementById('main_screen')
-	start_button.style.display = 'none';
 
-    try{
-	var sheep = world.new_boid_as_sheep(function(boid, config){
-		config.colour = "pink" 
-		config.geo_data = {  
-		   position: new Vector(350, 250),
-		   velocity: new Vector(0, 0),
-		   acceleration: new Vector(0, 0) 
-		}
-		return config 
-	  })
-     } catch(err) {
-     	// Catch the dynamic call and raise it to method_missing()
-     	throw err
-     } finally{
-     	// Keep on after method_missing
-       world.start()
-     }
+function main(){
+	var menu_handler = new MenuHandler("menu")
+
+	game        = new GameControl('screener')
+	var menu_handler = new MenuHandler("menu")
+	var option_handler = new OptionHandler("level_option_container")
+	option_handler.addPort("keep_menu_out", menu_handler)
+
+
+
+	var maker = new Galactus( menu_handler, 'screener')
 }
 
-function main(){ 
-   $logger = new $Logger()
-   world   = new World('screener')
-   game    = new GameControl('screener')
 
-
-   play = new Button("play_button",  { onclick: function(event, element){
-      start_game()
-   } })
-  
-}
- 

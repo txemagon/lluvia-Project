@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title id="aux">Boids</title>
+        <script type="text/javascript" src="javascript/escenario.js" ></script>
+        <script type="text/javascript" src="javascript/dependencies.js" ></script>
+        <script type="text/javascript" src="../../src/lluvia.js" ></script>
+        <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
+    </head>
+    <body onload="bringLLuvia(), escenario = 6;">
+        <div id="heading"></div>>
+        <div id="container">
+            <div id="sub-contaniner1">
+                <div id="face_canvas" class="Panel">
+                    <canvas id="face" width="150" height="150"> </canvas>
+                </div>
+                <div id="boid_list_content" class="Panel">
+                    <div id="chip_parte_alta"></div>
+                    <div id="chip_parte_media">
+                        <div id="text_lcd"></div>
+                    </div>
+                    <div id="chip_parte_baja"></div>
+                </div>
+            </div>
+            <div id="sub-contaniner2">
+                <div id="canvas" class="Panel">
+                    <canvas id="screener" width="550" height="400"> </canvas>
+                </div>
+            </div>
+            <div id="sub-contaniner3">
+                <div id="boid_properties" class="Panel">
+                    <div id="properties_up"></div>
+                    <div id="properties_center">
+                        
+                        <div id="text_lcd2"></div>
+
+                        <div id="speaker_buttons">  <br>
+                            <img id="button_on" src="images/button_play.png">
+                            <img id="button_off" src="images/button_stop.png">
+                            <img id="button_previous_track" src="images/button_previous.png">
+                            <img id="button_next_track" src="images/button_next.png">
+                            <img id="button_plus" src="images/button_plus2.png">
+                            <img id="button_less" src="images/button_less2.png">
+                        </div>
+                        <div id="nanobot_buttons">  <br>
+                            <img id="button_talk" src="images/talk.png">
+                            <img id="button_games" src="images/button_games.png">
+                            <img id="button_orders" src="images/button_orders.png">
+                        </div>
+
+                        <div id="talk_options"> <br>
+                            <div id="talk_initial_msg"></div>
+                            <div id="greet_button"></div>
+                            <div id="teach_button"></div>
+                            <div id="joke_button"></div>
+                            <div id="argue_button"></div>
+                            <div id="insult_button"></div>
+                            <div id="threaten_button"></div>
+                            <img id="back_button" src="images/button_back.png">
+                        </div>
+
+                        <div id="orders_options"> <br>
+                            <div id="orders_initial_msg"></div>
+                            <div id="follow_me_button"></div>
+                            <div id="go_away_button"></div>
+                            <img id="back_button_orders" src="images/button_back.png">
+                        </div>
+
+                        <div id="games_options"> <br>
+                            <div id="games_initial_msg"></div>
+                            <div id="ring_around_the_rosey"></div>
+                            <div id="conga"></div>
+                            <img id="back_button_games" src="images/button_back.png">
+                        </div>
+                    </div>
+                    <div id="properties_down"></div>
+                </div>
+            </div>
+                <div id="canvas_sound_body">
+                    <div id="canvas_sound_left"></div>
+                    <div id="canvas_sound_center"></div>
+                    <canvas id="canvas_sound" width="500" height="137"> </canvas> 
+                    <div id="canvas_sound_right"></div>
+                </div>
+        </div>
+    </body>
+</html>

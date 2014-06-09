@@ -1542,6 +1542,7 @@ String.prototype.bytesize = function(){
 
 /**
  * @method is_string$U
+ * @static
  *
  * @param  {string | String} name
  * @return {boolean}      true if name is any kind of string

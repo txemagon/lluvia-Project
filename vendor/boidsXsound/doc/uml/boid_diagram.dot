@@ -1,0 +1,103 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+                style= "rounded"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+                dir = "back"
+                arrowhead = "empty"
+        ]
+
+        Boid [
+                label = "{Boid| brain : Brain \n \
+                                last_heading : Vector \n \
+                                geo_data : GeoData \n \
+                                vel_max : Number\n \
+                                my_world : void*\n \
+                                last_time : Date\n \
+                                current_time : Date\n \
+                                colour : String\n \
+                                mass : Number\n \
+                                vision : Number\n \
+                                vel_max : Number\n \
+                                force_limits : ForceLimits\n \
+                              |\
+                                position() : Vector\n \
+                                velocity() : Vector\n \
+                                acceleration() : Vector\n \
+                                star(Date) : void\n \
+                                delta_t() : Number\n \
+                                update_physics(Date) : void\n \
+                                run(Date) : void\n \
+                                draw(Canvas) : void\n \
+                                heading() : Vector\n \
+                                locale() : Vector\n \
+                                globale() : Vector\n \
+                                localize() : Vector\n \
+                                globalize() : Vector\n \
+                                visible_objects() : Array\n \
+                                requested_acceleration() : Vector\n \
+                                clip() : Vector\n \
+                                set_target(Boid) : Boid\n \
+                                target_data() : GeoData\n \
+                        }"
+        ]
+
+        Nanobot [
+        		label = "{Nanobot| stress_level : Number \n \
+                                           wave_lenght :  Number\n \
+                                           wave_aux : Number \n \
+                                           talking : Boolean \n \
+                                           is_listening : Boolean \n \
+                                           array_frequency : Array \n \
+                                           visible_objects : Array \n \
+                                           array_msg : Array \n \
+                                           word_msg : String \n \
+                                           replying : Boolean \n \
+                                           world_reply : String \n \
+                                        |\
+                                            audible_objects() : Array \n \
+                                            set_frequency(Number) : void \n \
+                                            talk(String) : void \n \
+                                            set_msg(Object) : void \n \
+                                            analyze_msg() : void \n \
+                                            analyze_sound : void \n \
+                                            listen() : void \n \
+                                            run(Date) : void \n \
+                                            draw(Canvas) : void \n \
+                        }"
+        ]
+
+        Speaker [
+                        label = "{Speaker| image : Image \n \
+                                           wave_lenght : Number \n \
+                                           wave_aux : aux \n \
+                                           this_on : Boolean \n \
+                                           frequency : Number \n \
+                                           array_frequency : Array \n \
+                                        |\
+                                            on() : void \n \
+                                            off() : void \n \
+                                            volume_up(Number) : void \n \
+                                            volume_down(Number) : void \n \
+                                            get_wave_length() : Number \n \
+                                            get_frequency_music() : Number \n \
+                                            set_frequency_music() : void \n \
+                                            audible_objects() : Array \n \
+                                            nanobot_is_listening() : void \n \
+                                            run(Date) : void \n \
+                                            draw(Canvas) \n \
+                                 }"
+        ]
+
+        Boid -> Nanobot 
+        Boid -> Speaker
+}

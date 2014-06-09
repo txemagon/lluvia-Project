@@ -1,0 +1,139 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+                style= "rounded"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+                dir = "back"
+                arrowhead = "empty"
+        ]
+
+        Behavior [label = "{Behavior| before : Array \n \
+                                      after : Array \n \
+                                      brain : Brain \n \
+                                      me :  void* \n \
+                                      target : Boid \n \
+                                      before_modifier : String \n \
+                                      after_modifier : String \n \
+                                    |\
+                                      decompose_name(String) : Array \n \
+                                      new(Brain, String, Boid) : Function \n \
+                                      type_of(String) : Function \n \
+                                      is_a$U(String) : Boolean \n \
+                                      desired_acceleration() : Vector \n \
+                                      is_premodified_by$U(String) : Booelan \n \
+                                      is_postmodified_by$U(String) : Boolean \n \
+                                      is_modified_by$U(String) : Boolean \n \
+                                      get_modifiers_for(Number) : Array \n \
+                                      all_modifiers() : Array \n \
+                                      activate_modifier(String, Number) : void \n \
+                                      get_modifier(String, Number) : String \n \
+                        }"
+        ]
+
+        Separation_behavior [
+            label = "{Separation Behavior|  x : Number \n \
+                                            y : Number \n \
+                                            count : Number \n \
+                                         |\
+                                            desired_acceleration() : Vector \n \
+                        }"
+        ]
+
+        Cohesion_behavior [
+            label = "{Cohesion Behavior|  x : Number \n \
+                                          y : Number \n \
+                                          count : Number \n \
+                                         |\
+                                          desired_acceleration() : Vector \n \
+                        }"
+        ]
+
+        Alignment_behavior [
+            label = "{Alignment Behavior|  x : Number \n \
+                                           y : Number \n \
+                                           count : Number \n \
+                                         |\
+                                           desired_acceleration() : Vector \n \
+                        }"
+        ]
+
+        Containment_behavior [
+            label = "{Containment Behavior| p : Vector \n \
+                                            v : Vector \n \
+                                            path : Array \n \
+                                         |\
+                                            desired_acceleration() : Vector \n \
+                        }"
+        ]
+
+        Flee_behavior [
+            label = "{Flee Behavior| \n \
+                                   |\
+                                    set_target(Boid) : void \n \
+                                    target_data() : Boid \n \
+                                    get_target() : Vector \n \
+                                    target_at() : Vector \n \
+                                    desired_velocity() : Vector \n \
+                                    desired_acceleration() : Vector \n \
+                        }"
+        ]
+
+        Pursue_behavior [
+            label = "{Pursue Behavior| X : Number \n \
+                                     |\
+                                       set_target() : \n \
+                                       target_data() : Vector\n \
+                                       get_target() : Vector\n \
+                                       target_at() : Vector\n \
+                                       desired_velocity() : Vector\n \
+                                       desired_acceleration() :  Vector\n \
+                        }"
+        ]
+
+        Seek_behavior [
+            label = "{Seek Behavior| approach_distance : Number \n \
+                                     |\
+                                       set_target() : \n \
+                                       target_data() : Vector\n \
+                                       get_target() : Vector\n \
+                                       target_at() : Vector\n \
+                                       desired_velocity() : Vector\n \
+                                       desired_acceleration() :  Vector\n \
+                        }"
+        ]
+
+        Wander_behavior [
+            label = "{Wander Behavior| target : Boid \n \
+                                       D : Number \n \
+                                       R : Number \n \
+                                       theta : Number \n \
+                                     |\
+                                       get_update_target_function() : Function\n \
+                                       initiate_updates() : void\n \
+                                       target_at() : Vector\n \
+                                       desired_velocity() : Vector\n \
+                                       desired_acceleration() :  Vector\n \
+                        }"
+        ]
+
+        Behavior -> Separation_behavior
+        Behavior -> Cohesion_behavior
+        Behavior -> Alignment_behavior
+        Behavior -> Containment_behavior
+        Behavior -> Flee_behavior
+        Behavior -> Pursue_behavior
+        Behavior -> Seek_behavior
+        Behavior -> Wander_behavior
+
+
+
+}

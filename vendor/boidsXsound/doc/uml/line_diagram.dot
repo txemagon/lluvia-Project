@@ -1,0 +1,46 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+                style= "rounded"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+                dir = "back"
+                arrowhead = "empty"
+        ]
+
+        Line [
+                label = "{Line| Error : Number \n \
+                              |\
+                                distance() : Number\n \
+                                get_intersection() : Vector\n \
+                                intersects$U() : boolean\n \
+                                intersects_segment$U() Vector: \n \
+                                slope_line() : Number\n \
+                        }"
+        ]
+
+        StraightLine [
+        		label = "{StraightLine| initial_point : Vector \n \
+                                        director : Vector \n \
+                                        |\
+                                        get_initial_point() : Vector\n \
+                                        get_final_point() :  Vector\n \
+                                        at() :  Vector\n \
+                                        get_tangent() : Vector\n \
+                                        get_normal() :  Vector\n \
+                                        get_arc_length() : Number\n \
+                                        belongs_to$U() : boolean\n \
+                                        get_perpendicular() : StraightLine\n \
+                        }"
+        ]
+
+        Line -> StraightLine 
+}

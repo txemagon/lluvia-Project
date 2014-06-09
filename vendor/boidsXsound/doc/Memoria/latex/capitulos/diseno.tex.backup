@@ -1,0 +1,168 @@
+\section{Diseño}
+\label{section:diseno}
+
+\subsection{Metodología de desarrollo}
+\label{sec:metodologia_desarrollo}
+Para el desarrollo de la aplicacion se utilizo el desarrollo guiado por pruebas de software, o Test-driven development (TDD)[Figura 6]. Sus dos reglas principales son:
+\begin{itemize}
+ \item Escribir las pruebas primero.
+ \item Refactorización.
+\end{itemize}
+
+Para escribir las pruebas se utilizaron pruebas unitarias. En primer lugar, se escribe una prueba y se verifica que las pruebas fallan. A continuación, se implementa el código que hace que la prueba pase satisfactoriamente y seguidamente se refactoriza el código escrito. El propósito del desarrollo guiado por pruebas es lograr un código limpio que funcione. La idea es que los requisitos sean traducidos a pruebas, de este modo, cuando las pruebas pasen se garantizará que el software cumple con los requisitos que se han establecido.
+
+Una ventaja de esta forma de programación es el evitar escribir código innecesario. Se intenta escribir el mínimo código posible, y si el código pasa una prueba aunque sepamos que es incorrecto nos da una idea de que tenemos que modificar nuestra lista de requerimientos agregando uno nuevo.
+
+La generación de pruebas para cada funcionalidad hace que el programador confíe en el código escrito. Esto permite hacer modificaciones profundas del código pues sabemos que si luego logramos hacer pasar todas las pruebas tendremos un código que funcione correctamente.
+
+Otra característica del desarrollo guiado por pruebas de software es que requiere que el programador primero haga fallar los casos de prueba. La idea es asegurarse de que los casos de prueba realmente funcionen y puedan recoger un error.
+
+A pesar de los elevados requisitos iniciales de aplicar esta metodología, el desarrollo guiado por pruebas (TDD) puede proporcionar un gran valor añadido en la creación de software, produciendo aplicaciones de más calidad y en menos tiempo. Ofrece más que una simple validación del cumplimiento de los requisitos, también puede guiar el diseño de un programa. Centrándose en primer lugar en los casos de prueba uno debe imaginarse cómo los clientes utilizarán la funcionalidad (en este caso, los casos de prueba). Por lo tanto, al programador solo le importa la interfaz y no la implementación. Esta ventaja es similar al diseño por convenio pero se parece a él por los casos de prueba más que por las aserciones matemáticas.
+
+
+\subsection{Tecnología utilizada}
+\label{sec:tecnologia_utilizada}
+\
+Para la codificación de la aplicacion se utilizará el Framework de desarrollo Lluvia basado en el lenguaje de programación JavaScript. 
+
+Lluvia es una API Open Source que incorpora gran parte de las funciones nativas de Ruby. Soporta multihilo a pequeña escala y provee de un sistema de mensajería asíncrono gestionado por señales. 
+
+En Lluvia los Devices son los encargados de proporcionar el mecanismo asincrono de comunicacion. Estan preparados para disparar eventos y recibir mensajes de otros Devices, estos mesajes se almacenan en una cola de mensajes para que sean procesados cuando llege su turno. A efectos practicos, cada Device se comporta como una aplicacion independiente del resto.
+
+Para gestionar los eventos del DOM de HTML se utilizan los Gates de Lluvia que estan capacitados para mantener el campo de visibilidad del objeto. 
+
+La conjunción de los Devices y los Gates proporciona un metodo dinamico y agil para la creacion de aplicaciones web. 
+\subsection{Clases principales de la aplicación}
+\label{sec:clases_principlaes}
+
+\subsubsection{World}
+\label{sec:world}
+La clase World deriva de Device y es la encargada de generar el mundo donde coexisten los nanobots y speakers. Es necesario indicarle el canvas(elemento HTML incorporado en HMTL5 que permite la generación de gráficos dinámicamente por medio del scripting) donde se realizará la representación gráfica y optativo el ancho y largo del mismo. 
+
+En la clase World se almacena un array con todos los nanobot y speakers que se hayan generado  para su facil manipulacion. Para ir almacenandolos se llama al metodo has\_born() que se encarga almacenar el boid creado y disparar el evento new\_boid.
+
+Dispone de un método run() que es llamado cada cierto tiempo para su ejecución. En el  se actualiza el tiempo del procesador y se pinta el mundo.
+
+Se dispone del método new\_boid\_of() para crear nuevos boids de la clase que se desee. Para la llamada del método es posible pasarle en los argumentos el tipo de entidad que se quiere crear(boid, nanobot o speaker) y un bloque. En el bloque se puede pasar una configuración inicial de la entidad para darle valores iniciales.
+
+Los métodos visible\_for() y audible\_for() permiten comprobar que se puede ver o escuchar desde determinado lugar del mundo, estos métodos son llamados desde los nanobots o speakers para saber que pueden ver u oír desde su posición. Se consideró que este método era más adecuado integrarlo en el mundo en vez de en el nanobot o boid para tener la posibilidad de saber que se puede ver en algún lugar del mundo sin la necesidad de que allí esté situado un nanobot.
+
+La clase World es capaz de atender al evento focus\_boid que se encarga de saber si un nanobot esta resaltado y poder dibujar en pantalla información adicional sobre su velocidad y aceleración.
+
+Por último, dispone de los clásicos métodos para poder acceder de manera segura a distintas variables de la clase.
+
+\subsubsection{Boid}
+\label{sec:boid}
+La clase boid es clase padre tanto de nanobot como de speaker. Es la encargada de dotarlos de unas propiedades básicas idénticas para ambas clases hijas.
+ 
+Un boid se puede definir con un objeto de configuración capaz de sobrescribir todos los  valores por defecto de los atributos.
+
+Se crea un objeto donde se almacena toda la información de la posicion, velocidad y aceleración del boid, este objeto se llama geo\_data. Además, se dota al boid de una masa, color, visión y cerebro por defecto.
+ 
+Se crea un puntero al mundo donde vivirá, especialmente útil para poder utilizar los metodos visible\_for() y audible\_for() de la clase world.
+
+También se crean tres variables de calcular las fuerzas limites de cada boids: thrust, steering, braking (aceleración, ángulo de giro y frenado).
+ 
+Dispone de un metodo run() que es llamado cada x tiempo para poder actualizar su aceleración en función de la media de todas las aceleraciones que devuelvan los comportamientos activos, además de, actualizar su tiempo actual.
+ 
+El método clip() se encarga de adecuar la aceleración y velocidad actual para que se cumplan las fuerzas limite de cada boid. Si se pasa de aceleración o velocidad aqui se vuelve al estado anterior de dicha magnitud.
+ 
+Por último, dispone de los clásicos métodos para poder acceder de manera segura a distintas variables de la clase.
+
+\subsubsection{Nanobot}
+\label{sec:nanobot}
+
+La clase nanobot deriva de la clase boid y es la encargada de crear nuevos nanobot en el mundo.
+ 
+Para su creación es necesario pasarle un bloque de configuración que este a su vez pasará a la clase padre para asignarle los valores. Además, se crea un nivel de estrés, un radio para la longitud que alcanzara el habla del nanobot, un array de frecuencias donde se almacenarán todas las frecuencias que vaya escuchando el nanobot y un array de objetos visibles.
+ 
+El nanobot es capaz de comunicarse con otros por medio de su método talk(). Para realizar la comunicación se comprobará quien puede escuchar y a todos los nanobot que estén a la escucha se le mandara un mensaje con set\_msg(). Dicho mensaje se trata de un objeto compuesto por la palabra que se quiere comunicar y un puntero al nanobot emisor. Los mensajes según llegan al receptor se guardan en un array de mensajes para poder leerlos de manera asíncrona y no perder información. A la hora de analizar dichos mensajes, en analyze\_msg(), se comprueba cual es la palabra que se pasa en el mensaje y en función de su contenido se ejecuta unas instrucciones u otras. 
+
+Hay instrucciones que son órdenes que activan comportamientos directamente, para estas es necesario tener un objetivo para el comportamiento, para ello se utiliza el puntero al emisor. A la hora de crear la réplica se elegirá al azar de un array de réplicas que existen para cada caso.
+ 
+El nanobot es capaz de recibir frecuencias, con el metodo set\_frequency(), de una onda de sonido. En el método analyze\_sound() se comprobara el valor de la frecuencia y en funcion de su valor aumentara o disminuirá el nivel de estrés del nanobot. Ese nivel de estrés,
+TERMINAR LO DEL ESTRES!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+El método listen() encapsula todo lo relacionado con el sistema auditivo del nanobot.
+
+\subsubsection{Speaker}
+\label{sec:speaker}
+
+La clase speaker deriva de la clase Boid y es la encargada de crear nuevos speakers en el mundo.
+
+Para su creación es necesario pasarle un bloque de configuración que este a su vez pasará a la clase padre para asignarle los valores. Ademas, se crea un radio para la longitud que tendrá la música que reproduzca el speaker, variables para saber la frecuencia a la que emite, conocer si esta apagado o encendido, así como, para conocer su volumen.
+
+El speaker se podrá encender o apagar con los métodos on() y off(). Si esta apagado la música parará y no se reproducirá nada. Se podra aumentar y disminuir el volumen con los métodos voluemn\_up() y volumen\_down().
+
+La frecuencia a la que emite se puede obtener a traves del metodo set\_frequency\_music() y se podrá mandar a quien escuche con get\_frequency\_music().
+
+\subsubsection{World interface}
+\label{sec:world_interface}
+La clase World interface deriva de la clase Device y es la gestora de crear el dispositivo encargado de poder seleccionar a los nanobots para poder observar sus características y opciones.
+
+Es capaz de atender el mensaje new\_boid que se encarga de añadir un nuevo nanobot o speaker al dispositivo para su selección. 
+
+\subsubsection{Boid editor}
+\label{sec:boid_editor}
+La clase Boid\_editor deriva de Device y es la encargada de mostrar toda la informacion u opciones para el speaker o nanobot que este selecionado en el World\_interface. 
+
+Si se trata de un nanobot mostrara la posicion actual, el comportamiento activo en ese momento y su nivel de estrés. Además, mostrará una serie de controles para el manejo independiente de cada uno de los boids.
+
+Si el seleccionado es un speaker mostrará los controles para manipular el speaker, que son: boton de apagado y encendido, subir y bajar volumen, cambiar cancion y la canción que actualmente se está reproduciendo.  
+
+\subsubsection{Brain}
+\label{sec:brain}
+La clase Brain es la encargada de gestionar todos los comportamientos que puedan estar asociados a un nanobot y devolver la aceleración ponderada de todas las aceleraciones individuales devueltas por los comportamientos.
+
+Es capaz de activar y desactivar comportamientos con los métodos activate() y deactivate(). Esto ayuda a crear comportamientos más complejos que los inicialmente propuesto gracias a la combinación de comportamientos simples.
+
+También se puede preguntar al cerebro con can\$U() si un comportamiento puede ser activado en un determinado nanobot.
+
+\subsubsection{Beahavior}
+\label{sec:beahavior}
+La clase Behavior permite modelar el comportamiento de los boids. Esto se consigue modificando el vector de aceleración que cada uno de los boids posee como parte de su estructura interna. Un comportamiento se puede definir como un objeto que devuelve una aceleración deseada en un momento concreto.
+
+Al ser una clase abstracta, no permite crear instancias, de manera que para crear un comportamiento nuevo es necesario generar una clase nueva que derive de ésta.
+
+\subsubsection{Separation}
+\label{sec:separation}
+La clase Separation deriva de Behavior y es la encargada del comportamiento de separación entre nanobots.
+
+Calcula  los vectores de distancia entre todos los nanobots visibles y realiza su media para posteriormente dividir cada término del vector por un radio de aproximación mínimo. El vector opuesto a ese resultado será devuelto como aceleración vectorial deseada.
+
+\subsubsection{Cohesion}
+\label{sec:cohesion}
+La clase Cohesion deriva de Behavior y es la encargada del comportamiento de cohesión entre nanobots.
+
+Teniendo en cuenta el vector posicion de cada nanobot visible por el nanobot observador calcula su media. El vector resultante de dicha operación será devuelto como la aceleración vectorial deseada.
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}
+
+
+\subsubsection{}
+\label{sec:}

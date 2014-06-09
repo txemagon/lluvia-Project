@@ -123,6 +123,49 @@ Object.prototype.eql$U = function(model){
 }*/
 ////////////////////////////////////////////////////////////////////
 
+/**
+ * @method _$innerObject
+ *
+ * ### Example
+ *
+ * Godman inherits from Device
+ *
+ *  Godman calls the Device contructor that executes:
+ *
+ *      this.openDevice    = _$innerObject(this, "device")
+ *  So:
+ *      me = that = Godman device object
+ *      parentName = device
+ *
+ *  Anywhere inside person we can read:
+ *
+ *      var AHuman = this.openDevice(Human)
+ *      var person = new AHuman(name)
+ *
+ *  openDevice returns an anonymous function that redirects all its calls
+ *  to Human (the innerObject) but this function (used as a constructor)
+ *  appends this.device = Godman through:
+ *
+ *      this[parentName] = me
+ *
+ * The price to be paid in exchange for this benefit is that:
+ *
+ *    AHuman instanceof Human == false
+ *
+ * So to fix this
+ *
+ *     $F_innerObj.prototype = new arguments[0]
+ *     $F_innerObj.prototype.constructor = arguments[0]
+ *
+ * is added. Now
+ *    AHuman instanceof Human == true
+ *
+ *    todo: One single property is taken into account now. A better design
+ *    will accept an outer object like this: _$innerObject({device: Godman, other_key: value})
+ *
+ * @param {Object} that
+ * @param {String} parentName
+ */
 function _$innerObject(that, parentName){
 	var me = that
 	return function(){

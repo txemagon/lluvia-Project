@@ -1,0 +1,412 @@
+body{
+  font-family: sans, Arial, helvetica;
+}
+
+#lluvia_load{
+  display: none;
+}
+
+#heading{
+  width: auto;
+  height: 50px;
+}
+
+#container{
+  width: 1200px;
+  height: 800px;
+  border: solid 1px white;
+  position: relative;
+  margin: auto;
+  background-image:url('../images/fondo_circuito.svg');
+  background-size: 100% 100%;
+}
+
+.Panel{
+  display: inline-block;
+}
+
+#face_canvas{
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  margin: 50px 0 0 75px;
+}
+
+#boid_list_content{
+  width: 150px;
+  position: absolute;
+  margin: 250px 0 0 75px;
+}
+
+#chip_parte_alta{
+  width: 150px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_alta2.png');
+  background-size: 100% 100%;
+}
+
+#chip_parte_media{
+  width: 150px;
+  /*color: #424242;*/
+  background-image:url('../images/pantalla_parte_media3.png');
+  background-repeat:repeat-y;
+
+}
+
+#text_lcd{
+  width: 100%;
+  /*padding: 0 0 0 30px;*/
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+  line-height: 22px; 
+  font-size: 15px;
+  cursor: pointer;  
+}
+
+#chip_parte_baja{
+  width: 150px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_baja.png');
+  background-size: 100% 100%;
+}
+
+#canvas{
+  border: solid 2px black;
+  width: 550px;
+  height: 400px;
+  position: absolute;
+  margin: 0 0 0 300px;
+  border-radius:10px;
+}
+
+
+#boid_properties{
+/*  background-image:url('../images/fondo_placa.png');
+  background-size: 100% 100%;
+*/
+  width: 220px;
+  height: 380px;
+  margin: 50px 0 0 925px;
+  cursor: pointer;
+  position: absolute;
+}
+
+#properties_up{
+  width: 220px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_alta2.png');
+  background-size: 100% 100%;
+}
+
+#properties_center{
+  width: 220px;
+  height: 320px;
+  background-image:url('../images/pantalla_parte_media3.png');
+  background-size: 100%;
+  background-repeat:repeat-y;
+}
+
+#text_lcd2{
+  width: 100%;
+  padding: 0px 0 0 35px;
+  font-family: Verdana, Geneva, sans-serif;
+  line-height: 32px; 
+  font-size: 15px;
+  cursor: pointer;  
+}
+
+#properties_down{
+  width: 220px;
+  height: 30px;
+  background-image:url('../images/pantalla_parte_baja.png');
+  background-size: 100% 100%;
+
+}
+
+#speaker_buttons{
+  visibility: hidden;
+  width: 200px;
+  height: 135px; 
+}
+
+#button_on{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -20px 0 0 28px;
+}
+
+#button_off{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -20px 0 0 110px;
+}
+
+#button_next_track{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 44px 0 0 110px;
+}
+
+#button_previous_track{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 44px 0 0 28px;
+}
+
+#button_plus{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 110px 0 0 28px;
+}
+
+#button_less{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: 110px 0 0 110px;
+}
+
+#nanobot_buttons{
+  visibility: hidden;
+  width: 200px;
+ height: 135px; 
+}
+
+#button_talk{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -155px 0 0 28px;
+}
+
+    #talk_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #talk_initial_msg{
+            width: 100%;
+            padding: 13px 0 0 45px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }        
+
+        #greet_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #teach_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #joke_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #argue_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #insult_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #threaten_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #back_button{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 34px 0 0 28px;
+        }
+
+    #orders_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #orders_initial_msg{
+            width: 100%;
+            padding: 12px 0 0 27px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }        
+
+        #follow_me_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #go_away_button{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer; 
+        }
+
+        #back_button_orders{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 163px 0 0 28px;
+        }
+
+#button_games{
+  width: 85px;
+  height: 60px;
+  position: absolute;
+  margin: -155px 0 0 110px;
+}
+
+    #games_options{
+      visibility: hidden;
+      width: 220px;
+      height: 380px;
+      position: absolute;
+      margin: -500px 0 0 0;
+    }
+
+        #games_initial_msg{
+            width: 100%;
+            padding: 13px 0 0 34px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 14px;
+            cursor: pointer;
+        }        
+
+        #ring_around_the_rosey{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #conga{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #tag{
+            width: 100%;
+            padding: 0px 0 0 35px;
+            font-family: Verdana, Geneva, sans-serif;
+            line-height: 32px; 
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        #back_button_games{
+            width: 167px;
+            height: 61px;
+            position: absolute;
+            margin: 162px 0 0 28px;
+        }
+
+#button_orders{
+  width: 168px;
+  height: 60px;
+  position: absolute;
+  margin: -92px 0 0 28px;
+}
+
+
+#canvas_sound_body{
+  width: 550px;
+  height: 191px;
+  margin: 450px 0 0 300px;
+  /*
+  background-color: #85ab34;
+  */
+}
+
+#canvas_sound_left{
+  width: 25px;
+  height: 100%;
+  background-image:url('../images/lcd_left.png');
+  background-size: 100% 100%;
+  /*background-repeat:repeat-y;*/
+  float: left;
+}
+
+#canvas_sound_center{
+  width: 510px;
+  height: 100%;
+  background-image:url('../images/lcd_center.png');
+  background-size: 7% 100%;
+  background-repeat:repeat-x;
+  margin: 0 0 0 20px;
+}
+
+#canvas_sound{
+  position: absolute;
+  margin: -165px 0 0 31px;
+}
+
+#canvas_sound_right{
+  width: 25px;
+  height: 100%;
+  background-image:url('../images/lcd_right.png');
+  background-size: 100% 100%;
+  margin: -191px 0 0 530px;
+}
+

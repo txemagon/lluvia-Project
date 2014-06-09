@@ -1,0 +1,41 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[pdftex]{graphicx}
+\graphicspath{ {images/} }
+\DeclareGraphicsExtensions{.jpeg, .png, .jpg}
+\usepackage{tikz}
+ \usepackage[]{subcaption}
+\usepackage[]{placeins}
+\usepackage{epsfig}
+\usepackage{float}
+ 
+\usetikzlibrary{snakes}
+\usetikzlibrary{decorations}
+\author{José Moreno Casero \and Iván Bravo del Valle}
+\title{Proyecto de Simulación Comportamental en Entornos con Tasas de Estrés Variable.}
+
+\begin{document}
+%\frontmatter
+%\maketitle
+
+\include{./capitulos/prologo}
+
+\tableofcontents
+
+%\mainmatter
+
+\include{./capitulos/introduccion}
+\include{./capitulos/antecedentes}
+\include{./capitulos/analisis}
+\include{./capitulos/diseno}
+\include{./capitulos/resultados}
+\include{./capitulos/conclusiones}
+\include{./capitulos/bibliografia}
+
+
+\appendix
+\include{./capitulos/manual}
+\include{./capitulos/presentacion}
+
+\end{document}

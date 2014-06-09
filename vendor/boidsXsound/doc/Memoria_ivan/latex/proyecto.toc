@@ -1,0 +1,50 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Introducci\IeC {\'o}n}{3}
+\contentsline {section}{\numberline {2}Antecedentes}{4}
+\contentsline {section}{\numberline {3}An\IeC {\'a}lisis}{6}
+\contentsline {subsection}{\numberline {3.1}El mundo}{6}
+\contentsline {subsection}{\numberline {3.2}Nanobot}{7}
+\contentsline {subsubsection}{\numberline {3.2.1}Caracter\IeC {\'\i }sticas b\IeC {\'a}sicas}{7}
+\contentsline {subsubsection}{\numberline {3.2.2}Visi\IeC {\'o}n}{9}
+\contentsline {subsubsection}{\numberline {3.2.3}Audici\IeC {\'o}n}{9}
+\contentsline {subsubsection}{\numberline {3.2.4}Sistema de comportamientos}{9}
+\contentsline {paragraph}{Comportamientos individuales}{11}
+\contentsline {subsubsection}{\numberline {3.2.5}Toma de decisiones}{14}
+\contentsline {subsubsection}{\numberline {3.2.6}Comunicaci\IeC {\'o}n oral}{14}
+\contentsline {subsubsection}{\numberline {3.2.7}Nivel de estr\IeC {\'e}s}{15}
+\contentsline {subsection}{\numberline {3.3}Speaker}{15}
+\contentsline {subsection}{\numberline {3.4}AudioContext}{15}
+\contentsline {subsection}{\numberline {3.5}C\IeC {\'o}mo cargar sonidos}{17}
+\contentsline {subsection}{\numberline {3.6}Analizar el sonido}{19}
+\contentsline {subsection}{\numberline {3.7}Flujo de trabajo de la aplicaci\IeC {\'o}n}{21}
+\contentsline {section}{\numberline {4}Dise\IeC {\~n}o}{22}
+\contentsline {subsection}{\numberline {4.1}Metodolog\IeC {\'\i }a de desarrollo}{22}
+\contentsline {subsection}{\numberline {4.2}Tecnolog\IeC {\'\i }a utilizada}{23}
+\contentsline {subsection}{\numberline {4.3}Clases principales de la aplicaci\IeC {\'o}n}{23}
+\contentsline {subsubsection}{\numberline {4.3.1}World}{23}
+\contentsline {subsubsection}{\numberline {4.3.2}Boid}{24}
+\contentsline {subsubsection}{\numberline {4.3.3}Nanobot}{25}
+\contentsline {subsubsection}{\numberline {4.3.4}Speaker}{25}
+\contentsline {subsubsection}{\numberline {4.3.5}World interface}{26}
+\contentsline {subsubsection}{\numberline {4.3.6}Boid editor}{26}
+\contentsline {subsubsection}{\numberline {4.3.7}Brain}{26}
+\contentsline {subsubsection}{\numberline {4.3.8}Beahavior}{27}
+\contentsline {subsubsection}{\numberline {4.3.9}Separation}{27}
+\contentsline {subsubsection}{\numberline {4.3.10}Cohesion}{27}
+\contentsline {subsubsection}{\numberline {4.3.11}Alignment}{27}
+\contentsline {subsubsection}{\numberline {4.3.12}Containment}{28}
+\contentsline {subsubsection}{\numberline {4.3.13}Seek}{28}
+\contentsline {subsubsection}{\numberline {4.3.14}Flee}{28}
+\contentsline {subsubsection}{\numberline {4.3.15}Pursue}{28}
+\contentsline {subsubsection}{\numberline {4.3.16}Wander}{29}
+\contentsline {subsubsection}{\numberline {4.3.17}Line}{29}
+\contentsline {subsubsection}{\numberline {4.3.18}Stringhline}{29}
+\contentsline {subsubsection}{\numberline {4.3.19}WebAudio.js}{29}
+\contentsline {subsubsection}{\numberline {4.3.20}class\_SongLoader.js}{32}
+\contentsline {subsubsection}{\numberline {4.3.21}requestAnimFrame.js}{35}
+\contentsline {subsubsection}{\numberline {4.3.22}class\_Speaker.js}{36}
+\contentsline {subsection}{\numberline {4.4}Funcionamiento detallado de la aplicaci\IeC {\'o}n}{40}
+\contentsline {subsection}{\numberline {4.5}Descripci\IeC {\'o}n de la interface}{41}
+\contentsline {section}{\numberline {5}Conclusiones, trabajos futuros y posibles aplicaciones}{43}
+\contentsline {section}{\numberline {6}Bibliograf\IeC {\'\i }a}{45}
+\contentsline {section}{\numberline {A}Diagramas de clases}{46}

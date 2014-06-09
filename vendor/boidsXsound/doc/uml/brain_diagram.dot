@@ -1,0 +1,34 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+                style= "rounded"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+                dir = "back"
+                arrowhead = "empty"
+        ]
+
+        Brain [
+                label = "{Brain| possible_behaviors : Array \n \
+                                active_behaviors : Hash
+                              |\
+                                can$U() : Boolean\n \
+                                can_be_in$U() : Boolean\n \
+                                activate() : void\n \
+                                deactivate() : void\n \
+                                is_in$U() : Boolean\n \
+                                get_behavior() : Object\n \
+                                _$see_accelerations() : String\n \
+                                desired_accelerations() : void\n \
+                                desired_acceleration() : Vector\n \
+                        }"
+        ]
+}
