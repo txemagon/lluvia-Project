@@ -1,11 +1,10 @@
 {
-package: "lluvia",
-description: "lluvia loader. User application loader. Booter.",
-path: "/",
-files: [
-	]
-requires: ["loader"],
-provides: ["utils", "kernel", "engine", "browser", "mathematics"],
-offers:   []
+"package": "lluvia",
+"description": "lluvia loader. User application loader. Booter.",
+"path": "/",
+"files": [ ],
+"requires": ["loader"],
+"provides": ["utils", "kernel", "engine", "browser", "mathematics"],
+"offers":   []
 }
 
