@@ -257,5 +257,47 @@ switch(escenario){
                                 config.cruising_speed = 0
                         })
     break
+
+    case 10:
+      var speaker = w.new_boid_of(Speaker, function(config){ config.geo_data = {
+                                    position: new Vector(275, 200),
+                                    velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
+                                    acceleration: new Vector(0, 0)
+                                  }
+                                config.cruising_speed = 0
+                        })
+
+      var a = w.new_boid_of(Nanobot, function(config){ config.geo_data = {
+                                    position: new Vector(210, 200),
+                                    velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
+                                    acceleration: new Vector(0, 0)
+                                  }
+                                config.cruising_speed = 0
+                        })
+
+      var b = w.new_boid_of(Nanobot, function(config){ config.geo_data = {
+                                    position: new Vector(340, 200),
+                                    velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
+                                    acceleration: new Vector(0, 0)
+                                  }
+                                config.cruising_speed = 0
+                        })
+
+      var c = w.new_boid_of(Nanobot, function(config){ config.geo_data = {
+                                    position: new Vector(275, 135),
+                                    velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
+                                    acceleration: new Vector(0, 0)
+                                  }
+                                config.cruising_speed = 0
+                        })
+
+      var d = w.new_boid_of(Nanobot, function(config){ config.geo_data = {
+                                    position: new Vector(275, 265),
+                                    velocity: new Vector(0.0001, 0.0001), //==> Si es 0 peta!!!
+                                    acceleration: new Vector(0, 0)
+                                  }
+                                config.cruising_speed = 0
+                        })
+    break
   }
 }
