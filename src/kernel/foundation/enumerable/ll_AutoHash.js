@@ -39,7 +39,7 @@ function AutoHash(intial_data, block) {
             block = function() {};
 
     var that = this
-    this.data = newଳ HashData()
+    this.data = new HashData()
 
     if (initial_data && typeof(initial_data) !== "function")
         this.data.merge$B(initial_data)

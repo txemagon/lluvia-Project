@@ -55,7 +55,7 @@ String.prototype.humanize = function(){
  *
  * ### Example:
  *
- *      "TheRollingStone".underscore()   //=> "The rolling stones"
+ *      "TheRollingStone".underscore()   //=> "The_rolling_stones"
  *
  *
  * @return {String} string

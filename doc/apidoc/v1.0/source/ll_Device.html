@@ -15,14 +15,14 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Engine-Device'>/**
+  <pre class="prettyprint lang-js"><span id='state'>/**
 </span> * @class Engine.Device
  * @extends Processor
  * @mixins Engine.ThreadAutomata
  *
  * Provides an asynchronous mechanism for communicating with another devices.
  * In practical terms, it uses a message queue and fires events.
- * I doesn't have a window on his own but handles Gates to communicate
+ * I doesn&#39;t have a window on his own but handles Gates to communicate
  * with HTML DOM.
  *
  * ###Example of use:
@@ -37,7 +37,7 @@
  *     	if (arguments.length)
  *     		Gate.call(this, el)
  *     }
- *     // No 'device' references are provided in the constructor
+ *     // No &#39;device&#39; references are provided in the constructor
  *
  *
  *     ButtonGate.prototype.do_onclick = function(event, element){
@@ -98,7 +98,7 @@ extend(Device, ThreadAutomata)  // ThreadAutomata is the last class in the inher
 Device.prototype.constructor = Device
 
 
-<span id='Engine-Device-method-constructor'>/** 
+<span id='state-method-constructor'>/** 
 </span> * @method constructor
  * Creates a Device.
  *
@@ -218,13 +218,13 @@ function Device(view, state, currentState, parent){
 
 }
 
-<span id='Engine-Device-property-Device.STATE'>/**
+<span id='state-property-Device'>/**
 </span> * Device default states
  * @property {Object} Device.STATE Enumeration constant.
  */
 Device.STATE = new Enumeration(&quot;suspended&quot;, &quot;running&quot;, &quot;suspending&quot;, &quot;killing&quot;, &quot;killed&quot;)
 
-<span id='Engine-Device-method-state_substate'>/**
+<span id='state-method-state_substate'>/**
 </span>* @method state_substate
 * Dynamic
 *
@@ -237,7 +237,7 @@ Device.STATE = new Enumeration(&quot;suspended&quot;, &quot;running&quot;, &quot
 * When functionality is required, override the required method.
 */
 
-<span id='Engine-Device-method-getSolicitors'>/**
+<span id='state-method-getSolicitors'>/**
 </span> * @method getSolicitors
  *
  * Return the array of solicitors.
@@ -245,14 +245,14 @@ Device.STATE = new Enumeration(&quot;suspended&quot;, &quot;running&quot;, &quot
  * @return {Array} Array of three functions (up, steady and running) by state, packed in a global array.
  */
 
-<span id='Engine-Device-method-getStates'>/**
+<span id='state-method-getStates'>/**
 </span> * @method getStates
  * Return the list of all possible states for this Device.
  *
  * @return {Array} List of states.
  */
 
-<span id='Engine-Device-method-gateRunner'>/**
+<span id='state-method-gateRunner'>/**
 </span> * @method gateRunner
  * @private
  *
@@ -265,7 +265,7 @@ Device.prototype.gateRunner = function(){
 
 }
 
-<span id='Engine-Device-method-childRunner'>/**
+<span id='state-method-childRunner'>/**
 </span> * @method childRunner
  * @private
  *
@@ -287,7 +287,7 @@ Device.prototype.childRunner = function(){
 
 }
 
-<span id='Engine-Device-method-newGate'>/**
+<span id='state-method-newGate'>/**
 </span> * @method newGate
  *
  * Creates a new Object using a derived class of Gate and attaches it to the gates array own property.
@@ -309,7 +309,7 @@ Device.prototype.newGate = function(el, ClassCons, config){
 	}
 }
 
-<span id='Engine-Device-method-attend'>/**
+<span id='state-method-attend'>/**
 </span> * @method attend
  *
  * Generic meesage dispatcher. Seeks for a more specific message handler.
@@ -326,7 +326,7 @@ Device.prototype.newGate = function(el, ClassCons, config){
  *  Make the previous definition in a derived class.
  */
 Device.prototype.attend = function(date, mssg){
-	this[&quot;attend_&quot;+ mssg.name](date, mssg)  // If attend_ method doesn't exist then we shall provide a generic dispatcher.
+	this[&quot;attend_&quot;+ mssg.name](date, mssg)  // If attend_ method doesn&#39;t exist then we shall provide a generic dispatcher.
 }
 
 Device.prototype._y = function(htmlElement, stopAt){
@@ -365,7 +365,7 @@ Device.prototype.x_calc = function(){
 	return null
 }
 
-<span id='Engine-Device-method-fireEvent'>/**
+<span id='state-method-fireEvent'>/**
 </span> * @method fireEvent
  *
  * Notifies to all the listeners that this device has generated an event.
@@ -379,7 +379,7 @@ Device.prototype.fireEvent = function (mssg){
 
 }
 
-<span id='Engine-Device-method-addPort'>/**
+<span id='state-method-addPort'>/**
 </span> * @method addPort
  *
  * Adds an specific port (reference to a listener) to the selected event listeners list.
@@ -392,7 +392,7 @@ Device.prototype.addPort = function (mssg_name, device){
 	this.eventDispatcher.addPort(mssg_name, device)
 }
 
-<span id='Engine-Device-method-newMessage'>/**
+<span id='state-method-newMessage'>/**
 </span> * @method newMessage
  *
  * Creates new message.
@@ -408,7 +408,7 @@ Device.prototype.newMessage = function(type, name, data){
 		return systemEv(type , {name: name, data: data || &quot;no extra data available&quot;}, this)
 }
 
-<span id='Engine-Device-method-sendMessage'>/**
+<span id='state-method-sendMessage'>/**
 </span> * @method sendMessage
  *
  * Sends a message to a particular device, without using the listeners list.
@@ -424,7 +424,7 @@ Device.prototype.sendMessage = function(type, name, data, receiptant){
 
 }
 
-<span id='Engine-Device-method-method_missing'>/**
+<span id='state-method-method_missing'>/**
 </span> * @method method_missing
  *
  * Throws an exception when a method is not defined, unless someone has used the
@@ -441,7 +441,7 @@ Device.prototype.method_missing = function (method, obj, params){
     return method.underscore.apply(this, params)
   obj = obj || &quot;&quot;
   params = params || []
-  throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + this.constructor.name +&quot;. Params: &quot; + params.join(', ') ))
+  throw(new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + this.constructor.name +&quot;. Params: &quot; + params.join(&#39;, &#39;) ))
 }
 
 </pre>
