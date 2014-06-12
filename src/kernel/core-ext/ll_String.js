@@ -588,7 +588,6 @@ String.prototype.chomp = function(){
  *
  * Returns a string without \n or \r or \r\n or char of the end the String.
  *
- * @param        {String}
  * @return       {String}
  *
  * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed.
@@ -618,7 +617,6 @@ String.prototype.chop = function(){
  *
  * Returns a number hexadecimal convert to decimal.
  *
- * @param        {Number}
  * @return       {Number}
  *
  * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x)
@@ -816,7 +814,6 @@ String.prototype.to_f = function() {
  *
  * Returns a copy of str with leading and trailing whitespace removed.
  *
- * @param    {void}
  * @return  {String} // Return a copy of str with leading and trailing whitespace removed
  *
  * ### Example
@@ -888,7 +885,6 @@ String.prototype.partition = function(){
  *
  * Returns a copy of str with trailing whitespace removed.
  *
- * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
  *
  * ### Example
@@ -969,7 +965,6 @@ String.prototype.chars = function(){
  *
  * Sum of the ASCII codes of all characters in the string.
  *
- * @param    {void}     //No parameters
  * @return   {Number} return the sum
  *
  * ### Example
@@ -1310,8 +1305,8 @@ String.prototype.end_With$U = function(str){
  *
  * Returns true or false by comparing  object and the argument.
  *
- * @param       {string}
- * @return      {boolean}
+ * @param       {String}   string String to compare.
+ * @return      {Boolean}
  *
  * ### Comments:    Compares the object with argument.
  *
@@ -1321,8 +1316,8 @@ String.prototype.end_With$U = function(str){
  *
  **/
 
-String.prototype.eql$U = function() {
-    return this == arguments[0]
+String.prototype.eql$U = function(string) {
+    return this == string
 }
 
 /**
@@ -1330,8 +1325,8 @@ String.prototype.eql$U = function() {
  *
  * Returns the indexth byte as an integer.
  *
- * @param       {string}
- * @return      {number}  a interger.
+ * @param       {Number}  index Specified index in the string.
+ * @return      {Number}  a interger.
  *
  * ### Comments:    Using charCodeAt from a javaScript function.
  *
@@ -1339,8 +1334,8 @@ String.prototype.eql$U = function() {
  *     "A".getbyte()    //=> 65
  *
  **/
-String.prototype.getbyte = function(){
-    return this.charCodeAt(arguments[0])
+String.prototype.getbyte = function(index){
+    return this.charCodeAt(index)
 }
 
 /**
