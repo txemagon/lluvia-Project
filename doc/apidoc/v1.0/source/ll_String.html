@@ -430,7 +430,6 @@ String.prototype.oct = function(){
  *
  * Returns a reversed version of an introduced string
  *
- * @param        {String}
  * @return       {String}     Return the reverse from a string.
  *
  * ### Comments: This function use a &quot;.reverse&quot; from array class.
@@ -504,10 +503,9 @@ String.prototype.include_some_of$U = function(
  *
  * Returns the index of the string passed as parameter
  *
- * @param        {String}
- * @return       {Number}     Returns index.
+ * @param        {String}     search Searched string.
+ * @return       {Number}     Returned index.
  *
- * ### Comments:
  *
  * ### Example1:
  *
@@ -519,10 +517,10 @@ String.prototype.include_some_of$U = function(
  * &quot;pacoelmejor&quot;.rindex(&quot;el&quot;)
  * //=&gt; 4
  */
-String.prototype.rindex = function(){
+String.prototype.rindex = function(search){
     if (arguments.length == 0)
 	return null
-    return (this.lastIndexOf(arguments[0]) &gt; 0)? this.lastIndexOf(arguments[0]) : false
+    return (this.lastIndexOf(search) &gt; 0)? this.lastIndexOf(search) : false
 }
 
 <span id='Kernel-CoreExt-String-method-center'>/**
@@ -530,7 +528,8 @@ String.prototype.rindex = function(){
  * Returns a center word in the string
  *
  * @chainable
- * @param        {String}
+ * @param        {Number}     length  Size of the resulting line.
+ * @param        {String}     padding String to pad with.  
  * @return       {String}     Return the a string with a word center.
  *
  * ### Comments: If integer is greater than the length of str,
@@ -542,22 +541,22 @@ String.prototype.rindex = function(){
  *    &quot;hello&quot;.center(20)           //=&gt; &quot;       hello        &quot;
  *    &quot;hello&quot;.center(20, &#39;123&#39;)    //=&gt; &quot;1231231hello12312312&quot;
  */
-String.prototype.center = function(){
+String.prototype.center = function(length, padding){
     if (arguments.length == 0 || arguments.length &gt; 2)
 	throw(&quot;wrong number arguments&quot;)
-    if (this.length &gt;= arguments[0])
+    if (this.length &gt;= length)
 	return this
     var str = &quot;&quot;
     var i = 0
     var j = 0
-    while(i&lt;=(arguments[0] - this.length)){
-	if (i == (arguments[0]-this.length) / 2){
+    while(i&lt;=(length - this.length)){
+	if (i == (length-this.length) / 2){
 	    j = 0
 	    str += this
 	}
 	else if (arguments.length &gt; 1){
-	    str += arguments[1].length == 1? arguments[1] : arguments[1][j]
-	    j = (j+1)%arguments[1].length
+	    str += padding.length == 1? padding : padding[j]
+	    j = (j+1) % padding.length
 	}
 	else
 	    str += &quot; &quot;
@@ -1374,7 +1373,6 @@ String.prototype.to_str = function(){
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
  * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
  *
- * @param      {string}
  * @return     {string}  Return a rational
  *			             If the arguments is invalid return &quot;0/1&quot;
  *                       Returns a copy of str with uppercase alphabetic characters
@@ -1439,16 +1437,16 @@ String.prototype.to_r = function(){
  *
  * Number of decimal positions in a number
  *
- * @param  {number | string }
+ * @param  {number | string }   number Number of decimal positions in a number.
  * @return {Number}  Number of decimal. If the arguments is invalid return 0
  *
  **/
 
-function decimal() {
-    if(isNaN(arguments[0]))
+function decimal(number) {
+    if(isNaN(number))
 	return -1
 
-    var num = new Number(arguments[0])
+    var num = new Number(number)
     if( num &lt; Number.MIN_VALUE || num &gt; Number.MAX_VALUE)
 	return 0
 
