@@ -26,7 +26,6 @@ function Thread(solicitor, processor){
 /**
  * Thread execution step. Is an abstract method.
  *
- * @memberOf  {Thread}
  * @method    run	State machine manager.
  */
 Thread.prototype.run = function(processors_time){
