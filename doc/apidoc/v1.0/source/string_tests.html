@@ -16,703 +16,703 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">assert (&quot;String#capitalize 1. Normal string&quot;,
-        &quot;a.capitalize()&quot;, '&quot;Hello&quot;',
-        'a = &quot;hello&quot;')
+        &quot;a.capitalize()&quot;, &#39;&quot;Hello&quot;&#39;,
+        &#39;a = &quot;hello&quot;&#39;)
 
 assert (&quot;String#capitalize 2. String with numbers at the first.&quot;,
-        &quot;a.capitalize()&quot;, '&quot;123hello&quot;',
-        'a = &quot;123hello&quot;')
+        &quot;a.capitalize()&quot;, &#39;&quot;123hello&quot;&#39;,
+        &#39;a = &quot;123hello&quot;&#39;)
 
 assert (&quot;String#capitalize 3. String without changes&quot;,
-        &quot;a.capitalize()&quot;, '&quot;Hello&quot;',
-        'a = &quot;Hello&quot;')
+        &quot;a.capitalize()&quot;, &#39;&quot;Hello&quot;&#39;,
+        &#39;a = &quot;Hello&quot;&#39;)
 
 assert(&quot;String#index 1. Letter position in the word.&quot;,
-       '&quot;hello&quot;.index(&quot;e&quot;)', '1',
-       '&quot;hello&quot;.index(&quot;e&quot;)')
+       &#39;&quot;hello&quot;.index(&quot;e&quot;)&#39;, &#39;1&#39;,
+       &#39;&quot;hello&quot;.index(&quot;e&quot;)&#39;)
 
 assert(&quot;String#index 2. Letters position.&quot;,
-       '&quot;hello&quot;.index(&quot;lo&quot;)', '3',
-       '&quot;hello&quot;.index(&quot;lo&quot;)')
+       &#39;&quot;hello&quot;.index(&quot;lo&quot;)&#39;, &#39;3&#39;,
+       &#39;&quot;hello&quot;.index(&quot;lo&quot;)&#39;)
 
 assert(&quot;String#index 3. Position array in the word.&quot;,
-       '&quot;hello&quot;.index(a)', '0',
-       'a = &quot;hello&quot;; &quot;hello&quot;.index(a) ')
+       &#39;&quot;hello&quot;.index(a)&#39;, &#39;0&#39;,
+       &#39;a = &quot;hello&quot;; &quot;hello&quot;.index(a) &#39;)
 
-assert(&quot;String#index 4. Letter isn't word.&quot;,
-       '&quot;hello&quot;.index(&quot;a&quot;)', &quot;null&quot;,
-       '&quot;hello&quot;.index(&quot;a&quot;)')
+assert(&quot;String#index 4. Letter isn&#39;t word.&quot;,
+       &#39;&quot;hello&quot;.index(&quot;a&quot;)&#39;, &quot;null&quot;,
+       &#39;&quot;hello&quot;.index(&quot;a&quot;)&#39;)
 
 assert(&quot;String#index 5. Set of letters in the word.&quot;,
-       '&quot;hello&quot;.index(/[aeiou]/, -3)', '4',
-       '&quot;hello&quot;.index(/[aeiou]/, -3)')
+       &#39;&quot;hello&quot;.index(/[aeiou]/, -3)&#39;, &#39;4&#39;,
+       &#39;&quot;hello&quot;.index(/[aeiou]/, -3)&#39;)
 
 assert(&quot;String#insert 1. Insert one letter&quot;,
-       '&quot;hello&quot;.insert(1,&quot;X&quot;)', '&quot;hXello&quot;',
-       '&quot;hello&quot;.insert(1,&quot;X&quot;)')
+       &#39;&quot;hello&quot;.insert(1,&quot;X&quot;)&#39;, &#39;&quot;hXello&quot;&#39;,
+       &#39;&quot;hello&quot;.insert(1,&quot;X&quot;)&#39;)
        
 assert(&quot;String#insert 2. Insert string&quot;,
-       '&quot;hello&quot;.insert(-3,&quot;XY&quot;)', '&quot;helXYlo&quot;',
-       '&quot;hello&quot;.insert(-3,&quot;XY&quot;)')
+       &#39;&quot;hello&quot;.insert(-3,&quot;XY&quot;)&#39;, &#39;&quot;helXYlo&quot;&#39;,
+       &#39;&quot;hello&quot;.insert(-3,&quot;XY&quot;)&#39;)
 
 assert(&quot;String#ljust 1. Without letters.&quot;,
-       '&quot;hello&quot;.ljust(10)', '&quot;hello     &quot;',
-       '&quot;hello&quot;.ljust(10)')
+       &#39;&quot;hello&quot;.ljust(10)&#39;, &#39;&quot;hello     &quot;&#39;,
+       &#39;&quot;hello&quot;.ljust(10)&#39;)
 
 assert(&quot;String#ljust 2. With one letter.&quot;,
-       '&quot;hello&quot;.ljust(10,&quot;p&quot;)', '&quot;helloppppp&quot;',
-       '&quot;hello&quot;.ljust(10,&quot;p&quot;)')
+       &#39;&quot;hello&quot;.ljust(10,&quot;p&quot;)&#39;, &#39;&quot;helloppppp&quot;&#39;,
+       &#39;&quot;hello&quot;.ljust(10,&quot;p&quot;)&#39;)
 
 assert(&quot;String#ljust 3. with string.&quot;,
-       '&quot;hello&quot;.ljust(10,&quot;pe&quot;)', '&quot;hellopepep&quot;',
-       '&quot;hello&quot;.ljust(10,&quot;pe&quot;)')
+       &#39;&quot;hello&quot;.ljust(10,&quot;pe&quot;)&#39;, &#39;&quot;hellopepep&quot;&#39;,
+       &#39;&quot;hello&quot;.ljust(10,&quot;pe&quot;)&#39;)
 
 assert(&quot;String#ljust 4. with blanks.&quot;,
-       'a.ljust(10)', '&quot;hello     &quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.ljust(10)&#39;, &#39;&quot;hello     &quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#swapcase 1. Simple sample.&quot;,
-       'a.swapcase()','&quot;Hello&quot;',
-       'a = &quot;hELLO&quot;')
+       &#39;a.swapcase()&#39;,&#39;&quot;Hello&quot;&#39;,
+       &#39;a = &quot;hELLO&quot;&#39;)
 
 assert(&quot;String#swapcase 2. Another string.&quot;,
-       'a.swapcase()','&quot;MoUnTaIn&quot;',
-       'a = &quot;mOuNtAiN&quot;')
+       &#39;a.swapcase()&#39;,&#39;&quot;MoUnTaIn&quot;&#39;,
+       &#39;a = &quot;mOuNtAiN&quot;&#39;)
 
 assert(&quot;String#empty$U 1. Stream full&quot;,
-      'a.empty$U()', &quot;false&quot;,
-      'a = &quot;Full&quot;')
+      &#39;a.empty$U()&#39;, &quot;false&quot;,
+      &#39;a = &quot;Full&quot;&#39;)
 
 assert(&quot;String#empty$U 2. Stream empty&quot;,
-      'a.empty$U()', &quot;true&quot;,
-      'a = &quot;&quot;')
+      &#39;a.empty$U()&#39;, &quot;true&quot;,
+      &#39;a = &quot;&quot;&#39;)
 
 assert(&quot;String#lstrip 1. with spaces.&quot;,
-       '&quot;    hello    &quot;.lstrip()', '&quot;hello    &quot;',
-       '&quot;    hello    &quot;.lstrip()')
+       &#39;&quot;    hello    &quot;.lstrip()&#39;, &#39;&quot;hello    &quot;&#39;,
+       &#39;&quot;    hello    &quot;.lstrip()&#39;)
 
 assert(&quot;String#lstrip 2. without spaces.&quot;,
-       '&quot;hello&quot;.lstrip()', '&quot;hello&quot;',
-       '&quot;hello&quot;.lstrip()')
+       &#39;&quot;hello&quot;.lstrip()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;&quot;hello&quot;.lstrip()&#39;)
 
 assert(&quot;String#downcase 1. Replace all letter uppercase for letter downcase or return null if not changes were made&quot;,
-      'a.downcase()', '&quot;hello&quot;',
-      'a = &quot;Hello&quot;')
+      &#39;a.downcase()&#39;, &#39;&quot;hello&quot;&#39;,
+      &#39;a = &quot;Hello&quot;&#39;)
 
 assert(&quot;String#downcase 2. Replace all letter uppercase for letter downcase or return null if not changes were made&quot;,
-      'a.downcase()', 'null',
-      'a = &quot;hello&quot;')
+      &#39;a.downcase()&#39;, &#39;null&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#downcase 3. Replace all letter uppercase for letter downcase or return null if not changes were made&quot;,
-      'a.downcase()', '&quot;hello 1 2 3 ) ? &quot;',
-      'a = &quot;Hello 1 2 3 ) ? &quot;')
+      &#39;a.downcase()&#39;, &#39;&quot;hello 1 2 3 ) ? &quot;&#39;,
+      &#39;a = &quot;Hello 1 2 3 ) ? &quot;&#39;)
 
 assert(&quot;String#downcase 4. Replace all letter uppercase for letter downcase or return null if not changes were made&quot;,
-      'a.downcase()', 'null',
-      'a = &quot;&quot;')
+      &#39;a.downcase()&#39;, &#39;null&#39;,
+      &#39;a = &quot;&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;abcde&quot;)', '1',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;abcde&quot;)&#39;, &#39;1&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;abcdef&quot;)', '0',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;abcdef&quot;)&#39;, &#39;0&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;abcdefg&quot;)', '-1',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;abcdefg&quot;)&#39;, &#39;-1&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;ac&quot;)', '-1',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;ac&quot;)&#39;, &#39;-1&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;a&quot;)', '1',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;a&quot;)&#39;, &#39;1&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#casecmp.&quot;,
-      'a.casecmp(&quot;aBcD&quot;)', '1',
-      'a = &quot;abcdef&quot;')
+      &#39;a.casecmp(&quot;aBcD&quot;)&#39;, &#39;1&#39;,
+      &#39;a = &quot;abcdef&quot;&#39;)
 
 assert(&quot;String#ord . Return an integer value of string&quot;,
-      'a.ord()','97',
-      'a = &quot;a&quot;')
+      &#39;a.ord()&#39;,&#39;97&#39;,
+      &#39;a = &quot;a&quot;&#39;)
 
 assert(&quot;String#reverse. Return the reverse of string&quot;,
-      'a.reverse()','&quot;aloh&quot;',
-      'a = &quot;hola&quot;')
+      &#39;a.reverse()&#39;,&#39;&quot;aloh&quot;&#39;,
+      &#39;a = &quot;hola&quot;&#39;)
 
 assert(&quot;String#include$U 1. Check is string contains the given string or character. the arguments is one character&quot;,
-      'a.include$U(&quot;i&quot;)', &quot;true&quot;,
-      'a = &quot;adios&quot;')
+      &#39;a.include$U(&quot;i&quot;)&#39;, &quot;true&quot;,
+      &#39;a = &quot;adios&quot;&#39;)
 
 assert(&quot;String#include$U 2. Check is string contains the given string or character. Argumenst empty &quot;,
-      'a.include$U(&quot;&quot;)', &quot;true&quot;, 
-      'a = &quot;adios&quot;')
+      &#39;a.include$U(&quot;&quot;)&#39;, &quot;true&quot;, 
+      &#39;a = &quot;adios&quot;&#39;)
 
 assert(&quot;String#include$U 3. Check is string contains the given string or character. Argumenst is a string and find it&quot;,
-      'a.include$U(&quot;io&quot;)', &quot;true&quot;, 
-      'a = &quot;adios&quot;')
+      &#39;a.include$U(&quot;io&quot;)&#39;, &quot;true&quot;, 
+      &#39;a = &quot;adios&quot;&#39;)
 
 assert(&quot;String#include$U 4. Check is string contains the given string or character. Argumenst is a string and not find it&quot;,
-      'a.include$U(&quot;hio&quot;)', &quot;false&quot;, 
-      'a = &quot;adios&quot;')
+      &#39;a.include$U(&quot;hio&quot;)&#39;, &quot;false&quot;, 
+      &#39;a = &quot;adios&quot;&#39;)
 
 assert(&quot;String#rindex 1. Returns the position of the last occurrence of the given character&quot;,
-      'a.rindex(&quot;e&quot;)', &quot;1&quot;, 
-      'a = &quot;hello&quot;')
+      &#39;a.rindex(&quot;e&quot;)&#39;, &quot;1&quot;, 
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#rindex 2. Returns the position of the last occurrence of the given other variable&quot;,
-      'a.rindex(b)', &quot;4&quot;, 
-      'a = &quot;hello&quot;; b = &quot;o&quot; ')
+      &#39;a.rindex(b)&#39;, &quot;4&quot;, 
+      &#39;a = &quot;hello&quot;; b = &quot;o&quot; &#39;)
 
 assert(&quot;String#rindex 3. Returns the position of the last occurrence of the given other string&quot;,
-      'a.rindex(&quot;el&quot;)', &quot;1&quot;, 
-      'a = &quot;hello&quot;')
+      &#39;a.rindex(&quot;el&quot;)&#39;, &quot;1&quot;, 
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#rindex 4. Returns the position of the last occurrence of the given not arguments&quot;,
-      'a.rindex()', &quot;null&quot;, 
-      'a = &quot;hello&quot;')
+      &#39;a.rindex()&#39;, &quot;null&quot;, 
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#center 1.&quot;,
-       'a.center(3)', '&quot;hello&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.center(3)&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#center 2.&quot;,
-       'a.center(5)', '&quot;hello&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.center(5)&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#center 3.&quot;,
-       'a.center(11)', '&quot;   hello   &quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.center(11)&#39;, &#39;&quot;   hello   &quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#center 4.&quot;,
-       'a.center(11, &quot;12&quot;)', '&quot;121hello121&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.center(11, &quot;12&quot;)&#39;, &#39;&quot;121hello121&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#center 5.&quot;,
-       'a.center(11, &quot;1&quot;)', '&quot;111hello111&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.center(11, &quot;1&quot;)&#39;, &#39;&quot;111hello111&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#chr 1. Return the first character from a string&quot;,
-       'a.chr()', '&quot;h&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.chr()&#39;, &#39;&quot;h&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#chr 2. Return the string if unique character&quot;,
-       'a.chr()', '&quot;h&quot;',
-       'a = &quot;h&quot;')
+       &#39;a.chr()&#39;, &#39;&quot;h&quot;&#39;,
+       &#39;a = &quot;h&quot;&#39;)
 
 assert(&quot;String#chr 3. Return the string void&quot;,
-       'a.chr()', '&quot;&quot;',
-       'a = &quot;&quot;')
+       &#39;a.chr()&#39;, &#39;&quot;&quot;&#39;,
+       &#39;a = &quot;&quot;&#39;)
 
 assert(&quot;String#chomp 1.&quot;, 
-       'a.chomp()', '&quot;hello&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.chomp()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#chomp 2.&quot;, 
-       'a.chomp()', '&quot;hello&quot;',
-       'a= &quot;hello\\n&quot;')
+       &#39;a.chomp()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\n&quot;&#39;)
 
 assert(&quot;String#chomp 3.&quot;, 
-       'a.chomp()', '&quot;hello&quot;',
-       'a= &quot;hello\\r&quot;')
+       &#39;a.chomp()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\r&quot;&#39;)
 
 assert(&quot;String#chomp 4.&quot;, 
-       'a.chomp()', '&quot;hello&quot;',
-       'a= &quot;hello\\r\\n&quot;')
+       &#39;a.chomp()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\r\\n&quot;&#39;)
 
 assert(&quot;String#chomp 5.&quot;, 
-       'a.chomp(&quot;llo&quot;)', '&quot;he&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.chomp(&quot;llo&quot;)&#39;, &#39;&quot;he&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#chomp 6.&quot;, 
-       'a.chomp()', '&quot;hello \\n there&quot;',
-       'a= &quot;hello \\n there&quot;')
+       &#39;a.chomp()&#39;, &#39;&quot;hello \\n there&quot;&#39;,
+       &#39;a= &quot;hello \\n there&quot;&#39;)
 
 /* todo:
 assert(&quot;String#clear. Returns a clear string&quot;,////////////////////////// PENDIENTE REVISION
-       'a.clear()', '&quot;&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.clear()&#39;, &#39;&quot;&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 */
 
 assert(&quot;String#chop 1.&quot;,
-       'a.chop()', '&quot;hell&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.chop()&#39;, &#39;&quot;hell&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#chop 2.&quot;,
-       'a.chop()', '&quot;hello&quot;',
-       'a= &quot;hello\\n&quot;')
+       &#39;a.chop()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\n&quot;&#39;)
 
 assert(&quot;String#chop 3.&quot;,
-       'a.chop()', '&quot;hello&quot;',
-       'a= &quot;hello\\r&quot;')
+       &#39;a.chop()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\r&quot;&#39;)
 
 assert(&quot;String#chop 4.&quot;,
-       'a.chop()', '&quot;hello&quot;',
-       'a= &quot;hello\\r\\n&quot;')
+       &#39;a.chop()&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello\\r\\n&quot;&#39;)
 
 assert(&quot;String#chop 5.&quot;,
-       'a.chop(&quot;llo&quot;)', 'null',
-       'a= &quot;hello&quot;')
+       &#39;a.chop(&quot;llo&quot;)&#39;, &#39;null&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#hex 1. String numeric&quot;,
-       'a.hex()', '19',
-       'a= &quot;13&quot;')
+       &#39;a.hex()&#39;, &#39;19&#39;,
+       &#39;a= &quot;13&quot;&#39;)
        
 assert(&quot;String#hex 2. String numeric hexadecimal&quot;,
-       'a.hex()', '19',
-       'a= &quot;0x13&quot;')
+       &#39;a.hex()&#39;, &#39;19&#39;,
+       &#39;a= &quot;0x13&quot;&#39;)
 
 assert(&quot;String#hex 3. String whith caracter hexadecimal&quot;,
-       'a.hex()', '10',
-       'a= &quot;algo&quot;')
+       &#39;a.hex()&#39;, &#39;10&#39;,
+       &#39;a= &quot;algo&quot;&#39;)
 
 assert(&quot;String#hex 4. String negative numeric&quot;,
-       'a.hex()', '-19',
-       'a= &quot;-13&quot;')
+       &#39;a.hex()&#39;, &#39;-19&#39;,
+       &#39;a= &quot;-13&quot;&#39;)
 
 assert(&quot;String#hex 5. String&quot;,
-       'a.hex()', '0',
-       'a= &quot;hello&quot;')
+       &#39;a.hex()&#39;, &#39;0&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#rjust 1.&quot;,
-       'a.rjust(4)', '&quot;hello&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.rjust(4)&#39;, &#39;&quot;hello&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
        
 assert(&quot;String#rjust 2.&quot;,
-       'a.rjust(10)', '&quot;     hello&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.rjust(10)&#39;, &#39;&quot;     hello&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#rjust 3.&quot;,
-       'a.rjust(10,&quot;123&quot;)', '&quot;12312hello&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.rjust(10,&quot;123&quot;)&#39;, &#39;&quot;12312hello&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#rjust 4.&quot;,
-       'a.rjust(10,&quot;1&quot;)', '&quot;11111hello&quot;',
-       'a= &quot;hello&quot;')
+       &#39;a.rjust(10,&quot;1&quot;)&#39;, &#39;&quot;11111hello&quot;&#39;,
+       &#39;a= &quot;hello&quot;&#39;)
 
 assert(&quot;String#succ 1.&quot;,
-       'a.succ()', '&quot;abce&quot;',
-       'a = &quot;abcd&quot;')
+       &#39;a.succ()&#39;, &#39;&quot;abce&quot;&#39;,
+       &#39;a = &quot;abcd&quot;&#39;)
 
 assert(&quot;String#succ 2.&quot;,
-       'a.succ()', '&quot;aaaaa&quot;',
-       'a = &quot;zzzz&quot;')
+       &#39;a.succ()&#39;, &#39;&quot;aaaaa&quot;&#39;,
+       &#39;a = &quot;zzzz&quot;&#39;)
 
 assert(&quot;String#succ 3.&quot;,
-       'a.succ()', '&quot;ibA0&quot;',
-       'a = &quot;iaZ9&quot;')
+       &#39;a.succ()&#39;, &#39;&quot;ibA0&quot;&#39;,
+       &#39;a = &quot;iaZ9&quot;&#39;)
 
 assert(&quot;String#succ 4.&quot;,
-       'a.succ()', '&quot;&lt;&lt;ibA0&gt;&gt;&quot;',
-       'a = &quot;&lt;&lt;iaZ9&gt;&gt;&quot;')
+       &#39;a.succ()&#39;, &#39;&quot;&lt;&lt;ibA0&gt;&gt;&quot;&#39;,
+       &#39;a = &quot;&lt;&lt;iaZ9&gt;&gt;&quot;&#39;)
 
 assert(&quot;String#to_i 1.Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36)  Only numbers and not base&quot;,
-      'a.to_i()', &quot;1234&quot;,
-      'a = &quot;1234&quot;')
+      &#39;a.to_i()&#39;, &quot;1234&quot;,
+      &#39;a = &quot;1234&quot;&#39;)
 
 assert(&quot;String#to_i 2.Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36)  first numbers after character and not base&quot;,
-      'a.to_i()', &quot;1234&quot;,
-      'a = &quot;1234abce\t&quot;')
+      &#39;a.to_i()&#39;, &quot;1234&quot;,
+      &#39;a = &quot;1234abce\t&quot;&#39;)
 
 assert(&quot;String#to_i 3.Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36)  first character after numbers and character and not base&quot;,
-      'a.to_i()', &quot;0&quot;,
-      'a = &quot;abc1234abce\t&quot;')
+      &#39;a.to_i()&#39;, &quot;0&quot;,
+      &#39;a = &quot;abc1234abce\t&quot;&#39;)
 
 assert(&quot;String#to_i 4.Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36)  first numbers and character and base= 2&quot;,
-      'a.to_i(2)', &quot;100&quot;,
-      'a = &quot;1100100abc&quot;')
+      &#39;a.to_i(2)&#39;, &quot;100&quot;,
+      &#39;a = &quot;1100100abc&quot;&#39;)
 
 assert(&quot;String#to_i 5.Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36)  first numbers and character and base= 16&quot;,
-      'a.to_i(16)', &quot;410&quot;,
-      'a = &quot;19ahd&quot;')
+      &#39;a.to_i(16)&#39;, &quot;410&quot;,
+      &#39;a = &quot;19ahd&quot;&#39;)
 
 assert(&quot;String#to_f 1.Returns the result of interpreting leading characters in str as a floating point number. Only numbers&quot;,
-      'a.to_f()', &quot;12345.0&quot;,
-      'a = &quot;12345&quot;')
+      &#39;a.to_f()&#39;, &quot;12345.0&quot;,
+      &#39;a = &quot;12345&quot;&#39;)
 
 assert(&quot;String#to_f 2. First numbers after character&quot;,
-      'a.to_f()', &quot;45.67&quot;,
-      'a = &quot;45.67 degrees\t&quot;')
+      &#39;a.to_f()&#39;, &quot;45.67&quot;,
+      &#39;a = &quot;45.67 degrees\t&quot;&#39;)
 
 assert(&quot;String#to_f 3.First character after numbers and characters&quot;,
-      'a.to_f()', &quot;0.0&quot;,
-      'a = &quot;thx1138&quot;')
+      &#39;a.to_f()&#39;, &quot;0.0&quot;,
+      &#39;a = &quot;thx1138&quot;&#39;)
 
 assert(&quot;String#to_f 4.First numbers and exponent&quot;,
-      'a.to_f()', &quot;1234.5&quot;,
-      'a = &quot;123.45e1&quot;')
+      &#39;a.to_f()&#39;, &quot;1234.5&quot;,
+      &#39;a = &quot;123.45e1&quot;&#39;)
 
 assert(&quot;String#to_f 5.First negative numbers and exponent&quot;,
-      'a.to_f()', &quot;-1234.5&quot;,
-      'a = &quot;-123.45e1&quot;')
+      &#39;a.to_f()&#39;, &quot;-1234.5&quot;,
+      &#39;a = &quot;-123.45e1&quot;&#39;)
 
 assert(&quot;String#to_f 6.First negative numbers and negative exponent&quot;,
-      'a.to_f()', &quot;-123.45&quot;,
-      'a = &quot;-1234.5e-1&quot;')
+      &#39;a.to_f()&#39;, &quot;-123.45&quot;,
+      &#39;a = &quot;-1234.5e-1&quot;&#39;)
 
 assert(&quot;String#to_f 7.First numbers - character - numbers&quot;,
-      'a.to_f()', &quot;123&quot;,
-      'a= &quot;123abc56&quot;')
+      &#39;a.to_f()&#39;, &quot;123&quot;,
+      &#39;a= &quot;123abc56&quot;&#39;)
 
 assert(&quot;String#strip 1.Returns a copy of str with leading and trailing whitespace removed. Only character &quot;,
-      'a.strip()', &quot;123&quot;,
-      'a = &quot;123&quot;')
+      &#39;a.strip()&#39;, &quot;123&quot;,
+      &#39;a = &quot;123&quot;&#39;)
 
 assert(&quot;String#strip 2.Returns a copy of str with leading and trailing whitespace removed. Whitespace - character - &quot;,
-      'a.strip()', &quot;123&quot;,
-      'a = &quot;  \\\t \\\n  123&quot;')
+      &#39;a.strip()&#39;, &quot;123&quot;,
+      &#39;a = &quot;  \\\t \\\n  123&quot;&#39;)
 
 assert(&quot;String#strip 3.Returns a copy of str with leading and trailing whitespace removed. character - Whitespace&quot;,
-      'a.strip()', &quot;123&quot;,
-      'a = &quot;123 \\\t \\\r \\\n \t&quot;')
+      &#39;a.strip()&#39;, &quot;123&quot;,
+      &#39;a = &quot;123 \\\t \\\r \\\n \t&quot;&#39;)
 
 assert(&quot;String#setbyte. Receive an index and and int. Returns the str with the character of the index changed ascii code&quot;,
-      'a.setbyte(2,99)','&quot;hoca&quot;',
-      'a = &quot;hola&quot;')
+      &#39;a.setbyte(2,99)&#39;,&#39;&quot;hoca&quot;&#39;,
+      &#39;a = &quot;hola&quot;&#39;)
 
 assert(&quot;String#each_line 1. Split a string in substring without argument to split string&quot;,
-      'a.each_line(function(obj){return &quot;&quot; + obj + &quot;&quot;})', '[&quot;Hello\\n&quot;,&quot;world&quot;]',
-      'a = &quot;Hello\\nworld&quot;')
+      &#39;a.each_line(function(obj){return &quot;&quot; + obj + &quot;&quot;})&#39;, &#39;[&quot;Hello\\n&quot;,&quot;world&quot;]&#39;,
+      &#39;a = &quot;Hello\\nworld&quot;&#39;)
 
 assert(&quot;String#each_line 2. Split a string in substring by an argument[0]&quot;,
-      'b', '[&quot;Hel&quot;, &quot;l&quot;, &quot;o \\n worl&quot;, &quot;d&quot;]',
-      'a = &quot;Hello \\n world&quot;; b = []; a.each_line(&quot;l&quot;,function(obj){b.push(obj)})')
+      &#39;b&#39;, &#39;[&quot;Hel&quot;, &quot;l&quot;, &quot;o \\n worl&quot;, &quot;d&quot;]&#39;,
+      &#39;a = &quot;Hello \\n world&quot;; b = []; a.each_line(&quot;l&quot;,function(obj){b.push(obj)})&#39;)
 
-assert(&quot;String#each_line 3.Split a string in substring by argument ''  &quot;,
-      'a.each_line(&quot;&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;})', '[&quot;Hello \\n\\n\\n&quot;,&quot; world&quot;]',
-      'a = &quot;Hello \\n\\n\\n world&quot;')
+assert(&quot;String#each_line 3.Split a string in substring by argument &#39;&#39;  &quot;,
+      &#39;a.each_line(&quot;&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;})&#39;, &#39;[&quot;Hello \\n\\n\\n&quot;,&quot; world&quot;]&#39;,
+      &#39;a = &quot;Hello \\n\\n\\n world&quot;&#39;)
 
 assert(&quot;String#each_line 4.Split a string in substring by an argument that is not found  &quot;,
-      'a.each_line(&quot;g&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;})', '&quot;Hello \\n\\n world&quot;',
-      'a = &quot;Hello \\n\\n world&quot;')
+      &#39;a.each_line(&quot;g&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;})&#39;, &#39;&quot;Hello \\n\\n world&quot;&#39;,
+      &#39;a = &quot;Hello \\n\\n world&quot;&#39;)
 
 assert(&quot;String#strip 1.Returns a copy of str with leading and trailing whitespace removed. character - Whitespace - character - whitespace&quot;,
-      'a.strip()', &quot;123&quot;,
-      'a = &quot;  \t  123   \t&quot;')
+      &#39;a.strip()&#39;, &quot;123&quot;,
+      &#39;a = &quot;  \t  123   \t&quot;&#39;)
 
 assert(&quot;String#partition 1.&quot;, 
-       'a.partition(&quot;l&quot;)', '[&quot;he&quot;, &quot;l&quot;, &quot;lo&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.partition(&quot;l&quot;)&#39;, &#39;[&quot;he&quot;, &quot;l&quot;, &quot;lo&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#partition 2.&quot;,
-       'a.partition(&quot;x&quot;)', '[&quot;hello&quot;, &quot;&quot;, &quot;&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.partition(&quot;x&quot;)&#39;, &#39;[&quot;hello&quot;, &quot;&quot;, &quot;&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
      
 assert(&quot;String#partition 3.&quot;,
-       'a.partition(/.l/)', '[&quot;h&quot;, &quot;el&quot;, &quot;lo&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.partition(/.l/)&#39;, &#39;[&quot;h&quot;, &quot;el&quot;, &quot;lo&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#rstrip 1. Delete the spaces to right the string.&quot;,
-      'a.rstrip()', '&quot;  Hello&quot;',
-      'a = &quot;  Hello  &quot;')
+      &#39;a.rstrip()&#39;, &#39;&quot;  Hello&quot;&#39;,
+      &#39;a = &quot;  Hello  &quot;&#39;)
 
 assert(&quot;String#rstrip 2. Delete the spaces to right the string.&quot;,
-      'a.rstrip()', '&quot;Hello&quot;',
-      'a = &quot;Hello \t  \\\r   &quot;')
+      &#39;a.rstrip()&#39;, &#39;&quot;Hello&quot;&#39;,
+      &#39;a = &quot;Hello \t  \\\r   &quot;&#39;)
 
 assert(&quot;String#oct 1.  Returns an octal value from a string &quot;,
-      'a.oct()', '&quot;83&quot;',
-      'a = &quot;123&quot;')
+      &#39;a.oct()&#39;, &#39;&quot;83&quot;&#39;,
+      &#39;a = &quot;123&quot;&#39;)
 
 assert(&quot;String#oct 2.  Returns a negative octal value from a string&quot;,
-      'a.oct()', '&quot;-255&quot;',
-      'a = &quot;-377&quot;')
+      &#39;a.oct()&#39;, &#39;&quot;-255&quot;&#39;,
+      &#39;a = &quot;-377&quot;&#39;)
 
 assert(&quot;String#oct 3. Returns a null value from a character string&quot;,
-      'a.oct()', '&quot;0&quot;',
-      'a = &quot;bad&quot;')
+      &#39;a.oct()&#39;, &#39;&quot;0&quot;&#39;,
+      &#39;a = &quot;bad&quot;&#39;)
 
 assert(&quot;String#oct 4. Only returns the octal value of a string&quot;,
-      'a.oct()', '&quot;255&quot;',
-      'a = &quot;0377bad&quot;')
+      &#39;a.oct()&#39;, &#39;&quot;255&quot;&#39;,
+      &#39;a = &quot;0377bad&quot;&#39;)
 
 assert(&quot;String#sum 1.&quot;,
-       'a.sum()', '99',
-       'a = &quot;12&quot;')
+       &#39;a.sum()&#39;, &#39;99&#39;,
+       &#39;a = &quot;12&quot;&#39;)
 
 assert(&quot;String#sum 2.&quot;,
-       'a.sum()', '195',
-       'a = &quot;ab&quot;')
+       &#39;a.sum()&#39;, &#39;195&#39;,
+       &#39;a = &quot;ab&quot;&#39;)
 
 assert(&quot;String#upto 1.&quot;, 
-       'a.upto(&quot;b6&quot;, function(obj){return obj + &quot; &quot;})', '&quot;a8 a9 b0 b1 b2 b3 b4 b5 b6 &quot;' ,
-       'a = &quot;a8&quot;')
+       &#39;a.upto(&quot;b6&quot;, function(obj){return obj + &quot; &quot;})&#39;, &#39;&quot;a8 a9 b0 b1 b2 b3 b4 b5 b6 &quot;&#39; ,
+       &#39;a = &quot;a8&quot;&#39;)
 
 assert(&quot;String#upto 2.&quot;, 
-       'a.upto(&quot;a8&quot;, function(obj){return obj + &quot; &quot;})', '&quot;b6 &quot;' ,
-       'a = &quot;b6&quot;')
+       &#39;a.upto(&quot;a8&quot;, function(obj){return obj + &quot; &quot;})&#39;, &#39;&quot;b6 &quot;&#39; ,
+       &#39;a = &quot;b6&quot;&#39;)
 
 assert(&quot;String#upto 3.&quot;, 
-       'a.upto(&quot;zz&quot;, function(obj){return obj + &quot; &quot;})', '&quot;1z 2a 2b 2c 2d 2e 2f 2g 2h 2i 2j 2k 2l 2m 2n 2o 2p 2q 2r 2s 2t 2u 2v 2w 2x 2y 2z 3a 3b 3c 3d 3e 3f 3g 3h 3i 3j 3k 3l 3m 3n 3o 3p 3q 3r 3s 3t 3u 3v 3w 3x 3y 3z 4a 4b 4c 4d 4e 4f 4g 4h 4i 4j 4k 4l 4m 4n 4o 4p 4q 4r 4s 4t 4u 4v 4w 4x 4y 4z 5a 5b 5c 5d 5e 5f 5g 5h 5i 5j 5k 5l 5m 5n 5o 5p 5q 5r 5s 5t 5u 5v 5w 5x 5y 5z 6a 6b 6c 6d 6e 6f 6g 6h 6i 6j 6k 6l 6m 6n 6o 6p 6q 6r 6s 6t 6u 6v 6w 6x 6y 6z 7a 7b 7c 7d 7e 7f 7g 7h 7i 7j 7k 7l 7m 7n 7o 7p 7q 7r 7s 7t 7u 7v 7w 7x 7y 7z 8a 8b 8c 8d 8e 8f 8g 8h 8i 8j 8k 8l 8m 8n 8o 8p 8q 8r 8s 8t 8u 8v 8w 8x 8y 8z 9a 9b 9c 9d 9e 9f 9g 9h 9i 9j 9k 9l 9m 9n 9o 9p 9q 9r 9s 9t 9u 9v 9w 9x 9y 9z &quot;' ,
-       'a = &quot;1z&quot;')
+       &#39;a.upto(&quot;zz&quot;, function(obj){return obj + &quot; &quot;})&#39;, &#39;&quot;1z 2a 2b 2c 2d 2e 2f 2g 2h 2i 2j 2k 2l 2m 2n 2o 2p 2q 2r 2s 2t 2u 2v 2w 2x 2y 2z 3a 3b 3c 3d 3e 3f 3g 3h 3i 3j 3k 3l 3m 3n 3o 3p 3q 3r 3s 3t 3u 3v 3w 3x 3y 3z 4a 4b 4c 4d 4e 4f 4g 4h 4i 4j 4k 4l 4m 4n 4o 4p 4q 4r 4s 4t 4u 4v 4w 4x 4y 4z 5a 5b 5c 5d 5e 5f 5g 5h 5i 5j 5k 5l 5m 5n 5o 5p 5q 5r 5s 5t 5u 5v 5w 5x 5y 5z 6a 6b 6c 6d 6e 6f 6g 6h 6i 6j 6k 6l 6m 6n 6o 6p 6q 6r 6s 6t 6u 6v 6w 6x 6y 6z 7a 7b 7c 7d 7e 7f 7g 7h 7i 7j 7k 7l 7m 7n 7o 7p 7q 7r 7s 7t 7u 7v 7w 7x 7y 7z 8a 8b 8c 8d 8e 8f 8g 8h 8i 8j 8k 8l 8m 8n 8o 8p 8q 8r 8s 8t 8u 8v 8w 8x 8y 8z 9a 9b 9c 9d 9e 9f 9g 9h 9i 9j 9k 9l 9m 9n 9o 9p 9q 9r 9s 9t 9u 9v 9w 9x 9y 9z &quot;&#39; ,
+       &#39;a = &quot;1z&quot;&#39;)
 
 assert(&quot;String#each_char.&quot;,
-       'a.each_char(function(obj){return obj + &quot; &quot;})', '&quot;h e l l o &quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.each_char(function(obj){return obj + &quot; &quot;})&#39;, &#39;&quot;h e l l o &quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#intersection 1. Returns the matches letters in the string.&quot;,
-      'a.intersection(&quot;l&quot;)', '&quot;ll&quot;',
-      'a = &quot;hello&quot;')
+      &#39;a.intersection(&quot;l&quot;)&#39;, &#39;&quot;ll&quot;&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#intersection 2. Returns the matches letters in the string given a letters range.&quot;,
-      'a.intersection(&quot;a-i&quot;)', '&quot;he&quot;',
-      'a = &quot;hello&quot;')
+      &#39;a.intersection(&quot;a-i&quot;)&#39;, &#39;&quot;he&quot;&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#intersection 3. Returns the string without matches letters.&quot;,
-      'a.intersection(&quot;^l&quot;)', '&quot;heo&quot;',
-      'a = &quot;hello&quot;')
+      &#39;a.intersection(&quot;^l&quot;)&#39;, &#39;&quot;heo&quot;&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#intersection 4. Returns an intersection between the arguments.&quot;,
-      'a.intersection(&quot;l&quot;,&quot;lo&quot;)', '&quot;ll&quot;',
-      'a = &quot;hello&quot;')
+      &#39;a.intersection(&quot;l&quot;,&quot;lo&quot;)&#39;, &#39;&quot;ll&quot;&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#intersection 5. Returns the letters between the range and the matches letters&quot;,
-      'a.intersection(&quot;a-il&quot;)', '&quot;hell&quot;',
-      'a = &quot;hello&quot;')
+      &#39;a.intersection(&quot;a-il&quot;)&#39;, &#39;&quot;hell&quot;&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 /* todo:
 assert(&quot;String#sub 1. &quot;,
-      'a.sub(/[aeiou]/, &quot;*&quot; )', '&quot;H**lloo&quot;',//////////////////////// PENDIENTE REVISIÓN
-      'a = &quot;Heelloo&quot;')
+      &#39;a.sub(/[aeiou]/, &quot;*&quot; )&#39;, &#39;&quot;H**lloo&quot;&#39;,//////////////////////// PENDIENTE REVISIÓN
+      &#39;a = &quot;Heelloo&quot;&#39;)
 */
 
 assert(&quot;String#bytes.&quot;,
-      'a.bytes()', '104',
-      'a = &quot;hello&quot;')
+      &#39;a.bytes()&#39;, &#39;104&#39;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#ascii_only$U 1.&quot;,
-      'a.ascii_only$U()', &quot;true&quot;,
-      'a = &quot;hello&quot;')
+      &#39;a.ascii_only$U()&#39;, &quot;true&quot;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#ascii_only$U 2.&quot;,
-      'a.ascii_only$U()', &quot;false&quot;,
-      'a = &quot;-1.25&quot;')
+      &#39;a.ascii_only$U()&#39;, &quot;false&quot;,
+      &#39;a = &quot;-1.25&quot;&#39;)
 
 assert(&quot;String#each_codepoint.&quot;,
-       'a.each_codepoint(function(obj){return obj + &quot; &quot;})', '&quot;104 101 108 108 111 1593 &quot;',
-       'a = &quot;hello\u0639&quot;')
+       &#39;a.each_codepoint(function(obj){return obj + &quot; &quot;})&#39;, &#39;&quot;104 101 108 108 111 1593 &quot;&#39;,
+       &#39;a = &quot;hello\u0639&quot;&#39;)
 
 assert(&quot;String#rpartition 1.&quot;, 
-       'a.rpartition(&quot;l&quot;)', '[&quot;hel&quot;, &quot;l&quot;, &quot;o&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.rpartition(&quot;l&quot;)&#39;, &#39;[&quot;hel&quot;, &quot;l&quot;, &quot;o&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#rpartition 2.&quot;,
-       'a.rpartition(&quot;x&quot;)', '[&quot;&quot;,&quot;&quot;,&quot;hello&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.rpartition(&quot;x&quot;)&#39;, &#39;[&quot;&quot;,&quot;&quot;,&quot;hello&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
      
 assert(&quot;String#rpartition 3.&quot;,
-       'a.rpartition(/.l/)', '[&quot;he&quot;, &quot;ll&quot;, &quot;o&quot;]',
-       'a = &quot;hello&quot;')
+       &#39;a.rpartition(/.l/)&#39;, &#39;[&quot;he&quot;, &quot;ll&quot;, &quot;o&quot;]&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#scan.&quot;,
-      'a.scan(/.../)', '[&quot;Hel&quot;]',
-      'a = &quot;Hello World&quot;')
+      &#39;a.scan(/.../)&#39;, &#39;[&quot;Hel&quot;]&#39;,
+      &#39;a = &quot;Hello World&quot;&#39;)
 
 assert(&quot;String#scan.&quot;,
-      'a.scan(/(..)(.)/)', '[&quot;He&quot;,&quot;l&quot;]',
-      'a = &quot;Hello World&quot;')
+      &#39;a.scan(/(..)(.)/)&#39;, &#39;[&quot;He&quot;,&quot;l&quot;]&#39;,
+      &#39;a = &quot;Hello World&quot;&#39;)
 
 assert(&quot;String#scan.&quot;,
-      'b', '[&quot;Hel&quot;, &quot;lo &quot;, &quot;Wor&quot;]',
-      'a = &quot;Hello World&quot;; b= []; a.scan(/.../, function(el){ b.push(el) })')
+      &#39;b&#39;, &#39;[&quot;Hel&quot;, &quot;lo &quot;, &quot;Wor&quot;]&#39;,
+      &#39;a = &quot;Hello World&quot;; b= []; a.scan(/.../, function(el){ b.push(el) })&#39;)
 
 assert(&quot;String#scan.&quot;,
-      'b', '[&quot;He&quot;, &quot;l&quot;, &quot;lo&quot;, &quot; &quot;, &quot;Wo&quot;, &quot;r&quot;]',
-      'a = &quot;Hello World&quot;; b= []; a.scan(/(..)(.)/, function(el1, el2){; b.push(el1); b.push(el2); })')
+      &#39;b&#39;, &#39;[&quot;He&quot;, &quot;l&quot;, &quot;lo&quot;, &quot; &quot;, &quot;Wo&quot;, &quot;r&quot;]&#39;,
+      &#39;a = &quot;Hello World&quot;; b= []; a.scan(/(..)(.)/, function(el1, el2){; b.push(el1); b.push(el2); })&#39;)
 
 
 assert(&quot;String#end_With$U. Returns true if str ends with a suffix given.&quot;,
-    'a.end_With$U(&quot;llo&quot;)',&quot;true&quot;,
-    'a = &quot;hello&quot;')
+    &#39;a.end_With$U(&quot;llo&quot;)&#39;,&quot;true&quot;,
+    &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#eql$U. Returns true or false by comparing  object and the argument.&quot;,
-      'a.eql$U(&quot;hello&quot;)',&quot;true&quot;,
-      'a = &quot;hello&quot;')
+      &#39;a.eql$U(&quot;hello&quot;)&#39;,&quot;true&quot;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#to_str. Returns a duplicate, but not the string itself.&quot;,
-      &quot;a.to_str()&quot;, &quot;'Hello'&quot;,
-      &quot;a = 'Hello'; b = a.to_str(); b = 'Bye'&quot;)
+      &quot;a.to_str()&quot;, &quot;&#39;Hello&#39;&quot;,
+      &quot;a = &#39;Hello&#39;; b = a.to_str(); b = &#39;Bye&#39;&quot;)
 
 assert(&quot;String#getbyte .Returns the indexth byte as an integer.&quot;,
-      'a.getbyte(1)',&quot;101&quot;,
-      'a = &quot;hello&quot;')
+      &#39;a.getbyte(1)&#39;,&quot;101&quot;,
+      &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#erase 1. Erases a letter from a string.&quot;,
-       'a.erase(&quot;l&quot;)', '&quot;heo&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.erase(&quot;l&quot;)&#39;, &#39;&quot;heo&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#erase 2. Erases an intersection between the arguments.&quot;,
-       'a.erase(&quot;l&quot;, &quot;lo&quot;)', '&quot;heo&quot;',
-       'a = &quot;hello&quot;')	
+       &#39;a.erase(&quot;l&quot;, &quot;lo&quot;)&#39;, &#39;&quot;heo&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)	
 
 assert(&quot;String#erase 3. Erases an intersection between the arguments.&quot;,
-       'a.erase(&quot;aeiou&quot;, &quot;^e&quot;)', '&quot;hell&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.erase(&quot;aeiou&quot;, &quot;^e&quot;)&#39;, &#39;&quot;hell&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#erase 4. Erases a group of letters.&quot;,
-       'a.erase(&quot;a-i&quot;)', '&quot;llo&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.erase(&quot;a-i&quot;)&#39;, &#39;&quot;llo&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#erase 5. Erases an intersection between a group of letters and a single letter.&quot;,
-        'a.erase(&quot;a-io&quot;)', '&quot;ll&quot;',
-        'a = &quot;hello&quot;')
+        &#39;a.erase(&quot;a-io&quot;)&#39;, &#39;&quot;ll&quot;&#39;,
+        &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#to_r 1. Return a rational number which denotes the string form. String only number .&quot;,
-        'a.to_r()', '&quot;12/1&quot;',
-        'a = &quot;12&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;12/1&quot;&#39;,
+        &#39;a = &quot;12&quot;&#39;)
 
 assert(&quot;String#to_r 2. Return a rational number which denotes the string form. String only number and charater .&quot;,
-        'a.to_r()', '&quot;61/5&quot;',
-        'a = &quot;  12.2__a212  _&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;61/5&quot;&#39;,
+        &#39;a = &quot;  12.2__a212  _&quot;&#39;)
 
 
 
 assert(&quot;String#to_r 3. Return a rational number which denotes the string form. String only number and charater at firts string .&quot;,
-        'a.to_r()', '&quot;0/1&quot;',
-        'a = &quot;  _12.2__a212  _&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;0/1&quot;&#39;,
+        &#39;a = &quot;  _12.2__a212  _&quot;&#39;)
 
 assert(&quot;String#to_r 4. Return a rational number which denotes the string form. String with number / number  .&quot;,
-        'a.to_r()', '&quot;150/1&quot;',
-        'a = &quot;  300/2_&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;150/1&quot;&#39;,
+        &#39;a = &quot;  300/2_&quot;&#39;)
 assert(&quot;String#to_r 5. Return a rational number which denotes the string form. String with number / number and other character .&quot;,
-        'a.to_r()', '&quot;7/2&quot;',
-        'a = &quot;  21/06/09_&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;7/2&quot;&#39;,
+        &#39;a = &quot;  21/06/09_&quot;&#39;)
 
 assert(&quot;String#to_r 6. Return a rational number which denotes the string form. String with negative number.&quot;,
-        'a.to_r()', '&quot;-920/1&quot;',
-        'a = &quot;  -9.2e2_&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;-920/1&quot;&#39;,
+        &#39;a = &quot;  -9.2e2_&quot;&#39;)
 
 assert(&quot;String#to_r 7. Return a rational number which denotes the string form. String with character + number.&quot;,
-        'a.to_r()', '&quot;0/1&quot;',
-        'a = &quot;  kike-9.2e2_&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;0/1&quot;&#39;,
+        &#39;a = &quot;  kike-9.2e2_&quot;&#39;)
 
 assert(&quot;String#to_r 8. Return a rational number which denotes the string form. String with number / number + character + number.&quot;,
-        'a.to_r()', '&quot;460/1&quot;',
-        'a = &quot;  9.2e2/2_kike12&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;460/1&quot;&#39;,
+        &#39;a = &quot;  9.2e2/2_kike12&quot;&#39;)
 
 assert(&quot;String#to_r 9. Return a rational number which denotes the string form. String with number / number with decimal character .&quot;,
-        'a.to_r()', '&quot;460/1&quot;',
-        'a = &quot;  9.2e2/2.2_kike&quot;')
+        &#39;a.to_r()&#39;, &#39;&quot;460/1&quot;&#39;,
+        &#39;a = &quot;  9.2e2/2.2_kike&quot;&#39;)
 
 assert(&quot;String#bytesize&quot;,
-       'a.bytesize()', '&quot;5&quot;',
-       'a = &quot;hello&quot;')
+       &#39;a.bytesize()&#39;, &#39;&quot;5&quot;&#39;,
+       &#39;a = &quot;hello&quot;&#39;)
 
 assert(&quot;String#humanize&quot;,
-       '&quot;the_rolling_stones&quot;.humanize()', '&quot;the rolling stones&quot;',
-       ''
+       &#39;&quot;the_rolling_stones&quot;.humanize()&#39;, &#39;&quot;the rolling stones&quot;&#39;,
+       &#39;&#39;
       )
 
 assert(&quot;String#humanize&quot;,
-       '&quot;the______rolling______stones&quot;.humanize()', '&quot;the rolling stones&quot;',
-       ''
+       &#39;&quot;the______rolling______stones&quot;.humanize()&#39;, &#39;&quot;the rolling stones&quot;&#39;,
+       &#39;&#39;
       )
 
 assert(&quot;String#humanize&quot;,
-       '&quot;theRollingStones&quot;.humanize()', '&quot;the rolling stones&quot;',
-       ''
+       &#39;&quot;theRollingStones&quot;.humanize()&#39;, &#39;&quot;the rolling stones&quot;&#39;,
+       &#39;&#39;
       )      
 
 assert(&quot;String#humanize&quot;,
-       '&quot;TheRollingStones&quot;.humanize()', '&quot;The rolling stones&quot;',
-       ''
+       &#39;&quot;TheRollingStones&quot;.humanize()&#39;, &#39;&quot;The rolling stones&quot;&#39;,
+       &#39;&#39;
       )
 
 
 assert(&quot;String#humanize&quot;,
-       '&quot;   the_rolling_stones   &quot;.humanize()', '&quot;the rolling stones&quot;',
-       ''
+       &#39;&quot;   the_rolling_stones   &quot;.humanize()&#39;, &#39;&quot;the rolling stones&quot;&#39;,
+       &#39;&#39;
       )
       
 
 assert(&quot;String#humanize&quot;,
-       '&quot;   theRollingStones  &quot;.humanize()', '&quot;the rolling stones&quot;',
-       ''
+       &#39;&quot;   theRollingStones  &quot;.humanize()&#39;, &#39;&quot;the rolling stones&quot;&#39;,
+       &#39;&#39;
       )      
       
 assert(&quot;String#humanize&quot;,
-       '&quot;  TheRollingStones  &quot;.humanize()', '&quot;The rolling stones&quot;',
-       ''
+       &#39;&quot;  TheRollingStones  &quot;.humanize()&#39;, &#39;&quot;The rolling stones&quot;&#39;,
+       &#39;&#39;
       )
       
 assert(&quot;String#underscore&quot;,
-       '&quot;the rolling stones&quot;.underscore()', '&quot;the_rolling_stones&quot;',
-       ''
+       &#39;&quot;the rolling stones&quot;.underscore()&#39;, &#39;&quot;the_rolling_stones&quot;&#39;,
+       &#39;&#39;
       )
       
 assert(&quot;String#underscore&quot;,
-       '&quot;  the rolling stones  &quot;.underscore()', '&quot;the_rolling_stones&quot;',
-       ''
+       &#39;&quot;  the rolling stones  &quot;.underscore()&#39;, &#39;&quot;the_rolling_stones&quot;&#39;,
+       &#39;&#39;
       )
 
 assert(&quot;String#underscore&quot;,
-       '&quot;theRolling stones&quot;.underscore()', '&quot;the_rolling_stones&quot;',
-       ''
+       &#39;&quot;theRolling stones&quot;.underscore()&#39;, &#39;&quot;the_rolling_stones&quot;&#39;,
+       &#39;&#39;
       )
       
 assert(&quot;String#underscore&quot;,
-       '&quot;TheRolling _stones&quot;.underscore()', '&quot;The_rolling_stones&quot;',
-       ''
+       &#39;&quot;TheRolling _stones&quot;.underscore()&#39;, &#39;&quot;The_rolling_stones&quot;&#39;,
+       &#39;&#39;
       )
 
 
 assert(&quot;String#underscore&quot;,
-       '&quot;  TheRolling   ____stones&quot;.underscore()', '&quot;The_rolling_stones&quot;',
-       ''
+       &#39;&quot;  TheRolling   ____stones&quot;.underscore()&#39;, &#39;&quot;The_rolling_stones&quot;&#39;,
+       &#39;&#39;
       )      
 
 
 assert(&quot;String#camel_case&quot;,
-       '&quot;the rolling stones&quot;.camel_case()', '&quot;theRollingStones&quot;',
-       '')
+       &#39;&quot;the rolling stones&quot;.camel_case()&#39;, &#39;&quot;theRollingStones&quot;&#39;,
+       &#39;&#39;)
        
 assert(&quot;String#camel_case&quot;,
-       '&quot;the rolling   stones&quot;.camel_case()', '&quot;theRollingStones&quot;',
-       '')
+       &#39;&quot;the rolling   stones&quot;.camel_case()&#39;, &#39;&quot;theRollingStones&quot;&#39;,
+       &#39;&#39;)
        
 assert(&quot;String#camel_case&quot;,
-       '&quot;the_rolling___stones&quot;.camel_case()', '&quot;theRollingStones&quot;',
-       '')            
+       &#39;&quot;the_rolling___stones&quot;.camel_case()&#39;, &#39;&quot;theRollingStones&quot;&#39;,
+       &#39;&#39;)            
        
 assert(&quot;String#camel_case&quot;,
-       '&quot;  the _rolling  _  ___ _ stones&quot;.camel_case()', '&quot;theRollingStones&quot;',
-       '')         
+       &#39;&quot;  the _rolling  _  ___ _ stones&quot;.camel_case()&#39;, &#39;&quot;theRollingStones&quot;&#39;,
+       &#39;&#39;)         
        
 assert(&quot;String#camel_case&quot;,
-       '&quot;  The _rolling  _  ___ _ stones&quot;.camel_case()', '&quot;TheRollingStones&quot;',
-       '')                
+       &#39;&quot;  The _rolling  _  ___ _ stones&quot;.camel_case()&#39;, &#39;&quot;TheRollingStones&quot;&#39;,
+       &#39;&#39;)                
        
 assert(&quot;String#camel_case&quot;,
-       '&quot;The _rolling  _  ___ _ stones&quot;.camel_case()', '&quot;TheRollingStones&quot;',
-       '')        
+       &#39;&quot;The _rolling  _  ___ _ stones&quot;.camel_case()&#39;, &#39;&quot;TheRollingStones&quot;&#39;,
+       &#39;&#39;)        
 /*
 assert(&quot;String#squeeze 1. &quot;,
-       'a.squeeze()', '&quot;helo&quot;',
-       'a = &quot;heello&quot;')
+       &#39;a.squeeze()&#39;, &#39;&quot;helo&quot;&#39;,
+       &#39;a = &quot;heello&quot;&#39;)
 
 assert(&quot;String#squeeze 2. &quot;,
-       'a.squeeze(&quot;l&quot;)', '&quot;heelo&quot;',
-       'a = &quot;heello&quot;')
+       &#39;a.squeeze(&quot;l&quot;)&#39;, &#39;&quot;heelo&quot;&#39;,
+       &#39;a = &quot;heello&quot;&#39;)
 
 assert(&quot;String#squeeze 3. &quot;,
-       'a.squeeze(&quot;g-m&quot;)', '&quot;abcdefzz&quot;',////////////////////////////////// PENDIENTE REVISION
-       'a = &quot;abcdefgghhiijjkkzz&quot;')
+       &#39;a.squeeze(&quot;g-m&quot;)&#39;, &#39;&quot;abcdefzz&quot;&#39;,////////////////////////////////// PENDIENTE REVISION
+       &#39;a = &quot;abcdefgghhiijjkkzz&quot;&#39;)
 */
 
 
 assert(&quot;String#normalize_index 1.&quot;,
-       'a.normalize_index(-1)', '4',
-       'a=&quot;hello&quot;')
+       &#39;a.normalize_index(-1)&#39;, &#39;4&#39;,
+       &#39;a=&quot;hello&quot;&#39;)
 
 assert(&quot;String#normalize_index 2&quot;,
-       'a.normalize_index(-6)', 'null',
-       'a=&quot;hello&quot;')
+       &#39;a.normalize_index(-6)&#39;, &#39;null&#39;,
+       &#39;a=&quot;hello&quot;&#39;)
 
 assert(&quot;String#normalize_index 3&quot;,
-       'a.normalize_index(-2,5)', '3',
-       'a=&quot;hello&quot;')
+       &#39;a.normalize_index(-2,5)&#39;, &#39;3&#39;,
+       &#39;a=&quot;hello&quot;&#39;)
 </pre>
 </body>
 </html>

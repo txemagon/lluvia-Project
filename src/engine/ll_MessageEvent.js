@@ -47,7 +47,7 @@ var systemEv = (function(){
 /**
  * Syntax:
  *
- * SystemEv(<type_of_message>, {name: <message_name>, data: <extra_data>}[, <creator_reference>] [, <setup_function>] )
+ * SystemEv(type_of_message, {name: message_name, data: extra_data}[, creator_reference] [, setup_function] )
  *
  * You can provide an specific setup function for a particular message
  *

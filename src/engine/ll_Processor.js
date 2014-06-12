@@ -1,16 +1,14 @@
 /**
+ * @class Processor
  * Multiprocess components / state machines
- * @author Txema
- * @version 1.00, june 2007
- */
-
-Processor.prototype.constructor = Processor;
-
-/**
  * Create a Processor to run threads.
  * lluviaProject provides a default processor $Processor in the global scope.
  *
- * @constructor Processor
+ */
+
+Processor.prototype.constructor = Processor;
+/**
+ * @method constructor
  * @return				{Processor}	retuns a new processor.
  */
 function Processor(){
@@ -26,7 +24,6 @@ function Processor(){
 
 /**
  * Add a thread in the execution queue
- * @memberOf	{Processor}
  * @method		register
  * @param		{Thread}    cObject		Is the caller object to be porocessed through the thread interface.
  * @param		{Function}  solicitorF		Control loop object. Typically "run".
@@ -52,7 +49,6 @@ Processor.prototype.register = function(cObject, solicitorF){
 /**
  * Removes a thread out of the execution queue.
  *
- * @memberOf	{Processor}
  * @method		 kill
  * @param		{Thread}		rObject		Object to be removed from the execution queue.
  * @param		{Function}	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
@@ -66,7 +62,6 @@ Processor.prototype.kill = function(rObject, solicitorF){
 /**
  * Execute all threads one step.
  *
- * @memberOf	{Processor}
  * @method		step
  */
 Processor.prototype.step = function (date){

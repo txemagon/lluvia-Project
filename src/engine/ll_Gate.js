@@ -2,7 +2,6 @@
  * Event to message mapper.
  *
  * @author Txema
- * @version 1.00 Aug, 2009
  */
 
 /*

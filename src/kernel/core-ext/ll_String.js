@@ -55,7 +55,7 @@ String.prototype.humanize = function(){
  *
  * ### Example:
  *
- *      "TheRollingStone".underscore()   //=> "The rolling stones"
+ *      "TheRollingStone".underscore()   //=> "The_rolling_stones"
  *
  *
  * @return {String} string
@@ -413,7 +413,6 @@ String.prototype.oct = function(){
  *
  * Returns a reversed version of an introduced string
  *
- * @param        {String}
  * @return       {String}     Return the reverse from a string.
  *
  * ### Comments: This function use a ".reverse" from array class.
@@ -487,10 +486,9 @@ String.prototype.include_some_of$U = function(
  *
  * Returns the index of the string passed as parameter
  *
- * @param        {String}
- * @return       {Number}     Returns index.
+ * @param        {String}     search Searched string.
+ * @return       {Number}     Returned index.
  *
- * ### Comments:
  *
  * ### Example1:
  *
@@ -502,10 +500,10 @@ String.prototype.include_some_of$U = function(
  * "pacoelmejor".rindex("el")
  * //=> 4
  */
-String.prototype.rindex = function(){
+String.prototype.rindex = function(search){
     if (arguments.length == 0)
 	return null
-    return (this.lastIndexOf(arguments[0]) > 0)? this.lastIndexOf(arguments[0]) : false
+    return (this.lastIndexOf(search) > 0)? this.lastIndexOf(search) : false
 }
 
 /**
@@ -513,7 +511,8 @@ String.prototype.rindex = function(){
  * Returns a center word in the string
  *
  * @chainable
- * @param        {String}
+ * @param        {Number}     length  Size of the resulting line.
+ * @param        {String}     padding String to pad with.  
  * @return       {String}     Return the a string with a word center.
  *
  * ### Comments: If integer is greater than the length of str,
@@ -525,22 +524,22 @@ String.prototype.rindex = function(){
  *    "hello".center(20)           //=> "       hello        "
  *    "hello".center(20, '123')    //=> "1231231hello12312312"
  */
-String.prototype.center = function(){
+String.prototype.center = function(length, padding){
     if (arguments.length == 0 || arguments.length > 2)
 	throw("wrong number arguments")
-    if (this.length >= arguments[0])
+    if (this.length >= length)
 	return this
     var str = ""
     var i = 0
     var j = 0
-    while(i<=(arguments[0] - this.length)){
-	if (i == (arguments[0]-this.length) / 2){
+    while(i<=(length - this.length)){
+	if (i == (length-this.length) / 2){
 	    j = 0
 	    str += this
 	}
 	else if (arguments.length > 1){
-	    str += arguments[1].length == 1? arguments[1] : arguments[1][j]
-	    j = (j+1)%arguments[1].length
+	    str += padding.length == 1? padding : padding[j]
+	    j = (j+1) % padding.length
 	}
 	else
 	    str += " "
@@ -589,7 +588,6 @@ String.prototype.chomp = function(){
  *
  * Returns a string without \n or \r or \r\n or char of the end the String.
  *
- * @param        {String}
  * @return       {String}
  *
  * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed.
@@ -619,7 +617,6 @@ String.prototype.chop = function(){
  *
  * Returns a number hexadecimal convert to decimal.
  *
- * @param        {Number}
  * @return       {Number}
  *
  * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x)
@@ -817,7 +814,6 @@ String.prototype.to_f = function() {
  *
  * Returns a copy of str with leading and trailing whitespace removed.
  *
- * @param    {void}
  * @return  {String} // Return a copy of str with leading and trailing whitespace removed
  *
  * ### Example
@@ -889,7 +885,6 @@ String.prototype.partition = function(){
  *
  * Returns a copy of str with trailing whitespace removed.
  *
- * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
  *
  * ### Example
@@ -970,7 +965,6 @@ String.prototype.chars = function(){
  *
  * Sum of the ASCII codes of all characters in the string.
  *
- * @param    {void}     //No parameters
  * @return   {Number} return the sum
  *
  * ### Example
@@ -1311,8 +1305,8 @@ String.prototype.end_With$U = function(str){
  *
  * Returns true or false by comparing  object and the argument.
  *
- * @param       {string}
- * @return      {boolean}
+ * @param       {String}   string String to compare.
+ * @return      {Boolean}
  *
  * ### Comments:    Compares the object with argument.
  *
@@ -1322,8 +1316,8 @@ String.prototype.end_With$U = function(str){
  *
  **/
 
-String.prototype.eql$U = function() {
-    return this == arguments[0]
+String.prototype.eql$U = function(string) {
+    return this == string
 }
 
 /**
@@ -1331,8 +1325,8 @@ String.prototype.eql$U = function() {
  *
  * Returns the indexth byte as an integer.
  *
- * @param       {string}
- * @return      {number}  a interger.
+ * @param       {Number}  index Specified index in the string.
+ * @return      {Number}  a interger.
  *
  * ### Comments:    Using charCodeAt from a javaScript function.
  *
@@ -1340,8 +1334,8 @@ String.prototype.eql$U = function() {
  *     "A".getbyte()    //=> 65
  *
  **/
-String.prototype.getbyte = function(){
-    return this.charCodeAt(arguments[0])
+String.prototype.getbyte = function(index){
+    return this.charCodeAt(index)
 }
 
 /**

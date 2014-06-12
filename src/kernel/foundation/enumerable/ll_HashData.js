@@ -1,3 +1,3 @@
-function ଳHashData() {
+function HashData() {
 
 }

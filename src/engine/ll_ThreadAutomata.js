@@ -31,7 +31,6 @@ function ThreadAutomata(state, currentState, solicitor, processor){
  * The main difference between ThreadAutomata#run and Automata#run lies on
  * the type of the solicitor functions, designed to make atomic operations.
  *
- * @memberOf {ThreadAutomata}
  * @method	  run
  *
  */

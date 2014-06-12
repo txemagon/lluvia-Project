@@ -1,7 +1,7 @@
 /**
  * @class Kernel.Facilities.Class.ApplyProxyConstructor
  * Class Factory that proxies its call to Constructor.
- * see {@link Kernle.Facilities.Class.ProxyConstructor} for details.
+ * see {@link Kernel.Facilities.Class.ProxyConstructor} for details.
  *
  * @constructor
  * Creates an ApplyProxyConstructor

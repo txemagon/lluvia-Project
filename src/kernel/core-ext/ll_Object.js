@@ -1,4 +1,4 @@
-/**  Note: Extending Object's prototype will address you
+/*  Note: Extending Object's prototype will address you
  *  to the hub of hell (hellHub) in programmer's
  *  collective mind, but freedom is the rider of
  *  love. Bear it in your mind and practice:

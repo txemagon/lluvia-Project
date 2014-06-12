@@ -9,7 +9,7 @@ Thread.prototype.constructor = Thread;
  * @method constructor
  *  
  * @param  {Function} 	    solicitor Function attending processor calls.
- * @return {Thread} 		New execution thread
+ * @return {object} 	    New execution thread
  */
 function Thread(solicitor, processor){
 	this.before = new Date()
@@ -24,10 +24,10 @@ function Thread(solicitor, processor){
 
 
 /**
+ * @method    run	
+ * State machine manager.
  * Thread execution step. Is an abstract method.
  *
- * @memberOf  {Thread}
- * @method    run	State machine manager.
  */
 Thread.prototype.run = function(processors_time){
 	this.now = processors_time

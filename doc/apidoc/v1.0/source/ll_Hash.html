@@ -15,32 +15,74 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">function Hash(initial_data){
-   if (initial_data)
-	  this.merge$B(initial_data)
+  <pre class="prettyprint lang-js"><span id='Hash'>/**
+</span> * @class Hash
+ * Creates an associative array.
+ */
+
+<span id='Hash-method-constructor'>/**
+</span> * @method  constructor
+ *
+ * ### Example
+ *
+ *     var a = new Hash({name: &quot;John&quot;}, function(){} )
+ *
+ * @param {Object} initial_data Initial values for the Hash.
+ */
+function Hash(initial_data) {
+    if (initial_data)
+        this.merge$B(initial_data)
+
 }
 
-Hash.prototype.values = function(){
-   var that = this
-   return this.keys().collect( function(i){ return that[i] } )
+<span id='Hash-method-values'>/**
+</span> * @method values
+ * Returns an array with the values of all the reachable keys of this object.
+ *
+ * @return {Array} Object values list.
+ */
+Hash.prototype.values = function() {
+    var that = this
+    return this.keys().collect(function(i) {
+        return that[i]
+    })
 }
+Hash.prototype.stop_enumerating(&quot;values&quot;)
 
-Hash.prototype.self_values = function(){
-   var that = this
-   return this.self_keys().collect( function(i){ return that[i] } )
+<span id='Hash-method-self_values'>/**
+</span> * @method self_values
+ * Returns a list with values set directly on this object keys.
+ *
+ * @return {Array} List of non inherited values.
+ */
+Hash.prototype.self_values = function() {
+    var that = this
+    return this.self_keys().collect(function(i) {
+        return that[i]
+    })
 }
+Hash.prototype.stop_enumerating(&quot;self_values&quot;)
 
+<span id='Hash-method-own_values'>/**
+</span> * @method  own_values.
+ * Alias of Hash#self_values.
+ */
 Hash.prototype.alias(&quot;own_values&quot;, &quot;self_values&quot;)
 
 
-// Notice: Hash doesn't support inherited properties
+<span id='Hash-method-each'>/**
+</span> * @method each
+ * Calls the block with every key/value pair. Notice that those
+ * key reached via the prototype chain are explicitly excluded.
+ */
 Hash.prototype.each = function() {
-   for (var i in this)
-	  if ( this.hasOwnProperty(i) )
-		 Hash.prototype.each.yield(i, this[i])
+    for (var i in this)
+        if (this.hasOwnProperty(i))
+            Hash.prototype.each.yield(i, this[i])
 }
+Hash.prototype.stop_enumerating(&quot;each&quot;)
 
-<span id='global-method-collect'>/**
+<span id='Hash-method-collect'>/**
 </span> * @method collect
  * Collects into an Array all the values returned by a block.
  *
@@ -53,22 +95,22 @@ Hash.prototype.each = function() {
  *
  */
 Hash.prototype.collect = function() {
-   var result = []
-   for (var i in this)
-	  result.push( Hash.prototype.each.yield(i, this[i]) )
-   return result
+    var result = []
+    for (var i in this)
+        result.push(Hash.prototype.each.yield(i, this[i]))
+    return result
 }
+Hash.prototype.stop_enumerating(&quot;collect&quot;)
 
-<span id='global-method-size'>/**
+<span id='Hash-method-size'>/**
 </span> * @method size
  * Returns the numbers of selk keys
  *
  * @return {Number}
  */
-Hash.prototype.size = function(){
-   return this.self_keys().count()
+Hash.prototype.size = function() {
+    return this.self_keys().count()
 }
-
-</pre>
+Hash.prototype.stop_enumerating(&quot;size&quot;)</pre>
 </body>
 </html>

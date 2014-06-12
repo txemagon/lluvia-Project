@@ -206,12 +206,12 @@ Array.prototype.count = function(obj){
  *
  * ###Example
  *     var sentence   = &quot;&quot;
- *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\'t&quot;, &quot;I&quot;]
+ *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\&#39;t&quot;, &quot;I&quot;]
  *     to_my_boss.reverse_each(function(element){
  *                                sentence += (element + &quot; &quot;).toUpperCase()
  *                             })
  *     sentence
- *     //=&gt; &quot;I DON'T LIKE THIS JOB &quot;
+ *     //=&gt; &quot;I DON&#39;T LIKE THIS JOB &quot;
  */
 
 Array.prototype.reverse_each = function(){
@@ -287,7 +287,7 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
  *
  * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array.
  * If not, it will be deleted.
- * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
+ * @return  {Array} Returns all items that have passed the condition. If an item can&#39;t pass the condition, it is deleted.
  *
  * ###Example
  *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
@@ -717,7 +717,7 @@ Array.prototype.delete$B = function(obj){
  *     // =&gt; true
  *
  *     var names = [&quot;carlos&quot;,&quot;jordan&quot;,&quot;david&quot;,&quot;susan&quot;]
- *     newName = names.include$U('susan')
+ *     newName = names.include$U(&#39;susan&#39;)
  *     // =&gt; true
  */
 Array.prototype.include$U = function(){
@@ -844,7 +844,7 @@ Array.prototype.merge = function(ary2){
  * Deletes elements from position 0 of the array to the possition passed as parameter.
  *
  * @param {Number} Position to stop deleting data of the array.
- * @return {Array} Returns the array elements that haven't been deleted.
+ * @return {Array} Returns the array elements that haven&#39;t been deleted.
  *
  * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
@@ -1187,7 +1187,7 @@ Array.prototype.shuffle = function()
  *     numbers.transpose()
  *     //=&gt; [[1,1,1],[2,2,2],[3,3,3]]
  *
- *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
+ *     var words = [[&#39;hola&#39;,&#39;pedro&#39;,&#39;cristobal&#39;],[&#39;adios&#39;,&#39;juan&#39;,&#39;colon&#39;]]
  *     words.transpose()
  *     //=&gt; [[hola, adios], [pedro, juan], [cristobal, colon]]
  */
@@ -1549,19 +1549,19 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * @return {Array} Sorted Array
  *
  * ###Example
- *      var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']
+ *      var cities = [&#39;Madrid&#39;, &#39;barcelona&#39;, &#39;Valencia&#39;, &#39;alicante&#39;]
  *      cities.sort_by()
  *      //=&gt; [Madrid,Valencia,alicante,barcelona]
  *
  *      cities.sort_by( function(el){
  *                        return el.toLowerCase()
  *                       })
- *      //=&gt; ['alicante', 'barcelona', 'Madrid', 'Valencia']
+ *      //=&gt; [&#39;alicante&#39;, &#39;barcelona&#39;, &#39;Madrid&#39;, &#39;Valencia&#39;]
  *
  *      cities.sort_by( function(el){
  *                        return el.length
  *                       })
- *      //=&gt; ['Madrid', 'Valencia', 'Barcelona']
+ *      //=&gt; [&#39;Madrid&#39;, &#39;Valencia&#39;, &#39;Barcelona&#39;]
  *
  */
 Array.prototype.sort_by = function(){

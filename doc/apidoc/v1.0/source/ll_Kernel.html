@@ -48,7 +48,7 @@ function O(variable){
     if (t !== &quot;String&quot;)
       return eval(&quot;new &quot; + t + &quot;(&quot; + variable + &quot;)&quot;)
     else
-      return eval(&quot;new &quot; + t + &quot;('&quot; + variable + &quot;')&quot;)
+      return eval(&quot;new &quot; + t + &quot;(&#39;&quot; + variable + &quot;&#39;)&quot;)
   }
   return variable
 }
@@ -57,7 +57,7 @@ function O(variable){
 </span> * @method requires
  *
  * Waits until a list of classes or objects are fully parsed by the browser.
- * It doesn't actually fetch any code from the server
+ * It doesn&#39;t actually fetch any code from the server
  *
  * @param {String} list_of_objects list of elements required to proceed with the execution.
  */
@@ -86,11 +86,12 @@ function requires(list_of_objects){
  * @param  {Object} error  [The error that triggers method_missing call.]
  * @param  {String} method [Name of the method that was invoked]
  * @param  {Array}  params List of params in the invokation.
- * @return {[type]}        [description]
+ * @return {Object}        As long as it is a delegator, it returns
+ *                         depending on the called function.
  *
  * **NOTE:**
  *
- *  Class_&lt;Name&gt;() function calls generates a class with the
+ *  Class_&amp;lt;Name&amp;gt;() function calls generates a class with the
  *  scaffolding.
  */
 function method_missing(error, method, params){
