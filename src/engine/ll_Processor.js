@@ -1,16 +1,14 @@
 /**
+ * @class Processor
  * Multiprocess components / state machines
- * @author Txema
- * @version 1.00, june 2007
- */
-
-Processor.prototype.constructor = Processor;
-
-/**
  * Create a Processor to run threads.
  * lluviaProject provides a default processor $Processor in the global scope.
  *
- * @constructor Processor
+ */
+
+Processor.prototype.constructor = Processor;
+/**
+ * @method constructor
  * @return				{Processor}	retuns a new processor.
  */
 function Processor(){

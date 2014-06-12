@@ -15,19 +15,17 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-property-constructor'>/**
-</span> * Multiprocess components / state machines
- * @author Txema
- * @version 1.00, june 2007
+  <pre class="prettyprint lang-js"><span id='Processor'>/**
+</span> * @class Processor
+ * Multiprocess components / state machines
+ * Create a Processor to run threads.
+ * lluviaProject provides a default processor $Processor in the global scope.
+ *
  */
 
 Processor.prototype.constructor = Processor;
-
-<span id='Processor-method-constructor'><span id='Processor'>/**
-</span></span> * Create a Processor to run threads.
- * lluviaProject provides a default processor $Processor in the global scope.
- *
- * @constructor Processor
+<span id='Processor-method-constructor'>/**
+</span> * @method constructor
  * @return				{Processor}	retuns a new processor.
  */
 function Processor(){
@@ -43,7 +41,6 @@ function Processor(){
 
 <span id='Processor-method-register'>/**
 </span> * Add a thread in the execution queue
- * @memberOf	{Processor}
  * @method		register
  * @param		{Thread}    cObject		Is the caller object to be porocessed through the thread interface.
  * @param		{Function}  solicitorF		Control loop object. Typically &quot;run&quot;.
@@ -69,7 +66,6 @@ Processor.prototype.register = function(cObject, solicitorF){
 <span id='Processor-method-kill'>/**
 </span> * Removes a thread out of the execution queue.
  *
- * @memberOf	{Processor}
  * @method		 kill
  * @param		{Thread}		rObject		Object to be removed from the execution queue.
  * @param		{Function}	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
@@ -83,7 +79,6 @@ Processor.prototype.kill = function(rObject, solicitorF){
 <span id='Processor-method-step'>/**
 </span> * Execute all threads one step.
  *
- * @memberOf	{Processor}
  * @method		step
  */
 Processor.prototype.step = function (date){

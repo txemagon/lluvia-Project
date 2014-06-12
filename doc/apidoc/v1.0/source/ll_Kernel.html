@@ -86,11 +86,12 @@ function requires(list_of_objects){
  * @param  {Object} error  [The error that triggers method_missing call.]
  * @param  {String} method [Name of the method that was invoked]
  * @param  {Array}  params List of params in the invokation.
- * @return {[type]}        [description]
+ * @return {Object}        As long as it is a delegator, it returns
+ *                         depending on the called function.
  *
  * **NOTE:**
  *
- *  Class_&lt;Name&gt;() function calls generates a class with the
+ *  Class_&amp;lt;Name&amp;gt;() function calls generates a class with the
  *  scaffolding.
  */
 function method_missing(error, method, params){
