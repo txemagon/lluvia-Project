@@ -1,7 +1,11 @@
 var Package = require('./lib/package.js')
-var initial_package = __dirname + '/../../src/package.json'
+var initial_package = __dirname + '/../..'
 
-var c = new Package(initial_package)
+
+var p = new Package(initial_package, "/src")
+
+console.dir( c.catalog() )
+
 
 
 
