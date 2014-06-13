@@ -6,33 +6,60 @@ var FileReader = require('./../lib/file_reader.js')
  */
 
 function Package(filepath, path) {
-    this.filepath = filepath
+
+
+    Object.defineProperty(this, "filepath", {
+         value: filepath,
+         enumerable: false
+    })
     this.path = path || "/"
 }
+
 /**
 */
-Package.prototype.full_name = function() {
-    return this.filepath + this.path + "/package.json"
+Package.prototype.full_name = function(subpath) {
+    subpath = subpath || ""
+    return this.filepath + this.path + subpath + "/package.json"
 }
+
 Object.defineProperty(Package.prototype, "full_name", {
     value: Package.prototype.full_name,
     enumerable: false
 })
 
+/**
+*/
 Package.prototype.catalog = function(){
+    var dependencies = ["provides", "offers", "requires"]
     try{
-        this.new_file = new FileReader(this.full_name())
-        this.object_file = JSON.parse(this.new_file.read())
-        i = "provides"
-        this[i] = object_file[i]
 
-        if(this.object_file.provides)
-            for(var i=0; i<this.object_file.provides.length; i++)
-                new Package(this.path + this.object_file.provides[i])
+        Object.defineProperty(this, "new_file", {
+            value: new FileReader(this.full_name()),
+            enumerable: false
+        })
 
-    }catch(e){
-        console.dir("Warnng: package.json was not found in " + this.path)
+        var object_file = JSON.parse(this.new_file.read())
+        console.dir(object_file)
+        //i = "provides"
+        //this[i] = this.object_file[i]
+
+        if(object_file[ dependencies[0] ])
+            for(var i=0; i<object_file.provides.length; i++){
+                var testP = new Package(this.filepath, this.path + "/" + object_file.provides[i])
+
+                testP.catalog()        
+            }
+
+    }catch(e) {
+        console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
+        //console.dir(e)
     }
 }
+
+Package.prototype.toString = function() {
+    var text = ""
+
+    return text
+};
 
 module.exports = Package

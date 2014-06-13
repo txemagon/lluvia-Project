@@ -6,7 +6,7 @@
 		{"name": "ll_Exception.js",    "description": "Exceptions."},
 		{"name": "ll_Module.js",       "description": "Redefinition of Module class."}
 	],
-		"provides": ["CoreExt"],
+		"provides": ["core-ext"],
 		"offers": ["Facilities"]
 }
 

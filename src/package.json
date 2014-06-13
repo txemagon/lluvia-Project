@@ -4,7 +4,7 @@
 "path": "/",
 "files": [ ],
 "requires": ["loader"],
-"provides": ["utils", "kernel", "engine", "browser", "mathematics"],
+"provides": ["utils", "kernel", "engine", "browser", "Mathematics"],
 "offers":   []
 }
 

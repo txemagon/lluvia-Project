@@ -1,0 +1,8 @@
+{   "package": "Mathemathics",
+		"description": "Mathemathics.",
+		"path": "",
+		"files": [
+			{"name": "ll_Angle.js",    "description": ""}
+		],
+		"provides": []
+}
