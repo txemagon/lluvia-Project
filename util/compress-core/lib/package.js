@@ -12,6 +12,7 @@ function Package(path) {
 
 
 Package.prototype.catalog = function(){
+    try{
     this.new_file = new FileReader(this.path)
     this.object_file = JSON.parse(this.new_file.read())
     console.dir(this.object_file)
@@ -21,6 +22,7 @@ Package.prototype.catalog = function(){
     	    this.new_path = this.path.split("package.json").join("")
             new Package(this.new_path + this.object_file.provides[i] + "/package.json")
         }
+    }catch(e){return}
 }
 
 module.exports = Package
