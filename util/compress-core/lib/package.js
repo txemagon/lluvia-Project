@@ -15,6 +15,8 @@ function Package(filepath, path) {
     this.path = path || "/"
 }
 
+Package.prototype.list_package = []
+
 /**
 */
 Package.prototype.full_name = function(subpath) {
@@ -39,13 +41,13 @@ Package.prototype.catalog = function(){
         })
 
         var object_file = JSON.parse(this.new_file.read())
-        console.dir(object_file)
+        this.list_package.push(object_file)       
 
         for(var i=0; i<dependencies.length; i++)
             if(object_file[dependencies[i]])
                 for(var a=0; a<object_file[dependencies[i]].length; a++){
-                    var testP = new Package(this.filepath, this.path + "/" + object_file[dependencies[i]][a])
-                    testP.catalog()        
+                    var new_pk = new Package(this.filepath, this.path + "/" + object_file[dependencies[i]][a])
+                    new_pk.catalog()
                 }      
 
     }catch(e) {
@@ -54,8 +56,12 @@ Package.prototype.catalog = function(){
     }
 }
 
-Package.prototype.toString = function() {
+Package.prototype.inspect = function() {
     var text = ""
+    
+    for(var i=0; i<this.list_package.length; i++){
+        text += JSON.stringify(this.list_package[i]) + ' \n '
+    }
 
     return text
 };
