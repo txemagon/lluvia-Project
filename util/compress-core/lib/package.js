@@ -40,19 +40,17 @@ Package.prototype.catalog = function(){
 
         var object_file = JSON.parse(this.new_file.read())
         console.dir(object_file)
-        //i = "provides"
-        //this[i] = this.object_file[i]
 
-        if(object_file[ dependencies[0] ])
-            for(var i=0; i<object_file.provides.length; i++){
-                var testP = new Package(this.filepath, this.path + "/" + object_file.provides[i])
-
-                testP.catalog()        
-            }
+        for(var i=0; i<dependencies.length; i++)
+            if(object_file[dependencies[i]])
+                for(var a=0; a<object_file[dependencies[i]].length; a++){
+                    var testP = new Package(this.filepath, this.path + "/" + object_file[dependencies[i]][a])
+                    testP.catalog()        
+                }      
 
     }catch(e) {
-        console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
-        //console.dir(e)
+        //console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
+        console.dir(e)
     }
 }
 

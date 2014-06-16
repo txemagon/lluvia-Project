@@ -6,7 +6,7 @@ var p = new Package(initial_package, "/src")
 
 p.catalog()
 
-console.dir( p.toString() )
+//console.dir( p.toString() )
 
 
 
