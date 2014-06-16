@@ -11,26 +11,25 @@ Constant.prototype.toString = function () {
 Constant.enumerate = function (name, value, array) {
     try{
         if(!(eval(name).constructor.name == "Constant")){
-            position = array.length
-            array[eval(name + " = new Constant(position)")] = value
+            eval(name + " = new Constant(array.length)")
+            array.push(value)
         }
         else
            return
     }
     catch(err){
-            position = array.length
-            array[eval(name + " = new Constant(position)")] = value
+            eval(name + " = new Constant(array.length)")
+            array.push(value)
     }
 }
 
 var b = []
 var a = []
-Constant.juntar("p", 35, b)
-b[p]
+Constant.enumerate("p", 35, b)
 b[0]
 p.position
 
 a[0] = 5
 a[1] = 6
-Constant.juntar("p", 35, a)
+Constant.enumerate("p", 35, a)
 p.position
