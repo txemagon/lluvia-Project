@@ -1,6 +1,5 @@
 	{   "package": "browser",
 		"description": "Browser.",
-		"path": "browser/",
 		"files": [
 			{"name": "ll_BrowserFeatures.js",    "description": ""},
 			{"name": "ll_CodeBlockFinder.js",       "description": "."},

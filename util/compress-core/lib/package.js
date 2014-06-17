@@ -12,17 +12,28 @@ function Package(filepath, path) {
          value: filepath,
          enumerable: false
     })
-    //console.dir("Path: " + this.path )
-    this.path = path || "/"
-}
 
-Package.prototype.list_package = []
+    this._path
+
+    Object.defineProperty(this, "path", {
+        get: function(){ return this._path },
+        set: function(path){
+            this._path = path 
+            if (this._path[this._path.length - 1] != "/")
+                this._path += "/"
+            this._path = this._path.replace(/\/+/g, "/")
+        }
+    })
+
+    this.path = path 
+   
+}
 
 /**
 */
 Package.prototype.full_name = function(subpath) {
     subpath = subpath || ""
-    return (this.filepath + this.path + subpath + "/package.json").replace(/\/\//g, "/")
+    return (this.filepath + this.path + subpath + "/package.json").replace(/\/+/g, "/")
 }
 
 Object.defineProperty(Package.prototype, "full_name", {
@@ -44,37 +55,40 @@ Package.prototype.catalog = function(){
         var object_file = JSON.parse(this.new_file.read())
 
         for(var i in object_file)
-            if (i == "path"){
-                console.dir("Este --->  " + this.path)
-                this[i] = this.path + object_file[i]
+            if (i != "path")
+                this[i] = object_file[i]
+            else{
+                if (this._path[0] != "/")
+                    this.path = this.path +  object_file[i]
+                else
+                    this.path = object_file[i]
             }
-            else
-                this[i] = object_file[i]       
 
         for(var i=0; i<dependencies.length; i++)
-            if(object_file[dependencies[i]])
+            if(object_file[dependencies[i]]){
                 for(var a=0; a<object_file[dependencies[i]].length; a++){
                     var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
                     new_pk.catalog()
                     this[dependencies[i]][a] = new_pk
                 }
+            }
 
     }catch(e) {
-        //console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
-        console.dir(e)
+        console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
+        //console.dir(e)
     }
 }
 
 Package.prototype.inspect = function() {
-    var text = ""
-    /*
-    for(var i=0; i<this.list_package.length; i++){
-        text += JSON.stringify(this.list_package[i]) + ' \n '
-    }
-    */
+    var text = "{"
+    
+    for(var i in this)
+        if(this[i] instanceof Package)
+            text += this[i].inspect().replace(/\\n/g, "\n\t")
+        else
+            text += "\n\t" + i + ": " + JSON.stringify(this[i])
    
-
-    return text
+    return text + "}"
 };
 
 module.exports = Package

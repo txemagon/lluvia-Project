@@ -1,6 +1,5 @@
 {	"package": "loader",
 	"description": "",
-	"path": "loader/",
 	"files": [
 		{"name": "log_module_interface.js",       "description": ""},
 		{"name": "log_module_load.js",    "description": ""}

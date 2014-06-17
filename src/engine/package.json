@@ -1,6 +1,5 @@
 	{   "package": "engine",
 		"description": "Event and execution control.",
-		"path": "engine/",
 		"files": [
 			{"name": "ll_Processor.js",    "description": "Manage multiple threads."},
 			{"name": "ll_Thread.js",       "description": "Thread functionality."},

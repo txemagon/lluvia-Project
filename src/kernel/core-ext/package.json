@@ -1,6 +1,5 @@
 	{	"package": "Core Extensions",
 		"description": "Javascript extensions to native objects.",
-		"path": "core-ext/",
 		"files": [
 			{"name": "ll_Object.js",       "description": "Redefinition of Object class."},
 			{"name": "ll_Number.js",       "description": "Something for Numbers."},

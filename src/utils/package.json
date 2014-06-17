@@ -1,6 +1,5 @@
 {	"package": "utils",
 	"description": "Javascript extensions && global objects.",
-	"path": "utils/",
 	"files": [
 		{"name": "ll_Events.js",        "description": "Core javascript for the global object."},
 		{"name": "ll_Geometry.js",      "description": "Exceptions."},
