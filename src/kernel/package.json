@@ -7,7 +7,7 @@
 		{"name": "ll_Module.js",       "description": "Redefinition of Module class."}
 	],
 		"provides": ["core-ext"],
-		"offers": ["Facilities"]
+		"offers": ["facilities"]
 }
 
 

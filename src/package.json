@@ -2,7 +2,7 @@
 "package": "lluvia",
 "description": "lluvia loader. User application loader. Booter.",
 "path": "/",
-"files": [ ],
+"files": [],
 "requires": ["loader"],
 "provides": ["utils", "kernel", "engine", "browser", "Mathematics"],
 "offers":   []
