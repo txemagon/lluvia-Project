@@ -1,4 +1,3 @@
-
 /**
  * @class
  *
@@ -30,15 +29,37 @@ function Constant(name, value) {
     })
 }
 
+/**
+ * @method valueOf
+ * 
+ * Returns the value of the name of obj
+ * 
+ * @return {string}  
+ */
 
 Constant.prototype.valueOf = function() {
     return this.name
 }
 
+/**
+ * @method toString
+ * 
+ * Returns an array with the value of string. 
+ * 
+ * @return {Array}  
+ */
+
 Constant.prototype.toString = function() {
     return this[this.name]
 }
 
+/**
+ * @method equals
+ * 
+ * Returns an array 
+ * 
+ * @return {Array}  
+ */
 
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
