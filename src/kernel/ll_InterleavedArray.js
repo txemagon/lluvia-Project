@@ -6,40 +6,46 @@ function InterleavedArray(array){
      for(var i=0; i<array.length; i++)
         if (array[i] instanceof Array) {
     
-           this.push( array[i][0] )
+           this.subpush( i, array[i][0] )
+           
            if(array[i][1] instanceof Array)
-               for(var h=0; h<array[i][1].length; h++)
-                   this[i + "." + ( h + 1 ) ] = array[i][1][h]
+               for(var h=0; h<array[i][1].length; h++){
+                   /*this[i + "." + ( h + 1 ) ] = array[i][1][h]*/
+                   var index = i + "." + (h + 1)
+                   this.subpush(index, array[i][1][h])
                    
+               }
+     
         } else 
-            this.push( array[i] )
-            
+            this.subpush( i, array[i] )
+}
+InterleavedArray.prototype.size = function() {
+    var size = 0
+    for (var i in this)
+        size ++
+    return size
 }
 
 InterleavedArray.prototype.inspect = function() {
     var txt = "{\n"
-    for(var i in this)
-        txt += "\n\t" + i + ": " + this[i]
-           
+    //for(var i in this)
+    for(var i = 0; i<this.size(); i++)
+        if(i in this){
+          txt += "\n\t" + i + ": " + this[i]
+          for (var x = 1; eval(i + "." + x +  " in this"); x++)
+            txt += "\n\t" + i + "." + x + ": " + this[eval(i + "." + x)]
+            }
     return txt + "\n}"
 }
 
 /**
 Como en array
-ia.subpush(position, element1, element2)
 ia.subpush("5", 3, 7)
 ia.subpush([3,7])
 */
-InterleavedArray.prototype.subpush = function(index, elements) {
-    
-    /*var number_of_elements = elements.length
-    while(this[index] == "number" || this[index] == "array"){
-       index++
-       if(this[index] != "number" || this[index] != "array")  
-          this[index].push = elements
-    }
-      */  
-       
+
+InterleavedArray.prototype.subpush = function(index, elements){
+        this[index] = elements
 }
 
 Object.defineProperties(InterleavedArray.prototype, { 
