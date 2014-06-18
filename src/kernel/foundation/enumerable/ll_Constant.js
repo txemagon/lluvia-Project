@@ -44,9 +44,9 @@ Constant.prototype.valueOf = function() {
 /**
  * @method toString
  * 
- * Returns an array with the value of string. 
+ * Returns an number. 
  * 
- * @return {Array}  
+ * @return {Number}  
  */
 
 Constant.prototype.toString = function() {
@@ -56,9 +56,9 @@ Constant.prototype.toString = function() {
 /**
  * @method equals
  * 
- * Returns an array 
+ * Returns true or false, if the name has that number. 
  * 
- * @return {Array}  
+ * @return {Boolean}  
  */
 
 Constant.prototype.equals = function(obj) {
