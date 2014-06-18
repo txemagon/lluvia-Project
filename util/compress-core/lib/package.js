@@ -79,16 +79,58 @@ Package.prototype.catalog = function(){
     }
 }
 
-Package.prototype.inspect = function() {
-    var text = "{"
-    
+Object.defineProperty(Package.prototype, "catalog", {
+    value: Package.prototype.catalog,
+    enumerable: false
+})
+
+/**
+*/
+Package.prototype.inspect = function(level) {
+    var text = ""
+    var level = level || 1
+    var array_packages = []
+
+    function tabulation(level){
+        var tab = ""
+        for(var i=0; i<level; i++)
+            tab += "\t"
+        return tab
+    }
+
+    text += "\n" + tabulation(level-1) + " {"
+
     for(var i in this)
-        if(this[i] instanceof Package)
-            text += this[i].inspect().replace(/\\n/g, "\n\t")
-        else
-            text += "\n\t" + i + ": " + JSON.stringify(this[i])
-   
-    return text + "}"
+        if(this[i] instanceof Array){
+            text +="\n" + tabulation(level) + i + ": [" 
+            for(var a=0; a<this[i].length; a++){
+                if(this[i][a].name){
+                    text += "\n" + tabulation(level+1) + "{\"name\": \"" + this[i][a].name + "\", \"description\": " + this[i][a].description + "}"
+                }
+                else
+                    text += "\"" + this[i][a].package + "\""
+                if(this[i][a] instanceof Package)
+                    array_packages.push(this[i][a])
+                if(a != this[i].length-1)
+                    text += ","
+            }
+            text += "]"
+        }
+        else if(this[i] != this._path)
+            text += "\n" + tabulation(level) + i + ": " + JSON.stringify(this[i])
+    
+    text += "\n" + tabulation(level-1) +" } \n"
+
+    for(var i=0; i<array_packages.length; i++)
+        text += array_packages[i].inspect(level+1)
+
+    return text
 };
 
+Object.defineProperty(Package.prototype, "inspect", {
+    value: Package.prototype.inspect,
+    enumerable: false
+})
+
 module.exports = Package
+
