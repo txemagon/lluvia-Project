@@ -1,6 +1,8 @@
 /**
  * @class Kernel.CoreExt.Array
  *
+ * Module extending Array
+ *
  */
 
 

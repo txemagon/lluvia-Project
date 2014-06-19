@@ -128,7 +128,7 @@ basic_proto()
                                                   }; ")
 
   $global_space[class_name].call(eval(class_name + "({initialize: true})")) // Execute as a function (class initialization)
-  $classes.push(new_class)
+  Class.all.push(new_class)
   alert(new_class)
   return new_class
 }

@@ -1,25 +1,42 @@
 /**
- * @class
+ * @class Kernel.Foundation.Enumerable.Constant
  *
- * { name: "pepe",
- *   pepe: 36 
- * }
+ * Defines Constants similar to C define preprocesor directives.
  *
+ * ## Constant's structure
+ *
+ *     new Constant("euro", 166.386)
+ *     //=> { name: "euro",
+ *     //=>   euro: 166.386
+ *     //=> }
+ *
+ * Only euro attribute is enumerable.
+ *
+ * ## Usage
+ *
+ *     var first = new Constant("Txema", 1101)
+ *
+ *     first == "Txema"
+ *     //=> true
+ *
+ *     first.equals(1101)
+ *     //=> true
+ *
+ * Constants are specially usefull as Array indexes.
+ *
+ *     var monday  = new Constant("monday", 0)
+ *     var week_income = [1000, 2000, 3000, 500, 2000, 0, 0]
+ *     week_income[monday]
+ *     //=> 1000
  */
+
 
 /**
  * @method constructor
- * 
- * Receives two parameters to give a value to the constant.
+ * Receives two parameters to set the constant value.
  *
- * @param {String} Constant string value 
+ * @param {String} Constant string value
  * @param {Number} Constant number value
- *
- * var me = new Constant("pepe", 36)
- *
- * me == "pepe"
- * me.equals(36)
- *
  */
 function Constant(name, value) {
     this[name] = value
@@ -29,38 +46,35 @@ function Constant(name, value) {
     })
 }
 
+
 /**
  * @method valueOf
- * 
  * Returns the value of the name of obj
- * 
- * @return {string}  
+ *
+ * @return {string}
  */
-
 Constant.prototype.valueOf = function() {
     return this.name
 }
 
+
 /**
  * @method toString
- * 
- * Returns an number. 
- * 
- * @return {Number}  
+ * Returns an number.
+ *
+ * @return {Number}
  */
-
 Constant.prototype.toString = function() {
     return this[this.name]
 }
 
+
 /**
  * @method equals
- * 
- * Returns true or false, if the name has that number. 
- * 
- * @return {Boolean}  
+ * Returns true or false, if the name has that number.
+ *
+ * @return {Boolean}
  */
-
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }

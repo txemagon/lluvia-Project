@@ -15,23 +15,11 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-static-css_var-S-classes'>/**
-</span> * @var $classes
- * @static
- *
- * All classes created.
- */
-var $classes = []
-
-<span id='before_filters'>/**
-</span> * @class Kernel.Facilities.Class.Class
- *
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Architecture-Class'>/**
+</span> * @class Kernel.Foundation.Architecture.Class
  * Base class of all lluvia classes.
  *
- * @property {Object} before_filters Hash with all the functions to be called before a particular method.
- * @property {Object} after_filters  Hash with all the functions to be called after a particular method.
- *
- * ###Example
+ * ### Example
  *
  * The greet method would be called after _introduce_ and _prepare_
  *
@@ -40,8 +28,6 @@ var $classes = []
  *
  * Do not handle theses properties directly. Use add _ before _ filter and add _ after _ filter instead.
  *
- * @property [Array] attr_readers list of getters.
- * @property [Array] attr_writers list of setters.
  */
 //Class.prototype = new Module
 Class.prototype.constructor = Class
@@ -55,13 +41,33 @@ function Class(){
    this.attr_writers = []
 }
 
-<span id='before_filters-method-create_attr'>/**
+
+<span id='Kernel-Foundation-Architecture-Class-property-before_filters'>/**
+</span> * @property {Object} before_filters Hash with all the functions to be called before a particular method.
+ */
+<span id='Kernel-Foundation-Architecture-Class-property-after_filters'>/**
+</span> * @property {Object} after_filters  Hash with all the functions to be called after a particular method.
+ */
+<span id='Kernel-Foundation-Architecture-Class-property-attr_readers'>/**
+</span> * @property {Array} attr_readers list of getters.
+ */
+<span id='Kernel-Foundation-Architecture-Class-property-attr_writers'>/**
+</span> * @property {Array} attr_writers list of setters.
+ */
+
+<span id='Kernel-Foundation-Architecture-Class-property-all'>/**
+</span> * List of all created classes.
+ */
+Class.all = []
+
+
+<span id='Kernel-Foundation-Architecture-Class-method-create_attr'>/**
 </span> * @method create_attr
- *
  * Creates an attribute.
  *
  * @param  {String} attr attribute to be created.
  * @param  initial_value Inital value for attr.
+ *
  * @return {Array} List of newly created attributes names.
  *
  * ###Example
@@ -109,7 +115,7 @@ Class.prototype.create_attr = function(attributes){
    return effective_attributes
 }
 
-<span id='before_filters-method-attr_reader'>/**
+<span id='Kernel-Foundation-Architecture-Class-method-attr_reader'>/**
 </span> * @method attr_reader
  *
  * Decorator function that creates attribute getters along with the attribute itself.
@@ -157,7 +163,8 @@ Class.prototype.attr_reader = function (attr_names){
    }
 }
 
-<span id='before_filters-method-attr_writer'>/**
+
+<span id='Kernel-Foundation-Architecture-Class-method-attr_writer'>/**
 </span> * @method attr_writer
  *
  * Decorator function that creates attribute setters along with the attribute itself.
@@ -196,7 +203,8 @@ Class.prototype.attr_writer = function (attr_names){
    }
 }
 
-<span id='before_filters-method-attr_accessor'>/**
+
+<span id='Kernel-Foundation-Architecture-Class-method-attr_accessor'>/**
 </span> * @method attr_accessor
  *
  * Creates an attribute along with a setter and a getter. See Class#attr_reader or Class#attr_writer.
@@ -231,6 +239,7 @@ Class.prototype.attr_accessor = function(attr_names){
    }
 }
 
+
 /*
  * Auxiliar method.
  *
@@ -242,11 +251,34 @@ function _$_add_filter(where, single_param){
    where.push(single_param[i])
 }
 
+
+<span id='Kernel-Foundation-Architecture-Class-static-method-superclass'>/**
+</span> * @method superclass
+ * @static
+ *
+ * Pointer to superclass constructor
+ */
 Class.superclass = function() { return null }
+
+
+<span id='Kernel-Foundation-Architecture-Class-static-method-ancestors'>/**
+</span> * @method ancestors
+ * @static
+ *
+ * List of this class ancestors.
+ */
 Class.ancestors  = function() { return [] }
+
+<span id='Kernel-Foundation-Architecture-Class-method-get_this'>/**
+</span> * @method get_this
+ * @chainable
+ *
+ * Returns this.
+ */
 Class.prototype.get_this   = function() { return this }
 
-<span id='before_filters-method-add_before_filter'>/**
+
+<span id='Kernel-Foundation-Architecture-Class-method-add_before_filter'>/**
 </span> * @method add_before_filter
  *
  * Adds a function to be called before a particular method invocation..
@@ -284,7 +316,7 @@ Class.prototype.add_before_filter   = function(observed_function, filters) {
    _$_add_filter(this.before_filters[observed_function], arguments[i])
 }
 
-<span id='before_filters-method-add_after_filter'>/**
+<span id='Kernel-Foundation-Architecture-Class-method-add_after_filter'>/**
 </span> * @method add_after_filter
  * Adds a function to be called before a particular method invocation..
  *
@@ -321,7 +353,7 @@ Class.prototype.add_after_filter   = function(observed_function, filters) {
    _$_add_filter(this.after_filters[observed_function], arguments[i])
 }
 
-<span id='before_filters-method-call_before'>/**
+<span id='Kernel-Foundation-Architecture-Class-method-call_before'>/**
 </span> * @method call_before
  *
  * Executes all the before filters for a given function. Filters
@@ -337,7 +369,7 @@ Class.prototype.call_before = function(fn_name){
 }
 /* todo: define a notation in _ClassFactory to avoid filters' call by default */
 
-<span id='before_filters-method-call_after'>/**
+<span id='Kernel-Foundation-Architecture-Class-method-call_after'>/**
 </span> * @method call_after
  *
  * Executes all the after filters for a given function.
@@ -350,14 +382,14 @@ Class.prototype.call_after = function(fn_name){
    this.after_filters[fn_name][i]();
 }
 
-<span id='before_filters-method-method_missing'>/**
+<span id='Kernel-Foundation-Architecture-Class-method-method_missing'>/**
 </span> * @method method_missing
  *
  * Throws an exception when a method is not defined.
  *
  * provides the following dynamic method:
  *
- * Class_&lt;ClassName&gt;()
+ * Class_&amp;lt;ClassName&amp;gt;()
  *
  * ###Example:
  *     // Create class MyClass

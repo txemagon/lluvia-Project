@@ -762,8 +762,8 @@ String.prototype.next = function(){
     return this.succ.apply(this,arguments)
 }
 
-<span id='Kernel-CoreExt-String-property-'>/**
-</span> * @ method   to_i
+<span id='Kernel-CoreExt-String-method-to_i'>/**
+</span> * @method   to_i
  *
  * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
  * Extraneous characters past the end of a valid number are ignored.
@@ -1355,15 +1355,17 @@ String.prototype.getbyte = function(index){
     return this.charCodeAt(index)
 }
 
-<span id='Kernel-CoreExt-String-property-'>/**
-</span> *
+<span id='Kernel-CoreExt-String-method-to_str'>/**
+</span> * @method to_str
+ * Alias of #toString.
+ *
  */
 String.prototype.to_str = function(){
     return this.toString()
 }
 
 <span id='Kernel-CoreExt-String-method-to_r'>/**
-</span> * @method     to_r
+</span> * @method to_r
  *
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
  * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
@@ -1429,7 +1431,7 @@ String.prototype.to_r = function(){
 
 
 <span id='Kernel-CoreExt-String-method-decimal'>/**
-</span> * @method  decimal
+</span> * @method decimal
  *
  * Number of decimal positions in a number
  *

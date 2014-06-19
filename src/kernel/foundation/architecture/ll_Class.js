@@ -1,20 +1,8 @@
 /**
- * @var $classes
- * @static
- *
- * All classes created.
- */
-var $classes = []
-
-/**
- * @class Kernel.Facilities.Class.Class
- *
+ * @class Kernel.Foundation.Architecture.Class
  * Base class of all lluvia classes.
  *
- * @property {Object} before_filters Hash with all the functions to be called before a particular method.
- * @property {Object} after_filters  Hash with all the functions to be called after a particular method.
- *
- * ###Example
+ * ### Example
  *
  * The greet method would be called after _introduce_ and _prepare_
  *
@@ -23,8 +11,6 @@ var $classes = []
  *
  * Do not handle theses properties directly. Use add _ before _ filter and add _ after _ filter instead.
  *
- * @property [Array] attr_readers list of getters.
- * @property [Array] attr_writers list of setters.
  */
 //Class.prototype = new Module
 Class.prototype.constructor = Class
@@ -38,13 +24,33 @@ function Class(){
    this.attr_writers = []
 }
 
+
+/**
+ * @property {Object} before_filters Hash with all the functions to be called before a particular method.
+ */
+/**
+ * @property {Object} after_filters  Hash with all the functions to be called after a particular method.
+ */
+/**
+ * @property {Array} attr_readers list of getters.
+ */
+/**
+ * @property {Array} attr_writers list of setters.
+ */
+
+/**
+ * List of all created classes.
+ */
+Class.all = []
+
+
 /**
  * @method create_attr
- *
  * Creates an attribute.
  *
  * @param  {String} attr attribute to be created.
  * @param  initial_value Inital value for attr.
+ *
  * @return {Array} List of newly created attributes names.
  *
  * ###Example
@@ -140,6 +146,7 @@ Class.prototype.attr_reader = function (attr_names){
    }
 }
 
+
 /**
  * @method attr_writer
  *
@@ -179,6 +186,7 @@ Class.prototype.attr_writer = function (attr_names){
    }
 }
 
+
 /**
  * @method attr_accessor
  *
@@ -214,6 +222,7 @@ Class.prototype.attr_accessor = function(attr_names){
    }
 }
 
+
 /*
  * Auxiliar method.
  *
@@ -225,9 +234,32 @@ function _$_add_filter(where, single_param){
    where.push(single_param[i])
 }
 
+
+/**
+ * @method superclass
+ * @static
+ *
+ * Pointer to superclass constructor
+ */
 Class.superclass = function() { return null }
+
+
+/**
+ * @method ancestors
+ * @static
+ *
+ * List of this class ancestors.
+ */
 Class.ancestors  = function() { return [] }
+
+/**
+ * @method get_this
+ * @chainable
+ *
+ * Returns this.
+ */
 Class.prototype.get_this   = function() { return this }
+
 
 /**
  * @method add_before_filter
@@ -340,7 +372,7 @@ Class.prototype.call_after = function(fn_name){
  *
  * provides the following dynamic method:
  *
- * Class_<ClassName>()
+ * Class_&lt;ClassName&gt;()
  *
  * ###Example:
  *     // Create class MyClass

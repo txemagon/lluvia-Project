@@ -1,5 +1,6 @@
 /**
  * @class Kernel.JSNative.String
+ * @mixins Kernel.CoreExt.String
  *
  * `String` is a global object that may be used to construct String instances.
  *

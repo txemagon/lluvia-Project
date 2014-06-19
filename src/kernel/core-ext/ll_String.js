@@ -746,7 +746,7 @@ String.prototype.next = function(){
 }
 
 /**
- * @ method   to_i
+ * @method   to_i
  *
  * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
  * Extraneous characters past the end of a valid number are ignored.
@@ -1339,6 +1339,8 @@ String.prototype.getbyte = function(index){
 }
 
 /**
+ * @method to_str
+ * Alias of #toString.
  *
  */
 String.prototype.to_str = function(){
@@ -1346,7 +1348,7 @@ String.prototype.to_str = function(){
 }
 
 /**
- * @method     to_r
+ * @method to_r
  *
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
  * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
@@ -1412,7 +1414,7 @@ String.prototype.to_r = function(){
 
 
 /**
- * @method  decimal
+ * @method decimal
  *
  * Number of decimal positions in a number
  *

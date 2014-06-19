@@ -15,28 +15,45 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id=''>/**
-</span> * @class
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-Constant'>/**
+</span> * @class Kernel.Foundation.Enumerable.Constant
  *
- * { name: &quot;pepe&quot;,
- *   pepe: 36 
- * }
+ * Defines Constants similar to C define preprocesor directives.
  *
+ * ## Constant's structure
+ *
+ *     new Constant(&quot;euro&quot;, 166.386)
+ *     //=&gt; { name: &quot;euro&quot;,
+ *     //=&gt;   euro: 166.386
+ *     //=&gt; }
+ *
+ * Only euro attribute is enumerable.
+ *
+ * ## Usage
+ *
+ *     var first = new Constant(&quot;Txema&quot;, 1101)
+ *
+ *     first == &quot;Txema&quot;
+ *     //=&gt; true
+ *
+ *     first.equals(1101)
+ *     //=&gt; true
+ *
+ * Constants are specially usefull as Array indexes.
+ *
+ *     var monday  = new Constant(&quot;monday&quot;, 0)
+ *     var week_income = [1000, 2000, 3000, 500, 2000, 0, 0]
+ *     week_income[monday]
+ *     //=&gt; 1000
  */
 
-<span id='-method-constructor'>/**
+
+<span id='Kernel-Foundation-Enumerable-Constant-method-constructor'>/**
 </span> * @method constructor
- * 
- * Receives two parameters to give a value to the constant.
+ * Receives two parameters to set the constant value.
  *
- * @param {String} Constant string value 
+ * @param {String} Constant string value
  * @param {Number} Constant number value
- *
- * var me = new Constant(&quot;pepe&quot;, 36)
- *
- * me == &quot;pepe&quot;
- * me.equals(36)
- *
  */
 function Constant(name, value) {
     this[name] = value
@@ -46,38 +63,35 @@ function Constant(name, value) {
     })
 }
 
-<span id='-method-valueOf'>/**
-</span> * @method valueOf
- * 
- * Returns the value of the name of obj
- * 
- * @return {string}  
- */
 
+<span id='Kernel-Foundation-Enumerable-Constant-method-valueOf'>/**
+</span> * @method valueOf
+ * Returns the value of the name of obj
+ *
+ * @return {string}
+ */
 Constant.prototype.valueOf = function() {
     return this.name
 }
 
-<span id='-method-toString'>/**
-</span> * @method toString
- * 
- * Returns an number. 
- * 
- * @return {Number}  
- */
 
+<span id='Kernel-Foundation-Enumerable-Constant-method-toString'>/**
+</span> * @method toString
+ * Returns an number.
+ *
+ * @return {Number}
+ */
 Constant.prototype.toString = function() {
     return this[this.name]
 }
 
-<span id='-method-equals'>/**
-</span> * @method equals
- * 
- * Returns true or false, if the name has that number. 
- * 
- * @return {Boolean}  
- */
 
+<span id='Kernel-Foundation-Enumerable-Constant-method-equals'>/**
+</span> * @method equals
+ * Returns true or false, if the name has that number.
+ *
+ * @return {Boolean}
+ */
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }

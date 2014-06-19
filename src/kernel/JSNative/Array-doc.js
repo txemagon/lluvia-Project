@@ -1,5 +1,6 @@
 /**
  * @class Kernel.JSNative.Array
+ * @mixins Kernel.CoreExt.Array
  *
  * In JavaScript, the `Array` property of the global object is a constructor for
  * array instances.
