@@ -1,4 +1,8 @@
 /**
+ * @class Kernel.Facilities.Class.ClassTemplate
+ */
+
+/**
  * @method get_constructor
  * Creates a function constructor to generate object like this.
  * Default values are those present in this object.

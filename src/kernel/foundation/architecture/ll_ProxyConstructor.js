@@ -1,5 +1,5 @@
 /**
- * @class Kernel.Facilities.Class.ProxyConstructor
+ * @class Kernel.Foundation.Architecture.ProxyConstructor
  * Proxy class to apply all the given arguments of a constructor to another
  *
  * From [mdn new operator][https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new] notice:
@@ -16,7 +16,10 @@
  *    var b = new (ProxyConstructor(Enumeration, "spades", "hearts"))
  *    // => {spades:0, hearts:1}
  *
- * @constructor
+ */
+
+/**
+ * @method constructor
  * Use rest_of_arguments as comma separated list.
  *
  * @param {Function} Constructor Constructor to delegate new call.

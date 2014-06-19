@@ -1,5 +1,6 @@
 /**
  * @class Kernel.JSNative.Function
+ * @mixins Kernel.CoreExt.Function
  *
  * Every function in JavaScript is actually a `Function` object.
  *

@@ -15,12 +15,15 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Kernel-Facilities-Class-Delegate-method-constructor'><span id='Kernel-Facilities-Class-Delegate'>/**
-</span></span> * @class Kernel.Facilities.Class.Delegate
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Architecture-Delegate'>/**
+</span> * @class Kernel.Foundation.Architecture.Delegate
  * Creates a Class that delegates all of its method calls via Delegate#method_missing.
- * Take a look to {@link ProxyConstructor} to find out other ways.
+ * Take a look to {@link Kernel.Foundation.Architecture.ProxyConstructor} to find out other ways.
  *
- * @constructor
+ */
+
+<span id='Kernel-Foundation-Architecture-Delegate-method-constructor'>/**
+</span> * @method constructor
  * Creates a Delegated class.
  *
  * @param {String} class_name Name of the class to delegate missing methods.
@@ -29,7 +32,7 @@ function Delegate(class_name){
   this.delegate_class = eval(class_name)
 }
 
-<span id='Kernel-Facilities-Class-Delegate-method-method_missing'>/**
+<span id='Kernel-Foundation-Architecture-Delegate-method-method_missing'>/**
 </span> * @method method_missing
  * Forward all failed method calls to class_name
  * This method is automatically called by the framework.

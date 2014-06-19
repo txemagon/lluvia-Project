@@ -1,4 +1,9 @@
-/*  Note: Extending Object's prototype will address you
+/**
+ * @class Kernel.CoreExt.Object
+ * Extends Javascript Native Object class.
+ *
+ *
+ *  Note: Extending Object's prototype will address you
  *  to the hub of hell (hellHub) in programmer's
  *  collective mind, but freedom is the rider of
  *  love. Bear it in your mind and practice:
@@ -167,16 +172,6 @@ Object.prototype.self_keys = function(re) {
     return the_keys
 }
 
-/**
- * own_keys
- * Alias of Object#self_keys.
- *
- * @param re
- * @return
- */
-Object.prototype.own_keys = function(re) {
-    return this.self_keys(re)
-}
 
 /**
  * @method clone
@@ -496,7 +491,7 @@ Object.prototype.is_a$U = function(clss) {
 Object.prototype.alias("kind_of$U", "is_a$U")
 
 /**
- * @method kind_of$U
+ * @method instance_of$U
  * Object#is_a$U alias.
  *
  * @return

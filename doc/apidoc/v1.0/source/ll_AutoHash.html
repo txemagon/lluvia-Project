@@ -15,8 +15,9 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='AutoHash'>/**
-</span> * @class AutoHash
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-AutoHash'>/**
+</span> * @class Kernel.Foundation.Enumerable.AutoHash
+ * @extends Kernel.Foundation.Enumerable.Hash
  * A Hash with a lazy execution initializer.
  *
  * ### Example
@@ -40,7 +41,7 @@
 
 AutoHash.prototype = new Hash
 AutoHash.prototype.constructor = AutoHash
-<span id='AutoHash-method-constructor'>/**
+<span id='Kernel-Foundation-Enumerable-AutoHash-method-constructor'>/**
 </span> * @method constructor
  *
  * @param {function(Object, String)} block Initializer function

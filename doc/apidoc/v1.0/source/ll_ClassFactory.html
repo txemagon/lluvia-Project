@@ -15,7 +15,11 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-method-Kernel'>/**
+  <pre class="prettyprint lang-js"><span id='Kernel-Facilities-Class-ClassFactory'>/**
+</span> * @class Kernel.Facilities.Class.ClassFactory
+ */
+
+<span id='Kernel-Facilities-Class-ClassFactory-method-Kernel'>/**
 </span> * @method Kernel.Facilities.Class._ClassFactory
  *
  * Creates a new class
@@ -145,7 +149,7 @@ basic_proto()
                                                   }; &quot;)
 
   $global_space[class_name].call(eval(class_name + &quot;({initialize: true})&quot;)) // Execute as a function (class initialization)
-  $classes.push(new_class)
+  Class.all.push(new_class)
   alert(new_class)
   return new_class
 }

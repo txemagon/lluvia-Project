@@ -1,9 +1,12 @@
 /**
- * @class Kernel.Facilities.Class.Delegate
+ * @class Kernel.Foundation.Architecture.Delegate
  * Creates a Class that delegates all of its method calls via Delegate#method_missing.
- * Take a look to {@link ProxyConstructor} to find out other ways.
+ * Take a look to {@link Kernel.Foundation.Architecture.ProxyConstructor} to find out other ways.
  *
- * @constructor
+ */
+
+/**
+ * @method constructor
  * Creates a Delegated class.
  *
  * @param {String} class_name Name of the class to delegate missing methods.

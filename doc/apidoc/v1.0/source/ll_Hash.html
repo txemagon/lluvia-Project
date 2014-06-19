@@ -15,12 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Hash'>/**
-</span> * @class Hash
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-Hash'>/**
+</span> * @class Kernel.Foundation.Enumerable.Hash
  * Creates an associative array.
  */
 
-<span id='Hash-method-constructor'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-constructor'>/**
 </span> * @method  constructor
  *
  * ### Example
@@ -35,7 +35,7 @@ function Hash(initial_data) {
 
 }
 
-<span id='Hash-method-values'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-values'>/**
 </span> * @method values
  * Returns an array with the values of all the reachable keys of this object.
  *
@@ -49,7 +49,7 @@ Hash.prototype.values = function() {
 }
 Hash.prototype.stop_enumerating(&quot;values&quot;)
 
-<span id='Hash-method-self_values'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-self_values'>/**
 </span> * @method self_values
  * Returns a list with values set directly on this object keys.
  *
@@ -63,14 +63,14 @@ Hash.prototype.self_values = function() {
 }
 Hash.prototype.stop_enumerating(&quot;self_values&quot;)
 
-<span id='Hash-method-own_values'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-own_values'>/**
 </span> * @method  own_values.
  * Alias of Hash#self_values.
  */
 Hash.prototype.alias(&quot;own_values&quot;, &quot;self_values&quot;)
 
 
-<span id='Hash-method-each'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-each'>/**
 </span> * @method each
  * Calls the block with every key/value pair. Notice that those
  * key reached via the prototype chain are explicitly excluded.
@@ -82,7 +82,7 @@ Hash.prototype.each = function() {
 }
 Hash.prototype.stop_enumerating(&quot;each&quot;)
 
-<span id='Hash-method-collect'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-collect'>/**
 </span> * @method collect
  * Collects into an Array all the values returned by a block.
  *
@@ -102,7 +102,7 @@ Hash.prototype.collect = function() {
 }
 Hash.prototype.stop_enumerating(&quot;collect&quot;)
 
-<span id='Hash-method-size'>/**
+<span id='Kernel-Foundation-Enumerable-Hash-method-size'>/**
 </span> * @method size
  * Returns the numbers of selk keys
  *
@@ -111,6 +111,7 @@ Hash.prototype.stop_enumerating(&quot;collect&quot;)
 Hash.prototype.size = function() {
     return this.self_keys().count()
 }
-Hash.prototype.stop_enumerating(&quot;size&quot;)</pre>
+Hash.prototype.stop_enumerating(&quot;size&quot;)
+</pre>
 </body>
 </html>

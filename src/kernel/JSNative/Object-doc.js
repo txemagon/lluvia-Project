@@ -1,5 +1,6 @@
 /**
  * @class Kernel.JSNative.Object
+ * @mixins Kernel.CoreExt.Object
  *
  * Creates an object wrapper.
  *

@@ -1,5 +1,6 @@
 /**
- * @class AutoHash
+ * @class Kernel.Foundation.Enumerable.AutoHash
+ * @extends Kernel.Foundation.Enumerable.Hash
  * A Hash with a lazy execution initializer.
  *
  * ### Example

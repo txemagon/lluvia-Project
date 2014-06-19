@@ -35,8 +35,8 @@
  * @method constructor
  * Receives two parameters to set the constant value.
  *
- * @param {String} Constant string value
- * @param {Number} Constant number value
+ * @param {String} name string value
+ * @param {Number} value number value
  */
 function Constant(name, value) {
     this[name] = value
@@ -44,6 +44,12 @@ function Constant(name, value) {
         value: name,
         enumerable: false
     })
+    try{
+        $global_space["$constants"].push(this)
+    } catch (e) {
+        if ($K_debug_level > $KC_dl.USER)
+            $K_logger.warn("Error Creating Constant: " + e)
+    }
 }
 
 

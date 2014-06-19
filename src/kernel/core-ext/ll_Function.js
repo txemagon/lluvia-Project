@@ -1,3 +1,7 @@
+/**
+ * @class Kernel.CoreExt.Function
+ * Extends JavaScript native Function
+ */
 
 Function.prototype.bind = function(object){
 	var f = this
@@ -24,7 +28,7 @@ Function.prototype.block_given$U = function(){
      return given
 }
 
-/** Takes a function and prepare it to clone with the Function constructor.
+/* Takes a function and prepare it to clone with the Function constructor.
 */
 Function.prototype.deconstruct = function(){
   return { name: this.name,
@@ -233,9 +237,10 @@ Function.prototype.extend = function(superclass, args){
     this.super.Class.after_extended(this)
 
 }
+
+
 /**
  * @method reflect
- * @static
  *
  * Creates a bang method version of the referred one.
  *
@@ -244,7 +249,8 @@ Function.prototype.extend = function(superclass, args){
  * If original method is an Array of Strings then performs reflection
  * over every mentioned method.
  *
- * ###Example
+ * ### Example
+ *
  *      // Create Array#map$B based on Array#map
  *      Array.reflect("map")
  *

@@ -1,5 +1,6 @@
 /**
  * @class Kernel.Foundation.Architecture.Class
+ * @extends Kernel.Foundation.Architecture.Module
  * Base class of all lluvia classes.
  *
  * ### Example
@@ -12,7 +13,7 @@
  * Do not handle theses properties directly. Use add _ before _ filter and add _ after _ filter instead.
  *
  */
-//Class.prototype = new Module
+Class.prototype = new Module
 Class.prototype.constructor = Class
 
 function Class(){

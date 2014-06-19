@@ -15,7 +15,11 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">
+  <pre class="prettyprint lang-js"><span id='Kernel-CoreExt-Function'>/**
+</span> * @class Kernel.CoreExt.Function
+ * Extends JavaScript native Function
+ */
+
 Function.prototype.bind = function(object){
 	var f = this
 	return function(){ f.apply(object, arguments) }
@@ -41,8 +45,8 @@ Function.prototype.block_given$U = function(){
      return given
 }
 
-<span id='global-property-'>/** Takes a function and prepare it to clone with the Function constructor.
-</span>*/
+/* Takes a function and prepare it to clone with the Function constructor.
+*/
 Function.prototype.deconstruct = function(){
   return { name: this.name,
            params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(&quot;,&quot;),
@@ -250,9 +254,10 @@ Function.prototype.extend = function(superclass, args){
     this.super.Class.after_extended(this)
 
 }
-<span id='global-static-method-reflect'>/**
+
+
+<span id='Kernel-CoreExt-Function-method-reflect'>/**
 </span> * @method reflect
- * @static
  *
  * Creates a bang method version of the referred one.
  *
@@ -261,7 +266,8 @@ Function.prototype.extend = function(superclass, args){
  * If original method is an Array of Strings then performs reflection
  * over every mentioned method.
  *
- * ###Example
+ * ### Example
+ *
  *      // Create Array#map$B based on Array#map
  *      Array.reflect(&quot;map&quot;)
  *

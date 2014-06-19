@@ -15,7 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">/*  Note: Extending Object's prototype will address you
+  <pre class="prettyprint lang-js"><span id='Kernel-CoreExt-Object'>/**
+</span> * @class Kernel.CoreExt.Object
+ * Extends Javascript Native Object class.
+ *
+ *
+ *  Note: Extending Object's prototype will address you
  *  to the hub of hell (hellHub) in programmer's
  *  collective mind, but freedom is the rider of
  *  love. Bear it in your mind and practice:
@@ -58,7 +63,7 @@
 //     };
 // }
 
-<span id='global-method-to_a'>/**
+<span id='Kernel-CoreExt-Object-method-to_a'>/**
 </span> * @method to_a
  * Returns this object inside an array.
  *
@@ -74,7 +79,7 @@ Object.prototype.to_a = function() {
     return [this]
 }
 
-<span id='global-method-alias'>/**
+<span id='Kernel-CoreExt-Object-method-alias'>/**
 </span> * @method alias
  *
  * Creates a reference to an original method. Changing
@@ -94,7 +99,7 @@ Object.prototype.alias = function(alias_name, original_method) {
 
 Object._$NUM_ERR = 0.000001
 
-<span id='global-method-inspect'>/**
+<span id='Kernel-CoreExt-Object-method-inspect'>/**
 </span> * @method inspect
  * Shows an object pretty printed. Is an improved version of toSource()
  *
@@ -125,7 +130,7 @@ Object.prototype.inspect = function(sp) {
     return output
 }
 
-<span id='global-method-keys'>/**
+<span id='Kernel-CoreExt-Object-method-keys'>/**
 </span> * @method keys
  * Yields all the accesible attributes of an object.
  *
@@ -167,7 +172,7 @@ Object.prototype.keys = function(re) {
 }
 
 
-<span id='global-method-self_keys'>/**
+<span id='Kernel-CoreExt-Object-method-self_keys'>/**
 </span> * @method self_keys
  * Return the attributes defined in this object. This method excludes further seeking via
  * the prototype chain. See Object#keys for usage.
@@ -184,18 +189,8 @@ Object.prototype.self_keys = function(re) {
     return the_keys
 }
 
-<span id='global-method-'>/**
-</span> * own_keys
- * Alias of Object#self_keys.
- *
- * @param re
- * @return
- */
-Object.prototype.own_keys = function(re) {
-    return this.self_keys(re)
-}
 
-<span id='global-method-clone'>/**
+<span id='Kernel-CoreExt-Object-method-clone'>/**
 </span> * @method clone
  * Shallow copy of an object.
  *
@@ -218,7 +213,7 @@ Object.prototype.clone = function() {
     return the_clone
 }
 
-<span id='global-method-_S-innerObject'>/**
+<span id='Kernel-CoreExt-Object-method-_S-innerObject'>/**
 </span> * @method _$innerObject
  * Class augmentation. Creates a constructor based on another. This let us
  * to add extra attributes.
@@ -286,7 +281,7 @@ function _$innerObject(that, parentName) {
 }
 
 
-<span id='global-method-implement'>/**
+<span id='Kernel-CoreExt-Object-method-implement'>/**
 </span> * @method implement
  * Defines all the interface mentods in a object
  *
@@ -306,7 +301,7 @@ Object.prototype._trust = true
 /* Carefull ECMAScript 5 defines similar freeze */
 Object.prototype._FROZEN = false
 
-<span id='global-method-taint'>/**
+<span id='Kernel-CoreExt-Object-method-taint'>/**
 </span> * @method taint
  * Marks an object as tainted.
  *
@@ -315,7 +310,7 @@ Object.prototype.taint = function() {
     this.tainted = true
 }
 
-<span id='global-method-untaint'>/**
+<span id='Kernel-CoreExt-Object-method-untaint'>/**
 </span> * @method untaint
  * Removes the tainted mark from an object.
  *
@@ -324,7 +319,7 @@ Object.prototype.untaint = function() {
     this.tainted = false
 }
 
-<span id='global-method-taintedS-U'>/**
+<span id='Kernel-CoreExt-Object-method-taintedS-U'>/**
 </span> * @method tainted$U
  * tainted predicate.
  *
@@ -334,7 +329,7 @@ Object.prototype.tainted$U = function() {
     return !this.tainted
 }
 
-<span id='global-method-trust'>/**
+<span id='Kernel-CoreExt-Object-method-trust'>/**
 </span> * @method trust
  * Set an object as trustable.
  *
@@ -343,7 +338,7 @@ Object.prototype.trust = function() {
     this._trust = true
 }
 
-<span id='global-method-untrust'>/**
+<span id='Kernel-CoreExt-Object-method-untrust'>/**
 </span> * @method untrust
  * Mark an object as untrustable.
  *
@@ -352,7 +347,7 @@ Object.prototype.untrust = function() {
     this._trust = false
 }
 
-<span id='global-method-untrustedS-U'>/**
+<span id='Kernel-CoreExt-Object-method-untrustedS-U'>/**
 </span> * @method untrusted$U
  * trustable predicate.
  *
@@ -366,7 +361,7 @@ Object.prototype.trusted$U = function() {
     return this._trust
 }
 
-<span id='global-method-freeze'>/**
+<span id='Kernel-CoreExt-Object-method-freeze'>/**
 </span> * @method freeze
  * @deprecated
  * Mark an object as frozen.
@@ -376,7 +371,7 @@ Object.prototype.freeze = function() {
     this._FROZEN = true
 }
 
-<span id='global-method-frozenS-U'>/**
+<span id='Kernel-CoreExt-Object-method-frozenS-U'>/**
 </span> * @method frozen$U
  * @deprecated
  * Frozen predicate
@@ -388,7 +383,7 @@ Object.prototype.frozen$U = function() {
     return this._FROZEN || false
 }
 
-<span id='global-method-respond_to'>/**
+<span id='Kernel-CoreExt-Object-method-respond_to'>/**
 </span> * @method respond_to
  * Checks for the existence of a method. Use it
  * for Duck typing.
@@ -399,13 +394,13 @@ Object.prototype.frozen$U = function() {
 Object.prototype.respond_to = function(function_name) {
     return typeof(this[function_name]) === &quot;function&quot;
 }
-<span id='global-method-respond_toS-U'>/**
+<span id='Kernel-CoreExt-Object-method-respond_toS-U'>/**
 </span> * @method respond_to$U
  * Alias of Object#respond_to
  */
 Object.prototype.alias(&quot;respond_to$U&quot;, &quot;respond_to&quot;)
 
-<span id='global-method-eqlS-U'>/**
+<span id='Kernel-CoreExt-Object-method-eqlS-U'>/**
 </span> * @method eql$U
  * Compares two objects. Returns true when Object#toSource() is the same on both
  * objects.
@@ -422,7 +417,7 @@ Object.prototype.eql$U = function(model) {
 }
 
 
-<span id='global-method-equals'>/**
+<span id='Kernel-CoreExt-Object-method-equals'>/**
 </span> * @method equals
  * Alias of ==
  *
@@ -437,7 +432,7 @@ Object.prototype.equals = function(model) {
 //     return this.equals(model)
 // }
 
-<span id='global-method-value_of'>/**
+<span id='Kernel-CoreExt-Object-method-value_of'>/**
 </span> * @method value_of
  * Gets the inner value of an object whenever is possible.  If not a
  * Object#toSource() representation is taken.
@@ -450,7 +445,7 @@ Object.prototype.value_of = function() {
     return this.toSource()
 }
 
-<span id='global-method-identic'>/**
+<span id='Kernel-CoreExt-Object-method-identic'>/**
 </span> * @method identic
  * Check if the best representation of two objects are identical.
  *
@@ -463,7 +458,7 @@ Object.prototype.identic = function(model) {
     return this === model
 }
 
-<span id='global-method-to_s'>/**
+<span id='Kernel-CoreExt-Object-method-to_s'>/**
 </span> * @method to_s
  * Object#toString alias
  *
@@ -473,7 +468,7 @@ Object.prototype.to_s = function() {
     return this.toString()
 }
 
-<span id='global-method-to_str'>/**
+<span id='Kernel-CoreExt-Object-method-to_str'>/**
 </span> * @method to_str
  * Object#to_s alias.
  *
@@ -483,7 +478,7 @@ Object.prototype.to_str = function() {
     return this.to_s()
 }
 
-<span id='global-method-is_aS-U'>/**
+<span id='Kernel-CoreExt-Object-method-is_aS-U'>/**
 </span> * @method is_a$U
  *
  * Check if an object is descendant of a class
@@ -504,7 +499,7 @@ Object.prototype.is_a$U = function(clss) {
     return this instanceof clss
 }
 
-<span id='global-method-kind_ofS-U'>/**
+<span id='Kernel-CoreExt-Object-method-kind_ofS-U'>/**
 </span> * @method kind_of$U
  * Object#is_a$U alias.
  *
@@ -512,15 +507,15 @@ Object.prototype.is_a$U = function(clss) {
  */
 Object.prototype.alias(&quot;kind_of$U&quot;, &quot;is_a$U&quot;)
 
-<span id='global-method-kind_ofS-U'>/**
-</span> * @method kind_of$U
+<span id='Kernel-CoreExt-Object-method-instance_ofS-U'>/**
+</span> * @method instance_of$U
  * Object#is_a$U alias.
  *
  * @return
  */
 Object.prototype.alias(&quot;instance_of$U&quot;, &quot;is_a$U&quot;)
 
-<span id='global-method-method_missing'>/**
+<span id='Kernel-CoreExt-Object-method-method_missing'>/**
 </span> * @method method_missing
  *
  * Automatically called whenever a non existing method is called
@@ -577,7 +572,7 @@ Object.prototype.method_missing = function(method, obj, params) {
     bad_function()
 }
 
-<span id='global-method-merge'>/**
+<span id='Kernel-CoreExt-Object-method-merge'>/**
 </span> * @method merge
  * Merges all the self keys of an object _source_ whith this.
  * This method is actually a bang method. Further discussion is needed.
@@ -598,7 +593,7 @@ Object.prototype.merge = function(source) {
     return this
 }
 
-<span id='global-method-soft_merge'>/**
+<span id='Kernel-CoreExt-Object-method-soft_merge'>/**
 </span> * @method soft_merge
  * Works as Object#merge, but source can not override already
  * existing keys.
@@ -616,7 +611,7 @@ Object.prototype.soft_merge = function(source) {
     return this
 }
 
-<span id='global-method-override'>/**
+<span id='Kernel-CoreExt-Object-method-override'>/**
 </span> * @method override
  * Works as Object#merge but cannot augment this object.
  *
@@ -634,7 +629,7 @@ Object.prototype.override = function(source) {
     return this
 }
 
-<span id='global-method-stop_enumeratng'>/**
+<span id='Kernel-CoreExt-Object-method-stop_enumeratng'>/**
 </span> * @method stop_enumeratng
  * Make a property not enumerable.
  *
@@ -651,7 +646,7 @@ Object.prototype.stop_enumerating = function(methods) {
             })
 }
 
-<span id='global-method-reflect'>/**
+<span id='Kernel-CoreExt-Object-method-reflect'>/**
 </span> * @method reflect
  * Creates a bang version of a given method. It reflects the response changes over
  * the _this_ object.
@@ -689,17 +684,17 @@ Object.reflect = function() {
 
 }
 
-<span id='global-method-mergeS-B'>/**
+<span id='Kernel-CoreExt-Object-method-mergeS-B'>/**
 </span> * @method merge$B
  * See Object#merge
  */
 
-<span id='global-method-soft_mergeS-B'>/**
+<span id='Kernel-CoreExt-Object-method-soft_mergeS-B'>/**
 </span> * @method soft_merge$B
  * See Object#soft_merge
  */
 
-<span id='global-method-overrideS-B'>/**
+<span id='Kernel-CoreExt-Object-method-overrideS-B'>/**
 </span> * @method override$B
  * See Object#override
  */
@@ -707,7 +702,7 @@ Object.bang_methods = [&quot;merge&quot;, &quot;soft_merge&quot;, &quot;override
 Object.reflect(Object.bang_methods)
 
 
-<span id='global-method-own_keys'>/**
+<span id='Kernel-CoreExt-Object-method-own_keys'>/**
 </span> * @method own_keys
  * Alias of Object#self_keys
  */

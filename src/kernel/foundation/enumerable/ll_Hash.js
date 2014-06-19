@@ -1,5 +1,5 @@
 /**
- * @class Hash
+ * @class Kernel.Foundation.Enumerable.Hash
  * Creates an associative array.
  */
 

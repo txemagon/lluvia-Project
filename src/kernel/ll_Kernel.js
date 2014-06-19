@@ -1,3 +1,11 @@
+/**
+ * @class Kernel.Global
+ * Global constant, variables and functions introduced by the Kernel.
+ */
+
+/**
+ * @property {Hash} $KC_dl Kernel Constant Debug level
+ */
 $KC_dl = {
     USER: 0,
     PROGRAMMER: 25,
@@ -13,13 +21,25 @@ catch (e) {
 	$K_debug_level = $KC_dl.USER
 }
 
-$K_logger = null
 
-$global_space = (function(){return this;}).call(null)
-$global_space["$constants"] = {}
+/**
+ * @property {Object} $K_logger Pointer to the logger to be used.
+ */
+$K_logger = console
 
 
 /**
+ * @property {Object} $global_space Pointer to the global space.
+ *
+ *     $global_space["$constants"] // Holds all the defined constants.
+ */
+$global_space = (function(){return this;}).call(null)
+$global_space["$constants"] = []
+
+
+/**
+ * @method O
+ * @static
  * Creates wrapped objects for simple types.
  *
  * @param {boolean | number | string} variable [description]
@@ -64,6 +84,8 @@ function requires(list_of_objects){
 }
 
 /**
+ * @method method_missing
+ * @static
  * Dinamically called when a no existent function is invoked
  *
  * @param  {Object} error  [The error that triggers method_missing call.]

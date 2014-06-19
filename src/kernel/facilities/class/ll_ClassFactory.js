@@ -1,4 +1,8 @@
 /**
+ * @class Kernel.Facilities.Class.ClassFactory
+ */
+
+/**
  * @method Kernel.Facilities.Class._ClassFactory
  *
  * Creates a new class

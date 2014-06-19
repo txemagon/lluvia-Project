@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Kernel-Facilities-Class-ProxyConstructor-method-constructor'><span id='Kernel-Facilities-Class-ProxyConstructor'>/**
-</span></span> * @class Kernel.Facilities.Class.ProxyConstructor
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Architecture-ProxyConstructor'>/**
+</span> * @class Kernel.Foundation.Architecture.ProxyConstructor
  * Proxy class to apply all the given arguments of a constructor to another
  *
  * From [mdn new operator][https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new] notice:
@@ -33,7 +33,10 @@
  *    var b = new (ProxyConstructor(Enumeration, &quot;spades&quot;, &quot;hearts&quot;))
  *    // =&gt; {spades:0, hearts:1}
  *
- * @constructor
+ */
+
+<span id='Kernel-Foundation-Architecture-ProxyConstructor-method-constructor'>/**
+</span> * @method constructor
  * Use rest_of_arguments as comma separated list.
  *
  * @param {Function} Constructor Constructor to delegate new call.

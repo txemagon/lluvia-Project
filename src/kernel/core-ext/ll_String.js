@@ -1353,7 +1353,6 @@ String.prototype.to_str = function(){
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
  * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
  *
- * @param      {string}
  * @return     {string}  Return a rational
  *			             If the arguments is invalid return "0/1"
  *                       Returns a copy of str with uppercase alphabetic characters
@@ -1414,16 +1413,15 @@ String.prototype.to_r = function(){
 
 
 /**
- * @method decimal
- *
+ * @method decimals
  * Number of decimal positions in a number
  *
- * @param  {number | string }
+ * @param  {number | string } Operand 
  * @return {Number}  Number of decimal. If the arguments is invalid return 0
  *
  **/
-
-function decimal() {
+//todo: Move to Math
+ function decimals() {
     if(isNaN(arguments[0]))
 	return -1
 
@@ -1483,7 +1481,6 @@ function intMcd() {
 
 
 /**
- * @member      String
  * @method      bytesize
  *
  * Returns the length of string in bytes.
