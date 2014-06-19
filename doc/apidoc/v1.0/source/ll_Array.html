@@ -27,7 +27,7 @@
                       &quot;clone&quot;,
                       &quot;compact&quot;,
                       &quot;sort_by&quot;,
-		      &quot;distribute&quot;
+                      &quot;distribute&quot;
                     ]
 
 <span id='Kernel-CoreExt-Array-static-method-reflect'>/**
@@ -36,12 +36,12 @@
  *
  * Creates a bang method version of the referred one.
  *
- * @param  {(String | String[])...} original_method Name of the original method.
  *
  * If original method is an Array of Strings then performs reflection
  * over every mentioned method.
  *
- * ###Example
+ * ### Example
+ *
  *      // Create Array#map$B based on Array#map
  *      Array.reflect(&quot;map&quot;)
  *
@@ -51,90 +51,93 @@
  *      // Create Array#map$B and Array#collect$B
  *      var method_list = [&quot;map&quot;, &quot;collect&quot;]
  *      Array.reflect(method_list)
+ *
+ * @param  {(String | String[])...} original_method Name of the original method.
  */
 Array.reflect = function(){
-  var result
+    var result
     var return_value = {}
 
-  function duplicate(original_method){
-    Array.prototype[original_method + &quot;$B&quot;] = function(){
-      var substitute = Array.prototype[original_method].apply(this, arguments)
+    function duplicate(original_method){
+        Array.prototype[original_method + &quot;$B&quot;] = function(){
+            var substitute = Array.prototype[original_method].apply(this, arguments)
 
-	this.clear()
-	for (var i=0; i&lt;substitute.length; i++)
-	  this[i] = substitute[i]
+            this.clear()
+            for (var i=0; i&lt;substitute.length; i++)
+            this[i] = substitute[i]
 
-	    return this
+            return this
+        }
+        return [ original_method + &quot;$B&quot;, Array.prototype[original_method + &quot;$B&quot;] ]
     }
-    return [ original_method + &quot;$B&quot;, Array.prototype[original_method + &quot;$B&quot;] ]
-  }
 
-  for(var i=0; i&lt;arguments.length; i++)
+    for(var i=0; i&lt;arguments.length; i++)
     if (arguments[i] instanceof Array)
-      for(var j=0; j&lt;arguments[i].length; j++){
-	result = duplicate(arguments[i][j])
-	  return_value[result[0]] = result[1]
-      }
-    else {
-      result = duplicate(arguments[i])
-	return_value[result[0]] = result[1]
-    }
-  return return_value
+        for(var j=0; j&lt;arguments[i].length; j++){
+            result = duplicate(arguments[i][j])
+            return_value[result[0]] = result[1]
+        }
+        else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+        return return_value
 }
+
 
 <span id='Kernel-CoreExt-Array-method-each'>/**
 </span> * @method  each
  *
  * Calls the block once for each element of the Array.
+ * This method shows an alert for item.
  *
- * @param  {function(Object)}  block Argument processor called once for every Array item
+ * ### Example
  *
- * @return {Array} Returns self
- *
- * ###Example
  *     var names = [&quot;Peter&quot;, &quot;John&quot;, &quot;David&quot;]
  *     names.each(function (arrayItem){ alert(arrayItem) })
  *     //=&gt; [&quot;Peter&quot;, &quot;John&quot;, &quot;David&quot;]
  *
- * This method shows an alert for item.
+ *
+ * @param  {function(Object)}  block Argument processor called once for every Array item
+ * @return {Array} Returns self
  */
 Array.prototype.each = function(){
-  for (var i = 0; i &lt; this.length; i++)
-    Array.prototype.each.yield(this[i])
+    for (var i = 0; i &lt; this.length; i++)
+        Array.prototype.each.yield(this[i])
 
-  return this
+    return this
 }
+
+
 <span id='Kernel-CoreExt-Array-method-each_index'>/**
 </span> * @method  each_index
  *
  * Calls the block once for each item with the element and its index.
  *
- * @param  {function(number)}  block Called once with every index.
+ * ### Example
  *
- * @return {Array} this
- *
- * ###Example
  *     var names = [&quot;Peter&quot;, &quot;Johnnie&quot;, &quot;Walker&quot;]
  *     names.each_index(function (arrayIndex){ alert(arrayIndex)})
  *     //=&gt; [&quot;Peter&quot;, &quot;Johnnie&quot;, &quot;Walker&quot;]
  *
- * This code throws an alert for each array item showing the array index number
+ * This code pops an alert for each array item, showing the array index number
+ *
+ * @param  {function(number)}  block Called once with every index.
  */
 Array.prototype.each_index = function(){
   for (var i = 0; i &lt; this.length; i++)
     Array.prototype.each_index.yield(i)
 }
 
+
 <span id='Kernel-CoreExt-Array-method-each_with_index'>/**
 </span> * @method  each_with_index
  *
  * Calls the block with the element and its index.
  *
- * @param  {function(Object, number)}  block \(element, index\) Called once with every element and index.
  *
- * @return {Array} this
+ * ### Example
  *
- * ###Example
  *     var list  = &quot;&quot;
  *     var names = [&quot;Peter&quot;, &quot;John&quot;, &quot;David&quot;]
  *     names.each_with_index(
@@ -146,24 +149,21 @@ Array.prototype.each_index = function(){
  *     //=&gt;    1.- John
  *     //=&gt;    2.- David &quot;
  *
- * This code throws an alert for each array item showing the array index number and the content of the index.
+ * @param  {function(Object, number)}  block \(element, index\) Called once with every element and index.
  */
 Array.prototype.each_with_index = function(){
   for (var i = 0; i &lt; this.length; i++)
     Array.prototype.each_with_index.yield(this[i], i)
 }
 
+
 <span id='Kernel-CoreExt-Array-method-count'>/**
 </span> * @method  count
  *
  * Counts all the elements of the array matching a particular criteria, if given.
  *
- * @param {Object}   [to_find] Count occurences of *to_find*
- * @param {function(Object)} [block] Counting criteria
+ * ### Example
  *
- * @return  {Number} Number of  matches.
- *
- * ###Example
  *     var names = [&quot;Peter&quot;, &quot;John&quot;, &quot;David&quot;]
  *     names.count()
  *     //=&gt; 3
@@ -177,6 +177,11 @@ Array.prototype.each_with_index = function(){
  *                    return element.length == 5
  *                 })
  *     //=&gt; 2
+ *
+ * @param {Object}   [to_find] Count occurences of *to_find*
+ * @param {function(Object)} [block] Counting criteria
+ *
+ * @return  {Number} Number of  matches.
  */
 Array.prototype.count = function(obj){
   if (typeof(obj) === &quot;undefined&quot; )
@@ -184,27 +189,23 @@ Array.prototype.count = function(obj){
 
       var count = 0
       for (var i=0; i&lt;this.length; i++)
-	if (
-	    ( typeof(obj) === &quot;function&quot; ?
-	      Array.prototype.count.yield(this[i]) :
-	      this[i] == obj
-	    )
-	   )
-	  count++
+        if ( ( typeof(obj) === &quot;function&quot; ?
+              Array.prototype.count.yield(this[i]) :
+              this[i] == obj
+            ))
+          count++
 
-	    return count
+   return count
 }
+
 
 <span id='Kernel-CoreExt-Array-method-reverse_each'>/**
 </span> * @method reverse_each
  *
  * Traverse every element of the array through the block in reverse order.
  *
- * @param  {function(object)}  block Called once with every element
+ * ### Example
  *
- * @return {Array} this
- *
- * ###Example
  *     var sentence   = &quot;&quot;
  *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\'t&quot;, &quot;I&quot;]
  *     to_my_boss.reverse_each(function(element){
@@ -212,6 +213,10 @@ Array.prototype.count = function(obj){
  *                             })
  *     sentence
  *     //=&gt; &quot;I DON'T LIKE THIS JOB &quot;
+ *
+ * @param  {function(Object)}  block Called once with every element
+ *
+ * @return {Array} this
  */
 
 Array.prototype.reverse_each = function(){
@@ -220,16 +225,14 @@ Array.prototype.reverse_each = function(){
       Array.prototype.reverse_each.yield(this[i])
 }
 
+
 <span id='Kernel-CoreExt-Array-method-collect'>/**
 </span> * @method  collect
  *
  * Maps array elements using a block for the transfomation.
  *
- * @param  {function(Object)} block Transforming function
- *
- * @return  {Array} Returns the trasformed image of self
- *
  * ### Example
+ *
  *     var number     = [250, 500, 1143]
  *     var discount   = 0.25
  *     var discounted = number.collect(function(obj){
@@ -242,19 +245,24 @@ Array.prototype.reverse_each = function(){
  *     var list = [ {name: &quot;John&quot;, age:23}, {name: &quot;Mary&quot;, age: 27 } ]
  *     list.collect(&quot;age&quot;)
  *     // =&gt; [23, 27]
+ *
+ * @param  {function(Object)} block Transforming function
+ *
+ * @return  {Array} Returns the trasformed image of self
  */
 Array.prototype.collect = function(){
     var collectable = []
 
     if ( String.is_string$U(arguments[0]) )
-	for (var i = 0; i &lt; this.length; i++)
+        for (var i = 0; i &lt; this.length; i++)
           collectable.push(this[i][arguments[0]])
     else
-	for (var i = 0; i &lt; this.length; i++)
+        for (var i = 0; i &lt; this.length; i++)
           collectable.push(Array.prototype.collect.yield(this[i]))
 
     return collectable
 }
+
 
 <span id='Kernel-CoreExt-Array-method-collectS-B'>/**
 </span> * @method  collect$B
@@ -264,13 +272,15 @@ Array.prototype.collect = function(){
  * (see Array#collect)
  */
 
+
 <span id='Kernel-CoreExt-Array-method-map'>/**
 </span> * @method  map
  *
- * Alias of {@link Array#collect Array#collect}
+ * Alias of Array#collect
  *
  */
 Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
+
 
 <span id='Kernel-CoreExt-Array-method-mapS-B'>/**
 </span> * @method  map$B
@@ -280,27 +290,48 @@ Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
  * (see Array#collect)
  */
 
+
 <span id='Kernel-CoreExt-Array-method-select_if'>/**
 </span> * @method  select_if
  *
  * Collects the element or elements that pass a given condition.
  *
- * @param  {function} This function must return a boolean. If it returns true, the array item will be included in the final array.
- * If not, it will be deleted.
- * @return  {Array} Returns all items that have passed the condition. If an item can't pass the condition, it is deleted.
+ * ### Example
  *
- * ###Example
- *     //SUSTITUIR POR EJEMPLO MAS ELABORADO CON METODOS DE STRING
- *     discount = number.collect(function(obj){ return obj-(obj*0.25)})
- *     //=&gt; [187.5,375,857.25]
+ *     // Return whether integer is perfect or not
+ *     function is_perfect$U(integer) {
+ *         var factor = []
+ *         for (var i=1; i&lt;=integer / 2; i++)
+ *             if (integer % i == 0)
+ *                 factor.push(i)
+ *
+ *         var sum = 0
+ *         for (var i=0; i&lt;factor.length; i++)
+ *             sum += factor[i]
+ *
+ *         return sum == integer
+ *     }
+ *
+ *     [3, 4, 6, 14, 21, 28].select_if(function(el){ return is_perfect$U(el) })
+ *     //=&gt; [6, 28]
+ *
+ *
+ * @param  {Function} block This function must return a boolean.
+ *                          If it returns true, the array item will be
+ *                          included in the final array.
+ *                          If not, it will be deleted.
+ * @return  {Array} Returns all items that have passed the condition.
+ *                  If an item can't pass the condition, it is deleted.
+ *
  */
 Array.prototype.select_if = function(){
   var collectable = []
     for (var i = 0; i &lt; this.length; i++)
       if ( Array.prototype.select_if.yield(this[i]) )
-	collectable.push(this[i])
-	  return collectable
+        collectable.push(this[i])
+          return collectable
 }
+
 
 <span id='Kernel-CoreExt-Array-method-indexOf'>/**
 </span> * @method  indexOf
@@ -310,12 +341,14 @@ Array.prototype.select_if = function(){
  * The method searches for an object in every position of the array,
  * starting at position passed as parameter.
  *
- * @param  {Object} The object that will be searched
- * @param  {Number} Position to start searching
- * ###Example
+ * ### Example
+ *
  *     var numbers = [34,56,78,98]
  *     numbers.indexOf(56, 0)
  *     //=&gt; 1
+ *
+ * @param  {Object} The object that will be searched
+ * @param  {Number} Position to start searching
  */
 Array.prototype.indexOf = function(searchElement, fromIndex){
   var i
@@ -324,24 +357,28 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
     return i
 }
 
+
 <span id='Kernel-CoreExt-Array-method-clone'>/**
 </span> * @method  clone
  *
  * Clones an array.
  *
- * @return  {Array} Cloned array
+ * ### Example
  *
- * ###Example
  *     var numbers = [34,56,78,98]
  *     numbers2 = numbers.clone()
- *     //numbers2 = [34,56,78,98]
+ *     numbers2
+ *     //=&gt; [34,56,78,98]
+ *
+ * @return  {Array} Cloned array
  */
 Array.prototype.clone = function(){
   var ary = []
     for (var i=0; i&lt;this.length; i++)
       ary[i] = this[i]
-	return ary
+        return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-cloneS-B'>/**
 </span> * @method  clone$B
@@ -351,30 +388,33 @@ Array.prototype.clone = function(){
  * (see Array#clone)
  */
 
+
 <span id='Kernel-CoreExt-Array-method-clear'>/**
 </span> * @method  clear
  * Clears an Array from the elements that it contains.
  *
- * @return  {Array} Empty array
- * ###Example
+ * ### Example
+ *
  *     var numbers = [34,56,78,98]
  *     numbers.clear()
  *     numbers
  *     //=&gt; numbers = []
+ *
+ * @return  {Array} Empty array
  */
 Array.prototype.clear = function(){
   while( this.length &gt; 0)
     this.pop()
 }
 
+
 <span id='Kernel-CoreExt-Array-method-equalsS-U'>/**
 </span> * @method  equals$U
  *
  * Compares two arrays.
  *
- * @return  {Boolean} If the arrays matches the condition, it returns true. If not, it returns false
- * @param  {Array} Array to compare
- * ###Example
+ * ### Example
+ *
  *     var numbers = [1,2,3,4,5]
  *     var numbers2 = [1,2,3,4,5]
  *     numbers.equals$U(numbers2)
@@ -384,15 +424,18 @@ Array.prototype.clear = function(){
  *    var cadena2 = [&quot;Soy&quot;, &quot;Laura&quot;]
  *    cadena.equals$U(cadena2)
  *    //=&gt; false
+ *
+ * @param  {Array} Array to compare
+ * @return  {Boolean} If the arrays matches the condition, it returns true. If not, it returns false
  */
 Array.prototype.equals$U = function(other){
-  var same = true
+    var same = true
     if(this.length != other.length)
-      return  false
-	for (var i=0; i&lt;this.length; i++)
-	  if (this[i] != other[i])
-	    same = false
-	      return same
+        return  false
+    for (var i=0; i&lt;this.length; i++)
+    if (this[i] != other[i])
+        same = false
+    return same
 }
 
 <span id='Kernel-CoreExt-Array-method-uniq'>/**
@@ -400,11 +443,8 @@ Array.prototype.equals$U = function(other){
  *
  * Searches repeated items in an array and deletes them.
  *
- * @param  {function(object)}  Block indicates the position of the element to compare
+ * ### Example
  *
- * @return  {Array} Returns an array without repeated items
- *
- * ###Example
  *     a = [2, 1, 2, 1, 2, 2, 3, 1, 1]
  *     a.uniq()
  *     // =&gt; [2, 1, 3]
@@ -413,7 +453,10 @@ Array.prototype.equals$U = function(other){
  *     a.uniq(function(element){
  *              return element[0]
  *            })
- *     // =&gt; [[2, 1], [1, 1]]
+ *     // =&gt; [[2, 1], [1, 1]]*
+ *
+ * @param  {function(Object)}  Block indicates the position of the element to compare
+ * @return  {Array} Returns an array without repeated items
  */
 Array.prototype.uniq = function(){
   var uniq = []
@@ -423,12 +466,13 @@ Array.prototype.uniq = function(){
 
     for (var i=0; i&lt;this.length; i++){
       element = block ? arguments[0](this[i]) : this[i]
-	if (!includes(element, comparable))
-	  uniq.push(this[i])
-	    comparable.push(element)
+        if (!Array.includes(element, comparable))
+          uniq.push(this[i])
+            comparable.push(element)
     }
   return uniq
 }
+
 
 <span id='Kernel-CoreExt-Array-method-uniqS-B'>/**
 </span> * @method  uniq$B
@@ -445,45 +489,47 @@ Array.prototype.uniq$B = function(){
   if (uniq.equals$U(this))
       return null
 
-	this.clear()
+        this.clear()
 
-	for(var i=0; i&lt;uniq.length; i++)
-	  this[i] = uniq[i]
+        for(var i=0; i&lt;uniq.length; i++)
+          this[i] = uniq[i]
 
   return this
 }
+
 
 <span id='Kernel-CoreExt-Array-method-first'>/**
 </span> * @method  first
  *
  * Returns the first element or elements of the array -it will depend on the number of elements meeting the parameters.
  *
- * @return  {Array} Returns the first element or elements of the array
- * @param  {Number} Position to end including the elements in the returned array
- * ###Example
+ * ### Example
+ *
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.first(3)
  *     //=&gt; [1,2,3]
+ *
+ * @param  {Number} Position to end including the elements in the returned array
+ * @return  {Array} Returns the first element or elements of the array
  */
 Array.prototype.first = function(){
   if (this.length == 0)
    return null
       if (arguments.length == 0)
-	return this[0]
-	  var ary = []
-	  for (var i=0; i &lt; arguments[0] &amp;&amp; i &lt; this.length ; i++)
-	    ary[i] = this[i]
-	      return ary
+        return this[0]
+          var ary = []
+          for (var i=0; i &lt; arguments[0] &amp;&amp; i &lt; this.length ; i++)
+            ary[i] = this[i]
+              return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-last'>/**
 </span> * @method  last
+ * Returns the element or elements of an array starting from the end.
+ * It will depend on the number of elements meeting the parameters.
  *
- * Returns the element or elements of an array starting from the end. It will depend on the number of elements meeting the parameters.
- *
- * @return  {Array} Returns the last element or elements of the array
- * @param  {Number} Position to start including the elements in the returned array
- * ###Example
+ * ### Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     filterNumbers = numbers.last(6)
  *     //=&gt; [4,5,6,7,8,9]
@@ -495,88 +541,95 @@ Array.prototype.first = function(){
  *     var numbers = []
  *     filterNumbers = numbers.last(2)
  *     //=&gt; null
+ *
+ * @param  {Number} Position to start including the elements in the returned array
+ * @return  {Array} Returns the last element or elements of the array
+ *
  */
 Array.prototype.last = function(){
   if (this.length == 0)
     return null
       if (arguments.length == 0)
-	return this[this.length -1]
-	  var ary = []
+        return this[this.length -1]
+          var ary = []
 
-	  for (var i= 0; i &lt; Math.min(arguments[0], this.length); i++)
-	    ary[i] = this[ this.length - Math.min(arguments[0], this.length) +i ]
-	      return ary
+          for (var i= 0; i &lt; Math.min(arguments[0], this.length); i++)
+            ary[i] = this[ this.length - Math.min(arguments[0], this.length) +i ]
+              return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-eraseS-B'>/**
 </span> * @method  erase$B
- *
  * Deletes the element especify in parenthesis.
  *
- * @param  {Number} Index
+ * ### Example
  *
- * @returns {Object} This
- *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase$B(3)
- *     //=&gt; [1,2,4,5,6,7,8,9] Note the difference with the method erase_at$B. The element extractes here is number 3
+ *     //=&gt; [1,2,4,5,6,7,8,9]
+ *
+ * ### Notice
+ *
+ * Notice the difference with the method erase_at$B. The element extracted here is number 3.
+ *
+ * @param  {Number} Index
+ * @returns {Object} This
  */
-Array.prototype.erase$B = function(){ // El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido). Falla una vez se pone la condición de parámetro inexistente en el array.
-  //todo: error on erase$B
-  if(arguments.length &gt; 1)
-    return null
-      //throw (&quot;Wrong number of parameters&quot;)
-      var find = false
-      for(var i = this.length-1; i&gt;=0; i--)
-	if(this[i] == arguments[0]){
-	  this.splice(i,1)
-	    find = true;
-	}
+Array.prototype.erase$B = function(){
+    if(arguments.length &gt; 1)
+        return null
+
+    var find = false
+    for(var i = this.length-1; i&gt;=0; i--)
+       if(this[i] == arguments[0]){
+          this.splice(i,1)
+            find = true;
+        }
   return find? this: null
 }
 
+
 <span id='Kernel-CoreExt-Array-method-erase_atS-B'>/**
 </span> * @method  erase_at$B
- *
  * Deletes the element on an specific position.
  *
- * @param  {Number} Position of the array item to be deleted
+ * ### Example
  *
- * @return {Array} this
- *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
- *     numbers.erase_at$B(3)          //=&gt; [1,2,3,5,6,7,8,9] Note the difference with the method erase$B. The element extracted here is in position 3
+ *
+ *     numbers.erase_at$B(3)          //=&gt; [1,2,3,5,6,7,8,9]
  *     numbers.erase_at$B(-1)         //=&gt; [1,2,3,4,5,6,7,8]
  *     numbers.erase_at$B(0)          //=&gt; [2,3,4,5,6,7,8,9]
  *     numbers.erase_at$B(8)          //=&gt; [1,2,3,4,5,6,7,8]
  *
+ * @param  {Number} Position of the array item to be deleted
+ * @return {Array} this
  */
-Array.prototype.erase_at$B = function(){//El assert muestra un test fallido sin motivo alguno (valor esperado == valor recibido).
+Array.prototype.erase_at$B = function(){
   if( !is_a_number(arguments[0]) )
     return null
     if(arguments.length &gt; 1)
       return null
         //throw (&quot;Wrong number of parameters&quot;)
         if(arguments[0] &gt; this.length)
-  	  return null
-  	    this.splice(arguments[0],1)
+          return null
+            this.splice(arguments[0],1)
   return this
 }
 
+
 <span id='Kernel-CoreExt-Array-method-erase_if'>/**
 </span> * @method  erase_if
- *
  * Deletes all the array elements that meet the condition specified by the block..
  *
- * @param  {function(object):boolean} Block that must contain a condition by which the element will be erased or not.
- * @returns {array} Returns those elements that satisfy the condition.
- *
- * ###Example
+ * ### Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if(function(obj){ return obj &gt; 2 })
  *     //=&gt; [1,2]
+ *
+ * @param  {function(Object):boolean} Block that must contain a condition by which the element will be erased or not.
+ * @return {Array} Returns those elements that satisfy the condition.
  */
 Array.prototype.erase_if = function(){
 
@@ -588,24 +641,25 @@ Array.prototype.erase_if = function(){
   for(var i = 0; i &lt; this.length; i++)
 
   if ( !Array.prototype.erase_if.yield(this[i]) )
-	  ary.push(this[i])
-	    return ary.compact()
+          ary.push(this[i])
+            return ary.compact()
 }
+
 
 <span id='Kernel-CoreExt-Array-method-erase_ifS-B'>/**
 </span> * @method  erase_if$B
- *
  * Deletes all the array elements that meet the condition specified by the block..
  * Deletion is made in block call. Not at the end
  *
- * @param  {function(object):boolean} Block that must contain a condition by which the element will be erased or not.
- * @returns {array} this
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.erase_if$B(function(obj){ return obj &gt; 2 })
  *     //=&gt; [1,2]
- */
+ *
+ * @param  {function(Object):boolean} Block that must contain a condition by which the element will be erased or not.
+ * @returns {Array} this
+*/
 Array.prototype.erase_if$B = function(){
 
   if(arguments.length &gt; 1)
@@ -619,14 +673,14 @@ Array.prototype.erase_if$B = function(){
   return this
 }
 
+
 <span id='Kernel-CoreExt-Array-method-replace'>/**
 </span> * @method  replace
  *
  * Replaces the array content with the array passed as parameter.
  *
- * @param  {Array} Array that will replace the original array. If this array is empty, the returned array will be null.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.replace([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])
  *     // =&gt; [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
@@ -639,29 +693,28 @@ Array.prototype.erase_if$B = function(){
  *     var substitute = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
  *     newNumbers = numbers.replace(substitute)
  *     // =&gt; [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
+ *
+ * @param  {Array} Array that will replace the original array. If this array is empty, the returned array will be null.
  */
 Array.prototype.replace = function(){
   if(arguments.length == 0)
     return null
       if(arguments.length &gt; 1)
-	return null
-	  //throw(&quot;wrong number of arguments&quot;)
-	  if (!(arguments[0] instanceof Array))
-	    return null
-	      //throw(&quot;Invalid parameter type: Array expected.&quot;)
-	      this.clear()
-	      for(var i = 0; i &lt; arguments[0].length; i++)
-		this[i] = arguments[0][i]
-		  return this
+        return null
+          //throw(&quot;wrong number of arguments&quot;)
+          if (!(arguments[0] instanceof Array))
+            return null
+              //throw(&quot;Invalid parameter type: Array expected.&quot;)
+              this.clear()
+              for(var i = 0; i &lt; arguments[0].length; i++)
+                this[i] = arguments[0][i]
+                  return this
 }
 
 <span id='Kernel-CoreExt-Array-method-deleteS-B'>/**
 </span> * @method delete$B
- *
  * Eliminates an object from the array that meets the parameter passed as position. The object can also be returned
  *
- * @param {Object} Object that is passed to the method as parameter.
- * @return {Array} A copy of the array without the deleted elements.
  *
  * ### Example 1
  *     var numbers = [1, 2, 3, 4, 5]
@@ -669,12 +722,16 @@ Array.prototype.replace = function(){
  *     numbers
  *     //=&gt; numbers = [1, 2, 4, 5]
  *
+ *
  * ### Example 2
+ *
  *     var numbers = [1, 2, 3, 4, 5]
  *     numbers.delete$B(8, function(){return &quot;Item not found&quot;})
  *     //=&gt; &quot;Item not found&quot;
  *
+ *
  * ### Example 3
+ *
  *     var numbers = [1, 2, 3, 4, 5]
  *     var deleted = numbers.delete$B(3)
  *     deleted
@@ -682,12 +739,17 @@ Array.prototype.replace = function(){
  *
  * Array#delete$B() calls remove undefined values.
  *
+ *
  * ### Example 4
+ *
  *     a
  *     // =&gt; [undefined, 5, 7, undefined, undefined, 2]
  *     a.delete$B()
  *     a
  *     // =&gt; [5, 7, 2]
+ *
+ * @param {Object} Object that is passed to the method as parameter.
+ * @return {Array} A copy of the array without the deleted elements.
  */
 Array.prototype.delete$B = function(obj){
   var position = this.indexOf(obj)
@@ -703,15 +765,13 @@ Array.prototype.delete$B = function(obj){
   return obj
 }
 
+
 <span id='Kernel-CoreExt-Array-method-includeS-U'>/**
 </span> * @method include$U
- *
  * Searches every item of the array for the object passed as parameter.
  *
- * @param  {Object} Object that the method will search for.
- * @return {Boolean} Returns the result of the search. If item is included, returns true. If not, false.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.include$U(3)
  *     // =&gt; true
@@ -719,78 +779,84 @@ Array.prototype.delete$B = function(obj){
  *     var names = [&quot;carlos&quot;,&quot;jordan&quot;,&quot;david&quot;,&quot;susan&quot;]
  *     newName = names.include$U('susan')
  *     // =&gt; true
- */
+ *
+ * @param  {Object} Object that the method will search for.
+ * @return {Boolean} Returns the result of the search. If item is included, returns true. If not, false.
+*/
 Array.prototype.include$U = function(){
   if(arguments.length != 1)
     //throw &quot;wrong number of arguments (it needs one argument)&quot;
     return null
       var find = false
       for(var i = 0; i &lt; this.length; i++)
-	if( arguments[0] == this[i])
-	  find = true
-	    return find
+        if( arguments[0] == this[i])
+          find = true
+            return find
 }
+
 
 <span id='Kernel-CoreExt-Array-method-assoc'>/**
 </span> * @method  assoc
- *
  * Checks the first element of each array and compares it with the passed parameter. If found, returns the array that contains it.
  * If not, returns null.
- * @param  {Object} object searched parameter.
- * @return {Array} Array
  *
- * ###Example
+ * $$ \frac{1}{x} $$
+ *
+ * ### Example
+ *
  *     var coupleOne = [&quot;David&quot;, &quot;Homer&quot;]
  *     var coupleTwo = [&quot;John&quot;, &quot;Steve&quot;]
  *     var index = [coupleOne, coupleTwo]
  *     var winnerCouple = index.assoc(&quot;John&quot;)     //=&gt; [&quot;John&quot;,&quot;Steve&quot;]
  *     var winnerCouple = index.assoc([&quot;John&quot;])   //=&gt; [&quot;John&quot;,&quot;Steve&quot;]
  *     var winnerCouple = index.assoc(&quot;Homer&quot;)    //=&gt; null
+ *
+ * @param  {Object} object searched parameter.
+ * @return {Array} Array
  */
 Array.prototype.assoc = function(){
   if(arguments.length &gt; 1)
     //throw &quot;wrong number of arguments&quot;
     return null
       for(var i=0; i&lt;this.length; i++)
-	if(arguments[0] == this[i][0])
-	  return this[i]
-	    return null
+        if(arguments[0] == this[i][0])
+          return this[i]
+            return null
 }
+
 
 <span id='Kernel-CoreExt-Array-method-at'>/**
 </span> * @method  at
- *
  * Returns the element corresponding to the index passed as parameter.
  *
- * @param  {number} Array index position.
- * @return {Object} The selected element by an index passed as parameter.
- *
- * ###Example
+ * ### Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.at(3)
  *     //=&gt; numbers = 4
+ *
+ * @param  {number} Array index position.
+ * @return {Object} The selected element by an index passed as parameter.
  */
 Array.prototype.at = function(){
   if(arguments.length &gt; 1)
     //throw &quot;wrong number of arguments&quot;
     if(arguments[0] &gt; this.length)
       return null
-	if(isNaN(arguments[0]))
-	  //throw &quot;wrong type paremeter&quot; Converts any argument to array, then merges elements of itself with corresponding elements from each argument.
-	  return null
-	    if(arguments[0] &lt; 0 &amp;&amp; (this.length + arguments[0]) &lt; 0)
-	      return null
-		return arguments[0]&gt;=0? this[arguments[0]] : this[this.length+(arguments[0])]
+        if(isNaN(arguments[0]))
+          //throw &quot;wrong type paremeter&quot; Converts any argument to array, then merges elements of itself with corresponding elements from each argument.
+          return null
+            if(arguments[0] &lt; 0 &amp;&amp; (this.length + arguments[0]) &lt; 0)
+              return null
+                return arguments[0]&gt;=0? this[arguments[0]] : this[this.length+(arguments[0])]
 }
+
 
 <span id='Kernel-CoreExt-Array-method-compact'>/**
 </span> * @method  compact
- *
  * Deletes the null elements of an array.
  *
- * @returns {Array} Returns the array clean and null elements.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,null,2,null,3,null,4,5,6,7,8,9]
  *     newNumbers = numbers.compact()
  *     // =&gt; [1,2,3,4,5,6,7,8,9]
@@ -798,14 +864,17 @@ Array.prototype.at = function(){
  *     var numbers = [null,null,null]
  *     newNumbers = numbers.compact()
  *     // =&gt; []
+ *
+ * @returns {Array} Returns the array clean and null elements.
  */
 Array.prototype.compact = function(){
   var ary = []
     for(var i = 0; i &lt; this.length; i++)
       if(this[i] != null)
-	ary.push(this[i])
-	  return ary
+        ary.push(this[i])
+          return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-compactS-B'>/**
 </span> * @method  compact$B
@@ -815,38 +884,37 @@ Array.prototype.compact = function(){
  * (see Array#compact)
  */
 
+
 <span id='Kernel-CoreExt-Array-method-merge'>/**
 </span> * @method merge
+ * Joins to Arrays.
  *
- * Merges two arrays in one
+ * ### Example
  *
- * @param {Array} Array that needs to be merged
- * @return {Array} Returns an array made out of two arrays
- *
- * ###Example
  *     var numbers = [1,2,3]
  *     var letters = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
  *     var merged = numbers.merge(letters)
  *     //=&gt; merged = [1, 2, 3, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+ *
+ * @param {Array} Array that needs to be merged
+ * @return {Array} Returns an array made out of two arrays
  */
 Array.prototype.merge = function(ary2){
   var ary = []// PROBLEMAS CON EL TEST, LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
     for(var i = 0; i &lt; this.length; i++)
       ary.push(this[i])
-	for(var i = 0; i &lt; ary2.length; i++)
-	  ary.push(ary2[i])
-	    return ary
+        for(var i = 0; i &lt; ary2.length; i++)
+          ary.push(ary2[i])
+            return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-drop'>/**
 </span> * @method  drop
- *
  * Deletes elements from position 0 of the array to the possition passed as parameter.
  *
- * @param {Number} Position to stop deleting data of the array.
- * @return {Array} Returns the array elements that haven't been deleted.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop(3)
  *     //=&gt; [5,6,7,8,9]
@@ -854,33 +922,34 @@ Array.prototype.merge = function(ary2){
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop(-3)
  *     //=&gt; [1,2,3,4,5,6,7,8,9]
+ *
+ * @param {Number} Position to stop deleting data of the array.
+ * @return {Array} Returns the array elements that haven't been deleted.
  */
 Array.prototype.drop = function(){
   if(arguments.length &gt; 1 || arguments.length &lt; 1)
     //throw &quot;Wrong number of arguments&quot;
     return null
       if(isNaN(arguments[0]))
-	//throw &quot;Invalid type argument&quot;
-	return null
-	  var ary = []
-	  if(arguments[0] &gt; this.length-1)
-	    return ary
-	      ary = this.clone()
-	      for(var i = 0; i &lt; arguments[0]; i++)
-		ary.splice(0,1)
-		  return ary
+        //throw &quot;Invalid type argument&quot;
+        return null
+          var ary = []
+          if(arguments[0] &gt; this.length-1)
+            return ary
+              ary = this.clone()
+              for(var i = 0; i &lt; arguments[0]; i++)
+                ary.splice(0,1)
+                  return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-drop_while'>/**
 </span> * @method  drop_while
- *
  * Executes a block passed as parameter that returns either an
  * object or null. If it returns null, this position will be deleted.
  *
- * @param {function(Object):(boolean | Object)} Block receiving the element.
- * @returns {Array} Returns an array of elements that have not been deleted.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(element){ return element &gt; 5? element : null})
  *     //=&gt; [7,8,9]
@@ -888,6 +957,9 @@ Array.prototype.drop = function(){
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     newNumbers = numbers.drop_while(function(element){ return element &gt; 7? element : null})
  *     //=&gt; [8,9]
+ *
+ * @param {function(Object):(boolean | Object)} Block receiving the element.
+ * @returns {Array} Returns an array of elements that have not been deleted.
  */
 Array.prototype.drop_while = function(){
   if(arguments.length &gt; 1)
@@ -899,18 +971,15 @@ Array.prototype.drop_while = function(){
       if (Array.prototype.drop_while.yield(this[i]))
         ary.push( this[i])
   }
-	  return ary.compact()
+          return ary.compact()
 }
+
 
 <span id='Kernel-CoreExt-Array-method-flatten'>/**
 </span> * @method  flatten
- *
  * Transforms an array that contains other arrays in a single array with the data of all of them
  *
- * @param {Number} level The level to stop flatting objects
- * @return {Array} Returns an array with the elements
- *
- * ###Example
+ * ### Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.flatten()
  *     //=&gt; [1,2,3,4,5,6]
@@ -922,28 +991,32 @@ Array.prototype.drop_while = function(){
  *     var numbers = [1,[2,[3,[4,[5,6]]]]]
  *     numbers.flatten(3)
  *     //=&gt; [1,2,3,4,[5,6]]
+ *
+ * @param {Number} level The level to stop flatting objects
+ * @return {Array} Returns an array with the elements
  */
 Array.prototype.flatten = function(level){
   if(level == 0)
     return this
       level = level || 1000
-      return unpack(this, [], level)
+      return Array.unpack(this, [], level)
 }
+
 
 <span id='Kernel-CoreExt-Array-method-index'>/**
 </span> * @method  index
- *
  * Finds the first position of a given object or the position of the first matching
  * a given criteria.
  *
- * @param {Object | function(Object): boolean} Object that the method will search for, or matching criteria.
+ * ### Example
  *
- * @return {number} Position of the element we are looking for. null if not found.
- *
- * ###Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
  *     numbers.index(3)
  *     //=&gt; 2
+ *
+ * @param {Object | function(Object): boolean} Object that the method will search for,
+ *                                                    or matching criteria.
+ * @return {number} Position of the element we are looking for. null if not found.
  */
 Array.prototype.index = function(){
   for(var i = 0; i &lt; this.length; i++)
@@ -951,32 +1024,70 @@ Array.prototype.index = function(){
           Array.prototype.index.yield( this[i]) :
           this[i] == arguments[0] )
       return i
-	return null
+        return null
 }
 
-<span id='Kernel-CoreExt-Array-property-'>/**
-</span> * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿???????????????????????????????
+
+<span id='Kernel-CoreExt-Array-method-product'>/**
+</span> * @method product
+ * Returns the cartesian product of two matrices.
+ *
+ * ### Example
+ *
+ *     [1,2,3].product([4,5])
+ *     //=&gt; [[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]]
+ *
+ *     [1,2].product([1,2])
+ *     //=&gt; [[1,1],[1,2],[2,1],[2,2]]
+ *
+ *     [1,2].product([3,4],[5,6])
+ *     //=&gt; [[1,3,5],[1,3,6],[1,4,5],[1,4,6],
+ *     //=&gt;  [2,3,5],[2,3,6],[2,4,5],[2,4,6]]
+ *
+ *     [1,2].product()
+ *     //=&gt; [[1],[2]]
+ *
+ *     [1,2].product([])
+ *     //=&gt; []
+ *
+ *     [1,2,3].product()
+ *     //=&gt; [[1], [2], [3]]
+ *
  */
 Array.prototype.product = function(){
   var ary = []
 
     if(!(arguments[0])){
       for(var i = 0; i &lt; this.length; i++)
-	ary[i] = [this[i]]
-	  return ary
+        ary[i] = [this[i]]
+          return ary
     }
 
   if(arguments[0].length &lt; 1)
     return ary
 
       if(arguments.length &gt;= 1){
-	if(arguments.length == 1)
-	  return aproduct(this,arguments[0])///////////////TO DO
+        if(arguments.length == 1)
+          return Array.product(this,arguments[0])
       }
 }
 
-<span id='Kernel-CoreExt-Array-property-'>/**
-</span> * ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿????????????????????????
+
+<span id='Kernel-CoreExt-Array-method-rassoc'>/**
+</span> * @method rassoc
+ * Using arrays of arrays as Hashes, seeks in the second
+ * element for a given key.
+ *
+ * ### Example
+ *
+ *     a = [ [ 1, &quot;one&quot;], [2, &quot;two&quot;], [3, &quot;three&quot;], [&quot;ii&quot;, &quot;two&quot;] ]
+ *
+ *     a.rassoc(&quot;two&quot;)
+ *     //=&gt; [2, &quot;two&quot;]
+ *
+ *     a.rassoc(&quot;four&quot;)
+ *     //=&gt; null
+ *
  */
 Array.prototype.rassoc = function(){
   if(arguments.length &gt; 1 || arguments.length &lt; 1)
@@ -984,31 +1095,32 @@ Array.prototype.rassoc = function(){
     return null
       var existsArray = false
       for(var i = 0; i &lt; this.length; i++)
-	if(this[i] instanceof Array)
-	  if(this[i].length == 2)
-	    existingArray = true
+        if(this[i] instanceof Array)
+          if(this[i].length == 2)
+            existingArray = true
 
-	      if(existingArray){
-		for(var i = 0; i &lt; this.length; i++)
-		  if(this[i] instanceof Array)
-		    if(this[i][1] == arguments[0])
-		      return this[i]
-	      }
+              if(existingArray){
+                for(var i = 0; i &lt; this.length; i++)
+                  if(this[i] instanceof Array)
+                    if(this[i][1] == arguments[0])
+                      return this[i]
+              }
   return null
 }
 
+
 <span id='Kernel-CoreExt-Array-method-rindex'>/**
 </span> * @method  rindex
- *
  * Searches an array to find the element passed as parameter and returns the position of this element,
  * starting the search from the final position of the array.
  *
- * @param {Object} Object that the method will search for.
- * @return {number} Position of the element searched for. If not find, it will be null.
- * ###Example
+ * ### Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     newNumbers = numbers.rindex(3)
  *     //=&gt; 6
+ *
+ * @param {Object} Object that the method will search for.
+ * @return {number} Position of the element searched for. If not find, it will be null.
  */
 Array.prototype.rindex = function(){
   if(arguments.length != 1)
@@ -1016,20 +1128,18 @@ Array.prototype.rindex = function(){
     return null
 
       for(var i = this.length-1; i &gt;= 0; i--)
-	if(this[i] == arguments[0])
-	  return i
-	    return null
+        if(this[i] == arguments[0])
+          return i
+            return null
 }
+
 
 <span id='Kernel-CoreExt-Array-method-rotate'>/**
 </span> * @method  rotate
- *
  * Rotates the array elements stablishing as amount of rotation an index passed as parameter.
  *
- * @param {Number} Stablishes the amount of the array rotation.
- * @return {Array} Items ordered.
+ * ### Example
  *
- * ###Example
  *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
  *     characters.rotate(2)
  *     //=&gt; [&quot;c&quot;,&quot;d&quot;,&quot;a&quot;,&quot;b&quot;]
@@ -1041,6 +1151,9 @@ Array.prototype.rindex = function(){
  *     var characters = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
  *     characters.rotate(3)
  *     //=&gt; [&quot;d&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]
+ *
+ * @param {Number} Stablishes the amount of the array rotation.
+ * @return {Array} Items ordered.
  */
 Array.prototype.rotate = function(obj){
   if (typeof(obj) === &quot;undefined&quot;){
@@ -1053,41 +1166,42 @@ Array.prototype.rotate = function(obj){
     return null
       var ary = this.clone()
       if(arguments){
-	if(isNaN(arguments[0]))
-	  //throw (&quot;Wrong type argument&quot;)
-	  return null
+        if(isNaN(arguments[0]))
+          //throw (&quot;Wrong type argument&quot;)
+          return null
 
-	    if(arguments[0] &lt; 0){
-	      if(Math.abs(arguments[0]) &gt; this.length-1)
-		//throw(&quot;Invalid index&quot;)
-		return null
-		  return _rotate(Math.abs(arguments[0]), this, ary)
-	    }
-	if(arguments[0] &gt; this.length-1)
-	  //throw(&quot;Invalid index&quot;)
-	  return null
-	    for(var i = 0; i &lt; ary.length; i++){
-	      ary[i] = this[arguments[0]]
-		arguments[0]++
-		if(arguments[0] == this.length)
-		  arguments[0] = 0
-	    }
-	return ary
+            if(arguments[0] &lt; 0){
+              if(Math.abs(arguments[0]) &gt; this.length-1)
+                //throw(&quot;Invalid index&quot;)
+                return null
+                  return _rotate(Math.abs(arguments[0]), this, ary)
+            }
+        if(arguments[0] &gt; this.length-1)
+          //throw(&quot;Invalid index&quot;)
+          return null
+            for(var i = 0; i &lt; ary.length; i++){
+              ary[i] = this[arguments[0]]
+                arguments[0]++
+                if(arguments[0] == this.length)
+                  arguments[0] = 0
+            }
+        return ary
       }
   return _rotate(this.length-1, this, ary)
 }
 
+
 <span id='Kernel-CoreExt-Array-method-take'>/**
 </span> * @method  take
- *
  * Takes the elements of an array from the first position to the position passed as parameter.
  *
- * @param {number} Position of the last element to take.
+ * ### Example
  *
- * ###Example
  *     var numbers = [1,2,3,4,5,4,3,2,1]
  *     newNumbers = numbers.take(3)
  *     //=&gt; [1,2,3]
+ *
+ * @param {number} Position of the last element to take.
  */
 Array.prototype.take = function(){
   if(!(arguments[0]) || arguments.length &gt; 1)
@@ -1095,30 +1209,31 @@ Array.prototype.take = function(){
     return null
 
       if(isNaN(arguments[0]))
-	//throw (&quot;Wrong type of parameters&quot;)
-	return null
+        //throw (&quot;Wrong type of parameters&quot;)
+        return null
 
-	  var ary = []
-	  if(arguments[0] &gt; this.length)
-	    arguments[0] = this.length
-	      for(var i = 0; i &lt; arguments[0]; i++)
-		ary[i] = this[i]
-		  return ary
+          var ary = []
+          if(arguments[0] &gt; this.length)
+            arguments[0] = this.length
+              for(var i = 0; i &lt; arguments[0]; i++)
+                ary[i] = this[i]
+                  return ary
 }
+
 
 <span id='Kernel-CoreExt-Array-method-take_while'>/**
 </span> * @method take_while
- *
  * Takes the first elements of an array while the condition is met.
  *
- * @param  {function(Object):boolean} block
- * @return {Array}       First elements of an Array
+ * ### Example
  *
- * ###Example
  *      [1, 2, 2, 3, 2, 4].take_while( function(el){
  *             return el &lt; 3
  *           })
  *      //=&gt; [1, 2, 2]
+ *
+ * @param  {function(Object):boolean} block
+ * @return {Array}       First elements of an Array
  */
 Array.prototype.take_while = function(){
   var ary    = []
@@ -1132,17 +1247,17 @@ Array.prototype.take_while = function(){
     return ary
 }
 
+
 <span id='Kernel-CoreExt-Array-method-shuffle'>/**
 </span> * @method  shuffle
- *
  * Shuffles the array items randomly.
  *
- * @return {Array} Shuffled array.
- *
- * ###Example
+ * ### Example
  *     var numbers = [1,2,3,4]
  *     numbers.shuffle()
  *     // =&gt; The same elements of the array in another order.
+ *
+ * @return {Array} Shuffled array.
  */
 Array.prototype.shuffle = function()
 {
@@ -1159,7 +1274,7 @@ Array.prototype.shuffle = function()
     var number = Math.round(getRandomArbitary(0,this.length));
     for (var i=0; i &lt; usedNumbers.length; i++)
       if (number == usedNumbers[i])
-	finded = true;
+        finded = true;
     if(!finded &amp;&amp; number &lt; this.length)
     {
       usedNumbers.push(number);
@@ -1170,15 +1285,12 @@ Array.prototype.shuffle = function()
   return randomizedArray;
 }
 
+
 <span id='Kernel-CoreExt-Array-method-transpose'>/**
 </span> * @method   transpose
- *
  * Assumes that self is an array of arrays and transposes the rows to columns.
  *
- * @param   {Array} Array with elements to transpose.
- * @return  {String} Returns a string with the union of the columns of different matrices.
- *
- * ###Example
+ * ### Example
  *     var numbers = [[1,2],[3,4],[5,6]]
  *     numbers.transpose()
  *     //=&gt; [[1,3,5],[2,4,6]]
@@ -1190,42 +1302,42 @@ Array.prototype.shuffle = function()
  *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
  *     words.transpose()
  *     //=&gt; [[hola, adios], [pedro, juan], [cristobal, colon]]
+ *
+ *  ### Notice
+ *
+ *  DIMENSIONS
+ *  Paremeters dimensions must have the same dimensions.
+ *
+ *
+ * @param   {Array} Array with elements to transpose.
+ * @return  {String} Returns a string with the union of the columns of different matrices.
  */
 Array.prototype.transpose = function(){
-<span id='Kernel-CoreExt-Array-property-'>  /**
-</span>   * VALID INPUT!
-   *
-   *  PARAMETER TYPES
-   *  (Array of Arrays)
-   *
-   *  DIMENSIONS
-   *  Paremeters dimensions must have the same dimensions.
-   *
-   */
+
   for(var i = 0; i &lt; this.length; i++)
     if(!(this[i] instanceof Array))
       //throw(&quot;Wrong type of parameters into Array&quot; + typeof(arguments[i]))
       return null
 
-	for(var i = 0; i &lt; this.length; i++)
-	  if((this[0].length) != (this[i].length))
-	    //throw(&quot;Element size differs&quot;)
-	    return null
+        for(var i = 0; i &lt; this.length; i++)
+          if((this[0].length) != (this[i].length))
+            //throw(&quot;Element size differs&quot;)
+            return null
 
-	      var ary = []
+              var ary = []
 
 
-	      //Square matrices
-	      if((this.length) == (this[0].length)){
-		ary = this.clone()
-		  for(var i = 0; i &lt; this.length;i++){
-		    ary[i] = []
-		      for(var j = 0;j &lt; this[i].length; j++)
-			ary[i][j] = this[j][i]
-		  }
+              //Square matrices
+              if((this.length) == (this[0].length)){
+                ary = this.clone()
+                  for(var i = 0; i &lt; this.length;i++){
+                    ary[i] = []
+                      for(var j = 0;j &lt; this[i].length; j++)
+                        ary[i][j] = this[j][i]
+                  }
 
-		return ary
-	      }
+                return ary
+              }
 
   //Non-square matrices
 
@@ -1235,44 +1347,46 @@ Array.prototype.transpose = function(){
       return ary
 }
 
+
 <span id='Kernel-CoreExt-Array-method-zip'>/**
 </span> * @method  zip
+ * Takes the elements of two or more arrays passed as parameter and 
+ * copies their content in a single array.
  *
- * Takes the elements of two or more arrays passed as parameter and copies their content in a single array.
- *
- * @param {Array} Arrays to be joined.
- * @return {Array} Array with all elements from the other arrays.
- *
- * ###Example
+ * ### Example
  *     var a = [1,2]
  *     var b = [3,4]
  *     a.zip(b)
  *     //=&gt; [[1,2],[3,4]]
+ *
+ * @param {Array} Arrays to be joined.
+ * @return {Array} Array with all elements from the other arrays.
  */
 Array.prototype.zip = function(){
   var ary = []
     for(var i=0;i&lt;this.length;i++){
       ary[i] = []
-	ary[i][0]=this[i]
-	for (var j=0; j&lt;arguments.length; j++)
-	  if(arguments[j][i] == (void 0))
-	    ary[i][j+1]=null
-	  else
-	    ary[i][j+1]=arguments[j][i]
+        ary[i][0]=this[i]
+        for (var j=0; j&lt;arguments.length; j++)
+          if(arguments[j][i] == (void 0))
+            ary[i][j+1]=null
+          else
+            ary[i][j+1]=arguments[j][i]
     }
   return ary;
 }
 
+
 <span id='Kernel-CoreExt-Array-method-emptyS-U'>/**
 </span> * @method  empty$U
- *
  * Checks if the array is empty.
  *
- * @return {Boolean} if empty, returns true. If not, false
- * ###Example
+ * ### Example
  *     var a = []
  *     a.empty$U()
  *     //=&gt; true
+ *
+ * @return {Boolean} if empty, returns true. If not, false
  */
 Array.prototype.empty$U = function(){
   if(arguments.length &gt; 0)
@@ -1281,18 +1395,18 @@ Array.prototype.empty$U = function(){
       return this.length==0? true: false
 }
 
+
 <span id='Kernel-CoreExt-Array-method-eqlS-U'>/**
 </span> * @method  eql$U
- *
  * Checks if the arrays are equals.
  *
- * @return {boolean} if they are equal, returns true. If not, false.
- *
- * ###Example
+ * ### Example
  *     var a = [1,2]
  *     var b = [1,2]
  *     a.eql$U(b)
  *     // =&gt; true
+ *
+ * @return {boolean} if they are equal, returns true. If not, false.
  */
 Array.prototype.eql$U = function(model){
   if(arguments.length &gt; 1)
@@ -1300,40 +1414,83 @@ Array.prototype.eql$U = function(model){
     return null
 
       if(!(arguments[0] instanceof Array))
-	return false
+        return false
 
-	  if(this.length != arguments[0].length)
-	    return false
-	      var that = this
-	      return model.inject_with_index( true,
-		  function (el, index, acum){
-		    if (typeof(el) === &quot;number&quot;)
-		return acum &amp;&amp; el == that[index] //Number.eql$U(el, that[index])
-		return acum &amp;&amp; ((el != null)? el.eql$U(that[index]) : true)
-		  });
+          if(this.length != arguments[0].length)
+            return false
+              var that = this
+              return model.inject_with_index( true,
+                  function (el, index, acum){
+                    if (typeof(el) === &quot;number&quot;)
+                return acum &amp;&amp; el == that[index] //Number.eql$U(el, that[index])
+                return acum &amp;&amp; ((el != null)? el.eql$U(that[index]) : true)
+                  });
 
 }
 
-<span id='Kernel-CoreExt-Array-property-'>/**
-</span> *    ¿??????????
-[1,2,3].inject(0, function(element, acumulator) { return element + acumulator });
 
-[1, 2, 7, 2, 3].inject(0, function(element, acumulator) {
-   return element &gt; acumulator ? element : acumulator
-})
+<span id='Kernel-CoreExt-Array-method-inject'>/**
+</span> * @method inject
+ * Make a whip round through all parishioners (this array elements).
+ *
+ * ### Example
+ *
+ *     [1,2,3].inject(0, function(element, accumulator) {
+ *         return element + acumulator
+ *     });
+ *     //=&gt; 6
+ *
+ *     [1, 2, 7, 2, 3].inject(0, function(element, accumulator){
+ *         return element &gt; acumulator ? element : accumulator
+ *     })
+ *     //=&gt; 7
+ *
+ *     [1, 2, 3].inject( {even: [], odd: []}, function(el, ac){
+ *         if (el % 2)
+ *            acu.odd.push(el)
+ *         else
+ *            acu.even.push(el)
+ *         return ac
+ *     })
+ *     //=&gt; {odd: [1, 3], even: [2]}
+ *
+ *
+ * @param {Number|Object} init_value Initial value or collect box
+ * @param {Function} block Callback
+ * @param block.element Each of the elements
+ *                                      (one per interaction) of this array.
+ * @param {Number|Object} block.accumulator Collect box to hold the results.
+ * @param {Number|Object} block.return Next value of block.accumulator.
+ *
+ * @return {Number/Object} Last value of block.return
  */
-Array.prototype.inject = function(init_value){
+Array.prototype.inject = function(init_value, block){
   for (var i=0; i&lt;this.length; i++)
     init_value = Array.prototype.inject.yield(this[i], init_value)
       return init_value
 }
 
-<span id='Kernel-CoreExt-Array-property-'>/**
-</span> *
- * ###Example:
- * [2, 2, 2, 2, 2].inject_with_index(0, function(element, index, acumulator) {
-   return acumulator + Math.pow(element, index)
-})
+
+<span id='Kernel-CoreExt-Array-method-inject_with_index'>/**
+</span> * @method inject_with_index
+ * Same as #inject but block recieves an extra value: array index.
+ *
+ * ### Example:
+ *
+ *     [2, 2, 2, 2, 2].inject_with_index(0, function(element, index, accumulator) {
+ *         return accumulator + Math.pow(element, index)
+ *     })
+ *     //   1 + 2 + 4 + 8 + 16
+ *     //=&gt; 31
+ *
+ * @param {Number|Object} init_value Initial value or collect box
+ * @param {Function} block Callback
+ * @param block.element Each of the elements
+ *                                      (one per interaction) of this array.
+ * @param {Number|Object} block.accumulator Collect box to hold the results.
+ * @param {Number|Object} block.return Next value of block.accumulator.
+ *
+ * @return {Number/Object} Last value of block.return
  */
 Array.prototype.inject_with_index = function(init_value){
   for (var i=0; i&lt;this.length; i++)
@@ -1341,40 +1498,40 @@ Array.prototype.inject_with_index = function(init_value){
       return init_value
 }
 
+
 <span id='Kernel-CoreExt-Array-method-reverse'>/**
 </span> * @method  reverse
- *
  * Reverses all array elements.
  *
- * @return {Array} New array with reversed elements.
- *
- * ###Example
+ * ### Example
  *     var a = [1,2,3,4]
  *     a.reverse()
  *     //=&gt; [4,3,2,1]
+ *
+ * @return {Array} New array with reversed elements.
  */
 Array.prototype.reverse = function(){
   var ary = []
     pos = 0
     for(var i = this.length-1; i &gt;= 0; i--){
       ary[pos] = this[i]
-	pos++
+        pos++
     }
   return ary
 }
 
+
 <span id='Kernel-CoreExt-Array-method-values_at'>/**
 </span> * @method  values_at
- *
  * Returns the value of an index passed as parameter.
  *
- * @param {number} Index to be selected
- * @return {Array} New array with values of selected index.
- *
- * ###Example
+ * ### Example
  *     var a = [1,2,3,4]
  *     a.values_at(1,2)
  *     //=&gt; [1,2]
+ *
+ * @param {number} Index to be selected
+ * @return {Array} New array with values of selected index.
  */
 Array.prototype.values_at = function(){
   for(var i = 0; i &lt; arguments.length; i ++)
@@ -1382,58 +1539,58 @@ Array.prototype.values_at = function(){
       //throw (&quot;Invalid type of paramenter&quot;)
       return null
 
-	var ary = []
-	for(var i = 0; i &lt; arguments.length; i++){
-	  //Converts real numbers (if exists) into integer.
-	  arguments[i] = Math.round(arguments[i])
+        var ary = []
+        for(var i = 0; i &lt; arguments.length; i++){
+          //Converts real numbers (if exists) into integer.
+          arguments[i] = Math.round(arguments[i])
 
-	    if((arguments[i]) &gt;= (this.length))
-	      ary.push(null)
+            if((arguments[i]) &gt;= (this.length))
+              ary.push(null)
 
-	    else if(arguments[i] &lt; 0){
-	      if((arguments[i]+(arguments[i]*-2)) &gt;= this.length)
-		ary.push(null)
-	      else
-		ary.push(this[this.length+(arguments[i])])
-	    }
+            else if(arguments[i] &lt; 0){
+              if((arguments[i]+(arguments[i]*-2)) &gt;= this.length)
+                ary.push(null)
+              else
+                ary.push(this[this.length+(arguments[i])])
+            }
 
-	    else
-	      ary.push(this[arguments[i]])
-	}
+            else
+              ary.push(this[arguments[i]])
+        }
   return ary
 }
 
+
 <span id='Kernel-CoreExt-Array-method-to_a'>/**
 </span> * @method  to_a
- *
  * Returns self. If called on a subclass of Array, converts the receiver into an Array object.
  *
- * @return  {Array} this
- *
- * ###Example
+ * ### Example
  *      [1, 2, 3, 4, 5].to_a()
  *      //=&gt; [1, 2, 3, 4, 5]
+ *
+ * @return  {Array} this
  */
 Array.prototype.to_a = function(){
   return this
 }
 
+
 <span id='Kernel-CoreExt-Array-method-cycle'>/**
 </span> * @method  cycle
- *
  * Calls block for each element n times or forever if none or null is given.
  * If a non-positive number is given or the array is empty, does nothing.
  * Returns null if the loop has finished without getting interrupted.
  *
+ * ### Example
  *
- * @param        {function {}}
+ *     [1,3,2].cycle(2, function(element){
+ *      alert(element);
+ *     })
+ *     //=&gt; shows an alert for each element of the array twice
  *
- * ###Example
- *
- * [1,3,2].cycle(2, function(element){
- *  alert(element);
- * })
- * //=&gt; shows an alert for each element of the array twice
+ * @param        {Number} times Number of iterations.
+ * @param        {Function} block
  */
 Array.prototype.cycle = function(times){
   if (times &lt; 0 || this.empty$U())
@@ -1445,17 +1602,17 @@ Array.prototype.cycle = function(times){
   return null
 }
 
+
 <span id='Kernel-CoreExt-Array-method-strip_all'>/**
 </span> * @method strip_all
- *
  * Searches for strings in an array. Strips each of the string elements of an array.
  *
- * @return  {Array} A new array with stripped elements.
- *
- * ###Example
+ * ### Example
  *     var a = [1,2,3,&quot;  4&quot;]
  *     a.strip_all()
  *     //=&gt; [1,2,3,&quot;4&quot;]
+ *
+ * @return  {Array} A new array with stripped elements.
  */
 Array.prototype.strip_all = function(){
   return this.collect(function(el){
@@ -1463,15 +1620,12 @@ Array.prototype.strip_all = function(){
   })
 }
 
+
 <span id='Kernel-CoreExt-Array-method-combination'>/**
 </span> * @method combination
- *
  * Generates all the possible combinations grouped by *number*.
  *
- * @param  {number}  Grouping amount
- * @return {Array}   All the combinations.
- *
- * ###Example
+ * ### Example
  *      a = [1, 2, 3, 4]
  *      a.combination(1)  //=&gt; [[1], [2], [3], [4]]
  *      a.combination(2)  //=&gt; [[1,2], [1,3], [1,4], [2, 3], [2, 4], [3, 4]]
@@ -1480,19 +1634,22 @@ Array.prototype.strip_all = function(){
  *      a.combination(0)  //=&gt; [[]]
  *      a.combination(5)  //=&gt; []
  *
- * ###Diagram
+ * ### Diagram
  *
  * For pairs of 3
  *
- *      1    2
- *     / \   |
- *    2   3  3
- *   / \  |  |
- *  3   4 4  4
+ *          1    2
+ *         / \   |
+ *        2   3  3
+ *       / \  |  |
+ *      3   4 4  4
  *
  *
- *  [1]
- *  [[1,2], [1,3]]
+ *      [1]
+ *      [[1,2], [1,3]]
+ *
+ * @param  {number}  Grouping amount
+ * @return {Array}   All the combinations.
  */
 Array.prototype.combination = function(number){
   if (! is_a_number(number) )
@@ -1538,17 +1695,14 @@ Array.prototype.__secure_combination = function(number, base, initial){
   return result.clone()
 }
 
+
 <span id='Kernel-CoreExt-Array-method-sort_by'>/**
 </span> * @method sort_by
- *
  * Returns a sorted array using the mapped value returned by the block.
  * When no block is given then acts a Array#sort alias.
  *
- * @param {(function(Object):Object)=} Block. Maps to provide a comparison item.
+ * ### Example
  *
- * @return {Array} Sorted Array
- *
- * ###Example
  *      var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']
  *      cities.sort_by()
  *      //=&gt; [Madrid,Valencia,alicante,barcelona]
@@ -1563,6 +1717,9 @@ Array.prototype.__secure_combination = function(number, base, initial){
  *                       })
  *      //=&gt; ['Madrid', 'Valencia', 'Barcelona']
  *
+ *
+ * @param {(function(Object):Object)=} Block. Maps to provide a comparison item.
+ * @return {Array} Sorted Array
  */
 Array.prototype.sort_by = function(){
   var indexed = []
@@ -1570,20 +1727,21 @@ Array.prototype.sort_by = function(){
      var ordered = []
 
      for (var i=0; i&lt;this.length; i++)
-	     indexed.push( [ Array.prototype.sort_by.yield(this[i]), this[i] ] )
-	   if (is_a_number$U( indexed[0][0]) )
+             indexed.push( [ Array.prototype.sort_by.yield(this[i]), this[i] ] )
+           if (is_a_number$U( indexed[0][0]) )
        indexed.sort( function(a,b){ return a[0] - b[0] } )
      else
        indexed.sort()
 
      for (var i=0; i&lt;this.length; i++)
-	      ordered.push( indexed[i][1] )
+              ordered.push( indexed[i][1] )
 
     return ordered
     } else
       return this.sort()
 
 }
+
 
 <span id='Kernel-CoreExt-Array-method-sort_byS-B'>/**
 </span> * @method  sort_by$B
@@ -1592,6 +1750,7 @@ Array.prototype.sort_by = function(){
  * Bang methods ...$B operates in `this` object.
  * (see Array#sort_by)
  */
+
 
 <span id='Kernel-CoreExt-Array-method-distribute'>/**
 </span> * @method distribute
@@ -1613,39 +1772,39 @@ Array.prototype.distribute = function(op2) {
     return result
 }
 
+
 <span id='Kernel-CoreExt-Array-method-distributeS-B'>/**
 </span> * @method distribute$B
  * Bang method. See Array#distribute
  */
 
+
 <span id='Kernel-CoreExt-Array-method-compose'>/**
 </span> * @method compose
  * Creates combinations via cartesian product.
  *
- * ## Example
+ * ### Example
  *
- *    var a = [&quot;teki&quot;, [&quot;anal&quot;, &quot;hypnot&quot;], &quot;izer&quot;]
- *    a.compose(&quot;_&quot;, &quot;&quot;)
- *    // =&gt; [&quot;teki_analizer&quot;, &quot;teki_hypnotizer&quot;]
- *
- *
- *    var a = [[&quot;teki&quot;, &quot;woman&quot;], [&quot;anal&quot;, &quot;hypnot&quot;], &quot;izer&quot;]
- *    a.compose(&quot;_&quot;, &quot;&quot;)
- *    // =&gt; [&quot;teki_analizer&quot;, &quot;teki_hypnotizer&quot;, &quot;woman_analizer&quot;, &quot;woman_hypnotizer&quot;]
+ *     var a = [&quot;teki&quot;, [&quot;anal&quot;, &quot;hypnot&quot;], &quot;izer&quot;]
+ *     a.compose(&quot;_&quot;, &quot;&quot;)
+ *     // =&gt; [&quot;teki_analizer&quot;, &quot;teki_hypnotizer&quot;]
  *
  *
- *    var a = [&quot;prefix&quot;, [[&quot;hyper&quot;, &quot;super&quot;], &quot;memo&quot;, [&quot;person&quot;, &quot;rocket&quot;] ], &quot;izer&quot;]
- *    a.compose(&quot;_&quot;, [&quot;-&quot;, &quot;&gt;&quot;], &quot;&quot;)
- *    // =&gt; [ &quot;prefix_hyper-memo&gt;personizer&quot;, &quot;prefix_super-memo&gt;personizer&quot;,
- *    //      &quot;prefix_hyper-memo&gt;rocketizer&quot;, &quot;prefix_super-memo&gt;rocketizer&quot; ]
+ *     var a = [[&quot;teki&quot;, &quot;woman&quot;], [&quot;anal&quot;, &quot;hypnot&quot;], &quot;izer&quot;]
+ *     a.compose(&quot;_&quot;, &quot;&quot;)
+ *     // =&gt; [&quot;teki_analizer&quot;, &quot;teki_hypnotizer&quot;, &quot;woman_analizer&quot;, &quot;woman_hypnotizer&quot;]
+ *
+ *
+ *     var a = [&quot;prefix&quot;, [[&quot;hyper&quot;, &quot;super&quot;], &quot;memo&quot;, [&quot;person&quot;, &quot;rocket&quot;] ], &quot;izer&quot;]
+ *     a.compose(&quot;_&quot;, [&quot;-&quot;, &quot;&gt;&quot;], &quot;&quot;)
+ *     // =&gt; [ &quot;prefix_hyper-memo&gt;personizer&quot;, &quot;prefix_super-memo&gt;personizer&quot;,
+ *     //      &quot;prefix_hyper-memo&gt;rocketizer&quot;, &quot;prefix_super-memo&gt;rocketizer&quot; ]
  */
-
-
 Array.prototype.compose = function(){
     var copy = this.clone()
 
     if (this.length &lt; 2)
-	return copy
+        return copy
 
     var args   = []
     for (var i=0; i&lt;arguments.length; i++)
@@ -1654,57 +1813,85 @@ Array.prototype.compose = function(){
     var roller = copy.shift().to_a()
 
     for(var i=0; copy.length; i++){
-	var next = copy.shift().to_a()
-	var inner_arrays = false
-	for (var h=0; h&lt;next.length; h++)
-	   if (next[h] instanceof Array)
-	       inner_arrays = true
-	if (inner_arrays){
-	    next = Array.prototype.compose.apply(next, args[i+1])
-	    args.splice(i+1,1)
-	}
-	var result = roller.distribute(next)
-	roller = result.collect(function(el) { return el.join(args[i]) })
+        var next = copy.shift().to_a()
+        var inner_arrays = false
+        for (var h=0; h&lt;next.length; h++)
+           if (next[h] instanceof Array)
+               inner_arrays = true
+        if (inner_arrays){
+            next = Array.prototype.compose.apply(next, args[i+1])
+            args.splice(i+1,1)
+        }
+        var result = roller.distribute(next)
+        roller = result.collect(function(el) { return el.join(args[i]) })
     }
     return roller
 }
 
-//Internal simple functions
-function includes(el, array){
+
+<span id='Kernel-CoreExt-Array-static-method-includes'>/**
+</span> * @method includes
+ * @static
+ * Returns whether or not an elment is contained in an Array
+ *
+ * @param {Object} el Element to look for.
+ * @return {Boolean} Found or not found.
+ */
+Array.includes = function(el, array) {
     for (var i=0; i&lt;array.length; i++)
     if (array[i] == el)
-	return true
+        return true
     return false
 }
 
-function unpack(model, array, level){
+
+<span id='Kernel-CoreExt-Array-method-unpack'>/**
+</span> * @method unpack
+ * Unnest arrays till the given nested level. Used for Array#flatten.
+ *
+ * @param {Object} model String or Array or any given object to use [] on.
+ * @param {Array} array  Array to push results in.
+ * @param {Number} level Depth.
+ *
+ * @return {Array} Returns array.
+ */
+Array.unpack = function(model, array, level){
     var l = level;
 
     for (var i=0; i&lt;model.length; i++){
-	if ( (model[i] instanceof Array) &amp;&amp; (l &gt; 0)){
-	    unpack(model[i], array, l-1)
-	}
-	else{
-	    array.push(model[i])
-	}
+        if ( (model[i] instanceof Array) &amp;&amp; (l &gt; 0)){
+            Array.unpack(model[i], array, l-1)
+        }
+        else{
+            array.push(model[i])
+        }
     }
     return array
 }
 
-function aproduct(array1, array2){
+
+<span id='Kernel-CoreExt-Array-static-method-product'>/**
+</span> * @method product
+ * @static
+ * Returns the cartesian product of two arrays.
+ *
+ * @param {Array} array1 First operand.
+ * @param {Array} array2 Second operand.
+ */
+Array.product = function(array1, array2) {
     var nary = []
     var arrays = array1.length * array2.length
     for(var i = 0; i &lt; arrays; i++){
-	nary[i] = []
+        nary[i] = []
     }
     var pos = 0
     for(var i = 0; i &lt; array1.length; i++)
     for(var j = 0; j &lt; array2.length; j++){
-	nary[pos][0] = array1[i]
-	nary[pos][1] = array2[j]
-	pos++
+        nary[pos][0] = array1[i]
+        nary[pos][1] = array2[j]
+        pos++
     }
-	return nary
+        return nary
 }
 
 function _rotate(number, array1, array2){
@@ -1712,24 +1899,28 @@ function _rotate(number, array1, array2){
     array2[number] = array1[0]
     var arg = number
     if(arg == array1.length-1)
-	arg = 0
+        arg = 0
     else
-	arg++
-	for(var i = arg; i != number;i++){
-	    array2[i] = array1[pos]
-	    if(i == (array1.length-1))
-		i = -1;
-	    pos++
-	}
-	    return array2
+        arg++
+        for(var i = arg; i != number;i++){
+            array2[i] = array1[pos]
+            if(i == (array1.length-1))
+                i = -1;
+            pos++
+        }
+            return array2
 }
 
 function getRandomArbitary (min, max) {
     return Math.random() * (max - min) + min;
 }
 
+
+/*
+ * This function returns a transposed array.
+ * (Used by Array#transpose method when it receives non-square matrices).
+ */
 function _transpose(pos, nary){
-    //This function returns a transpose array. (Used by Array#transpose method when it receives non-square matrices).
     var array = []
     for(var i = 0; i &lt; nary.length; i++)
     array[i] = nary[i][pos]
