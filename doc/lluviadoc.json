@@ -1,5 +1,5 @@
 {
-    "--title": "lluviaProject",
+    "--title": "lluvia<b>Project</b>",
     "--seo": true,
     "--output": "apidoc/v1.0",
     "--external":[],
