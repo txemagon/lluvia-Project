@@ -1,0 +1,10 @@
+{
+    "--title": "lluviaProject",
+    "--seo": true,
+    "--output": "apidoc/v1.0",
+    "--external":[],
+    "--": [
+        "../src/kernel",
+        "../src/engine/*.js"
+    ]
+}

@@ -3,7 +3,7 @@
  *
  * Creates several symbolic constants
  *
- *    ###Example:
+ *    ### Example:
  *
  *    Suit = new Enumeration("spades", "hearts", "diamonds", "clovers")
  *    // { spades: 0, hearts: 1, diamonds: 2, clovers: 3}

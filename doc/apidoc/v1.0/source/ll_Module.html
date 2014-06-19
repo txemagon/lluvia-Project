@@ -15,8 +15,55 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">function Module() {
+  <pre class="prettyprint lang-js">Module.prototype.constructor = Module
+Module._constants = new Hash()
 
+function Module(module_name, block){
+  if (module_name){
+    var module = new Module
+    Module._constants = Module._constants || new Hash()
+
+    if (typeof(block) !== &quot;undefined&quot;)
+       block.call(module)
+
+    Module._constants[module_name] = module
+    $global_space[&quot;$constants&quot;][module_name] = module
+
+    eval.call( null,
+               module_name +
+               &quot; = $global_space['$constants']['&quot; +
+               module_name + &quot;']&quot; )
+    return module
+  }
+
+}
+
+Module.constant_names = function(){
+    return Module._constants.self_keys()
+  }
+
+Module.constants = function(){
+    return Module._constants.values()
+}
+
+function require(){
+  //todo: define require to require another libraries not included in the index.js
+}
+
+<span id='global-method-alias_method'>/**
+</span> * @method alias_method
+ *
+ * Creates a copy of the old name function with the new name.
+ *
+ * @param  {string | Function} new_name
+ * @param  {string} old_name
+ * @return {Function}  returns a reference to the newly created function.
+ */
+Module.prototype.alias_method = function(new_name, old_name){
+  if (String.is_string$U(old_name))
+    this[new_name] = eval( this[old_name].toSource() )
+
+  return this[new_name]
 }
 </pre>
 </body>
