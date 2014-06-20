@@ -17,7 +17,7 @@ function Line() {
 * @method distance
 * @static
 *
-* Calculate the distance between two lines or one line and point
+* Calculate the distance between two lines or one line and a point
 *
 * @param {Object} line1 First line for calculations
 * @param {Object | Object} StraightLine || Vector shape2 Second param for calculations

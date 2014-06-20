@@ -43,6 +43,7 @@ assert("Check if two lines intersect in first quadrant.",
   'l1 = new StraightLine(new Vector(1,0), new Vector(3,3));  \
    l2 = new StraightLine(new Vector(0,3), new Vector(3,0));  \
    inter = Line.intersects$U(l1, l2)')
+
 assert("Check if two lines intersect in second quadrant.",
     "inter", 'true',
   'l1 = new StraightLine(new Vector(-4,3), new Vector(-3,2));  \
