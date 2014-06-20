@@ -20,12 +20,12 @@ $K_dependencies = [
 		description: "Uncategorized functionality.",
 		path: "utils/",
 		files: [
-			{name: "ll_Events.js", description: ""},
-			{name: "ll_Geometry.js", description: ""},
+			{name: "ll_Events.js",      description: ""},
+			{name: "ll_Geometry.js",    description: ""},
 			{name: "ll_Inheritance.js", description: ""},
-			{name: "ll_Physics.js", description: ""},
-			{name: "ll_Strings.js", description: ""},
-			{name: "ll_Webbrowser.js", description: ""}
+			{name: "ll_Physics.js",     description: ""},
+			{name: "ll_Strings.js",     description: ""},
+			{name: "ll_Webbrowser.js",  description: ""}
 		]
 	},
        llPackage("kernel", "engine"),
@@ -44,9 +44,10 @@ $K_dependencies = [
 		description: "Mathematics Types.",
 		path: "Mathematics/",
 		files: [
-			{name: "ll_Expression.js",   description: "Physics Vectors."},
-			{name: "ll_func.js",   description: "Physics Vectors."},
-			{name: "Geometry/ll_Vector.js",   description: "Physics Vectors."}
+			{name: "ll_Expression.js",           description: "Physics Vectors."},
+			{name: "ll_func.js",                 description: "Physics Vectors."},
+			{name: "Geometry/ll_Vector.js",      description: "Physics Vectors."},
+			{name: "Geometry/Vector_Fixed.js",   description: "Fixed Vectors."}
 		]
 	}
 
