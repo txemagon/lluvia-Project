@@ -4,7 +4,6 @@ var FileReader = require('./../lib/file_reader.js')
  * Hace cosas mu chulas que no se poner en ingles.
  * 
  */
-
 function Package(filepath, path) {
 
 
@@ -98,31 +97,26 @@ Package.prototype.inspect = function(level) {
         return tab
     }
 
-    text += "\n" + tabulation(level-1) + " {"
+    text += "\n" + tabulation(level-1) + "   {"
 
     for(var i in this)
         if(this[i] instanceof Array){
             text +="\n" + tabulation(level) + i + ": [" 
             for(var a=0; a<this[i].length; a++){
-                if(this[i][a].name){
-                    text += "\n" + tabulation(level+1) + "{\"name\": \"" + this[i][a].name + "\", \"description\": " + this[i][a].description + "}"
+                if(this[i][a].name)
+                    text += "\n" + tabulation(level+1) + "{\"name\": \"" + this[i][a].name + "\", \"description\": \"" + this[i][a].description + "\"}"
+                if(this[i][a] instanceof Package){
+                    text += this[i][a].inspect(level+2)
                 }
-                else
-                    text += "\"" + this[i][a].package + "\""
-                if(this[i][a] instanceof Package)
-                    array_packages.push(this[i][a])
                 if(a != this[i].length-1)
                     text += ","
             }
-            text += "]"
+            text += "],"
         }
         else if(this[i] != this._path)
-            text += "\n" + tabulation(level) + i + ": " + JSON.stringify(this[i])
+            text += "\n" + tabulation(level) + i + ": " + JSON.stringify(this[i]) + ","
     
-    text += "\n" + tabulation(level-1) +" } \n"
-
-    for(var i=0; i<array_packages.length; i++)
-        text += array_packages[i].inspect(level+1)
+        text += "\n" + tabulation(level-1) +" }\n" 
 
     return text
 };
