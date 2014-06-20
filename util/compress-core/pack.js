@@ -7,7 +7,9 @@ var p = new Package(initial_package, "/src")
 
 p.catalog()
 
-util.puts(  p.inspect() )
+
+console.dir(p.get_path("engine") )
+//util.puts(  p.inspect() )
 
 
 

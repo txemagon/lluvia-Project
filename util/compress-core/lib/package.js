@@ -1,7 +1,7 @@
 var FileReader = require('./../lib/file_reader.js')
 /**
  * @class Package
- * Hace cosas mu chulas que no se poner en ingles.
+ * 
  * 
  */
 function Package(filepath, path) {
@@ -24,8 +24,47 @@ function Package(filepath, path) {
         }
     })
 
-    this.path = path 
+    this.path = path
+    this.is_load$U = false 
+
    
+}
+
+Package.prototype.list_package = []
+
+/**
+*/
+Package.prototype.add_list_package = function(package){
+    var unique = true
+
+    if(this.list_package.length == 0)
+        this.list_package.push(package)
+
+    for(var i=0; i<this.list_package.length; i++)
+        if(this.list_package[i].full_name() == package.full_name())
+            unique = false
+
+    if(unique)
+        this.list_package.push(package)
+}
+
+/**
+*/
+Package.prototype.is_in$U = function(package) {
+    for(var i=0; i<this.list_package.length; i++){
+        if(this.list_package[i].package == package)
+            return true
+    }
+    return false
+}
+
+/**
+*/
+Package.prototype.get_path = function(package) {
+    for(var i=0; i<this.list_package.length; i++){
+        if(this.list_package[i].package == package)
+            return this.filepath + this._path + package
+    }
 }
 
 /**
@@ -44,6 +83,7 @@ Object.defineProperty(Package.prototype, "full_name", {
 */
 Package.prototype.catalog = function(){
     var dependencies = ["provides", "offers", "requires"]
+
     try{
 
         Object.defineProperty(this, "new_file", {
@@ -63,6 +103,8 @@ Package.prototype.catalog = function(){
                     this.path = object_file[i]
             }
 
+        this.add_list_package(this)
+
         for(var i=0; i<dependencies.length; i++)
             if(object_file[dependencies[i]]){
                 for(var a=0; a<object_file[dependencies[i]].length; a++){
@@ -74,7 +116,6 @@ Package.prototype.catalog = function(){
 
     }catch(e) {
         console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
-        //console.dir(e)
     }
 }
 
