@@ -30,7 +30,7 @@ InterleavedArray.prototype.inspect = function() {
     var txt = "{\n"
     //for(var i in this)
     for(var i = 0; i<this.size(); i++)
-        if(i in this){
+        if(i.toString() in this){
           txt += "\n\t" + i + ": " + this[i]
           for (var x = 1; eval(i + "." + x +  " in this"); x++)
             txt += "\n\t" + i + "." + x + ": " + this[eval(i + "." + x)]
@@ -44,8 +44,20 @@ ia.subpush("5", 3, 7)
 ia.subpush([3,7])
 */
 
-InterleavedArray.prototype.subpush = function(index, elements){
-        this[index] = elements
+InterleavedArray.prototype.subpush = function(index){
+    if(typeof(index) === "number")
+	index = index.toString()
+    for(var i=1; i<arguments.length; i++)
+	if(index in this){
+	    var free = false
+		for(var n=1; free != true; n++)
+		    if(!(index + "."+ n in this)){
+			free = true
+			    this[index + "." + n] = arguments[i]
+		    }
+	}
+	else
+	    this[index] = arguments[i]
 }
 
 Object.defineProperties(InterleavedArray.prototype, { 
