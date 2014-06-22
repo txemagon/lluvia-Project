@@ -78,19 +78,26 @@ InterleavedArray.prototype.constructor = InterleavedArray
  */
 function InterleavedArray(elements) {
 
-    Object.defineProperty(this, "subarray", {
+    Object.defineProperty(this, 'subarray', {
         value: [],
-        enumerable: false
+        enumerable: false,
+        writable: true
     })
 
-    for (var el = 0; el < arguments.length; el++)
-        if (!(arguments[el] instanceof Array))
+    var last_was_number = 0
+    for (var el = 0; el < arguments.length; el++) {
+        if (!(arguments[el] instanceof Array)) {
             this.push(arguments[el])
-        else
-            this.infiltrate(
-                this.length - 1,
-                new(ApplyProxyConstructor(InterleavedArray, arguments[el])))
+            last_was_number = 1
+        } else {
+            this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
+            for (var i = 0; i < this.subarray.length; i++)
+                this[(this.length - last_was_number) + "." + (i + 1)] = this.subarray[i]
+            last_was_number = 0
+        }
+    }
 }
+
 
 /**
  * @method infiltrate
@@ -122,7 +129,7 @@ function InterleavedArray(elements) {
  */
 InterleavedArray.prototype.infiltrate = function(position, element) {
 
-    for (var i = 1; i < element.length; i++)
+    for (var i = 0; i < element.length; i++)
         if (!(element[i] instanceof Array))
             this[position + "." + (this.subarray.length + 1)] = element[i]
         else

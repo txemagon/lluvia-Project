@@ -14,7 +14,6 @@
  * @param {Array} arguments_array Array of arguments.
  */
 function ApplyProxyConstructor(Constructor, arguments_array) {
-    var args = arguments_array
+    arguments_array.unshift(Constructor)
     return ProxyConstructor.apply(this, arguments)
 }
-
