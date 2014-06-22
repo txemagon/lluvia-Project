@@ -56,7 +56,7 @@ assert("Fixed Vector can be different to another.",
         var b = new FixedVector([4,6], [2,3,5,8] )')
 
 assert("Fixed Vector can substracts another.",
-    'c.foot', '[4,8]',
+    'c.foot', '[3,7]',
     'var a = new FixedVector( [1,1], [2,6]); \
         var b = new FixedVector( [1,3], [2,4]); \
         var c = a.subs(b)')
