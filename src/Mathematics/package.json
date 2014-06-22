@@ -1,6 +1,5 @@
-{   "package": "Mathemathics",
-		"description": "Mathemathics.",
-		"path": "",
+{   "package": "Mathematics",
+		"description": "Mathematics.",
 		"files": [
 			{"name": "ll_Angle.js",    "description": ""}
 		],
