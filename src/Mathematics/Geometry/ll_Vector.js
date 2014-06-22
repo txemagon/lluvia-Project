@@ -88,6 +88,56 @@ function Vector(){
     
 }
 
+/**
+* Compares the dimension of two vectors
+*
+* @param {Vector} vector_to_compare Vector which dimensions are to be checked
+* 
+* @return {Boolean} Returns true if dimensions are equal and false if not
+*/
+Vector.prototype.has_same_dimension_as$U = function(vector_to_compare){
+    if(this.Coord.length == vector_to_compare.Coord.length)
+        return true
+    return false
+}
+
+/**
+* Checks if two vector have the same number of coordinates. 
+* If not, fills the missing coordinates with zeros
+*
+* @param {Vector} vector_to_compare Vector to compare with the given one
+*
+* Example:
+* var a = new Vector(4, 2, 6)
+* var b = new Vector(2, 3)
+*
+* a.standarize_coordinates(b)
+* b.Coord
+*
+* //=> [2, 3, 0]
+* 
+*/
+Vector.prototype.standarize_coordinates = function(vector_to_compare) {
+    if(this.Coord.length >= vector_to_compare.Coord.length){
+        var difference = this.Coord.length - vector_to_compare.Coord.length
+        for (var i = 0; i < difference; i++) {
+            vector_to_compare.Coord.push(0)
+        }
+    }
+
+    if(this.Coord.length <= vector_to_compare.Coord.length){
+        var difference = vector_to_compare.Coord.length - this.Coord.length
+        for (var i = 0; i < difference; i++) {
+            this.Coord.push(0)
+        }
+    }    
+}
+
+/**
+* Transforms the given vector into its unitarian
+*
+* @return {Vector} Returns the unitarian vector
+*/
 Vector.prototype.unit = function(){
   return new Vector( this.uVector || this.scale(1 / this._module) )
 }
@@ -102,7 +152,7 @@ Vector.prototype.unit = function(){
  * @return      (Vector)      length
  *
  * Comments:   This function works creating a vector from the length of the biggest vector to add,
- *			  witch initial elements are '0', and replace 0 by the add of the terms of the vectors.
+ *			  which initial elements are '0', and replace 0 by the addition of the terms of the vectors.
  */
 Vector.prototype.parseInput = function(args){
 	/**
