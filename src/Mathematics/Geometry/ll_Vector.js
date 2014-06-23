@@ -218,7 +218,6 @@ Vector.prototype.cloneCoords = function(vectCpy){
 }
 
 Vector.prototype.add = function(vectAdd){
-
     /**
      *	VALID INPUT!
      *
