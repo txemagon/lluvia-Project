@@ -64,10 +64,7 @@ InterleavedArray.prototype.constructor = InterleavedArray
  *     //=> {0: 2, 0.1: 3, 0.2: 5}
  *
  *     new InterleavedArray( [2, [3, 5]] )
- *     //=> {0: 2, 0.1: 3, 0.2: 5}
- *
- *     new InterleavedArray( [2, [3, 5]], 9 )
- *     //=> {0: 2, 0.1: 3, 0.2: 5, 1: 9}
+ *     //=> {0: undefined, 0.1: 2, 0.1.1: 3, 0.1.2: 5}
  *
  *     new InterleavedArray( [2, [3, 5], 8], 9 )
  *     //=> {0: undefined, 0.1: 2, 0.1.1: 3, 0.1.2: 5, 0.2: 8, 1: 9}
@@ -77,7 +74,14 @@ InterleavedArray.prototype.constructor = InterleavedArray
  * @param {Object | Array} elements Variadic list or elements.
  */
 function InterleavedArray(elements) {
-
+/*
+   [1, 2, [3, 4, [7, 8], 6], 5]
+   [1, 2, 5] -> Array
+       | subarray
+      [3, 4, 6] -> IA
+          | subarray
+         [7, 8] -> IA
+*/
     Object.defineProperty(this, 'subarray', {
         value: [],
         enumerable: false,
@@ -91,13 +95,17 @@ function InterleavedArray(elements) {
             last_was_number = 1
         } else {
             this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
-            for (var i = 0; i < this.subarray.length; i++)
-                this[(this.length - last_was_number) + "." + (i + 1)] = this.subarray[i]
+            // for (var i = 0; i < this.subarray.length; i++)
+            //     this[(this.length - last_was_number) + "." + (i + 1)] = this.subarray[i]
             last_was_number = 0
         }
     }
+    
 }
 
+InterleavedArray.prototype.enumerate = function(base_index, subarray) {
+
+}
 
 /**
  * @method infiltrate
