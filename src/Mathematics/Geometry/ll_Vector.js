@@ -238,7 +238,7 @@ Vector.prototype.add = function(vectAdd) {
     function addVector(vector) {
         for (var i = 0; i < vector.Coord.length; i++) {
             if (!vectRes[i])
-                vectRes = 0
+                vectRes[i] = 0
             vectRes[i] += vector.Coord[i]
         }
     }
@@ -317,7 +317,7 @@ Vector.prototype.subs = function(vectSubs) {
     function subsVector(vector) {
         for (var i = 0; i < vector.Coord.length; i++) {
             if (!vectRes[i])
-                vectRes = 0
+                vectRes[i] = 0
             vectRes[i] -= vector.Coord[i]
         }
     }
