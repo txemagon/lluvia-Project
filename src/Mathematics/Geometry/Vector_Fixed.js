@@ -41,8 +41,8 @@ function FixedVector(free_vector, foot) {
  *
  * @return {Vector} Returns true if vectors are equal and false if not
  */
-FixedVector.prototype.equals_to$U = function(vector_to_compare) {
-    if (this.foot.eql$U(vector_to_compare.foot) && +this.eql$U(vector_to_compare))
+FixedVector.prototype.eql$U = function(vector_to_compare) {
+    if (this.foot.eql$U(vector_to_compare.foot) && this.eql$U(vector_to_compare))
         return true
     return false
 }
@@ -77,4 +77,3 @@ FixedVector.prototype.subs = function(vec) {
 
     return new FixedVector(new_free, new_foot)
 }
-

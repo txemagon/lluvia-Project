@@ -42,12 +42,12 @@ assert("Fixed Vector can accept array parameters with different dimensions.",
     'var a = new FixedVector( [2,3,5,8], [4,6] )')
 
 assert("Fixed Vector can be equal to another.",
-    'a.equals_to$U(b)', 'true',
+    'a.eql$U(b)', 'true',
     'var a = new FixedVector( [2,3,5,8], [4,6] ); \
         var b = new FixedVector([2,3,5,8], [4,6] )')
 
 assert("Fixed Vector can be different to another.",
-    'a.equals_to$U(b)', 'false',
+    'a.eql$U(b)', 'false',
     'var a = new FixedVector( [2,3,5,8], [4,6] ); \
         var b = new FixedVector([4,6], [2,3,5,8] )')
 
