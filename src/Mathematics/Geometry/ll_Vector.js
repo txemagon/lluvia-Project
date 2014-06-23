@@ -401,7 +401,7 @@ Vector.prototype.dot = function(vectors) {
         for (var cor = 0; cor < vectors[0].Coord.length; cor++) {
             var aux = 1
             for (var v = 0; v < vectors.length; v++)
-                aux *= vectors[v].Coord[cor]
+                aux *= (vectors[v].Coord[cor] || 0)
             dt += aux
         } else
             throw "Ther must be at least two vectors for the scalar product"
