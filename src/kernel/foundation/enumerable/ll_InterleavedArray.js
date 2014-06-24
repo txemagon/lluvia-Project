@@ -89,22 +89,32 @@ function InterleavedArray(elements) {
     })
 
     var last_was_number = 0
+    var position = 0
     for (var el = 0; el < arguments.length; el++) {
         if (!(arguments[el] instanceof Array)) {
             this.push(arguments[el])
             last_was_number = 1
+            position = i
         } else {
-            this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
+            //this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
             // for (var i = 0; i < this.subarray.length; i++)
             //     this[(this.length - last_was_number) + "." + (i + 1)] = this.subarray[i]
+            this.subarray[position] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
             last_was_number = 0
         }
     }
-    
+    for (var i = 0; i < this.subarray.length; i++)
+	    if(this.subarray[i] instanceof Array)
+		    this.enumerate(i, this.subarray[i])
 }
 
 InterleavedArray.prototype.enumerate = function(base_index, subarray) {
-
+     for(var i=0; i<subarray.length; i++){
+     	var index = base_index + "." + (i+1)
+     	this[index] = subarray[i]
+     	if (subarray.subarray[i] instanceof Array)
+     		this.enumerate(index, subarray.subarray[i])
+     }
 }
 
 /**
@@ -168,35 +178,50 @@ InterleavedArray.prototype.to_a = function(index) {
 
 }
 
+/**
+ * @method keys
+ * Return the keys in the InterleavedArray
+ *
+ * ### Example
+ * 
+ * var a = new InterleavedArray(0, 1, [5, [[7], 8, 9], 4)
+ * a.keys()
+ * //=> ["0", "1", "1.1", "1.1.1", "1.2", "1.3", "2"]
+ * 
+ */
+InterleavedArray.prototype.keys = function(){
+}
+
 InterleavedArray.prototype.size = function() {
-    var size = 0
-    for (var i in this)
-        size++
-    return size
+    if(this.subarray.length > 0){
+        var count = 0
+        for(var i=0; i<this.subarray.length; i++)
+            if(this.subarray[i] instanceof Array)  
+                count += this.subarray[i].size()
+        return this.length + count
+    }
+    return this.length
 }
 
 InterleavedArray.prototype.inspect = function() {
     var txt = "{\n"
-    //for(var i in this)
-    for (var i = 0; i < this.size(); i++)
-        if (i.toString() in this) {
-            txt += "\n\t" + i + ": " + this[i]
-            for (var x = 1; eval(i + "." + x + " in this"); x++)
-                txt += "\n\t" + i + "." + x + ": " + this[eval(i + "." + x)]
-        }
+    for (var i in this)
+       txt += i + ": " + this[i] + "\n"
     return txt + "\n}"
 }
 
-Object.defineProperties(InterleavedArray.prototype, {
-    "inspect": {
-        value: InterleavedArray.prototype["inspect"],
-        enumerable: false
-    },
-    "constructor": {
-        value: InterleavedArray.prototype["constructor"],
-        enumerable: false
-    }
-})
+function stop_enum(method) {
+  for (var i=0; i<method.length; i++)
+  Object.defineProperty(InterleavedArray.prototype, method[i], {
+          value: InterleavedArray.prototype[method[i]],
+          enumerable: false
+      })
+}
+stop_enum(["inspect", "enumerate", "size", "constructor", "to_a", "length", "infiltrate", "keys"])
 
+/*
+ * Fails
+ * var a = new InterleavedArray(1,[2, [3, 5]], [5, 1],3,[4])
+*/
 var b = new InterleavedArray([2, 1, [2, [3, 5]], 7, 10, [4, [5, 7]], 5])
 b.inspect()

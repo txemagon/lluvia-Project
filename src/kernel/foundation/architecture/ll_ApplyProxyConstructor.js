@@ -15,5 +15,5 @@
  */
 function ApplyProxyConstructor(Constructor, arguments_array) {
     arguments_array.unshift(Constructor)
-    return ProxyConstructor.apply(this, arguments)
+    return ProxyConstructor.apply(this, arguments_array)
 }
