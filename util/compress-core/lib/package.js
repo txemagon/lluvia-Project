@@ -127,6 +127,7 @@ Object.defineProperty(Package.prototype, "full_name", {
 Package.prototype.list_path = []
 
 Package.prototype.is_path$U = function(path){
+    //console.dir(path)
     for(var i=0; i<this.list_path.length; i++)
         if(this.list_path[i] == path)
             return true
@@ -186,8 +187,7 @@ Object.defineProperty(Package.prototype, "catalog", {
 /**
 */
 Package.prototype.through = function(block, already){
-    var that = this
-    var dependencies = ["requires", "this", "provides", "offers"]
+    var dependencies = ["requires","this", "provides", "offers"]
     var already_there = already || []
     
     var actual_package = block
@@ -201,22 +201,18 @@ Package.prototype.through = function(block, already){
 
     for(var i=0; i<dependencies.length; i++){
         if(dependencies[i] == "this"){
-            console.dir("------------------------ INICIO ---------------------")
-            for(var e=0; e<dependencies.length; e++)
-                if(dependencies[e] != "this"){
-                    //console.dir(this[dependencies[e]])
-                    console.dir(this[dependencies[e]])
-                    //if(is_already_there$U(Path.join(this.filepath, this.path, this[dependencies[i]][e])))
-                    //    already_there.push(Path.join(this.filepath, this.path, this[dependencies[i]][e]))
-
-                }
-
-            console.dir("------------------------ FIN ---------------------")
+            if(!is_already_there$U(this.full_name())){
+                already_there.push(this.full_name())
+                this.through(this, already_there)
+            }
         }
         else if(actual_package[dependencies[i]])
-            for(var e=0; e<actual_package[dependencies[i]].length; e++){
-                //console.dir(actual_package[dependencies[i]][e])
-            }
+            for(var u=0; u<actual_package[dependencies[i]].length; u++)
+                if(!is_already_there$U(actual_package[dependencies[i]][u].full_name())){
+                    already_there.push(actual_package[dependencies[i]][u].full_name())
+                    console.dir(actual_package[dependencies[i]][u].full_name())
+                    actual_package[dependencies[i]][u].through(actual_package[dependencies[i]][u], already_there)
+                }
     }
 }
 

@@ -1,7 +1,6 @@
 {
 "package": "test",
 "description": "test_package",
-"path": "/src",
 "files": [{"name": "test.js",       "description": "Test package."}],
 "requires": ["test"],
 "provides": [],
