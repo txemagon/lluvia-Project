@@ -3,7 +3,7 @@
 "description": "lluvia loader. User application loader. Booter.",
 "files": [],
 "requires": ["loader"],
-"provides": ["utils", "kernel", "engine", "browser", "Mathematics"],
+"provides": ["utils", "kernel", "engine", "browser", "Mathematics", "test"],
 "offers":   []
 }
 

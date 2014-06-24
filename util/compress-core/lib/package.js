@@ -7,7 +7,6 @@ var Path = require('path')
  */
 function Package(filepath, path) {
 
-
     Object.defineProperty(this, "filepath", {
          value: filepath,
          enumerable: false
@@ -26,11 +25,13 @@ function Package(filepath, path) {
     })
 
     this.path = path  
+    this.dependencies = ["provides", "offers", "requires"]
 }
 
 /**
 */
 Package.prototype.list_package = []
+
 
 Object.defineProperty(Package.prototype, "list_package", {
     value: Package.prototype.list_package,
@@ -39,20 +40,10 @@ Object.defineProperty(Package.prototype, "list_package", {
 
 /**
 */
-Package.prototype.add_list_package = function(package, dependency){
-    var unique = true
-    var pk = {package: package, dependency: dependency}
-
-    if(this.list_package.length == 0)
-        this.list_package.push(pk)
-
-    for(var i=0; i<this.list_package.length; i++){
-        if(this.list_package[i].package.full_name() == package.full_name())
-            unique = false
+Package.prototype.save_first_package = function(package){
+    if(this.list_package.length == 0){
+        this.list_package.push(package)
     }
-
-    if(unique)
-        this.list_package.push(pk)
 }
 
 Object.defineProperty(Package.prototype, "add_list_package", {
@@ -62,11 +53,34 @@ Object.defineProperty(Package.prototype, "add_list_package", {
 
 /**
 */
-Package.prototype.is_in$U = function(name_package) {
-    for(var i=0; i<this.list_package.length; i++){
-        if(this.list_package[i].package.package == name_package)
-            return true
-    }
+Package.prototype.find_package = function(name_package){
+    var actual_package = actual_package || this.list_package[0]
+
+    if(actual_package.package == name_package)
+        return true
+    else
+        for(var i=0; i<this.dependencies.length; i++)
+            if(actual_package[this.dependencies[i]])
+                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
+                    if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
+                        return actual_package[this.dependencies[i]][a]
+}
+
+
+/**
+*/
+Package.prototype.is_in$U = function(name_package, actual_package) {
+    var actual_package = actual_package || this.list_package[0]
+
+    if(actual_package.package == name_package)
+        return true
+    else
+        for(var i=0; i<this.dependencies.length; i++)
+            if(actual_package[this.dependencies[i]])
+                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
+                    if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
+                        return true
+
     return false
 }
 
@@ -86,11 +100,11 @@ Object.defineProperty(Package.prototype, "is_in$U", {
 
 /**
 */
-Package.prototype.get_path = function(package) {
-    for(var i=0; i<this.list_package.length; i++){
-        if(this.list_package[i].package == package)
-            return Path.join(this.filepath, this.path, package)
-    }
+Package.prototype.get_path = function(name_package) {
+    var actual_pk = this.find_package(name_package)
+    
+    //return Path.resolve(actual_pk.filepath, name_package)    
+    return Path.join(actual_pk.filepath, actual_pk.path, name_package)
 }
 
 Object.defineProperty(Package.prototype, "get_path", {
@@ -110,11 +124,22 @@ Object.defineProperty(Package.prototype, "full_name", {
     enumerable: false
 })
 
+
+Package.prototype.list_path = []
+
+Package.prototype.is_path$U = function(path){
+    for(var i=0; i<this.list_path.length; i++)
+        if(this.list_path[i] == path)
+            return true
+        return false
+}
+
 /**
 */
 Package.prototype.catalog = function(dependency){
     var dependencies = ["provides", "offers", "requires"]
     var actual_dependency = dependency || ""
+    this.save_first_package(this)
 
     try{
 
@@ -135,20 +160,23 @@ Package.prototype.catalog = function(dependency){
                     this.path = object_file[i]
             }
 
-        this.add_list_package(this, actual_dependency)
-
         for(var i=0; i<dependencies.length; i++)
             if(object_file[dependencies[i]]){
                 for(var a=0; a<object_file[dependencies[i]].length; a++){
-                    var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
-                    new_pk.catalog(dependencies[i])
-                    this[dependencies[i]][a] = new_pk
+                    if(!this.is_path$U(Path.join(this.filepath, this.path, this[dependencies[i]][a]))){
+                        this.list_path.push(Path.join(this.filepath, this.path, this[dependencies[i]][a]))    
+                        var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
+                        new_pk.catalog(dependencies[i])
+                        this[dependencies[i]][a] = new_pk
+                    }
                 }
             }
-
+    
     }catch(e) {
         console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
     }
+    
+    this.list_path = []
 }
 
 Object.defineProperty(Package.prototype, "catalog", {
@@ -158,15 +186,17 @@ Object.defineProperty(Package.prototype, "catalog", {
 
 /**
 */
-Package.prototype.all_files = function(){
+Package.prototype.get_files = function(){
     var text = ""
 
-    for(var i in this.list_package){
-        var array_files = this.list_package[i].package.files
-        for(var a in array_files)
-            text += Path.join(this.list_package[i].package.filepath, this.list_package[i].package.path, array_files[a].name) + "\n"
-    }
+    var actual_package = this.list_package[0]
 
+        for(var i=0; i<this.dependencies.length; i++)
+            if(actual_package[this.dependencies[i]])
+                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
+                    for(var e=0; e<actual_package[this.dependencies[i]][a].files.length; e++)
+                        text += Path.join(actual_package[this.dependencies[i]][a].filepath, actual_package[this.dependencies[i]][a].path, actual_package[this.dependencies[i]][a].files[e].name) + "\n"
+    
     return text
 }
 
