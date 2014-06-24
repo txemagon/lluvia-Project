@@ -89,14 +89,17 @@ function InterleavedArray(elements) {
     })
 
     var last_was_number = 0
+    var position = 0
     for (var el = 0; el < arguments.length; el++) {
         if (!(arguments[el] instanceof Array)) {
             this.push(arguments[el])
             last_was_number = 1
+            position = i
         } else {
-            this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
+            //this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
             // for (var i = 0; i < this.subarray.length; i++)
             //     this[(this.length - last_was_number) + "." + (i + 1)] = this.subarray[i]
+            this.subarray[position] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
             last_was_number = 0
         }
     }
@@ -188,9 +191,15 @@ InterleavedArray.prototype.to_a = function(index) {
  */
 InterleavedArray.prototype.keys = function(){
 }
+
 InterleavedArray.prototype.size = function() {
-    if (this.subarray && "size" in this.subarray)
-           return this.length + this.subarray.size()
+    if(this.subarray.length > 0){
+        var count = 0
+        for(var i=0; i<this.subarray.length; i++)
+            if(this.subarray[i] instanceof Array)  
+                count += this.subarray[i].size()
+        return this.length + count
+    }
     return this.length
 }
 
@@ -208,7 +217,11 @@ function stop_enum(method) {
           enumerable: false
       })
 }
-stop_enum(["inspect", "enumerate", "size", "constructor", "to_a", "length", "infiltrate"])
+stop_enum(["inspect", "enumerate", "size", "constructor", "to_a", "length", "infiltrate", "keys"])
 
+/*
+ * Fails
+ * var a = new InterleavedArray(1,[2, [3, 5]], [5, 1],3,[4])
+*/
 var b = new InterleavedArray([2, 1, [2, [3, 5]], 7, 10, [4, [5, 7]], 5])
 b.inspect()
