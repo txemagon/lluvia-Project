@@ -30,8 +30,7 @@ function Package(filepath, path) {
 
 /**
 */
-Package.prototype.list_package = []
-
+Package.list = []
 
 Object.defineProperty(Package.prototype, "list_package", {
     value: Package.prototype.list_package,
@@ -41,8 +40,8 @@ Object.defineProperty(Package.prototype, "list_package", {
 /**
 */
 Package.prototype.save_first_package = function(package){
-    if(this.list_package.length == 0){
-        this.list_package.push(package)
+    if(Package.list.length == 0){
+        Package.list.push(package)
     }
 }
 
@@ -54,7 +53,7 @@ Object.defineProperty(Package.prototype, "add_list_package", {
 /**
 */
 Package.prototype.find_package = function(name_package){
-    var actual_package = actual_package || this.list_package[0]
+    var actual_package = actual_package || Package.list[0]
 
     if(actual_package.package == name_package)
         return true
@@ -70,7 +69,7 @@ Package.prototype.find_package = function(name_package){
 /**
 */
 Package.prototype.is_in$U = function(name_package, actual_package) {
-    var actual_package = actual_package || this.list_package[0]
+    var actual_package = actual_package || Package.list[0]
 
     if(actual_package.package == name_package)
         return true
@@ -87,9 +86,9 @@ Package.prototype.is_in$U = function(name_package, actual_package) {
 /**
 */
 Package.prototype.type_dependency = function(name_package) {
-    for(var i=0; i<this.list_package.length; i++){
-        if(this.list_package[i].package.package == name_package)
-            return this.list_package[i].dependency
+    for(var i=0; i<Package.list.length; i++){
+        if(Package.list[i].package.package == name_package)
+            return Package.list[i].dependency
     }
 }
 
@@ -186,10 +185,34 @@ Object.defineProperty(Package.prototype, "catalog", {
 
 /**
 */
+Package.prototype.through = function(block, already){
+    var already_there = already || []
+    
+    var actual_package = block
+
+    for(var i=0; i<this.dependencies.length; i++)
+        if(actual_package[this.dependencies[i]])
+            for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
+                console.dir(actual_package[this.dependencies[i]] + "\n -----------------------------")
+    
+    //console.dir(this)
+
+    //console.dir(block)
+    
+    //for(var i=0; i<this.dependencies.length; i++)
+        //if(actual_package[this.dependencies[i]])
+            //for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
+                //if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
+                    //return actual_package[this.dependencies[i]][a]
+}
+
+
+/**
+*/
 Package.prototype.get_files = function(){
     var text = ""
 
-    var actual_package = this.list_package[0]
+    var actual_package = Package.list[0]
 
         for(var i=0; i<this.dependencies.length; i++)
             if(actual_package[this.dependencies[i]])
