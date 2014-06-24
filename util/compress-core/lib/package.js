@@ -186,24 +186,38 @@ Object.defineProperty(Package.prototype, "catalog", {
 /**
 */
 Package.prototype.through = function(block, already){
+    var that = this
+    var dependencies = ["requires", "this", "provides", "offers"]
     var already_there = already || []
     
     var actual_package = block
-
-    for(var i=0; i<this.dependencies.length; i++)
-        if(actual_package[this.dependencies[i]])
-            for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
-                console.dir(actual_package[this.dependencies[i]] + "\n -----------------------------")
     
-    //console.dir(this)
+    function is_already_there$U(path){
+        for(var i=0; i<already_there.length; i++)
+            if(already_there[i] == path)
+                return true
+            return false
+    }
 
-    //console.dir(block)
-    
-    //for(var i=0; i<this.dependencies.length; i++)
-        //if(actual_package[this.dependencies[i]])
-            //for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
-                //if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
-                    //return actual_package[this.dependencies[i]][a]
+    for(var i=0; i<dependencies.length; i++){
+        if(dependencies[i] == "this"){
+            console.dir("------------------------ INICIO ---------------------")
+            for(var e=0; e<dependencies.length; e++)
+                if(dependencies[e] != "this"){
+                    //console.dir(this[dependencies[e]])
+                    console.dir(this[dependencies[e]])
+                    //if(is_already_there$U(Path.join(this.filepath, this.path, this[dependencies[i]][e])))
+                    //    already_there.push(Path.join(this.filepath, this.path, this[dependencies[i]][e]))
+
+                }
+
+            console.dir("------------------------ FIN ---------------------")
+        }
+        else if(actual_package[dependencies[i]])
+            for(var e=0; e<actual_package[dependencies[i]].length; e++){
+                //console.dir(actual_package[dependencies[i]][e])
+            }
+    }
 }
 
 
