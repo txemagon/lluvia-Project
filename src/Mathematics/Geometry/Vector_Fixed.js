@@ -42,7 +42,7 @@ function FixedVector(free_vector, foot) {
  * @return {Vector} Returns true if vectors are equal and false if not
  */
 FixedVector.prototype.eql$U = function(vector_to_compare) {
-    if (this.foot.eql$U(vector_to_compare.foot) && this.eql$U(vector_to_compare))
+    if (this.foot.eql$U(vector_to_compare.foot) && this.Coord.eql$U(vector_to_compare.Coord))
         return true
     return false
 }
@@ -54,15 +54,19 @@ FixedVector.prototype.eql$U = function(vector_to_compare) {
  */
 
 FixedVector.prototype.add = function(vec) {
-    if (this._head.eql$U(vec.foot)) {
-        var aux = new Vector(this.Coord)
-        var new_free = aux.add(vec.Coord)
+    alert(vec.length)
 
-        return new FixedVector(new_free, this.foot)
-
-    } else
-        throw ("Invalid operation for fixed vectors." +
-            " First vector head must be equal to second's foot")
+    for(var i=0; i < vec.length; i++){
+        if (this._head.eql$U(vec.foot)) {
+            var aux = new Vector(this.Coord)
+            var new_free = aux.add(vec.Coord)
+    
+            return new FixedVector(new_free, this.foot)
+    
+        } else
+            throw ("Invalid operation for fixed vectors." +
+                    " First vector head must be equal to second's foot")
+        }
 }
 
 /**

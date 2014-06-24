@@ -10,8 +10,8 @@ assert("Fixed Vector can create an instance of itself 2.",
     'var a = new FixedVector()')
 
 assert("Fixed Vector accepts one parameter.",
-    'a', '[2,3]',
-    'var a = new FixedVector( new Vector(2,3) )')
+    'a.Coord', '[2,3]',
+    'var a = new FixedVector(new Vector(2,3))')
 
 assert("Fixed Vector accepts two parameters",
     'a._head', '[6,9]',
@@ -22,7 +22,7 @@ assert("Fixed Vector can give the foot vector.",
     'var a = new FixedVector(new Vector(2,3), new Vector(4,6) )')
 
 assert("Fixed Vector can give the free vector.",
-    'a', '[2,3]',
+    'a.Coord', '[2,3]',
     'var a = new FixedVector(new Vector(2,3), new Vector(4,6) )')
 
 assert("Fixed Vector can give the _head vector.",
@@ -58,7 +58,7 @@ assert("Fixed Vector can substracts another.",
         var c = a.subs(b)')
 
 assert("Fixed Vector can substracts another.",
-    'c', '[0,4]',
+    'c.Coord', '[0,4]',
     'var a = new FixedVector( [1,5], [2,6]); \
         var b = new FixedVector( [1,3], [2,4]); \
         var c = a.subs(b)')
@@ -73,4 +73,4 @@ assert("Fixed Vector can't add another when a._head doesn't equals to b.foot.",
     'c', 'false',
     'var a = new FixedVector( [1,1], [2,6] ); \
         var b = new FixedVector( [1,1], [3,8] ); \
-        var c = a._head.eql$U(b.foot)')
+        var c = a.eql$U(b)')
