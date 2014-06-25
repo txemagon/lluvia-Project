@@ -68,11 +68,25 @@ assert("Fixed Vector can substracts another.",
         var b = new FixedVector( [[1,3], [2,4]] ); \
         var c = a.subs(b)')
 
+assert("Fixed Vector can add several when first._head equals to next.foot.",
+    'd.Coord', '[4,8]',
+    'var a = new FixedVector([[1,1],[2,6]]); \
+        var b = new FixedVector([[2,2],[3,7]]); \
+        var c = new FixedVector([[2,6],[5,9]]); \
+        var d = a.subs([b,c])')
+
 assert("Fixed Vector can add another when a._head equals to b.foot.",
     'c.Coord', '[2,2]',
     'var a = new FixedVector( [[1,1], [2,6]] ); \
         var b = new FixedVector( [[1,1], [3,7]] ); \
         var c = a.add(b)')
+
+assert("Fixed Vector can add several when first._head equals to next.foot.",
+    'd.Coord', '[5,9]',
+    'var a = new FixedVector([[1,1],[2,6]]); \
+        var b = new FixedVector([[2,2],[3,7]]); \
+        var c = new FixedVector([[2,6],[5,9]]); \
+        var d = a.add([b,c])')
 
 assert("Fixed Vector can't add another when a._head doesn't equals to b.foot.",
     'c', 'false',

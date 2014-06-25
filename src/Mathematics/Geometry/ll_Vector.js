@@ -923,7 +923,7 @@ Vector.prototype.toSpherical = function() {
  *
  *
  *
- *Comments:     this function creates a vector whith two points (point and aplicationPoint)
+ *Comments:     this function creates a vector with two points (point and aplicationPoint)
  *				and calculates the cross of the resultant vector and the other vector.
  */
 Vector.prototype.torque = function(point, vect) {

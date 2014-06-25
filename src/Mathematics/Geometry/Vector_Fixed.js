@@ -11,6 +11,25 @@ FixedVector.prototype = new Vector
 FixedVector.prototype.constructor = FixedVector
 FixedVector.super = Vector
 
+/**
+ * @method constructor
+ *
+ * ### Example
+ * 
+ *     new FixedVector()
+ *     //=> this.foot = (0,0)
+ *     //=> this._head = (0,0) 
+ *
+ *     Cases of usage:
+ *     constructor accepts only the free vector
+ *     constructor accepts only the _head (foot = (0,0))
+ *     constructor doesn't accept only foot (it wouldn't know where it ends)
+ *     constructor can accept a minimun of 0 parameters and a maximun of 3
+ *
+ * //NOTA: Vector.prototype.add.call(this, this.foot) //suma this a this.foot usando el metodo de vector
+ */
+
+
 function FixedVector(input) {
     if (!input)
         input = []
@@ -41,6 +60,7 @@ function FixedVector(input) {
 
 
 /**
+ * @method eql$U
  * Tells if one vector equals the given one
  *
  * @return {Vector} Returns true if vectors are equal and false if not
@@ -61,7 +81,6 @@ FixedVector.prototype.eql$U = function(vector_to_compare) {
 FixedVector.prototype.add = function(vec) {
     var that = this
     var first_time = true
-
 
         function addVec(vect) {
             if (that._head.Coord.eql$U(vect.foot.Coord)) {
@@ -99,8 +118,8 @@ FixedVector.prototype.subs = function(vec) {
     var that = this
 
         function subsVec(vect) {
-            new_free = that._head.subs(vect._head)
-            new_foot = vect._head
+            new_foot = that._head
+            new_free = vect._head.subs(that._head)
         }
 
     if (vec instanceof Array)
@@ -112,16 +131,19 @@ FixedVector.prototype.subs = function(vec) {
 }
 
 /**
- *Scales a FixedVector with a number
+ * Scales a FixedVector according to a number
  *
  * @param {Number} number number passed as parameter
  * @return {FixedVector} Returns a scaled FixedVector
  */
 
-FixedVector.prototype.scle = function(number) { //see why it effs on full name
+FixedVector.prototype.scle = function(number) { //scale from Vector needs to be redifined
     scalable = new Vector(this.Coord)
     scalable = scalable.scale(number)
     fv_foot = this.foot.scale(number)
 
     return new FixedVector([scalable, fv_foot])
 }
+
+//producto vectorial. See if it is necessary to redifined
+//FixedVector.prototype.cross = function(){}
