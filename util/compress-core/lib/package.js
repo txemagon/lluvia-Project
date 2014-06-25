@@ -1,5 +1,6 @@
 var FileReader = require('./../lib/file_reader.js')
 var Path = require('path')
+
 /**
  * @class Package
  * 
@@ -32,10 +33,6 @@ function Package(filepath, path) {
 */
 Package.list = []
 
-Object.defineProperty(Package.prototype, "list_package", {
-    value: Package.prototype.list_package,
-    enumerable: false
-})
 
 /**
 */
@@ -53,43 +50,28 @@ Object.defineProperty(Package.prototype, "add_list_package", {
 /**
 */
 Package.prototype.find_package = function(name_package){
-    var actual_package = actual_package || Package.list[0]
+    var result_pk
 
-    if(actual_package.package == name_package)
-        return true
-    else
-        for(var i=0; i<this.dependencies.length; i++)
-            if(actual_package[this.dependencies[i]])
-                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
-                    if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
-                        return actual_package[this.dependencies[i]][a]
+    this.through(function(pk){
+            if(pk.package == name_package)
+                result_pk = pk
+        })
+
+    return result_pk
 }
 
 
 /**
 */
-Package.prototype.is_in$U = function(name_package, actual_package) {
-    var actual_package = actual_package || Package.list[0]
+Package.prototype.is_in$U = function(name_package) {
+    var exist = false
 
-    if(actual_package.package == name_package)
-        return true
-    else
-        for(var i=0; i<this.dependencies.length; i++)
-            if(actual_package[this.dependencies[i]])
-                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
-                    if(actual_package[this.dependencies[i]][a].is_in$U(name_package, actual_package[this.dependencies[i]][a]))
-                        return true
+    this.through(function(pk){
+            if(pk.package == name_package)
+                exist = true
+        })
 
-    return false
-}
-
-/**
-*/
-Package.prototype.type_dependency = function(name_package) {
-    for(var i=0; i<Package.list.length; i++){
-        if(Package.list[i].package.package == name_package)
-            return Package.list[i].dependency
-    }
+    return exist
 }
 
 Object.defineProperty(Package.prototype, "is_in$U", {
@@ -100,10 +82,15 @@ Object.defineProperty(Package.prototype, "is_in$U", {
 /**
 */
 Package.prototype.get_path = function(name_package) {
-    var actual_pk = this.find_package(name_package)
-    
-    //return Path.resolve(actual_pk.filepath, name_package)    
-    return Path.join(actual_pk.filepath, actual_pk.path, name_package)
+    var name_package = name_package || this.package
+    var path = ""
+
+    this.through(function(pk){
+            if(pk.package == name_package)
+                path = pk.full_name()
+        })
+
+    return path
 }
 
 Object.defineProperty(Package.prototype, "get_path", {
@@ -124,22 +111,21 @@ Object.defineProperty(Package.prototype, "full_name", {
 })
 
 
-Package.prototype.list_path = []
 
-Package.prototype.is_path$U = function(path){
-    //console.dir(path)
-    for(var i=0; i<this.list_path.length; i++)
-        if(this.list_path[i] == path)
-            return true
-        return false
-}
 
 /**
 */
-Package.prototype.catalog = function(dependency){
+Package.prototype.catalog = function(already){
     var dependencies = ["provides", "offers", "requires"]
-    var actual_dependency = dependency || ""
     this.save_first_package(this)
+    var already_there = already || []
+
+    function is_already_there$U(path){
+    for(var i=0; i<already_there.length; i++)
+        if(already_there[i] == path)
+            return true
+        return false
+    }
 
     try{
 
@@ -163,10 +149,10 @@ Package.prototype.catalog = function(dependency){
         for(var i=0; i<dependencies.length; i++)
             if(object_file[dependencies[i]]){
                 for(var a=0; a<object_file[dependencies[i]].length; a++){
-                    if(!this.is_path$U(Path.join(this.filepath, this.path, this[dependencies[i]][a]))){
-                        this.list_path.push(Path.join(this.filepath, this.path, this[dependencies[i]][a]))    
+                    if(!is_already_there$U(Path.join(this.filepath, this.path, this[dependencies[i]][a]))){
+                        already_there.push(Path.join(this.filepath, this.path, this[dependencies[i]][a]))    
                         var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
-                        new_pk.catalog(dependencies[i])
+                        new_pk.catalog(already_there)
                         this[dependencies[i]][a] = new_pk
                     }
                 }
@@ -175,8 +161,6 @@ Package.prototype.catalog = function(dependency){
     }catch(e) {
         console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
     }
-    
-    this.list_path = []
 }
 
 Object.defineProperty(Package.prototype, "catalog", {
@@ -186,11 +170,11 @@ Object.defineProperty(Package.prototype, "catalog", {
 
 /**
 */
-Package.prototype.through = function(block, already){
-    var dependencies = ["requires","this", "provides", "offers"]
+Package.prototype.through = function(block, already, last_package){
+    var dependencies = ["requires", "this", "provides", "offers"]
     var already_there = already || []
     
-    var actual_package = block
+    var actual_package = last_package || this
     
     function is_already_there$U(path){
         for(var i=0; i<already_there.length; i++)
@@ -203,15 +187,17 @@ Package.prototype.through = function(block, already){
         if(dependencies[i] == "this"){
             if(!is_already_there$U(this.full_name())){
                 already_there.push(this.full_name())
-                this.through(this, already_there)
+                this.through(block, already_there, this)
+                block(this)
+
             }
         }
         else if(actual_package[dependencies[i]])
             for(var u=0; u<actual_package[dependencies[i]].length; u++)
                 if(!is_already_there$U(actual_package[dependencies[i]][u].full_name())){
                     already_there.push(actual_package[dependencies[i]][u].full_name())
-                    console.dir(actual_package[dependencies[i]][u].full_name())
-                    actual_package[dependencies[i]][u].through(actual_package[dependencies[i]][u], already_there)
+                    actual_package[dependencies[i]][u].through(block, already_there, actual_package[dependencies[i]][u])
+                    block(actual_package[dependencies[i]][u])
                 }
     }
 }
@@ -220,17 +206,14 @@ Package.prototype.through = function(block, already){
 /**
 */
 Package.prototype.get_files = function(){
-    var text = ""
+    var files = ""
 
-    var actual_package = Package.list[0]
-
-        for(var i=0; i<this.dependencies.length; i++)
-            if(actual_package[this.dependencies[i]])
-                for(var a=0; a<actual_package[this.dependencies[i]].length; a++)
-                    for(var e=0; e<actual_package[this.dependencies[i]][a].files.length; e++)
-                        text += Path.join(actual_package[this.dependencies[i]][a].filepath, actual_package[this.dependencies[i]][a].path, actual_package[this.dependencies[i]][a].files[e].name) + "\n"
-    
-    return text
+    this.through(function(pk){
+            for(var i=0; i<pk.files.length; i++)
+                files += Path.join(pk.filepath, pk.path, pk.files[i].name) + "\n"
+        })
+  
+    return files
 }
 
 /**
