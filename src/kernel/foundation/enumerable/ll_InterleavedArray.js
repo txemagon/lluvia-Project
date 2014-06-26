@@ -178,11 +178,23 @@ InterleavedArray.prototype.infiltrate = function(position, element) {
  *     a.to_a(0)
  *     //=> [3, 5]
  *
- * @param  {[type]} index [description]
- * @return {[type]}       [description]
+ * @param  {String | Number | Void} index The index of the position in the InterleavedArray
+ * @return {Array}                  array Returns the array with data. in the InterleavedArray
  */
 InterleavedArray.prototype.to_a = function(index) {
-
+    var array = []
+    if(typeof(index) == "number")
+       index = index.toString()
+    if(typeof(index) == "string"){
+       array.push(this[index])
+       return array   
+    }
+    for(var i = 0; i<this.length; i++){ 
+         array.push(this[i])
+         if(this.subarray[i] instanceof Array)
+            array.push(this.subarray[i].to_a())
+      }
+    return array
 }
 
 /**
