@@ -206,9 +206,21 @@ InterleavedArray.prototype.to_a = function(index) {
  * var a = new InterleavedArray(0, 1, [5, [[7], 8, 9], 4)
  * a.keys()
  * //=> ["0", "1", "1.1", "1.1.1", "1.2", "1.3", "2"]
- * 
+ *
+ * @return {Array} array The keys in order. 
  */
 InterleavedArray.prototype.keys = function(){
+   
+	var array = Object.keys(this)
+	var aux;
+	for(var i=0; i<array.length; i++)
+	    for(var j=i+1; j<array.length; j++)
+	        if(array[i] > array[j]){
+	    	   aux = array[i]
+		   array[i] = array[j]
+		   array[j] = aux
+ 		}
+	return array
 }
 
 InterleavedArray.prototype.size = function() {
