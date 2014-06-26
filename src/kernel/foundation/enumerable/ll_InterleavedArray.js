@@ -88,6 +88,11 @@ function InterleavedArray(elements) {
         writable: true
     })
 
+    Object.defineProperty(this, "length", {
+         enumerable: false,
+         writable: true
+    })
+
     var last_was_number = 0
     for (var el = 0; el < arguments.length; el++) {
         if (!(arguments[el] instanceof Array)) {
@@ -219,7 +224,7 @@ function stop_enum(method) {
           enumerable: false
       })
 }
-stop_enum(["inspect", "enumerate", "size", "constructor", "to_a", "length", "infiltrate", "keys"])
+stop_enum(["inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
 
 
 var a = new InterleavedArray(1,[2, [3, 5]], [5, 1],3,[4])
