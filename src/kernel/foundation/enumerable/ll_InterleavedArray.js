@@ -223,6 +223,12 @@ InterleavedArray.prototype.keys = function(){
 	return array
 }
 
+/**
+ * @method size
+ * Return the number of elements in InterleavedArray
+ * 
+ * @return {Number} 
+ */ 
 InterleavedArray.prototype.size = function() {
     if(this.subarray.length > 0){
         var count = 0
