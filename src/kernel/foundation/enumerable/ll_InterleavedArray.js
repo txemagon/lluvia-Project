@@ -95,7 +95,7 @@ function InterleavedArray(elements) {
             last_was_number = 1
         } else {
                if(!((this.length - last_was_number)  in this)){
-                  this.push("Undefined")
+                  this.push(undefined)
                   last_was_number = 1
             }
             this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
