@@ -47,7 +47,7 @@ $K_dependencies = [
 			{name: "ll_Expression.js",           description: "Physics Vectors."},
 			{name: "ll_func.js",                 description: "Physics Vectors."},
 			{name: "Geometry/ll_Vector.js",      description: "Physics Vectors."},
-			{name: "Geometry/Vector_Fixed.js",   description: "Fixed Vectors."}
+			{name: "Geometry/ll_FixedVector.js",   description: "Fixed Vectors."}
 		]
 	}
 

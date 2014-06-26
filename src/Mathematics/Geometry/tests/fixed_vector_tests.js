@@ -57,13 +57,13 @@ assert("Fixed Vector can be different from another.",
         var b = new FixedVector( [[4,6], [2,3,5,8]] )')
 
 assert("Fixed Vector can substracts another.",
-    'c.foot', '[3,7]',
+    'c.foot', '[3,11]',
     'var a = new FixedVector( [[1,5], [2,6]]); \
         var b = new FixedVector( [[1,3], [2,4]]); \
         var c = a.subs(b)')
 
 assert("Fixed Vector can substracts another.",
-    'c.Coord', '[0,4]',
+    'c.Coord', '[0,-4]',
     'var a = new FixedVector( [[1,5], [2,6]] ); \
         var b = new FixedVector( [[1,3], [2,4]] ); \
         var c = a.subs(b)')
@@ -93,3 +93,8 @@ assert("Fixed Vector can't add another when a._head doesn't equals to b.foot.",
     'var a = new FixedVector( [[1,1], [2,6]] ); \
         var b = new FixedVector( [[1,1], [3,8]] ); \
         var c = a.eql$U(b)')
+
+assert("Fixed Vector can return the virial of itself.",
+    'c', '46',
+    'var a = new FixedVector( [[2,5], [3,8]] ); \
+        var c = a.virial()')

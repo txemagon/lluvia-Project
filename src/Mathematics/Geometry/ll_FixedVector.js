@@ -81,28 +81,26 @@ FixedVector.prototype.eql$U = function(vector_to_compare) {
 FixedVector.prototype.add = function(vec) {
     var that = this
     var first_time = true
+    var checks = false
+    var new_free
 
-        function addVec(vect) {
-            if (that._head.Coord.eql$U(vect.foot.Coord)) {
-                aux = new Vector(vect.Coord)
-                if (first_time) {
-                    new_free = new Vector(that.Coord)
-                    first_time = false
-                }
-
-                new_free = new_free.add(aux)
-                that = vect
-            } else
-                throw ("Invalid operation for fixed vectors." +
-                    " First vector head must be equal to second's foot")
+    function checkVec(vect){
+        if (that._head.Coord.eql$U(vect.foot.Coord)) {
+            checks = true
+        }else{
+            checks = false
+        throw ("Invalid operation for fixed vectors." +
+            " First vector head must be equal to second's foot")
         }
+        that = vect
+    }
 
-    if (vec instanceof Array)
-        for (var i = 0; i < vec.length; i++) {
-            addVec(vec[i])
-        }
-    if (vec instanceof FixedVector)
-        addVec(vec)
+    vec = Vector.prototype.parseInput.apply(this, arguments)
+
+    for (var i = 0; i < vec.length; i++)
+        checkVec(vec[i])
+    if(checks)
+        new_free = vec[vec.length - 1]._head.subs(this.foot)
 
     return new FixedVector([new_free, this.foot])
 }
@@ -116,16 +114,12 @@ FixedVector.prototype.add = function(vec) {
 
 FixedVector.prototype.subs = function(vec) {
     var that = this
+    var new_free, new_foot
 
-        function subsVec(vect) {
-            new_foot = that._head
-            new_free = vect._head.subs(that._head)
-        }
+    vec = Vector.prototype.parseInput.apply(this, arguments)
 
-    if (vec instanceof Array)
-        subsVec(vec[vec.length - 1])
-    if (vec instanceof FixedVector)
-        subsVec(vec)
+    new_foot = this._head
+    new_free = vec[vec.length - 1]._head.subs(this._head)
 
     return new FixedVector([new_free, new_foot])
 }
@@ -147,3 +141,17 @@ FixedVector.prototype.scle = function(number) { //scale from Vector needs to be 
 
 //producto vectorial. See if it is necessary to redifined
 //FixedVector.prototype.cross = function(){}
+
+/**
+ * 
+ *
+ * @param {Number} number number passed as parameter
+ * @return {FixedVector} Returns a scaled FixedVector
+ */
+
+FixedVector.prototype.virial = function() {
+    var new_free = new Vector(this.Coord)
+    var virial = new_free.dot(this.foot)
+
+    return virial
+}

@@ -368,8 +368,8 @@ Vector.prototype.subs$B = function(vectSubs) {
  * r = v1·v2·v3 = v11 x v21 x v31 +  v12 x v22 x v32 + v13 x v23 x v33
  *
  * @memberOf	{Vector}
- * @method		dot			Returns a number which is the scalar product of two vectors.
- * @param 		{Vector} 	Vectors Array of at least two Vector.only two vectors will be processed.
+ * @method		dot			Returns a number that is the scalar product of two vectors.
+ * @param 		{Vector} 	Vectors Array of at least two Vector. Only two vectors will be processed.
  *
  * @return		{Number}	Scalar product
  */
@@ -404,7 +404,7 @@ Vector.prototype.dot = function(vectors) {
                 aux *= (vectors[v].Coord[cor] || 0)
             dt += aux
         } else
-            throw "Ther must be at least two vectors for the scalar product"
+            throw "There must be at least two vectors for the scalar product"
 
     return dt
 }

@@ -6,9 +6,9 @@ var _test_index = [ "../../../kernel/ll_Exception.js",
                     "../../../kernel/foundation/architecture/ll_Module.js",
                     "../ll_Vector.js",
                     "../ll_ReferenceFrame.js",
-                    "../Vector_Fixed.js",
+                    "../ll_FixedVector.js",
                     //From here on, test files can be added
-                    "fixed_vector_test.js",
+                    "fixed_vector_tests.js",
                     //"vector_tests.js",
                     //"reference_frames_tests.js"
                     ]
