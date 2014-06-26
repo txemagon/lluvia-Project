@@ -170,12 +170,24 @@ Object.defineProperty(Package.prototype, "catalog", {
 
 /**
 */
-Package.prototype.through = function(block, already, last_package){
+Package.prototype.through = function(block, config){ 
+    var config = config || {last_package: this, prune: [], already_there: []}
+
     var dependencies = ["requires", "this", "provides", "offers"]
-    var already_there = already || []
-    
-    var actual_package = last_package || this
-    
+    var actual_package = config.last_package
+    var prune = config.prune
+    var already_there = config.already_there
+
+    function prune_dependencies(array_prune){
+        for(var i=0; i<dependencies.length; i++){
+            for(var a=0; a<array_prune.length; a++){
+                if(dependencies[i] == array_prune[a]){
+                    dependencies.splice(i, 1)
+                }
+            }
+        }    
+    }
+
     function is_already_there$U(path){
         for(var i=0; i<already_there.length; i++)
             if(already_there[i] == path)
@@ -183,22 +195,25 @@ Package.prototype.through = function(block, already, last_package){
             return false
     }
 
+    prune_dependencies(prune)
+
     for(var i=0; i<dependencies.length; i++){
         if(dependencies[i] == "this"){
             if(!is_already_there$U(this.full_name())){
                 already_there.push(this.full_name())
-                this.through(block, already_there, this)
+                this.through(block, {last_package: this, prune: prune, already_there: already_there})
                 block(this)
-
             }
         }
-        else if(actual_package[dependencies[i]])
-            for(var u=0; u<actual_package[dependencies[i]].length; u++)
-                if(!is_already_there$U(actual_package[dependencies[i]][u].full_name())){
-                    already_there.push(actual_package[dependencies[i]][u].full_name())
-                    actual_package[dependencies[i]][u].through(block, already_there, actual_package[dependencies[i]][u])
-                    block(actual_package[dependencies[i]][u])
+        else if(actual_package[dependencies[i]]){
+            for(var a=0; a<actual_package[dependencies[i]].length; a++){
+                if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
+                    already_there.push(actual_package[dependencies[i]][a].full_name())
+                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: prune, already_there: already_there})
+                    block(actual_package[dependencies[i]][a])
                 }
+            }
+        }
     }
 }
 
@@ -212,7 +227,7 @@ Package.prototype.get_files = function(){
             for(var i=0; i<pk.files.length; i++)
                 files += Path.join(pk.filepath, pk.path, pk.files[i].name) + "\n"
         })
-  
+
     return files
 }
 
