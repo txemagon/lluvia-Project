@@ -217,16 +217,31 @@ Package.prototype.through = function(block, config){
     }
 }
 
-
 /**
 */
 Package.prototype.get_files = function(){
-    var files = ""
+    var files = []
 
-    this.through(function(pk){
-            for(var i=0; i<pk.files.length; i++)
-                files += Path.join(pk.filepath, pk.path, pk.files[i].name) + "\n"
-        })
+    for(var i=0; i<this.files.length; i++)
+        files.push(Path.join(this.filepath, this.path, this.files[i].name))
+
+    return files
+}
+
+/**
+*/
+Package.get_files = function(packages){
+    var files = []
+
+    if(packages instanceof Package){
+        files = packages.get_files()
+    }
+
+    if(packages instanceof Array){
+        for(var i in packages)
+            files.push(packages[i].get_files())
+    }
+
 
     return files
 }

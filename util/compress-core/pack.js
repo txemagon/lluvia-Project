@@ -10,16 +10,9 @@ var list = []
 
 p.through(function(pk){
         list.push(pk)
-    }, {last_package: this, prune: ["requires","offers"], already_there: []})
+    }, {last_package: this, prune: [], already_there: []})
 
-
-
-
-//var utils = p.find_package("kernel")
-//var files = utils.get_files()
-
-
-//util.puts(files)
+console.dir(Package.get_files(list))
 
  
 
