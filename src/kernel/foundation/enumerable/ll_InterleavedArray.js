@@ -210,11 +210,41 @@ InterleavedArray.prototype.size = function() {
     return this.length
 }
 
-InterleavedArray.prototype.inspect = function() {
-    var txt = "{\n"
+/**
+ * @method inspect
+ * Return the keys and value in the InterleavedArray
+ *
+ * ## Example
+ * var a = new InterleavedArray(1,[2, [3, 5]], [5, 1],3,[4])
+ * a.inspect()
+ * //=> 0: 1
+ *      0.1: 2
+ *      0.1.1: 3
+ *      0.1.2: 5
+ *      1: undefined
+ *      1.1: 5
+ *      1.2: 1
+ *      2: 3
+ *      2.1: 4
+ *
+ * @param {String | void} index The position index.
+ * @return {string} txt All keys and values in the InterleavedArray.
+ */
+
+InterleavedArray.prototype.inspect = function(index) {
+    /*var txt = "{\n"
     for (var i in this)
        txt += i + ": " + this[i] + "\n"
-    return txt + "\n}"
+    return txt + "\n}"*/
+    var txt = ""
+    var position = ""
+      for(var i = 0; i<this.length; i++){ 
+         position = index + (i+1) || i
+         txt += position + ": " + this[i] + "\n"
+         if(this.subarray[i] instanceof Array)
+            txt += this.subarray[i].inspect(position + ".")
+      }
+    return txt
 }
 
 function stop_enum(method) {
