@@ -3,8 +3,16 @@ var Path = require('path')
 
 /**
  * @class Package
+ *
+ * Description
  * 
- * 
+ * ###Example
+ *    |
+ *
+ * @param {String} filepath [description]
+ * @param {String} path [description]
+ *
+ * @return {} [description] 
  */
 function Package(filepath, path) {
 
@@ -26,13 +34,114 @@ function Package(filepath, path) {
     })
 
     this.path = path  
-    this.dependencies = ["provides", "offers", "requires"]
+}
+
+/**
+ * 
+ */
+Package.list = []
+
+/**
+*/
+Package.prototype.catalog = function(already){
+    var dependencies = ["provides", "offers", "requires"]
+    this.save_first_package(this)
+    var already_there = already || []
+
+    function is_already_there$U(path){
+    for(var i=0; i<already_there.length; i++)
+        if(already_there[i] == path)
+            return true
+        return false
+    }
+
+    try{
+
+        Object.defineProperty(this, "new_file", {
+            value: new FileReader(this.full_name()),
+            enumerable: false
+        })
+
+        var object_file = JSON.parse(this.new_file.read())
+
+        for(var i in object_file)
+            if (i != "path")
+                this[i] = object_file[i]
+            else{
+                if (this._path[0] != "/")
+                    this.path = this.path +  object_file[i]
+                else
+                    this.path = object_file[i]
+            }
+
+        for(var i=0; i<dependencies.length; i++)
+            if(object_file[dependencies[i]]){
+                for(var a=0; a<object_file[dependencies[i]].length; a++){
+                    if(!is_already_there$U(Path.join(this.filepath, this.path, this[dependencies[i]][a]))){
+                        already_there.push(Path.join(this.filepath, this.path, this[dependencies[i]][a]))    
+                        var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
+                        new_pk.catalog(already_there)
+                        this[dependencies[i]][a] = new_pk
+                    }
+                }
+            }
+    
+    }catch(e) {
+        console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
+    }
 }
 
 /**
 */
-Package.list = []
+Package.prototype.through = function(block, config){ 
+    var config = config || {}
+    config.last_package = config.last_package || this
+    config.prune = config.prune || []
+    config.already_there = config.already_there || []
 
+    var dependencies = ["requires", "this", "provides", "offers"]
+    var actual_package = config.last_package
+    //var prune = config.prune
+    //var already_there = config.already_there
+
+    function prune_dependencies(array_prune){
+        for(var i=0; i<dependencies.length; i++){
+            for(var a=0; a<array_prune.length; a++){
+                if(dependencies[i] == array_prune[a]){
+                    dependencies.splice(i, 1)
+                }
+            }
+        }    
+    }
+
+    function is_already_there$U(path){
+        for(var i=0; i<config.already_there.length; i++)
+            if(config.already_there[i] == path)
+                return true
+            return false
+    }
+
+    prune_dependencies(config.prune)
+
+    for(var i=0; i<dependencies.length; i++){
+        if(dependencies[i] == "this"){
+            if(!is_already_there$U(this.full_name())){
+                config.already_there.push(this.full_name())
+                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
+                block(this)
+            }
+        }
+        else if(actual_package[dependencies[i]]){
+            for(var a=0; a<actual_package[dependencies[i]].length; a++){
+                if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
+                    config.already_there.push(actual_package[dependencies[i]][a].full_name())
+                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: config.prune, already_there: config.already_there})
+                    block(actual_package[dependencies[i]][a])
+                }
+            }
+        }
+    }
+}
 
 /**
 */
@@ -113,55 +222,7 @@ Object.defineProperty(Package.prototype, "full_name", {
 
 
 
-/**
-*/
-Package.prototype.catalog = function(already){
-    var dependencies = ["provides", "offers", "requires"]
-    this.save_first_package(this)
-    var already_there = already || []
 
-    function is_already_there$U(path){
-    for(var i=0; i<already_there.length; i++)
-        if(already_there[i] == path)
-            return true
-        return false
-    }
-
-    try{
-
-        Object.defineProperty(this, "new_file", {
-            value: new FileReader(this.full_name()),
-            enumerable: false
-        })
-
-        var object_file = JSON.parse(this.new_file.read())
-
-        for(var i in object_file)
-            if (i != "path")
-                this[i] = object_file[i]
-            else{
-                if (this._path[0] != "/")
-                    this.path = this.path +  object_file[i]
-                else
-                    this.path = object_file[i]
-            }
-
-        for(var i=0; i<dependencies.length; i++)
-            if(object_file[dependencies[i]]){
-                for(var a=0; a<object_file[dependencies[i]].length; a++){
-                    if(!is_already_there$U(Path.join(this.filepath, this.path, this[dependencies[i]][a]))){
-                        already_there.push(Path.join(this.filepath, this.path, this[dependencies[i]][a]))    
-                        var new_pk = new Package(this.filepath, this.path + this[dependencies[i]][a])
-                        new_pk.catalog(already_there)
-                        this[dependencies[i]][a] = new_pk
-                    }
-                }
-            }
-    
-    }catch(e) {
-        console.dir("Warning: package.json was not found in " + this.full_name("/" + object_file.provides[i]) )
-    }
-}
 
 Object.defineProperty(Package.prototype, "catalog", {
     value: Package.prototype.catalog,
@@ -170,60 +231,11 @@ Object.defineProperty(Package.prototype, "catalog", {
 
 /**
 */
-Package.prototype.through = function(block, config){ 
-    var config = config || {last_package: this, prune: [], already_there: []}
-
-    var dependencies = ["requires", "this", "provides", "offers"]
-    var actual_package = config.last_package
-    var prune = config.prune
-    var already_there = config.already_there
-
-    function prune_dependencies(array_prune){
-        for(var i=0; i<dependencies.length; i++){
-            for(var a=0; a<array_prune.length; a++){
-                if(dependencies[i] == array_prune[a]){
-                    dependencies.splice(i, 1)
-                }
-            }
-        }    
-    }
-
-    function is_already_there$U(path){
-        for(var i=0; i<already_there.length; i++)
-            if(already_there[i] == path)
-                return true
-            return false
-    }
-
-    prune_dependencies(prune)
-
-    for(var i=0; i<dependencies.length; i++){
-        if(dependencies[i] == "this"){
-            if(!is_already_there$U(this.full_name())){
-                already_there.push(this.full_name())
-                this.through(block, {last_package: this, prune: prune, already_there: already_there})
-                block(this)
-            }
-        }
-        else if(actual_package[dependencies[i]]){
-            for(var a=0; a<actual_package[dependencies[i]].length; a++){
-                if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
-                    already_there.push(actual_package[dependencies[i]][a].full_name())
-                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: prune, already_there: already_there})
-                    block(actual_package[dependencies[i]][a])
-                }
-            }
-        }
-    }
-}
-
-/**
-*/
 Package.prototype.get_files = function(){
     var files = []
 
     for(var i=0; i<this.files.length; i++)
-        files.push(Path.join(this.filepath, this.path, this.files[i].name))
+        files += Path.join(this.filepath, this.path, this.files[i].name) + "\n"
 
     return files
 }
@@ -238,12 +250,25 @@ Package.get_files = function(packages){
     }
 
     if(packages instanceof Array){
-        for(var i in packages)
-            files.push(packages[i].get_files())
+        for(var i in packages){
+            var actual_files = packages[i].get_files()
+            for(var a in actual_files)
+                files.push(actual_files[a])
+        }
     }
 
-
     return files
+}
+
+/**
+ */
+Package.cat = function(package_catalog){
+    var string_package_catalog = ""
+        
+        for(var i in package_catalog)
+            string_package_catalog += package_catalog[i].toString() + "\n"
+
+    return string_package_catalog
 }
 
 /**
