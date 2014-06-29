@@ -91,6 +91,11 @@ Package.prototype.catalog = function(already){
     }
 }
 
+Object.defineProperty(Package.prototype, "catalog", {
+    value: Package.prototype.catalog,
+    enumerable: false
+})
+
 /**
 */
 Package.prototype.through = function(block, config){ 
@@ -220,22 +225,13 @@ Object.defineProperty(Package.prototype, "full_name", {
 })
 
 
-
-
-
-
-Object.defineProperty(Package.prototype, "catalog", {
-    value: Package.prototype.catalog,
-    enumerable: false
-})
-
 /**
 */
 Package.prototype.get_files = function(){
     var files = []
 
     for(var i=0; i<this.files.length; i++)
-        files += Path.join(this.filepath, this.path, this.files[i].name) + "\n"
+        files.push(Path.join(this.filepath, this.path, this.files[i].name))
 
     return files
 }
