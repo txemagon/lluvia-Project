@@ -3,16 +3,15 @@ var Path = require('path')
 
 /**
  * @class Package
- *
- * Description
- * 
- * ###Example
- *    |
- *
- * @param {String} filepath [description]
- * @param {String} path [description]
- *
- * @return {} [description] 
+ * Description.
+ */
+
+/**
+ * @method constructor
+ * Description.
+ *  
+ * @param {String} filepath
+ * @param {String} path
  */
 function Package(filepath, path) {
 
@@ -42,7 +41,16 @@ function Package(filepath, path) {
 Package.list = []
 
 /**
-*/
+ * @method catalog
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     
+ * @param {Array} already
+ */
 Package.prototype.catalog = function(already){
     var dependencies = ["provides", "offers", "requires"]
     this.save_first_package(this)
@@ -97,7 +105,21 @@ Object.defineProperty(Package.prototype, "catalog", {
 })
 
 /**
-*/
+ * @method through
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     var filelist = []
+ *     p.through(function(pk){
+ *             filelist = filelist.concat(pk.get_files())
+ *         }, {prune: ["offers"]})
+ *
+ *     
+ * @param {Function} block
+ * @param {Object} config
+ */
 Package.prototype.through = function(block, config){ 
     var config = config || {}
     config.last_package = config.last_package || this
@@ -148,21 +170,43 @@ Package.prototype.through = function(block, config){
     }
 }
 
+Object.defineProperty(Package.prototype, "through", {
+    value: Package.prototype.through,
+    enumerable: false
+})
+
 /**
-*/
+ * @method save_first_package
+ * Description.
+ *
+ * ### Example
+ *
+ * @param {Package} package
+ */
 Package.prototype.save_first_package = function(package){
     if(Package.list.length == 0){
         Package.list.push(package)
     }
 }
 
-Object.defineProperty(Package.prototype, "add_list_package", {
-    value: Package.prototype.add_list_package,
+Object.defineProperty(Package.prototype, "save_first_package", {
+    value: Package.prototype.save_first_package,
     enumerable: false
 })
 
 /**
-*/
+ * @method find_package
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     p.find_package("kernel")
+ *
+ * @param {String} name_package
+ * @return {Package} result_pk
+ */
 Package.prototype.find_package = function(name_package){
     var result_pk
 
@@ -174,9 +218,25 @@ Package.prototype.find_package = function(name_package){
     return result_pk
 }
 
+Object.defineProperty(Package.prototype, "find_package", {
+    value: Package.prototype.find_package,
+    enumerable: false
+})
+
 
 /**
-*/
+ * @method is_in$U
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     p.is_in$U("kernel")
+ *
+ * @param {String} name_package
+ * @return {Boolean} exist
+ */
 Package.prototype.is_in$U = function(name_package) {
     var exist = false
 
@@ -194,7 +254,18 @@ Object.defineProperty(Package.prototype, "is_in$U", {
 })
 
 /**
-*/
+ * @method get_path
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     p.get_path("kernel")
+ *
+ * @param {String} name_package
+ * @return {String} path
+ */
 Package.prototype.get_path = function(name_package) {
     var name_package = name_package || this.package
     var path = ""
@@ -213,7 +284,18 @@ Object.defineProperty(Package.prototype, "get_path", {
 })
 
 /**
-*/
+ * @method full_name
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     p.full_name()
+ *
+ * @param {String} subpath
+ * @return {String} path
+ */
 Package.prototype.full_name = function(subpath) {
     subpath = subpath || ""
     return Path.join(this.filepath, this.path, subpath, "package.json")
@@ -226,7 +308,17 @@ Object.defineProperty(Package.prototype, "full_name", {
 
 
 /**
-*/
+ * @method get_files
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     var files = p.get_files()
+ *
+ * @return {Boolean} files
+ */
 Package.prototype.get_files = function(){
     var files = []
 
@@ -236,8 +328,25 @@ Package.prototype.get_files = function(){
     return files
 }
 
+Object.defineProperty(Package.prototype, "get_files", {
+    value: Package.prototype.get_files,
+    enumerable: false
+})
+
 /**
-*/
+ * @method get_files
+ * @static
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     Package.get_files(p)
+ *
+ * @param {Package | Array} packages
+ * @return {Array} files
+ */
 Package.get_files = function(packages){
     var files = []
 
@@ -256,19 +365,20 @@ Package.get_files = function(packages){
     return files
 }
 
+
 /**
+ * @method inspect
+ * Description.
+ *
+ * ### Example
+ *
+ *     var p = new Package('/../..', "/src")
+ *     p.catalog()
+ *     p.inspect()
+ *
+ * @param {Number} level
+ * @return {String} text
  */
-Package.cat = function(package_catalog){
-    var string_package_catalog = ""
-        
-        for(var i in package_catalog)
-            string_package_catalog += package_catalog[i].toString() + "\n"
-
-    return string_package_catalog
-}
-
-/**
-*/
 Package.prototype.inspect = function(level) {
     var text = ""
     var level = level || 1
