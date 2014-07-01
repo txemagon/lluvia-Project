@@ -420,5 +420,30 @@ Object.defineProperty(Package.prototype, "inspect", {
     enumerable: false
 })
 
+
+Package.prototype.save = function(config){
+    config = config || {}
+    if (! "package" in config)
+        ; // Darle lo ultimo de path
+
+}
+    // save()
+    // 1- crear carpeta 
+    //   1.1- comprobar si existe, ni zorra de como hacer esto!
+    //      1.2- sino existe crearla  
+    // 2- crear json o reescribirlo
+    // 3- crear all.js
+
+
+/*
+
+Estuctura del json
+{
+"package": "distribution",
+"description": "lluvia Project as a single package.",
+"files": ["all.js"],
+}
+
+ */
 module.exports = Package
 

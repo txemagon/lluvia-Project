@@ -16,7 +16,7 @@ function Sanitize(text){
 /**
  * @method multilines
  * @chainable
- * Description.
+ * Delete comments block.
  *
  * ### Example
  *
@@ -33,7 +33,7 @@ Sanitize.prototype.multilines = function(){
 /**
  * @method singles
  * @chainable
- * Description.
+ * Delete comments one line.
  *
  * ### Example
  *
@@ -50,7 +50,7 @@ Sanitize.prototype.singles = function(){
 /**
  * @method empty
  * @chainable
- * Description.
+ * Delete blank lines.
  *
  * ### Example
  *

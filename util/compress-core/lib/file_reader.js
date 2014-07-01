@@ -57,7 +57,7 @@ FileReader.cat = function(files) {
         }
         catch(e){console.dir("Warning:  no such file " + files[i])}
     }
-
+    
     return text
 }
 

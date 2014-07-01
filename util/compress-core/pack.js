@@ -13,8 +13,11 @@ p.through(function(pk){
         filelist = filelist.concat(pk.get_files())
     }, {prune: ["offers"]})
 
-var text = FileReader.cat(filelist)
+//var distro = new Package(..., ...)
+// p.path == "/kernel/dist"
+//distro.save({package: "distribution", files: ["all.js"]})
+
+var text = FileReader.cat(filelist, process.stdout)
 
 var a = new Sanitize(text).multilines().singles().empty()
 
-FileReader.create_file("packages_lluvia.js", a.text)
