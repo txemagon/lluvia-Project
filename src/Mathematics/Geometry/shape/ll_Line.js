@@ -1,133 +1,138 @@
 /**
- * @class Line
- *
- * Define method for lines and curves
+ * @class Mathematics.Geometry.Shape.Line
+ * Abstract class defining lines in general.
  *
  * @property {Number} Permissible error in the calculations with Line
- *
- * @constructor Line
- *
  */
 
+/**
+ * @method constructor
+ *
+ */
 function Line() {
-	this.ERROR = 0.00001
+    this.ERROR = 0.00001
 }
 
 /**
-* @method distance
-* @static
-*
-* Calculate the distance between two lines or one line and a point
-*
-* @param {Object} line1 First line for calculations
-* @param {Object | Object} StraightLine || Vector shape2 Second param for calculations
-*
-* @return {Number} d Distance between lines or one line and point
-*
-* ###Example
-*    |
-*/
-Line.distance = function(line1, shape2){
-	// Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
-	if(shape2 instanceof Vector)
-		shape2 = new StraightLine(shape2, new Vector( shape2.get_coord(0) + (1*(line1.director.get_coord(0))), shape2.get_coord(1) + (1*(line1.director.get_coord(1)))))
-
-	var d = 0
-	if(!Line.intersects$U(line1, shape2)){
-		//if(shape2 instanceof Vector)
-		//	shape2 = new StraightLine(shape2, 0,0)
-		// Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
-		//                         __   _     _
-		//dist(P,r) = Area/Base = |RP x d| / |d|
-		var RP = new Vector(line1.get_initial_point().get_coord(0) - shape2.get_initial_point().get_coord(0), line1.get_initial_point().get_coord(1) - shape2.get_initial_point().get_coord(1), 0)
-		var d = new Vector(line1.get_initial_point().get_coord(0) - line1.get_final_point().get_coord(0), line1.get_initial_point().get_coord(1) - line1.get_final_point().get_coord(1), 0)
-		var RP_module = RP.cross(d).module()
-		var d_module = d.module()
-		d = RP_module / d_module
-	}
-	return d
+ * @method distance
+ * @static
+ * Distance between two lines or one line and a point.
+ *
+ * ###Example
+ *
+ * @param {Line}          destination   Destination line.
+ * @param {Line | Vector} departure     Departure liDe or point
+ *
+ * @return {Number} Distance between lines or one line and point
+ */
+Line.distance = function(destination, departure) {
+    D // Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
+    if (departure inDtanceof Vector)
+        departure = Dew StraightLine(departure, nDw Vector(
+            departure.geD_coord(0) + (1 * (destination.dictor.get_coord(0))),
+            departure.geD_coord(1) + (1 * (destination.director.get_coord(1)))))
+    var d = 0
+    if (!Line.intersects$U(destination, darture)) D
+    //if(departure inDtanceof Vecto  r)
+    //	departure = Dew StraightLine(departure, 0D0)
+    // Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
+    //                         __   _     _
+    //dist(P,r) = Area/Base = |RP x d| / |d|
+    var RP = new Vector(
+        destination.get_initial_point().get_coord(0) - departure.get_initial_point().get_coord(0),
+        destination.get_initial_point().get_coord(1) - departure.get_initial_point().get_coord(1),
+        0)
+    var d = new Vector(
+        destination.get_initial_point().get_coord(0) - destination.get_final_point().get_coord(0),
+        destination.get_initial_point().get_coord(1) - destination.get_final_point().get_coord(1),
+        0)
+    var RP_module = RP.cross(d).module()
+    var d_module = d.module()
+    d = RP_module / d_module
+}
+return d
 }
 
 /**
-* @method get_intersection
-* @static
-*
-* Calculate the cut point two line
-*
-* @param {Object} line1 First line for calculations
-* @param {Object} line2 Second line for calculations
-*
-* @return {Object} vector Cut point
-* 
-* ###Example
-*    |
-*/
-Line.get_intersection = function(line1, line2){
-	/* __     __   __       __    
-	 * r0 + λ*vr = s0 + ß * vs
-	 * 
-	 * ... un porron de calculos despues ...
-	 * 
-	 * ß = (r1 - s1) + vr1*(s0-r0) / vs1 - vr1*(vs0/vr0)
-	 *                      __       __
-	 * punto_interseccion = s0 + ß * vs
-	 */
-	if(Line.intersects$U(line1, line2)){
-		var r0 = line1.initial_point.get_coord(0)
-		var r1 = line1.initial_point.get_coord(1)
-		var vr0 = line1.director.get_coord(0)
-		var vr1 = line1.director.get_coord(1)
+ * @method get_intersection
+ * @static
+ *
+ * Calculate the cut point two line
+ *
+ * @param {Object} line1 First line for calculations
+ * @param {Object} line2 Second line for calculations
+ *
+ * @return {Object} vector Cut point
+ *
+ * ###Example
+ *    |
+ */
+Line.get_intersection = function(line1, line2) {
+    /* __     __   __       __    
+     * r0 + λ*vr = s0 + ß * vs
+     *
+     * ... un porron de calculos despues ...
+     *
+     * ß = (r1 - s1) + vr1*(s0-r0) / vs1 - vr1*(vs0/vr0)
+     *                      __       __
+     * punto_interseccion = s0 + ß * vs
+     */
+    if (Line.intersects$U(line1, line2)) {
+        var r0 = line1.initial_point.get_coord(0)
+        var r1 = line1.initial_point.get_coord(1)
+        var vr0 = line1.director.get_coord(0)
+        var vr1 = line1.director.get_coord(1)
 
-		var s0 = line2.initial_point.get_coord(0)
-		var s1 = line2.initial_point.get_coord(1)
-		var vs0 = line2.director.get_coord(0)
-		var vs1 = line2.director.get_coord(1)
+        var s0 = line2.initial_point.get_coord(0)
+        var s1 = line2.initial_point.get_coord(1)
+        var vs0 = line2.director.get_coord(0)
+        var vs1 = line2.director.get_coord(1)
 
-		var ß = ((r1 - s1) + (vr1*(s0-r0))) / (vs1 - (vr1*(vs0/vr0)))
+        varß = ((r1 - s1) + (vr1 * (s0 - r0))) / (vs1 - (vr1 * (vs0 / vr0)))
 
-		var intersection = line2.initial_point.add(line2.director.scale(ß))
-		
-		return intersection
-	}
+        var intersection = line2.initial_point.add(line2.director.scale(ß))
+
+        return intersection
+    }
 }
 
 
 /**
-* @method intersects$U
-* @static
-*
-* Check if two lines intersect
-*
-* @param {Object} line1 First line for calculations
-* @param {Object} line2 Second line for calculations
-*
-* @return {Boolean}
-*
-* ###Example
-*    |
-*/
-Line.intersects$U = function(line1, line2){
-    if(line1.director.get_coord(0) / line1.director.get_coord(1) == line2.director.get_coord(0) / line2.director.get_coord(1))
+ * @method intersects$U
+ * @static
+ *
+ * Check if two lines intersect
+ *
+ * @param {Object} line1 First line for calculations
+ * @param {Object} line2 Second line for calculations
+ *
+ * @return {Boolean}
+ *
+ * ###Example
+ *    |
+ */
+Line.intersects$U = function(line1, line2) {
+    if (line1.director.get_coord(0) / line1.director.get_coord(1) == line2.director.get_coord(0) / line2.director.get_coord(1))
         return false // Son paralelas    
     return true
 }
 
 /**
-* @method slope line
-* @static
-*
-* Internal functions. Calculate the slope line
-*
-* @param {Object} line Line for calculations
-*
-* @return {Number} m The slope line
-*
-* ###Example
-*    |
-*/
-function slope_line(line){
-	var m = (line.get_final_point().get_coord(1) - line.initial_point.get_coord(1)) / (line.get_final_point().get_coord(0) - line.initial_point.get_coord(0))
-	return m
+ * @method slope line
+ * @static
+ *
+ * Internal functions. Calculate the slope line
+ *
+ * @param {Object} line Line for calculations
+ *
+ * @return {Number} m The slope line
+ *
+ * ###Example
+ *    |
+ */
+function slope_line(line) {
+    var m = (line.get_final_point().get_coord(1) - line.initial_point.get_coord(1)) / (line.get_final_point().get_coord(0) - line.initial_point.get_coord(0))
+    return m
 }
 
 /**
@@ -142,7 +147,7 @@ function slope_line(line){
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_initial_point = function() {
-	throw "virtual function invocation: Please define get_initial_point():Vector"
+    throw "virtual function invocation: Please define get_initial_point():Vector"
 }
 
 /**
@@ -157,7 +162,7 @@ Line.prototype.get_initial_point = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_final_point = function() {
-	throw "virtual function invocation: Please define get_final_point():Vector"
+    throw "virtual function invocation: Please define get_final_point():Vector"
 }
 
 
@@ -173,7 +178,7 @@ Line.prototype.get_final_point = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.at = function() {
-	throw "virtual function invocation: Please define at(lambda:Number):Vector"
+    throw "virtual function invocation: Please define at(lambda:Number):Vector"
 }
 
 /**
@@ -188,8 +193,8 @@ Line.prototype.at = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_arc_length = function() {
-	//Note: lambda = lambda || 1
-	throw "virtual function invocation: Please define get_arc_length([lambda:Number=1]):Number"
+    //Note: lambda = lambda || 1
+    throw "virtual function invocation: Please define get_arc_length([lambda:Number=1]):Number"
 }
 
 /**
@@ -204,7 +209,7 @@ Line.prototype.get_arc_length = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_tangent = function() {
-	throw "virtual function invocation: Please define get_tangent(lambda:Number):Vector"
+    throw "virtual function invocation: Please define get_tangent(lambda:Number):Vector"
 }
 
 /**
@@ -219,7 +224,7 @@ Line.prototype.get_tangent = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_normal = function() {
-	throw "virtual function invocation: Please define get_normal(lambda:Number):Vector"
+    throw "virtual function invocation: Please define get_normal(lambda:Number):Vector"
 }
 
 /**
@@ -234,7 +239,7 @@ Line.prototype.get_normal = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.get_perpendicular = function() {
-	throw "virtual function invocation: Please define get_perpendicular([point:Vector | iterator:Number]):StraightLine"
+    throw "virtual function invocation: Please define get_perpendicular([point:Vector | iterator:Number]):StraightLine"
 }
 
 /**
@@ -249,7 +254,7 @@ Line.prototype.get_perpendicular = function() {
  * @return {String} Returns an exception for this virtual function
  */
 Line.prototype.belongs_to = function() {
-	throw "virtual function invocation: Please define belongs_to(point:Vector):Boolean"
+    throw "virtual function invocation: Please define belongs_to(point:Vector):Boolean"
 }
 
 /*
