@@ -15,9 +15,10 @@ p.through(function(pk){
 
 //var distro = new Package(..., ...)
 // p.path == "/kernel/dist"
-//distro.save({package: "distribution", files: ["all.js"]})
+//distro.save({package: "distribution", files: ["all.js"], path: "../../"})
 
 var text = FileReader.cat(filelist, process.stdout)
 
 var a = new Sanitize(text).multilines().singles().empty()
 
+p.save({files: ["all.js"], path: "../../dist", text: a.text})
