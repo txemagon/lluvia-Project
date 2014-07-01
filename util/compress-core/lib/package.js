@@ -420,30 +420,20 @@ Object.defineProperty(Package.prototype, "inspect", {
     enumerable: false
 })
 
+FileReader.fs = require('fs')
 
 Package.prototype.save = function(config){
     config = config || {}
-    if (! "package" in config)
-        ; // Darle lo ultimo de path
-
-}
-    // save()
-    // 1- crear carpeta 
-    //   1.1- comprobar si existe, ni zorra de como hacer esto!
-    //      1.2- sino existe crearla  
-    // 2- crear json o reescribirlo
-    // 3- crear all.js
+    config.package = config.package || Path.basename(this.path)
 
 
-/*
+    if(!FileReader.fs.existsSync(config.path))
+        FileReader.fs.mkdirSync(config.path)
 
-Estuctura del json
-{
-"package": "distribution",
-"description": "lluvia Project as a single package.",
-"files": ["all.js"],
+    FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": distribution,\n    "description": "lluvia Project as a single package.",\n    "files": ["all.js"]\n}')
+    
+    FileReader.fs.writeFileSync(Path.join(config.path, config.files[0]), config.text)
 }
 
- */
 module.exports = Package
 
