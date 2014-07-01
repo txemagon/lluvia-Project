@@ -15,10 +15,15 @@ Path.prototype = new Array
 extend(Path, Line)
 Path.prototype.constructor = Path
 
+/**
+ * @method constructor
+ */
 function Path(lines){
 	this.summary = []
 	this.total_length = 0
 }
+
+
 /**
  * @method lambda_to_line
  * Given a lambda for the path returns de number of line and the lambda of that line
@@ -42,10 +47,10 @@ Path.prototype.lambda_to_line = function(path_lambda){
    return locator
 }
 
+
 /**
  * @method at
  * @static
- *
  *  Calculates the point of the path defined by lamba
  *
  * @param  {Number} lambda Parameter to calculate the point.
@@ -58,6 +63,7 @@ Path.prototype.at = function(lambda){
 
    return this[local.line].at(local.lambda)
 }
+
 
 /**
  * @method update_summary
@@ -88,6 +94,7 @@ Path.prototype.update_summary = function() {
       }
    }
 }
+
 
 Path.overrided_functions = {
    Line: ["push", "pop", "shift", "2splice", "unshift"],

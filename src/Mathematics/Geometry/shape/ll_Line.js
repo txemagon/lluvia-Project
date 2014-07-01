@@ -18,7 +18,7 @@ function Line() {
  * @static
  * Distance between two lines or one line and a point.
  *
- * ###Example
+ * ### Example
  *
  * @param {Line}          destination   Destination line.
  * @param {Line | Vector} departure     Departure liDe or point
@@ -26,13 +26,13 @@ function Line() {
  * @return {Number} Distance between lines or one line and point
  */
 Line.distance = function(destination, departure) {
-    D // Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
-    if (departure inDtanceof Vector)
-        departure = Dew StraightLine(departure, nDw Vector(
-            departure.geD_coord(0) + (1 * (destination.dictor.get_coord(0))),
-            departure.geD_coord(1) + (1 * (destination.director.get_coord(1)))))
+     // Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
+    if (departure instanceof Vector)
+        departure = new StraightLine(departure, new Vector(
+            departure.get_coord(0) + (1 * (destination.dictor.get_coord(0))),
+            departure.get_coord(1) + (1 * (destination.director.get_coord(1)))))
     var d = 0
-    if (!Line.intersects$U(destination, darture)) D
+    if (!Line.intersects$U(destination, departure)) {
     //if(departure inDtanceof Vecto  r)
     //	departure = Dew StraightLine(departure, 0D0)
     // Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
@@ -53,6 +53,7 @@ Line.distance = function(destination, departure) {
 return d
 }
 
+
 /**
  * @method get_intersection
  * @static
@@ -68,7 +69,7 @@ return d
  *    |
  */
 Line.get_intersection = function(line1, line2) {
-    /* __     __   __       __    
+    /* __     __   __       __
      * r0 + λ*vr = s0 + ß * vs
      *
      * ... un porron de calculos despues ...
@@ -107,28 +108,22 @@ Line.get_intersection = function(line1, line2) {
  * @param {Object} line2 Second line for calculations
  *
  * @return {Boolean}
- *
- * ###Example
- *    |
  */
 Line.intersects$U = function(line1, line2) {
     if (line1.director.get_coord(0) / line1.director.get_coord(1) == line2.director.get_coord(0) / line2.director.get_coord(1))
-        return false // Son paralelas    
+        return false // Son paralelas
     return true
 }
+
 
 /**
  * @method slope line
  * @static
- *
  * Internal functions. Calculate the slope line
  *
  * @param {Object} line Line for calculations
  *
  * @return {Number} m The slope line
- *
- * ###Example
- *    |
  */
 function slope_line(line) {
     var m = (line.get_final_point().get_coord(1) - line.initial_point.get_coord(1)) / (line.get_final_point().get_coord(0) - line.initial_point.get_coord(0))
@@ -136,10 +131,8 @@ function slope_line(line) {
 }
 
 /**
- *
  * @method get_initial_point
  * @virtual
- *
  * Gets the initial coordinates of the defined vector
  *
  * @param  {}
@@ -151,10 +144,8 @@ Line.prototype.get_initial_point = function() {
 }
 
 /**
- *
  * @method get_final_point
  * @virtual
- *
  * Gets the final coordinates of the defined vector
  *
  * @param  {}
@@ -167,10 +158,8 @@ Line.prototype.get_final_point = function() {
 
 
 /**
- *
  * @method at
  * @virtual
- *
  * Gets the coordinates of the defined vector at a given point represented by lambda
  *
  * @param  {}
@@ -181,11 +170,10 @@ Line.prototype.at = function() {
     throw "virtual function invocation: Please define at(lambda:Number):Vector"
 }
 
+
 /**
- *
  * @method get_arc_length
  * @virtual
- *
  * Calculates the length of an arc
  *
  * @param  {}
@@ -197,11 +185,10 @@ Line.prototype.get_arc_length = function() {
     throw "virtual function invocation: Please define get_arc_length([lambda:Number=1]):Number"
 }
 
+
 /**
- *
  * @method get_tangent
  * @virtual
- *
  * Calculates the coordinates of the tangent to the straight line according to lambda
  *
  * @param  {}
@@ -212,11 +199,10 @@ Line.prototype.get_tangent = function() {
     throw "virtual function invocation: Please define get_tangent(lambda:Number):Vector"
 }
 
+
 /**
- *
  * @method get_normal
  * @virtual
- *
  * Calculates the coordinates of the normal vector to the straight line according to lambda.
  *
  * @param  {}
@@ -227,8 +213,8 @@ Line.prototype.get_normal = function() {
     throw "virtual function invocation: Please define get_normal(lambda:Number):Vector"
 }
 
+
 /**
- *
  * @method get_perpendicular
  * @virtual
  *
@@ -242,8 +228,8 @@ Line.prototype.get_perpendicular = function() {
     throw "virtual function invocation: Please define get_perpendicular([point:Vector | iterator:Number]):StraightLine"
 }
 
+
 /**
- *
  * @method belongs_to
  * @virtual
  *
@@ -256,6 +242,7 @@ Line.prototype.get_perpendicular = function() {
 Line.prototype.belongs_to = function() {
     throw "virtual function invocation: Please define belongs_to(point:Vector):Boolean"
 }
+
 
 /*
 Line.prototype.intersects$U = function() {
