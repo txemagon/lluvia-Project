@@ -1390,7 +1390,7 @@ String.prototype.to_r = function(){
     else
 	str2 = null
 
-    if( isNaN( (op1 = parseFloat(str1)) ) )//Checks the string is a number
+    if( isNaN( (op1 = parseFloat(str1)) ) ) //Checks the string is a number
 	return op1
     //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
     if( isNaN(str1) || isNaN( op2 = parseInt(str2) ) )

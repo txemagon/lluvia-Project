@@ -42,7 +42,7 @@ Sanitize.prototype.multilines = function(){
  * @return {Sanitize} this 
  */
 Sanitize.prototype.singles = function(){
-    this.text = this.text.replace(/\/\/.*/gm, "")
+    this.text = this.text.replace(/([^\\]|^)(\/\/.*)$/gm, "$1")
 
     return this
 }

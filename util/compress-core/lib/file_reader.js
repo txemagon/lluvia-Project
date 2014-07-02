@@ -54,6 +54,7 @@ FileReader.cat = function(files) {
     for(var i=0; i<files.length; i++){
     	try{
             text += FileReader.fs.readFileSync(files[i], 'utf8')
+            text += "\n"
         }
         catch(e){console.dir("Warning:  no such file " + files[i])}
     }
