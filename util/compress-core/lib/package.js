@@ -435,7 +435,7 @@ Package.prototype.save = function(config){
         FileReader.fs.mkdirSync(config.path)
     }catch(e){;}
 
-    FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": distribution,\n    "description": "lluvia Project as a single package.",\n    "files": ["all.js"]\n}')
+    FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": "distribution",\n    "description": "lluvia Project as a single package.",\n    "files": ["lluvia.js"]\n}')
     
     
 }
