@@ -1,0 +1,7 @@
+{   "package": "function",
+		"description": "Mathematical functions utilities.",
+		"files": [
+			{"name": "ll_func.js",          "description": "Mathematical functions."},
+			{"name": "ll_Trail.js",         "description": "Function discretization."}
+		]
+}

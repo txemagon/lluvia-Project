@@ -1,0 +1,8 @@
+{   "package": "mathematics",
+		"description": "Mathematics library.",
+		"files": [
+			{"name": "ll_Angle.js",         "description": "Class Angle."},
+			{"name": "ll_Expression.js",    "description": "Mathematical expression."}
+		],
+		"provides": ["analysis", "function", "geometry"]
+}

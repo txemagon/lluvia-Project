@@ -1,9 +1,7 @@
 {	"package": "loader",
-	"description": "",
+	"description": "Mechanism to request remote files from the server.",
 	"files": [
 		{"name": "log_module_interface.js",       "description": ""},
 		{"name": "log_module_load.js",    "description": ""}
-	],
-		"provides": [],
-		"offers": []
+	]
 }

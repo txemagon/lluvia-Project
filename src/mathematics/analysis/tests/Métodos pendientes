@@ -1,0 +1,61 @@
+
+STRING TO DO:
+-------------
+str.ascii_only? -->Alvaro
+str.bytes -->Alvaro
+str.bytesize -->Álvaro
+str.each_char -->Fran
+str.codepoints -->Fran
+str.count -->Álvaro
+str.delete -->Sergio
+str.dump --> Sergio
+str.each_codepoint --> Rafa
+str.each_line --> Enrique
+str.end_with? --> Rafa
+str.eql? --> Rafa
+str.getbyte --> Rafa
+str.hash --> Alex
+str.hex --> Alex
+str.replace --> Alex
+str.inspect --> Alex
+str.intern/str.to_sym --> Enrique
+str.rpartition --> Álvaro
+str.scan --> Dani
+str.setbyte --> Ivan
+str.star_with? --> Raul
+str.sub --> Kevin
+str.sum --> Dani Sanch
+str.to_c --> Dani Pas
+str.to_str --> Ivan
+str.tr --> Raúl
+str.unpack ??? 
+str.upto --> Dani San
+str.valid_encoding --> Kevin
+
+Array TO DO:
+------------
+ary.combination
+ary.cycle
+ary.each ??
+ary.each_index ??
+ary.fetch
+ary.fill
+ary.frozen?
+ary.keep_if
+ary.pack
+ary.permutation
+ary.product
+ary.reject --copy
+ary.repeated_combination
+ary.repeated_permutation
+ary.select
+ary.to_a
+ary.to_ary
+ary.to_s
+
+
+
+
+
+
+

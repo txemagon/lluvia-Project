@@ -341,7 +341,7 @@ rectangle.prototype.getRectCoord = function(){
 }
 rectangle.prototype.elarge = function (despl){
 	this.x1 += despl.x;
-	this.y1 += despl.y;}Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+	this.y1 += despl.y;}Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
 Object.prototype.to_a = function() {
     return [this]
 }
@@ -1843,6 +1843,124 @@ function _transpose(pos, nary){
     return array
 }
 Array.reflect(Array.bang_methods)
+function _ClassFactory(class_name, initial_functions){
+  var whole_class_name = class_name
+  class_name           = whole_class_name.split(/\$\$/)[0]
+  var parent_class     = whole_class_name.split(/\$\$/)[1] || "Class"
+  function parse_arguments(){
+    for (var i=1; i<initial_functions.length; i++){
+      if (typeof(initial_functions[i]) === "function" )
+        initial_functions[i] = initial_functions[i].toSource()
+      initial_functions[i].match(/function\s*([^(]*)\(/)
+      if (RegExp.$1 != ""){
+        var fn_name = RegExp.$1
+        var class_method = /^self_/.test(fn_name)
+        if (class_method)
+          initial_functions[i] = initial_functions[i].replace(/function\s+self_/, "function ")
+        var f = eval("$F$ = " + initial_functions[i]).deconstruct()
+        var fun = []
+        if (f.params != "")
+          fun = f.params.clone()
+        fun.push(f.body.replace(/self\./g, class_name + "."))
+        if (class_method)
+          try {
+            eval(class_name)[f.name] = ( function(){
+                                                   var super_mthd = eval(parent_class + ".prototype." + f.name);
+                                                   with(this)
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){ this.call_before('" + f.name + "');\n " + f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this'))").replace(/Super\(\s*\)/, parent_class + "." + f.name + ".apply(this, arguments)").replace(/Super\(/, parent_class + "." + f.name + "( ") + ";\nthis.call_after('" + f.name + "');\n}" )}
+                                               )()
+          } catch (err) {
+            alert("Impossible to create the function.\n" + err + "\n" + fun)
+          }
+        else
+          eval(class_name).prototype[f.name] = ( function(){
+                                                   var super_mthd = eval(parent_class + ".prototype." + f.name);
+                                                   var Self =  function(){ return self }
+                                                   var aux_body = f.body.replace(/self\./g, class_name + ".").replace(/Self(?!\s*\()/g, "(eval('this.constructor'))").replace(/Super\(\s*\)/, parent_class + ".prototype." + fn_name + ".apply(this, arguments)").replace(/Super\(/, parent_class + ".prototype." + fn_name + "( ") + ";"
+                                                   eval(class_name + ".prototype._" + f.name +" = function(" + f.params + "){"+aux_body+"}")
+                                                   with(this)
+                                                   return eval("$$F$$ = function " + f.name + "(" + f.params + "){\n var return_value;\nthis.call_before('" + f.name + "');\n" + "return_value = this._"+ f.name +"(" + f.params + "); \nthis.call_after('" + f.name + "');\nreturn return_value;\n}" )}
+                                               )()
+       }
+     }
+  }
+  var initializer = initial_functions[0] || "function (){ }"
+  if (typeof(initializer) === "function" )
+     initializer = initializer.toSource()
+  initializer = initializer.replace(
+      /function\s*\(([^\)]*)\)\s*{(.*)/m,
+      "function " + class_name + "($1){ \n \
+        this.inheritance_level = this.inheritance_level || 0 \n\
+        this.inheritance_level++ \n\
+        try{" + parent_class + ".apply(this, arguments);}catch(err){;};\n\
+        this.inheritance_level-- \n\
+        var self = " + class_name + " \n\
+	var that = this \n\
+	$2\n\
+	").replace(/}$/m,
+	" \n\
+        if (!" + class_name + ".initialized ){ \n\
+          if (typeof(arguments[0]) != 'undefined' && arguments[0].initialize)\n\
+            try{" + class_name + ".initialize()}catch(err){;}\n\
+          " + class_name + ".initialized = true \n\
+        }\n\
+        else if (this instanceof " + class_name + " && this.inheritance_level == 0 )\n\
+         try{this.initialize.apply(this, arguments)}catch(err){;} \n\
+        }; \n\
+      ")
+   eval(class_name + "= new Function();")
+  function basic_proto(){
+	  eval.call(null, class_name + ".prototype = new " + parent_class + ";")
+	  eval.call(null, class_name + ".prototype.constructor = " + class_name +";" )
+	  eval.call(null, class_name + ".prototype.super_class = " + parent_class + ";")
+	}
+  basic_proto()
+  var initialize = eval.call(null, "$$NeWCLaSs = " + initializer  )
+  var new_class = $global_space[class_name] = initialize
+basic_proto()
+  parse_arguments()
+  eval.call(null, class_name + ".prototype.class = " + class_name + ";")
+  eval.call(null, class_name + ".superclass = function (){ return " + parent_class + "};")
+  eval.call(null, class_name + ".ancestors = function (){ \n\
+    var ancestor  = " + class_name + "\n\
+    var ancestors = [] \n\
+    while( (ancestor = ancestor.superclass()) )\n\
+      ancestors.push(ancestor);\n\
+    return ancestors\n\
+    };")
+  eval.call(null, class_name + ".Self = function (){ \n\
+     return this.prototype.constructor };")
+  eval.call(null, class_name + ".prototype.Self = function (){ \n\
+     return this.constructor };")
+  eval.call(null, class_name + ".method_missing = function(method, object, argument){ \n\
+                                                     var ancestors = this.ancestors();\n\
+                                                     for (var i=0; i< ancestors.length; i++)\n\
+                                                       try{ return ancestors[i][method].apply(object, argument) } catch(err){;}\n\
+                                                       throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
+                                                     return " + parent_class + "[method].apply(object, argument) \n\
+                                                  }; ")
+  $global_space[class_name].call(eval(class_name + "({initialize: true})")) 
+  Class.all.push(new_class)
+  alert(new_class)
+  return new_class
+}
+Object.defineProperty(Object.prototype, "get_constructor", {
+    value: function() {
+        var that = this
+        return function() {
+            var index = 0
+            for (var i in that)
+                this[i] = that[i] || arguments[index++]
+        }
+    },
+    enumerable: false
+})
+Object.defineProperty(Object.prototype, "to_class", {
+    value: function(class_name) {
+        return window[class_name] = this.get_constructor()
+    },
+    enumerable: false
+})
 $KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
 MethodMissingError.prototype.constructor = MethodMissingError
 function MethodMissingError(){
@@ -1903,494 +2021,6 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-Processor.prototype.constructor = Processor;
-function Processor(){
-	this.now	 = new Date();
-	this.events  = new Event();
-	this.threads = new Array();
-}
-Processor.prototype.register = function(cObject, solicitorF){
-	var obj = null
-	var fun = null
-	if (cObject){
-		obj = cObject
-		if (solicitorF)
-			fun = solicitorF
-		else if (cObject.run)
-			fun = cObject.run
-		if (!fun)
-			throw "The current processor can´t get a valid solicitor"
-	}
-	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
-}
-Processor.prototype.kill = function(rObject, solicitorF){
-	for (var i in this.threads)
-		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
-			this.threads.slice(i,i+1);
-}
-Processor.prototype.step = function (date){
-	this.now = date || new Date();
-	try {
-	  for (var i=0; i<this.threads.length; i++)
-            this.threads[i].solicitor.call(this.threads[i].object, this.now);
-    }
-    catch (e) {
-    }
-}
-Processor.prototype.run = function (date){
-    this.now =  new Date();
-    try {
-	this.step(this.now)
-    }
-    catch (e) {
-    }
-    setTimeout(this.run.bind(this), 20);
-}
-Processor.prototype.start = function(){
-    this.run()
-    return this;
-}
-Processor.prototype.newThread = function(){
-    var t = new Thread(null, this)
-    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
-    return t;
-}
-Processor.prototype.get = Processor.prototype.get = function (object) {
-    var collect = []
-    var len = this.threads.length
-    for (var i=0; i<len; i++) {
-	var candidate = this.threads[i].object
-       if ( candidate && !collect.include$U(candidate) &&
-	    ( candidate == object ||  candidate instanceof object )
-	  )
-      collect.push(candidate)
-    }
-    return collect
-}
-$Processor = new Processor().start()
-Thread.prototype.constructor = Thread;
-function Thread(solicitor, processor){
-	this.before = new Date()
-	this.now = processor? processor.now: new Date();
-	if (!solicitor)
-		solicitor = this.run;
-	if (processor && processor instanceof Processor)
-		processor.register(this, solicitor);
-}
-Thread.prototype.run = function(processors_time){
-	this.now = processors_time
-	throw "The solicitor function remains still undefined."
-}
-Automata.prototype.constructor = Automata;
-function Automata(states, initialState, solicitor){
-	if (states instanceof Array)
-	this.state = states == null ? { none: -1 } : states;
-	this.state_name = []
-	for (var key in this.state)
-		if (this.state.hasOwnProperty(key))
-			this.state_name[this.state[key]] = key
-	this.stateChange  = {	up: 0, steady:1, down: 2};
-	this.currentState = initialState != null ? initialState:
-						{	previous  : this.state.none,
-							current   : this.state.none,
-							requested : this.state.none };
-	this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
-}
-Automata.prototype.drive_state = function() {
-	var base   = this.state_name[this.currentState.current]
-	var down   = base + "_down"
-	var steady = base + "_steady"
-	var up     = base + "_up"
-	if ( this.currentState.requested != this.state.none ){
-		this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-		if ( this[down])
-			this[down]()
-		this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-		if (this[up])
-			this[up]()
-	}
-	this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-	if (this[steady])
-		this[steady]()
-}
-Automata.prototype.run = function(){
-	Automata.prototype.drive_state.apply(this, arguments)
-	if ( this.currentState.requested != this.state.none ){
-		this.currentState.previous  = this.currentState.current;
-		this.currentState.current   = this.currentState.requested;
-		this.currentState.requested = this.state.none;
-	}
-}
-ThreadAutomata.prototype  = new Thread;
-extend(ThreadAutomata, Automata);
-ThreadAutomata.prototype.constructor = ThreadAutomata;
-function ThreadAutomata(state, currentState, solicitor, processor){
-	if (arguments.length){
-		Automata.call(this, state, currentState, solicitor);
-		Thread.call(this, ThreadAutomata.prototype.run, processor);
-	}
-}
-ThreadAutomata.prototype.run = function(processors_time){
-	if (this.now)
-		this.before = this.now
-	this.now    = processors_time
-	Automata.prototype.run.call(this, this.now, this.before);
-}
-Device.prototype = new Processor
-extend(Device, ThreadAutomata)  
-Device.prototype.constructor = Device
-function Device(view, state, currentState, parent){
-	var that    = this
-	this._class = that
-	state = state || Device.STATE
-      state.self_keys().each(function(key){  
-		   ["up", "steady", "down"].each(function(substate){
-		     Device.prototype[state + "_" + substate] = function(){;}
-		})})
-	this.solicitors = [
-			[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function (){
-				 ;
-				this.gateRunner(this.now)
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		[
-			function(){
-				;
-			},
-			function(){
-				 ;
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function(){
-				 ;
-				this.gateRunner(this.now)
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		]
-	]
-	if (view)
-		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
-	this.lookup = new Lookup();
-	this.eventDispatcher = new EventDispatcher(this.lookup);
-	this.currentState = currentState ||
-						{ 	previous:  Device.STATE.suspended,
-							current:   Device.STATE.suspended,
-							requested: Device.STATE.running
-						}
-	this.gates		   = []
-	this.getSolicitors = function() { return that.solicitors; }
-	this.getStates	   = function() { return state; }
-	this.openDevice	   = _$innerObject(this, "device")
-	function initialize(){ 
-		that.eventDispatcher.device = that
-		that.register(that.eventDispatcher, that.eventDispatcher.shift)
-		if (that.self_events)
-			that.eventDispatcher.joinPorts(that.self_events)
-		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
-	}
-	if (arguments.length)	
-		initialize();
-}
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
-Device.prototype.gateRunner = function(){
-		for (var i=0; i<this.gates.length; i++)
-			this.gates[i].run( this.now, this.before )
-}
-Device.prototype.childRunner = function(){
-	if (this.currentState != this.getStates().killed) {
-		this.now = arguments[0]
-		for (var i in this.threads)
-			try {
-				this.threads[i].solicitor.call(this.threads[i].object, this.now);
-			}
-			catch (e) {
-			}
-	}
-}
-Device.prototype.newGate = function(el, ClassCons, config){
-	try {
-		var Cons = this.openDevice(ClassCons)
-		var view = this.view || null
-		var ob = new Cons(el, view, config)
-        ob.device = this
-		this.gates.push( ob )
-		return ob
-	} catch (e) {
-		if ($K_debug_level >= $KC_dl.DEVELOPER)
-			alert("No event handlers were found.\nException: " + e.toSource())
-	}
-}
-Device.prototype.attend = function(date, mssg){
-	this["attend_"+ mssg.name](date, mssg)  
-}
-Device.prototype._y = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt !== htmlElement && htmlElement.offsetParent)
-		return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
-	return 0
-}
-Device.prototype._x = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt && htmlElement && stopAt === htmlElement)
-		return 0
-	if (htmlElement.offsetParent)
-		return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
-	return 0
-}
-Device.prototype.y_calc = function(){
-	if (this.view) {
-		this.y = this._y(this.view)
-		return this.y
-	}
-	return null
-}
-Device.prototype.x_calc = function(){
-	if (this.view) {
-		this.x = this._x(this.view)
-		return this.x
-	}
-	return null
-}
-Device.prototype.fireEvent = function (mssg){
-	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
-	  this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg.clone())
-}
-Device.prototype.addPort = function (mssg_name, device){
-	this.eventDispatcher.addPort(mssg_name, device)
-}
-Device.prototype.newMessage = function(type, name, data){
-	if (type && name)
-		return systemEv(type , {name: name, data: data || "no extra data available"}, this)
-}
-Device.prototype.sendMessage = function(type, name, data, receiptant){
-	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
-}
-Device.prototype.method_missing = function (method, obj, params){
-  if (this.respond_to$U(method.underscore()))
-    return method.underscore.apply(this, params)
-  obj = obj || ""
-  params = params || []
-  throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
-}
-EventDispatcher.prototype = new ThreadAutomata
-EventDispatcher.prototype.constructor = EventDispatcher
-function EventDispatcher(lookup){
-	var that = this; 
-	this.ids   = 0
-	this.ports = {
-	}
-	this.inqueue = []
-	this.clss = that	
-	this.getId = function(){return ++that.ids;}
-	lookup.add(this)
-}
-EventDispatcher.prototype.enqueue = function(mssg){
-	var ev = this
-	mssg.received = {id: ev.getId(), time: new Date()};
-	this.inqueue.push(mssg)
-	return mssg.received.id
-}
-EventDispatcher.prototype.addPort = function (event, device){
-	if (this.ports[event])
-		this.ports[event].push(device)
-}
-EventDispatcher.prototype.joinPorts = function (listArray){
-	for (var i=0; i<listArray.length; i++)
-		this.ports[listArray[i]] = []
-}
-EventDispatcher.prototype.delPort = function (event, device){
-	if (this.clss.ports[event])
-		for (var i=0; i<this.clss.ports.length; i++)
-			if (this.clss.ports[i] === device)
-				this.clss.ports[i].splice(i,1)
-}
-EventDispatcher.prototype.fireEvent = function(event){
-	if (this.clss.ports[event.name])
-		for (var i=0; i<this.clss.ports[event.name].length; i++)
-			this.clss.ports[event.name][i](event);
-}
-EventDispatcher.prototype.shift = function(){ 
-	for (var i=0; i<this.inqueue.length; i++)
-		try {
-			var mssg = this.inqueue[i]
-			if (mssg.status[mssg.current] === "closed")
-				this.inqueue.splice(i, 1)
-			if (this.inqueue[i]) {
-				mssg = this.inqueue[i]
-				if (mssg.status[mssg.current] === "sent") {
-					this.device.attend(arguments[0], mssg)
-					mssg.current++
-				}
-			}
-		} catch (e) {
-			if ($K_debug_level >= $KC_dl.PROGRAMMER)
-			   alert("No event handler for message. \nException: " + e.toSource())
-		}
-	return true;
-}
-EventDispatcher.prototype.run = function(){
-	return shift.apply(this, arguments)
-}
-function _stitchWorlds(gate, solicitor){
-	return function(e){
-		e = e || window.event
-		try{
-		 return gate[solicitor](e, this)
-		} catch (err) {
-			Exception.parse(err) }
-	}
-}
-function Gate(element, parent, config){
-    var that = this
-    var args = arguments
-    function initialize(){
-	if (element){
-	    if (typeof(element) === "string")
-		if (document.getElementById(element))
-		    element = document.getElementById(element)
-	    else{
-		var element_name = element
-		element = document.createElement("div")
-		element.setAttribute('id', element_name)
-		if (parent){
-		    if (typeof (parent) === "string" )
-			parent = document.getElementById(parent)
-		    if (parent) parent.appendChild(element)
-		}
-	    }
-	    that.panel = element
-	}
-	if (!element) {
-	    that.panel = document.createElement("div")
-	    if (parent)
-		parent.appendChild(that.panel)
-	    else
-		document.body.appendChild(that.panel)
-	}
-	if (config)
-	    that.merge$B(config)
-	that.keys(/do_.*/).each(function(handler){
-        handler.match( /do_(.*)/ )
-        that.panel[RegExp.$1] = _stitchWorlds(that, handler)
-	})
-	that.threads = []
-    }
-    if (arguments.length)
-	initialize()
-}
-Gate.prototype.listen = function(event, handler){
-    this.panel[event] = _stitchWorlds(this, handler)
-}
-Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } 
-Gate.prototype.applySkin = function(skin){
-    var div = document.createElement("div")
-    div.setAttribute("class", skin)
-    this.panel.appendChild(div)
-}
-Gate.prototype.run = function(now, before){
-    for (var i=0; i<this.threads.length; i++)
-    this.threads[i].run(now, before)
-}
-Gate.prototype.new_effect = function(eff){
-    this.threads.push(eff)
-    return eff
-}
-Lookup.prototype.constructor = Lookup
-function Lookup(){
-    this.levers = []
-    this.ports = []
-    this.applications = []
-    this.eventDispatcher = null
-    this.global = []
-    this.view = null
-}
-Lookup.prototype.add = function(obj){
-    if (obj.isPrototypeOf(EventDispatcher)) 
-        this.eventDispatcher = obj
-	else this.global.push(obj)
-}
-Lookup.prototype.get = function(interfc){
-	var objects = []
-	for (var i=0; i<this.global.length; i++)
-		if (interfc.isPrototypeOf(this.global[i]))
-			if (this.global[i].lookupGet)
-				objects.push(this.global[i].lookupGet())
-			else
-				objects.push(this.global[i])
-}
-Lookup.prototype.off = function(object){
-	for (var i=0; i<this.global.length; i++)
-		if (this.global[i] == object)
-			this.global.splice(i,1);
-}
-var systemEv = (function(){
-    return (function $_sev(type, event, behalf){
-	var args = arguments
-	function setup(){
-	    var sEvs = {
-		"sync": {	type    : "synchronous",					
-		    name	: null,
-		    creation: {creator: null, time: null},		
-		    current : 0,								
-		    status  : ["sent", "attended", "closed"],	
-		    event   : {}
-		}
-	    }
-	    newOb = sEvs[type]
-	    newOb.name             = event.name
-	    newOb.event[event.name]= event
-	    newOb.creation.creator = (typeof (behalf) === "object")? behalf : null
-	    newOb.creation.time    = new Date()
-	    return newOb
-	}
-	var ob_msg = setup(  )
-	$_sev.yield(ob_msg)
-	return  ob_msg; })
-})()
 function navigator_version() { return navigator.appVersion }
 function is_firefox(ffversion){
 	ffversion = ffversion || ""
@@ -2547,63 +2177,4 @@ $Logger.prototype.log = function(message, severity){
 		                       message + "<br/>\n" + this.panel.innerHTML
 		this.logs.push(message)
 	}
-}
-Angle.prototype.constructor = Angle
-Angle.mode = "rad"  
-Angle.valid_modes = ["rad", "deg"]
-var PI = Math.PI
-function Angle(){
-  var that = this
-  this._value
-  function parseInput(args){
-    if (typeof(args[0] === "number"))
-      that._value = args[0]
-    if (typeof(args[0]) === "string"){
-       var formula = args[0].replace(/\s+/g, "")
-       formula = formula.replace(/pi/gi, "PI").replace(/PI/g, Math.PI)
-       var k = formula.indexOf("º") == -1 ? 1 : Math.PI / 180
-       that._value = k * eval(formula.match( /[^º]*/ ).toString())
-    }
-  }
-  if (arguments.length > 0)
-    parseInput(arguments)
-}
-Angle.prototype.valueOf = function(){
-  return this._value
-}
-Angle.prototype.canonical = function(){
-  var canon = this.value()
-  var sign = canon  > 0 ? 1 : -1 
-  while (canon > 2 * Math.PI || canon < 0)
-    canon -= (sign) * 2 * Math.PI
-  return canon
-}
-Angle.prototype.rounds = function(){
-  var canon = this.value()
-  var rounds = 0
-  var sign = canon  > 0 ? 1 : -1 
-  while (canon > 2 * Math.PI || canon < 0){
-    canon -= (sign) * 2 * Math.PI
-    rounds += sign
-  }
-  return rounds
-}
-Angle.prototype.equals = function(angle){
-  var max = angle.value_of() > this.value_of() ? angle.value_of(): this.value_of();
-  var min = angle.value_of() + this.value_of() - max
-  while (max > min)
-    max -= 2 * Math.PI
-  return max == min
-}
-Angle.prototype.to_str = function(mode){ 
-  mode = mode || Angle.mode
-  mode = mode.toLowerCase()
-  if (Angle.mode == "deg")
-    return Angle.to_deg(this)
-  return this.value()
-}
-Angle.to_deg = function (angle){
-  if (! (angle instanceof Angle) )
-    angle = new Angle(angle)
-  return angle.value() * 180 / Math.PI
 }

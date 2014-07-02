@@ -32,7 +32,11 @@ function Package(filepath, path) {
         }
     })
 
-    this.path = path  
+    this.path = path
+    var arrays = ["files", "provides", "requires", "offers"]
+    for(var i=0; i<arrays.length; i++)  
+        this[arrays[i]] = this[arrays[i]] || []
+    
 }
 
 /**
@@ -420,19 +424,20 @@ Object.defineProperty(Package.prototype, "inspect", {
     enumerable: false
 })
 
-FileReader.fs = require('fs')
+FileReader = require('./file_reader.js')
 
 Package.prototype.save = function(config){
     config = config || {}
     config.package = config.package || Path.basename(this.path)
 
 
-    if(!FileReader.fs.existsSync(config.path))
+    try{
         FileReader.fs.mkdirSync(config.path)
+    }catch(e){;}
 
     FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": distribution,\n    "description": "lluvia Project as a single package.",\n    "files": ["all.js"]\n}')
     
-    FileReader.fs.writeFileSync(Path.join(config.path, config.files[0]), config.text)
+    
 }
 
 module.exports = Package

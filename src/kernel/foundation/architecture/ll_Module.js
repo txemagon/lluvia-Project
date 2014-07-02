@@ -59,3 +59,5 @@ Module.prototype.alias_method = function(new_name, old_name){
 
   return this[new_name]
 }
+
+//todo: Create a mechanism to extend / include modules.

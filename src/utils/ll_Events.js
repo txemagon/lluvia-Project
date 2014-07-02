@@ -1,10 +1,10 @@
 /**
- * @author Josh Davis
- * @version 1.00 June 2007
- * @translated for Antonio Carhuatocto
+ * author Josh Davis
+ * version 1.00 June 2007
  */
 
 /**
+ * @method bind
  * Binds a function to the given object's scope
  *
  * @param {Object} object The object to bind the function to.
