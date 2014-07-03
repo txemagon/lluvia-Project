@@ -21,7 +21,7 @@ FixedVector.super = Vector
  *     -Constructor accepts only the _head (where foot would be 0,0)
  *     -Constructor doesn't accept only foot (it wouldn't know where vector ends)
  *     -Constructor accepts free_vector and foot when is_head is not defined or is false and
- *     accepts _head and foot when is_head is true
+ *     accepts _head and foot when is_head has a value
  *     
  *     new FixedVector()
  *     //=> this.foot = (0,0)
@@ -32,6 +32,11 @@ FixedVector.super = Vector
  *     //=> this.foot = (0,0)
  *     //=> this._head = (3,5)
  *     //=> this.Coord = (3,5)
+ *
+ *     new FixedVector( [new Vector(8,2)], true )
+ *     //=> this.foot = (0,0)
+ *     //=> this._head = (8,2)
+ *     //=> this.Coord = (8,2)
  *
  *     new FixedVector([ [new Vector(3,5), new Vector(6,1) ])
  *     //=> this.foot = (6,1)
@@ -53,7 +58,7 @@ FixedVector.super = Vector
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
  *
- *     new FixedVector([ new Vector(3,1), [5,2] ], true)
+ *     new FixedVector([ new Vector(3,1), [5,2] ], "abs")
  *     //=> this.foot = (5,2)
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
@@ -190,7 +195,7 @@ FixedVector.prototype.scle = function(number) { //scale from Vector needs to be 
 
 /**
  * @method virial
- * 
+ * Scalar product of a vector and its foot
  *
  * @param {Vector} vec FixedVector to operate with 
  * @param {Number} angle Angle between the two Fixed vectors
@@ -203,4 +208,23 @@ FixedVector.prototype.virial = function(vec, angle) {
     virial = new_free.dot(this.foot)
 
     return virial
+}
+
+/**
+ * @method planar_momentum
+ * Momentum of a vector in a plane
+ *
+ * @param {FixedVector} vec FixedVector to operate with 
+ * @param {FixedVector} plane_pt FixedVector made from a point in the plane
+ * 
+ * @return {FixedVector} Returns the virial of a vector or vectors
+ */
+FixedVector.prototype.planar_momentum = function(vec, plane_pt) {
+    var vector_r = new FixedVector( vec.foot, plane_pt.foot)
+    var unitary = plane_pt.unit()
+    var vec_module = vec.module()
+
+    var res = vector_r.cross(unitary).scale(vec_module)
+
+    return res
 }
