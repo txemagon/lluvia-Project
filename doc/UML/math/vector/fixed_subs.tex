@@ -1,0 +1,18 @@
+% AXIS
+\draw [help lines] (0,0) grid (10,10);
+\draw [<->] (0,10) node [left] {$y$} -- (0,0) node [below left] {(0,0)} -- (10,0) node [below] {$x$};
+
+% Fixed Vector 1
+\draw [->,>=latex,color=gray] (0,0) -- node[midway, above, sloped] {$ \vec{a}_f = \vec{c}_f $} (2,4);
+\draw [->,>=latex,color=blue] (2,4) -- node[midway, below, sloped] {$ \vec{a} = (1,3) $} (3,7);
+
+% Fixed Vector 2
+\draw [->,>=latex,color=gray] (0,0) -- node[midway, below, sloped] {$ \vec{b}_f $} (3,7);
+\draw [->,>=latex,color=blue] (3,7) -- node[midway, below, sloped] {$ \vec{b} = (2,2)$} (5,8);
+
+% Fixed Vector 3
+\draw [->,>=latex,color=gray] (0,0) -- node[midway, below, sloped] {$ \vec{b}_f $} (5,8);
+\draw [->,>=latex,color=blue] (5,8) -- node[midway, below, sloped] {$ \vec{b} = (2,6)$} (7,10);
+
+% Result
+\draw [->,>=latex,color=red] (2,4) -- node[midway, above, sloped] {$ \vec{c} = (5,6)$} (7,10);
