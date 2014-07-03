@@ -1,0 +1,11 @@
+{
+	"package": "architecture",
+	"description": "Classes related to hierarchical language organization.",
+	"files": [
+        {"name": "ll_Module.js", "description": "Base class of all Class."},
+        {"name": "ll_Class.js", "description": "Base class of all classes"},
+        {"name": "ll_Delegate.js", "description": "Creates a fake class that delegates all non existing method calls to another one"},
+        {"name": "ll_ProxyConstructor.js", "description": "Delegated anonymous class intended to be used as a constructor used via Function#call"},
+        {"name": "ll_ApplyProxyConstructor.js", "description": "Delegated anonymous class intended to be used as a constructor used via Function#apply"}
+	] 
+}

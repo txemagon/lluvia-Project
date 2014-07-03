@@ -1,4 +1,3 @@
-Continue.prototype.constructor = Continue;
 
 /**
  * @classDescription Make a copy of a generic object to be evaluated in two instants of time.
@@ -7,6 +6,7 @@ Continue.prototype.constructor = Continue;
  * @return {Continue} 				Returns an object capable of being derived / integrated.
  * @constructor 
  */
+Continue.prototype.constructor = Continue;
 function Continue(magnitude){
 	this.magnitude0 = new magnitude.constructor(magnitude);
 	this.magnitude  = new magnitude.constructor(magnitude);

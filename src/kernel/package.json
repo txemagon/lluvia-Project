@@ -2,11 +2,10 @@
 	"description": "Javascript extensions && global objects.",
 	"files": [
 		{"name": "ll_Kernel.js",       "description": "Core javascript for the global object."},
-		{"name": "ll_Exception.js",    "description": "Exceptions."},
-		{"name": "ll_Module.js",       "description": "Redefinition of Module class."}
+		{"name": "ll_Exception.js",    "description": "Exceptions."}
 	],
-		"provides": ["core-ext"],
-		"offers": ["facilities"]
+		"provides": ["core-ext", "facilities", "foundation"],
+		"offers": []
 }
 
 

@@ -1,0 +1,5 @@
+{
+	"package": "foundation",
+	"description": "Foundation classes",
+    "provides": ["architecture", "enumerable"]
+}

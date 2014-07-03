@@ -1,9 +1,5 @@
-	{	"package": "Facilities",
+	{	"package": "facilities",
 		"description": "Javascript new classes and helpers.",
-		"files": [
-			{"name": "ll_Enumeration.js",  "description": "Define Enumerations."},
-			{"name": "ll_Hash.js",         "description": "Hash class."},
-			{"name": "ll_Set.js",          "description": "Adds functionality for sets."}
-		]
+        "provides": ["class"]
 	}
 

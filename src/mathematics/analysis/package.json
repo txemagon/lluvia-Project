@@ -1,0 +1,7 @@
+{   "package": "analysis",
+		"description": "Number types",
+		"files": [
+			{"name": "ll_Complex_Instance.js",     "description": "Objext of class Complex."},
+			{"name": "ll_Complex_Static.js",       "description": "Class Complex."}
+		]
+}

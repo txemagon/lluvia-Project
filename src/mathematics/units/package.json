@@ -1,0 +1,8 @@
+{   "package": "units",
+		"description": ".",
+		"files": [
+			{"name": "ll_Magnitude.js",    "description": "."},
+			{"name": "ll_Unit.js",         "description": "."},
+			{"name": "ll_Units.js",        "description": "."},
+		],
+}

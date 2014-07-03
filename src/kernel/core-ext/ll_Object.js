@@ -16,7 +16,7 @@
  *  as much as you can.
  */
 
-/*
+/**
  *
  * a = {a: 2, b:3}
  * b = Object.extend(a)

@@ -1,0 +1,8 @@
+{   "package": "shape",
+		"description": ".",
+		"files": [
+			{"name": "ll_Line.js",             "description": "."},
+			{"name": "ll_Path.js",             "description": "."},
+			{"name": "ll_StraightLine.js",     "description": "."}
+		]
+}
