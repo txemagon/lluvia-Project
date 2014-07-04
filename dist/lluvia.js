@@ -1,21 +1,27 @@
-function PackageManager(server){
-	this.server = server
-	this.packages_server = []
-	this.catalog = []
+function Package(pk){
+ this.pk = pk || {}
 }
-PackageManager.all_packages = []
-PackageManager.prototype.include_script = function(src){
-	var script = document.createElement('script')
-	script.setAttribute('type', 'text/javascript')
-	script.src = src
-	script.async = false
-	document.getElementsByTagName('head')[0].appendChild(script)
+Package.prototype.catalog = function(){
+    var dependencies = ["requires", "provides", "offers"]
+    for(var i in this.pk)
+        if (i != "path")
+            this[i] = this.pk[i]
+        else{
+            if (this._path[0] != "/")
+                this.path = this.path +  this.pk[i]
+            else
+                this.path = this.pk[i]
+        }
+    for(var i=0; i<dependencies.length; i++)
+        if(this[dependencies[i]]){
+            for(var a=0; a<this[dependencies[i]].length; a++){
+                var new_pk = new Package(this[dependencies[i]][a])
+                new_pk.catalog()
+                this[dependencies[i]][a] = new_pk
+            }
+        }
 }
-PackageManager.prototype.create_catalog = function(catalog){
-	var catalog = catalog || {}
-	this.catalog = catalog
-}
-PackageManager.prototype.through = function(block, config){ 
+Package.prototype.through = function(block, config){ 
     var config = config || {}
     config.last_package = config.last_package || this
     config.already_there = config.already_there || []
@@ -30,17 +36,45 @@ PackageManager.prototype.through = function(block, config){
     for(var i=0; i<dependencies.length; i++){
         if(actual_package[dependencies[i]]){
             for(var a=0; a<actual_package[dependencies[i]].length; a++){
-                if(!is_already_there$U(actual_package[dependencies[i]][a].path)){
-                    config.already_there.push(actual_package[dependencies[i]][a].path)
-                    alert(actual_package[dependencies[i]][a].toSource())
                     actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], already_there: config.already_there})
                     block(actual_package[dependencies[i]][a])
-                }
             }
         }
     }
 }
-PackageManager.prototype.is_in$U = function(catalog){
+function PackageManager(uri){
+	this.uri = uri
+	this.packages_server = []
+	this.catalog = []
+}
+PackageManager.all_packages = []
+PackageManager.prototype.wait = function() {
+		setTimeout(10, PackageManager.prototype.wait)
+}
+PackageManager.prototype.include_script = function(src){
+	$K_script_response = 0
+	var script = document.createElement('script')
+	script.setAttribute('type', 'text/javascript')
+	script.src = src
+	script.async = false
+	document.getElementsByTagName('head')[0].appendChild(script)
+	this.wait()
+}
+PackageManager.prototype.get_catalog = function(){
+    if(!this.catalog.length)
+    	this.include_script(this.uri + "/dist/" + "catalog.js")
+}
+PackageManager.prototype.create_catalog = function(){
+	this.catalog.push(new Package($K_script_response))
+}
+PackageManager.prototype.is_in$U = function(name_package){
+	var exist = false
+	for(var i=0; i<this.catalog.length; i++)
+		this.catalog[i].through(function(pk){
+			if(pk.package == name_package)
+				exist = true
+		})
+    return exist    
 }
 PackageManager.prototype.require = function(){
 }
@@ -2601,6 +2635,4 @@ Exception.parse = function(err, source_code){
      throw(err)
 }
 var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
-p.include_script('../../dist/catalog.js')
-alert(1)
-p.create_catalog($K_script_response)
+p.get_catalog()

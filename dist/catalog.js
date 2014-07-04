@@ -121,6 +121,7 @@ var $K_script_response =
 			"requires": [
 				   {
 					"files": [
+						{"name": "package.js", "description": ""},
 						{"name": "package_manager.js", "description": ""}],
 					"provides": [],
 					"requires": [],

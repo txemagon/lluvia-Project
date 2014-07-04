@@ -1,0 +1,10 @@
+{
+	"development": {
+		"protocol": "file"
+	    "server_name": "localhost"
+	},
+	"production": {
+		"protocol": "http"
+		"server_name": "lluvia.novaws.es"
+	}
+}
