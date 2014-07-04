@@ -34,7 +34,14 @@ Package.prototype.through = function(block, config){
             return false
     }
     for(var i=0; i<dependencies.length; i++){
-        if(actual_package[dependencies[i]]){
+        if(dependencies[i] == "this"){
+            if(!is_already_there$U(this.full_name())){
+                config.already_there.push(this.full_name())
+                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
+                block(this)
+            }
+        }
+        else if(actual_package[dependencies[i]]){
             for(var a=0; a<actual_package[dependencies[i]].length; a++){
                     actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], already_there: config.already_there})
                     block(actual_package[dependencies[i]][a])
@@ -46,6 +53,7 @@ function PackageManager(uri){
 	this.uri = uri
 	this.packages_server = []
 	this.catalog = []
+    this.offers = []
 }
 PackageManager.all_packages = []
 PackageManager.prototype.wait = function() {
@@ -65,7 +73,15 @@ PackageManager.prototype.get_catalog = function(){
     	this.include_script(this.uri + "/dist/" + "catalog.js")
 }
 PackageManager.prototype.create_catalog = function(){
-	this.catalog.push(new Package($K_script_response))
+    var that = this
+    var pk = new Package($K_script_response)
+	this.catalog.push(pk)
+    pk.catalog()
+    pk.through(function(pk){
+        for(var i=0; i<pk.offers.length; i++){
+            that.offers.push(pk.offers[i].package)
+        }
+    })
 }
 PackageManager.prototype.is_in$U = function(name_package){
 	var exist = false
@@ -76,7 +92,29 @@ PackageManager.prototype.is_in$U = function(name_package){
 		})
     return exist    
 }
-PackageManager.prototype.require = function(){
+PackageManager.prototype.is_offer$U = function(name_package){
+    var is_offer = false
+    for(var i=0; i<this.offers.length; i++)
+        if(this.offers[i] == name_package){
+            is_offer = true
+        }
+    return is_offer    
+}
+PackageManager.prototype.find_package  = function(name_package){
+    var package = {}
+    for(var i=0; i<this.catalog.length; i++)
+        this.catalog[i].through(function(pk){
+            if(pk.package == name_package)
+                package = pk   
+        })
+    return package
+}
+PackageManager.prototype.drop = function(name_package){
+    if(this.is_offer$U(name_package)){
+        var package = this.find_package(name_package)
+        for(var i=0; i<package.files.length; i++)
+            this.include_script(this.uri + "/src/mathematics/geometry/shape/" + package.files[0].name)
+     }
 }
 function giveme_node(id){
   var node = document.getElementById(id)
@@ -2634,5 +2672,5 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
 p.get_catalog()
