@@ -76,7 +76,8 @@ PackageManager.prototype.is_in$U = function(name_package){
 		})
     return exist    
 }
-PackageManager.prototype.require = function(){
+PackageManager.prototype.drop = function(name_package){
+    if(this.is_in$U(name_package))
 }
 function giveme_node(id){
   var node = document.getElementById(id)
@@ -2199,6 +2200,36 @@ Object.defineProperty(Object.prototype, "to_class", {
     },
     enumerable: false
 })
+function VersionNumber(initial_string, sep) {
+    Object.defineProperty(this, "sep", {
+        value: sep || ".",
+        enumerable: false
+    })
+    var coefficients = initial_string.split(this.sep)
+    var last = this
+    for (var i = 0; i < coefficients.length; i++)
+        last[coefficients[i]] = (last = {})
+}
+VersionNumber.prototype.toString = function() {
+    var obj = this
+    var text = ""
+    var key = null
+    while (key = Object.keys(obj)[0]) {
+        text += key + "."
+        obj = obj[key]
+    }
+    return text.replace(/.$/, "")
+}
+VersionNumber.prototype.valueOf = function() {
+    var last = 0
+    var obj = this
+    while (key = Object.keys(obj)[0]) {
+        obj = obj[key]
+        if (key)
+            last = key
+    }
+    return parseInt(last) || last
+}
 Module.prototype.constructor = Module
 Module._constants = new Hash()
 function Module(module_name, block){
@@ -2460,7 +2491,8 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(){    for (var i=0; i<arguments.length; i++)        if (arguments[i] instanceof Array){            this[arguments[i][0]] = new Number(i)            var subcases = new (ApplyProxyConstructor(Enumeration, arguments[i][1]))            for (var key in subcases)                Object.defineProperty(this[arguments[i][0]], key, {value: subcases[key], enumerable: true})        } else            this[arguments[i]] = i}function Map() {
+function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false    })    var keys = this.ia.keys()    for (var i = 0; i < keys.length; i++)        this[this.ia[keys[i]]] = new VersionNumber(keys[i])}
+function Map() {
 }
 InterleavedArray.prototype = new Array
 InterleavedArray.prototype.constructor = InterleavedArray
@@ -2634,5 +2666,5 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/txema/work/lluvia-Project/util/compress-core/../..")
 p.get_catalog()

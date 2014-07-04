@@ -72,6 +72,16 @@ var $K_script_response =
 					"provides": [
 						   {
 							"files": [
+								{"name": "ll_VersionNumber.js", "description": "Semantic Version numbers."}],
+							"provides": [],
+							"requires": [],
+							"offers": [],
+							"package": "DataType",
+							"description": "Provides new data types.",
+						 }
+,
+						   {
+							"files": [
 								{"name": "ll_Module.js", "description": "Base class of all Class."},
 								{"name": "ll_Class.js", "description": "Base class of all classes"},
 								{"name": "ll_Delegate.js", "description": "Creates a fake class that delegates all non existing method calls to another one"},
