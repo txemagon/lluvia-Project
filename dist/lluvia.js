@@ -1,3 +1,49 @@
+function PackageManager(server){
+	this.server = server
+	this.packages_server = []
+	this.catalog = []
+}
+PackageManager.all_packages = []
+PackageManager.prototype.include_script = function(src){
+	var script = document.createElement('script')
+	script.setAttribute('type', 'text/javascript')
+	script.src = src
+	script.async = false
+	document.getElementsByTagName('head')[0].appendChild(script)
+}
+PackageManager.prototype.create_catalog = function(catalog){
+	var catalog = catalog || {}
+	this.catalog = catalog
+}
+PackageManager.prototype.through = function(block, config){ 
+    var config = config || {}
+    config.last_package = config.last_package || this
+    config.already_there = config.already_there || []
+    var actual_package = config.last_package
+    var dependencies = ["requires", "provides", "offers"]
+    function is_already_there$U(path){
+        for(var i=0; i<config.already_there.length; i++)
+            if(config.already_there[i] == path)
+                return true
+            return false
+    }
+    for(var i=0; i<dependencies.length; i++){
+        if(actual_package[dependencies[i]]){
+            for(var a=0; a<actual_package[dependencies[i]].length; a++){
+                if(!is_already_there$U(actual_package[dependencies[i]][a].path)){
+                    config.already_there.push(actual_package[dependencies[i]][a].path)
+                    alert(actual_package[dependencies[i]][a].toSource())
+                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], already_there: config.already_there})
+                    block(actual_package[dependencies[i]][a])
+                }
+            }
+        }
+    }
+}
+PackageManager.prototype.is_in$U = function(catalog){
+}
+PackageManager.prototype.require = function(){
+}
 function giveme_node(id){
   var node = document.getElementById(id)
   if (!node){
@@ -341,7 +387,165 @@ rectangle.prototype.getRectCoord = function(){
 }
 rectangle.prototype.elarge = function (despl){
 	this.x1 += despl.x;
-	this.y1 += despl.y;}Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+	this.y1 += despl.y;}
+Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+function navigator_version() { return navigator.appVersion }
+function is_firefox(ffversion){
+	ffversion = ffversion || ""
+	return navigator.userAgent.toLowerCase().indexOf('firefox/'+ffversion) > -1;
+}
+function CodeBlockFinder(snippet, start_after, delimiters, counted_character){
+	delimiters = delimiters || {}
+	delimiters.open  = delimiters.open  || '{'
+    delimiters.close = delimiters.close || '}'
+    this.delimiters = delimiters
+    this.counted_character = counted_character || "\n"
+    this.search_start = 0
+    if (start_after){
+	    if (typeof(start_after) === "number")
+	    	this.search_start = start_after
+	    if (start_after.constructor.name == "String" ||
+	    	start_after.constructor.name == "RegExp"    )
+	    	this.search_start = snippet.search(start_after)
+    }
+    if (this.search_start < 0)
+        throw "Impossible to set up the CodeBlockFinder" +
+              "with params: " + arguments.toSource()
+    this.source    = snippet + " " 
+    this.reset()
+}
+CodeBlockFinder.States  = new Enumeration("searching", "scanning", "ended")
+CodeBlockFinder.prototype.reset = function(){
+	this.initial    = this.search_start
+    this.final      = this.search_start
+    this.status     = CodeBlockFinder.States.searching
+    this.delimiter  = this.delimiters.open  
+    this.nested     = 0
+    this.lines_read = 0
+}
+CodeBlockFinder.prototype.start = function(){
+	var car  = null 
+	var text = []
+    while(car = this.source[this.initial]){
+    	if (car == this.counted_character)
+    		this.lines_read++
+    	switch(this.status){
+    		case CodeBlockFinder.States.searching:
+	    		if (car == this.delimiter){
+	    			text.push(car)
+	    			this.delimiter = this.delimiters.close 
+	    			this.status    = CodeBlockFinder.States.scanning
+	    		}      
+	    		break;
+	    	case CodeBlockFinder.States.scanning:
+	    	    text.push(car)
+	    	    if (car == this.delimiters.open)
+	    	    	this.nested++
+	    		if (car == this.delimiter){
+	    			if (this.nested > 0)
+	    				this.nested--
+	    			else
+	    			    this.status = CodeBlockFinder.States.ended
+	    		}      
+	    		break;
+	    	case CodeBlockFinder.States.ended:
+	    	   this.text = text.join("")
+	    	   return this.text
+	    	default:
+	    	  throw "Inconsistent state parsing code block"
+	    	  break;
+    	}
+    	this.initial++
+    }
+    return ""
+}
+CodeBlockFinder.parse_params = function(string_of_params){
+   var params = []
+   if (/^\s*$/.test(string_of_params))
+    return params
+   var possible_param = string_of_params.split(/,\s*/)
+   var items = possible_param.length
+   var position_line = 0
+   var position_initialize = 1  
+   for (var i=0; i<items; i++){
+        if (!possible_param[i].match(/function\s+initialize/))
+            position_line++
+        else
+            position_initialize = position_line
+    }
+   for (var i=0; i<items; i++){
+     if (possible_param[i].match(/function/)){
+        var closure = ""
+        var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
+        closure_param.start()
+        var delta = closure_param.lines_read 
+        closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
+        closure_param.start()
+        delta +=  closure_param.lines_read + (position_initialize)
+        closure = possible_param.slice(i, i + delta).join(", ")
+        params.push(closure)
+        i += delta - (position_initialize)
+     } else
+        params.push(possible_param[i])
+   }
+   return params
+}
+function get_HTML_element(html_element, create){
+	if (typeof(html_element) === "string"){
+		var element = document.getElementById(html_element)
+		if (!element){
+			element = document.createElement("div")
+			element.setAttribute("id", html_element)
+			document.body.appendChild(element)
+			html_element = element
+		}
+	}
+    return html_element
+}
+function JavascriptSource (file_name) {
+	this.file_name = file_name
+	this.source = JavascriptSource.read(file_name)
+	this.lines = this.source.split("\n")
+	JavascriptSource.read_files[file_name] = this
+}
+JavascriptSource.prototype.line = function(line_number){ 
+	return this.lines[line_number-1]
+}
+JavascriptSource.prototype.lines_from = function(start, end){
+	start = start || 0
+	end   = end   || this.lines.length
+	return this.lines.slice(start, end)
+}
+JavascriptSource.prototype.code_from = function(line_number, end_line){
+	return this.lines_from.apply(this, arguments).join("\n")
+}
+JavascriptSource.read_files = {}
+JavascriptSource.read = function(file_name){
+	if (JavascriptSource.read_files[file_name])
+		return JavascriptSource.read_files[file_name]
+	var request = new XMLHttpRequest();
+	request.open("GET", file_name, false);
+	try{
+	   request.send(null);
+	} catch (err){
+		throw "NetError. Imposible to reach file " + file_name
+	}
+	var returnValue = request.responseText;
+	return returnValue;
+}
+function $Logger(html_element, severity){
+	this.panel    = get_HTML_element(html_element || "ll_logger")
+	this.severity = severity || "TESTING"
+	this.logs     = []
+}
+$Logger.prototype.log = function(message, severity){
+	severity = severity || this.severity
+	if ($K_debug_level >= $KC_dl[severity]){
+		this.panel.innerHTML = "[" + new Date().toLocaleTimeString() + "]:" + severity + ": " + 
+		                       message + "<br/>\n" + this.panel.innerHTML
+		this.logs.push(message)
+	}
+}
 Object.prototype.to_a = function() {
     return [this]
 }
@@ -1126,14 +1330,14 @@ String.prototype.to_r = function(){
     if( str1.search(/^[\d\+.-]/g) == -1 ) 
 	return op1
     str2 = str1 = str1.replace(/[_]/g,"")  
-    pos = str1.search(/\
+    pos = str1.search(/\//g) 
 	if( pos > 0) {
 	str1 = str1.substring(0,pos)
 	str2 = str2.substring(pos+1)
     }
     else
 	str2 = null
-    if( isNaN( (op1 = parseFloat(str1)) ) )
+    if( isNaN( (op1 = parseFloat(str1)) ) ) 
 	return op1
     if( isNaN(str1) || isNaN( op2 = parseInt(str2) ) )
 	op2 = 1
@@ -1961,6 +2165,381 @@ Object.defineProperty(Object.prototype, "to_class", {
     },
     enumerable: false
 })
+Module.prototype.constructor = Module
+Module._constants = new Hash()
+function Module(module_name, block){
+  if (module_name){
+    var module = new Module
+    Module._constants = Module._constants || new Hash()
+    if (typeof(block) !== "undefined")
+       block.call(module)
+    Module._constants[module_name] = module
+    $global_space["$constants"][module_name] = module
+    eval.call( null,
+               module_name +
+               " = $global_space['$constants']['" +
+               module_name + "']" )
+    return module
+  }
+}
+Module.constant_names = function(){
+    return Module._constants.self_keys()
+  }
+Module.constants = function(){
+    return Module._constants.values()
+}
+function require(){
+}
+Module.prototype.alias_method = function(new_name, old_name){
+  if (String.is_string$U(old_name))
+    this[new_name] = eval( this[old_name].toSource() )
+  return this[new_name]
+}
+Class.prototype = new Module
+Class.prototype.constructor = Class
+function Class(){
+   var self = this instanceof Function ? this : eval(this.constructor.name)
+   var that = this
+   this.before_filters = {}
+   this.after_filters  = {}
+   this.attr_readers = []
+   this.attr_writers = []
+}
+Class.all = []
+Class.prototype.create_attr = function(attributes){
+   var that = this
+   var effective_attributes = []
+   function add_value(attr, initial_value) {
+	  if (typeof(that[attr]) == "undefined") {
+		 initial_value = initial_value || null
+		 that[attr] = initial_value
+		 effective_attributes.push( attr )
+	  }
+   }
+   for (var i=0; i<arguments.length; i++){
+	  var attr = arguments[i]
+	  if ( String.is_string$U(attr) )
+		 attr = [attr]
+	  if (attr instanceof Array)
+		 for (var j=0; j<attr.length; j++)
+	  add_value(attr[j])
+	  else if (attr instanceof Object)
+		 attr.self_keys().each( function(key) {
+			add_value( key, attr[key] )
+		 })
+   }
+   return effective_attributes
+}
+Class.prototype.attr_reader = function (attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+	  for(var i=0; i<attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_readers.push(name)
+		 this["get" + name.replace(name[0], name[0].toUpperCase())] = this["get_" + name] = function(){ return eval("this." + name) }
+	  }
+   }catch(err){
+   }
+}
+Class.prototype.attr_writer = function (attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+	  for(var i=0; i<attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_writers.push(name)
+		 this["set" + name.replace(name[0], name[0].toUpperCase())] = this["set_" + name] = function(value){ this[name] = value }
+	  }
+   } catch(err) {
+   }
+}
+Class.prototype.attr_accessor = function(attr_names){
+   try{
+	  attr_names = this.create_attr(attr_names)
+	  for(var i=0; i<attr_names.length; i++) {
+		 name = attr_names[i]
+		 this.attr_readers.push(name)
+		 this.attr_writers.push(name)
+		 this["get" + name.replace(name[0], name[0].toUpperCase())] = this["get_" + name] = function(){ return eval("this." + name) }
+		 this["set" + name.replace(name[0], name[0].toUpperCase())] = this["set_" + name] = function(value){ this[name] = value }
+	  }
+   } catch(err) {
+   }
+}
+function _$_add_filter(where, single_param){
+   if (!(single_param instanceof Array))
+	  single_param = [single_param]
+   for (var i=0; i<single_param.length; i++)
+   where.push(single_param[i])
+}
+Class.superclass = function() { return null }
+Class.ancestors  = function() { return [] }
+Class.prototype.get_this   = function() { return this }
+Class.prototype.add_before_filter   = function(observed_function, filters) {
+   if (typeof(this.before_filters[observed_function]) == "undefined")
+	  this.before_filters[observed_function] = []
+   for (var i=1; i<arguments.length; i++)
+   _$_add_filter(this.before_filters[observed_function], arguments[i])
+}
+Class.prototype.add_after_filter   = function(observed_function, filters) {
+   if (typeof(this.after_filters[observed_function]) == "undefined")
+	  this.after_filters[observed_function] = []
+   for (var i=1; i<arguments.length; i++)
+   _$_add_filter(this.after_filters[observed_function], arguments[i])
+}
+Class.prototype.call_before = function(fn_name){
+   this.before_filters[fn_name] = this.before_filters[fn_name] || []
+   for (var i=0; i<this.before_filters[fn_name].length; i++)
+   this.before_filters[fn_name][i]();
+}
+Class.prototype.call_after = function(fn_name){
+   this.after_filters[fn_name] = this.after_filters[fn_name] || []
+   for (var i=0; i<this.after_filters[fn_name].length; i++)
+   this.after_filters[fn_name][i]();
+}
+Class.method_missing = function(method, object, args){ throw object + "." + method + "(" + args + ") invalid method call." }
+function Delegate(class_name){
+  this.delegate_class = eval(class_name)
+}
+Delegate.prototype.method_missing = function(method, params){
+  return this.delegate_class[method].call(this, params)
+}
+function ProxyConstructor(Constructor, rest_of_arguments) {
+    var args = Array.prototype.slice.call(arguments, 1)
+    return function() {
+        var $$F$$ = function(){}
+        $$F$$.prototype = Constructor.prototype
+        var obj = new $$F$$
+        var yield_back = Constructor.apply(obj, args)
+        return Object(yield_back) == yield_back ? yield_back : obj
+    }
+}
+function ApplyProxyConstructor(Constructor, arguments_array) {
+    arguments_array.unshift(Constructor)
+    return ProxyConstructor.apply(this, arguments_array)
+}
+Set.prototype = new Array
+Set.prototype.constructor = Set
+Set.prototype.super = Array
+function Set(){
+  Array.apply(this, arguments)
+}
+Set.prototype.inner_data = function(){
+  var inner = []
+  for (var i=0; i<this.length; i++)
+    inner.push(this[i])
+  return inner
+}
+Set.prototype.push = function(obj){
+    if (!this.inner_data().include$U(obj)){
+      this[this.length] = obj
+      this.length++
+    }
+}
+Set.prototype.clear$B = function(){
+  this.splice(0, this.length)
+}
+Set.prototype.toSource = function(){
+    return this.inner_data().toSource()
+}
+Set.prototype.toString = function(){
+    return this.inner_data().toString()
+}
+function Hash(initial_data) {
+    if (initial_data)
+        this.merge$B(initial_data)
+}
+Hash.prototype.values = function() {
+    var that = this
+    return this.keys().collect(function(i) {
+        return that[i]
+    })
+}
+Hash.prototype.stop_enumerating("values")
+Hash.prototype.self_values = function() {
+    var that = this
+    return this.self_keys().collect(function(i) {
+        return that[i]
+    })
+}
+Hash.prototype.stop_enumerating("self_values")
+Hash.prototype.alias("own_values", "self_values")
+Hash.prototype.each = function() {
+    for (var i in this)
+        if (this.hasOwnProperty(i))
+            Hash.prototype.each.yield(i, this[i])
+}
+Hash.prototype.stop_enumerating("each")
+Hash.prototype.collect = function() {
+    var result = []
+    for (var i in this)
+        result.push(Hash.prototype.each.yield(i, this[i]))
+    return result
+}
+Hash.prototype.stop_enumerating("collect")
+Hash.prototype.size = function() {
+    return this.self_keys().count()
+}
+Hash.prototype.stop_enumerating("size")
+AutoHash.prototype = new Hash
+AutoHash.prototype.constructor = AutoHash
+function AutoHash(intial_data, block) {
+    if (!block)
+        if (initial_data && typeof(initial_data) === "function")
+            block = initial_data
+        else
+            block = function() {};
+    var that = this
+    this.data = new HashData()
+    if (initial_data && typeof(initial_data) !== "function")
+        this.data.merge$B(initial_data)
+    this.__noSuchMethod__ = function(id, args) {
+        if (!(id in that.data))
+            that.data[id] = (block)(that, id)
+        if (typeof(that[id] !== "function"))
+            that[id] = (function(value) {
+                if (!value)
+                    return this[id]
+                this.value = value
+            })()
+        return that.data[id]
+    }
+}
+function Constant(name, value) {
+    this[name] = value
+    Object.defineProperty(this, "name", {
+        value: name,
+        enumerable: false
+    })
+    try{
+        $global_space["$constants"].push(this)
+    } catch (e) {
+        if ($K_debug_level > $KC_dl.USER)
+            $K_logger.warn("Error Creating Constant: " + e)
+    }
+}
+Constant.prototype.valueOf = function() {
+    return this.name
+}
+Constant.prototype.toString = function() {
+    return this[this.name]
+}
+Constant.prototype.equals = function(obj) {
+    return this[this.name] == obj
+}
+function Enumeration(){    for (var i=0; i<arguments.length; i++)        if (arguments[i] instanceof Array){            this[arguments[i][0]] = new Number(i)            var subcases = new (ApplyProxyConstructor(Enumeration, arguments[i][1]))            for (var key in subcases)                Object.defineProperty(this[arguments[i][0]], key, {value: subcases[key], enumerable: true})        } else            this[arguments[i]] = i}function Map() {
+}
+InterleavedArray.prototype = new Array
+InterleavedArray.prototype.constructor = InterleavedArray
+function InterleavedArray(elements) {
+    Object.defineProperty(this, 'subarray', {
+        value: [],
+        enumerable: false,
+        writable: true
+    })
+    Object.defineProperty(this, "length", {
+        enumerable: false,
+        writable: true
+    })
+    var last_was_number = 0
+    for (var el = 0; el < arguments.length; el++) {
+        if (!(arguments[el] instanceof Array)) {
+            this.push(arguments[el])
+            last_was_number = 1
+        } else {
+            if (!((this.length - last_was_number) in this)) {
+                this.push(undefined)
+                last_was_number = 1
+            }
+            this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
+            last_was_number = 0
+        }
+    }
+    for (var i = 0; i < this.subarray.length; i++)
+        if (this.subarray[i] instanceof Array)
+            this.enumerate(i, this.subarray[i])
+}
+InterleavedArray.prototype.enumerate = function(base_index, subarray) {
+    for (var i = 0; i < subarray.length; i++) {
+        var index = base_index + "." + (i + 1)
+        this[index] = subarray[i]
+        if (subarray.subarray[i] instanceof Array)
+            this.enumerate(index, subarray.subarray[i])
+    }
+}
+InterleavedArray.prototype.infiltrate = function(position, element) {
+    var ia = new(ApplyProxyConstructor(InterleavedArray, element)) 
+    var subarray = this.go(position)
+    var l = subarray.length
+    for (var i = 0; i < ia.subarray.length; i++)
+        subarray.subarray[l + i] = ia.subarray[i]
+    Array.prototype.push.apply(subarray, ia)
+    return this
+}
+InterleavedArray.prototype.go = function(index) {
+    var subarray = this
+    if (typeof(index) === "undefined")
+        return subarray
+    var indices = index.toString().split(".")
+    for (var i = 0; i < indices.length; i++)
+        subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
+    return subarray
+}
+InterleavedArray.prototype.to_a = function(index) {
+    var array = []
+    if (typeof(index) !== "undefined")
+        try {
+            return this.go(index).to_a()
+        } catch (e) {
+            return []
+        }
+    for (var i = 0; i < this.length; i++) {
+        array.push(this[i])
+        if (this && this.subarray[i] && "to_a" in this.subarray[i])
+            array.push(this.subarray[i].to_a())
+    }
+    return array
+}
+InterleavedArray.prototype.keys = function() {
+    var array = Object.keys(this)
+    var aux;
+    for (var i = 0; i < array.length; i++)
+        for (var j = i + 1; j < array.length; j++)
+            if (array[i] > array[j]) {
+                aux = array[i]
+                array[i] = array[j]
+                array[j] = aux
+            }
+    return array
+}
+InterleavedArray.prototype.size = function() {
+    if (this.subarray.length > 0) {
+        var count = 0
+        for (var i = 0; i < this.subarray.length; i++)
+            if (this.subarray[i] instanceof Array)
+                count += this.subarray[i].size()
+        return this.length + count
+    }
+    return this.length
+}
+InterleavedArray.prototype.inspect = function(index) {
+    var txt = ""
+    var position = ""
+    for (var i = 0; i < this.length; i++) {
+        position = index + (i + 1) || i
+        txt += position + ": " + this[i] + "\n"
+        if (this.subarray[i] instanceof Array)
+            txt += this.subarray[i].inspect(position + ".")
+    }
+    return txt
+}
+function stop_enum(method) {
+    for (var i = 0; i < method.length; i++)
+        Object.defineProperty(InterleavedArray.prototype, method[i], {
+            value: InterleavedArray.prototype[method[i]],
+            enumerable: false
+        })
+}
+stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
 $KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
 MethodMissingError.prototype.constructor = MethodMissingError
 function MethodMissingError(){
@@ -2021,160 +2600,7 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-function navigator_version() { return navigator.appVersion }
-function is_firefox(ffversion){
-	ffversion = ffversion || ""
-	return navigator.userAgent.toLowerCase().indexOf('firefox/'+ffversion) > -1;
-}
-function CodeBlockFinder(snippet, start_after, delimiters, counted_character){
-	delimiters = delimiters || {}
-	delimiters.open  = delimiters.open  || '{'
-    delimiters.close = delimiters.close || '}'
-    this.delimiters = delimiters
-    this.counted_character = counted_character || "\n"
-    this.search_start = 0
-    if (start_after){
-	    if (typeof(start_after) === "number")
-	    	this.search_start = start_after
-	    if (start_after.constructor.name == "String" ||
-	    	start_after.constructor.name == "RegExp"    )
-	    	this.search_start = snippet.search(start_after)
-    }
-    if (this.search_start < 0)
-        throw "Impossible to set up the CodeBlockFinder" +
-              "with params: " + arguments.toSource()
-    this.source    = snippet + " " 
-    this.reset()
-}
-CodeBlockFinder.States  = new Enumeration("searching", "scanning", "ended")
-CodeBlockFinder.prototype.reset = function(){
-	this.initial    = this.search_start
-    this.final      = this.search_start
-    this.status     = CodeBlockFinder.States.searching
-    this.delimiter  = this.delimiters.open  
-    this.nested     = 0
-    this.lines_read = 0
-}
-CodeBlockFinder.prototype.start = function(){
-	var car  = null 
-	var text = []
-    while(car = this.source[this.initial]){
-    	if (car == this.counted_character)
-    		this.lines_read++
-    	switch(this.status){
-    		case CodeBlockFinder.States.searching:
-	    		if (car == this.delimiter){
-	    			text.push(car)
-	    			this.delimiter = this.delimiters.close 
-	    			this.status    = CodeBlockFinder.States.scanning
-	    		}      
-	    		break;
-	    	case CodeBlockFinder.States.scanning:
-	    	    text.push(car)
-	    	    if (car == this.delimiters.open)
-	    	    	this.nested++
-	    		if (car == this.delimiter){
-	    			if (this.nested > 0)
-	    				this.nested--
-	    			else
-	    			    this.status = CodeBlockFinder.States.ended
-	    		}      
-	    		break;
-	    	case CodeBlockFinder.States.ended:
-	    	   this.text = text.join("")
-	    	   return this.text
-	    	default:
-	    	  throw "Inconsistent state parsing code block"
-	    	  break;
-    	}
-    	this.initial++
-    }
-    return ""
-}
-CodeBlockFinder.parse_params = function(string_of_params){
-   var params = []
-   if (/^\s*$/.test(string_of_params))
-    return params
-   var possible_param = string_of_params.split(/,\s*/)
-   var items = possible_param.length
-   var position_line = 0
-   var position_initialize = 1  
-   for (var i=0; i<items; i++){
-        if (!possible_param[i].match(/function\s+initialize/))
-            position_line++
-        else
-            position_initialize = position_line
-    }
-   for (var i=0; i<items; i++){
-     if (possible_param[i].match(/function/)){
-        var closure = ""
-        var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
-        closure_param.start()
-        var delta = closure_param.lines_read 
-        closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
-        closure_param.start()
-        delta +=  closure_param.lines_read + (position_initialize)
-        closure = possible_param.slice(i, i + delta).join(", ")
-        params.push(closure)
-        i += delta - (position_initialize)
-     } else
-        params.push(possible_param[i])
-   }
-   return params
-}
-function get_HTML_element(html_element, create){
-	if (typeof(html_element) === "string"){
-		var element = document.getElementById(html_element)
-		if (!element){
-			element = document.createElement("div")
-			element.setAttribute("id", html_element)
-			document.body.appendChild(element)
-			html_element = element
-		}
-	}
-    return html_element
-}
-function JavascriptSource (file_name) {
-	this.file_name = file_name
-	this.source = JavascriptSource.read(file_name)
-	this.lines = this.source.split("\n")
-	JavascriptSource.read_files[file_name] = this
-}
-JavascriptSource.prototype.line = function(line_number){ 
-	return this.lines[line_number-1]
-}
-JavascriptSource.prototype.lines_from = function(start, end){
-	start = start || 0
-	end   = end   || this.lines.length
-	return this.lines.slice(start, end)
-}
-JavascriptSource.prototype.code_from = function(line_number, end_line){
-	return this.lines_from.apply(this, arguments).join("\n")
-}
-JavascriptSource.read_files = {}
-JavascriptSource.read = function(file_name){
-	if (JavascriptSource.read_files[file_name])
-		return JavascriptSource.read_files[file_name]
-	var request = new XMLHttpRequest();
-	request.open("GET", file_name, false);
-	try{
-	   request.send(null);
-	} catch (err){
-		throw "NetError. Imposible to reach file " + file_name
-	}
-	var returnValue = request.responseText;
-	return returnValue;
-}
-function $Logger(html_element, severity){
-	this.panel    = get_HTML_element(html_element || "ll_logger")
-	this.severity = severity || "TESTING"
-	this.logs     = []
-}
-$Logger.prototype.log = function(message, severity){
-	severity = severity || this.severity
-	if ($K_debug_level >= $KC_dl[severity]){
-		this.panel.innerHTML = "[" + new Date().toLocaleTimeString() + "]:" + severity + ": " + 
-		                       message + "<br/>\n" + this.panel.innerHTML
-		this.logs.push(message)
-	}
-}
+var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+p.include_script('../../dist/catalog.js')
+alert(1)
+p.create_catalog($K_script_response)

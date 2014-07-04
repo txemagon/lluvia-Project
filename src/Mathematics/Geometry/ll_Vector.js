@@ -423,12 +423,11 @@ function _simple_cross(vector1, vectorArray) {
 
 /**
  * This fuction return the vector product of 2 vectors size 3.
- *
- * @memberOf 	{vector}
  * @method 		cross        returns a vector which is the result of 2 vector product
+ * 
  * @param {Object} vectors
  *
- * coded by Antonio Carhuatocto
+ * 
  */
 Vector.prototype.cross = function(vectors) {
 
@@ -963,12 +962,11 @@ Vector.prototype.value_of = function() {
 }
 
 /**
- * This function return first coordinate of this vector.
+ * @method      get_coord    
+ * This function return first coordinate of this vector. 
+ * 
  *
- * @memberOf    {Vector}
- * @method      get_coord    returns the first coordinate as an array.
- *
- * @return      (Object)     First coordinate
+ * @return {Object}     Returns the first coordinate as an array.
  *
  */
 Vector.prototype.get_coord = function() {
@@ -981,7 +979,7 @@ Vector.prototype.get_coord = function() {
         var pos = arguments[0] >= 'a' && arguments[0] <= 'z' ? arguments[0].charCodeAt(0) - "z".charCodeAt(0) + (this.Coord.length - 1) : arguments[0].charCodeAt(0) - "Z".charCodeAt(0) + (this.Coord.length - 1)
         return this.Coord[pos]
     }
-    return this.Coord[arguments[0]]
+    return this.Coord[arguments[0]] || 0
 }
 
 Vector.prototype.eql$U = function(model) {
@@ -997,3 +995,17 @@ Vector.is_valid_cs$U = function(cs) {
     })
 
 }
+
+/**
+ * @method get
+ *
+ * 
+ * @param  {Number} coordinate Position in the Coord array
+ * @return {Number} Returns the value of the position passed as parameter. 
+ *                  If it doesn't exist, returns 0
+ */
+Vector.prototype.get(coordinate) {
+    return this.Coord[coordinate] || 0
+}
+
+Vector.prototype._ = Vector.prototype.get

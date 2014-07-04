@@ -399,7 +399,7 @@ Package.prototype.inspect = function(level) {
 
     for(var i in this)
         if(this[i] instanceof Array){
-            text +="\n" + tabulation(level) + i + ": [" 
+            text +="\n" + tabulation(level) + "\"" + i + "\"" + ": [" 
             for(var a=0; a<this[i].length; a++){
                 if(this[i][a].name)
                     text += "\n" + tabulation(level+1) + "{\"name\": \"" + this[i][a].name + "\", \"description\": \"" + this[i][a].description + "\"}"
@@ -412,7 +412,7 @@ Package.prototype.inspect = function(level) {
             text += "],"
         }
         else if(this[i] != this._path)
-            text += "\n" + tabulation(level) + i + ": " + JSON.stringify(this[i]) + ","
+            text += "\n" + tabulation(level) + "\"" + i + "\"" + ": " + JSON.stringify(this[i]) + ","
     
         text += "\n" + tabulation(level-1) +" }\n" 
 
@@ -426,6 +426,11 @@ Object.defineProperty(Package.prototype, "inspect", {
 
 FileReader = require('./file_reader.js')
 
+/**
+ * [save description]
+ * @param  {[type]} config [description]
+ * @return {[type]}        [description]
+ */
 Package.prototype.save = function(config){
     config = config || {}
     config.package = config.package || Path.basename(this.path)
@@ -435,10 +440,15 @@ Package.prototype.save = function(config){
         FileReader.fs.mkdirSync(config.path)
     }catch(e){;}
 
-    FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": distribution,\n    "description": "lluvia Project as a single package.",\n    "files": ["all.js"]\n}')
+    FileReader.fs.writeFileSync(Path.join(config.path, "package.json"), '{\n    "package": "distribution",\n    "description": "lluvia Project as a single package.",\n    "files": ["lluvia.js"]\n}')
     
     
 }
+
+Object.defineProperty(Package.prototype, "save", {
+    value: Package.prototype.save,
+    enumerable: false
+})
 
 module.exports = Package
 

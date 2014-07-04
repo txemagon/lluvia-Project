@@ -6,8 +6,10 @@ assert("Fixed Vector can create an instance of itself.",
             var b = true')
 
 assert("Fixed Vector can create an instance of itself 2.",
-    'a.toSource()', '"({foot:{Coord:[0, 0], _module:0, uVector:[NaN, NaN]}, Coord:[0, 0], _module:0, uVector:[NaN, NaN]})"',
-    'var a = new FixedVector()')
+    'is_a_fixed_vector', 'true',
+    'var a = new FixedVector(); \
+    if(a instanceof FixedVector); \
+    is_a_fixed_vector = true')
 
 assert("Fixed Vector accepts different parameters.",
     'a.Coord', '[1,1]',
@@ -60,22 +62,16 @@ assert("Fixed Vector can be different from another.",
         var b = new FixedVector( [[4,6], [2,3,5,8]] )')
 
 assert("Fixed Vector can substracts another.",
-    'c.foot', '[3,11]',
-    'var a = new FixedVector( [[1,5], [2,6]]); \
-        var b = new FixedVector( [[1,3], [2,4]]); \
-        var c = a.subs(b)')
-
-assert("Fixed Vector can substracts another.",
     'c.Coord', '[0,-4]',
     'var a = new FixedVector( [[1,5], [2,6]] ); \
         var b = new FixedVector( [[1,3], [2,4]] ); \
         var c = a.subs(b)')
 
-assert("Fixed Vector can add several when first._head equals to next.foot.",
+assert("Fixed Vector can substracts several others.",
     'd.Coord', '[4,8]',
-    'var a = new FixedVector([[1,1],[2,6]]); \
-        var b = new FixedVector([[2,2],[3,7]]); \
-        var c = new FixedVector([[2,6],[5,9]]); \
+    'var a = new FixedVector([[1,9],[2,4]]); \
+        var b = new FixedVector([[2,2],[3,13]]); \
+        var c = new FixedVector([[2,6],[5,15]]); \
         var d = a.subs([b,c])')
 
 assert("Fixed Vector can add another when a._head equals to b.foot.",
@@ -84,7 +80,7 @@ assert("Fixed Vector can add another when a._head equals to b.foot.",
         var b = new FixedVector( [[1,1], [3,7]] ); \
         var c = a.add(b)')
 
-assert("Fixed Vector can add several when first._head equals to next.foot.",
+assert("Fixed Vector can add several others when first._head equals to next.foot.",
     'd.Coord', '[5,9]',
     'var a = new FixedVector([[1,1],[2,6]]); \
         var b = new FixedVector([[2,2],[3,7]]); \
@@ -102,10 +98,8 @@ assert("Fixed Vector can return the virial of itself.",
     'var a = new FixedVector( [[2,5], [3,8]] ); \
         var c = a.virial()')
 
-
 assert("Fixed Vector can return the virial according to another and an angle.",
     'c', '2.23606797749979',
     'var a = new FixedVector([[3,5],[2,4]], true); \
         var b = new FixedVector([[2,1],[3,5]]); \
         var c = a.virial(b, 45)')
-
