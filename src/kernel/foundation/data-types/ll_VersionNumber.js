@@ -2,9 +2,16 @@
  * @class  VersionNumber
  * Creates a class to manage version numbers. For instance: "2.3.5" or "5.7.10.9"
  *
+ * ### Inner Structure
+ *
+ *     new VersionNumber("2.3.5")
+ *     //=> {2: {3: {5: {}}}}
+ *
  * ### Notice
  *
- *  "5.7.10.9" is different to "5.7.1.9"
+ * These are not decimal numbers, therefore:
+ *
+ *     "5.1" is different to "5.10"
  */
 
 /**
