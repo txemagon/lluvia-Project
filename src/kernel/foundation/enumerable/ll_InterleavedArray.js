@@ -113,6 +113,13 @@ function InterleavedArray(elements) {
             this.enumerate(i, this.subarray[i])
 }
 
+/**
+ * @method enumerate
+ * Reenumerates all of the entries of the InterleavedArray
+ *
+ * @param  {Number|String} base_index Base number for the enumeration.
+ * @param  {InterleavedArray} subarray   Subelements to interleave
+ */
 InterleavedArray.prototype.enumerate = function(base_index, subarray) {
     for (var i = 0; i < subarray.length; i++) {
         var index = base_index + "." + (i + 1)

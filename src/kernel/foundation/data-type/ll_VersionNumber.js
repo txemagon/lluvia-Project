@@ -1,6 +1,9 @@
 /**
- * @class  VersionNumber
- * Creates a class to manage version numbers. For instance: "2.3.5" or "5.7.10.9"
+ * @class  Kernel.Foundation.DataType.VersionNumber
+ * Creates a class to manage version numbers. For instance: "2.3.5" or "5.7.10.9".
+ *
+ * Adding keys to these objects is not recommended. Adding enumerable properties is
+ * definitely not allowed.
  *
  * ### Inner Structure
  *
@@ -31,7 +34,7 @@ function VersionNumber(initial_string, sep) {
         value: sep || ".",
         enumerable: false
     })
-    var coefficients = initial_string.split(sep)
+    var coefficients = initial_string.split(this.sep)
 
     var last = this
     for (var i = 0; i < coefficients.length; i++)
@@ -63,4 +66,35 @@ VersionNumber.prototype.toString = function() {
     }
 
     return text.replace(/.$/, "")
+}
+
+/**
+ * @method valueOf
+ * Yields the las integer of the number as a number or the value itself.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber("1.2.3")
+ *     a.valueOf()
+ *     //=> 3
+ *
+ *     a == 3
+ *     //=> true
+ *
+ *     var a = new VersionNumber("1.2.a")
+ *     a.valueOf()
+ *     //=> "a"
+ *
+ * @return {Number | String}
+ */
+VersionNumber.prototype.valueOf = function() {
+    var last = 0
+    var obj = this
+    while (key = Object.keys(obj)[0]) {
+        obj = obj[key]
+        if (key)
+            last = key
+    }
+
+    return parseInt(last) || last
 }

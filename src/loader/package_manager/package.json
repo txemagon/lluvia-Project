@@ -1,7 +1,0 @@
-{	"package": "package_manager",
-	"description": ".",
-	"files": [
-	    {"name": "package.js",            "description": ""},
-		{"name": "package_manager.js",    "description": ""}
-	]
-}
