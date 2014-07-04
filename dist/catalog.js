@@ -131,8 +131,8 @@ var $K_script_response =
 			"requires": [
 				   {
 					"files": [
-						{"name": "package.js", "description": ""},
-						{"name": "package_manager.js", "description": ""}],
+						{"name": "ll_Package.js", "description": "Software package"},
+						{"name": "ll_PackageManager.js", "description": "Client pointer towards packages server."}],
 					"provides": [],
 					"requires": [],
 					"offers": [],
