@@ -1,0 +1,8 @@
+{
+    "package": "DataType",
+    "description": "Provides new data types.",
+    "files": [{
+        "name": "ll_VersionNumber.js",
+        "description": "Semantic Version numbers."
+    }]
+}
