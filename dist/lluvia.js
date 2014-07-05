@@ -1832,6 +1832,8 @@ Object.defineProperty(Object.prototype, "to_class", {
     enumerable: false
 })
 function VersionNumber(initial_string, sep) {
+    if (!initial_string || initial_string == "")
+        return
     Object.defineProperty(this, "sep", {
         value: sep || ".",
         enumerable: false
@@ -1851,7 +1853,27 @@ VersionNumber.prototype.toString = function() {
     }
     return text.replace(/.$/, "")
 }
-VersionNumber.prototype.valueOf = function() {
+VersionNumber.prototype.get = function(version) {
+    var found = null
+    var obj = this
+    while (!found && (key = Object.keys(obj)[0])) {
+        if (key && obj.toString() == version.toString())
+            found = obj
+        obj = obj[key]
+    }
+    return found
+}
+VersionNumber.prototype.last = function() {
+    var last = 0
+    var obj = this
+    while (key = Object.keys(obj)[0]) {
+        if (key)
+            last = obj
+        obj = obj[key]
+    }
+    return last
+}
+VersionNumber.prototype.last_value = function() {
     var last = 0
     var obj = this
     while (key = Object.keys(obj)[0]) {
@@ -1859,7 +1881,15 @@ VersionNumber.prototype.valueOf = function() {
         if (key)
             last = key
     }
+    return last
+}
+VersionNumber.prototype.valueOf = function() {
+    var last = this.last_value()
     return parseInt(last) || last
+}
+VersionNumber.prototype.branch = function() {
+}
+VersionNumber.prototype.values = function() {
 }
 VersionNumber.stop_enum = function(method) {
     for (var i = 0; i < method.length; i++)
@@ -1868,7 +1898,7 @@ VersionNumber.stop_enum = function(method) {
             enumerable: false
         })
 }
-VersionNumber.stop_enum(["toString", "valueOf"])
+VersionNumber.stop_enum(["toString", "valueOf", "values", "get", "last", "last_value", "branch"])
 Module.prototype.constructor = Module
 Module._constants = new Hash()
 function Module(module_name, block){

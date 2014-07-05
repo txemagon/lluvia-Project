@@ -7,6 +7,7 @@ function loaded() {
 function main() {
     // Write some test if you like to see if they work.
     var a = new Enumeration("paused", "running", ["era1", "era2", ["level1"], "era3"])
+    alert(a.running.inspect())
 
     // If we get to this line the page will display: "loaded"
     loaded()
