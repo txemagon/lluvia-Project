@@ -6,14 +6,14 @@
  */
 
 
- Array.bang_methods = [
-                      "collect",
-                      "map",
-                      "clone",
-                      "compact",
-                      "sort_by",
-                      "distribute"
-                    ]
+Array.bang_methods = [
+    "collect",
+    "map",
+    "clone",
+    "compact",
+    "sort_by",
+    "distribute"
+]
 
 /**
  * @method reflect
@@ -39,34 +39,33 @@
  *
  * @param  {(String | String[])...} original_method Name of the original method.
  */
-Array.reflect = function(){
+Array.reflect = function() {
     var result
     var return_value = {}
 
-    function duplicate(original_method){
-        Array.prototype[original_method + "$B"] = function(){
-            var substitute = Array.prototype[original_method].apply(this, arguments)
+        function duplicate(original_method) {
+            Array.prototype[original_method + "$B"] = function() {
+                var substitute = Array.prototype[original_method].apply(this, arguments)
 
-            this.clear()
-            for (var i=0; i<substitute.length; i++)
-            this[i] = substitute[i]
+                this.clear()
+                for (var i = 0; i < substitute.length; i++)
+                    this[i] = substitute[i]
 
-            return this
+                return this
+            }
+            return [original_method + "$B", Array.prototype[original_method + "$B"]]
         }
-        return [ original_method + "$B", Array.prototype[original_method + "$B"] ]
-    }
 
-    for(var i=0; i<arguments.length; i++)
-    if (arguments[i] instanceof Array)
-        for(var j=0; j<arguments[i].length; j++){
-            result = duplicate(arguments[i][j])
-            return_value[result[0]] = result[1]
-        }
-        else {
-            result = duplicate(arguments[i])
-            return_value[result[0]] = result[1]
-        }
-        return return_value
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j < arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+                result = duplicate(arguments[i])
+                return_value[result[0]] = result[1]
+            }
+    return return_value
 }
 
 
@@ -86,7 +85,7 @@ Array.reflect = function(){
  * @param  {function(Object)}  block Argument processor called once for every Array item
  * @return {Array} Returns self
  */
-Array.prototype.each = function(){
+Array.prototype.each = function() {
     for (var i = 0; i < this.length; i++)
         Array.prototype.each.yield(this[i])
 
@@ -109,9 +108,9 @@ Array.prototype.each = function(){
  *
  * @param  {function(number)}  block Called once with every index.
  */
-Array.prototype.each_index = function(){
-  for (var i = 0; i < this.length; i++)
-    Array.prototype.each_index.yield(i)
+Array.prototype.each_index = function() {
+    for (var i = 0; i < this.length; i++)
+        Array.prototype.each_index.yield(i)
 }
 
 
@@ -136,9 +135,9 @@ Array.prototype.each_index = function(){
  *
  * @param  {function(Object, number)}  block \(element, index\) Called once with every element and index.
  */
-Array.prototype.each_with_index = function(){
-  for (var i = 0; i < this.length; i++)
-    Array.prototype.each_with_index.yield(this[i], i)
+Array.prototype.each_with_index = function() {
+    for (var i = 0; i < this.length; i++)
+        Array.prototype.each_with_index.yield(this[i], i)
 }
 
 
@@ -168,19 +167,19 @@ Array.prototype.each_with_index = function(){
  *
  * @return  {Number} Number of  matches.
  */
-Array.prototype.count = function(obj){
-  if (typeof(obj) === "undefined" )
-    return this.length
+Array.prototype.count = function(obj) {
+    if (typeof(obj) === "undefined")
+        return this.length
 
-      var count = 0
-      for (var i=0; i<this.length; i++)
-        if ( ( typeof(obj) === "function" ?
-              Array.prototype.count.yield(this[i]) :
-              this[i] == obj
-            ))
-          count++
+    var count = 0
+    for (var i = 0; i < this.length; i++)
+        if ((typeof(obj) === "function" ?
+            Array.prototype.count.yield(this[i]) :
+            this[i] == obj
+        ))
+            count++
 
-   return count
+    return count
 }
 
 
@@ -204,10 +203,10 @@ Array.prototype.count = function(obj){
  * @return {Array} this
  */
 
-Array.prototype.reverse_each = function(){
-  var l = this.length - 1
-    for (var i=l; i>=0; i--)
-      Array.prototype.reverse_each.yield(this[i])
+Array.prototype.reverse_each = function() {
+    var l = this.length - 1
+    for (var i = l; i >= 0; i--)
+        Array.prototype.reverse_each.yield(this[i])
 }
 
 
@@ -235,17 +234,17 @@ Array.prototype.reverse_each = function(){
  *
  * @return  {Array} Returns the trasformed image of self
  */
-Array.prototype.collect = function(){
+Array.prototype.collect = function() {
     var collectable = []
 
-    if ( String.is_string$U(arguments[0]) )
+    if (String.is_string$U(arguments[0]))
         for (var i = 0; i < this.length; i++)
-          collectable.push(this[i][arguments[0]])
+            collectable.push(this[i][arguments[0]])
     else
         for (var i = 0; i < this.length; i++)
-          collectable.push(Array.prototype.collect.yield(this[i]))
+            collectable.push(Array.prototype.collect.yield(this[i]))
 
-    return collectable
+        return collectable
 }
 
 
@@ -309,12 +308,12 @@ Array.prototype.alias("map", "collect")
  *                  If an item can't pass the condition, it is deleted.
  *
  */
-Array.prototype.select_if = function(){
-  var collectable = []
+Array.prototype.select_if = function() {
+    var collectable = []
     for (var i = 0; i < this.length; i++)
-      if ( Array.prototype.select_if.yield(this[i]) )
-        collectable.push(this[i])
-          return collectable
+        if (Array.prototype.select_if.yield(this[i]))
+            collectable.push(this[i])
+    return collectable
 }
 
 
@@ -335,10 +334,10 @@ Array.prototype.select_if = function(){
  * @param  {Object} The object that will be searched
  * @param  {Number} Position to start searching
  */
-Array.prototype.indexOf = function(searchElement, fromIndex){
-  var i
-    for (i = fromIndex || 0; i <this.length && this[i] !== searchElement; i++);
-  i = i>=this.length? null: i
+Array.prototype.indexOf = function(searchElement, fromIndex) {
+    var i
+    for (i = fromIndex || 0; i < this.length && this[i] !== searchElement; i++);
+    i = i >= this.length ? null : i
     return i
 }
 
@@ -357,11 +356,11 @@ Array.prototype.indexOf = function(searchElement, fromIndex){
  *
  * @return  {Array} Cloned array
  */
-Array.prototype.clone = function(){
-  var ary = []
-    for (var i=0; i<this.length; i++)
-      ary[i] = this[i]
-        return ary
+Array.prototype.clone = function() {
+    var ary = []
+    for (var i = 0; i < this.length; i++)
+        ary[i] = this[i]
+    return ary
 }
 
 
@@ -387,9 +386,9 @@ Array.prototype.clone = function(){
  *
  * @return  {Array} Empty array
  */
-Array.prototype.clear = function(){
-  while( this.length > 0)
-    this.pop()
+Array.prototype.clear = function() {
+    while (this.length > 0)
+        this.pop()
 }
 
 
@@ -413,13 +412,13 @@ Array.prototype.clear = function(){
  * @param  {Array} Array to compare
  * @return  {Boolean} If the arrays matches the condition, it returns true. If not, it returns false
  */
-Array.prototype.equals$U = function(other){
+Array.prototype.equals$U = function(other) {
     var same = true
-    if(this.length != other.length)
-        return  false
-    for (var i=0; i<this.length; i++)
-    if (this[i] != other[i])
-        same = false
+    if (this.length != other.length)
+        return false
+    for (var i = 0; i < this.length; i++)
+        if (this[i] != other[i])
+            same = false
     return same
 }
 
@@ -443,19 +442,19 @@ Array.prototype.equals$U = function(other){
  * @param  {function(Object)}  Block indicates the position of the element to compare
  * @return  {Array} Returns an array without repeated items
  */
-Array.prototype.uniq = function(){
-  var uniq = []
+Array.prototype.uniq = function() {
+    var uniq = []
     var comparable = []
     var block = arguments.length && typeof(arguments[0]) == "function"
     var element = null
 
-    for (var i=0; i<this.length; i++){
-      element = block ? arguments[0](this[i]) : this[i]
+    for (var i = 0; i < this.length; i++) {
+        element = block ? arguments[0](this[i]) : this[i]
         if (!Array.includes(element, comparable))
-          uniq.push(this[i])
-            comparable.push(element)
+            uniq.push(this[i])
+        comparable.push(element)
     }
-  return uniq
+    return uniq
 }
 
 
@@ -468,18 +467,18 @@ Array.prototype.uniq = function(){
  * Operates as Array#uniq except when no repetitions are found (returns null).
  * (see Array#uniq)
  */
-Array.prototype.uniq$B = function(){
-  var uniq = this.uniq()
+Array.prototype.uniq$B = function() {
+    var uniq = this.uniq()
 
-  if (uniq.equals$U(this))
-      return null
+    if (uniq.equals$U(this))
+        return null
 
-        this.clear()
+    this.clear()
 
-        for(var i=0; i<uniq.length; i++)
-          this[i] = uniq[i]
+    for (var i = 0; i < uniq.length; i++)
+        this[i] = uniq[i]
 
-  return this
+    return this
 }
 
 
@@ -497,15 +496,15 @@ Array.prototype.uniq$B = function(){
  * @param  {Number} Position to end including the elements in the returned array
  * @return  {Array} Returns the first element or elements of the array
  */
-Array.prototype.first = function(){
-  if (this.length == 0)
-   return null
-      if (arguments.length == 0)
+Array.prototype.first = function() {
+    if (this.length == 0)
+        return null
+    if (arguments.length == 0)
         return this[0]
-          var ary = []
-          for (var i=0; i < arguments[0] && i < this.length ; i++)
-            ary[i] = this[i]
-              return ary
+    var ary = []
+    for (var i = 0; i < arguments[0] && i < this.length; i++)
+        ary[i] = this[i]
+    return ary
 }
 
 
@@ -531,16 +530,16 @@ Array.prototype.first = function(){
  * @return  {Array} Returns the last element or elements of the array
  *
  */
-Array.prototype.last = function(){
-  if (this.length == 0)
-    return null
-      if (arguments.length == 0)
-        return this[this.length -1]
-          var ary = []
+Array.prototype.last = function() {
+    if (this.length == 0)
+        return null
+    if (arguments.length == 0)
+        return this[this.length - 1]
+    var ary = []
 
-          for (var i= 0; i < Math.min(arguments[0], this.length); i++)
-            ary[i] = this[ this.length - Math.min(arguments[0], this.length) +i ]
-              return ary
+    for (var i = 0; i < Math.min(arguments[0], this.length); i++)
+        ary[i] = this[this.length - Math.min(arguments[0], this.length) + i]
+    return ary
 }
 
 
@@ -561,17 +560,17 @@ Array.prototype.last = function(){
  * @param  {Number} Index
  * @returns {Object} This
  */
-Array.prototype.erase$B = function(){
-    if(arguments.length > 1)
+Array.prototype.erase$B = function() {
+    if (arguments.length > 1)
         return null
 
     var find = false
-    for(var i = this.length-1; i>=0; i--)
-       if(this[i] == arguments[0]){
-          this.splice(i,1)
+    for (var i = this.length - 1; i >= 0; i--)
+        if (this[i] == arguments[0]) {
+            this.splice(i, 1)
             find = true;
         }
-  return find? this: null
+    return find ? this : null
 }
 
 
@@ -591,16 +590,16 @@ Array.prototype.erase$B = function(){
  * @param  {Number} Position of the array item to be deleted
  * @return {Array} this
  */
-Array.prototype.erase_at$B = function(){
-  if( !is_a_number(arguments[0]) )
-    return null
-    if(arguments.length > 1)
-      return null
+Array.prototype.erase_at$B = function() {
+    if (!is_a_number(arguments[0]))
+        return null
+    if (arguments.length > 1)
+        return null
         //throw ("Wrong number of parameters")
-        if(arguments[0] > this.length)
-          return null
-            this.splice(arguments[0],1)
-  return this
+    if (arguments[0] > this.length)
+        return null
+    this.splice(arguments[0], 1)
+    return this
 }
 
 
@@ -616,18 +615,18 @@ Array.prototype.erase_at$B = function(){
  * @param  {function(Object):boolean} Block that must contain a condition by which the element will be erased or not.
  * @return {Array} Returns those elements that satisfy the condition.
  */
-Array.prototype.erase_if = function(){
+Array.prototype.erase_if = function() {
 
-  if(arguments.length > 1)
+    if (arguments.length > 1)
     //throw("Wrong number of arguments")
-    return null
+        return null
 
-  var ary = []
-  for(var i = 0; i < this.length; i++)
+    var ary = []
+    for (var i = 0; i < this.length; i++)
 
-  if ( !Array.prototype.erase_if.yield(this[i]) )
-          ary.push(this[i])
-            return ary.compact()
+        if (!Array.prototype.erase_if.yield(this[i]))
+            ary.push(this[i])
+    return ary.compact()
 }
 
 
@@ -644,18 +643,18 @@ Array.prototype.erase_if = function(){
  *
  * @param  {function(Object):boolean} Block that must contain a condition by which the element will be erased or not.
  * @returns {Array} this
-*/
-Array.prototype.erase_if$B = function(){
+ */
+Array.prototype.erase_if$B = function() {
 
-  if(arguments.length > 1)
+    if (arguments.length > 1)
     //throw("Wrong number of arguments")
-    return null
+        return null
 
-  for(var i = 0; i < this.length; i++)
-    if ( !Array.prototype.erase_if.yield(this[i]) )
-      this.splice(i, 1)
+    for (var i = 0; i < this.length; i++)
+        if (!Array.prototype.erase_if.yield(this[i]))
+            this.splice(i, 1)
 
-  return this
+    return this
 }
 
 
@@ -681,19 +680,19 @@ Array.prototype.erase_if$B = function(){
  *
  * @param  {Array} Array that will replace the original array. If this array is empty, the returned array will be null.
  */
-Array.prototype.replace = function(){
-  if(arguments.length == 0)
-    return null
-      if(arguments.length > 1)
+Array.prototype.replace = function() {
+    if (arguments.length == 0)
         return null
-          //throw("wrong number of arguments")
-          if (!(arguments[0] instanceof Array))
-            return null
-              //throw("Invalid parameter type: Array expected.")
-              this.clear()
-              for(var i = 0; i < arguments[0].length; i++)
-                this[i] = arguments[0][i]
-                  return this
+    if (arguments.length > 1)
+        return null
+        //throw("wrong number of arguments")
+    if (!(arguments[0] instanceof Array))
+        return null
+        //throw("Invalid parameter type: Array expected.")
+    this.clear()
+    for (var i = 0; i < arguments[0].length; i++)
+        this[i] = arguments[0][i]
+    return this
 }
 
 /**
@@ -736,18 +735,18 @@ Array.prototype.replace = function(){
  * @param {Object} Object that is passed to the method as parameter.
  * @return {Array} A copy of the array without the deleted elements.
  */
-Array.prototype.delete$B = function(obj){
-  var position = this.indexOf(obj)
-    if ( position === null || position == -1 )
-      if (Array.prototype.delete$B.block_given$U())
-        return Array.prototype.delete$B.yield()
-      else
-        return null
+Array.prototype.delete$B = function(obj) {
+    var position = this.indexOf(obj)
+    if (position === null || position == -1)
+        if (Array.prototype.delete$B.block_given$U())
+            return Array.prototype.delete$B.yield()
+        else
+            return null
 
-  while ( (position = this.indexOf(obj)) != null && position != -1 )
-      this.splice(position, 1)
+            while ((position = this.indexOf(obj)) != null && position != -1)
+                this.splice(position, 1)
 
-  return obj
+            return obj
 }
 
 
@@ -767,16 +766,16 @@ Array.prototype.delete$B = function(obj){
  *
  * @param  {Object} Object that the method will search for.
  * @return {Boolean} Returns the result of the search. If item is included, returns true. If not, false.
-*/
-Array.prototype.include$U = function(){
-  if(arguments.length != 1)
+ */
+Array.prototype.include$U = function() {
+    if (arguments.length != 1)
     //throw "wrong number of arguments (it needs one argument)"
-    return null
-      var find = false
-      for(var i = 0; i < this.length; i++)
-        if( arguments[0] == this[i])
-          find = true
-            return find
+        return null
+    var find = false
+    for (var i = 0; i < this.length; i++)
+        if (arguments[0] == this[i])
+            find = true
+    return find
 }
 
 
@@ -797,14 +796,14 @@ Array.prototype.include$U = function(){
  * @param  {Object} object searched parameter.
  * @return {Array} Array
  */
-Array.prototype.assoc = function(){
-  if(arguments.length > 1)
+Array.prototype.assoc = function() {
+    if (arguments.length > 1)
     //throw "wrong number of arguments"
+        return null
+    for (var i = 0; i < this.length; i++)
+        if (arguments[0] == this[i][0])
+            return this[i]
     return null
-      for(var i=0; i<this.length; i++)
-        if(arguments[0] == this[i][0])
-          return this[i]
-            return null
 }
 
 
@@ -820,17 +819,17 @@ Array.prototype.assoc = function(){
  * @param  {number} Array index position.
  * @return {Object} The selected element by an index passed as parameter.
  */
-Array.prototype.at = function(){
-  if(arguments.length > 1)
+Array.prototype.at = function() {
+    if (arguments.length > 1)
     //throw "wrong number of arguments"
-    if(arguments[0] > this.length)
-      return null
-        if(isNaN(arguments[0]))
-          //throw "wrong type paremeter" Converts any argument to array, then merges elements of itself with corresponding elements from each argument.
-          return null
-            if(arguments[0] < 0 && (this.length + arguments[0]) < 0)
-              return null
-                return arguments[0]>=0? this[arguments[0]] : this[this.length+(arguments[0])]
+        if (arguments[0] > this.length)
+            return null
+    if (isNaN(arguments[0]))
+    //throw "wrong type paremeter" Converts any argument to array, then merges elements of itself with corresponding elements from each argument.
+        return null
+    if (arguments[0] < 0 && (this.length + arguments[0]) < 0)
+        return null
+    return arguments[0] >= 0 ? this[arguments[0]] : this[this.length + (arguments[0])]
 }
 
 
@@ -850,12 +849,12 @@ Array.prototype.at = function(){
  *
  * @returns {Array} Returns the array clean and null elements.
  */
-Array.prototype.compact = function(){
-  var ary = []
-    for(var i = 0; i < this.length; i++)
-      if(this[i] != null)
-        ary.push(this[i])
-          return ary
+Array.prototype.compact = function() {
+    var ary = []
+    for (var i = 0; i < this.length; i++)
+        if (this[i] != null)
+            ary.push(this[i])
+    return ary
 }
 
 
@@ -882,13 +881,13 @@ Array.prototype.compact = function(){
  * @param {Array} Array that needs to be merged
  * @return {Array} Returns an array made out of two arrays
  */
-Array.prototype.merge = function(ary2){
-  var ary = []// PROBLEMAS CON EL TEST, LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
-    for(var i = 0; i < this.length; i++)
-      ary.push(this[i])
-        for(var i = 0; i < ary2.length; i++)
-          ary.push(ary2[i])
-            return ary
+Array.prototype.merge = function(ary2) {
+    var ary = [] // PROBLEMAS CON EL TEST, LA VARIABLE ARY CONTIENE DATOS PERO EN EL TEST SE MUESTRA COMO UNDEFINED
+    for (var i = 0; i < this.length; i++)
+        ary.push(this[i])
+    for (var i = 0; i < ary2.length; i++)
+        ary.push(ary2[i])
+    return ary
 }
 
 
@@ -909,20 +908,20 @@ Array.prototype.merge = function(ary2){
  * @param {Number} Position to stop deleting data of the array.
  * @return {Array} Returns the array elements that haven't been deleted.
  */
-Array.prototype.drop = function(){
-  if(arguments.length > 1 || arguments.length < 1)
+Array.prototype.drop = function() {
+    if (arguments.length > 1 || arguments.length < 1)
     //throw "Wrong number of arguments"
-    return null
-      if(isNaN(arguments[0]))
-        //throw "Invalid type argument"
         return null
-          var ary = []
-          if(arguments[0] > this.length-1)
-            return ary
-              ary = this.clone()
-              for(var i = 0; i < arguments[0]; i++)
-                ary.splice(0,1)
-                  return ary
+    if (isNaN(arguments[0]))
+    //throw "Invalid type argument"
+        return null
+    var ary = []
+    if (arguments[0] > this.length - 1)
+        return ary
+    ary = this.clone()
+    for (var i = 0; i < arguments[0]; i++)
+        ary.splice(0, 1)
+    return ary
 }
 
 
@@ -944,17 +943,17 @@ Array.prototype.drop = function(){
  * @param {function(Object):(boolean | Object)} Block receiving the element.
  * @returns {Array} Returns an array of elements that have not been deleted.
  */
-Array.prototype.drop_while = function(){
-  if(arguments.length > 1)
+Array.prototype.drop_while = function() {
+    if (arguments.length > 1)
     //throw("Wrong number of parameters")
-    return null
+        return null
 
-  var ary = []
-  for(var i = 0; i < this.length; i++){
-      if (Array.prototype.drop_while.yield(this[i]))
-        ary.push( this[i])
-  }
-          return ary.compact()
+    var ary = []
+    for (var i = 0; i < this.length; i++) {
+        if (Array.prototype.drop_while.yield(this[i]))
+            ary.push(this[i])
+    }
+    return ary.compact()
 }
 
 
@@ -978,11 +977,11 @@ Array.prototype.drop_while = function(){
  * @param {Number} level The level to stop flatting objects
  * @return {Array} Returns an array with the elements
  */
-Array.prototype.flatten = function(level){
-  if(level == 0)
-    return this
-      level = level || 1000
-      return Array.unpack(this, [], level)
+Array.prototype.flatten = function(level) {
+    if (level == 0)
+        return this
+    level = level || 1000
+    return Array.unpack(this, [], level)
 }
 
 
@@ -1001,13 +1000,13 @@ Array.prototype.flatten = function(level){
  *                                                    or matching criteria.
  * @return {number} Position of the element we are looking for. null if not found.
  */
-Array.prototype.index = function(){
-  for(var i = 0; i < this.length; i++)
-    if ( typeof(arguments[0]) === "function" ?
-          Array.prototype.index.yield( this[i]) :
-          this[i] == arguments[0] )
-      return i
-        return null
+Array.prototype.index = function() {
+    for (var i = 0; i < this.length; i++)
+        if (typeof(arguments[0]) === "function" ?
+            Array.prototype.index.yield(this[i]) :
+            this[i] == arguments[0])
+            return i
+    return null
 }
 
 
@@ -1037,22 +1036,22 @@ Array.prototype.index = function(){
  *     //=> [[1], [2], [3]]
  *
  */
-Array.prototype.product = function(){
-  var ary = []
+Array.prototype.product = function() {
+    var ary = []
 
-    if(!(arguments[0])){
-      for(var i = 0; i < this.length; i++)
-        ary[i] = [this[i]]
-          return ary
+    if (!(arguments[0])) {
+        for (var i = 0; i < this.length; i++)
+            ary[i] = [this[i]]
+        return ary
     }
 
-  if(arguments[0].length < 1)
-    return ary
+    if (arguments[0].length < 1)
+        return ary
 
-      if(arguments.length >= 1){
-        if(arguments.length == 1)
-          return Array.product(this,arguments[0])
-      }
+    if (arguments.length >= 1) {
+        if (arguments.length == 1)
+            return Array.product(this, arguments[0])
+    }
 }
 
 
@@ -1072,23 +1071,23 @@ Array.prototype.product = function(){
  *     //=> null
  *
  */
-Array.prototype.rassoc = function(){
-  if(arguments.length > 1 || arguments.length < 1)
+Array.prototype.rassoc = function() {
+    if (arguments.length > 1 || arguments.length < 1)
     //throw ("wrong number of arguments")
-    return null
-      var existsArray = false
-      for(var i = 0; i < this.length; i++)
-        if(this[i] instanceof Array)
-          if(this[i].length == 2)
-            existingArray = true
+        return null
+    var existsArray = false
+    for (var i = 0; i < this.length; i++)
+        if (this[i] instanceof Array)
+            if (this[i].length == 2)
+                existingArray = true
 
-              if(existingArray){
-                for(var i = 0; i < this.length; i++)
-                  if(this[i] instanceof Array)
-                    if(this[i][1] == arguments[0])
-                      return this[i]
-              }
-  return null
+    if (existingArray) {
+        for (var i = 0; i < this.length; i++)
+            if (this[i] instanceof Array)
+                if (this[i][1] == arguments[0])
+                    return this[i]
+    }
+    return null
 }
 
 
@@ -1105,15 +1104,15 @@ Array.prototype.rassoc = function(){
  * @param {Object} Object that the method will search for.
  * @return {number} Position of the element searched for. If not find, it will be null.
  */
-Array.prototype.rindex = function(){
-  if(arguments.length != 1)
+Array.prototype.rindex = function() {
+    if (arguments.length != 1)
     //throw ("Wrong number of arguments")
-    return null
+        return null
 
-      for(var i = this.length-1; i >= 0; i--)
-        if(this[i] == arguments[0])
-          return i
-            return null
+    for (var i = this.length - 1; i >= 0; i--)
+        if (this[i] == arguments[0])
+            return i
+    return null
 }
 
 
@@ -1138,39 +1137,39 @@ Array.prototype.rindex = function(){
  * @param {Number} Stablishes the amount of the array rotation.
  * @return {Array} Items ordered.
  */
-Array.prototype.rotate = function(obj){
-  if (typeof(obj) === "undefined"){
-    var ary = this.clone()
-      ary.push(ary.shift())
-      return ary
-  }
-  if(arguments.length > 1)
-    //throw ("Wrong number of arguments")
-    return null
-      var ary = this.clone()
-      if(arguments){
-        if(isNaN(arguments[0]))
-          //throw ("Wrong type argument")
-          return null
-
-            if(arguments[0] < 0){
-              if(Math.abs(arguments[0]) > this.length-1)
-                //throw("Invalid index")
-                return null
-                  return _rotate(Math.abs(arguments[0]), this, ary)
-            }
-        if(arguments[0] > this.length-1)
-          //throw("Invalid index")
-          return null
-            for(var i = 0; i < ary.length; i++){
-              ary[i] = this[arguments[0]]
-                arguments[0]++
-                if(arguments[0] == this.length)
-                  arguments[0] = 0
-            }
+Array.prototype.rotate = function(obj) {
+    if (typeof(obj) === "undefined") {
+        var ary = this.clone()
+        ary.push(ary.shift())
         return ary
-      }
-  return _rotate(this.length-1, this, ary)
+    }
+    if (arguments.length > 1)
+    //throw ("Wrong number of arguments")
+        return null
+    var ary = this.clone()
+    if (arguments) {
+        if (isNaN(arguments[0]))
+        //throw ("Wrong type argument")
+            return null
+
+        if (arguments[0] < 0) {
+            if (Math.abs(arguments[0]) > this.length - 1)
+            //throw("Invalid index")
+                return null
+            return _rotate(Math.abs(arguments[0]), this, ary)
+        }
+        if (arguments[0] > this.length - 1)
+        //throw("Invalid index")
+            return null
+        for (var i = 0; i < ary.length; i++) {
+            ary[i] = this[arguments[0]]
+            arguments[0]++
+            if (arguments[0] == this.length)
+                arguments[0] = 0
+        }
+        return ary
+    }
+    return _rotate(this.length - 1, this, ary)
 }
 
 
@@ -1186,21 +1185,21 @@ Array.prototype.rotate = function(obj){
  *
  * @param {number} Position of the last element to take.
  */
-Array.prototype.take = function(){
-  if(!(arguments[0]) || arguments.length > 1)
+Array.prototype.take = function() {
+    if (!(arguments[0]) || arguments.length > 1)
     //throw ("Wrong number of parameters")
-    return null
-
-      if(isNaN(arguments[0]))
-        //throw ("Wrong type of parameters")
         return null
 
-          var ary = []
-          if(arguments[0] > this.length)
-            arguments[0] = this.length
-              for(var i = 0; i < arguments[0]; i++)
-                ary[i] = this[i]
-                  return ary
+    if (isNaN(arguments[0]))
+    //throw ("Wrong type of parameters")
+        return null
+
+    var ary = []
+    if (arguments[0] > this.length)
+        arguments[0] = this.length
+    for (var i = 0; i < arguments[0]; i++)
+        ary[i] = this[i]
+    return ary
 }
 
 
@@ -1218,15 +1217,15 @@ Array.prototype.take = function(){
  * @param  {function(Object):boolean} block
  * @return {Array}       First elements of an Array
  */
-Array.prototype.take_while = function(){
-  var ary    = []
-  var taking = true
+Array.prototype.take_while = function() {
+    var ary = []
+    var taking = true
 
-  for (var i=0; taking && i<this.length; i++)
-    if ( Array.prototype.take_while.yield(this[i]) )
-      ary.push(this[i])
-    else
-      taking = false
+    for (var i = 0; taking && i < this.length; i++)
+        if (Array.prototype.take_while.yield(this[i]))
+            ary.push(this[i])
+        else
+            taking = false
     return ary
 }
 
@@ -1242,30 +1241,27 @@ Array.prototype.take_while = function(){
  *
  * @return {Array} Shuffled array.
  */
-Array.prototype.shuffle = function()
-{
-  if(arguments.length > 0)
+Array.prototype.shuffle = function() {
+    if (arguments.length > 0)
     //throw("Wrong number of arguments")
-    return null
+        return null
 
-      randomizedArray = [];
-  usedNumbers = [];
+    randomizedArray = [];
+    usedNumbers = [];
 
-  while(randomizedArray.length < this.length)
-  {
-    finded = false;
-    var number = Math.round(getRandomArbitary(0,this.length));
-    for (var i=0; i < usedNumbers.length; i++)
-      if (number == usedNumbers[i])
-        finded = true;
-    if(!finded && number < this.length)
-    {
-      usedNumbers.push(number);
-      randomizedArray.push(this[number]);
+    while (randomizedArray.length < this.length) {
+        finded = false;
+        var number = Math.round(getRandomArbitary(0, this.length));
+        for (var i = 0; i < usedNumbers.length; i++)
+            if (number == usedNumbers[i])
+                finded = true;
+        if (!finded && number < this.length) {
+            usedNumbers.push(number);
+            randomizedArray.push(this[number]);
+        }
     }
-  }
 
-  return randomizedArray;
+    return randomizedArray;
 }
 
 
@@ -1295,45 +1291,45 @@ Array.prototype.shuffle = function()
  * @param   {Array} Array with elements to transpose.
  * @return  {String} Returns a string with the union of the columns of different matrices.
  */
-Array.prototype.transpose = function(){
+Array.prototype.transpose = function() {
 
-  for(var i = 0; i < this.length; i++)
-    if(!(this[i] instanceof Array))
-      //throw("Wrong type of parameters into Array" + typeof(arguments[i]))
-      return null
-
-        for(var i = 0; i < this.length; i++)
-          if((this[0].length) != (this[i].length))
-            //throw("Element size differs")
+    for (var i = 0; i < this.length; i++)
+        if (!(this[i] instanceof Array))
+        //throw("Wrong type of parameters into Array" + typeof(arguments[i]))
             return null
 
-              var ary = []
+    for (var i = 0; i < this.length; i++)
+        if ((this[0].length) != (this[i].length))
+        //throw("Element size differs")
+            return null
+
+    var ary = []
 
 
-              //Square matrices
-              if((this.length) == (this[0].length)){
-                ary = this.clone()
-                  for(var i = 0; i < this.length;i++){
-                    ary[i] = []
-                      for(var j = 0;j < this[i].length; j++)
-                        ary[i][j] = this[j][i]
-                  }
+    //Square matrices
+    if ((this.length) == (this[0].length)) {
+        ary = this.clone()
+        for (var i = 0; i < this.length; i++) {
+            ary[i] = []
+            for (var j = 0; j < this[i].length; j++)
+                ary[i][j] = this[j][i]
+        }
 
-                return ary
-              }
+        return ary
+    }
 
-  //Non-square matrices
+    //Non-square matrices
 
-  for(var i = 0; i < this[0].length;i++)
-    ary.push(_transpose(i,this))
+    for (var i = 0; i < this[0].length; i++)
+        ary.push(_transpose(i, this))
 
-      return ary
+    return ary
 }
 
 
 /**
  * @method  zip
- * Takes the elements of two or more arrays passed as parameter and 
+ * Takes the elements of two or more arrays passed as parameter and
  * copies their content in a single array.
  *
  * ### Example
@@ -1345,18 +1341,18 @@ Array.prototype.transpose = function(){
  * @param {Array} Arrays to be joined.
  * @return {Array} Array with all elements from the other arrays.
  */
-Array.prototype.zip = function(){
-  var ary = []
-    for(var i=0;i<this.length;i++){
-      ary[i] = []
-        ary[i][0]=this[i]
-        for (var j=0; j<arguments.length; j++)
-          if(arguments[j][i] == (void 0))
-            ary[i][j+1]=null
-          else
-            ary[i][j+1]=arguments[j][i]
+Array.prototype.zip = function() {
+    var ary = []
+    for (var i = 0; i < this.length; i++) {
+        ary[i] = []
+        ary[i][0] = this[i]
+        for (var j = 0; j < arguments.length; j++)
+            if (arguments[j][i] == (void 0))
+                ary[i][j + 1] = null
+            else
+                ary[i][j + 1] = arguments[j][i]
     }
-  return ary;
+    return ary;
 }
 
 
@@ -1371,11 +1367,11 @@ Array.prototype.zip = function(){
  *
  * @return {Boolean} if empty, returns true. If not, false
  */
-Array.prototype.empty$U = function(){
-  if(arguments.length > 0)
+Array.prototype.empty$U = function() {
+    if (arguments.length > 0)
     //throw("Wrong number of parameters")
-    return null
-      return this.length==0? true: false
+        return null
+    return this.length == 0 ? true : false
 }
 
 
@@ -1391,23 +1387,23 @@ Array.prototype.empty$U = function(){
  *
  * @return {boolean} if they are equal, returns true. If not, false.
  */
-Array.prototype.eql$U = function(model){
-  if(arguments.length > 1)
+Array.prototype.eql$U = function(model) {
+    if (arguments.length > 1)
     //throw("Wrong number of arguments")
-    return null
+        return null
 
-      if(!(arguments[0] instanceof Array))
+    if (!(arguments[0] instanceof Array))
         return false
 
-          if(this.length != arguments[0].length)
-            return false
-              var that = this
-              return model.inject_with_index( true,
-                  function (el, index, acum){
-                    if (typeof(el) === "number")
+    if (this.length != arguments[0].length)
+        return false
+    var that = this
+    return model.inject_with_index(true,
+        function(el, index, acum) {
+            if (typeof(el) === "number")
                 return acum && el == that[index] //Number.eql$U(el, that[index])
-                return acum && ((el != null)? el.eql$U(that[index]) : true)
-                  });
+            return acum && ((el != null) ? el.eql$U(that[index]) : true)
+        });
 
 }
 
@@ -1447,10 +1443,10 @@ Array.prototype.eql$U = function(model){
  *
  * @return {Number/Object} Last value of block.return
  */
-Array.prototype.inject = function(init_value, block){
-  for (var i=0; i<this.length; i++)
-    init_value = Array.prototype.inject.yield(this[i], init_value)
-      return init_value
+Array.prototype.inject = function(init_value, block) {
+    for (var i = 0; i < this.length; i++)
+        init_value = Array.prototype.inject.yield(this[i], init_value)
+    return init_value
 }
 
 
@@ -1475,10 +1471,10 @@ Array.prototype.inject = function(init_value, block){
  *
  * @return {Number/Object} Last value of block.return
  */
-Array.prototype.inject_with_index = function(init_value){
-  for (var i=0; i<this.length; i++)
-    init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
-      return init_value
+Array.prototype.inject_with_index = function(init_value) {
+    for (var i = 0; i < this.length; i++)
+        init_value = Array.prototype.inject_with_index.yield(this[i], i, init_value)
+    return init_value
 }
 
 
@@ -1493,14 +1489,14 @@ Array.prototype.inject_with_index = function(init_value){
  *
  * @return {Array} New array with reversed elements.
  */
-Array.prototype.reverse = function(){
-  var ary = []
+Array.prototype.reverse = function() {
+    var ary = []
     pos = 0
-    for(var i = this.length-1; i >= 0; i--){
-      ary[pos] = this[i]
+    for (var i = this.length - 1; i >= 0; i--) {
+        ary[pos] = this[i]
         pos++
     }
-  return ary
+    return ary
 }
 
 
@@ -1516,36 +1512,35 @@ Array.prototype.reverse = function(){
  * @param {number} Index to be selected
  * @return {Array} New array with values of selected index.
  */
-Array.prototype.values_at = function(){
-  for(var i = 0; i < arguments.length; i ++)
-    if(isNaN(arguments[i]))
-      //throw ("Invalid type of paramenter")
-      return null
+Array.prototype.values_at = function() {
+    for (var i = 0; i < arguments.length; i++)
+        if (isNaN(arguments[i]))
+        //throw ("Invalid type of paramenter")
+            return null
 
-        var ary = []
-        for(var i = 0; i < arguments.length; i++){
-          //Converts real numbers (if exists) into integer.
-          arguments[i] = Math.round(arguments[i])
+    var ary = []
+    for (var i = 0; i < arguments.length; i++) {
+        //Converts real numbers (if exists) into integer.
+        arguments[i] = Math.round(arguments[i])
 
-            if((arguments[i]) >= (this.length))
-              ary.push(null)
+        if ((arguments[i]) >= (this.length))
+            ary.push(null)
 
-            else if(arguments[i] < 0){
-              if((arguments[i]+(arguments[i]*-2)) >= this.length)
+        else if (arguments[i] < 0) {
+            if ((arguments[i] + (arguments[i] * -2)) >= this.length)
                 ary.push(null)
-              else
-                ary.push(this[this.length+(arguments[i])])
-            }
-
             else
-              ary.push(this[arguments[i]])
-        }
-  return ary
+                ary.push(this[this.length + (arguments[i])])
+        } else
+            ary.push(this[arguments[i]])
+    }
+    return ary
 }
 
 
 /**
  * @method  to_a
+ * @chainable
  * Returns self. If called on a subclass of Array, converts the receiver into an Array object.
  *
  * ### Example
@@ -1554,10 +1549,9 @@ Array.prototype.values_at = function(){
  *
  * @return  {Array} this
  */
-Array.prototype.to_a = function(){
-  return this
+Array.prototype.to_a = function() {
+    return this
 }
-
 
 /**
  * @method  cycle
@@ -1575,14 +1569,14 @@ Array.prototype.to_a = function(){
  * @param        {Number} times Number of iterations.
  * @param        {Function} block
  */
-Array.prototype.cycle = function(times){
-  if (times < 0 || this.empty$U())
-    return
+Array.prototype.cycle = function(times) {
+    if (times < 0 || this.empty$U())
+        return
 
-  times = times || -1
-  while(times--)
-    this.each.apply(this, arguments)
-  return null
+    times = times || -1
+    while (times--)
+        this.each.apply(this, arguments)
+    return null
 }
 
 
@@ -1597,10 +1591,10 @@ Array.prototype.cycle = function(times){
  *
  * @return  {Array} A new array with stripped elements.
  */
-Array.prototype.strip_all = function(){
-  return this.collect(function(el){
-    return el.respond_to("strip") ? el.strip() : el
-  })
+Array.prototype.strip_all = function() {
+    return this.collect(function(el) {
+        return el.respond_to("strip") ? el.strip() : el
+    })
 }
 
 
@@ -1609,6 +1603,7 @@ Array.prototype.strip_all = function(){
  * Generates all the possible combinations grouped by *number*.
  *
  * ### Example
+ *
  *      a = [1, 2, 3, 4]
  *      a.combination(1)  //=> [[1], [2], [3], [4]]
  *      a.combination(2)  //=> [[1,2], [1,3], [1,4], [2, 3], [2, 4], [3, 4]]
@@ -1634,48 +1629,50 @@ Array.prototype.strip_all = function(){
  * @param  {number}  Grouping amount
  * @return {Array}   All the combinations.
  */
-Array.prototype.combination = function(number){
-  if (! is_a_number(number) )
-    throw "Array#combination. Parameter must be a number."
-  if (number == 0)
-    return [[]]
-  if (number > this.length)
-    return []
-  if (number == this.length)
-    return [this.clone()]
-  if (number == 1)
-    return this.collect(function(el){ return [el] })
+Array.prototype.combination = function(number) {
+    if (!is_a_number(number))
+        throw "Array#combination. Parameter must be a number."
+    if (number == 0)
+        return [[]]
+    if (number > this.length)
+        return []
+    if (number == this.length)
+        return [this.clone()]
+    if (number == 1)
+        return this.collect(function(el) {
+            return [el]
+        })
 
-  var combinations = []
-  for (var i=0; i<this.length-number + 1; i++){
-    var r = [this[i]]
-    r = this.__secure_combination(number-1, r, i + 1)
-    for (var j=0; j<r.length; j++)
-      combinations.push(r[j])
-  }
+    var combinations = []
+    for (var i = 0; i < this.length - number + 1; i++) {
+        var r = [this[i]]
+        r = this.__secure_combination(number - 1, r, i + 1)
+        for (var j = 0; j < r.length; j++)
+            combinations.push(r[j])
+    }
 
-  return combinations
+    return combinations
 
 }
 
-Array.prototype.__secure_combination = function(number, base, initial){
+Array.prototype.__secure_combination = function(number, base, initial) {
 
-  if (number <= 0)
-    return base
-  var result = []
-  for (var i=initial; i<this.length-number + 1; i++){
-    var r = base.clone()
-    r.push(this[i])
-    r = this.__secure_combination( number-1, r.clone(), i+1 )
-    if (number > 1)
-      for (var j=0; j<r.length; j++)
-        result.push(r[j])
-    else
-      result.push(r)
+    if (number <= 0)
+        return base
+    var result = []
+    for (var i = initial; i < this.length - number + 1; i++) {
+        var r = base.clone()
+        r.push(this[i])
+        r = this.__secure_combination(number - 1, r.clone(), i + 1)
+        if (number > 1)
+            for (var j = 0; j < r.length; j++)
+                result.push(r[j])
+        else
+            result.push(r)
 
-  }
+    }
 
-  return result.clone()
+    return result.clone()
 }
 
 
@@ -1704,24 +1701,26 @@ Array.prototype.__secure_combination = function(number, base, initial){
  * @param {(function(Object):Object)=} Block. Maps to provide a comparison item.
  * @return {Array} Sorted Array
  */
-Array.prototype.sort_by = function(){
-  var indexed = []
-  if (Array.prototype.sort_by.block_given$U()) {
-     var ordered = []
+Array.prototype.sort_by = function() {
+    var indexed = []
+    if (Array.prototype.sort_by.block_given$U()) {
+        var ordered = []
 
-     for (var i=0; i<this.length; i++)
-             indexed.push( [ Array.prototype.sort_by.yield(this[i]), this[i] ] )
-           if (is_a_number$U( indexed[0][0]) )
-       indexed.sort( function(a,b){ return a[0] - b[0] } )
-     else
-       indexed.sort()
+        for (var i = 0; i < this.length; i++)
+            indexed.push([Array.prototype.sort_by.yield(this[i]), this[i]])
+        if (is_a_number$U(indexed[0][0]))
+            indexed.sort(function(a, b) {
+                return a[0] - b[0]
+            })
+        else
+            indexed.sort()
 
-     for (var i=0; i<this.length; i++)
-              ordered.push( indexed[i][1] )
+            for (var i = 0; i < this.length; i++)
+                ordered.push(indexed[i][1])
 
-    return ordered
+            return ordered
     } else
-      return this.sort()
+        return this.sort()
 
 }
 
@@ -1748,9 +1747,9 @@ Array.prototype.sort_by = function(){
 Array.prototype.distribute = function(op2) {
     var result = []
 
-    for (var i=0; i<this.length; i++)
-      for (var j=0; j<op2.length; j++)
-         result.push( [this[i], op2[j]] )
+    for (var i = 0; i < this.length; i++)
+        for (var j = 0; j < op2.length; j++)
+            result.push([this[i], op2[j]])
 
     return result
 }
@@ -1783,30 +1782,32 @@ Array.prototype.distribute = function(op2) {
  *     // => [ "prefix_hyper-memo>personizer", "prefix_super-memo>personizer",
  *     //      "prefix_hyper-memo>rocketizer", "prefix_super-memo>rocketizer" ]
  */
-Array.prototype.compose = function(){
+Array.prototype.compose = function() {
     var copy = this.clone()
 
     if (this.length < 2)
         return copy
 
-    var args   = []
-    for (var i=0; i<arguments.length; i++)
-      args[i] = arguments[i]
+    var args = []
+    for (var i = 0; i < arguments.length; i++)
+        args[i] = arguments[i]
 
     var roller = copy.shift().to_a()
 
-    for(var i=0; copy.length; i++){
+    for (var i = 0; copy.length; i++) {
         var next = copy.shift().to_a()
         var inner_arrays = false
-        for (var h=0; h<next.length; h++)
-           if (next[h] instanceof Array)
-               inner_arrays = true
-        if (inner_arrays){
-            next = Array.prototype.compose.apply(next, args[i+1])
-            args.splice(i+1,1)
+        for (var h = 0; h < next.length; h++)
+            if (next[h] instanceof Array)
+                inner_arrays = true
+        if (inner_arrays) {
+            next = Array.prototype.compose.apply(next, args[i + 1])
+            args.splice(i + 1, 1)
         }
         var result = roller.distribute(next)
-        roller = result.collect(function(el) { return el.join(args[i]) })
+        roller = result.collect(function(el) {
+            return el.join(args[i])
+        })
     }
     return roller
 }
@@ -1821,9 +1822,9 @@ Array.prototype.compose = function(){
  * @return {Boolean} Found or not found.
  */
 Array.includes = function(el, array) {
-    for (var i=0; i<array.length; i++)
-    if (array[i] == el)
-        return true
+    for (var i = 0; i < array.length; i++)
+        if (array[i] == el)
+            return true
     return false
 }
 
@@ -1838,14 +1839,13 @@ Array.includes = function(el, array) {
  *
  * @return {Array} Returns array.
  */
-Array.unpack = function(model, array, level){
+Array.unpack = function(model, array, level) {
     var l = level;
 
-    for (var i=0; i<model.length; i++){
-        if ( (model[i] instanceof Array) && (l > 0)){
-            Array.unpack(model[i], array, l-1)
-        }
-        else{
+    for (var i = 0; i < model.length; i++) {
+        if ((model[i] instanceof Array) && (l > 0)) {
+            Array.unpack(model[i], array, l - 1)
+        } else {
             array.push(model[i])
         }
     }
@@ -1864,37 +1864,37 @@ Array.unpack = function(model, array, level){
 Array.product = function(array1, array2) {
     var nary = []
     var arrays = array1.length * array2.length
-    for(var i = 0; i < arrays; i++){
+    for (var i = 0; i < arrays; i++) {
         nary[i] = []
     }
     var pos = 0
-    for(var i = 0; i < array1.length; i++)
-    for(var j = 0; j < array2.length; j++){
-        nary[pos][0] = array1[i]
-        nary[pos][1] = array2[j]
-        pos++
-    }
-        return nary
+    for (var i = 0; i < array1.length; i++)
+        for (var j = 0; j < array2.length; j++) {
+            nary[pos][0] = array1[i]
+            nary[pos][1] = array2[j]
+            pos++
+        }
+    return nary
 }
 
-function _rotate(number, array1, array2){
+function _rotate(number, array1, array2) {
     var pos = 1
     array2[number] = array1[0]
     var arg = number
-    if(arg == array1.length-1)
+    if (arg == array1.length - 1)
         arg = 0
     else
         arg++
-        for(var i = arg; i != number;i++){
-            array2[i] = array1[pos]
-            if(i == (array1.length-1))
-                i = -1;
-            pos++
-        }
-            return array2
+    for (var i = arg; i != number; i++) {
+        array2[i] = array1[pos]
+        if (i == (array1.length - 1))
+            i = -1;
+        pos++
+    }
+    return array2
 }
 
-function getRandomArbitary (min, max) {
+function getRandomArbitary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
@@ -1903,12 +1903,11 @@ function getRandomArbitary (min, max) {
  * This function returns a transposed array.
  * (Used by Array#transpose method when it receives non-square matrices).
  */
-function _transpose(pos, nary){
+function _transpose(pos, nary) {
     var array = []
-    for(var i = 0; i < nary.length; i++)
-    array[i] = nary[i][pos]
+    for (var i = 0; i < nary.length; i++)
+        array[i] = nary[i][pos]
     return array
 }
 
 Array.reflect(Array.bang_methods)
-

@@ -1,10 +1,20 @@
-	{   "package": "browser",
-		"description": "Facilities to ensure browser compatibility.",
-		"files": [
-			{"name": "ll_BrowserFeatures.js",    "description": "Facilities to ensure browser compatibility."},
-			{"name": "ll_CodeBlockFinder.js",    "description": "Finite Automaton for finding code blocks."},
-			{"name": "ll_HTMLElement.js",        "description": "DOM utilities."},
-			{"name": "ll_JavascriptSource.js",   "description": "Reads Javascript Files via AJAX and rips code blocks."},
-			{"name": "ll_Logger.js",             "description": "Creates logger depending of the severity level."}
-		]
+	{
+	    "package": "browser",
+	    "description": "Facilities to ensure browser compatibility.",
+	    "files": [{
+	        "name": "ll_BrowserFeatures.js",
+	        "description": "Facilities to ensure browser compatibility."
+	    }, {
+	        "name": "ll_CodeBlockFinder.js",
+	        "description": "Finite Automaton for finding code blocks."
+	    }, {
+	        "name": "ll_HTMLElement.js",
+	        "description": "DOM utilities."
+	    }, {
+	        "name": "ll_JavascriptSource.js",
+	        "description": "Reads Javascript Files via AJAX and rips code blocks."
+	    }, {
+	        "name": "ll_Logger.js",
+	        "description": "Creates logger depending of the severity level."
+	    }]
 	}

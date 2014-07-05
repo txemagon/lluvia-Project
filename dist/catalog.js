@@ -16,20 +16,6 @@ var $K_script_response =
 ,
 		   {
 			"files": [
-				{"name": "ll_BrowserFeatures.js", "description": "Facilities to ensure browser compatibility."},
-				{"name": "ll_CodeBlockFinder.js", "description": "Finite Automaton for finding code blocks."},
-				{"name": "ll_HTMLElement.js", "description": "DOM utilities."},
-				{"name": "ll_JavascriptSource.js", "description": "Reads Javascript Files via AJAX and rips code blocks."},
-				{"name": "ll_Logger.js", "description": "Creates logger depending of the severity level."}],
-			"provides": [],
-			"requires": [],
-			"offers": [],
-			"package": "browser",
-			"description": "Facilities to ensure browser compatibility.",
-		 }
-,
-		   {
-			"files": [
 				{"name": "ll_Kernel.js", "description": "Core javascript for the global object."},
 				{"name": "ll_Exception.js", "description": "Exceptions."}],
 			"provides": [
@@ -121,8 +107,7 @@ var $K_script_response =
 			"package": "kernel",
 			"description": "Javascript extensions && global objects.",
 		 }
-],
-	"requires": [
+,
 		   {
 			"files": [
 				{"name": "log_module_interface.js", "description": ""},
@@ -144,7 +129,22 @@ var $K_script_response =
 			"package": "loader",
 			"description": "Mechanism to request remote files from the server.",
 		 }
+,
+		   {
+			"files": [
+				{"name": "ll_BrowserFeatures.js", "description": "Facilities to ensure browser compatibility."},
+				{"name": "ll_CodeBlockFinder.js", "description": "Finite Automaton for finding code blocks."},
+				{"name": "ll_HTMLElement.js", "description": "DOM utilities."},
+				{"name": "ll_JavascriptSource.js", "description": "Reads Javascript Files via AJAX and rips code blocks."},
+				{"name": "ll_Logger.js", "description": "Creates logger depending of the severity level."}],
+			"provides": [],
+			"requires": [],
+			"offers": [],
+			"package": "browser",
+			"description": "Facilities to ensure browser compatibility.",
+		 }
 ],
+	"requires": [],
 	"offers": [
 		   {
 			"files": [

@@ -64,10 +64,10 @@
 function Enumeration(constants) {
     Object.defineProperty(this, "ia", {
         value: new(ApplyProxyConstructor(InterleavedArray, arguments)),
-        enumerable: false
+        enumerable: false,
     })
 
-    /*
+    /* this.ia
        {
 	      "0": "spades",
 	      "1": "hearts",
@@ -76,10 +76,31 @@ function Enumeration(constants) {
 	      "2": "diamonds",
 	      "3": "clovers"
        }
+     will be turned inside this into:
+         {
+       "spades": 0,
+       "hearts": { 1,
+       	           "red": 1,
+       	           "black": 2
+                  },
+        "diamonds": 2,
+        "clovers": 3
+        }
+        in the following lines.
      */
 
     var keys = this.ia.keys()
-    for (var i = 0; i < keys.length; i++)
-        this[this.ia[keys[i]]] = new VersionNumber(keys[i])
+    for (var k = 0; k < keys.length; k++) {
+        var ia_value = this.ia[keys[k]]
+        var deep = this
+        var key_chain = keys[k].split(".")
 
+        for (var i = 0; i < key_chain.length - 1; i++) {
+            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]
+
+            if (parent in deep)
+                deep = deep[parent]
+        }
+        deep[ia_value] = new VersionNumber(keys[k])
+    }
 }

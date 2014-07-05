@@ -18,7 +18,7 @@
  *      var text = "hello"   // giving a value to text
  *      text.capitalize()    //=> "Hello"
  */
-String.prototype.capitalize = function(){
+String.prototype.capitalize = function() {
     word = this.toLowerCase()
     return word.replace(word[0], word[0].toUpperCase())
 }
@@ -39,12 +39,12 @@ String.prototype.capitalize = function(){
  *      "theRolling_stones".humanize()    //=>"the rolling stones"
  *
  */
-String.prototype.humanize = function(){
+String.prototype.humanize = function() {
     var word = this.strip()
     var first = word[0]
-    word = word.substring(1).replace(/_+/g, " ").replace(/([A-Z])/g, " $1" ).replace(/\s+/g, " ")
+    word = word.substring(1).replace(/_+/g, " ").replace(/([A-Z])/g, " $1").replace(/\s+/g, " ")
     to_lower = word.downcase()
-    return first + (to_lower? to_lower: word)
+    return first + (to_lower ? to_lower : word)
 }
 
 
@@ -61,7 +61,7 @@ String.prototype.humanize = function(){
  * @return {String} string
  *
  */
-String.prototype.underscore = function(){
+String.prototype.underscore = function() {
 
     return this.humanize().replace(/\s+_*/g, "_")
 }
@@ -82,12 +82,12 @@ String.prototype.underscore = function(){
  * "seek_case"
  *
  **/
-String.prototype.camel_case = function(){
+String.prototype.camel_case = function() {
     var sentence = ""
     var first = this.strip()[0]
-    this.strip().split(/[\s_]+/g ).each(function(word){
-	sentence += word[0].toUpperCase()
-	sentence += word.substring(1)
+    this.strip().split(/[\s_]+/g).each(function(word) {
+        sentence += word[0].toUpperCase()
+        sentence += word.substring(1)
     })
 
     return first + sentence.substring(1)
@@ -101,12 +101,12 @@ String.prototype.camel_case = function(){
  * @return      {String} Returns camelCase name of class
  *
  */
-String.prototype.class_name = function(){
+String.prototype.class_name = function() {
     var sentence = ""
     var first = this.strip()[0]
-    this.strip().split(/[\s_]+/g ).each(function(word){
-	sentence += word[0].toUpperCase()
-	sentence += word.substring(1)
+    this.strip().split(/[\s_]+/g).each(function(word) {
+        sentence += word[0].toUpperCase()
+        sentence += word.substring(1)
     })
 
     return first.toUpperCase() + sentence.substring(1)
@@ -125,31 +125,31 @@ String.prototype.class_name = function(){
  * ### Example
  *      "hello".index("e")  //=> 1
  */
-String.prototype.index = function(){
+String.prototype.index = function() {
     if (arguments.length == 0 || arguments.length > 2)
-	//throw ("wrong number of arguments")
-	return null
-	var pos
-	var str = arguments[0].toString()
-	if (arguments.length > 1){
-	    pos = this.normalize_index(arguments[1])
-	    if(pos == null)
-		return pos
-	    var find = this.substr(pos, this.length - pos)
-	}
-	if (str[0] == '/' && str[str.length-1] == '/' && str[1] == '[' && str[str.length-2] == ']'){
-	    var min = this.length
-	    var entradoAlMenosUnaVez = false
-	    for(var i=2;i<str.length - 2; i++)
-	    if (min >= find.search(str[i]) && find.search(str[i]) >= 0){
-		min = find.search(str[i])+pos
-		entradoAlMenosUnaVez = true
-	    }
-	    return min >= 0 && entradoAlMenosUnaVez? min : null
-	}
-	return this.indexOf(arguments[0]) < 0? null : this.indexOf(arguments[0])
-	// todo: Falta que funcione al pasar por parametros
-	// ? y una letra, ya que da error de sintaxis
+    //throw ("wrong number of arguments")
+        return null
+    var pos
+    var str = arguments[0].toString()
+    if (arguments.length > 1) {
+        pos = this.normalize_index(arguments[1])
+        if (pos == null)
+            return pos
+        var find = this.substr(pos, this.length - pos)
+    }
+    if (str[0] == '/' && str[str.length - 1] == '/' && str[1] == '[' && str[str.length - 2] == ']') {
+        var min = this.length
+        var entradoAlMenosUnaVez = false
+        for (var i = 2; i < str.length - 2; i++)
+            if (min >= find.search(str[i]) && find.search(str[i]) >= 0) {
+                min = find.search(str[i]) + pos
+                entradoAlMenosUnaVez = true
+            }
+        return min >= 0 && entradoAlMenosUnaVez ? min : null
+    }
+    return this.indexOf(arguments[0]) < 0 ? null : this.indexOf(arguments[0])
+    // todo: Falta que funcione al pasar por parametros
+    // ? y una letra, ya que da error de sintaxis
 }
 
 /**
@@ -164,10 +164,10 @@ String.prototype.index = function(){
  * In case of abs() of number more than this.length, returns null, else returns index
  *
  */
-String.prototype.normalize_index = function(){
+String.prototype.normalize_index = function() {
     if (typeof(arguments[0]) === "number")
-	if (arguments[0] < 0? Math.abs(arguments[0]) <= this.length : Math.abs(arguments[0]) <= this.length - 1)
-	    return arguments[0] < 0? arguments[0] + this.length : arguments[0]
+        if (arguments[0] < 0 ? Math.abs(arguments[0]) <= this.length : Math.abs(arguments[0]) <= this.length - 1)
+            return arguments[0] < 0 ? arguments[0] + this.length : arguments[0]
     return null
 }
 
@@ -188,29 +188,29 @@ String.prototype.normalize_index = function(){
  *      "hello".insert(2, "haha")
  *      //=> hehahallo
  */
-String.prototype.insert = function(){
+String.prototype.insert = function() {
     if (arguments.length == 0 || arguments.length > 2)
-	//throw ("wrong number of arguments")
-	return null
-	if (arguments[0] == this.length)
-	    return this + arguments[1]
-	else if (arguments[0] == -(this.length + 1))
-	    return arguments[1] + this
-	var pos = arguments[0] >= 0? this.normalize_index(arguments[0]) : this.normalize_index(arguments[0]) + 1
-	if (this.normalize_index(arguments[0]) == null)
-	    return null
-	//throw("index out of string")
-	var str = ""
-	for(var i=0;i<=this.length;i++)
-	if(i == pos){
-	    str = str + arguments[1]
-	    var add = true
-	}
-	else if(!i==0 && add)
-	    str = str + this[i - 1]
-	else
-	    str = str + this[i]
-	return str
+    //throw ("wrong number of arguments")
+        return null
+    if (arguments[0] == this.length)
+        return this + arguments[1]
+    else if (arguments[0] == -(this.length + 1))
+        return arguments[1] + this
+    var pos = arguments[0] >= 0 ? this.normalize_index(arguments[0]) : this.normalize_index(arguments[0]) + 1
+    if (this.normalize_index(arguments[0]) == null)
+        return null
+        //throw("index out of string")
+    var str = ""
+    for (var i = 0; i <= this.length; i++)
+        if (i == pos) {
+            str = str + arguments[1]
+            var add = true
+        } else
+    if (!i == 0 && add)
+        str = str + this[i - 1]
+    else
+        str = str + this[i]
+    return str
 }
 
 /**
@@ -230,16 +230,17 @@ String.prototype.insert = function(){
  *      "hello".ljust(10,"p")
  *      //=> helloppppp
  */
-String.prototype.ljust = function(){
+String.prototype.ljust = function() {
     var str = this
     var j = 0
-    for(var i = 0; i < (arguments[0] - this.length); i++)
-    if (arguments.length > 1 && arguments[1].length > 1)
-	str = str + arguments[1][i % arguments[1].length]
-    else if (arguments.length > 1)
-	str = str + arguments[1]
+    for (var i = 0; i < (arguments[0] - this.length); i++)
+        if (arguments.length > 1 && arguments[1].length > 1)
+            str = str + arguments[1][i % arguments[1].length]
+        else
+    if (arguments.length > 1)
+        str = str + arguments[1]
     else
-	str = str + " "
+        str = str + " "
     return str
 }
 
@@ -257,8 +258,8 @@ String.prototype.ljust = function(){
  *     // => "ham"
  *
  */
-String.prototype.lstrip = function(){
-    return this.replace(/^\s+/g,"")
+String.prototype.lstrip = function() {
+    return this.replace(/^\s+/g, "")
 }
 
 /**
@@ -269,7 +270,7 @@ String.prototype.lstrip = function(){
  *
  * @return      {String} string
  *
- * ### Comments: 
+ * ### Comments:
  *
  * Case conversion is effective only in ASCII region.
  *
@@ -279,15 +280,14 @@ String.prototype.lstrip = function(){
  *      //=> hELLO
  *
  */
-String.prototype.swapcase= function(){
+String.prototype.swapcase = function() {
     var str = []
-    for(var i = 0; i < this.length;i++){
-	if ((this[i].charCodeAt(0) > 64) && (this[i].charCodeAt(0) < 97)){
-	    str[i] = this[i].toLowerCase()
-	}
-	else{
-	    str[i] = this[i].toUpperCase()
-	}
+    for (var i = 0; i < this.length; i++) {
+        if ((this[i].charCodeAt(0) > 64) && (this[i].charCodeAt(0) < 97)) {
+            str[i] = this[i].toLowerCase()
+        } else {
+            str[i] = this[i].toUpperCase()
+        }
     }
     var word = str.join("")
     return word
@@ -307,11 +307,11 @@ String.prototype.swapcase= function(){
  *      "".empty$U()        //=> true
  *
  */
-String.prototype.empty$U = function(){
-    if(arguments.length > 0)
-	//throw ("wrong number of arguments. This function not needs arguments")
-	return null
-	return this.length>0? false : true
+String.prototype.empty$U = function() {
+    if (arguments.length > 0)
+    //throw ("wrong number of arguments. This function not needs arguments")
+        return null
+    return this.length > 0 ? false : true
 }
 
 /**
@@ -333,8 +333,8 @@ String.prototype.empty$U = function(){
  *     "hello".downcase() //=>  null
  *
  */
-String.prototype.downcase = function(){
-    return this.toLowerCase() == this? null : this.toLowerCase()
+String.prototype.downcase = function() {
+    return this.toLowerCase() == this ? null : this.toLowerCase()
 }
 
 /**
@@ -357,13 +357,13 @@ String.prototype.downcase = function(){
  *     "abcdef".casecmp("abcdefg")   //=> -1
  *     "abcdef".casecmp("ABCDEF")    //=> 0
  */
-String.prototype.casecmp = function(){
+String.prototype.casecmp = function() {
 
     if (arguments.length < 1)
-	throw("ArgumentError: Wrong number of arguments")
+        throw ("ArgumentError: Wrong number of arguments")
     var str1 = this.toLowerCase()
     var str2 = arguments[0].toLowerCase()
-    return ( ( str1 == str2 ) ? 0 : ( ( str1 > str2 ) ? 1 : -1 ) );
+    return ((str1 == str2) ? 0 : ((str1 > str2) ? 1 : -1));
 
 }
 
@@ -383,7 +383,7 @@ String.prototype.casecmp = function(){
  *     "a".ord()     //=> 97
  *     "b".ord()     //=> 98
  */
-String.prototype.ord = function(){
+String.prototype.ord = function() {
     return this.charCodeAt(0)
 }
 
@@ -402,9 +402,9 @@ String.prototype.ord = function(){
  *
  *
  */
-String.prototype.oct = function(){
-    oct = this.match( /^[(-7)-7]+/)
-    oct= oct || ["0"]
+String.prototype.oct = function() {
+    oct = this.match(/^[(-7)-7]+/)
+    oct = oct || ["0"]
     return parseInt(oct[0], 8)
 }
 
@@ -422,7 +422,7 @@ String.prototype.oct = function(){
  *
  * //=> "rojemleocap"
  */
-String.prototype.reverse = function(){
+String.prototype.reverse = function() {
     return this.split("").reverse().join("")
 }
 
@@ -441,8 +441,8 @@ String.prototype.reverse = function(){
  * @param        {String} pattern String to look for.
  * @return       {Boolean} True if pattern found.
  **/
-String.prototype.include$U = function(){
-    return (this.lastIndexOf(arguments[0]) > -1)? true : false
+String.prototype.include$U = function() {
+    return (this.lastIndexOf(arguments[0]) > -1) ? true : false
 }
 
 /**
@@ -469,14 +469,13 @@ String.prototype.include$U = function(){
  *
  **/
 // Can receive comma-separated strings or an array
-String.prototype.include_some_of$U = function(
-){
+String.prototype.include_some_of$U = function() {
     var included = false
-    for (var i=0; i<arguments.length; i++){
-	if (typeof(arguments[i]) == "string")
-	    included = included || this.include$U(arguments[i])
-	if (arguments[i] instanceof Array)
-	    included = included || String.prototype.include_some_of$U.apply(this, arguments[i])
+    for (var i = 0; i < arguments.length; i++) {
+        if (typeof(arguments[i]) == "string")
+            included = included || this.include$U(arguments[i])
+        if (arguments[i] instanceof Array)
+            included = included || String.prototype.include_some_of$U.apply(this, arguments[i])
     }
     return included
 }
@@ -500,10 +499,10 @@ String.prototype.include_some_of$U = function(
  * "pacoelmejor".rindex("el")
  * //=> 4
  */
-String.prototype.rindex = function(search){
+String.prototype.rindex = function(search) {
     if (arguments.length == 0)
-	return null
-    return (this.lastIndexOf(search) > 0)? this.lastIndexOf(search) : false
+        return null
+    return (this.lastIndexOf(search) > 0) ? this.lastIndexOf(search) : false
 }
 
 /**
@@ -512,7 +511,7 @@ String.prototype.rindex = function(search){
  *
  * @chainable
  * @param        {Number}     length  Size of the resulting line.
- * @param        {String}     padding String to pad with.  
+ * @param        {String}     padding String to pad with.
  * @return       {String}     Return the a string with a word center.
  *
  * ### Comments: If integer is greater than the length of str,
@@ -524,28 +523,26 @@ String.prototype.rindex = function(search){
  *    "hello".center(20)           //=> "       hello        "
  *    "hello".center(20, '123')    //=> "1231231hello12312312"
  */
-String.prototype.center = function(length, padding){
+String.prototype.center = function(length, padding) {
     if (arguments.length == 0 || arguments.length > 2)
-	throw("wrong number arguments")
+        throw ("wrong number arguments")
     if (this.length >= length)
-	return this
+        return this
     var str = ""
     var i = 0
     var j = 0
-    while(i<=(length - this.length)){
-	if (i == (length-this.length) / 2){
-	    j = 0
-	    str += this
-	}
-	else if (arguments.length > 1){
-	    str += padding.length == 1? padding : padding[j]
-	    j = (j+1) % padding.length
-	}
-	else
-	    str += " "
-	i++
+    while (i <= (length - this.length)) {
+        if (i == (length - this.length) / 2) {
+            j = 0
+            str += this
+        } else if (arguments.length > 1) {
+            str += padding.length == 1 ? padding : padding[j]
+            j = (j + 1) % padding.length
+        } else
+            str += " "
+        i++
     }
-	return str
+    return str
 }
 
 /**
@@ -571,15 +568,15 @@ String.prototype.center = function(length, padding){
  *     "hello".chomp("llo")       //=> "he"
  *
  */
-String.prototype.chomp = function(){
+String.prototype.chomp = function() {
     if (arguments.length == 1)
-	return this.replace(arguments[0], "")
+        return this.replace(arguments[0], "")
     if (this.search(/\r\n/i) == this.length - 2)
-	return this.replace("\r\n", "")
+        return this.replace("\r\n", "")
     if (this.search(/\r/i) == this.length - 1)
-	return this.replace("\r", "")
+        return this.replace("\r", "")
     if (this.search(/\n/i) == this.length - 1)
-	return this.replace("\n", "")
+        return this.replace("\n", "")
     return this
 }
 
@@ -602,14 +599,14 @@ String.prototype.chomp = function(){
  *    "x".chop.chop()       //=> ""
  *
  **/
-String.prototype.chop = function(){
+String.prototype.chop = function() {
     if (arguments.length > 0)
-	//     throw("wrong number of arguments")
-	return null
-	var str = this.chomp()
-	if (str.length == this.length)
-	    return str.slice(0,this.length-1)
-	return str
+    //     throw("wrong number of arguments")
+        return null
+    var str = this.chomp()
+    if (str.length == this.length)
+        return str.slice(0, this.length - 1)
+    return str
 }
 
 /**
@@ -629,10 +626,10 @@ String.prototype.chop = function(){
  *    "wombat".hex()   //=> 0
  *
  **/
-String.prototype.hex = function(){
+String.prototype.hex = function() {
     if (this.search("0x") == 0)
-	return parseInt(this)
-    return isNaN(parseInt(this,16))? 0 : parseInt(this,16)
+        return parseInt(this)
+    return isNaN(parseInt(this, 16)) ? 0 : parseInt(this, 16)
 }
 
 /**
@@ -650,9 +647,9 @@ String.prototype.hex = function(){
  *      //=> "a"
  *
  **/
-String.prototype.chr = function(){
+String.prototype.chr = function() {
     if (this.length > 1)
-	return this[0]
+        return this[0]
     return this
 }
 
@@ -672,21 +669,19 @@ String.prototype.chr = function(){
  *    "hello".rjust(20, '1234')   //=> "123412341234123hello"
  *
  **/
-String.prototype.rjust = function(){
-    alert("okk");
+String.prototype.rjust = function() {
     if (this.length >= arguments[0])
-	return this
+        return this
     var str = ""
     var i = 0
-    while(i<(arguments[0] - this.length)){
-	if (arguments.length > 1){
-	    str += arguments[1].length == 1? arguments[1] : arguments[1][i%arguments[1].length]
-	}
-	else
-	    str += " "
-	i++
+    while (i < (arguments[0] - this.length)) {
+        if (arguments.length > 1) {
+            str += arguments[1].length == 1 ? arguments[1] : arguments[1][i % arguments[1].length]
+        } else
+            str += " "
+        i++
     }
-	return str+this
+    return str + this
 }
 
 /**
@@ -710,26 +705,26 @@ String.prototype.rjust = function(){
  *  "***".succ()         //=> "**+"
  *
  **/
-String.prototype.succ = function(){
+String.prototype.succ = function() {
     var str = ""
     var i
     var vuelta = true
-    for(i=this.length-1;i>=0 && vuelta;i--){
-	if (this[i] == '>' || this[i] == '<')
-	    str = this[i] + str
-	else if(this[i]=='z' || this[i]=='Z')
-	    str = (this[i]=='z'? 'a':'A') + str
-	else if(this[i] == '9')
-	    str = '0' + str
-	else
-	    str = String.fromCharCode(this[i].charCodeAt()+1) + str
-	vuelta =this[i] == 'z' || this[i] == 'Z' || this[i]=='9' || this[i]=='<' || this[i]=='>'
+    for (i = this.length - 1; i >= 0 && vuelta; i--) {
+        if (this[i] == '>' || this[i] == '<')
+            str = this[i] + str
+        else if (this[i] == 'z' || this[i] == 'Z')
+            str = (this[i] == 'z' ? 'a' : 'A') + str
+        else if (this[i] == '9')
+            str = '0' + str
+        else
+            str = String.fromCharCode(this[i].charCodeAt() + 1) + str
+        vuelta = this[i] == 'z' || this[i] == 'Z' || this[i] == '9' || this[i] == '<' || this[i] == '>'
     }
     if (this[0] == '<' && i < 0 && (this[2] == 'z' || this[2] == 'Z'))
-	return "<<" + str[2] + str.substr(2,str.length-2)
+        return "<<" + str[2] + str.substr(2, str.length - 2)
     else if (this[0] == '<' && i < 0 && this[2] == '9')
-	return "<<" + str[2].succ() + str.substr(2,str.length-2)
-    return i < 0 && (this[0]=='z' || this[0]=='Z')? str[0] + str : i < 0 && this[0] == '9'? str[0].succ() + str : this.substr(0,i+1)+str
+        return "<<" + str[2].succ() + str.substr(2, str.length - 2)
+    return i < 0 && (this[0] == 'z' || this[0] == 'Z') ? str[0] + str : i < 0 && this[0] == '9' ? str[0].succ() + str : this.substr(0, i + 1) + str
 }
 
 /**
@@ -741,8 +736,8 @@ String.prototype.succ = function(){
  * @return       {String} Str
  *
  **/
-String.prototype.next = function(){
-    return this.succ.apply(this,arguments)
+String.prototype.next = function() {
+    return this.succ.apply(this, arguments)
 }
 
 /**
@@ -774,17 +769,17 @@ String.prototype.to_i = function() {
     var result = 0 //Resultado por defecto
 
     //Exception
-    if(arguments.length > 1)
-	//throw ("wrong number of arguments. to_i( [base: 2 ... 36]) ")
-	return null
+    if (arguments.length > 1)
+    //throw ("wrong number of arguments. to_i( [base: 2 ... 36]) ")
+        return null
 
-	if(arguments.length != 0)
-	    if(isNaN(arguments[0]) || (arguments[0] < 2) || (arguments[0] > 36))
-		//throw ("Invalid argument for base (2 - 36)")
-		return null
-		else base = arguments[0]
+    if (arguments.length != 0)
+        if (isNaN(arguments[0]) || (arguments[0] < 2) || (arguments[0] > 36))
+        //throw ("Invalid argument for base (2 - 36)")
+            return null
+        else base = arguments[0]
 
-		    return isNaN( parseInt(this,base) )? 0 : parseInt(this,base)
+            return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
 }
 
 /**
@@ -802,11 +797,11 @@ String.prototype.to_i = function() {
  **/
 String.prototype.to_f = function() {
     //Exception
-    if(arguments.length > 0)
-	//throw ("This function doesn't need arguments")
-	return null
+    if (arguments.length > 0)
+    //throw ("This function doesn't need arguments")
+        return null
 
-	return isNaN(parseFloat(this))? 0.0 : parseFloat(this) ;
+    return isNaN(parseFloat(this)) ? 0.0 : parseFloat(this);
 }
 
 /**
@@ -839,17 +834,17 @@ String.prototype.strip = function() {
  *    // => "Aepe"
  *
  */
-String.prototype.setbyte = function(position, ascii){
+String.prototype.setbyte = function(position, ascii) {
     var that = this.split("")
-    if(arguments[0] < that.length)
-	that[arguments[0]] = String.fromCharCode(arguments[1])
+    if (arguments[0] < that.length)
+        that[arguments[0]] = String.fromCharCode(arguments[1])
     else
-	//throw("Wrong index")
-	return null
-	str = ""
-	for(var i = 0; i < that.length; i++)
-	str += that[i]
-	return str
+    //throw("Wrong index")
+        return null
+    str = ""
+    for (var i = 0; i < that.length; i++)
+        str += that[i]
+    return str
 }
 
 /**
@@ -867,16 +862,16 @@ String.prototype.setbyte = function(position, ascii){
  *      "hello".partition(/.l/)        //=> ["h", "el", "lo"]
  *
  **/
-String.prototype.partition = function(){
+String.prototype.partition = function() {
     var ary = [3]
     var str = arguments[0].toString()
     var pos = this.search(arguments[0])
     if (pos < 0)
-	ary = [this.substr(0,this.length), "", ""]
-    else if (str[0] == '/' && str[str.length-1] == '/')
-	ary = [this.substr(0, pos), this.substr(pos,str.length-2),this.substr(pos+str.length - 2,this.length-pos)]
+        ary = [this.substr(0, this.length), "", ""]
+    else if (str[0] == '/' && str[str.length - 1] == '/')
+        ary = [this.substr(0, pos), this.substr(pos, str.length - 2), this.substr(pos + str.length - 2, this.length - pos)]
     else
-	ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
+        ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
     return ary
 }
 
@@ -892,8 +887,8 @@ String.prototype.partition = function(){
  *     "     Madrid     ".rstrip()            //=> "     Madrid"
  *     "     Madrid Barcelona    ".rstrip()   //=> "     Madrid Barcelona"
  **/
-String.prototype.rstrip = function(){
-    return this.replace(/\s+$/g,'')
+String.prototype.rstrip = function() {
+    return this.replace(/\s+$/g, '')
 }
 
 /**
@@ -914,15 +909,15 @@ String.prototype.rstrip = function(){
  *
  *
  */
-String.prototype.upto = function(end, block){
+String.prototype.upto = function(end, block) {
     var num = this
     var str = ""
-    while( num != arguments[0] && num.length <= arguments[0].length && num < arguments[0] ){
-	str += String.prototype.upto.yield(num)
-	num = num.succ()
+    while (num != arguments[0] && num.length <= arguments[0].length && num < arguments[0]) {
+        str += String.prototype.upto.yield(num)
+        num = num.succ()
     }
-    if( num.length > arguments[0].length )
-	return str
+    if (num.length > arguments[0].length)
+        return str
     return str + String.prototype.upto.yield(num)
 }
 
@@ -942,10 +937,10 @@ String.prototype.upto = function(end, block){
  *      "hello".each_char(function(obj){return obj + '/'})
  *      //=> "h/e/l/l/o/"
  **/
-String.prototype.each_char = function(){
+String.prototype.each_char = function() {
     var str = ""
-    for (var i = 0; i<this.length;i++)
-    str += String.prototype.each_char.yield(this[i])
+    for (var i = 0; i < this.length; i++)
+        str += String.prototype.each_char.yield(this[i])
     return str
 }
 /**
@@ -956,7 +951,7 @@ String.prototype.each_char = function(){
  * @return      {String} str
  *
  **/
-String.prototype.chars = function(){
+String.prototype.chars = function() {
     return this.each_char.apply(this, arguments)
 }
 
@@ -974,10 +969,10 @@ String.prototype.chars = function(){
  *     "C3P0".sum()  //=> 246
  *
  **/
-String.prototype.sum = function(){
+String.prototype.sum = function() {
     var suma = 0
-    for (var i = 0; i<this.length;i++)
-    suma += this.charCodeAt(i)
+    for (var i = 0; i < this.length; i++)
+        suma += this.charCodeAt(i)
     return suma
 }
 
@@ -1042,11 +1037,11 @@ String.prototype.sum = function(){
  *     "Peter".intersection("Pe")  //=> "Pee"
  *
  **/
-String.prototype.intersection = function(){
+String.prototype.intersection = function() {
     var str = this
-    for (var i=0; i<arguments.length; i++){
-	var regex = "[" + arguments[i] + "]"
-	str = str.match( new RegExp(regex , "g" )).join("")
+    for (var i = 0; i < arguments.length; i++) {
+        var regex = "[" + arguments[i] + "]"
+        str = str.match(new RegExp(regex, "g")).join("")
     }
     return str
 }
@@ -1066,7 +1061,7 @@ String.prototype.intersection = function(){
  *     "Peter".sub("r","eeeeeee");   //=> "Peteeeeeeee"
  *
  **/
-String.prototype.sub= function(pattern, replacement){
+String.prototype.sub = function(pattern, replacement) {
     return this.replace(pattern, replacement)
 }
 
@@ -1078,9 +1073,9 @@ String.prototype.sub= function(pattern, replacement){
  * @return  {Number} Return an enumerator black or //nose continuar en ingles
  *
  **/
-String.prototype.bytes = function(){
-    for(var i = 0; i < this.length; i++)
-    return this.charCodeAt(i)
+String.prototype.bytes = function() {
+    for (var i = 0; i < this.length; i++)
+        return this.charCodeAt(i)
 }
 
 /**
@@ -1094,7 +1089,7 @@ String.prototype.bytes = function(){
  *     "Soccer".ascii_only$U()   //=> true
  *     " ".ascii_only$U()        //=> false
  **/
-String.prototype.ascii_only$U = function(){
+String.prototype.ascii_only$U = function() {
     return isNaN(this)
 }
 
@@ -1117,36 +1112,36 @@ String.prototype.ascii_only$U = function(){
  * "Hello\n world".each_line("l",function(obj){return "" + obj + ""}))      //=> "Hel", "l", "o \\n worl", "d"
  * "Hello \n\n\n world".each_line("",function(obj){return "" + obj + ""}))  //=> "Hello \\n\\n\\n"," world"
  **/
-String.prototype.each_line = function(split){
+String.prototype.each_line = function(split) {
     var ary = this
-    var arycpy = []  //ary with string result
-    var posEnd = 0		//position to split the origin string
-    var ind = 0			//index for ary
+    var arycpy = [] //ary with string result
+    var posEnd = 0 //position to split the origin string
+    var ind = 0 //index for ary
     var regExp = /\n/g
-    var argZero = false	//Indicates if the arguments zero is a ""
+    var argZero = false //Indicates if the arguments zero is a ""
 
-    if(arguments.length == 0 || arguments.length > 2)
-	return null
+    if (arguments.length == 0 || arguments.length > 2)
+        return null
 
-    if( typeof(arguments[0]) !== "function" ){
-	if(arguments[0] != "")
-	    regExp = RegExp(arguments[0])
-	else {
-	    regExp = /\n{2,}/g
-	    argZero = true
-	}
+    if (typeof(arguments[0]) !== "function") {
+        if (arguments[0] != "")
+            regExp = RegExp(arguments[0])
+        else {
+            regExp = /\n{2,}/g
+            argZero = true
+        }
     }
     posEnd = ary.search(regExp) + 1
-    while( (posEnd < ary.length) && (posEnd >0) ){
-	if(argZero){
-	    var trash = ary.substring(posEnd)
-	    posEnd += trash.search(/./g)
-	}
-	arycpy[ind] = ary.substring(0, posEnd)
-	ary = ary.substring(posEnd)
-	arycpy[ind] = ary.each_line.yield(arycpy[ind])
-	ind++
-	    posEnd = ary.search(regExp) + 1
+    while ((posEnd < ary.length) && (posEnd > 0)) {
+        if (argZero) {
+            var trash = ary.substring(posEnd)
+            posEnd += trash.search(/./g)
+        }
+        arycpy[ind] = ary.substring(0, posEnd)
+        ary = ary.substring(posEnd)
+        arycpy[ind] = ary.each_line.yield(arycpy[ind])
+        ind++
+        posEnd = ary.search(regExp) + 1
     }
     ary = ary.substring(posEnd)
     ary.each_line.yield(ary)
@@ -1169,10 +1164,10 @@ String.prototype.each_line = function(split){
  *      //=> "104 101 108 108 111 1593 "
  *
  **/
-String.prototype.each_codepoint = function(){
+String.prototype.each_codepoint = function() {
     var str = ""
-    for (var i=0;i<this.length;i++)
-    str += String.prototype.each_codepoint.yield(this[i].charCodeAt(0))
+    for (var i = 0; i < this.length; i++)
+        str += String.prototype.each_codepoint.yield(this[i].charCodeAt(0))
     return str
 }
 
@@ -1185,8 +1180,8 @@ String.prototype.each_codepoint = function(){
  * @return      {String} str of digits ASCII
  *
  **/
-String.prototype.codepoint = function(){
-    return this.each_codepoint.apply(this,arguments)
+String.prototype.codepoint = function() {
+    return this.each_codepoint.apply(this, arguments)
 }
 
 /**
@@ -1204,20 +1199,19 @@ String.prototype.codepoint = function(){
  *      "hello".rpartition(/.l/)        //=> ["he", "ll", "o"]
  *
  **/
-String.prototype.rpartition = function(){
+String.prototype.rpartition = function() {
     var ary = [3]
     var str = arguments[0].toString()
-    if (this.search(arguments[0]) == -1){
-	ary = ["","",this.substr(0,this.length)]
-	return ary
-    }
-    else{
-	auxstr = str.substr(2,str.length-3)
-	var pos = str[0] == '/' && str[str.length-1] == '/'? this.lastIndexOf(auxstr):this.lastIndexOf(str)
-	if (str[0] == '/' && str[str.length-1] == '/')
-	    ary = [this.substr(0, pos-1), this.substr(pos-1,auxstr.length+1),this.substr(pos+auxstr.length ,this.length-pos)]
-	else
-	    ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
+    if (this.search(arguments[0]) == -1) {
+        ary = ["", "", this.substr(0, this.length)]
+        return ary
+    } else {
+        auxstr = str.substr(2, str.length - 3)
+        var pos = str[0] == '/' && str[str.length - 1] == '/' ? this.lastIndexOf(auxstr) : this.lastIndexOf(str)
+        if (str[0] == '/' && str[str.length - 1] == '/')
+            ary = [this.substr(0, pos - 1), this.substr(pos - 1, auxstr.length + 1), this.substr(pos + auxstr.length, this.length - pos)]
+        else
+            ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
     }
     return ary
 }
@@ -1233,25 +1227,25 @@ String.prototype.rpartition = function(){
  * @return {string} String Returns an array of matches, or null if no match is found.
  *
  **/
-String.prototype.scan = function(){
+String.prototype.scan = function() {
     var ary = this.match(arguments[0])
-    if (ary.length > 1 && arguments.length <2)
-	ary.shift()
-    if ( arguments.length > 1 && typeof(arguments[1]) === "function" ){
-	ary = this
+    if (ary.length > 1 && arguments.length < 2)
+        ary.shift()
+    if (arguments.length > 1 && typeof(arguments[1]) === "function") {
+        ary = this
 
-	while( ary.length > 0 && ary.search(arguments[0]) != -1){
-	    var finds = []
-	    var find = ary.match(arguments[0])
-	    ary = ary.replace(arguments[0], "")
-	    for (var i=1; i<9; i++)
-	    if (RegExp["$" + i] != "")
-		finds.push(RegExp["$" + i])
-	    if (finds.length == 0)
-		finds = find
-	    arguments[1].apply(arguments[1], finds)
-	}
-	return this
+        while (ary.length > 0 && ary.search(arguments[0]) != -1) {
+            var finds = []
+            var find = ary.match(arguments[0])
+            ary = ary.replace(arguments[0], "")
+            for (var i = 1; i < 9; i++)
+                if (RegExp["$" + i] != "")
+                    finds.push(RegExp["$" + i])
+            if (finds.length == 0)
+                finds = find
+            arguments[1].apply(arguments[1], finds)
+        }
+        return this
     }
     return ary
 }
@@ -1271,10 +1265,10 @@ String.prototype.scan = function(){
  *     "Hello".erase("Ho")   //=> "ell"
  *
  **/
-String.prototype.erase = function(){
+String.prototype.erase = function() {
     var erase = this
-    for(var i = 0; i < arguments.length; i++)
-    erase = this.intersection(erase, arguments[i])
+    for (var i = 0; i < arguments.length; i++)
+        erase = this.intersection(erase, arguments[i])
     var regex = "[^" + erase + "]"
     erase = this.match(new RegExp(regex, "g")).join("")
     return erase
@@ -1296,8 +1290,8 @@ String.prototype.erase = function(){
  *
  **/
 
-String.prototype.end_With$U = function(str){
-    return (this.match(str+"$")==str)
+String.prototype.end_With$U = function(str) {
+    return (this.match(str + "$") == str)
 }
 
 /**
@@ -1334,7 +1328,7 @@ String.prototype.eql$U = function(string) {
  *     "A".getbyte()    //=> 65
  *
  **/
-String.prototype.getbyte = function(index){
+String.prototype.getbyte = function(index) {
     return this.charCodeAt(index)
 }
 
@@ -1343,7 +1337,7 @@ String.prototype.getbyte = function(index){
  * Alias of #toString.
  *
  */
-String.prototype.to_str = function(){
+String.prototype.to_str = function() {
     return this.toString()
 }
 
@@ -1369,45 +1363,44 @@ String.prototype.to_str = function(){
  * '21/06/09'.to_r()    //=> (7/2)
  * 'bwv 1079'.to_r()    //=> (0/1)
  **/
-String.prototype.to_r = function(){
-    var str1 	//String auxiliar
-    var str2 	//String auxiliar
+String.prototype.to_r = function() {
+    var str1 //String auxiliar
+    var str2 //String auxiliar
     var op1 = "0/1" //operando one rational number
-    var op2 = 1	//operando two rational number
+    var op2 = 1 //operando two rational number
     var pos
     var mcd
     var dec
 
     str1 = this.strip() //Returns a copy of str with leading and trailing whitespace removed
-    if( str1.search(/^[\d\+.-]/g) == -1 ) //Comprueba si el primer caracter es una letra o un caracter no valido)
-	return op1
-    str2 = str1 = str1.replace(/[_]/g,"")  //Replace underscore
+    if (str1.search(/^[\d\+.-]/g) == -1) //Comprueba si el primer caracter es una letra o un caracter no valido)
+        return op1
+    str2 = str1 = str1.replace(/[_]/g, "") //Replace underscore
     pos = str1.search(/\//g) //Find the "/" character
-	if( pos > 0) {
-	str1 = str1.substring(0,pos)
-	str2 = str2.substring(pos+1)
-    }
-    else
-	str2 = null
+    if (pos > 0) {
+        str1 = str1.substring(0, pos)
+        str2 = str2.substring(pos + 1)
+    } else
+        str2 = null
 
-    if( isNaN( (op1 = parseFloat(str1)) ) ) //Checks the string is a number
-	return op1
-    //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
-    if( isNaN(str1) || isNaN( op2 = parseInt(str2) ) )
-	op2 = 1
+    if (isNaN((op1 = parseFloat(str1)))) //Checks the string is a number
+        return op1
+        //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
+    if (isNaN(str1) || isNaN(op2 = parseInt(str2)))
+        op2 = 1
 
     //Dejo el primer numero sin decimales pasando los decimales que tuviese a la izquierdaReturns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region.
     dec = decimal(op1)
-    op1 = op1 * Math.pow(10,dec)
-    if( op2 == 1)//Si solo tenemos el operando 1
-	op2 = Math.pow(10,dec)
+    op1 = op1 * Math.pow(10, dec)
+    if (op2 == 1) //Si solo tenemos el operando 1
+        op2 = Math.pow(10, dec)
     else
-	op2 = op2 * Math.pow(10,dec)
-    //Calculo el maximo comun divisor de los 2 operandos
-    mcd = intMcd(op1,op2)
+        op2 = op2 * Math.pow(10, dec)
+        //Calculo el maximo comun divisor de los 2 operandos
+    mcd = intMcd(op1, op2)
     if (mcd == null)
-	mcd = 1
-    return op1/mcd + "/" + op2/mcd
+        mcd = 1
+    return op1 / mcd + "/" + op2 / mcd
 }
 
 
@@ -1416,32 +1409,32 @@ String.prototype.to_r = function(){
  * @method decimals
  * Number of decimal positions in a number
  *
- * @param  {number | string } Operand 
+ * @param  {number | string } Operand
  * @return {Number}  Number of decimal. If the arguments is invalid return 0
  *
  **/
 //todo: Move to Math
- function decimals() {
-    if(isNaN(arguments[0]))
-	return -1
+function decimals() {
+    if (isNaN(arguments[0]))
+        return -1
 
     var num = new Number(arguments[0])
-    if( num < Number.MIN_VALUE || num > Number.MAX_VALUE)
-	return 0
+    if (num < Number.MIN_VALUE || num > Number.MAX_VALUE)
+        return 0
 
     var ary = num.toString(10)
     var trash = ary
     var decUno = 0
     var decDos = 0
-    if ( ary.search("e") > 0)    {
-	decUno = ary.substring(ary.search("e")+1)
-	trash = ary.substring(0, ary.search("e"))
+    if (ary.search("e") > 0) {
+        decUno = ary.substring(ary.search("e") + 1)
+        trash = ary.substring(0, ary.search("e"))
     }
-    if ( ary.search("[.]") > 0){
-	decDos = trash.substring(trash.search("[.]")+1)
-	decDos = decDos.length
+    if (ary.search("[.]") > 0) {
+        decDos = trash.substring(trash.search("[.]") + 1)
+        decDos = decDos.length
     }
-    return parseInt(decUno)>=decDos? 0 : (decUno - decDos) * -1
+    return parseInt(decUno) >= decDos ? 0 : (decUno - decDos) * -1
 }
 
 /** @method   intMdc
@@ -1455,27 +1448,27 @@ String.prototype.to_r = function(){
  **/
 function intMcd() {
 
-    if(arguments.length != 2 || isNaN(arguments[0]) || isNaN(arguments[1]) )
-	return null
+    if (arguments.length != 2 || isNaN(arguments[0]) || isNaN(arguments[1]))
+        return null
 
     var op1 = parseInt(arguments[0])
     var op2 = parseInt(arguments[1])
 
-    if(arguments[0] == 0 || arguments[1] == 0)
-	return null
+    if (arguments[0] == 0 || arguments[1] == 0)
+        return null
     if (arguments[0] < 0)
-	op1 *= -1
+        op1 *= -1
     if (arguments[1] < 0)
-	op2 *= -1
+        op2 *= -1
 
-    while ( op1 != op2 || op1 < 0 || op2< 0 ){
-	if(op1 > op2)
-	    op1 = op1-op2
-	else
-	    op2 = op2-op1
+    while (op1 != op2 || op1 < 0 || op2 < 0) {
+        if (op1 > op2)
+            op1 = op1 - op2
+        else
+            op2 = op2 - op1
     }
-    if( op1 == op2)
-	return op1
+    if (op1 == op2)
+        return op1
     return null
 }
 
@@ -1493,7 +1486,7 @@ function intMcd() {
  *
  **/
 
-String.prototype.bytesize = function(){
+String.prototype.bytesize = function() {
     return this.length
 }
 
@@ -1504,8 +1497,6 @@ String.prototype.bytesize = function(){
  * @param  {string | String} name
  * @return {boolean}      true if name is any kind of string
  */
-String.is_string$U = function(name){
+String.is_string$U = function(name) {
     return typeof(name) === "string" || name instanceof String
 }
-
-

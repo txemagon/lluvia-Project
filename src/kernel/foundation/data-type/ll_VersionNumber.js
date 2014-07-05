@@ -98,3 +98,14 @@ VersionNumber.prototype.valueOf = function() {
 
     return parseInt(last) || last
 }
+
+
+VersionNumber.stop_enum = function(method) {
+    for (var i = 0; i < method.length; i++)
+        Object.defineProperty(VersionNumber.prototype, method[i], {
+            value: VersionNumber.prototype[method[i]],
+            enumerable: false
+        })
+}
+
+VersionNumber.stop_enum(["toString", "valueOf"])

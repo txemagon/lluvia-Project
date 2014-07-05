@@ -27,11 +27,10 @@
 function ProxyConstructor(Constructor, rest_of_arguments) {
     var args = Array.prototype.slice.call(arguments, 1)
     return function() {
-        var $$F$$ = function(){}
-        $$F$$.prototype = Constructor.prototype
-        var obj = new $$F$$
-        var yield_back = Constructor.apply(obj, args)
-        return Object(yield_back) == yield_back ? yield_back : obj
-    }
+            var $$F$$ = function() {}
+            $$F$$.prototype = Constructor.prototype
+            var obj = new $$F$$
+            var yield_back = Constructor.apply(obj, args)
+            return Object(yield_back) == yield_back ? yield_back : obj
+        }
 }
-

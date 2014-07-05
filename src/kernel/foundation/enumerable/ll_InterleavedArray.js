@@ -349,13 +349,13 @@ InterleavedArray.prototype.inspect = function(index) {
     return txt
 }
 
-function stop_enum(method) {
+InterleavedArray.stop_enum = function(method) {
     for (var i = 0; i < method.length; i++)
         Object.defineProperty(InterleavedArray.prototype, method[i], {
             value: InterleavedArray.prototype[method[i]],
             enumerable: false
         })
 }
-stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
+InterleavedArray.stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
 
 // todo: Override the other Array methods in InterleavedArray
