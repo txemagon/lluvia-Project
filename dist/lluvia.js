@@ -1841,7 +1841,7 @@ function VersionNumber(initial_string, sep) {
     var coefficients = initial_string.split(this.sep)
     var last = this
     for (var i = 0; i < coefficients.length; i++)
-        last[coefficients[i]] = (last = {})
+        last[coefficients[i]] = (last = new VersionNumber())
 }
 VersionNumber.prototype.toString = function() {
     var obj = this
@@ -1853,15 +1853,27 @@ VersionNumber.prototype.toString = function() {
     }
     return text.replace(/.$/, "")
 }
+VersionNumber.prototype.number_value = function() {
+    for (var i in this)
+        if (!isNaN(i))
+            return parseInt(i)
+}
+VersionNumber.prototype.number = function() {
+    for (var i in this)
+        if (!isNaN(i))
+            return this[i]
+}
 VersionNumber.prototype.get = function(version) {
-    var found = null
-    var obj = this
-    while (!found && (key = Object.keys(obj)[0])) {
-        if (key && obj.toString() == version.toString())
-            found = obj
-        obj = obj[key]
-    }
-    return found
+    if (!(version instanceof Array))
+        version = new String(version)
+    if (version instanceof String)
+        version = version.split(".")
+    if (version == "")
+        return this
+    var key = version.shift()
+    if (!version.length)
+        return this[key]
+    return this[key].get(version)
 }
 VersionNumber.prototype.last = function() {
     var last = 0
@@ -1887,9 +1899,45 @@ VersionNumber.prototype.valueOf = function() {
     var last = this.last_value()
     return parseInt(last) || last
 }
-VersionNumber.prototype.branch = function() {
+VersionNumber.prototype.branch = function(version, first_label) {
+    if (!first_label || first_label == "")
+        throw "VersionNumber#branch: Anonymous branches not " +
+            "allowed. Provide first_label in function call."
+    if (version instanceof VersionNumber)
+        version = version.toString()
+    version = new String(version)
+    var insertion_point = this.get(version)
+    if (!insertion_point || !(insertion_point instanceof VersionNumber))
+        throw "VersionNumber#branch: version (" + version + ") not found."
+    for (var i = 1; i < arguments.length; i++) {
+        var label = arguments[i]
+        try {
+            label = label.toString()
+        } catch (e) {}
+        var parts = label.split(":")
+        if (parts[1])
+            parts[1] = new VersionNumber(parts[1].replace(/^\s+/g, "").replace(/\s+$/g, ""))
+        var value = parts[1] || {}
+        if (i + 1 < arguments.length && typeof(arguments[i + 1]) !== "string")
+            value = arguments[++i]
+        this[parts[0]] = value
+    }
 }
-VersionNumber.prototype.values = function() {
+VersionNumber.prototype.branches = function() {
+    var response = []
+    for (var i in this)
+        if (isNaN(i) && this.hasOwnProperty(i))
+            response.push(i)
+    return response
+}
+VersionNumber.prototype.each = function(block) {
+    if (!block || typeof(block) !== "function")
+        return
+    var obj = this.number()
+    if (obj)
+        block(this.number_value(), obj, this)
+    if ("each" in obj && typeof(obj.each) === "function")
+        obj.each(block)
 }
 VersionNumber.stop_enum = function(method) {
     for (var i = 0; i < method.length; i++)
@@ -1898,7 +1946,11 @@ VersionNumber.stop_enum = function(method) {
             enumerable: false
         })
 }
-VersionNumber.stop_enum(["toString", "valueOf", "values", "get", "last", "last_value", "branch"])
+VersionNumber.stop_enum([
+    "toString", "valueOf",
+    "number_value", "number", "get", "last",
+    "last_value", "branch", "branches", "each"
+])
 Module.prototype.constructor = Module
 Module._constants = new Hash()
 function Module(module_name, block){
