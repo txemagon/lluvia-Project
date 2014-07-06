@@ -1,9 +1,8 @@
 /**
- * @class FixedVector
+ * @class Mathematics.Geometry.FixedVector
  * Creates a vector fixed in a coordinate axis.
  *
  */
-
 FixedVector.prototype = new Vector
 FixedVector.prototype.constructor = FixedVector
 FixedVector.super = Vector
@@ -12,17 +11,17 @@ FixedVector.super = Vector
  * @method constructor
  *
  * ### Example
- * 
+ *
  *     Cases of usage:
- *     
+ *
  *     -Constructor can accept a minimun of 0 parameters and a maximun of 2
  *     -Constructor accepts either vectors or arrays to define the free_vector and the foot
  *     -Constructor accepts only the free vector
  *     -Constructor accepts only the _head (where foot would be 0,0)
  *     -Constructor doesn't accept only foot (it wouldn't know where vector ends)
  *     -Constructor accepts free_vector and foot when is_head is not defined or is false and
- *     accepts _head and foot when is_head is true
- *     
+ *     accepts _head and foot when is_head has a value
+ *
  *     new FixedVector()
  *     //=> this.foot = (0,0)
  *     //=> this._head = (0,0)
@@ -32,6 +31,11 @@ FixedVector.super = Vector
  *     //=> this.foot = (0,0)
  *     //=> this._head = (3,5)
  *     //=> this.Coord = (3,5)
+ *
+ *     new FixedVector( [new Vector(8,2)], true )
+ *     //=> this.foot = (0,0)
+ *     //=> this._head = (8,2)
+ *     //=> this.Coord = (8,2)
  *
  *     new FixedVector([ [new Vector(3,5), new Vector(6,1) ])
  *     //=> this.foot = (6,1)
@@ -53,48 +57,73 @@ FixedVector.super = Vector
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
  *
- *     new FixedVector([ new Vector(3,1), [5,2] ], true)
+ *     new FixedVector([ new Vector(3,1), [5,2] ], "abs")
  *     //=> this.foot = (5,2)
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
- *     
+ *
  *
  * //NOTA: Vector.prototype.add.call(this, this.foot) //suma this a this.foot usando el metodo de vector
  *
  * @param  {Array} input Array with a free vector and a foot
  * @param {Boolean} is_head Indicates if the parameters passed through input are free_vector and foot or
  *                          _head and foot
- * 
+ *
  * @return {Vector}
+ *
+ * new Fv()
+ * new Fv([2,3], [3,5])
+ * new Fv([2,3])
+ * new Fv([2,6], 'abs')
+ * new Fv([2,6], [5,4], 'abs')
+ * new Fv([2,6], 'abs', [5,4])
+ * new Fv('abs', [2,6], [5,4])
+ * new Fv('abs', [2,6])
+ * new Fv('abs', [2,6], v2) // v2 is a vector
+ * new Fv(v1, v2)
+ * new Fv(fixed) // Clones fixed into a new FixedVector (Copy Constructor)
+ *
+ * new Fv([[2,6], [5,4], 'abs'])
  */
 
-
-function FixedVector(input, is_head) {
-    //input = [input] See how can brackets be remove
+function FixedVector(input) {
+    var that = this
 
     if (!input)
         input = []
 
-    is_head = is_head || false
+    var is_head = false
+    var free_vector
+    this.foot
 
-    var input_args = []
-    for (var i = 0; i < input.length; i++)
-        input_args[i] = input[i]
 
-    free_vector = input_args[0] || new Vector(0, 0)
-    this.foot = input_args[1] || new Vector(0, 0)
+        function check_arg(arg) {
+            //alert(typeof(arg))
+            if (arg instanceof String || typeof(arg) === "string")
+                is_head = arg
+            if (arg instanceof Array)
+                if (!free_vector)
+                    free_vector = new Vector(arg)
+                else
+                    that.foot = new Vector(arg)
+            if (arg instanceof Vector)
+                if (!free_vector)
+                    free_vector = arg
+                else
+                    that.foot = arg
+        }
 
-    if (free_vector instanceof Array)
-        free_vector = new Vector(free_vector)
+    for (var i = 0; i < arguments.length; i++)
+        check_arg(arguments[i])
 
-    if (this.foot instanceof Array)
-        this.foot = new Vector(this.foot)
+    is_head = is_head
+    free_vector = free_vector || new Vector(0, 0)
+    this.foot = this.foot || new Vector(0, 0)
 
     this.foot.standarize_coordinates(free_vector)
 
-    if(is_head){
+    if (is_head)
         free_vector = free_vector.subs(this.foot)
-    }
 
     Object.defineProperty(this, "_head", {
         value: this.foot.add(free_vector),
@@ -103,7 +132,6 @@ function FixedVector(input, is_head) {
 
     Vector.call(this, free_vector)
 }
-
 
 /**
  * @method eql$U
@@ -131,25 +159,25 @@ FixedVector.prototype.add = function(vec) {
     var checks = false
     var new_free
 
-    function checkVec(vect){
-        if (that._head.Coord.eql$U(vect.foot.Coord)) {
-            checks = true
-        }else{
-            checks = false
-        throw ("Invalid operation for fixed vectors." +
-            " First vector head must be equal to second's foot")
+        function checkVec(vect) {
+            if (that._head.Coord.eql$U(vect.foot.Coord)) {
+                checks = true
+            } else {
+                checks = false
+                throw ("Invalid operation for fixed vectors." +
+                    " First vector head must be equal to second's foot")
+            }
+            that = vect
         }
-        that = vect
-    }
 
     vec = Vector.prototype.parseInput.apply(this, arguments)
 
     for (var i = 0; i < vec.length; i++)
         checkVec(vec[i])
-    if(checks)
+    if (checks)
         new_free = vec[vec.length - 1]._head.subs(this.foot)
 
-    return new FixedVector([new_free, this.foot])
+    return new FixedVector(new_free, this.foot)
 }
 
 /**
@@ -161,15 +189,14 @@ FixedVector.prototype.add = function(vec) {
  */
 
 FixedVector.prototype.subs = function(vec) {
-    var that = this
     var new_free, new_foot
 
-    vec = Vector.prototype.parseInput.apply(this, arguments)
+        vec = Vector.prototype.parseInput.apply(this, arguments)
 
-    new_foot = this._head
-    new_free = vec[vec.length - 1]._head.subs(this._head)
+        new_foot = this._head
+        new_free = vec[vec.length - 1]._head.subs(this._head)
 
-    return new FixedVector([new_free, new_foot])
+        return new FixedVector(new_free, new_foot)
 }
 
 /**
@@ -180,27 +207,46 @@ FixedVector.prototype.subs = function(vec) {
  * @return {FixedVector} Returns a scaled FixedVector
  */
 
-FixedVector.prototype.scle = function(number) { //scale from Vector needs to be redefined
+FixedVector.prototype.scle = function(number) { //todo: scale from Vector needs to be redefined
     scalable = new Vector(this.Coord)
     scalable = scalable.scale(number)
     fv_foot = this.foot.scale(number)
 
-    return new FixedVector([scalable, fv_foot])
+    return new FixedVector(scalable, fv_foot)
 }
 
 /**
  * @method virial
- * 
+ * Scalar product of a vector and its foot
  *
- * @param {Vector} vec FixedVector to operate with 
+ * @param {Vector} vec FixedVector to operate with
  * @param {Number} angle Angle between the two Fixed vectors
- * 
+ *
  * @return {FixedVector} Returns the virial of a vector or vectors
  */
 FixedVector.prototype.virial = function(vec, angle) {
     var new_free, virial
-    new_free = new Vector(this.Coord)
-    virial = new_free.dot(this.foot)
+        new_free = new Vector(this.Coord)
+        virial = new_free.dot(this.foot)
 
-    return virial
+        return virial
+}
+
+/**
+ * @method planar_momentum
+ * Momentum of a vector in a plane
+ *
+ * @param {FixedVector} vec FixedVector to operate with
+ * @param {FixedVector} plane_pt FixedVector made from a point in the plane
+ *
+ * @return {FixedVector} Returns the virial of a vector or vectors
+ */
+FixedVector.prototype.planar_momentum = function(vec, plane_pt) {
+    var vector_r = new FixedVector(vec.foot, plane_pt.foot)
+    var unitary = plane_pt.unit()
+    var vec_module = vec.module()
+
+    var res = vector_r.cross(unitary).scale(vec_module)
+
+    return res
 }

@@ -246,7 +246,7 @@ InterleavedArray.prototype.go = function(index) {
  *     a.to_a("1.1.2").toSource()
  *     //=> [5, [4]]
  *
- * @param  {String | Number | Void} index The index of the position in the InterleavedArray
+ * @param  {String | Number | undefined} index The index of the position in the InterleavedArray
  * @return {Array}                  array Returns the array with data. in the InterleavedArray
  */
 InterleavedArray.prototype.to_a = function(index) {

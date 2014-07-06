@@ -605,7 +605,7 @@ Array.prototype.erase_at$B = function() {
 
 /**
  * @method  erase_if
- * Deletes all the array elements that meet the condition specified by the block..
+ * Deletes all the array elements that meet the condition specified by the block.
  *
  * ### Example
  *     var numbers = [1,2,3,4,5,6,7,8,9]
@@ -623,16 +623,16 @@ Array.prototype.erase_if = function() {
 
     var ary = []
     for (var i = 0; i < this.length; i++)
-
         if (!Array.prototype.erase_if.yield(this[i]))
             ary.push(this[i])
+
     return ary.compact()
 }
 
 
 /**
  * @method  erase_if$B
- * Deletes all the array elements that meet the condition specified by the block..
+ * Deletes all the array elements that meet the condition specified by the block.
  * Deletion is made in block call. Not at the end
  *
  * ### Example
@@ -1669,7 +1669,6 @@ Array.prototype.__secure_combination = function(number, base, initial) {
                 result.push(r[j])
         else
             result.push(r)
-
     }
 
     return result.clone()
