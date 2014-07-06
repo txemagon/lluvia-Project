@@ -270,7 +270,7 @@ VersionNumber.prototype.valueOf = function() {
  *     })
  *     a[a]()
  *
- * This example triggers a "Hello" alert. When a is used as an index toString()
+ * This example triggers a "Hello" alert. When a is used as an index of toString()
  * is automatically called, yielding the key of the function.
  *
  */
@@ -350,8 +350,7 @@ VersionNumber.prototype.branches = function() {
  *     container       //=> { 1: { 5: { 9: {}}} }
  *
  *
- * @param  {function(value, )}      block [description]
- * @return {[type]}       [description]
+ * @param  {function(Number,Object, Object)}      block Function block to be called.
  */
 VersionNumber.prototype.each = function(block) {
     if (!block || typeof(block) !== "function")

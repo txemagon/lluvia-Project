@@ -15,62 +15,366 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">InterleavedArray.prototype = new Array
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-InterleavedArray'>/**
+</span> * @class  Kernel.Foundation.Enumerable.InterleavedArray
+ * Creates an array with subindexes as in [semantic version controlling](http://semver.org/).
+ * It is the complementary class of Enumeration {@link Kernel.Foundation.Enumerable.Enumeration}
+ *
+ * ### Example
+ *
+ *     new Interleaved Array([2, 1, [2, [3, [5,7], 5]], 7, 10, [4, [5,7]], 5])
+ *     //=&gt; {
+ *     //=&gt;   0: 2
+ *     //=&gt;   1: 1
+ *     //=&gt;   2: 2
+ *     //=&gt;   2.1: 3
+ *     //=&gt;   2.2: 5,7
+ *     //=&gt;   2.3: 5
+ *     //=&gt;   3: 7
+ *     //=&gt;   4: 10
+ *     //=&gt;   5: 4
+ *     //=&gt;   5.1: 5
+ *     //=&gt;   5.2: 7
+ *     //=&gt;   6: 5
+ *     //=&gt; }
+ *
+ */
+
+
+InterleavedArray.prototype = new Array
 InterleavedArray.prototype.constructor = InterleavedArray
 
-function InterleavedArray(array){
-    
-     for(var i=0; i&lt;array.length; i++)
-        if (array[i] instanceof Array) {
-    
-           this.subpush( i, array[i][0] )
-           
-           if(array[i][1] instanceof Array)
-               for(var h=0; h&lt;array[i][1].length; h++){
-                   /*this[i + &quot;.&quot; + ( h + 1 ) ] = array[i][1][h]*/
-                   var index = i + &quot;.&quot; + (h + 1)
-                   this.subpush(index, array[i][1][h])
-                   
-               }
-     
-        } else 
-            this.subpush( i, array[i] )
-}
-InterleavedArray.prototype.size = function() {
-    var size = 0
-    for (var i in this)
-        size ++
-    return size
-}
-
-InterleavedArray.prototype.inspect = function() {
-    var txt = &quot;{\n&quot;
-    //for(var i in this)
-    for(var i = 0; i&lt;this.size(); i++)
-        if(i in this){
-          txt += &quot;\n\t&quot; + i + &quot;: &quot; + this[i]
-          for (var x = 1; eval(i + &quot;.&quot; + x +  &quot; in this&quot;); x++)
-            txt += &quot;\n\t&quot; + i + &quot;.&quot; + x + &quot;: &quot; + this[eval(i + &quot;.&quot; + x)]
-            }
-    return txt + &quot;\n}&quot;
-}
-
-<span id='global-property-'>/**
-</span>Como en array
-ia.subpush(&quot;5&quot;, 3, 7)
-ia.subpush([3,7])
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-constructor'>/**
+</span> * @method constructor
+ * Creates a new InterleavedArray
+ *
+ * ### Example
+ *
+ *     new InterleavedArray(2)
+ *     //=&gt; { 0: 2}
+ *
+ *     new InterleavedArray([2])
+ *     //=&gt; {0: undefined, 0.1: 2}
+ *
+ *     new InterleavedArray(2,3)
+ *     //=&gt; {0: 2, 1:3 }
+ *
+ *     new InterleavedArray([2,3], [5,7])
+ *     //=&gt; {0: undefined, 0.1: 2, 0.2: 3, 1:undefined, 1.1: 5, 1.2: 7}
+ *
+ *     new InterleavedArray(1, [2,3], [5,7])
+ *     //=&gt; {0: 1, 0.1: 2, 0.2: 3, 1:undefined, 1.1: 5, 1.2: 7}
+ *
+ *     new InterleavedArray([2,3])
+ *     //=&gt; {0: undefined, 0.1: 2, 0.2: 3}
+ *
+ *     new InterleavedArray([2,3], 3, [5,7])
+ *     //=&gt; {0: undefined, 0.1: 2, 0.2: 3, 1:3, 1.1: 5, 1.2: 7}
+ *
+ *     new InterleavedArray([2], 3)
+ *     //=&gt; { 0: undefined, 0.1: 2, 1: 3}
+ *
+ *     new InterleavedArray([[2], 3], 7)
+ *     //=&gt; { 0: undefined, 0.1: undefined, 0.1.1: 2, 0.2: 3, 1: 7}
+ *
+ *     new InterleavedArray(2, [3, 5])
+ *     //=&gt; {0: 2, 0.1: 3, 0.2: 5}
+ *
+ *     new InterleavedArray( [2, [3, 5]] )
+ *     //=&gt; {0: undefined, 0.1: 2, 0.1.1: 3, 0.1.2: 5}
+ *
+ *     new InterleavedArray( [2, [3, 5], 8], 9 )
+ *     //=&gt; {0: undefined, 0.1: 2, 0.1.1: 3, 0.1.2: 5, 0.2: 8, 1: 9}
+ *
+ *     new Interleaved Array( 2, 1, [2, [3, [5,7], 5]], 7, 10, [4, [5,7]], 5)
+ *
+ * @param {Object | Array} elements Variadic list or elements.
+ */
+function InterleavedArray(elements) {
+    /*
+   [1, 2, [3, 4, [7, 8], 6], 5]
+   [1, 2, 5] -&gt; Array
+       | subarray
+      [3, 4, 6] -&gt; IA
+          | subarray
+         [7, 8] -&gt; IA
 */
+    Object.defineProperty(this, 'subarray', {
+        value: [],
+        enumerable: false,
+        writable: true
+    })
 
-InterleavedArray.prototype.subpush = function(index, elements){
-        this[index] = elements
+    Object.defineProperty(this, &quot;length&quot;, {
+        enumerable: false,
+        writable: true
+    })
+
+    var last_was_number = 0
+    for (var el = 0; el &lt; arguments.length; el++) {
+        if (!(arguments[el] instanceof Array)) {
+            this.push(arguments[el])
+            last_was_number = 1
+        } else {
+            if (!((this.length - last_was_number) in this)) {
+                this.push(undefined)
+                last_was_number = 1
+            }
+            this.subarray[this.length - last_was_number] = new(ApplyProxyConstructor(InterleavedArray, arguments[el]))
+            last_was_number = 0
+
+        }
+    }
+    for (var i = 0; i &lt; this.subarray.length; i++)
+        if (this.subarray[i] instanceof Array)
+            this.enumerate(i, this.subarray[i])
 }
 
-Object.defineProperties(InterleavedArray.prototype, { 
-                        &quot;inspect&quot;: { value: InterleavedArray.prototype[&quot;inspect&quot;], enumerable: false},
-                        &quot;constructor&quot;: { value: InterleavedArray.prototype[&quot;constructor&quot;], enumerable: false}})
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-enumerate'>/**
+</span> * @method enumerate
+ * Reenumerates all of the entries of the InterleavedArray
+ *
+ * @param  {Number|String} base_index Base number for the enumeration.
+ * @param  {InterleavedArray} subarray   Subelements to interleave
+ */
+InterleavedArray.prototype.enumerate = function(base_index, subarray) {
+    for (var i = 0; i &lt; subarray.length; i++) {
+        var index = base_index + &quot;.&quot; + (i + 1)
+        this[index] = subarray[i]
+        if (subarray.subarray[i] instanceof Array)
+            this.enumerate(index, subarray.subarray[i])
+    }
+}
 
-var b = new InterleavedArray([2, 1, [2, [3, 5]], 7, 10, [4, [5,7]], 5])
-b.inspect()
-</pre>
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-infiltrate'>/**
+</span> * @method infiltrate
+ * @chainable
+ * Sets an element or an array as a subelement.
+ *
+ * ### Example
+ *
+ *     var a = new InterleavedArray(4, 3, [2, 5], 2, 1)
+ *     a.infiltrate(1, [2, [3, [5, 7]]])
+ *     //=&gt; {
+ *     //=&gt;    0: 4,
+ *     //=&gt;    1: 3,
+ *     //=&gt;    1.1: 2,
+ *     //=&gt;    1.2: 5,
+ *     //=&gt;    1.3: 2,
+ *     //=&gt;    1.3.1: 3,
+ *     //=&gt;    1.3.1.1: 5,
+ *     //=&gt;    1.3.1.2: 7,
+ *     //=&gt;    2: 2,
+ *     //=&gt;    3: 1
+ *     //=&gt; }
+ *
+ *
+ * @param  {Number} position Major number for all subelements.
+ * @param  {Object | InterleavedArray} elements  Variadic elements to insert.
+ * @return {InterleavedArray}          this
+ */
+InterleavedArray.prototype.infiltrate = function(position, element) {
+
+    var ia = new(ApplyProxyConstructor(InterleavedArray, element)) // element as InterleavedArray
+    var subarray = this.go(position)
+    var l = subarray.length
+
+    for (var i = 0; i &lt; ia.subarray.length; i++)
+        subarray.subarray[l + i] = ia.subarray[i]
+
+    Array.prototype.push.apply(subarray, ia)
+
+    return this
+}
+
+
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-go'>/**
+</span> * @method go
+ * Gains access to a subarray
+ *
+ * ### Example
+ *
+ *     var a = new InterleavedArray(4, [3, [2, 5]], 2, 1)
+ *
+ *     a.go().inspect()
+ *     //=&gt; 0: 4
+ *     //=&gt; 0.1: 3
+ *     //=&gt; 0.1.1: 2
+ *     //=&gt; 0.1.2: 5
+ *     //=&gt; 1: 2
+ *     //=&gt; 2: 1
+ *
+ *     a.go(0).inspect()
+ *     //=&gt; 0: 3
+ *     //=&gt; 0.1: 2
+ *     //=&gt; 0.2: 5
+ *
+ *     a.go(0.1).inspect()
+ *     //=&gt; 0: 2
+ *     //=&gt; 1: 5
+ *
+ *     var a = new InterleavedArray(4, [3, [2, [5]]], 2, 1)
+ *     a.go(&quot;1.1.2&quot;).inspect()
+ *     //=&gt; 0: 5
+ *     //=&gt; 0.1: 4
+ *
+ * @param  {String | Number} index Index of subarray
+ * @return {Array | InterleavedArray}       Nested array between two integer positions.
+ */
+InterleavedArray.prototype.go = function(index) {
+    var subarray = this
+
+    if (typeof(index) === &quot;undefined&quot;)
+        return subarray
+
+    var indices = index.toString().split(&quot;.&quot;)
+
+    for (var i = 0; i &lt; indices.length; i++)
+        subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
+
+    return subarray
+}
+
+
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-to_a'>/**
+</span> * @method to_a
+ * Converts to array
+ *
+ * ### Example
+ *
+ *     var a = new InterleavedArray(2, [3, 5])
+ *     //=&gt; {0: 2, 0.1: 3, 0.2: 5}
+ *     a.to_a()
+ *     //=&gt; [2, [3, 5]]
+ *     a.to_a(0)
+ *     //=&gt; [3, 5]
+ *
+ *     var a = new InterleavedArray(4, [3, [2, 5]], 2, 1)
+ *     a.to_a().toSource()
+ *     //=&gt; [4, [3, [2, 5]], 2, 1]
+ *
+ *     a.to_a(0).toSource()
+ *     //=&gt; [3, [2, 5]]
+ *
+ *     a.to_a(1).toSource()
+ *     //=&gt; []
+ *
+ *     var a = new InterleavedArray(1, 4, [3, [2, 7, [5, [4] ]], 2], 1)
+ *     a.to_a(&quot;1.1.2&quot;).toSource()
+ *     //=&gt; [5, [4]]
+ *
+ * @param  {String | Number | undefined} index The index of the position in the InterleavedArray
+ * @return {Array}                  array Returns the array with data. in the InterleavedArray
+ */
+InterleavedArray.prototype.to_a = function(index) {
+    var array = []
+
+    if (typeof(index) !== &quot;undefined&quot;)
+        try {
+            return this.go(index).to_a()
+        } catch (e) {
+            return []
+        }
+
+    for (var i = 0; i &lt; this.length; i++) {
+        array.push(this[i])
+        if (this &amp;&amp; this.subarray[i] &amp;&amp; &quot;to_a&quot; in this.subarray[i])
+            array.push(this.subarray[i].to_a())
+    }
+
+    return array
+}
+
+
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-keys'>/**
+</span> * @method keys
+ * Return the keys in the InterleavedArray
+ *
+ * ### Example
+ *
+ * var a = new InterleavedArray(0, 1, [5, [[7], 8, 9], 4)
+ * a.keys()
+ * //=&gt; [&quot;0&quot;, &quot;1&quot;, &quot;1.1&quot;, &quot;1.1.1&quot;, &quot;1.2&quot;, &quot;1.3&quot;, &quot;2&quot;]
+ *
+ * @return {Array} array The keys in order.
+ */
+InterleavedArray.prototype.keys = function() {
+
+    var array = Object.keys(this)
+    var aux;
+    for (var i = 0; i &lt; array.length; i++)
+        for (var j = i + 1; j &lt; array.length; j++)
+            if (array[i] &gt; array[j]) {
+                aux = array[i]
+                array[i] = array[j]
+                array[j] = aux
+            }
+    return array
+}
+
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-size'>/**
+</span> * @method size
+ * Return the number of elements in InterleavedArray
+ *
+ * @return {Number}
+ */
+InterleavedArray.prototype.size = function() {
+    if (this.subarray.length &gt; 0) {
+        var count = 0
+        for (var i = 0; i &lt; this.subarray.length; i++)
+            if (this.subarray[i] instanceof Array)
+                count += this.subarray[i].size()
+        return this.length + count
+    }
+    return this.length
+}
+
+<span id='Kernel-Foundation-Enumerable-InterleavedArray-method-inspect'>/**
+</span> * @method inspect
+ * Return the keys and value in the InterleavedArray
+ *
+ * ## Example
+ * var a = new InterleavedArray(1,[2, [3, 5]], [5, 1],3,[4])
+ * a.inspect()
+ * //=&gt; 0: 1
+ *      0.1: 2
+ *      0.1.1: 3
+ *      0.1.2: 5
+ *      1: undefined
+ *      1.1: 5
+ *      1.2: 1
+ *      2: 3
+ *      2.1: 4
+ *
+ * @param {String | void} index The position index.
+ * @return {string} txt All keys and values in the InterleavedArray.
+ */
+
+InterleavedArray.prototype.inspect = function(index) {
+    /*var txt = &quot;{\n&quot;
+    for (var i in this)
+       txt += i + &quot;: &quot; + this[i] + &quot;\n&quot;
+    return txt + &quot;\n}&quot;*/
+    var txt = &quot;&quot;
+    var position = &quot;&quot;
+    for (var i = 0; i &lt; this.length; i++) {
+        position = index + (i + 1) || i
+        txt += position + &quot;: &quot; + this[i] + &quot;\n&quot;
+        if (this.subarray[i] instanceof Array)
+            txt += this.subarray[i].inspect(position + &quot;.&quot;)
+    }
+    return txt
+}
+
+InterleavedArray.stop_enum = function(method) {
+    for (var i = 0; i &lt; method.length; i++)
+        Object.defineProperty(InterleavedArray.prototype, method[i], {
+            value: InterleavedArray.prototype[method[i]],
+            enumerable: false
+        })
+}
+InterleavedArray.stop_enum([&quot;go&quot;, &quot;inspect&quot;, &quot;enumerate&quot;, &quot;size&quot;, &quot;constructor&quot;, &quot;to_a&quot;, &quot;infiltrate&quot;, &quot;keys&quot;])
+
+// todo: Override the other Array methods in InterleavedArray</pre>
 </body>
 </html>
