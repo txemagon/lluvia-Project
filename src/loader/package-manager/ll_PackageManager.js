@@ -92,6 +92,23 @@ PackageManager.prototype.is_offer$U = function(name_package) {
     return is_offer
 }
 
+/**
+ *
+ */
+PackageManager.prototype.what_offers = function(){
+    var offers = ""
+
+    for(var i=0; i<this.offers.length; i++){
+        offers +=  this.offers[i]
+        if(i != this.offers.length - 1)
+            offers += ","
+    }
+
+    return offers
+}
+
+
+
 PackageManager.prototype.find_package = function(name_package) {
     var package = {}
 
