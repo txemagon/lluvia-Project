@@ -113,6 +113,13 @@ function InterleavedArray(elements) {
             this.enumerate(i, this.subarray[i])
 }
 
+/**
+ * @method enumerate
+ * Reenumerates all of the entries of the InterleavedArray
+ *
+ * @param  {Number|String} base_index Base number for the enumeration.
+ * @param  {InterleavedArray} subarray   Subelements to interleave
+ */
 InterleavedArray.prototype.enumerate = function(base_index, subarray) {
     for (var i = 0; i < subarray.length; i++) {
         var index = base_index + "." + (i + 1)
@@ -239,7 +246,7 @@ InterleavedArray.prototype.go = function(index) {
  *     a.to_a("1.1.2").toSource()
  *     //=> [5, [4]]
  *
- * @param  {String | Number | Void} index The index of the position in the InterleavedArray
+ * @param  {String | Number | undefined} index The index of the position in the InterleavedArray
  * @return {Array}                  array Returns the array with data. in the InterleavedArray
  */
 InterleavedArray.prototype.to_a = function(index) {
@@ -342,13 +349,13 @@ InterleavedArray.prototype.inspect = function(index) {
     return txt
 }
 
-function stop_enum(method) {
+InterleavedArray.stop_enum = function(method) {
     for (var i = 0; i < method.length; i++)
         Object.defineProperty(InterleavedArray.prototype, method[i], {
             value: InterleavedArray.prototype[method[i]],
             enumerable: false
         })
 }
-stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
+InterleavedArray.stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
 
 // todo: Override the other Array methods in InterleavedArray

@@ -14,6 +14,8 @@
  * @param {Array} arguments_array Array of arguments.
  */
 function ApplyProxyConstructor(Constructor, arguments_array) {
+    /* Convert to true Array, just in case is an Array like. */
+    arguments_array = Array.prototype.slice.call(arguments_array, 0)
     arguments_array.unshift(Constructor)
     return ProxyConstructor.apply(this, arguments_array)
 }

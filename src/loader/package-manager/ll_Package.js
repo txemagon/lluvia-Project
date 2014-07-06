@@ -3,15 +3,19 @@
  */
 function Package(pk){
  this.pk = pk || {}
+ //this.path = path || ""
 }
 
+// buscar la forma de qu los paquetes no se repitan, el path ya no vale
 Package.prototype.catalog = function(){
     var dependencies = ["requires", "provides", "offers"]
 
     for(var i in this.pk)
-        if (i != "path")
+        if (i != "path"){
             this[i] = this.pk[i]
+        }
         else{
+            alert(this.path)
             if (this._path[0] != "/")
                 this.path = this.path +  this.pk[i]
             else
@@ -46,9 +50,16 @@ Package.prototype.through = function(block, config){
                 return true
             return false
     }
-
+//Encontrar la forma de que no se repitan!!!!!!!!!
     for(var i=0; i<dependencies.length; i++){
-        if(actual_package[dependencies[i]]){
+        if(dependencies[i] == "this"){
+            if(!is_already_there$U(this.full_name())){
+                config.already_there.push(this.full_name())
+                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
+                block(this)
+            }
+        }
+        else if(actual_package[dependencies[i]]){
             for(var a=0; a<actual_package[dependencies[i]].length; a++){
                 //if(!is_already_there$U(actual_package[dependencies[i]][a].path)){
                 //    config.already_there.push(actual_package[dependencies[i]][a].path)

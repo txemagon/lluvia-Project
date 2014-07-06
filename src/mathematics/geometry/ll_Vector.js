@@ -9,7 +9,7 @@ Vector.prototype.constructor = Vector
 
 function Vector() {
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([ Vector | Coordinates | Array( {Coordinates} ) ])*
@@ -145,18 +145,18 @@ Vector.prototype.unit = function() {
 /**
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
- * @memberOf 	{vector}
- * @method 		lenght        returns a number whitch is the final result of the vector lenght.
+ * @memberOf    {vector}
+ * @method      lenght        returns a number whitch is the final result of the vector lenght.
  * @param       (Vector)      vector array of at least vector. Only one vector will be processed.
  *
  * @return      (Vector)      length
  *
  * Comments:   This function works creating a vector from the length of the biggest vector to add,
- *			  which initial elements are '0', and replace 0 by the addition of the terms of the vectors.
+ *            which initial elements are '0', and replace 0 by the addition of the terms of the vectors.
  */
 Vector.prototype.parseInput = function(args) {
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])*
@@ -219,7 +219,7 @@ Vector.prototype.cloneCoords = function(vectCpy) {
 
 Vector.prototype.add = function(vectAdd) {
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])*
@@ -256,7 +256,7 @@ Vector.prototype.add = function(vectAdd) {
 Vector.prototype.add$B = function(vectAdd) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -280,8 +280,8 @@ Vector.prototype.add$B = function(vectAdd) {
 /**
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
- * @memberOf 	{vector}
- * @method 		length        returns a number whitch is the final result of the vector length.
+ * @memberOf    {vector}
+ * @method      length        returns a number whitch is the final result of the vector length.
  * @param       (vector)      vector array of at least vector. Only one vector will be processed.
  *
  * @return      (vector)      lenght
@@ -289,12 +289,12 @@ Vector.prototype.add$B = function(vectAdd) {
  * Coded by: blitobaz
  *
  *Comments:   This function works creating a vector from the length of the biggest vector to substract,
- *			  witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
+ *            witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
  */
 Vector.prototype.subs = function(vectSubs) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -334,7 +334,7 @@ Vector.prototype.subs = function(vectSubs) {
 Vector.prototype.subs$B = function(vectSubs) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -367,16 +367,16 @@ Vector.prototype.subs$B = function(vectSubs) {
  *
  * r = v1·v2·v3 = v11 x v21 x v31 +  v12 x v22 x v32 + v13 x v23 x v33
  *
- * @memberOf	{Vector}
- * @method		dot			Returns a number that is the scalar product of two vectors.
- * @param 		{Vector} 	Vectors Array of at least two Vector. Only two vectors will be processed.
+ * @memberOf    {Vector}
+ * @method      dot         Returns a number that is the scalar product of two vectors.
+ * @param       {Vector}    Vectors Array of at least two Vector. Only two vectors will be processed.
  *
- * @return		{Number}	Scalar product
+ * @return      {Number}    Scalar product
  */
 Vector.prototype.dot = function(vectors) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -423,17 +423,16 @@ function _simple_cross(vector1, vectorArray) {
 
 /**
  * This fuction return the vector product of 2 vectors size 3.
+ * @method      cross        returns a vector which is the result of 2 vector product
  *
- * @memberOf 	{vector}
- * @method 		cross        returns a vector which is the result of 2 vector product
  * @param {Object} vectors
  *
- * coded by Antonio Carhuatocto
+ *
  */
 Vector.prototype.cross = function(vectors) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -479,7 +478,7 @@ function _simple_cross$B(vector1, vectorArray) {
 Vector.prototype.cross$B = function(vectors) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -509,16 +508,16 @@ Vector.prototype.cross$B = function(vectors) {
 
 /**
  * Returns the vector product of three vectors ((vector1 * vector2)*vector3).
- * @memberOf	{Vector}
- * @method		dCross		Returns an Array which is the vector product of three vectors.
- * @param 		{Vector} 	Vector Array of at least two components.
- * @var			{vectorAux}	Two parameters vector product.
- * @return		{Vector}		Vector product
+ * @memberOf    {Vector}
+ * @method      dCross      Returns an Array which is the vector product of three vectors.
+ * @param       {Vector}    Vector Array of at least two components.
+ * @var         {vectorAux} Two parameters vector product.
+ * @return      {Vector}        Vector product
  */
 Vector.prototype.dCross = function(vector1, vector2, vector3) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -544,7 +543,7 @@ Vector.prototype.dCross = function(vector1, vector2, vector3) {
 Vector.prototype.dCross$B = function(vector1, vector2, vector3) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -570,7 +569,7 @@ Vector.prototype.dCross$B = function(vector1, vector2, vector3) {
 /**
  * scale takes one vector and a number and returns the product of the scalar and the vecor.
  * Vector can be one scalar or an array of scalars. The order in the parameters is not important.
- * @param {Vector} vector	One vector for the scalar product.
+ * @param {Vector} vector   One vector for the scalar product.
  * @param {Number} number   One scalar for the scalar product.
  *
  * @return {Var} Returns either a number or an array with the scalar product of a Vector and a number
@@ -617,17 +616,17 @@ Vector.prototype.scale$B = function(vector, number) {
 
 /**
  * Projection of one vector over another.
- * @memberOf	{Vector}
- * @method		projection  Dice two vectors, we want obtain the orthogonal projection of one vector on another.
- * @param 		{Vector} 	Vectors Array of at least two vectors. Only two vectors will be processed
+ * @memberOf    {Vector}
+ * @method      projection  Dice two vectors, we want obtain the orthogonal projection of one vector on another.
+ * @param       {Vector}    Vectors Array of at least two vectors. Only two vectors will be processed
  
  *
- * @return		{Vector}	Proyection returns a vector
+ * @return      {Vector}    Proyection returns a vector
  */
 Vector.prototype.projection = function(vector1) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates] [Vector | Coordinates])
@@ -655,7 +654,7 @@ Vector.prototype.projection = function(vector1) {
 Vector.prototype.projection$B = function(vector1) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates] [Vector | Coordinates])
@@ -683,8 +682,8 @@ Vector.prototype.projection$B = function(vector1) {
 /**
  * This function compares vectors for finding a common point on its.
  *
- * @memberOf 	{vector}
- * @method 		linearCombination       returns true or false if there are or not linear combination.
+ * @memberOf    {vector}
+ * @method      linearCombination       returns true or false if there are or not linear combination.
  * @param       (vector)      vector array of at least vector.
  *
  * @return      (boolean)     boolean
@@ -692,12 +691,12 @@ Vector.prototype.projection$B = function(vector1) {
  * Coded by: blitobaz
  *
  *Comments:   This function works creating a vector from the length of the biggest vector to substract,
- *			  witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
+ *            witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
  */
 Vector.prototype.linearCombination$U = function(vectorSet) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -727,15 +726,15 @@ Vector.prototype.linearCombination$U = function(vectorSet) {
 
 /**
  * Returns the mixed triple product
- * @memberOf	{Vectors}
- * @method		box				Return .
- * @param 		{Vectors} 		Vectors Array of at least two Vector.only two vectors will be processed.
- * @return		{Number}		Box
+ * @memberOf    {Vectors}
+ * @method      box             Return .
+ * @param       {Vectors}       Vectors Array of at least two Vector.only two vectors will be processed.
+ * @return      {Number}        Box
  */
 Vector.prototype.box = function(vectors) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -772,16 +771,16 @@ Vector.prototype.box = function(vectors) {
 
 /**
  * Says if the vectors are in the same plane
- * @memberOf	{Vector}
- * @method		coplanar 		Returns true or false if the vectors are in the same plane.
- * @param 		{Vector}		Vectors Array of at least two Vector.Only two vectors will be processed.
+ * @memberOf    {Vector}
+ * @method      coplanar        Returns true or false if the vectors are in the same plane.
+ * @param       {Vector}        Vectors Array of at least two Vector.Only two vectors will be processed.
  *
- * @return		{Boolean}		True or false.
+ * @return      {Boolean}       True or false.
  */
 Vector.prototype.coplanar$U = function(vector) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * ([Vector | Coordinates])*
@@ -820,10 +819,10 @@ Vector.prototype.coplanar$U = function(vector) {
 // Calcular el angulo de este vector con otro.
 /**
  * Calculate the angle between two vectors
- * @memberOf	{Vectors}
- * @method		angle			Return the angle between two vectors.
- * @param 		{Vectors}
- * @return		{Number}		Angle
+ * @memberOf    {Vectors}
+ * @method      angle           Return the angle between two vectors.
+ * @param       {Vectors}
+ * @return      {Number}        Angle
  */
 Vector.prototype.angle = function() {
     v1 = new Vector(1, 1, 1)
@@ -842,8 +841,8 @@ Vector.prototype.angle = function() {
 /**
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
- * @memberOf 	{vector}
- * @method 		module        returns a number whitch is the final result of the vector lenght.
+ * @memberOf    {vector}
+ * @method      module        returns a number whitch is the final result of the vector lenght.
  * @param       (vector)      vector array of at least vector. Only one vector will be processed.
  *
  * @return      (number)      module
@@ -852,7 +851,7 @@ Vector.prototype.angle = function() {
 Vector.prototype.module = function() {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      *
@@ -883,10 +882,10 @@ Vector.prototype.module = function() {
 
 /**
  * Converts coordinates in cartesian system cylinder and the cylinder returns a vector.
- * @memberOf	{Vectors}
- * @method		toCylindrical	Returns cylindrical coordinates
- * @param 		{Vectors}
- * @return		{Number}		Coordinates
+ * @memberOf    {Vectors}
+ * @method      toCylindrical   Returns cylindrical coordinates
+ * @param       {Vectors}
+ * @return      {Number}        Coordinates
  */
 Vector.prototype.toCylindrical = function() {
     coords = []
@@ -914,8 +913,8 @@ Vector.prototype.toSpherical = function() {
 /**
  * This function calculates the torque of two vectors.
  *
- * @memberOf 	{vector}
- * @method 		torque       returns a vector which is the torque of another two vectors.
+ * @memberOf    {vector}
+ * @method      torque       returns a vector which is the torque of another two vectors.
  *
  * @param       (point, aplicationPoint, vector)    aplication point is a point of the vector.
  *
@@ -924,12 +923,12 @@ Vector.prototype.toSpherical = function() {
  *
  *
  *Comments:     this function creates a vector with two points (point and aplicationPoint)
- *				and calculates the cross of the resultant vector and the other vector.
+ *              and calculates the cross of the resultant vector and the other vector.
  */
 Vector.prototype.torque = function(point, vect) {
 
     /**
-     *	VALID INPUT!
+     *  VALID INPUT!
      *
      *   PARAMETER TYPES
      * (Vector Number)
@@ -951,8 +950,8 @@ Vector.prototype.torque = function(point, vect) {
 /**
  * This function calculates the torque of two vectors.
  *
- * @memberOf 	{vector}
- * @method 		value_of       returns a coordinates array.
+ * @memberOf    {vector}
+ * @method      value_of       returns a coordinates array.
  *
  * @return      (Array)     Coordinates
  *
@@ -963,12 +962,11 @@ Vector.prototype.value_of = function() {
 }
 
 /**
+ * @method      get_coord
  * This function return first coordinate of this vector.
  *
- * @memberOf    {Vector}
- * @method      get_coord    returns the first coordinate as an array.
  *
- * @return      (Object)     First coordinate
+ * @return {Object}     Returns the first coordinate as an array.
  *
  */
 Vector.prototype.get_coord = function() {
@@ -981,7 +979,7 @@ Vector.prototype.get_coord = function() {
         var pos = arguments[0] >= 'a' && arguments[0] <= 'z' ? arguments[0].charCodeAt(0) - "z".charCodeAt(0) + (this.Coord.length - 1) : arguments[0].charCodeAt(0) - "Z".charCodeAt(0) + (this.Coord.length - 1)
         return this.Coord[pos]
     }
-    return this.Coord[arguments[0]]
+    return this.Coord[arguments[0]] || 0
 }
 
 Vector.prototype.eql$U = function(model) {
@@ -997,3 +995,17 @@ Vector.is_valid_cs$U = function(cs) {
     })
 
 }
+
+/**
+ * @method get
+ *
+ *
+ * @param  {Number} coordinate Position in the Coord array
+ * @return {Number} Returns the value of the position passed as parameter.
+ *                  If it doesn't exist, returns 0
+ */
+Vector.prototype.get = function(coordinate) {
+    return this.Coord[coordinate] || 0
+}
+
+Vector.prototype._ = Vector.prototype.get

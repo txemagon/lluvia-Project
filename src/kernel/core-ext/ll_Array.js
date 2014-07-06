@@ -1540,6 +1540,7 @@ Array.prototype.values_at = function() {
 
 /**
  * @method  to_a
+ * @chainable
  * Returns self. If called on a subclass of Array, converts the receiver into an Array object.
  *
  * ### Example
@@ -1551,7 +1552,6 @@ Array.prototype.values_at = function() {
 Array.prototype.to_a = function() {
     return this
 }
-
 
 /**
  * @method  cycle
@@ -1603,6 +1603,7 @@ Array.prototype.strip_all = function() {
  * Generates all the possible combinations grouped by *number*.
  *
  * ### Example
+ *
  *      a = [1, 2, 3, 4]
  *      a.combination(1)  //=> [[1], [2], [3], [4]]
  *      a.combination(2)  //=> [[1,2], [1,3], [1,4], [2, 3], [2, 4], [3, 4]]
@@ -1668,7 +1669,6 @@ Array.prototype.__secure_combination = function(number, base, initial) {
                 result.push(r[j])
         else
             result.push(r)
-
     }
 
     return result.clone()

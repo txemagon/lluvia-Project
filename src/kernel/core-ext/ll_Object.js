@@ -62,6 +62,38 @@ Object.prototype.to_a = function() {
     return [this]
 }
 
+
+/**
+ * @method rip_array
+ * @static
+ * Creates a new Array extracting the integer keys of an object.
+ *
+ * ### Example
+ *
+ *     var a = {
+ *         name: "John",
+ *         1: "first son",
+ *         2: "daughter"
+ *     }
+ *
+ *     var b = Array.rip_array(a)
+ *     //=> [undefined, "first son", "daughter"]
+ *
+ * Even though Array.rip_array would be a better design, Array is not extensible.
+ *
+ * @param  {Object} object Model to rip numeric keys from.
+ * @return {Array}        New Array
+ */
+Object.prototype.rip_array = function(object) {
+    var res = []
+
+    for (var i in object)
+        if (parseInt(i))
+            res[parseInt(i)] = object[i]
+
+    return res
+}
+
 /**
  * @method alias
  *
@@ -701,9 +733,10 @@ Object.prototype.stop_enumerating(["to_a", "alias", "inspect", "own_keys",
     "instance_of$U",
     "bang_methods",
     "merge", "merge$B",
-    "keys", "self_keys", "respond_to", "respond_to$U",
+    "keys", "self_keys", "respond_to", "respond_to$U", "rip_array",
     "soft_merge", "soft_merge$B", "override", "override$B",
-    "method_missing", "stop_enumerating"
+    "method_missing", "stop_enumerating",
+    "tainted", "_trust", "_FROZEN", "value_of"
 ])
 
 Object.stop_enumerating("reflect")

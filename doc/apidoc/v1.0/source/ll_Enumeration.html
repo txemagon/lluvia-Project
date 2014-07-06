@@ -17,18 +17,17 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-Enumeration'>/**
 </span> * @class Kernel.Foundation.Enumerable.Enumeration
- *
  * Creates several symbolic constants
  *
- *    ### Example:
+ * ### Example:
  *
- *    Suit = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, &quot;diamonds&quot;, &quot;clovers&quot;)
- *    // { spades: 0, hearts: 1, diamonds: 2, clovers: 3}
+ *     Suit = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, &quot;diamonds&quot;, &quot;clovers&quot;)
+ *     // { spades: 0, hearts: 1, diamonds: 2, clovers: 3}
  *
- *    Suit.hearts == 1
- *    // =&gt; true
+ *     Suit.hearts == 1
+ *     // =&gt; true
  *
- *     var a = new Enumeration(&quot;spades&quot;, [&quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;]], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
  *     Object.keys(a.hearts)
  *     // =&gt; red,black
  *
@@ -36,20 +35,91 @@
  *     // =&gt; 1
  *
  *     a.hearts.red
- *     // =&gt; 0
+ *     // =&gt; 1
  *
+ * Attributes, as a.hearts, are holding
+ * {@link Kernel.Foundation.DataType.VersionNumber VersionNumber} objects.
+ *
+ * ### Inner Structure
+ *
+ *     {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *       	           &quot;red&quot;: 1,
+ *       	           &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *     }
+ *
+ * ### Sugar
+ *
+ *  Despite,
+ *
+ *     a.hearts.black == 2
+ *     //=&gt; true
+ *
+ * when stringifying,
+ *
+ *     a.hearts.black.toString()
+ *     //=&gt; &quot;1.2&quot;
+ *
+ * due to {@link Kernel.Foundation.DataType.VersionNumber VersionNumber} properties.
  */
-function Enumeration(){
-    for (var i=0; i&lt;arguments.length; i++)
-        if (arguments[i] instanceof Array){
-            this[arguments[i][0]] = new Number(i)
-            var subcases = new (ApplyProxyConstructor(Enumeration, arguments[i][1]))
-            for (var key in subcases)
-                Object.defineProperty(this[arguments[i][0]], key, {value: subcases[key], enumerable: true})
-        } else
-            this[arguments[i]] = i
 
-}
-</pre>
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-constructor'>/**
+</span> * @method constructor
+ * Create a list of constant given an
+ * {@link Kernel.Foundation.Enumerable.InterleavedArray InterleavedArray}
+ *
+ * ### Example
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ * @param {String...} constants List of constants to be used as an InterleavedArray.
+ */
+function Enumeration(constants) {
+    Object.defineProperty(this, &quot;ia&quot;, {
+        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),
+        enumerable: false,
+    })
+
+    /* this.ia
+       {
+	      &quot;0&quot;: &quot;spades&quot;,
+	      &quot;1&quot;: &quot;hearts&quot;,
+	      &quot;1.1&quot;: &quot;red&quot;,
+	      &quot;1.2&quot;: &quot;black&quot;,
+	      &quot;2&quot;: &quot;diamonds&quot;,
+	      &quot;3&quot;: &quot;clovers&quot;
+       }
+     will be turned inside this into:
+         {
+       &quot;spades&quot;: 0,
+       &quot;hearts&quot;: { 1,
+       	           &quot;red&quot;: 1,
+       	           &quot;black&quot;: 2
+                  },
+        &quot;diamonds&quot;: 2,
+        &quot;clovers&quot;: 3
+        }
+        in the following lines.
+     */
+
+    var keys = this.ia.keys()
+    for (var k = 0; k &lt; keys.length; k++) {
+        var ia_value = this.ia[keys[k]]
+        var deep = this
+        var key_chain = keys[k].split(&quot;.&quot;)
+
+        for (var i = 0; i &lt; key_chain.length - 1; i++) {
+            var parent = this.ia[key_chain.slice(0, i + 1).join(&quot;.&quot;)]
+
+            if (parent in deep)
+                deep = deep[parent]
+        }
+        deep[ia_value] = new VersionNumber(keys[k])
+    }
+}</pre>
 </body>
 </html>

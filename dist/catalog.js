@@ -1,8 +1,10 @@
 var $K_script_response = 
    {
+	"_path": "/src/",
 	"files": [],
 	"provides": [
 		   {
+			"_path": "/src/utils/",
 			"files": [
 				{"name": "ll_Events.js", "description": "Core javascript for the global object."},
 				{"name": "ll_Geometry.js", "description": "Exceptions."},
@@ -15,25 +17,13 @@ var $K_script_response =
 		 }
 ,
 		   {
-			"files": [
-				{"name": "ll_BrowserFeatures.js", "description": "Facilities to ensure browser compatibility."},
-				{"name": "ll_CodeBlockFinder.js", "description": "Finite Automaton for finding code blocks."},
-				{"name": "ll_HTMLElement.js", "description": "DOM utilities."},
-				{"name": "ll_JavascriptSource.js", "description": "Reads Javascript Files via AJAX and rips code blocks."},
-				{"name": "ll_Logger.js", "description": "Creates logger depending of the severity level."}],
-			"provides": [],
-			"requires": [],
-			"offers": [],
-			"package": "browser",
-			"description": "Facilities to ensure browser compatibility.",
-		 }
-,
-		   {
+			"_path": "/src/kernel/",
 			"files": [
 				{"name": "ll_Kernel.js", "description": "Core javascript for the global object."},
 				{"name": "ll_Exception.js", "description": "Exceptions."}],
 			"provides": [
 				   {
+					"_path": "/src/kernel/core-ext/",
 					"files": [
 						{"name": "ll_Object.js", "description": "Redefinition of Object class."},
 						{"name": "ll_Number.js", "description": "Something for Numbers."},
@@ -48,9 +38,11 @@ var $K_script_response =
 				 }
 ,
 				   {
+					"_path": "/src/kernel/facilities/",
 					"files": [],
 					"provides": [
 						   {
+							"_path": "/src/kernel/facilities/class/",
 							"files": [
 								{"name": "ll_ClassFactory.js", "description": "Utility for automating class creation."},
 								{"name": "ll_ClassTemplate.js", "description": "Utility for creating a constructor giving a default object."}],
@@ -68,9 +60,22 @@ var $K_script_response =
 				 }
 ,
 				   {
+					"_path": "/src/kernel/foundation/",
 					"files": [],
 					"provides": [
 						   {
+							"_path": "/src/kernel/foundation/data-type/",
+							"files": [
+								{"name": "ll_VersionNumber.js", "description": "Semantic Version numbers."}],
+							"provides": [],
+							"requires": [],
+							"offers": [],
+							"package": "DataType",
+							"description": "Provides new data types.",
+						 }
+,
+						   {
+							"_path": "/src/kernel/foundation/architecture/",
 							"files": [
 								{"name": "ll_Module.js", "description": "Base class of all Class."},
 								{"name": "ll_Class.js", "description": "Base class of all classes"},
@@ -85,6 +90,7 @@ var $K_script_response =
 						 }
 ,
 						   {
+							"_path": "/src/kernel/foundation/enumerable/",
 							"files": [
 								{"name": "ll_Set.js", "description": "Array with not repeated elements."},
 								{"name": "ll_Hash.js", "description": "Hash, Dictionary, Map"},
@@ -111,18 +117,19 @@ var $K_script_response =
 			"package": "kernel",
 			"description": "Javascript extensions && global objects.",
 		 }
-],
-	"requires": [
+,
 		   {
+			"_path": "/src/loader/",
 			"files": [
 				{"name": "log_module_interface.js", "description": ""},
 				{"name": "log_module_load.js", "description": ""}],
 			"provides": [],
 			"requires": [
 				   {
+					"_path": "/src/loader/package-manager/",
 					"files": [
-						{"name": "package.js", "description": ""},
-						{"name": "package_manager.js", "description": ""}],
+						{"name": "ll_Package.js", "description": "Software package"},
+						{"name": "ll_PackageManager.js", "description": "Client pointer towards packages server."}],
 					"provides": [],
 					"requires": [],
 					"offers": [],
@@ -134,9 +141,26 @@ var $K_script_response =
 			"package": "loader",
 			"description": "Mechanism to request remote files from the server.",
 		 }
+,
+		   {
+			"_path": "/src/browser/",
+			"files": [
+				{"name": "ll_BrowserFeatures.js", "description": "Facilities to ensure browser compatibility."},
+				{"name": "ll_CodeBlockFinder.js", "description": "Finite Automaton for finding code blocks."},
+				{"name": "ll_HTMLElement.js", "description": "DOM utilities."},
+				{"name": "ll_JavascriptSource.js", "description": "Reads Javascript Files via AJAX and rips code blocks."},
+				{"name": "ll_Logger.js", "description": "Creates logger depending of the severity level."}],
+			"provides": [],
+			"requires": [],
+			"offers": [],
+			"package": "browser",
+			"description": "Facilities to ensure browser compatibility.",
+		 }
 ],
+	"requires": [],
 	"offers": [
 		   {
+			"_path": "/src/engine/",
 			"files": [
 				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
 				{"name": "ll_Thread.js", "description": "Thread functionality."},
@@ -155,11 +179,13 @@ var $K_script_response =
 		 }
 ,
 		   {
+			"_path": "/src/mathematics/",
 			"files": [
 				{"name": "ll_Angle.js", "description": "Class Angle."},
 				{"name": "ll_Expression.js", "description": "Mathematical expression."}],
 			"provides": [
 				   {
+					"_path": "/src/mathematics/analysis/",
 					"files": [
 						{"name": "ll_Complex_Instance.js", "description": "Objext of class Complex."},
 						{"name": "ll_Complex_Static.js", "description": "Class Complex."}],
@@ -171,6 +197,7 @@ var $K_script_response =
 				 }
 ,
 				   {
+					"_path": "/src/mathematics/function/",
 					"files": [
 						{"name": "ll_func.js", "description": "Mathematical functions."},
 						{"name": "ll_Trail.js", "description": "Function discretization."}],
@@ -182,6 +209,7 @@ var $K_script_response =
 				 }
 ,
 				   {
+					"_path": "/src/mathematics/geometry/",
 					"files": [
 						{"name": "Vector_Static.js", "description": "Class Angle."},
 						{"name": "ll_FixedVector.js", "description": "Class Angle."},
@@ -191,6 +219,7 @@ var $K_script_response =
 					"requires": [],
 					"offers": [
 						   {
+							"_path": "/src/mathematics/geometry/shape/",
 							"files": [
 								{"name": "ll_Line.js", "description": "."},
 								{"name": "ll_Path.js", "description": "."},

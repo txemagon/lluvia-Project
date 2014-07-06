@@ -1,9 +1,7 @@
 {
-"package": "lluvia",
-"description": "lluvia loader. User application loader. Booter.",
-"files": [],
-"provides": ["utils", "browser", "kernel"],
-"requires": ["loader"],
-"offers":   ["engine", "mathematics"]
+    "package": "lluvia",
+    "description": "lluvia loader. User application loader. Booter.",
+    "files": [],
+    "provides": ["utils", "kernel", "loader", "browser"],
+    "offers": ["engine", "mathematics"]
 }
-

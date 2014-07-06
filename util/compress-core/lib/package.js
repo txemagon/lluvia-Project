@@ -411,7 +411,7 @@ Package.prototype.inspect = function(level) {
             }
             text += "],"
         }
-        else if(this[i] != this._path)
+        else 
             text += "\n" + tabulation(level) + "\"" + i + "\"" + ": " + JSON.stringify(this[i]) + ","
     
         text += "\n" + tabulation(level-1) +" }\n" 

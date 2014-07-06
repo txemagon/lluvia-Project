@@ -1,7 +1,31 @@
-<html>
-<head >
-	 <script src="../../dist/lluvia.js" language="JavaScript"> </script> 
-	 <script src="main.js" language="JavaScript"> </script> 
-</head>
-<body onload="main()"></body>
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>lluvia</title>
+        <script src="../../dist/lluvia.js" language="JavaScript"> </script>
+        <script src="javascript/test.js" language="JavaScript"> </script>
+        <script src="javascript/main.js" language="JavaScript"> </script>
+        <style type="text/css">
+            body {
+                font-family: arial, Sans, Helvetica;
+                color: #222;
+            }
+
+            #page {
+                width: 1000px;
+                margin: 40px auto 0 auto;
+            }
+        </style>
+    </head>
+    <body onload="main()">
+        <div id="page">
+            <h1><span style="color: #33C;">lluvia</span><span style="color: #116;">Project</span></h1>
+            <div id="output">
+                <span style="color: red; font-style: italic;">loading...</span> <br/> 
+                This message shall change into <span style="font-style: italic; color: blue;">loaded</span> if
+                no errors present in your code.
+            </div>
+        </div>
+    </body>
 </html>
