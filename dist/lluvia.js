@@ -2394,9 +2394,11 @@ function Package(pk){
 Package.prototype.catalog = function(){
     var dependencies = ["requires", "provides", "offers"]
     for(var i in this.pk)
-        if (i != "path")
+        if (i != "path"){
             this[i] = this.pk[i]
+        }
         else{
+            alert(this.path)
             if (this._path[0] != "/")
                 this.path = this.path +  this.pk[i]
             else
@@ -2462,9 +2464,9 @@ PackageManager.prototype.get_catalog = function() {
     if (!this.catalog.length)
         this.include_script(this.uri + "/dist/" + "catalog.js")
 }
-PackageManager.prototype.create_catalog = function() {
+PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
-    var pk = new Package($K_script_response)
+    var pk = new Package(initial_package)
     this.catalog.push(pk)
     pk.catalog()
     pk.through(function(pk) {
@@ -2502,8 +2504,9 @@ PackageManager.prototype.find_package = function(name_package) {
 PackageManager.prototype.drop = function(name_package) {
     if (this.is_offer$U(name_package)) {
         var package = this.find_package(name_package)
-        for (var i = 0; i < package.files.length; i++)
-            this.include_script(this.uri + "/src/mathematics/geometry/shape/" + package.files[0].name)
+        for (var i = 0; i < package.files.length; i++){
+            this.include_script(this.uri + package._path + package.files[i].name)
+        }
     }
 }
 function giveme_node(id){
@@ -2795,5 +2798,5 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
-var p = new PackageManager("/home/txema/work/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
 p.get_catalog()

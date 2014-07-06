@@ -3,6 +3,7 @@
  */
 function Package(pk){
  this.pk = pk || {}
+ //this.path = path || ""
 }
 
 // buscar la forma de qu los paquetes no se repitan, el path ya no vale
@@ -10,9 +11,11 @@ Package.prototype.catalog = function(){
     var dependencies = ["requires", "provides", "offers"]
 
     for(var i in this.pk)
-        if (i != "path")
+        if (i != "path"){
             this[i] = this.pk[i]
+        }
         else{
+            alert(this.path)
             if (this._path[0] != "/")
                 this.path = this.path +  this.pk[i]
             else
