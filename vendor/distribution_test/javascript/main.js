@@ -5,9 +5,12 @@ function loaded() {
 }
 
 function main() {
-    // Write some test if you like to see if they work.
-    var a = new Enumeration("paused", "running", ["era1", "era2", ["level1"], "era3"])
-    alert(a.running.inspect())
+    /* 
+    Write some test if you like to see if they work inside test function.
+    File test.js is added to git but discarded inside .gitignore. This
+    way your local tests won't overlap with other programmers' tests.
+    */
+    test()
 
     // If we get to this line the page will display: "loaded"
     loaded()
