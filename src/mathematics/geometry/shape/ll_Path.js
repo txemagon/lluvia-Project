@@ -12,7 +12,7 @@
 */
 
 Path.prototype = new Array
-extend(Path, Line)
+//extend(Path, Line)
 Path.prototype.constructor = Path
 
 /**

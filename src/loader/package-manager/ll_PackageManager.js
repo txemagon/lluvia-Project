@@ -50,9 +50,9 @@ PackageManager.prototype.get_catalog = function() {
 /**
  *
  */
-PackageManager.prototype.create_catalog = function() {
+PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
-    var pk = new Package($K_script_response)
+    var pk = new Package(initial_package)
     this.catalog.push(pk)
     pk.catalog()
     pk.through(function(pk) {
@@ -110,7 +110,8 @@ PackageManager.prototype.find_package = function(name_package) {
 PackageManager.prototype.drop = function(name_package) {
     if (this.is_offer$U(name_package)) {
         var package = this.find_package(name_package)
-        for (var i = 0; i < package.files.length; i++)
-            this.include_script(this.uri + "/src/mathematics/geometry/shape/" + package.files[0].name)
+        for (var i = 0; i < package.files.length; i++){
+            this.include_script(this.uri + package._path + package.files[i].name)
+        }
     }
 }
