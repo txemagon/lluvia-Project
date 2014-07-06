@@ -424,10 +424,10 @@ function _simple_cross(vector1, vectorArray) {
 /**
  * This fuction return the vector product of 2 vectors size 3.
  * @method 		cross        returns a vector which is the result of 2 vector product
- * 
+ *
  * @param {Object} vectors
  *
- * 
+ *
  */
 Vector.prototype.cross = function(vectors) {
 
@@ -962,9 +962,9 @@ Vector.prototype.value_of = function() {
 }
 
 /**
- * @method      get_coord    
- * This function return first coordinate of this vector. 
- * 
+ * @method      get_coord
+ * This function return first coordinate of this vector.
+ *
  *
  * @return {Object}     Returns the first coordinate as an array.
  *
@@ -999,12 +999,12 @@ Vector.is_valid_cs$U = function(cs) {
 /**
  * @method get
  *
- * 
+ *
  * @param  {Number} coordinate Position in the Coord array
- * @return {Number} Returns the value of the position passed as parameter. 
+ * @return {Number} Returns the value of the position passed as parameter.
  *                  If it doesn't exist, returns 0
  */
-Vector.prototype.get(coordinate) {
+Vector.prototype.get = function(coordinate) {
     return this.Coord[coordinate] || 0
 }
 
