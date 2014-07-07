@@ -241,17 +241,38 @@ VersionNumber.prototype.valueOf = function() {
  * ### Example
  *
  *     var a = new VersionNumber("2.3.5")
+ *     //=> { 2: {3: {5: {}}}}
  *     a.branch("", "era1")
+ *     //=> {
+ *     //=>   2: {3: {5: {}}},
+ *     //=>   era1: {}
+ *     //=> }
  *     a.branch("2.3", "era1", "era2")
+ *     //=> {
+ *     //=>   2: {3: {5: {},
+ *     //=>           era1: {},
+ *     //=>           era2: {}
+ *     //=> }}}
  *     a.branch("2.3", "era1", "era2:1.5.7")
+ *     //=> {
+ *     //=>   2: {3: {5: {},
+ *     //=>           era1: {},
+ *     //=>           era2: { 1: { 5: {7: {}}}}
+ *     //=> }}}
  *     a.branch("2.3", "era1", "era2", new VersionNumber("1.5.3"), "era4")
+ *     //=> {
+ *     //=>   2: {3: {5: {},
+ *     //=>           era1: {},
+ *     //=>           era2: { 1: { 5: {3: {}}}}
+ *     //=> }}}
  *
  * VersionNumber can be used as labels: Please be careful. It can lead you to errors.
  *
  *     a.branch("2.3", new VersionNumber("1.3"), function action(){} )
  *     //=> {
- *     //=>   2: {3: {}},
- *     //=>   "1.3": function action(){}
+ *     //=>   2: {
+ *     //=>        3: {"1.3": function action(){} }
+ *     //=>      }
  *     //=> }
  *
  * The above example can drive you to mistake a["1.3"] as a is VersionNumber when it
