@@ -112,3 +112,10 @@ assert("Fixed Vector can return the virial of itself.",
     'c', '46',
     'var a = new FixedVector( [2,5], [3,8] ); \
         var c = a.virial()')
+
+
+assert("Fixed Vector can return the virial of itself.",
+    'c', '[0, 23.873530416456102, -5.30522898143469]',
+    'var a = new FixedVector(new Vector(1,7,6), new Vector(3,0,0)); \
+        var b = new FixedVector(new Vector(5,2,9), new Vector(7,6,1)); \
+        var c = a.planar_momentum(b)')

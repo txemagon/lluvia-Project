@@ -293,6 +293,13 @@ FixedVector.prototype.virial = function() {
  * @method planar_momentum
  * Momentum of a vector in a plane
  *
+ * ###Example:
+ *    var a = new FixedVector(new Vector(3,5,6), new Vector(4,0,3))
+ *    var b = new FixedVector(new Vector(5,2,9), new Vector(8,2,3))
+ *    var c = a.planar_momentum(b)
+ *    c
+ *    //=> [4.786344211304795, 16.75220473956678, -6.381792281739726]
+ *
  * @param {FixedVector} vec FixedVector to operate with
  * @param {FixedVector} plane_pt FixedVector made from a point in the plane
  *

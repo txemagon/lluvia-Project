@@ -11,6 +11,7 @@ VectorSystem.super = Array
 function VectorSystem(vectors) {
     for (var i = 0; i < arguments.length; i++)
         this.push(arguments[i])
+
 }
 
 VectorSystem.prototype.push = function(elements) {
