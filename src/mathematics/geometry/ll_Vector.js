@@ -14,15 +14,11 @@ function Vector() {
      *   PARAMETER TYPES
      * ([ Vector | Coordinates | Array( {Coordinates} ) ])*
      */
-    var _Coord = []
+    _Coord = []
+
     var coord_temp = []
     var coordinate_system
     var that = this
-    var argument = []
-
-    for (var i = 0; i < arguments.length; i++)
-        _Coord.push(arguments[i])
-
     this.Coord = []
 
     for (var i = 0; i < 20; i++)
@@ -40,6 +36,12 @@ function Vector() {
                 }
             })()
         })
+
+    var argument = []
+
+    for (var i = 0; i < arguments.length; i++)
+        this.Coord.push(arguments[i])
+
 
     // arguments is not array, just array-like
     for (var i = 0; i < arguments.length; i++)

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Engine-EventDispatcher-method-constructor'><span id='Engine-EventDispatcher'>/**
+</span></span> * @class Engine.EventDispatcher
+ * @extends ThreadAutomata
+ *
+ * Handle in and out asynchronous communications via a message queue
+ * and a listener mechanism (ports).
+ *
+ * @constructor
+ * Creates a EventDispatcher.
+ *
+ * @param {Object} lookup
+ *
+ */
+
+EventDispatcher.prototype = new ThreadAutomata
+EventDispatcher.prototype.constructor = EventDispatcher
+
+function EventDispatcher(lookup){
+	// Private static vars
+	var that = this; // Class reference for static functions
+	this.ids   = 0
+	this.ports = {
+		 // List event listeners. &quot;app_down&quot;: []
+	}
+
+	// Public vars
+	this.inqueue = []
+	this.clss = that	// Reference for static members to be used inside instances
+
+	// Privileged methods
+	this.getId = function(){return ++that.ids;}
+
+	// Initialization
+	lookup.add(this)
+}
+
+<span id='Engine-EventDispatcher-method-enqueue'>/**
+</span> * @method enqueue
+ *
+ * Receives incoming messages stamping the arrival number. The arrival
+ * order can be used to identificate messages.
+ *
+ * @param {Object} mssg Message object pushed into the message queue.
+ *
+ * @return {Number} Order of arrival
+ *
+ */
+EventDispatcher.prototype.enqueue = function(mssg){
+	var ev = this
+	mssg.received = {id: ev.getId(), time: new Date()};
+	this.inqueue.push(mssg)
+	return mssg.received.id
+}
+
+<span id='Engine-EventDispatcher-method-addPort'>/**
+</span> * @method addPort
+ *
+ * Adds an specific device referer in the list of event listeners for a
+ * particular event.
+ *
+ * @param {String} event Name of the event to listen
+ * @param {Object} device Device to be added to the ports array (dock).
+ *
+ */
+EventDispatcher.prototype.addPort = function (event, device){
+	if (this.ports[event])
+		this.ports[event].push(device)
+}
+
+<span id='Engine-EventDispatcher-method-joinPorts'>/**
+</span> * @method joinPorts
+ *
+ * Builds an empty dock (port array) for every event.
+ *
+ * @param {Array} listArray
+ */
+EventDispatcher.prototype.joinPorts = function (listArray){
+	for (var i=0; i&lt;listArray.length; i++)
+		this.ports[listArray[i]] = []
+}
+
+<span id='Engine-EventDispatcher-method-delPort'>/**
+</span> * @method delPort
+ *
+ * Removes a listener from the dock.
+ *
+ * @param {Object} event Event that we were listening to
+ * @param {Object} device Device to be deleted to the ports array
+ *
+ */
+EventDispatcher.prototype.delPort = function (event, device){
+	if (this.clss.ports[event])
+		for (var i=0; i&lt;this.clss.ports.length; i++)
+			if (this.clss.ports[i] === device)
+				this.clss.ports[i].splice(i,1)
+}
+
+<span id='Engine-EventDispatcher-method-fireEvent'>/**
+</span> * @method fireEvent
+ *
+ * Notifies to all the listeners that this device has generated an event.
+ *
+ * @param {Object} event Event generated
+ */
+EventDispatcher.prototype.fireEvent = function(event){
+	if (this.clss.ports[event.name])
+		for (var i=0; i&lt;this.clss.ports[event.name].length; i++)
+			this.clss.ports[event.name][i](event);
+}
+
+<span id='Engine-EventDispatcher-method-shift'>/**
+</span> * @method shift
+ *
+ * Extract messages from the queue and send them
+ * to the device default dispatcher. If the dispatcher
+ * has closed the message being processed then it removes
+ * it from the message queue. Otherwise is kept until
+ * operations around this message are finished.
+ *
+ * @return {Boolean} true Confirms removal
+ */
+EventDispatcher.prototype.shift = function(){ //attend the inqueue
+	for (var i=0; i&lt;this.inqueue.length; i++)
+		try {
+			var mssg = this.inqueue[i]
+			if (mssg.status[mssg.current] === &quot;closed&quot;)
+				this.inqueue.splice(i, 1)
+			if (this.inqueue[i]) {
+				mssg = this.inqueue[i]
+				if (mssg.status[mssg.current] === &quot;sent&quot;) {
+					this.device.attend(arguments[0], mssg)
+					mssg.current++
+				}
+			}
+		} catch (e) {
+			if ($K_debug_level &gt;= $KC_dl.PROGRAMMER)
+			   alert(&quot;No event handler for message. \nException: &quot; + e.toSource())
+		}
+	return true;
+}
+
+<span id='Engine-EventDispatcher-method-run'>/**
+</span> * @method run
+ *
+ * Drives the incoming message queue.
+ *
+ * @return {Boolean} true
+ */
+EventDispatcher.prototype.run = function(){
+	return shift.apply(this, arguments)
+}
+</pre>
+</body>
+</html>

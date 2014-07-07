@@ -1,5 +1,5 @@
 /**
- * @class kernel.foundation.enumerable.ArrayClass
+ * @class Kernel.Foundation.Enumerable.ArrayClass
  * Creates an Array-like object that can modify its length property
  *
  */

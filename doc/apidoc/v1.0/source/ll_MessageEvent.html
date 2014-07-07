@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @author txema
+ */
+
+/* Example event 
+{
+    &quot;sync&quot;: {	type    : &quot;synchronous&quot;,           // Message type
+	name: &quot;app_down&quot;,
+	creation: {creator: null, time: null},     // Reference to creator object and creation time
+	current : 0,                               // Index of current status.
+	status  : [&quot;sent&quot;, &quot;attended&quot;, &quot;closed&quot;]}, // Valid object status
+	event   : {
+	    &quot;app_down&quot;: null                       // Inner data specific to the particular event
+	}
+	this.rId = null;                           // Inqueue assigned id
+}
+*/
+
+var systemEv = (function(){
+
+
+    return (function $_sev(type, event, behalf){
+	var args = arguments
+	function setup(){
+	    var sEvs = {
+		&quot;sync&quot;: {	type    : &quot;synchronous&quot;,					// Message type
+		    name	: null,
+		    creation: {creator: null, time: null},		// Reference to creator object and creation time
+		    current : 0,								// Index of current status.
+		    status  : [&quot;sent&quot;, &quot;attended&quot;, &quot;closed&quot;],	// Valid object status
+		    event   : {}
+		}
+	    }
+	    newOb = sEvs[type]
+	    newOb.name             = event.name
+	    newOb.event[event.name]= event
+	    newOb.creation.creator = (typeof (behalf) === &quot;object&quot;)? behalf : null
+	    newOb.creation.time    = new Date()
+	    return newOb
+	}
+	var ob_msg = setup(  )
+	$_sev.yield(ob_msg)
+	return  ob_msg; })
+
+})()
+
+<span id='global-property-'>/**
+</span> * Syntax:
+ *
+ * SystemEv(type_of_message, {name: message_name, data: extra_data}[, creator_reference] [, setup_function] )
+ *
+ * You can provide an specific setup function for a particular message
+ *
+ * Example of use:
+ *
+ * alert(systemEv(&quot;sync&quot;, {name: &quot;activated&quot;, data: &quot;no extra data available&quot;}).toSource())
+ *
+ * systemEv(&quot;sync&quot;, {name: &quot;activated&quot;, data: &quot;no extra data available&quot;}, function(p){alert(p.toSource());})
+ *
+ * systemEv(&quot;sync&quot;, {name: &quot;activated&quot;, data: &quot;no extra data available&quot;}, new Date(), function(p){alert(p.toSource());})
+ *
+ systemEv( &quot;sync&quot;, {name: &quot;activated&quot;, data: &quot;no extra data available&quot;},
+ new Date(),
+ function(msg){
+ msg.event[&quot;activated&quot;].data = &quot;this is an activation message&quot;;
+ alert(msg.toSource());
+ }
+ )
+ */
+
+
+</pre>
+</body>
+</html>

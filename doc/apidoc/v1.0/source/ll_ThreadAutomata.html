@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">
+ThreadAutomata.prototype  = new Thread;
+extend(ThreadAutomata, Automata);
+
+ThreadAutomata.prototype.constructor = ThreadAutomata;
+
+<span id='Engine-ThreadAutomata'>/**
+</span> * @class Engine.ThreadAutomata
+ * Creates an automata for atomic processing.
+ */
+
+<span id='Engine-ThreadAutomata-method-constructor'>/**
+</span> * @method constructor
+ * 
+ * @param {Object} state			Available automata states.
+ * @param {Object} currentState	    Initial automata state.
+ * @param {Object} solicitor		Functions state managers.
+ * @return {ThreadAutomata}			Newly created automata.
+ */
+function ThreadAutomata(state, currentState, solicitor, processor){
+	if (arguments.length){
+		Automata.call(this, state, currentState, solicitor);
+		Thread.call(this, ThreadAutomata.prototype.run, processor);
+	}
+}
+
+
+<span id='Engine-ThreadAutomata-method-run'>/**
+</span> * Calls a function that manages the next activity in function
+ * for the state of the object. It is responsible of state transitions through Automata#run.
+ * The main difference between ThreadAutomata#run and Automata#run lies on
+ * the type of the solicitor functions, designed to make atomic operations.
+ *
+ * @method	  run
+ *
+ */
+
+ThreadAutomata.prototype.run = function(processors_time){
+	if (this.now)
+		this.before = this.now
+	this.now    = processors_time
+	Automata.prototype.run.call(this, this.now, this.before);
+}
+
+
+</pre>
+</body>
+</html>

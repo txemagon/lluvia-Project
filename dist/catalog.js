@@ -98,7 +98,8 @@ var $K_script_response =
 								{"name": "ll_Constant.js", "description": "String-Number equivalence."},
 								{"name": "ll_Enumeration.js", "description": "Object with keys associated to consecutive numbers."},
 								{"name": "ll_Map.js", "description": "True Map where objects can be keys."},
-								{"name": "ll_InterleavedArray.js", "description": "Array with special indices. ie '1.2.1' "}],
+								{"name": "ll_InterleavedArray.js", "description": "Array with special indices. ie '1.2.1' "},
+								{"name": "ll_ArrayClass.js", "description": "Array that can modify length property"}],
 							"provides": [],
 							"requires": [],
 							"offers": [],
@@ -155,27 +156,6 @@ var $K_script_response =
 			"offers": [],
 			"package": "browser",
 			"description": "Facilities to ensure browser compatibility.",
-		 }
-],
-	"requires": [],
-	"offers": [
-		   {
-			"_path": "/src/engine/",
-			"files": [
-				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
-				{"name": "ll_Thread.js", "description": "Thread functionality."},
-				{"name": "ll_Automata.js", "description": "Finite automaton."},
-				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
-				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},
-				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
-				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
-				{"name": "ll_Lookup.js", "description": ""},
-				{"name": "ll_MessageEvent.js", "description": "Message generator."}],
-			"provides": [],
-			"requires": [],
-			"offers": [],
-			"package": "engine",
-			"description": "Event and execution control.",
 		 }
 ,
 		   {
@@ -241,6 +221,27 @@ var $K_script_response =
 			"description": "Mathematics library.",
 		 }
 ],
+	"requires": [],
+	"offers": [
+		   {
+			"_path": "/src/engine/",
+			"files": [
+				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
+				{"name": "ll_Thread.js", "description": "Thread functionality."},
+				{"name": "ll_Automata.js", "description": "Finite automaton."},
+				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
+				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},
+				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
+				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
+				{"name": "ll_Lookup.js", "description": ""},
+				{"name": "ll_MessageEvent.js", "description": "Message generator."}],
+			"provides": [],
+			"requires": [],
+			"offers": [],
+			"package": "engine",
+			"description": "Event and execution control.",
+		 }
+,],
 	"package": "lluvia",
 	"description": "lluvia loader. User application loader. Booter.",
  }

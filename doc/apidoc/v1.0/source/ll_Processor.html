@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Processor'>/**
+</span> * @class Processor
+ * Multiprocess components / state machines
+ * Create a Processor to run threads.
+ * lluviaProject provides a default processor $Processor in the global scope.
+ *
+ */
+
+Processor.prototype.constructor = Processor;
+<span id='Processor-method-constructor'>/**
+</span> * @method constructor
+ * @return				{Processor}	retuns a new processor.
+ */
+function Processor(){
+
+	// Variables member
+	this.now	 = new Date();
+	this.events  = new Event();
+	this.threads = new Array();
+}
+
+
+// Operations
+
+<span id='Processor-method-register'>/**
+</span> * Add a thread in the execution queue
+ * @method		register
+ * @param		{Thread}    cObject		Is the caller object to be porocessed through the thread interface.
+ * @param		{Function}  solicitorF		Control loop object. Typically &quot;run&quot;.
+ */
+Processor.prototype.register = function(cObject, solicitorF){
+	var obj = null
+	var fun = null
+	if (cObject){
+		obj = cObject
+		if (solicitorF)
+			fun = solicitorF
+		else if (cObject.run)
+			fun = cObject.run
+		if (!fun)
+			throw &quot;The current processor can´t get a valid solicitor&quot;
+
+	}
+
+	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
+
+}
+
+<span id='Processor-method-kill'>/**
+</span> * Removes a thread out of the execution queue.
+ *
+ * @method		 kill
+ * @param		{Thread}		rObject		Object to be removed from the execution queue.
+ * @param		{Function}	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
+ */
+Processor.prototype.kill = function(rObject, solicitorF){
+	for (var i in this.threads)
+		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
+			this.threads.slice(i,i+1);
+}
+
+<span id='Processor-method-step'>/**
+</span> * Execute all threads one step.
+ *
+ * @method		step
+ */
+Processor.prototype.step = function (date){
+
+	this.now = date || new Date();
+	try {
+	  for (var i=0; i&lt;this.threads.length; i++)
+            this.threads[i].solicitor.call(this.threads[i].object, this.now);
+    }
+    catch (e) {
+
+    }
+}
+
+<span id='Processor-method-run'>/**
+</span> * @method run
+ * Execute all threads. Top processors are called by themselves.
+ * Lower tiers can belong (be registered) in another&#39;s Processor#thread. Then
+ * a date is passed as a parameter in order to keep lower time lags between
+ * Thread#run calls. Thus, all registered threads are informed of the same (date)
+ * time.
+ *
+ * @param {Date} date Parent&#39;s processor time.
+ *
+ */
+Processor.prototype.run = function (date){
+    this.now =  new Date();
+    try {
+	this.step(this.now)
+    }
+    catch (e) {
+
+    }
+
+    setTimeout(this.run.bind(this), 20);
+}
+
+<span id='Processor-method-start'>/**
+</span> * @method start
+ *
+ * Start Processor#run cycle.
+ */
+Processor.prototype.start = function(){
+    this.run()
+    return this;
+}
+
+<span id='Processor-method-newThread'>/**
+</span> * @method newThread
+ * Executes periodically a function in a new Thread.
+ *
+ * Not tested. ruby -e &quot;puts &#39;sorry &#39; * 20&quot;
+ *
+ * ### Example
+ *
+ *    $Processor.newThread(function() {
+ *      for (var i=0; i&lt;1000; i++)
+ *         &quot;Love others as your code&quot;
+ *    })
+ */
+Processor.prototype.newThread = function(){
+    var t = new Thread(null, this)
+
+    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
+    return t;
+}
+
+<span id='Processor-method-get'>/**
+</span> *  @method get
+ *  Stereotypical mirage fetcher. Get objects or functions passed as a reference or
+ *  belonging to a class hierarchy.
+ *  A object can be repeated as long as you can push an object twice in the threads array
+ *  with the same or different solicitor function. Processor#get avoids repetion as
+ *  in sql select distinct.
+ *
+ * @param {Object} object object or class reference.
+ * @return {Array}  Array with collected objects or an empty array is anything is found.
+ */
+Processor.prototype.get = Processor.prototype.get = function (object) {
+    var collect = []
+
+    var len = this.threads.length
+    for (var i=0; i&lt;len; i++) {
+	var candidate = this.threads[i].object
+       if ( candidate &amp;&amp; !collect.include$U(candidate) &amp;&amp;
+	    ( candidate == object ||  candidate instanceof object )
+	  )
+      collect.push(candidate)
+    }
+
+    return collect
+}
+
+// Global Application Processor creation
+$Processor = new Processor().start()
+
+
+
+</pre>
+</body>
+</html>

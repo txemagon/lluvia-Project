@@ -16,7 +16,7 @@
  *  as much as you can.
  */
 
-/**
+/*
  *
  * a = {a: 2, b:3}
  * b = Object.extend(a)
@@ -740,14 +740,3 @@ Object.prototype.stop_enumerating(["to_a", "alias", "inspect", "own_keys",
 ])
 
 Object.stop_enumerating("reflect")
-
-
-// remove value property. Now is widely used by Harmony.
-/* Value property has to be defined at the end, as long as
- * it is used by defined property */
-Object.defineProperty(Object.prototype, "value", {
-    value: function() {
-        return this.value_of()
-    },
-    enumerable: false
-})
