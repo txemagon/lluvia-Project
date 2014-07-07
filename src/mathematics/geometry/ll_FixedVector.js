@@ -27,41 +27,61 @@ FixedVector.super = Vector
  *     //=> this._head = (0,0)
  *     //=> this.Coord = (0,0)
  *
- *     new FixedVector( [new Vector(3,5)] )
+ *     new FixedVector( new Vector(3,5) )
  *     //=> this.foot = (0,0)
  *     //=> this._head = (3,5)
  *     //=> this.Coord = (3,5)
  *
- *     new FixedVector( [new Vector(8,2)], true )
+ *     new FixedVector( new Vector(8,2), "abs" )
  *     //=> this.foot = (0,0)
  *     //=> this._head = (8,2)
  *     //=> this.Coord = (8,2)
  *
- *     new FixedVector([ [new Vector(3,5), new Vector(6,1) ])
+ *     new FixedVector( new Vector(3,5), new Vector(6,1) )
  *     //=> this.foot = (6,1)
  *     //=> this._head = (9,6)
  *     //=> this.Coord = (3,5)
  *
- *     new FixedVector([ [3,5], new Vector(6,2) ])
+ *     new FixedVector( [3,5], new Vector(6,2) )
  *     //=> this.foot = (6,2)
  *     //=> this._head = (9,7)
  *     //=> this.Coord = (3,5)
  *
- *     new FixedVector([ [3,5], [4,2] ])
+ *     new FixedVector( [3,5], [4,2] )
  *     //=> this.foot = (4,2)
  *     //=> this._head = (7,7)
  *     //=> this.Coord = (3,5)
  *
- *     new FixedVector([ [3,1], [5,2] ], true)
+ *     new FixedVector( [3,1], [5,2] , "abs")
  *     //=> this.foot = (5,2)
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
  *
- *     new FixedVector([ new Vector(3,1), [5,2] ], "abs")
+ *     new FixedVector( new Vector(3,1), [5,2], "abs")
  *     //=> this.foot = (5,2)
  *     //=> this._head = (8,3)
  *     //=> this.Coord = (-2,-1)
  *
+ *     new FixedVector( "abs", [5,2] )
+ *     //=> this.foot = (0,0)
+ *     //=> this._head = (5,3)
+ *     //=> this.Coord = (5,2)
+ *
+ *     new FixedVector( [2,6], "abs" )
+ *     //=> this.foot = (0,0)
+ *     //=> this._head = (2,6)
+ *     //=> this.Coord = (2,6)
+ *
+ *     new FixedVector([ new Vector(3,1), [5,2], "abs" ])
+ *     //=> this.foot = (5,2)
+ *     //=> this._head = (8,3)
+ *     //=> this.Coord = (-2,-1)
+ *
+ *     var a = new FixedVector([2,6], "abs", new Vector(3,8))
+ *     var b = new FixedVector(a)
+ *     //=> this.foot = (3,8)
+ *     //=> this._head = (2,6)
+ *     //=> this.Coord = (-1,-2)
  *
  * //NOTA: Vector.prototype.add.call(this, this.foot) //suma this a this.foot usando el metodo de vector
  *
@@ -71,19 +91,7 @@ FixedVector.super = Vector
  *
  * @return {Vector}
  *
- * new Fv()
- * new Fv([2,3], [3,5])
- * new Fv([2,3])
- * new Fv([2,6], 'abs')
- * new Fv([2,6], [5,4], 'abs')
- * new Fv([2,6], 'abs', [5,4])
- * new Fv('abs', [2,6], [5,4])
- * new Fv('abs', [2,6])
- * new Fv('abs', [2,6], v2) // v2 is a vector
- * new Fv(v1, v2)
  * new Fv(fixed) // Clones fixed into a new FixedVector (Copy Constructor)
- *
- * new Fv([[2,6], [5,4], 'abs'])
  */
 
 function FixedVector(input) {
