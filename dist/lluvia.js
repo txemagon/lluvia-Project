@@ -1,216 +1,3 @@
-Function.prototype.bind = function (object)
-{
-	var method = this;
-	return function ()
-	{
-		return method.apply(object, arguments);
-	};
-};
-function Event()
-{
-	this.events = [];
-	this.builtinEvts = [];
-}
-Event.prototype.getActionIdx = function(obj,evt,action,binding)
-{
-	if(obj && evt)
-	{
-		var curel = this.events[obj][evt];
-		if(curel)
-		{
-			var len = curel.length;
-			for(var i = len-1;i >= 0;i--)
-			{
-				if(curel[i].action == action && curel[i].binding == binding)
-				{
-					return i;
-				}
-			}
-		}
-		else
-		{
-			return -1;
-		}
-	}
-	return -1;
-};
-Event.prototype.addListener = function(obj,evt,action,binding)
-{
-	if(this.events[obj])
-	{
-		if(this.events[obj][evt])
-		{
-			if(this.getActionIdx(obj,evt,action,binding) == -1)
-			{
-				var curevt = this.events[obj][evt];
-				curevt[curevt.length] = {action:action,binding:binding};
-			}
-		}
-		else
-		{
-			this.events[obj][evt] = [];
-			this.events[obj][evt][0] = {action:action,binding:binding};
-		}
-	}
-	else
-	{
-		this.events[obj] = [];
-		this.events[obj][evt] = [];
-		this.events[obj][evt][0] = {action:action,binding:binding};
-	}
-};
-Event.prototype.removeListener = function(obj,evt,action,binding)
-{
-	if(this.events[obj])
-	{
-		if(this.events[obj][evt])
-		{
-			var idx = this.actionExists(obj,evt,action,binding);
-			if(idx >= 0)
-			{
-				this.events[obj][evt].splice(idx,1);
-			}
-		}
-	}
-};
-Event.prototype.fireEvent = function(e,obj,evt,args)
-{
-	if(!e){e = window.event;}
-	if(obj && this.events)
-	{
-		var evtel = this.events[obj];
-		if(evtel)
-		{
-			var curel = evtel[evt];
-			if(curel)
-			{
-				for(var act in curel)
-				{
-					var action = curel[act].action;
-					if(curel[act].binding)
-					{
-						action = action.bind(curel[act].binding);
-					}
-					action(e,args);
-				}
-			}
-		}
-	}
-};
-Event.prototype.getBuiltinListenerIdx = function(obj,evt,action,binding)
-{
-	for(var i = this.builtinEvts.length-1;i >= 0;i--)
-	{
-		var ArrayEl = this.builtinEvts[i];
-		if(ArrayEl)
-			if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action && ArrayEl.binding == binding)
-				return i;
-	}
-	return -1;
-};
-Event.prototype.addBuiltinListener = function(obj,evt,action,binding, captura)
-{
-	if(obj && evt && action)
-	{
-		if(this.getBuiltinListenerIdx(obj,evt,action,binding) < 0)
-		{
-			var boundAction = action;
-			if(binding)
-				boundAction = action.bind(binding);
-			if(obj.addEventListener)
-				if (!captura)
-					obj.addEventListener(evt,boundAction, false);
-				else
-					obj.addEventListener(evt,boundAction, captura);
-			else if(obj.attachEvent)
-				obj.attachEvent('on' + evt,boundAction);
-			else
-				obj['on' + evt] = boundAction;
-			this.builtinEvts[this.builtinEvts.length] = {obj:obj,evt:evt,action:action,binding:binding,boundAction:boundAction};
-		}
-	}
-};
-Event.prototype.removeBuiltinListener = function(obj,evt,action,binding)
-{
-	for(var i = this.builtinEvts.length-1;i >= 0;i--)
-	{
-		var ArrayEl = this.builtinEvts[i];
-		if(ArrayEl)
-		{
-			if(obj && evt && action && binding){
-				if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action && ArrayEl.binding == binding)
-				{
-					this.detachListener(ArrayEl,i);
-					break;
-				}
-			}else if(obj && evt && action){
-				if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action)
-					this.detachListener(ArrayEl,i);
-			}else if(obj && evt){
-				if(ArrayEl.obj == obj && ArrayEl.evt == evt)
-					this.detachListener(ArrayEl,i);
-			}else if(obj){
-				if(ArrayEl.obj == obj)
-					this.detachListener(ArrayEl,i);
-			}else
-				this.detachListener(ArrayEl,i);
-		}
-	}
-};
-Event.prototype.detachListener = function(arrayEl,idx)
-{
-	var obj = arrayEl.obj;
-	var evt = arrayEl.evt;
-	var boundAction = arrayEl.boundAction;
-	if(obj.removeEventListener)
-		obj.removeEventListener(evt,boundAction,false);
-	evt = 'on' + evt;
-	if(obj.detachEvent)
-		obj.detachEvent(evt,boundAction);
-	obj[evt] = null;
-	delete arrayEl.obj;
-	delete arrayEl.evt;
-	delete arrayEl.action;
-	delete arrayEl.binding;
-	delete arrayEl.boundAction;
-	delete this.builtinEvts[idx];
-	this.builtinEvts.splice(idx,1);
-};
-Point.prototype.constructor = Point;
-function Point(coordX, coordY){
-	if ((arguments.length == 1) && (arguments[0] instanceof Point)){
-		this.x = arguments[0].x;
-		this.y = arguments[0].y;
-		return this;
-	}
-	this.x = coordX;
-	this.y = coordY;}
-Point.prototype.multiply = function (amount){
-	this.x *= amount;
-	this.y *= amount;}
-Point.prototype.divide = function (amount){
-	this.x /= amount;
-	this.y /= amount;}
-rectangle.prototype.constructor = rectangle;
-function rectangle(coord,dimen){
-	this.x0 = coord.x;
-	this.y0 = coord.y;
-	this.x1 = this.x0 + dimen.x;
-	this.y1 = this.y0 + dimen.y;}
-rectangle.prototype.getRectDimen = function(){
-			return new Point(this.x1 - this.x0, this.y1 - this.y0);
-} 
-rectangle.prototype.getRectCoord = function(){
-	return new Point(this.x0, this.y0);}rectangle.prototype.displace = function (despl){
-	this.x0 += despl.x;
-	this.y0 += despl.y;
-	this.x1 += despl.x;
-	this.y1 += despl.y;
-}
-rectangle.prototype.elarge = function (despl){
-	this.x1 += despl.x;
-	this.y1 += despl.y;}
-Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
 Object.prototype.to_a = function() {
     return [this]
 }
@@ -2388,272 +2175,6 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-function Package(pk){
- this.pk = pk || {}
-}
-Package.prototype.catalog = function(already){
-    var dependencies = ["requires", "provides", "offers"]
-    var already_there = already || []
-    for(var i in this.pk)
-        this[i] = this.pk[i]
-    function is_already_there$U(path){
-        for(var i=0; i<already_there.length; i++)
-            if(already_there[i] == path)
-                return true
-            return false
-    }
-    for(var i=0; i<dependencies.length; i++)
-        if(this[dependencies[i]]){
-            for(var a=0; a<this[dependencies[i]].length; a++){
-                if(!is_already_there$U(this[dependencies[i]][a]._path)){
-                    already_there.push(this[dependencies[i]][a]._path)
-                    var new_pk = new Package(this[dependencies[i]][a])
-                    new_pk.catalog(already_there)
-                    this[dependencies[i]][a] = new_pk
-                }
-            }
-        }
-}
-Package.prototype.through = function(block, config){ 
-    var config = config || {}
-    config.last_package = config.last_package || this
-    config.already_there = config.already_there || []
-    var actual_package = config.last_package
-    var dependencies = ["requires", "this", "provides", "offers"]
-    function is_already_there$U(path){
-        for(var i=0; i<config.already_there.length; i++)
-            if(config.already_there[i] == path)
-                return true
-            return false
-    }
-    for(var i=0; i<dependencies.length; i++){
-        if(dependencies[i] == "this"){
-            if(!is_already_there$U(this._path)){
-                config.already_there.push(this._path)
-                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
-                block(this)
-            }
-        }
-        else if(actual_package[dependencies[i]]){
-            for(var a=0; a<actual_package[dependencies[i]].length; a++){
-                if(!is_already_there$U(actual_package[dependencies[i]][a]._path)){
-                    config.already_there.push(actual_package[dependencies[i]][a]._path)
-                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], already_there: config.already_there})
-                    block(actual_package[dependencies[i]][a])
-                }
-            }
-        }
-    }
-}
-function PackageManager(uri) {
-    this.uri = uri
-    this.packages_server = []
-    this.catalog = []
-    this.offers = []
-}
-PackageManager.all_packages = []
-PackageManager.prototype.wait = function() {
-    setTimeout(10, PackageManager.prototype.wait)
-}
-PackageManager.prototype.include_script = function(src) {
-    $K_script_response = 0
-    var script = document.createElement('script')
-    script.setAttribute('type', 'text/javascript')
-    script.src = src
-    script.async = false
-    document.getElementsByTagName('head')[0].appendChild(script)
-    this.wait()
-}
-PackageManager.prototype.get_catalog = function() {
-    if (!this.catalog.length)
-        this.include_script(this.uri + "/dist/" + "catalog.js")
-}
-PackageManager.prototype.create_catalog = function(initial_package) {
-    var that = this
-    var pk = new Package(initial_package)
-    this.catalog.push(pk)
-    pk.catalog()
-    pk.through(function(pk) {
-        for (var i = 0; i < pk.offers.length; i++) {
-            that.offers.push(pk.offers[i].package)
-        }
-    })
-}
-PackageManager.prototype.is_in$U = function(name_package) {
-    var exist = false
-    for (var i = 0; i < this.catalog.length; i++)
-        this.catalog[i].through(function(pk) {
-            if (pk.package == name_package)
-                exist = true
-        })
-    return exist
-}
-PackageManager.prototype.is_offer$U = function(name_package) {
-    var is_offer = false
-    for (var i = 0; i < this.offers.length; i++)
-        if (this.offers[i] == name_package) {
-            is_offer = true
-        }
-    return is_offer
-}
-PackageManager.prototype.what_offers = function(){
-    var offers = ""
-    for(var i=0; i<this.offers.length; i++){
-        offers +=  this.offers[i]
-        if(i != this.offers.length - 1)
-            offers += ","
-    }
-    return offers
-}
-PackageManager.prototype.find_package = function(name_package) {
-    var package = {}
-    for (var i = 0; i < this.catalog.length; i++)
-        this.catalog[i].through(function(pk) {
-            if (pk.package == name_package)
-                package = pk
-        })
-    return package
-}
-PackageManager.prototype.drop = function(name_package) {
-    if (this.is_offer$U(name_package)) {
-        var package = this.find_package(name_package)
-        for (var i = 0; i < package.files.length; i++){
-            this.include_script(this.uri + package._path + package.files[i].name)
-        }
-    }
-}
-function giveme_node(id){
-  var node = document.getElementById(id)
-  if (!node){
-    node = document.createElement("div")
-    node.setAttribute("id", id)
-    document.getElementsByTagName("body")[0].appendChild(node)
-  }
-  return node
-}
-function get_log_load(){
-    return lluvia_load =giveme_node("lluvia_load")
-}
-function explain(div, title, text){
-    var whole_html_text = ""
-    if (div) {
-        whole_html_text += title + ": " + text + "<br/>\n"
-        div.innerHTML += whole_html_text
-    }
-}
-function ll_module_to_include(module_source){
-    explain(get_log_load(), "About to load module", module_source.module)
-    module_loading[module_source.module] = new LogModuleLoad(module_source)
-}
-function ll_module_included(module_source){
-    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
-}
-function ll_file_included(file_source, module_source, last_file, last_module){
-    module_loading[module_source.module].addFile(file_source)
-    if (last_file) 
-        ll_module_included(module_source)
-    if (last_file && last_module)
-      if (!$K_loading_app && $K_app_dependencies){
-         $K_loading_app = true
-         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
-      }else
-        ll_start()
-}
-function highlight(language){
-    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
-    code = document.getElementsByTagName('pre')
-    for (var i = 0; i < code.length; i++) 
-        if (code[i].className == language) 
-            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
-}
-function ll_start(){
-  try{
-    highlight('javascript')
-  } catch(err){;}
-  if (typeof(main) == "function")
-      try{ main() } catch (err) { Exception.parse(err) }
-}
-function sanitize(code){
-    return code.replace("&lt;", "<")
-}
-function run(code_fragment){
-    var snippets = document.getElementsByName(code_fragment)	
-    for (var i = 0; i < snippets.length; i++) 	    
-        eval(sanitize(snippets[i].innerHTML))
-}
-function clear(div){
-    div = div || "debug"
-    giveme_node("debug").innerHTML = ""
-}
-var module_loading = {}
-function $timeStamp(){
-  var dat = new Date()
-  var timestamp = ""
-  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
-  return timestamp
-}
-function LogFileIncluded(file_source){
-  this.template = [
-    "<div class='_LogFile'>",
-    file_source.name,
-    " [" + $timeStamp() + "]",
-    ": ",
-    file_source.description,
-    "</div>"
-  ]
-}
-LogFileIncluded.prototype.toString = function(){
-  return this.template.join("")
-}
-function LogModuleLoad(module_source){
-  this.template = [
-      "<div class='_LogModule'>",
-      "<h3 class='_LogModuleName'> MODULE: ",
-      "I02:Module Name",
-      "</h3>\n",
-      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
-      "I05: Module Path",
-      ")</span>\n<br/>",
-      "<span class='_LogModuleDescription'>",
-      "I08: Module Description",
-      "</span>\n<br/>",
-      "Load Start Time: ",
-      "I11: start Time",
-      "<br/>\n",
-      "Load Finish Time: ",
-      "I14: Finish Time: ",
-      "<br/>\n",
-      "Load Time: ",
-      "I17: Elapsed Time: ",
-      " s.<br/>",
-      "FILES:<br/>",
-      "I20: FILES",
-      "<br/>",
-      "</div>"
-    ]
- this.start = new Date().getTime()
- this.end   = new Date().getTime()
- this.template[11] = $timeStamp()
- this.template[2]  = module_source.module
- this.template[5]  = module_source.path
- this.template[8]  = module_source.description
- this.files = []
-}
-LogModuleLoad.prototype.addFile = function(file_source){
- this.files.push(new LogFileIncluded(file_source))
-}
-LogModuleLoad.prototype.endLoad = function(){
-  this.end   = new Date().getTime()
-  this.template[14] = $timeStamp()     
-  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
-  return this.toString()
-}
-LogModuleLoad.prototype.toString = function(){  
-  this.template[20] = ""
-  for (var i=0; i<this.files.length; i++)
-    this.template[20] += this.files[i].toString()
-  return this.template.join('\n')
-}
 function navigator_version() { return navigator.appVersion }
 function is_firefox(ffversion){
 	ffversion = ffversion || ""
@@ -2811,5 +2332,485 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
-var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
+Function.prototype.bind = function (object)
+{
+	var method = this;
+	return function ()
+	{
+		return method.apply(object, arguments);
+	};
+};
+function Event()
+{
+	this.events = [];
+	this.builtinEvts = [];
+}
+Event.prototype.getActionIdx = function(obj,evt,action,binding)
+{
+	if(obj && evt)
+	{
+		var curel = this.events[obj][evt];
+		if(curel)
+		{
+			var len = curel.length;
+			for(var i = len-1;i >= 0;i--)
+			{
+				if(curel[i].action == action && curel[i].binding == binding)
+				{
+					return i;
+				}
+			}
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	return -1;
+};
+Event.prototype.addListener = function(obj,evt,action,binding)
+{
+	if(this.events[obj])
+	{
+		if(this.events[obj][evt])
+		{
+			if(this.getActionIdx(obj,evt,action,binding) == -1)
+			{
+				var curevt = this.events[obj][evt];
+				curevt[curevt.length] = {action:action,binding:binding};
+			}
+		}
+		else
+		{
+			this.events[obj][evt] = [];
+			this.events[obj][evt][0] = {action:action,binding:binding};
+		}
+	}
+	else
+	{
+		this.events[obj] = [];
+		this.events[obj][evt] = [];
+		this.events[obj][evt][0] = {action:action,binding:binding};
+	}
+};
+Event.prototype.removeListener = function(obj,evt,action,binding)
+{
+	if(this.events[obj])
+	{
+		if(this.events[obj][evt])
+		{
+			var idx = this.actionExists(obj,evt,action,binding);
+			if(idx >= 0)
+			{
+				this.events[obj][evt].splice(idx,1);
+			}
+		}
+	}
+};
+Event.prototype.fireEvent = function(e,obj,evt,args)
+{
+	if(!e){e = window.event;}
+	if(obj && this.events)
+	{
+		var evtel = this.events[obj];
+		if(evtel)
+		{
+			var curel = evtel[evt];
+			if(curel)
+			{
+				for(var act in curel)
+				{
+					var action = curel[act].action;
+					if(curel[act].binding)
+					{
+						action = action.bind(curel[act].binding);
+					}
+					action(e,args);
+				}
+			}
+		}
+	}
+};
+Event.prototype.getBuiltinListenerIdx = function(obj,evt,action,binding)
+{
+	for(var i = this.builtinEvts.length-1;i >= 0;i--)
+	{
+		var ArrayEl = this.builtinEvts[i];
+		if(ArrayEl)
+			if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action && ArrayEl.binding == binding)
+				return i;
+	}
+	return -1;
+};
+Event.prototype.addBuiltinListener = function(obj,evt,action,binding, captura)
+{
+	if(obj && evt && action)
+	{
+		if(this.getBuiltinListenerIdx(obj,evt,action,binding) < 0)
+		{
+			var boundAction = action;
+			if(binding)
+				boundAction = action.bind(binding);
+			if(obj.addEventListener)
+				if (!captura)
+					obj.addEventListener(evt,boundAction, false);
+				else
+					obj.addEventListener(evt,boundAction, captura);
+			else if(obj.attachEvent)
+				obj.attachEvent('on' + evt,boundAction);
+			else
+				obj['on' + evt] = boundAction;
+			this.builtinEvts[this.builtinEvts.length] = {obj:obj,evt:evt,action:action,binding:binding,boundAction:boundAction};
+		}
+	}
+};
+Event.prototype.removeBuiltinListener = function(obj,evt,action,binding)
+{
+	for(var i = this.builtinEvts.length-1;i >= 0;i--)
+	{
+		var ArrayEl = this.builtinEvts[i];
+		if(ArrayEl)
+		{
+			if(obj && evt && action && binding){
+				if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action && ArrayEl.binding == binding)
+				{
+					this.detachListener(ArrayEl,i);
+					break;
+				}
+			}else if(obj && evt && action){
+				if(ArrayEl.obj == obj && ArrayEl.evt == evt && ArrayEl.action == action)
+					this.detachListener(ArrayEl,i);
+			}else if(obj && evt){
+				if(ArrayEl.obj == obj && ArrayEl.evt == evt)
+					this.detachListener(ArrayEl,i);
+			}else if(obj){
+				if(ArrayEl.obj == obj)
+					this.detachListener(ArrayEl,i);
+			}else
+				this.detachListener(ArrayEl,i);
+		}
+	}
+};
+Event.prototype.detachListener = function(arrayEl,idx)
+{
+	var obj = arrayEl.obj;
+	var evt = arrayEl.evt;
+	var boundAction = arrayEl.boundAction;
+	if(obj.removeEventListener)
+		obj.removeEventListener(evt,boundAction,false);
+	evt = 'on' + evt;
+	if(obj.detachEvent)
+		obj.detachEvent(evt,boundAction);
+	obj[evt] = null;
+	delete arrayEl.obj;
+	delete arrayEl.evt;
+	delete arrayEl.action;
+	delete arrayEl.binding;
+	delete arrayEl.boundAction;
+	delete this.builtinEvts[idx];
+	this.builtinEvts.splice(idx,1);
+};
+Point.prototype.constructor = Point;
+function Point(coordX, coordY){
+	if ((arguments.length == 1) && (arguments[0] instanceof Point)){
+		this.x = arguments[0].x;
+		this.y = arguments[0].y;
+		return this;
+	}
+	this.x = coordX;
+	this.y = coordY;}
+Point.prototype.multiply = function (amount){
+	this.x *= amount;
+	this.y *= amount;}
+Point.prototype.divide = function (amount){
+	this.x /= amount;
+	this.y /= amount;}
+rectangle.prototype.constructor = rectangle;
+function rectangle(coord,dimen){
+	this.x0 = coord.x;
+	this.y0 = coord.y;
+	this.x1 = this.x0 + dimen.x;
+	this.y1 = this.y0 + dimen.y;}
+rectangle.prototype.getRectDimen = function(){
+			return new Point(this.x1 - this.x0, this.y1 - this.y0);
+} 
+rectangle.prototype.getRectCoord = function(){
+	return new Point(this.x0, this.y0);}rectangle.prototype.displace = function (despl){
+	this.x0 += despl.x;
+	this.y0 += despl.y;
+	this.x1 += despl.x;
+	this.y1 += despl.y;
+}
+rectangle.prototype.elarge = function (despl){
+	this.x1 += despl.x;
+	this.y1 += despl.y;}
+Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+function Package(pk){
+ this.pk = pk || {}
+}
+Package.prototype.catalog = function(already){
+    var dependencies = ["requires", "provides", "offers"]
+    var already_there = already || []
+    for(var i in this.pk)
+        this[i] = this.pk[i]
+    function is_already_there$U(path){
+        for(var i=0; i<already_there.length; i++)
+            if(already_there[i] == path)
+                return true
+            return false
+    }
+    for(var i=0; i<dependencies.length; i++)
+        if(this[dependencies[i]]){
+            for(var a=0; a<this[dependencies[i]].length; a++){
+                if(!is_already_there$U(this[dependencies[i]][a]._path)){
+                    already_there.push(this[dependencies[i]][a]._path)
+                    var new_pk = new Package(this[dependencies[i]][a])
+                    new_pk.catalog(already_there)
+                    this[dependencies[i]][a] = new_pk
+                }
+            }
+        }
+}
+Package.prototype.through = function(block, config){ 
+    var config = config || {}
+    config.last_package = config.last_package || this
+    config.already_there = config.already_there || []
+    var actual_package = config.last_package
+    var dependencies = ["requires", "this", "provides", "offers"]
+    function is_already_there$U(path){
+        for(var i=0; i<config.already_there.length; i++)
+            if(config.already_there[i] == path)
+                return true
+            return false
+    }
+    for(var i=0; i<dependencies.length; i++){
+        if(dependencies[i] == "this"){
+            if(!is_already_there$U(this._path)){
+                config.already_there.push(this._path)
+                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
+                block(this)
+            }
+        }
+        else if(actual_package[dependencies[i]]){
+            for(var a=0; a<actual_package[dependencies[i]].length; a++){
+                if(!is_already_there$U(actual_package[dependencies[i]][a]._path)){
+                    config.already_there.push(actual_package[dependencies[i]][a]._path)
+                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], already_there: config.already_there})
+                    block(actual_package[dependencies[i]][a])
+                }
+            }
+        }
+    }
+}
+function PackageManager(uri) {
+    this.uri = uri
+    this.packages_server = []
+    this.catalog = []
+    this.offers = []
+}
+PackageManager.all_packages = []
+PackageManager.offers = []
+PackageManager.wait = function() {
+    setTimeout(10, PackageManager.wait)
+}
+PackageManager.include_script = function(src) {
+    $K_script_response = 0
+    var script = document.createElement('script')
+    script.setAttribute('type', 'text/javascript')
+    script.src = src
+    script.async = false
+    document.getElementsByTagName('head')[0].appendChild(script)
+    this.wait()
+}
+PackageManager.prototype.get_catalog = function() {
+    if (!this.catalog.length)
+        PackageManager.include_script(this.uri + "/dist/" + "catalog.js")
+}
+PackageManager.prototype.create_catalog = function(initial_package) {
+    var that = this
+    var pk = new Package(initial_package)
+    PackageManager.all_packages.push(pk)
+    pk.catalog()
+    pk.through(function(pk) {
+        for (var i = 0; i < pk.offers.length; i++) {
+            PackageManager.offers.push(pk.offers[i].package)
+        }
+    })
+}
+PackageManager.prototype.is_in$U = function(name_package) {
+    var exist = false
+    for (var i = 0; i < this.catalog.length; i++)
+        this.catalog[i].through(function(pk) {
+            if (pk.package == name_package)
+                exist = true
+        })
+    return exist
+}
+PackageManager.is_offer$U = function(name_package) {
+    var is_offer = false
+    for (var i = 0; i < PackageManager.offers.length; i++)
+        if (PackageManager.offers[i] == name_package) {
+            is_offer = true
+        }
+    return is_offer
+}
+PackageManager.prototype.what_offers = function(){
+    var offers = ""
+    for(var i=0; i<this.offers.length; i++){
+        offers +=  this.offers[i]
+        if(i != this.offers.length - 1)
+            offers += ","
+    }
+    return offers
+}
+PackageManager.find_package = function(name_package) {
+    var package = {}
+    for (var i = 0; i < PackageManager.all_packages.length; i++)
+        PackageManager.all_packages[i].through(function(pk) {
+            if (pk.package == name_package)
+                package = pk
+        })
+    return package
+}
+PackageManager.drop = function(server, name_package) {
+    if (PackageManager.is_offer$U(name_package)) {
+        var package = PackageManager.find_package(name_package)
+        for (var i = 0; i < package.files.length; i++){
+            PackageManager.include_script(server.uri + package._path + package.files[i].name)
+        }
+    }
+}
+function giveme_node(id){
+  var node = document.getElementById(id)
+  if (!node){
+    node = document.createElement("div")
+    node.setAttribute("id", id)
+    document.getElementsByTagName("body")[0].appendChild(node)
+  }
+  return node
+}
+function get_log_load(){
+    return lluvia_load =giveme_node("lluvia_load")
+}
+function explain(div, title, text){
+    var whole_html_text = ""
+    if (div) {
+        whole_html_text += title + ": " + text + "<br/>\n"
+        div.innerHTML += whole_html_text
+    }
+}
+function ll_module_to_include(module_source){
+    explain(get_log_load(), "About to load module", module_source.module)
+    module_loading[module_source.module] = new LogModuleLoad(module_source)
+}
+function ll_module_included(module_source){
+    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
+}
+function ll_file_included(file_source, module_source, last_file, last_module){
+    module_loading[module_source.module].addFile(file_source)
+    if (last_file) 
+        ll_module_included(module_source)
+    if (last_file && last_module)
+      if (!$K_loading_app && $K_app_dependencies){
+         $K_loading_app = true
+         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
+      }else
+        ll_start()
+}
+function highlight(language){
+    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
+    code = document.getElementsByTagName('pre')
+    for (var i = 0; i < code.length; i++) 
+        if (code[i].className == language) 
+            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
+}
+function ll_start(){
+  try{
+    highlight('javascript')
+  } catch(err){;}
+  if (typeof(main) == "function")
+      try{ main() } catch (err) { Exception.parse(err) }
+}
+function sanitize(code){
+    return code.replace("&lt;", "<")
+}
+function run(code_fragment){
+    var snippets = document.getElementsByName(code_fragment)	
+    for (var i = 0; i < snippets.length; i++) 	    
+        eval(sanitize(snippets[i].innerHTML))
+}
+function clear(div){
+    div = div || "debug"
+    giveme_node("debug").innerHTML = ""
+}
+var module_loading = {}
+function $timeStamp(){
+  var dat = new Date()
+  var timestamp = ""
+  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
+  return timestamp
+}
+function LogFileIncluded(file_source){
+  this.template = [
+    "<div class='_LogFile'>",
+    file_source.name,
+    " [" + $timeStamp() + "]",
+    ": ",
+    file_source.description,
+    "</div>"
+  ]
+}
+LogFileIncluded.prototype.toString = function(){
+  return this.template.join("")
+}
+function LogModuleLoad(module_source){
+  this.template = [
+      "<div class='_LogModule'>",
+      "<h3 class='_LogModuleName'> MODULE: ",
+      "I02:Module Name",
+      "</h3>\n",
+      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
+      "I05: Module Path",
+      ")</span>\n<br/>",
+      "<span class='_LogModuleDescription'>",
+      "I08: Module Description",
+      "</span>\n<br/>",
+      "Load Start Time: ",
+      "I11: start Time",
+      "<br/>\n",
+      "Load Finish Time: ",
+      "I14: Finish Time: ",
+      "<br/>\n",
+      "Load Time: ",
+      "I17: Elapsed Time: ",
+      " s.<br/>",
+      "FILES:<br/>",
+      "I20: FILES",
+      "<br/>",
+      "</div>"
+    ]
+ this.start = new Date().getTime()
+ this.end   = new Date().getTime()
+ this.template[11] = $timeStamp()
+ this.template[2]  = module_source.module
+ this.template[5]  = module_source.path
+ this.template[8]  = module_source.description
+ this.files = []
+}
+LogModuleLoad.prototype.addFile = function(file_source){
+ this.files.push(new LogFileIncluded(file_source))
+}
+LogModuleLoad.prototype.endLoad = function(){
+  this.end   = new Date().getTime()
+  this.template[14] = $timeStamp()     
+  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
+  return this.toString()
+}
+LogModuleLoad.prototype.toString = function(){  
+  this.template[20] = ""
+  for (var i=0; i<this.files.length; i++)
+    this.template[20] += this.files[i].toString()
+  return this.template.join('\n')
+}
+var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
 p.get_catalog()

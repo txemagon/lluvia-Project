@@ -152,26 +152,30 @@ Package.prototype.through = function(block, config){
             return false
     }
 
-    prune_dependencies(config.prune)
+        prune_dependencies(config.prune)
 
-    for(var i=0; i<dependencies.length; i++){
-        if(dependencies[i] == "this"){
-            if(!is_already_there$U(this.full_name())){
-                config.already_there.push(this.full_name())
-                this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
-                block(this)
-            }
-        }
-        else if(actual_package[dependencies[i]]){
-            for(var a=0; a<actual_package[dependencies[i]].length; a++){
-                if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
-                    config.already_there.push(actual_package[dependencies[i]][a].full_name())
-                    actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: config.prune, already_there: config.already_there})
-                    block(actual_package[dependencies[i]][a])
+        for(var i=0; i<dependencies.length; i++){
+            if(dependencies[i] == "this"){
+                if(!is_already_there$U(this.full_name())){
+                    config.already_there.push(this.full_name())
+                    this.through(block, {last_package: this, prune: config.prune, already_there: config.already_there})
+                    block(this)
                 }
             }
+            else if(actual_package[dependencies[i]]){
+                for(var a=0; a<actual_package[dependencies[i]].length; a++){
+                    try{
+                        if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
+                            config.already_there.push(actual_package[dependencies[i]][a].full_name())
+                            actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: config.prune, already_there: config.already_there})
+                            block(actual_package[dependencies[i]][a])
+                        }
+                    }
+                    catch(e){}
+               }
+            }
         }
-    }
+
 }
 
 Object.defineProperty(Package.prototype, "through", {
@@ -434,7 +438,6 @@ FileReader = require('./file_reader.js')
 Package.prototype.save = function(config){
     config = config || {}
     config.package = config.package || Path.basename(this.path)
-
 
     try{
         FileReader.fs.mkdirSync(config.path)

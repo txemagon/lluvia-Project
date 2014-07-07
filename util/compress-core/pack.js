@@ -12,6 +12,7 @@ root_package.catalog()
 root_package.through(function(pk){
         filelist = filelist.concat(pk.get_files())
     }, {prune: ["offers"]})
+console.dir(filelist)
 
 root_package.save({files: ["lluvia.js"], path: "../../dist"})
 
