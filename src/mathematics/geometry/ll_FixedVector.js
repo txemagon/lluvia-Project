@@ -94,29 +94,37 @@ function FixedVector(input) {
 
     var is_head = false
     var free_vector
-    this.foot
-
+    this.foot = new Vector()
 
         function check_arg(arg) {
-            //alert(typeof(arg))
             if (arg instanceof String || typeof(arg) === "string")
                 is_head = arg
+
             if (arg instanceof Array)
-                if (!free_vector)
-                    free_vector = new Vector(arg)
-                else
-                    that.foot = new Vector(arg)
+                if (typeof(arg[0]) === "number")
+                    if (!free_vector)
+                        free_vector = new Vector(arg)
+                    else
+                        that.foot = new Vector(arg)
+                    else
+                        for (var i = 0; i < arg.length; i++)
+                            check_arg(arg[i])
+
             if (arg instanceof Vector)
                 if (!free_vector)
                     free_vector = arg
                 else
                     that.foot = arg
+
+            if (arg instanceof FixedVector) {
+                Vector.call(that, arg)
+                Vector.call(that.foot, new Vector(arg.foot))
+            }
         }
 
     for (var i = 0; i < arguments.length; i++)
         check_arg(arguments[i])
 
-    is_head = is_head
     free_vector = free_vector || new Vector(0, 0)
     this.foot = this.foot || new Vector(0, 0)
 

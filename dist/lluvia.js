@@ -2811,5 +2811,5 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
-var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/laura/work/lluvia-Project/util/compress-core/../..")
 p.get_catalog()

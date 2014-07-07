@@ -9,9 +9,25 @@ assert("Fixed Vector accepts different parameters.",
     'a.Coord', '[1,1]',
     'var a = new FixedVector( new Vector(1,1), [2,6] )')
 
+assert("Fixed Vector 'abs' can be in any position 1.",
+    'a.Coord', '[1,2]',
+    'var a = new FixedVector( new Vector(3,8), [2,6], "abs" )')
+
+assert("Fixed Vector 'abs' can be in any position 2.",
+    'a.Coord', '[1,2]',
+    'var a = new FixedVector( new Vector(3,8), "abs", [2,6] )')
+
+assert("Fixed Vector 'abs' can be in any position 3.",
+    'a.Coord', '[1,2]',
+    'var a = new FixedVector( "abs", new Vector(3,8), [2,6] )')
+
+assert("Fixed Vector accepts an array of arguments",
+    'a.Coord', '[1,2]',
+    'var a = new FixedVector( ["abs", new Vector(3,8), [2,6]] )')
+
 assert("Fixed Vector accepts one parameter.",
     'a.Coord', '[2,3]',
-    'var a = new FixedVector(new Vector(2,3))')
+    'var a = new FixedVector( new Vector(2,3) )')
 
 assert("Fixed Vector accepts free_vector and foot",
     'a._head', '[6,9]',
@@ -19,7 +35,7 @@ assert("Fixed Vector accepts free_vector and foot",
 
 assert("Fixed Vector also accepts _head and foot.",
     'a.Coord', '[1,1]',
-    'var a = new FixedVector([3,5],[2,4], "abs")')
+    'var a = new FixedVector( [3,5], [2,4], "abs" )')
 
 assert("Fixed Vector can give the foot vector.",
     'a.foot', '[4,6]',
