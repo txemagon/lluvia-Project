@@ -35,8 +35,7 @@ function Package(filepath, path) {
     this.path = path
     var arrays = ["files", "provides", "requires", "offers"]
     for(var i=0; i<arrays.length; i++)  
-        this[arrays[i]] = this[arrays[i]] || []
-    
+        this[arrays[i]] = this[arrays[i]] || []   
 }
 
 /**
@@ -164,14 +163,11 @@ Package.prototype.through = function(block, config){
             }
             else if(actual_package[dependencies[i]]){
                 for(var a=0; a<actual_package[dependencies[i]].length; a++){
-                    try{
-                        if(!is_already_there$U(actual_package[dependencies[i]][a].full_name())){
+                        if(actual_package[dependencies[i]][a] instanceof Object && !is_already_there$U(actual_package[dependencies[i]][a].full_name())){
                             config.already_there.push(actual_package[dependencies[i]][a].full_name())
                             actual_package[dependencies[i]][a].through(block, {last_package: actual_package[dependencies[i]][a], prune: config.prune, already_there: config.already_there})
                             block(actual_package[dependencies[i]][a])
                         }
-                    }
-                    catch(e){}
                }
             }
         }
