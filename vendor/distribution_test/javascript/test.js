@@ -1,9 +1,10 @@
 function test() {
     // Write your tests here.
 
-    var a = new VersionNumber("1.5.4")
-    a.branch("", "1.5.4", function action() {
-        alert("Hello")
-    })
-    a[a]()
+    alert($K_script_response)
+    p.create_catalog($K_script_response)
+    p.drop("mathematics")
+    alert("1")
+    var a = new Angle(30)
+    alert(a.inspect())
 }
