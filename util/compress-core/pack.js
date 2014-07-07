@@ -1,5 +1,6 @@
 var util = require('util')
 var fs = require('fs')
+var Path = require('path')
 var Package = require('./lib/package.js')
 var FileReader = require('./lib/file_reader.js')
 var Sanitize = require('./lib/sanitize.js')
@@ -13,9 +14,7 @@ root_package.through(function(pk){
         filelist = filelist.concat(pk.get_files())
     }, {prune: ["offers"]})
 
-console.dir(filelist)
-
-root_package.save({files: ["lluvia.js"], path: "../../dist"})
+root_package.save({files: ["lluvia.js"], path: Path.join(__dirname, "../../dist")})
 
 var text = FileReader.cat(filelist, process.stdout)
 text = (new Sanitize(text)).multilines().singles().empty().text
@@ -24,6 +23,6 @@ var load_package_manager = "var p = new PackageManager(\""+ initial_package +"\"
                            "p.get_catalog()\n" //+ 
                            //"p.create_catalog()" 
 
-FileReader.create_file("../../dist/lluvia.js",text + load_package_manager)
-FileReader.create_file("../../dist/catalog.js", "var $K_script_response = " + root_package.inspect())
+FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"),text + load_package_manager)
+FileReader.create_file(Path.join(__dirname, "../../dist/catalog.js"), "var $K_script_response = " + root_package.inspect())
 
