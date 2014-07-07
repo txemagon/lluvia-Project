@@ -1,5 +1,5 @@
 /**
- * @class Mathematics.Geometry.VectorSystem
+ * @class mathematics.geometry.VectorSystem
  * Creates a vector system as an array of anything that derives from Vector
  *
  */
@@ -37,7 +37,11 @@ VectorSystem.prototype.distribute$B = function(op2) {
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.map$B = function() {}
+VectorSystem.prototype.map$B = function(block) {
+    for (var i = 0; i < this.length; i++)
+        this[i].map$B(block)
+    return this
+}
 
 /**
  * @method sort_by$B

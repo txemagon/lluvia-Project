@@ -153,6 +153,17 @@ function FixedVector(input) {
  * @method eql$U
  * Tells if one vector equals the given one
  *
+ * ###Example:
+ *    var a = new FixedVector([3,8], [1,9])
+ *    var b = new FixedVector([3,8], [1,9])
+ *    a.eql$U(b)
+ *    //=> true
+ *
+ *    var a = new FixedVector([3,8], [1,9])
+ *    var b = new FixedVector([3,8], [2,9])
+ *    a.eql$U(b)
+ *    //=> false
+ *
  * @return {Vector} Returns true if vectors are equal and false if not
  */
 FixedVector.prototype.eql$U = function(vector_to_compare) {
@@ -164,6 +175,20 @@ FixedVector.prototype.eql$U = function(vector_to_compare) {
 /**
  * @method add
  * Adds one vector to another/s as long as the former's head equals the latter's foot
+ *
+ * ###Example:
+ *    var a = new FixedVector([3,8], [1,9])
+ *    var b = new FixedVector([1,4], [4,17])
+ *    var c = a.add(b)
+ *    c.Coord
+ *    //=> [4,12]
+ *
+ *    var a = new FixedVector([3,8], [1,9])
+ *    var b = new FixedVector([5,3], [6,10])
+ *    var c = a.add(b)
+ *    c.Coord
+ *    //=> Error: Invalid operation for fixed vectors. First vector head must
+ *    //=>        be equal to second's foot
  *
  * @param {FixedVector | Array} vec FixedVector or array of them passed as parameter
  * @return {FixedVector} Returns the FixedVector of the addition
@@ -200,6 +225,13 @@ FixedVector.prototype.add = function(vec) {
  * @method subs
  * Substracts one fixed vector from another or group of them
  *
+ * ###Example:
+ *    var a = new FixedVector([3,8], [1,9])
+ *    var b = new FixedVector([1,4], [4,17])
+ *    var c = a.subs(b)
+ *    c.Coord
+ *    //=> [1,4]
+ *
  * @param {FixedVector | Array} vec FixedVector or array of them passed as parameter
  * @return {FixedVector} Returns the FixedVector of the substraction
  */
@@ -219,6 +251,12 @@ FixedVector.prototype.subs = function(vec) {
  * @method scle
  * Scales a FixedVector according to a number
  *
+ * ###Example:
+ *    var a = new FixedVector([1,4], [4,17])
+ *    var b = a.scle(3)
+ *    b.Coord
+ *    //=> [3,12]
+ *
  * @param {Number} number number passed as parameter
  * @return {FixedVector} Returns a scaled FixedVector
  */
@@ -235,12 +273,15 @@ FixedVector.prototype.scle = function(number) { //todo: scale from Vector needs 
  * @method virial
  * Scalar product of a vector and its foot
  *
- * @param {Vector} vec FixedVector to operate with
- * @param {Number} angle Angle between the two Fixed vectors
+ * ###Example:
+ *    var a = new FixedVector([3,9], [4,5], "abs")
+ *    var b = a.virial()
+ *    b
+ *    //=> 16
  *
  * @return {FixedVector} Returns the virial of a vector or vectors
  */
-FixedVector.prototype.virial = function(vec, angle) {
+FixedVector.prototype.virial = function() {
     var new_free, virial
         new_free = new Vector(this.Coord)
         virial = new_free.dot(this.foot)
@@ -257,10 +298,10 @@ FixedVector.prototype.virial = function(vec, angle) {
  *
  * @return {FixedVector} Returns the virial of a vector or vectors
  */
-FixedVector.prototype.planar_momentum = function(vec, plane_pt) {
-    var vector_r = new FixedVector(vec.foot, plane_pt.foot)
+FixedVector.prototype.planar_momentum = function(plane_pt) {
+    var vector_r = new FixedVector(this.foot, plane_pt.foot)
     var unitary = plane_pt.unit()
-    var vec_module = vec.module()
+    var vec_module = this.module()
 
     var res = vector_r.cross(unitary).scale(vec_module)
 

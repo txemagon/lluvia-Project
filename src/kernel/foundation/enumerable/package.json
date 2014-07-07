@@ -1,13 +1,29 @@
 {
-	"package": "enumerable",
-	"description": "Foundation classes",
-    	"files": [
-        {"name": "ll_Set.js",               "description": "Array with not repeated elements."},
-        {"name": "ll_Hash.js",              "description": "Hash, Dictionary, Map"},
-        {"name": "ll_AutoHash.js",          "description": "Executes a Constructor block when key is undefined"},
-        {"name": "ll_Constant.js",          "description": "String-Number equivalence."},
-        {"name": "ll_Enumeration.js",       "description": "Object with keys associated to consecutive numbers."},
-        {"name": "ll_Map.js",               "description": "True Map where objects can be keys."},
-        {"name": "ll_InterleavedArray.js",  "description": "Array with special indices. ie '1.2.1' "}
-	] 
+    "package": "enumerable",
+    "description": "Foundation classes",
+    "files": [{
+        "name": "ll_Set.js",
+        "description": "Array with not repeated elements."
+    }, {
+        "name": "ll_Hash.js",
+        "description": "Hash, Dictionary, Map"
+    }, {
+        "name": "ll_AutoHash.js",
+        "description": "Executes a Constructor block when key is undefined"
+    }, {
+        "name": "ll_Constant.js",
+        "description": "String-Number equivalence."
+    }, {
+        "name": "ll_Enumeration.js",
+        "description": "Object with keys associated to consecutive numbers."
+    }, {
+        "name": "ll_Map.js",
+        "description": "True Map where objects can be keys."
+    }, {
+        "name": "ll_InterleavedArray.js",
+        "description": "Array with special indices. ie '1.2.1' "
+    }, {
+        "name": "ll_ArrayClass.js",
+        "description": "Array that can modify length property"
+    }]
 }

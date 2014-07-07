@@ -8,8 +8,9 @@ var _test_index = ["../../../kernel/ll_Exception.js",
     "../ll_ReferenceFrame.js",
     "../ll_FixedVector.js",
     "../ll_VectorSystem.js",
+    "../../../kernel/foundation/enumerable/ll_ArrayClass.js",
     //From here on, test files can be added
-    "fixed_vector_tests.js",
+    //"fixed_vector_tests.js",
     "vector_system_tests.js"
     //"vector_tests.js",
     //"reference_frames_tests.js"

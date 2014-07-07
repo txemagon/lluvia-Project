@@ -14,11 +14,32 @@ function Vector() {
      *   PARAMETER TYPES
      * ([ Vector | Coordinates | Array( {Coordinates} ) ])*
      */
-    this.Coord = []
+    var _Coord = []
     var coord_temp = []
     var coordinate_system
     var that = this
     var argument = []
+
+    for (var i = 0; i < arguments.length; i++)
+        _Coord.push(arguments[i])
+
+    this.Coord = []
+
+    for (var i = 0; i < 20; i++)
+        Object.defineProperty(this.Coord, i, {
+            get: (function() {
+                var j = i
+                return function() {
+                    return _Coord[j] || 0
+                }
+            })(),
+            set: (function() {
+                var j = i
+                return function(value) {
+                    _Coord[j] = value
+                }
+            })()
+        })
 
     // arguments is not array, just array-like
     for (var i = 0; i < arguments.length; i++)
