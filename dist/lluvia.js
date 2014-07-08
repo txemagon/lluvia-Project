@@ -3436,29 +3436,10 @@ ReferenceFrame.prototype.coord_of = function (point){
 }
 Vector.prototype.constructor = Vector
 function Vector() {
-    this._Coord = []
-    Object.defineProperty(this, "_Coord", {
-        writable: false
-    })
     var coord_temp = []
     var coordinate_system
     var that = this
     this.Coord = []
-    for (var i = 0; i < 20; i++)
-    Object.defineProperty(this.Coord, i, {
-            get: (function() {
-                var j = i
-                return function() {
-                    return that._Coord[j] || 0
-                }
-            })(),
-            set: (function() {
-                var j = i
-                return function(value) {
-                    that._Coord[j] = value
-                }
-            })()
-        })
     var argument = []
     for (var i = 0; i < arguments.length; i++)
         this.Coord.push(arguments[i])
@@ -3883,5 +3864,5 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
-var p = new PackageManager("/home/txema/work/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/jose/work/lluvia-Project/vendor/server_node_test/server/../../..")
 p.get_catalog()
