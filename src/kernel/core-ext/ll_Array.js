@@ -1426,9 +1426,9 @@ Array.prototype.eql$U = function(model) {
  *
  *     [1, 2, 3].inject( {even: [], odd: []}, function(el, ac){
  *         if (el % 2)
- *            acu.odd.push(el)
+ *            ac.odd.push(el)
  *         else
- *            acu.even.push(el)
+ *            ac.even.push(el)
  *         return ac
  *     })
  *     //=> {odd: [1, 3], even: [2]}
