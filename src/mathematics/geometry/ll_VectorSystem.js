@@ -23,6 +23,18 @@ VectorSystem.prototype.push = function(elements) {
 }
 
 /**
+ * @method get_vectors
+ *
+ * @return {[type]} [description]
+ */
+VectorSystem.prototype.get_vectors = function() {
+    var a = []
+    for (var i = 0; i < this.length; i++)
+        a.push(this[i].Coord)
+    return a
+}
+
+/**
  * @method distribute$B
  * [description]
  *
@@ -34,13 +46,15 @@ VectorSystem.prototype.distribute$B = function(op2) {
 
 /**
  * @method map$B
- * [description]
+ * Returns an array with the coordinates from the vectors of the vector system
+ * modified by the block passed as parameter
  *
- * @return {[]} [description]
+ * @param {Function} block Function to be used to modified the VectorSystem
+ * @return {Array}
  */
 VectorSystem.prototype.map$B = function(block) {
-    for (var i = 0; i < this.length; i++)
-        this[i].map$B(block)
+    for (var i = 0; i < a.length; i++)
+        this[i].Coord = this[i].Coord.map(block)
     return this
 }
 
@@ -50,7 +64,7 @@ VectorSystem.prototype.map$B = function(block) {
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.sort_by$B = function() {}
+VectorSystem.prototype.sort_by$B = function() {} // not necessary
 
 /**
  * @method uniq$B
@@ -58,7 +72,14 @@ VectorSystem.prototype.sort_by$B = function() {}
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.uniq$B = function() {}
+VectorSystem.prototype.uniq$B = function() { //doesn't work yet
+    var a = this.get_vectors()
+    a.uniq$B()
+
+    for (var i = 0; i < this.length; i++)
+        this[i].Coord = a[i]
+    return this
+}
 
 /**
  * @method inject
@@ -66,7 +87,11 @@ VectorSystem.prototype.uniq$B = function() {}
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.inject = function() {}
+VectorSystem.prototype.inject = function(vec) {
+    for (var i = 0; i < arguments.length; i++)
+        this.push(arguments[i])
+    return this
+}
 
 /**
  * @method inject_with_index
@@ -74,7 +99,25 @@ VectorSystem.prototype.inject = function() {}
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.inject_with_index = function() {}
+VectorSystem.prototype.inject_with_index = function(arg) {
+    var args = []
+    var position = 0
+
+    for (var i = 0; i < arguments.length; i++)
+        args[i] = arguments[i]
+
+    for (var i = 0; i < args.length; i++)
+        if (typeof(args[i]) === "number") {
+            position = args[i]
+            args.erase_at$B(i)
+        }
+
+    this.arguments.inject_with_index(position, args)
+    // for (var i = 0; i < args.length; i++)
+    //     this.push(args[i])
+
+    return this
+}
 
 /**
  * @method merge
