@@ -3864,5 +3864,5 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
-var p = new PackageManager("/home/jose/work/lluvia-Project/vendor/server_node_test/server/../../..")
+var p = new PackageManager("/home/txema/jose/lluvia-Project/vendor/server_node_test/server/../../..")
 p.get_catalog()
