@@ -34,6 +34,9 @@ VectorSystem.prototype.get_vectors = function() {
     return a
 }
 
+//class that checks that everything that gets in and out of vectorSystem is a vector
+VectorSystem.check_integrity = function() {}
+
 /**
  * @method distribute$B
  * [description]
@@ -53,18 +56,11 @@ VectorSystem.prototype.distribute$B = function(op2) {
  * @return {Array}
  */
 VectorSystem.prototype.map$B = function(block) {
-    for (var i = 0; i < a.length; i++)
-        this[i].Coord = this[i].Coord.map(block)
-    return this
+    var res = Array.prototype.map.apply(this, arguments)
+    //res must only have vectors
+    //erase elements from this (this.clear())
+    return res
 }
-
-/**
- * @method sort_by$B
- * [description]
- *
- * @return {[]} [description]
- */
-VectorSystem.prototype.sort_by$B = function() {} // not necessary
 
 /**
  * @method uniq$B
@@ -88,9 +84,7 @@ VectorSystem.prototype.uniq$B = function() { //doesn't work yet
  * @return {[]} [description]
  */
 VectorSystem.prototype.inject = function(vec) {
-    for (var i = 0; i < arguments.length; i++)
-        this.push(arguments[i])
-    return this
+
 }
 
 /**
@@ -100,23 +94,7 @@ VectorSystem.prototype.inject = function(vec) {
  * @return {[]} [description]
  */
 VectorSystem.prototype.inject_with_index = function(arg) {
-    var args = []
-    var position = 0
 
-    for (var i = 0; i < arguments.length; i++)
-        args[i] = arguments[i]
-
-    for (var i = 0; i < args.length; i++)
-        if (typeof(args[i]) === "number") {
-            position = args[i]
-            args.erase_at$B(i)
-        }
-
-    this.arguments.inject_with_index(position, args)
-    // for (var i = 0; i < args.length; i++)
-    //     this.push(args[i])
-
-    return this
 }
 
 /**
