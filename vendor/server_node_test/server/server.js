@@ -19,7 +19,7 @@ wss.on('connection', function(ws) {
 
         var text = FileReader.cat(filelist, process.stdout)
         text = (new Sanitize(text)).multilines().singles().empty().text
-        
+
         ws.send(text)	
     })
 })

@@ -1131,7 +1131,6 @@ Array.prototype.collect = function() {
             collectable.push(Array.prototype.collect.yield(this[i]))
         return collectable
 }
-Array.prototype.alias("map", "collect")
 Array.prototype.select_if = function() {
     var collectable = []
     for (var i = 0; i < this.length; i++)
@@ -2386,6 +2385,35 @@ Exception.parse = function(err, source_code){
        return obj.method_missing(m[2], m[1],  actual_parameters)
      }
      throw(err)
+}
+function Socket(uri, protocols){
+	this.uri = uri || ""
+	this.protocols = protocols || ['soap', 'xmpp']
+	this.connection = new WebSocket(this.uri, this.protocols)
+	this.is_connect$U = false
+	this.reply = "h"
+}
+Socket.prototype.communication = function(message){
+	var that = this
+    this.connection.onopen = function () {
+        that.connection.send('shape')
+    }
+    this.is_connect$U = true
+    this.connection.onmessage = function (e) {
+       that.reply = e.data
+    }
+    return this.reply
+}
+Socket.prototype.close_socket = function(){
+    connection.onclose = function () {
+        connection.send('socket closed')
+    }
+    this.is_connect$U = false
+}
+Socket.prototype.send_msg = function(message) {
+	this.connection.onopen = function () {
+        connection.send(message)
+    }
 }
 function Package(pk){
  this.pk = pk || {}
@@ -3864,5 +3892,5 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
-var p = new PackageManager("/home/txema/jose/lluvia-Project/vendor/server_node_test/server/../../..")
+var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
 p.get_catalog()
