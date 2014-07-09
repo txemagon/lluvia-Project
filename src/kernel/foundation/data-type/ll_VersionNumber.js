@@ -38,6 +38,19 @@
  * @param {String} [sep="."]            String to delimitate major minor and patch numbers.
  */
 function VersionNumber(initial_string, sep) {
+    /* Copy constructor */
+    if (initial_string instanceof VersionNumber) {
+        var level = this
+        initial_string.each(function(number, value, container) {
+            level[number] = {}
+            var branches = container.branches()
+            for (var i = branches.length - 1; i >= 0; i--) {
+                level[branches[i]] = container[branches[i]]
+            }
+            level = level[number]
+        })
+        return
+    }
     if (!initial_string || initial_string == "")
         return
     Object.defineProperty(this, "sep", {
@@ -323,7 +336,7 @@ VersionNumber.prototype.branch = function(version, first_label) {
             value = arguments[++i]
 
 
-        this[parts[0]] = value
+        insertion_point[parts[0]] = value
     }
 }
 
@@ -379,7 +392,7 @@ VersionNumber.prototype.each = function(block) {
     var obj = this.number()
     if (obj)
         block(this.number_value(), obj, this)
-    if ("each" in obj && typeof(obj.each) === "function")
+    if ((obj instanceof Object) && "each" in obj && typeof(obj.each) === "function")
         obj.each(block)
 }
 
