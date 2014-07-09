@@ -1,4 +1,3 @@
-alert("hey")
 assert("StraightLine accepts parameters",
     "a.toSource()", '"({initial_point:{Coord:[4, 6], _module:7.211102550927978, uVector:[0.5547001962252291, 0.8320502943378437]}, director:{Coord:[2, 4], _module:4.47213595499958, uVector:[0.4472135954999579, 0.8944271909999159]}})"',
     'var a = new StraightLine(new Vector(4, 6), new Vector(6, 10))')
