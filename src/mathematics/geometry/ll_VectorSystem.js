@@ -9,39 +9,100 @@ VectorSystem.prototype.constructor = VectorSystem
 VectorSystem.super = Array
 
 function VectorSystem(vectors) {
-    for (var i = 0; i < arguments.length; i++)
+    for (var i = 0; i < arguments.length; i++) {
         this.push(arguments[i])
+    }
 
 }
 
 VectorSystem.prototype.push = function(elements) {
-    for (var i = 0; i < arguments.length; i++)
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[0] instanceof Array) {
+            for (var j = 0; j < arguments[0].length; j++) {
+                if (arguments[0][j] instanceof Vector) {
+                    Array.prototype.push.call(this, arguments[0][j])
+                    //this.push(arguments[i][j])
+                    //alert(arguments[i][j].toSource())
+                }
+            }
+        }
         if (arguments[i] instanceof Vector)
             Array.prototype.push.call(this, arguments[i])
         else
             throw ("VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it")
+    }
+}
+/**
+ * @method push_with_index
+ * Pushed vectors into this according to a given position
+ *
+ * @return {VectorSystem} Returns this
+ */
+VectorSystem.prototype.push_with_index = function() {
+    var new_index = []
+    var args = []
+    var position = 0
+    var number = 0
+
+    for (var i = 0; i < arguments.length; i++) {
+        args[i] = arguments[i]
+        if (typeof(arguments[i]) === "number") {
+            position = args[i]
+            number = i
+        }
+    }
+    args.erase_at$B(number)
+
+    for (var i = 0; i < position; i++)
+        new_index[i] = this[i]
+
+    for (var i = 0; i < args.length; i++)
+        new_index[i + position] = args[i]
+
+    for (var i = position; i < this.length; i++)
+        new_index[i + args.length] = this[i]
+
+    this.clear()
+
+    VectorSystem.prototype.push.apply(this, new_index)
+
+    return this
 }
 
 /**
- * @method get_vectors
+ * @method to_a
+ * Transforms the coordinates of all the vectors of the Vector System into an array
  *
- * @return {[type]} [description]
+ *
+ * @return {Array}
  */
-VectorSystem.prototype.get_vectors = function() {
+VectorSystem.prototype.to_a = function() {
     var a = []
     for (var i = 0; i < this.length; i++)
         a.push(this[i].Coord)
     return a
 }
 
-//class that checks that everything that gets in and out of vectorSystem is a vector
-VectorSystem.check_integrity = function() {}
+/**
+ * @method check_integrity
+ * @static
+ * description
+ *
+ * @return {[type]} [description]
+ */
+VectorSystem.check_integrity = function() {
+    //class that checks that everything that gets in and out of vectorSystem is a vector
+    var a = true
+    for (var i = 0; i < this.length; i++)
+        if (!this[i] instanceof Vector)
+            a = false
+    return a
+}
 
 /**
  * @method distribute$B
- * [description]
+ * Method not valid for VectorSystem. When called, throws an exception
  *
- * @return {[]} [description]
  */
 VectorSystem.prototype.distribute$B = function(op2) {
     throw "No a valid function for VectorSystem"
@@ -49,17 +110,20 @@ VectorSystem.prototype.distribute$B = function(op2) {
 
 /**
  * @method map$B
- * Returns an array with the coordinates from the vectors of the vector system
- * modified by the block passed as parameter
+ * description
  *
  * @param {Function} block Function to be used to modified the VectorSystem
  * @return {Array}
  */
 VectorSystem.prototype.map$B = function(block) {
+
     var res = Array.prototype.map.apply(this, arguments)
-    //res must only have vectors
-    //erase elements from this (this.clear())
-    return res
+    this.clear()
+
+    for (var i = 0; i < res.length; i++)
+        this[i] = res[i]
+
+    return this
 }
 
 /**
@@ -69,11 +133,15 @@ VectorSystem.prototype.map$B = function(block) {
  * @return {[]} [description]
  */
 VectorSystem.prototype.uniq$B = function() { //doesn't work yet
-    var a = this.get_vectors()
-    a.uniq$B()
+    var a = this.to_a().flatten()
+    //var uniq_a = Array.prototype.uniq$B(this, 0)
+    //
+    a.uniq$B(0)
+
+    alert(a)
 
     for (var i = 0; i < this.length; i++)
-        this[i].Coord = a[i]
+        this[i] = a[i]
     return this
 }
 
@@ -120,3 +188,5 @@ VectorSystem.prototype.splice = function() {}
  * @return {[]} [description]
  */
 VectorSystem.prototype.unshift = function() {}
+
+VectorSystem.check_integrity()

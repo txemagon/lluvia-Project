@@ -1811,7 +1811,33 @@ Array.prototype.compose = function() {
     }
     return roller
 }
+/**
+ * @method to_v
+ * Creates  from this an array of 2D vectors
+ *
+ * @return {Array} Array of vectors
+ */
+Array.prototype.to_v = function(dim) {
+    var coord1 = 0
+    var coord2 = 0
+    var vec_array = []
+    var dimension = dim || 2
 
+    if (this.length % dimension == 0) {
+        for (var i = 0; i < this.length; i++) {
+            if (coord1 == 0)
+                coord1 = this[i]
+            else
+                coord2 = this[i]
+            if (coord1 != 0 && coord2 != 0)
+                vec_array.push(new Vector(coord1, coord2))
+        }
+        return vec_array
+
+    } else
+        throw "Odd number of arguments. Add one more number to create array"
+
+}
 
 /**
  * @method includes
