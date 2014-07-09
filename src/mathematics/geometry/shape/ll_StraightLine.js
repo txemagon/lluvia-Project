@@ -3,21 +3,21 @@
  * Define method for straight lines
  */
 
- StraightLine.prototype = new Line
- StraightLine.prototype.constructor = StraightLine
- StraightLine.super = Line
+StraightLine.prototype = new Line
+StraightLine.prototype.constructor = StraightLine
+StraightLine.super = Line
 
 /**
  * @method constructor
  */
- function StraightLine(initial_point, final_point) {
- 	var that = this
-	if (typeof (initial_point) === "undefined" || typeof(final_point) === "undefined")
-	 throw "StraightLine#new error: Not enough parameters"
- 	this.initial_point = new Vector(initial_point)
- 	this.director = new Vector(final_point).subs( this.initial_point )
+function StraightLine(initial_point, final_point) {
+    var that = this
+    if (typeof(initial_point) === "undefined" || typeof(final_point) === "undefined")
+        throw "StraightLine#new error: Not enough parameters"
+    this.initial_point = new Vector(initial_point)
+    this.director = new Vector(final_point).subs(this.initial_point)
 
- }
+}
 
 
 /**
@@ -29,10 +29,10 @@
  *
  * @return {Vector} Returns the initial coordinates of the direction Vector
  */
- StraightLine.prototype.get_initial_point = function(){
+StraightLine.prototype.get_initial_point = function() {
 
- 	return this.initial_point
- }
+    return this.initial_point
+}
 
 
 /**
@@ -44,10 +44,10 @@
  *
  * @return {Vector} Returns the final coordinates of the direction Vector
  */
- StraightLine.prototype.get_final_point = function(){
+StraightLine.prototype.get_final_point = function() {
 
- 	return new Vector( this.initial_point.add(this.director) )
- }
+    return new Vector(this.initial_point.add(this.director))
+}
 
 
 /**
@@ -59,10 +59,10 @@
  *
  * @return {Vector} Returns the coordinates calculated according to variable lambda
  */
- StraightLine.prototype.at = function(lambda){
+StraightLine.prototype.at = function(lambda) {
 
-  	return this.initial_point.add( this.director.scale(lambda) )
- }
+    return this.initial_point.add(this.director.scale(lambda))
+}
 
 
 /**
@@ -74,10 +74,10 @@
  *
  * @return {Vector} Returns a tangent Vector to the given one
  */
- StraightLine.prototype.get_tangent = function(lambda){
+StraightLine.prototype.get_tangent = function(lambda) {
 
- 	return this.director.unit()
- }
+    return this.director.unit()
+}
 
 
 /**
@@ -89,16 +89,16 @@
  *
  * @return {Vector} Returns the perpendicular Vector of the given one
  */
- StraightLine.prototype.get_normal = function(lambda){
+StraightLine.prototype.get_normal = function(lambda) {
 
- 	var t = this.get_tangent()
+    var t = this.get_tangent()
 
- 	var x = t.get_coord(0)
- 	var y = t.get_coord(1)
+    var x = t.get_coord(0)
+    var y = t.get_coord(1)
 
- 	return new Vector(-y, x)
+    return new Vector(-y, x)
 
- }
+}
 
 
 /**
@@ -109,11 +109,11 @@
  *
  * @return {Object} distance
  */
- StraightLine.prototype.get_arc_length = function(lambda){
- 	var lambda = lambda || 1
- 	var distance = lambda * this.director.module()
- 	return distance
- }
+StraightLine.prototype.get_arc_length = function(lambda) {
+    var lambda = lambda || 1
+    var distance = lambda * this.director.module()
+    return distance
+}
 
 
 /**
@@ -124,13 +124,13 @@
  *
  * @return {Boolean}
  */
- StraightLine.prototype.belongs_to$U = function(point){
+StraightLine.prototype.belongs_to$U = function(point) {
 
- 	if(Math.pow(Line.distance(this, point),2) < this.ERROR)
- 		return true
+    if (Math.pow(Line.distance(this, point), 2) < this.ERROR)
+        return true
 
- 	return false
- }
+    return false
+}
 
 
 /**
@@ -141,13 +141,12 @@
  *
  * @return {Object} line_perpendicular The line perpendicular
  */
- StraightLine.prototype.get_perpendicular = function(position_vector){
- 	if(typeof position_vector === "number")
- 		position_vector = this.at(position_vector)
+StraightLine.prototype.get_perpendicular = function(position_vector) {
+    if (typeof position_vector === "number")
+        position_vector = this.at(position_vector)
 
- 	var line_perpendicular = new StraightLine(position_vector, new Vector(0,0))
-		line_perpendicular.director = this.get_normal()
+    var line_perpendicular = new StraightLine(position_vector, new Vector(0, 0))
+    line_perpendicular.director = this.get_normal()
 
- 	return line_perpendicular
- }
-
+    return line_perpendicular
+}
