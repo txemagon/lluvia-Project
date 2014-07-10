@@ -1648,6 +1648,24 @@ Array.prototype.compose = function() {
     }
     return roller
 }
+Array.prototype.to_v = function(dim) {
+    var coord1 = 0
+    var coord2 = 0
+    var vec_array = []
+    var dimension = dim || 2
+    if (this.length % dimension == 0) {
+        for (var i = 0; i < this.length; i++) {
+            if (coord1 == 0)
+                coord1 = this[i]
+            else
+                coord2 = this[i]
+            if (coord1 != 0 && coord2 != 0)
+                vec_array.push(new Vector(coord1, coord2))
+        }
+        return vec_array
+    } else
+        throw "Odd number of arguments. Add one more number to create array"
+}
 Array.includes = function(el, array) {
     for (var i = 0; i < array.length; i++)
         if (array[i] == el)
@@ -2386,33 +2404,21 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-function Socket(uri, protocols){
-	this.uri = uri || ""
-	this.protocols = protocols || ['soap', 'xmpp']
-	this.connection = new WebSocket(this.uri, this.protocols)
-	this.is_connect$U = false
-	this.reply = "h"
-}
-Socket.prototype.communication = function(message){
-	var that = this
-    this.connection.onopen = function () {
-        that.connection.send('shape')
+function Socket(open_func, received_func, uri, protocols) {
+    var that = this
+    this.uri = uri || ""
+    this.protocols = protocols || ['soap', 'xmpp']
+    this.connection = new WebSocket(this.uri, this.protocols)
+    this.connection.onopen = function() {
+        open_func(that.connection)
     }
-    this.is_connect$U = true
-    this.connection.onmessage = function (e) {
-       that.reply = e.data
+    this.connection.onmessage = function(e) {
+        received_func(new String(e.data))
     }
-    return this.reply
 }
-Socket.prototype.close_socket = function(){
-    connection.onclose = function () {
+Socket.prototype.close_socket = function() {
+    connection.onclose = function() {
         connection.send('socket closed')
-    }
-    this.is_connect$U = false
-}
-Socket.prototype.send_msg = function(message) {
-	this.connection.onopen = function () {
-        connection.send(message)
     }
 }
 function Package(pk){
@@ -3892,5 +3898,5 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
-var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
+var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
 p.get_catalog()
