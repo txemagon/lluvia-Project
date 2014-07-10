@@ -1648,6 +1648,24 @@ Array.prototype.compose = function() {
     }
     return roller
 }
+Array.prototype.to_v = function(dim) {
+    var coord1 = 0
+    var coord2 = 0
+    var vec_array = []
+    var dimension = dim || 2
+    if (this.length % dimension == 0) {
+        for (var i = 0; i < this.length; i++) {
+            if (coord1 == 0)
+                coord1 = this[i]
+            else
+                coord2 = this[i]
+            if (coord1 != 0 && coord2 != 0)
+                vec_array.push(new Vector(coord1, coord2))
+        }
+        return vec_array
+    } else
+        throw "Odd number of arguments. Add one more number to create array"
+}
 Array.includes = function(el, array) {
     for (var i = 0; i < array.length; i++)
         if (array[i] == el)
@@ -2386,33 +2404,21 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-function Socket(uri, protocols){
-	this.uri = uri || ""
-	this.protocols = protocols || ['soap', 'xmpp']
-	this.connection = new WebSocket(this.uri, this.protocols)
-	this.is_connect$U = false
-	this.reply = "h"
-}
-Socket.prototype.communication = function(message){
-	var that = this
-    this.connection.onopen = function () {
-        that.connection.send('shape')
+function Socket(open_func, received_func, uri, protocols) {
+    var that = this
+    this.uri = uri || ""
+    this.protocols = protocols || ['soap', 'xmpp']
+    this.connection = new WebSocket(this.uri, this.protocols)
+    this.connection.onopen = function() {
+        open_func(that.connection)
     }
-    this.is_connect$U = true
-    this.connection.onmessage = function (e) {
-       that.reply = e.data
+    this.connection.onmessage = function(e) {
+        received_func(new String(e.data))
     }
-    return this.reply
 }
-Socket.prototype.close_socket = function(){
-    connection.onclose = function () {
+Socket.prototype.close_socket = function() {
+    connection.onclose = function() {
         connection.send('socket closed')
-    }
-    this.is_connect$U = false
-}
-Socket.prototype.send_msg = function(message) {
-	this.connection.onopen = function () {
-        connection.send(message)
     }
 }
 function Package(pk){
@@ -3469,12 +3475,17 @@ function Vector() {
     var that = this
     this.Coord = []
     var argument = []
+        function is_valid_cs$U(cs) {
+            return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+                return el == cs || val
+            })
+        }
     for (var i = 0; i < arguments.length; i++)
         this.Coord.push(arguments[i])
     for (var i = 0; i < arguments.length; i++)
         argument[i] = arguments[i]
     for (var i = 0; i < argument.length; i++)
-        if (Vector.is_valid_cs$U(arguments[i]))
+        if (is_valid_cs$U(arguments[i]))
             argument.push(argument.splice(i, 1)[0])
     if (typeof(argument[argument.length - 1]) == "string")
         coordinate_system = argument[argument.length - 1]
@@ -3515,6 +3526,11 @@ function Vector() {
     }
     this._module = this.module()
     this.uVector = this.scale(1 / this._module)
+}
+Vector.is_valid_cs$U = function(cs) {
+    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+        return el == cs || val
+    })
 }
 Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
     if (this.Coord.length == vector_to_compare.Coord.length)
@@ -3801,11 +3817,6 @@ Vector.prototype.eql$U = function(model) {
     return model.Coord.eql$U(this.Coord)
 }
 Vector.valid_cs = ["pol", "cart", "cyl", "sph"]
-Vector.is_valid_cs$U = function(cs) {
-    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
-        return el == cs || val
-    })
-}
 Vector.prototype.get = function(coordinate) {
     return this.Coord[coordinate] || 0
 }
@@ -3892,5 +3903,9 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
-var p = new PackageManager("/home/jose/work/lluvia-Project/util/compress-core/../..")
+<<<<<<< HEAD
+var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+=======
+var p = new PackageManager("/home/laura/work/lluvia-Project/util/compress-core/../..")
+>>>>>>> f00ba322a6a16e0dcd88b8d4c45a4e7277b9be60
 p.get_catalog()

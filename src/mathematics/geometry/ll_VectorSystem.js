@@ -9,27 +9,25 @@ VectorSystem.prototype.constructor = VectorSystem
 VectorSystem.super = Array
 
 function VectorSystem(vectors) {
-    for (var i = 0; i < arguments.length; i++) {
+    for (var i = 0; i < arguments.length; i++)
         this.push(arguments[i])
-    }
 
 }
 
 VectorSystem.prototype.push = function(elements) {
     for (var i = 0; i < arguments.length; i++) {
-        if (arguments[0] instanceof Array) {
-            for (var j = 0; j < arguments[0].length; j++) {
-                if (arguments[0][j] instanceof Vector) {
-                    Array.prototype.push.call(this, arguments[0][j])
-                    //this.push(arguments[i][j])
-                    //alert(arguments[i][j].toSource())
-                }
-            }
+        if (arguments[i] instanceof Array) {
+            for (var j = 0; j < arguments[i].length; j++)
+                if (arguments[i][j] instanceof Vector)
+                    Array.prototype.push.call(this, arguments[i][j])
+                else
+                    throw ("VectorSystem#push: Invalid input.\n" + arguments[i][j] + " must be a Vector or derived from it")
+        } else {
+            if (arguments[i] instanceof Vector)
+                Array.prototype.push.call(this, arguments[i])
+            else
+                throw ("VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it")
         }
-        if (arguments[i] instanceof Vector)
-            Array.prototype.push.call(this, arguments[i])
-        else
-            throw ("VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it")
     }
 }
 /**
@@ -115,7 +113,7 @@ VectorSystem.prototype.distribute$B = function(op2) {
  * @param {Function} block Function to be used to modified the VectorSystem
  * @return {Array}
  */
-VectorSystem.prototype.map$B = function(block) {
+VectorSystem.prototype.map$B = function(block) { //doesn't work yet
 
     var res = Array.prototype.map.apply(this, arguments)
     this.clear()
@@ -132,16 +130,27 @@ VectorSystem.prototype.map$B = function(block) {
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.uniq$B = function() { //doesn't work yet
-    var a = this.to_a().flatten()
-    //var uniq_a = Array.prototype.uniq$B(this, 0)
-    //
-    a.uniq$B(0)
-
-    alert(a)
+VectorSystem.prototype.uniq$B = function() {
+    var a = []
+    var eq = false
+    var lgh = this.length
 
     for (var i = 0; i < this.length; i++)
-        this[i] = a[i]
+        a[i] = this[i]
+
+    this.clear()
+
+    for (var i = 0; i < lgh; i++) {
+        for (var j = (i + 1); j < lgh; j++) {
+            eq = a[i].is_equal_to$U(a[j])
+            if (eq == true) {
+                a.erase$B(a[j])
+                lgh--
+            }
+        }
+    }
+    this.push(a)
+
     return this
 }
 
