@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Engine-State'>/**
+</span> * @class Engine.State
+ * @extends Kernel.Foundation.DataType.VersionNumber
+ * Defines each of the states of an Automata.
+ *
+ * ### Example
+ *
+ * Create a new State for an automata.
+ *
+ *     var a = new State(&quot;1.3.5&quot;)
+ *
+ * Then override run function to provide a default action
+ * to be executed independently of the substate (up, steady or down).
+ *
+ *     a.run = function(name) {
+ *         alert(&quot;Regime: &quot; + this.regime.name + &quot;, Mr. &quot; + name)
+ *     }
+ *
+ * Provide the substate action (driver)
+ *
+ *     a.run.steady = function(name) {
+ *         alert(&quot;Hello all the time Mr. &quot; + name&quot;)
+ *     }
+ *
+ * Define the regime of your state (up, steady or down)
+ *     a.regime = State.REGIME.steady
+ *
+ * Execute the state using this syntax:
+ *
+ *     a[a](&quot;Jones&quot;)
+ *
+ *
+ * ## Hooks
+ *
+ * Some extra additions can be used. State#before_hooks and State#after_hooks
+ * are two arrays of functions to be called before and after the drivers with the
+ * same parameters of State#run
+ *
+ * The after_hooks calls are appended with an array containing the response
+ * of the general driver and the substate driver.
+ *
+ * Take a look to the following.
+ *
+ * ### Example
+ *
+ *
+ *     var a = new State(&quot;1.3.5&quot;)
+ *     a.door = &quot;locked&quot;
+ *
+ *     a.run = function(name) {
+ *         if (this.door != &quot;locked&quot;) {
+ *             this.door = &quot;opened&quot;
+ *             return true
+ *         }
+ *         return false
+ *     }
+ *
+ *     a.run.steady = function(name) {
+ *         if (this.door == &quot;opened&quot;)
+ *             return &quot;2 people inside&quot;
+ *         return &quot;Can't see anybody. The door is closed.&quot;
+ *     }
+ *     a.regime = State.REGIME.steady
+ *
+ *     a.before_hooks.push(function(obj) {
+ *         obj.door = &quot;unlocked&quot;
+ *     })
+ *
+ *
+ *     a.after_hooks.push(function(obj, responses) {
+ *         alert(&quot;The door is opened: &quot; + responses[0] + &quot;\n&quot; +
+ *             &quot;I see: &quot; + responses[1])
+ *     })
+ *     a[a]()
+ *
+ * The before hook is executed before the drivers and it unlocks the door.
+ * The after driver shows two people and the door opened.
+ *
+ * obj is a parameter appended in before and after hooks and represents the
+ * obj that is executing the hooks.
+ *
+ * The after_hooks receive an ectra parameter responses.
+ *
+ * 1. responses[0] is the response of the general driver, and
+ * 1. responses[1] is the response of the substate driver.
+ *
+ */
+
+State.prototype = new VersionNumber
+State.prototype.constructor = State
+
+<span id='Engine-State-method-constructor'>/**
+</span> * @method constructor
+ *
+ * @param  {String|VersionNumber} label. Any valid parameter in
+ *                                {@link Kernel.Foundation.DataType.VersionNumber VersionNumber}
+ *                                Constructor.
+ */
+function State(label) {
+    /*  Don't check anything but existance.
+        Just try to execute for profiling purposes.
+    */
+    VersionNumber.apply(this, arguments)
+    var that = this
+    this.before_hooks = []
+    this.after_hooks = []
+
+    Object.defineProperties(this, {
+        before_hooks: {
+            value: this.before_hooks,
+            enumerable: false
+        },
+        after_hooks: {
+            value: this.after_hooks,
+            enumerable: false
+        }
+    })
+
+    Object.defineProperty(this, &quot;regime&quot;, {
+        value: State.REGIME.up,
+        writable: true,
+        configurable: true
+    })
+
+    /* Override this.run for common actions */
+    this.run = function() {}
+    this[this] = function() {
+        State.prototype._run.apply(that, arguments)
+    }
+}
+
+<span id='Engine-State-property-regime'>/**
+</span> * @property {VersionNumber} regime Current regime of the state: up, steady or down.
+ */
+
+
+<span id='Engine-State-property-before_hooks'>/**
+</span> * @property {Array} before_hooks List of functions for calling them before calling the
+ * drivers.
+ */
+
+
+<span id='Engine-State-property-after_hooks'>/**
+</span> * @property {Array} after_hooks List of functions for calling them after calling the
+ * drivers.
+ */
+
+<span id='Engine-State-method-_run'>/**
+</span> * @method  _run
+ * Controller that invokes the drivers. This method is non writable, non enumerable
+ * and non configurable.
+ */
+State.prototype._run = function() {
+    var response = []
+    var args = Array.prototype.slice.call(arguments, 0)
+    args.push(this)
+
+    for (var i = this.before_hooks.length - 1; i &gt;= 0; i--)
+        this.before_hooks[i].apply(this, args)
+
+    response[0] = this.run.apply(this, arguments)
+
+    if (this.run[this.regime.name])
+        response[1] = this.run[this.regime.name].apply(this, arguments)
+
+    args.push(response)
+    if (this.after_hooks.length)
+        for (var i = this.after_hooks.length - 1; i &gt;= 0; i--)
+            this.after_hooks[i].apply(this, args)
+}
+Object.defineProperty(State.prototype, &quot;_run&quot;, {
+    value: State.prototype._run,
+    enumerable: false,
+    writable: false,
+    configurable: false
+})
+
+<span id='Engine-State-static-property-REGIME'>/**
+</span> * @property {Enumeration} REGIME
+ * @static
+ * Possible values for a state: up, steady and down.
+ * up and down states provide a way politely enter and leave the state.
+ */
+State.REGIME = new Enumeration(&quot;up&quot;, &quot;steady&quot;, &quot;down&quot;)</pre>
+</body>
+</html>

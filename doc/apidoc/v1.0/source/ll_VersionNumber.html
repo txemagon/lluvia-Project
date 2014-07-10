@@ -51,12 +51,29 @@
  *     new VersionNumber(&quot;1.2.3&quot;)
  *     new VersionNumber(&quot;1-2-3&quot;, &quot;-&quot;)
  *
- * @param {String} initial_string Version number.
+ * @param {String|VersionNumber} initial_string Version number. Provide a VersionNumber to use the
+ *                                              copy constructor.
  * @param {String} [sep=&quot;.&quot;]            String to delimitate major minor and patch numbers.
  */
 function VersionNumber(initial_string, sep) {
+    /* Empty Object */
     if (!initial_string || initial_string == &quot;&quot;)
         return
+
+    /* Copy constructor */
+    if (initial_string instanceof VersionNumber) {
+        var level = this
+        initial_string.each(function(number, value, container) {
+            level[number] = new VersionNumber()
+            var branches = container.branches()
+            for (var i = branches.length - 1; i &gt;= 0; i--) {
+                level[branches[i]] = container[branches[i]]
+            }
+            level = level[number]
+        })
+        return
+    }
+
     Object.defineProperty(this, &quot;sep&quot;, {
         value: sep || &quot;.&quot;,
         enumerable: false
@@ -67,7 +84,9 @@ function VersionNumber(initial_string, sep) {
     for (var i = 0; i &lt; coefficients.length; i++)
         last[coefficients[i]] = (last = new VersionNumber())
 }
-
+<span id='Kernel-Foundation-DataType-VersionNumber-property-sep'>/**
+</span> * @property {String} [sep=&quot;.&quot;] Separator in between major, minor and patch.
+ */
 
 <span id='Kernel-Foundation-DataType-VersionNumber-method-toString'>/**
 </span> * @method toString
@@ -293,7 +312,7 @@ VersionNumber.prototype.valueOf = function() {
  *     //=&gt; }
  *
  * The above example can drive you to mistake a[&quot;1.3&quot;] as a is VersionNumber when it
- * actually isn&#39;t.
+ * actually isn't.
  *
  * ## Hack
  *
@@ -340,7 +359,7 @@ VersionNumber.prototype.branch = function(version, first_label) {
             value = arguments[++i]
 
 
-        this[parts[0]] = value
+        insertion_point[parts[0]] = value
     }
 }
 
@@ -396,7 +415,7 @@ VersionNumber.prototype.each = function(block) {
     var obj = this.number()
     if (obj)
         block(this.number_value(), obj, this)
-    if (&quot;each&quot; in obj &amp;&amp; typeof(obj.each) === &quot;function&quot;)
+    if ((obj instanceof Object) &amp;&amp; &quot;each&quot; in obj &amp;&amp; typeof(obj.each) === &quot;function&quot;)
         obj.each(block)
 }
 

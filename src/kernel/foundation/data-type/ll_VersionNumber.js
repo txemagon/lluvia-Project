@@ -34,15 +34,20 @@
  *     new VersionNumber("1.2.3")
  *     new VersionNumber("1-2-3", "-")
  *
- * @param {String} initial_string Version number.
+ * @param {String|VersionNumber} initial_string Version number. Provide a VersionNumber to use the
+ *                                              copy constructor.
  * @param {String} [sep="."]            String to delimitate major minor and patch numbers.
  */
 function VersionNumber(initial_string, sep) {
+    /* Empty Object */
+    if (!initial_string || initial_string == "")
+        return
+
     /* Copy constructor */
     if (initial_string instanceof VersionNumber) {
         var level = this
         initial_string.each(function(number, value, container) {
-            level[number] = {}
+            level[number] = new VersionNumber()
             var branches = container.branches()
             for (var i = branches.length - 1; i >= 0; i--) {
                 level[branches[i]] = container[branches[i]]
@@ -51,8 +56,7 @@ function VersionNumber(initial_string, sep) {
         })
         return
     }
-    if (!initial_string || initial_string == "")
-        return
+
     Object.defineProperty(this, "sep", {
         value: sep || ".",
         enumerable: false
@@ -63,7 +67,9 @@ function VersionNumber(initial_string, sep) {
     for (var i = 0; i < coefficients.length; i++)
         last[coefficients[i]] = (last = new VersionNumber())
 }
-
+/**
+ * @property {String} [sep="."] Separator in between major, minor and patch.
+ */
 
 /**
  * @method toString

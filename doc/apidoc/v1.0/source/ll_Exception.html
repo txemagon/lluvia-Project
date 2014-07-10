@@ -57,7 +57,7 @@ Exception.parse = function(err, source_code){
       search_text += method_name
 
       var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
-      var params  = new CodeBlockFinder( src, search_text, {open:&#39;(&#39;, close: &#39;)&#39;}).start()
+      var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
       //params = params.substring(1, params.length-1)  // Rip parenthesis
       params = params.replace(/\(\s*/, &quot;&quot;)
       params = params.replace(/\s*\)\s*$/, &quot;&quot;)

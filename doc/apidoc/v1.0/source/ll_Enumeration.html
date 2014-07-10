@@ -119,6 +119,9 @@ function Enumeration(constants) {
                 deep = deep[parent]
         }
         deep[ia_value] = new VersionNumber(keys[k])
+        Object.defineProperty(deep[ia_value], &quot;name&quot;, {
+            value: ia_value
+        })
     }
 }</pre>
 </body>

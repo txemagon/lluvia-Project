@@ -163,6 +163,7 @@ var $K_script_response =
 			"files": [
 				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
 				{"name": "ll_Thread.js", "description": "Thread functionality."},
+				{"name": "ll_State.js", "description": "Each of the states of an Automaton."},
 				{"name": "ll_Automata.js", "description": "Finite automaton."},
 				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
 				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},

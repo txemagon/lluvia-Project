@@ -1825,10 +1825,12 @@ Object.defineProperty(Object.prototype, "to_class", {
     enumerable: false
 })
 function VersionNumber(initial_string, sep) {
+    if (!initial_string || initial_string == "")
+        return
     if (initial_string instanceof VersionNumber) {
         var level = this
         initial_string.each(function(number, value, container) {
-            level[number] = {}
+            level[number] = new VersionNumber()
             var branches = container.branches()
             for (var i = branches.length - 1; i >= 0; i--) {
                 level[branches[i]] = container[branches[i]]
@@ -1837,8 +1839,6 @@ function VersionNumber(initial_string, sep) {
         })
         return
     }
-    if (!initial_string || initial_string == "")
-        return
     Object.defineProperty(this, "sep", {
         value: sep || ".",
         enumerable: false
@@ -2218,7 +2218,7 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false,    })    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new VersionNumber(keys[k])    }}
+function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false,    })    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new VersionNumber(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}
 function Map() {
 }
 InterleavedArray.prototype = new Array
@@ -2900,6 +2900,52 @@ Thread.prototype.run = function(processors_time){
 	this.now = processors_time
 	throw "The solicitor function remains still undefined."
 }
+State.prototype = new VersionNumber
+State.prototype.constructor = State
+function State(label) {
+    VersionNumber.apply(this, arguments)
+    var that = this
+    this.before_hooks = []
+    this.after_hooks = []
+    Object.defineProperties(this, {
+        before_hooks: {
+            value: this.before_hooks,
+            enumerable: false
+        },
+        after_hooks: {
+            value: this.after_hooks,
+            enumerable: false
+        }
+    })
+    Object.defineProperty(this, "regime", {
+        value: State.REGIME.up,
+        writable: true,
+        configurable: true
+    })
+    this.run = function() {}
+    this[this] = function() {
+        State.prototype._run.apply(that, arguments)
+    }
+}
+State.prototype._run = function() {
+    var response = []
+    var args = Array.prototype.slice.call(arguments, 0)
+    args.push(this)
+    for (var i = this.before_hooks.length - 1; i >= 0; i--)
+        this.before_hooks[i].apply(this, args)
+    response[0] = this.run.apply(this, arguments)
+    if (this.run[this.regime.name])
+        response[1] = this.run[this.regime.name].apply(this, arguments)
+    args.push(response)
+    if (this.after_hooks.length)
+        for (var i = this.after_hooks.length - 1; i >= 0; i--)
+            this.after_hooks[i].apply(this, args)
+}
+Object.defineProperty(State.prototype, "_run", {
+    value: State.prototype._run,
+    enumerable: false
+})
+State.REGIME = new Enumeration("up", "steady", "down")
 Automata.prototype.constructor = Automata;
 function Automata(states, initialState, solicitor) {
     if (states instanceof Array)
@@ -2920,6 +2966,15 @@ function Automata(states, initialState, solicitor) {
         requested: this.state.none
     };
     this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
+    var current
+    Object.defineProperty(this, "current", {
+        get: function() {
+            return current
+        },
+        set: function(value) {
+            current = value
+        }
+    })
 }
 Automata.prototype.drive_state = function() {
     var base = this.state_name[this.currentState.current]
