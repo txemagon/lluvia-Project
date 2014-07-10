@@ -129,6 +129,7 @@ var $K_script_response =
 				   {
 					"_path": "/src/loader/package-manager/",
 					"files": [
+						{"name": "ll_Socket.js", "description": ""},
 						{"name": "ll_Package.js", "description": "Software package"},
 						{"name": "ll_PackageManager.js", "description": "Client pointer towards packages server."}],
 					"provides": [],

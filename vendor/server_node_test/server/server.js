@@ -9,24 +9,23 @@ var initial_package = __dirname + '/../../..'
 var root_package = new Package(initial_package, "/src")
 root_package.catalog()
 
-var WebSocketServer = require('ws').Server
-    , wss = new WebSocketServer({port: 8080})
+var WebSocketServer = require('ws').Server,
+    wss = new WebSocketServer({
+        port: 8081
+    })
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
-        
-        var pk = root_package.find_package(message)
-        var filelist = pk.get_files()
 
-        var text = FileReader.cat(filelist, process.stdout)
-        text = (new Sanitize(text)).multilines().singles().empty().text
-        
-        ws.send(text)	
+        var pk = root_package.find_package(message)
+            // var filelist = pk.get_files()
+
+        // var text = FileReader.cat(filelist, process.stdout)
+        // text = (new Sanitize(text)).multilines().singles().empty().text
+
+        //ws.send(text)
+        ws.send("function Line(){;}")
+
     })
 })
 
 console.log("Servidor iniciado...")
-
-
-
-
-

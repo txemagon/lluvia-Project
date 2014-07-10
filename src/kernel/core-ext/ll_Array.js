@@ -1811,7 +1811,57 @@ Array.prototype.compose = function() {
     }
     return roller
 }
+/**
+ * @method to_v
+ * Creates  from this an array of n dimensions vectors
+ *
+ * @return {Array} Array of vectors
+ */
+Array.prototype.to_v = function(dim) {
+    var coord1 = 0
+    var coord2 = 0
+    var vec_array = []
+    var dimension = dim || 2
 
+    if (this.length % dimension == 0) {
+        for (var i = 0; i < this.length; i++) {
+            if (coord1 == 0)
+                coord1 = this[i]
+            else
+                coord2 = this[i]
+            if (coord1 != 0 && coord2 != 0) {
+                vec_array.push(new Vector(coord1, coord2))
+                coord1 = 0
+                coord2 = 0
+            }
+        }
+        return vec_array
+
+    } else
+        throw "Odd number of arguments. Add one more number to create array"
+
+}
+
+Array.prototype.get_cool_var_names = function() {
+    var a = [
+        "billa",
+        "bacoa",
+        "co",
+        "bara",
+        "bie",
+        "ita",
+        "celona",
+        "tolo"
+
+    ]
+
+    var cool_names = []
+
+    for (var i = 0; i < a.length; i++)
+        cool_names[i] = "var-" + a[i]
+
+    return cool_names
+}
 
 /**
  * @method includes
@@ -1897,7 +1947,6 @@ function _rotate(number, array1, array2) {
 function getRandomArbitary(min, max) {
     return Math.random() * (max - min) + min;
 }
-
 
 /*
  * This function returns a transposed array.

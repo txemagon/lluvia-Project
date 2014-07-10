@@ -1,6 +1,6 @@
 
 function main(){
-
+/*
     var connection = new WebSocket('ws:localhost:8080', ['soap', 'xmpp'])
 
     connection.onopen = function () {
@@ -14,5 +14,5 @@ function main(){
     connection.onerror = function (error) {
         console.log('WebSocket Error ' + error)
     }
-    
+ */   
 }
