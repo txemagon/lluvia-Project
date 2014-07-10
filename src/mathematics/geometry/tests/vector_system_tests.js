@@ -35,4 +35,20 @@ assert("A new vector can be pushed with index to a VectorSystem",
 assert("A group of vectors can be pushed with index to a VectorSystem",
     'a.to_a()', '[ [2, 3], [25, 9], [10, 6], [4, 7] ]',
     'var a = new VectorSystem(new Vector(2, 3), new Vector(4, 7)); \
-        a.push_with_index(1, new Vector(25, 9), new Vector(10,6))')
+        a.push_with_index(new Vector(25, 9), 1, new Vector(10,6))')
+
+assert("An Array can be transformed into an array of vectors and create a VectorSystem",
+    'c.to_a()', '[ [2, 3], [5, 4], [6, 8] ]',
+    'var a = [2,3,5,4,6,8]; \
+        var b = a.to_v(); \
+        var c = new VectorSystem(b)')
+
+assert("An Array can be transformed into an array of vectors and create a VectorSystem - 2",
+    'c.to_a()', '[ [2, 3], [5, 4], [6, 8], [1, 1] ]',
+    'var a = [2,3,5,4,6,8]; \
+        var b = a.to_v(); \
+        var c = new VectorSystem(b, new Vector(1,1))')
+
+assert("An Array can be transformed into an array of vectors and create a VectorSystem - 3",
+    'c.to_a()', '[ [2, 3], [5, 4], [6, 8], [1, 1] ]',
+    'var c = new VectorSystem([2,3,5,4,6,8].to_v(), new Vector(1,1))')
