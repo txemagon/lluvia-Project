@@ -7,6 +7,7 @@
  */
 Vector.prototype.constructor = Vector
 
+
 function Vector() {
     /**
      *  VALID INPUT!
@@ -21,6 +22,12 @@ function Vector() {
 
     var argument = []
 
+        function is_valid_cs$U(cs) {
+            return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+                return el == cs || val
+            })
+        }
+
     for (var i = 0; i < arguments.length; i++)
         this.Coord.push(arguments[i])
 
@@ -31,7 +38,7 @@ function Vector() {
 
     //moves the coordinate system string (if exists) to the last position
     for (var i = 0; i < argument.length; i++)
-        if (Vector.is_valid_cs$U(arguments[i]))
+        if (is_valid_cs$U(arguments[i]))
             argument.push(argument.splice(i, 1)[0])
 
 
@@ -93,6 +100,12 @@ function Vector() {
 
 }
 
+Vector.is_valid_cs$U = function(cs) {
+    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+        return el == cs || val
+    })
+}
+
 /**
  * Compares the dimension of two vectors
  *
@@ -110,7 +123,7 @@ Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
  * Checks if two vector have the same number of coordinates.
  * If not, fills the missing coordinates with zeros
  *
- * @param {Vector} vector_to_compare Vector to compare with the given one
+ * @param {Vector} vector_to_compare Vector to compare to the given one
  *
  * Example:
  * var a = new Vector(4, 2, 6)
@@ -962,8 +975,7 @@ Vector.prototype.torque = function(point, vect) {
  *
  */
 Vector.prototype.value_of = function() {
-    return this.Coord // dice que this.Coord is not a function, he visto que haciendo una llamada no lo coge supongo que
-    // no es una funcion sino un atributo, asi que le he quitado los parentesis de llamada y corre perfecto
+    return this.Coord
 }
 
 /**
@@ -994,12 +1006,6 @@ Vector.prototype.eql$U = function(model) {
 
 /* Class Variables and Methods */
 Vector.valid_cs = ["pol", "cart", "cyl", "sph"]
-Vector.is_valid_cs$U = function(cs) {
-    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
-        return el == cs || val
-    })
-
-}
 
 /**
  * @method get
@@ -1011,6 +1017,30 @@ Vector.is_valid_cs$U = function(cs) {
  */
 Vector.prototype.get = function(coordinate) {
     return this.Coord[coordinate] || 0
+}
+
+/**
+ * @method are_equal$U
+ * Checks if two vectors are equal. If so, returns true. Else, returns false
+ *
+ * @param  {Vector}  vec Vector to compare
+ * @return {Boolean}     Returns true if vectors are equal
+ */
+Vector.prototype.is_equal_to$U = function(vec) {
+    var r_eq = 0
+    if (this.Coord.length == vec.Coord.length) {
+        for (var i = 0; i < this.Coord.length; i++)
+            if (this.Coord[i] == vec.Coord[i])
+                r_eq++
+            else
+                r_eq--
+
+        if (r_eq == this.Coord.length)
+            return true
+        else
+            return false
+    } else
+        return false
 }
 
 Vector.prototype._ = Vector.prototype.get

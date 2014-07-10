@@ -3475,12 +3475,17 @@ function Vector() {
     var that = this
     this.Coord = []
     var argument = []
+        function is_valid_cs$U(cs) {
+            return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+                return el == cs || val
+            })
+        }
     for (var i = 0; i < arguments.length; i++)
         this.Coord.push(arguments[i])
     for (var i = 0; i < arguments.length; i++)
         argument[i] = arguments[i]
     for (var i = 0; i < argument.length; i++)
-        if (Vector.is_valid_cs$U(arguments[i]))
+        if (is_valid_cs$U(arguments[i]))
             argument.push(argument.splice(i, 1)[0])
     if (typeof(argument[argument.length - 1]) == "string")
         coordinate_system = argument[argument.length - 1]
@@ -3521,6 +3526,11 @@ function Vector() {
     }
     this._module = this.module()
     this.uVector = this.scale(1 / this._module)
+}
+Vector.is_valid_cs$U = function(cs) {
+    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+        return el == cs || val
+    })
 }
 Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
     if (this.Coord.length == vector_to_compare.Coord.length)
@@ -3807,11 +3817,6 @@ Vector.prototype.eql$U = function(model) {
     return model.Coord.eql$U(this.Coord)
 }
 Vector.valid_cs = ["pol", "cart", "cyl", "sph"]
-Vector.is_valid_cs$U = function(cs) {
-    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
-        return el == cs || val
-    })
-}
 Vector.prototype.get = function(coordinate) {
     return this.Coord[coordinate] || 0
 }
@@ -3898,5 +3903,9 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
+<<<<<<< HEAD
 var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+=======
+var p = new PackageManager("/home/laura/work/lluvia-Project/util/compress-core/../..")
+>>>>>>> f00ba322a6a16e0dcd88b8d4c45a4e7277b9be60
 p.get_catalog()
