@@ -33,26 +33,19 @@
  */
 Automata.prototype.constructor = Automata;
 
-function Automata(states, initialState, solicitor) {
+function Automata(states, initial_state, solicitor) {
 
     if (states instanceof Array)
         states = new(ApplyProxyConstructor(Enumeration, states))
-    this.state = states == null ? {
-        none: -1
-    } : states;
-    if (!this.state.none)
-        this.state.none = -1
+    if (!states)
+        this.state = {
+            none: State.NONE
+        }
 
-    this.stateChange = {
-        up: 0,
-        steady: 1,
-        down: 2
-    };
-    this.currentState = initialState != null ? initialState : {
-        previous: this.state.none,
-        current: this.state.none,
-        requested: this.state.none
-    };
+    // Always -1 
+    this.state.none = State.NONE
+    this.currentState = new AutomataGear(initial_state)
+
     this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
 
     var current

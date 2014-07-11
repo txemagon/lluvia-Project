@@ -182,3 +182,4 @@ Object.defineProperty(State.prototype, "_run", {
  * up and down states provide a way politely enter and leave the state.
  */
 State.REGIME = new Enumeration("up", "steady", "down")
+State.NONE = new State("-1")
