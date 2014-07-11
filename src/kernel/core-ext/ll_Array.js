@@ -43,18 +43,18 @@ Array.reflect = function() {
     var result
     var return_value = {}
 
-        function duplicate(original_method) {
-            Array.prototype[original_method + "$B"] = function() {
-                var substitute = Array.prototype[original_method].apply(this, arguments)
+    function duplicate(original_method) {
+        Array.prototype[original_method + "$B"] = function() {
+            var substitute = Array.prototype[original_method].apply(this, arguments)
 
-                this.clear()
-                for (var i = 0; i < substitute.length; i++)
-                    this[i] = substitute[i]
+            this.clear()
+            for (var i = 0; i < substitute.length; i++)
+                this[i] = substitute[i]
 
-                return this
-            }
-            return [original_method + "$B", Array.prototype[original_method + "$B"]]
+            return this
         }
+        return [original_method + "$B", Array.prototype[original_method + "$B"]]
+    }
 
     for (var i = 0; i < arguments.length; i++)
         if (arguments[i] instanceof Array)
@@ -179,7 +179,7 @@ Array.prototype.count = function(obj) {
         ))
             count++
 
-    return count
+            return count
 }
 
 
@@ -244,7 +244,7 @@ Array.prototype.collect = function() {
         for (var i = 0; i < this.length; i++)
             collectable.push(Array.prototype.collect.yield(this[i]))
 
-        return collectable
+    return collectable
 }
 
 
@@ -596,7 +596,7 @@ Array.prototype.erase_at$B = function() {
         return null
     if (arguments.length > 1)
         return null
-        //throw ("Wrong number of parameters")
+            //throw ("Wrong number of parameters")
     if (arguments[0] > this.length)
         return null
     this.splice(arguments[0], 1)
@@ -686,10 +686,10 @@ Array.prototype.replace = function() {
         return null
     if (arguments.length > 1)
         return null
-        //throw("wrong number of arguments")
+            //throw("wrong number of arguments")
     if (!(arguments[0] instanceof Array))
         return null
-        //throw("Invalid parameter type: Array expected.")
+            //throw("Invalid parameter type: Array expected.")
     this.clear()
     for (var i = 0; i < arguments[0].length; i++)
         this[i] = arguments[0][i]
@@ -744,10 +744,10 @@ Array.prototype.delete$B = function(obj) {
         else
             return null
 
-            while ((position = this.indexOf(obj)) != null && position != -1)
-                this.splice(position, 1)
+    while ((position = this.indexOf(obj)) != null && position != -1)
+        this.splice(position, 1)
 
-            return obj
+    return obj
 }
 
 
@@ -1634,7 +1634,9 @@ Array.prototype.combination = function(number) {
     if (!is_a_number(number))
         throw "Array#combination. Parameter must be a number."
     if (number == 0)
-        return [[]]
+        return [
+            []
+        ]
     if (number > this.length)
         return []
     if (number == this.length)
@@ -1715,10 +1717,10 @@ Array.prototype.sort_by = function() {
         else
             indexed.sort()
 
-            for (var i = 0; i < this.length; i++)
-                ordered.push(indexed[i][1])
+        for (var i = 0; i < this.length; i++)
+            ordered.push(indexed[i][1])
 
-            return ordered
+        return ordered
     } else
         return this.sort()
 
@@ -1851,14 +1853,24 @@ Array.prototype.get_cool_var_names = function() {
         "bie",
         "ita",
         "celona",
-        "tolo"
-
+        "tolo",
+        "ritar",
+        "itono",
+        "ba",
+        "manolo",
+        "reinols",
+        "simpson",
+        "tolome",
+        "ices",
+        "avillosho",
+        "icela",
+        "ademedir"
     ]
 
     var cool_names = []
 
     for (var i = 0; i < a.length; i++)
-        cool_names[i] = "var-" + a[i]
+        cool_names[i] = "var " + a[i]
 
     return cool_names
 }
@@ -1935,12 +1947,12 @@ function _rotate(number, array1, array2) {
         arg = 0
     else
         arg++
-    for (var i = arg; i != number; i++) {
-        array2[i] = array1[pos]
-        if (i == (array1.length - 1))
-            i = -1;
-        pos++
-    }
+        for (var i = arg; i != number; i++) {
+            array2[i] = array1[pos]
+            if (i == (array1.length - 1))
+                i = -1;
+            pos++
+        }
     return array2
 }
 
