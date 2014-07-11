@@ -43,3 +43,43 @@ function test() {
     alert(l)
 
 }
+
+
+
+
+//////////////////////////
+
+function test() {
+
+    function PM() {
+
+    }
+
+    PM.prototype.drop = function(arg, callback) {
+        var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
+        var packages = arg
+
+        connection.onopen = function() {
+            connection.send(packages)
+        }
+
+        connection.onmessage = function(e) {
+            eval.call(null, e.data)
+            callback()
+        }
+
+        connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error)
+        }
+    }
+
+    PM.prototype.download = function(arg, callback) {
+
+    }
+
+    var pm = new PM()
+    pm.drop("shape", function() {
+        var l = new Line()
+        alert(l.toSource())
+    })
+}

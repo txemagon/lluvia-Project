@@ -17,12 +17,12 @@ wss.on('connection', function(ws) {
     ws.on('message', function(message) {
 
         var pk = root_package.find_package(message)
-            // var filelist = pk.get_files()
+        var filelist = pk.get_files()
 
-        // var text = FileReader.cat(filelist, process.stdout)
-        // text = (new Sanitize(text)).multilines().singles().empty().text
+        var text = FileReader.cat(filelist, process.stdout)
+        text = (new Sanitize(text)).multilines().singles().empty().text
 
-        //ws.send(text)
+        ws.send(text)
         ws.send("function Line(){;}")
 
     })

@@ -76,12 +76,12 @@ PackageManager.is_offer$U = function(name_package) {
     return is_offer
 }
 
-PackageManager.prototype.what_offers = function(){
+PackageManager.prototype.what_offers = function() {
     var offers = ""
 
-    for(var i=0; i<this.offers.length; i++){
-        offers +=  this.offers[i]
-        if(i != this.offers.length - 1)
+    for (var i = 0; i < this.offers.length; i++) {
+        offers += this.offers[i]
+        if (i != this.offers.length - 1)
             offers += ","
     }
 
@@ -103,7 +103,7 @@ PackageManager.find_package = function(name_package) {
 PackageManager.drop = function(server, name_package) {
     if (PackageManager.is_offer$U(name_package)) {
         var package = PackageManager.find_package(name_package)
-        for (var i = 0; i < package.files.length; i++){
+        for (var i = 0; i < package.files.length; i++) {
             PackageManager.include_script(server.uri + package._path + package.files[i].name)
         }
     }
