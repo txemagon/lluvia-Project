@@ -1845,6 +1845,18 @@ Object.defineProperty(Object.prototype, "to_class", {
 function VersionNumber(initial_string, sep) {
     if (!initial_string || initial_string == "")
         return
+    if (initial_string instanceof VersionNumber) {
+        var level = this
+        initial_string.each(function(number, value, container) {
+            level[number] = new VersionNumber()
+            var branches = container.branches()
+            for (var i = branches.length - 1; i >= 0; i--) {
+                level[branches[i]] = container[branches[i]]
+            }
+            level = level[number]
+        })
+        return
+    }
     Object.defineProperty(this, "sep", {
         value: sep || ".",
         enumerable: false
@@ -1931,7 +1943,7 @@ VersionNumber.prototype.branch = function(version, first_label) {
         var value = parts[1] || {}
         if (i + 1 < arguments.length && typeof(arguments[i + 1]) !== "string")
             value = arguments[++i]
-        this[parts[0]] = value
+        insertion_point[parts[0]] = value
     }
 }
 VersionNumber.prototype.branches = function() {
@@ -1947,7 +1959,7 @@ VersionNumber.prototype.each = function(block) {
     var obj = this.number()
     if (obj)
         block(this.number_value(), obj, this)
-    if ("each" in obj && typeof(obj.each) === "function")
+    if ((obj instanceof Object) && "each" in obj && typeof(obj.each) === "function")
         obj.each(block)
 }
 VersionNumber.stop_enum = function(method) {
@@ -2224,7 +2236,7 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false,    })    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new VersionNumber(keys[k])    }}
+function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false,    })    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new VersionNumber(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}
 function Map() {
 }
 InterleavedArray.prototype = new Array
@@ -2404,33 +2416,21 @@ Exception.parse = function(err, source_code){
      }
      throw(err)
 }
-function Socket(uri, protocols){
-	this.uri = uri || ""
-	this.protocols = protocols || ['soap', 'xmpp']
-	this.connection = new WebSocket(this.uri, this.protocols)
-	this.is_connect$U = false
-	this.reply = "h"
-}
-Socket.prototype.communication = function(message){
-	var that = this
-    this.connection.onopen = function () {
-        that.connection.send('shape')
+function Socket(open_func, received_func, uri, protocols) {
+    var that = this
+    this.uri = uri || ""
+    this.protocols = protocols || ['soap', 'xmpp']
+    this.connection = new WebSocket(this.uri, this.protocols)
+    this.connection.onopen = function() {
+        open_func(that.connection)
     }
-    this.is_connect$U = true
-    this.connection.onmessage = function (e) {
-       that.reply = e.data
+    this.connection.onmessage = function(e) {
+        received_func(new String(e.data))
     }
-    return this.reply
 }
-Socket.prototype.close_socket = function(){
-    connection.onclose = function () {
+Socket.prototype.close_socket = function() {
+    connection.onclose = function() {
         connection.send('socket closed')
-    }
-    this.is_connect$U = false
-}
-Socket.prototype.send_msg = function(message) {
-	this.connection.onopen = function () {
-        connection.send(message)
     }
 }
 function Package(pk){
@@ -2857,505 +2857,558 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
-Complex.prototype.constructor = Complex    
-Complex.prefix_sep = false  
-Complex.sep = "i"          
-Complex.valid_binomial_sep = ["i", "j"]
-Complex.valid_polar_sep    = [";", ":", "\\|", "\\("]
-Complex.output_mode = "binomial"
-Complex.valid_output_modes = ["binomial", "polar", "exponential"]
-function Complex () {
-  var that = this
-  this._real = 0
-  this._img  = 0
-  this._k_pi = 0
-  function parse_input(args){
-    if (args[0] instanceof Complex){
-     that._real = args[0].real()
-     that._img  = args[0].img()
+Processor.prototype.constructor = Processor;
+function Processor(){
+	this.now	 = new Date();
+	this.events  = new Event();
+	this.threads = new Array();
+}
+Processor.prototype.register = function(cObject, solicitorF){
+	var obj = null
+	var fun = null
+	if (cObject){
+		obj = cObject
+		if (solicitorF)
+			fun = solicitorF
+		else if (cObject.run)
+			fun = cObject.run
+		if (!fun)
+			throw "The current processor can´t get a valid solicitor"
+	}
+	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
+}
+Processor.prototype.kill = function(rObject, solicitorF){
+	for (var i in this.threads)
+		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
+			this.threads.slice(i,i+1);
+}
+Processor.prototype.step = function (date){
+	this.now = date || new Date();
+	try {
+	  for (var i=0; i<this.threads.length; i++)
+            this.threads[i].solicitor.call(this.threads[i].object, this.now);
     }
-    if (args[0] instanceof Array){
-      that._real = args[0][0] || 0
-      that._img  = args[0][1] || 0
+    catch (e) {
     }
-    if (args.length == 2 && 
-	typeof(args[0]) == "number" ||
-	typeof(args[1]) == "number" )
-	if (typeof(args[2]) == "string" && args[2][0].toLowerCase() == "p")
-	  args[0] = "" + args[0] + ";" + args[1]
-      else{
-        that._real = args[0] || 0
-        that._img  = args[1] || 0
-      }
-    if ( typeof(args[0]) == "string"){
-      var text = args[0].replace(/,/g, ".")
-      if (Complex.is_valid_binomial(args[0])){
-	   that._real = eval( Complex.get_members("real", text).join(" ") ) || 0
-	   that._img  = eval( Complex.get_members("img" , text).join(" ") ) || 0
-      }
-      if (Complex.is_valid_polar(args[0])){
-         var mod = eval( Complex.get_members("mod", text).join(" ") ) || 0
-         var ang = new Angle( Complex.get_members("arg", text) )
-         var arg = ang.value() || 0
-	   that._real = mod * Math.cos( arg )
-	   that._img  = mod * Math.sin( arg )
-	   that._k_pi = ang.rounds()
-      }
+}
+Processor.prototype.run = function (date){
+    this.now =  new Date();
+    try {
+	this.step(this.now)
     }
-  }
-  if (arguments.length != 0)
-    parse_input(arguments)
+    catch (e) {
+    }
+    setTimeout(this.run.bind(this), 20);
 }
-Complex.prototype.real = function(){
-  return this._real
+Processor.prototype.start = function(){
+    this.run()
+    return this;
 }
-Complex.prototype.re = function(){
-  return this.real()
+Processor.prototype.newThread = function(){
+    var t = new Thread(null, this)
+    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
+    return t;
 }
-Complex.prototype.img = function(){
-  return this._img
+Processor.prototype.get = Processor.prototype.get = function (object) {
+    var collect = []
+    var len = this.threads.length
+    for (var i=0; i<len; i++) {
+	var candidate = this.threads[i].object
+       if ( candidate && !collect.include$U(candidate) &&
+	    ( candidate == object ||  candidate instanceof object )
+	  )
+      collect.push(candidate)
+    }
+    return collect
 }
-Complex.prototype.im = function(){ 
-  return this.img()
+$Processor = new Processor().start()
+Thread.prototype.constructor = Thread;
+function Thread(solicitor, processor){
+	this.before = new Date()
+	this.now = processor? processor.now: new Date();
+	if (!solicitor)
+		solicitor = this.run;
+	if (processor && processor instanceof Processor)
+		processor.register(this, solicitor);
 }
-Complex.prototype.imag = function(){ 
-  return this.img()
+Thread.prototype.run = function(processors_time){
+	this.now = processors_time
+	throw "The solicitor function remains still undefined."
 }
-Complex.prototype.imaginary = function(){ 
-  return this.img()
-}
-Complex.prototype.valueOf = function(){
-  return [this.real(), this.img()]
-}
-Complex.prototype.to_str = function(mode){
-  mode = mode || Complex.output_mode.toLowerCase()
-  mode = mode.toLowerCase()
-  if ( mode[0] == "p" )  
-    return "polar"
-  return this.real() + _dress_img(this.img())  
-}
-Complex.prototype.toString = function(){
-  return this.to_str()
-}
-Complex.prototype.equals = function(re, im){
-  var model 
-  if ( typeof(re) == "number" || typeof(im) == "number")
-       model = new Complex(re, im)
-  else 
-         model = new Complex(re)
-  return _$same_number(model.real(),this.real()) && _$same_number(model.img(), this.img())
-}
-Complex.prototype.identical = function(re, im){
-  var model 
-  if ( typeof(re) == "number" || typeof(im) == "number")
-       model = new Complex(re, im)
-  else 
-         model = new Complex(re)
-  return _$same_number(model.real(),this.real()) && 
-         _$same_number(model.img(), this.img() ) &&
-         _$same_number(model._k_pi, this._k_pi)  
-}
-Complex.prototype.is_real$U = function(){
-  return this.img() == 0
-}
-Complex.prototype.is_img$U = function(){
-  return this.real() == 0
-}
-Complex.prototype.is_im$U = function(){
-  return this.is_img$u()
-}
-Complex.prototype.is_imag$U = function(){
-  return this.is_img$u()
-}
-Complex.prototype.is_imaginary$U = function(){
-  return this.is_img$u()
-}
-Complex.prototype.module = function(){
-  var r = this.real();
-  var i = this.img();
-  return Math.sqrt( r * r + i * i )
-}
-Complex.prototype.arg = function(){
-}
-Complex.prototype.argument = function(){ 
-  return this.arg()
-}
-Complex.get_members = function(real, text){
-  real = real.toLowerCase()
-  if (real[0] == "r" || real[0] == "i"){ 
-    real = real.indexOf("r") == 0
-    var terms = _split_terms(text)
-    var result = []
-    terms.each(function(el){
-       if (real && !el.include_some_of$U(Complex.valid_binomial_sep))
-         result.push(el)
-       if (!real && el.include_some_of$U(Complex.valid_binomial_sep))
-         result.push(el.replace(new RegExp("[" + Complex.valid_binomial_sep +"]", "g"), ""))
-       })
-    return result
-  }else{
-    var module = real[0] == "m"
-    text = text.replace(/\s+/g, "")
-    if (module)
-      return text.match( /^[\d\.,]+/ )
-    else{
-      return text.match( new RegExp( "[" + Complex.valid_polar_sep.join("") + "](.*)$") )[1] || 0
-      }
-  }
-}
-Complex.is_valid_binomial = function (text){
-  text = text.replace(/\s/g, "")
-  return text.search(new RegExp( "[^"+ Complex.valid_binomial_sep.join("") + "\\d\\.,\\+-]" )) == -1 &&
-         _complex_not_at_the_same_time( text, ["\\.", ","]) && 
-         _complex_not_at_the_same_time(text, Complex.valid_binomial_sep)
-}
-Complex.is_valid_polar = function (text){
-  text = text.replace(/\s/g, "").replace(/;;/g, ";")
-  return text.search( new RegExp("^[\\d\.,]+[" + Complex.valid_polar_sep + "].*º?$", "g") ) != -1 &&
-         _complex_not_at_the_same_time( text, ["\\.", ","]) && 
-         !Complex.is_valid_binomial(text)
- }
-function _append_complex_sep( term ){
-  if (Complex.prefix_sep)
-    return Complex.sep + term
-  return term + Complex.sep
-}
-function _dress_img(term){
-  var sign = term < 0 ? " - " : " + "
-  return sign + _append_complex_sep(Math.abs(term))
-}
-function _split_terms(text){
-  var terms = []
-  text.split("+").each(function(el){ 
-    el.split("-").each_with_index( function (subel, index){
-      if (subel.length != 0)
-        subel = (index == 0? "+" : "-" ) + subel 
-      if ( (subel.search(/\d/) == -1) &&
-	   subel.include_some_of$U(Complex.valid_binomial_sep) )
-        subel += "1"
-      terms.push(subel)
+State.prototype = new VersionNumber
+State.prototype.constructor = State
+function State(label) {
+    VersionNumber.apply(this, arguments)
+    var that = this
+    this.before_hooks = []
+    this.after_hooks = []
+    Object.defineProperties(this, {
+        before_hooks: {
+            value: this.before_hooks,
+            enumerable: false
+        },
+        after_hooks: {
+            value: this.after_hooks,
+            enumerable: false
+        }
     })
-  })
-  return terms
+    Object.defineProperty(this, "regime", {
+        value: State.REGIME.up,
+        writable: true,
+        configurable: true
+    })
+    this.run = function() {}
+    this[this] = function() {
+        State.prototype._run.apply(that, arguments)
+    }
 }
-function _complex_not_at_the_same_time(text, incompatibilities){
-  var counters = {}
-  for (var i=0; i<incompatibilities.length; i++)
-    counters[incompatibilities[i]] = 0;
-  incompatibilities.each(function(el){
-        if (text.search(el) != -1)
-        counters[el] = 1
-      })
-  var sum = 0
-  for (var i=0; i<incompatibilities.length; i++)
-    sum += counters[incompatibilities[i]];
-  return sum < 2
+State.prototype._run = function() {
+    var response = []
+    var args = Array.prototype.slice.call(arguments, 0)
+    args.push(this)
+    for (var i = this.before_hooks.length - 1; i >= 0; i--)
+        this.before_hooks[i].apply(this, args)
+    response[0] = this.run.apply(this, arguments)
+    if (this.run[this.regime.name])
+        response[1] = this.run[this.regime.name].apply(this, arguments)
+    args.push(response)
+    if (this.after_hooks.length)
+        for (var i = this.after_hooks.length - 1; i >= 0; i--)
+            this.after_hooks[i].apply(this, args)
 }
-function _$same_number(op1, op2){
-  return Math.abs(op1 - op2) < Object._$NUM_ERR
+Object.defineProperty(State.prototype, "_run", {
+    value: State.prototype._run,
+    enumerable: false
+})
+State.REGIME = new Enumeration("up", "steady", "down")
+Automata.prototype.constructor = Automata;
+function Automata(states, initialState, solicitor) {
+    if (states instanceof Array)
+        states = new(ApplyProxyConstructor(Enumeration, states))
+    this.state = states == null ? {
+        none: -1
+    } : states;
+    if (!this.state.none)
+        this.state.none = -1
+    this.stateChange = {
+        up: 0,
+        steady: 1,
+        down: 2
+    };
+    this.currentState = initialState != null ? initialState : {
+        previous: this.state.none,
+        current: this.state.none,
+        requested: this.state.none
+    };
+    this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
+    var current
+    Object.defineProperty(this, "current", {
+        get: function() {
+            return current
+        },
+        set: function(value) {
+            current = value
+        }
+    })
 }
-Func.prototype.constructor = Func
-function Func(formula, param){
-   if (arguments[0] instanceof Func)
-     return new Func(arguments[0].formula, arguments[0].param)
-   if (typeof(formula) != "string")
-     return null;
-   this.formula = formula.replace( /\s+/g, "")
-   this.param = this.sanitize_params(param)
+Automata.prototype.drive_state = function() {
+    var base = this.state_name[this.currentState.current]
+    var down = base + "_down"
+    var steady = base + "_steady"
+    var up = base + "_up"
+    if (this.currentState.requested != this.state.none) {
+        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
+        if (this[down])
+            this[down]()
+        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
+        if (this[up])
+            this[up]()
+    }
+    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
+    if (this[steady])
+        this[steady]()
 }
-Func.prototype.equals = function(model){
-  if (!(model instanceof Func))
-    model = new Func(model)
-  return this.formula.replace(/\s+/g, "") == model.formula.replace(/\s+/g, "")
+Automata.prototype.run = function() {
+    Automata.prototype.drive_state.apply(this, arguments)
+    if (this.currentState.requested != this.state.none) {
+        this.currentState.previous = this.currentState.current;
+        this.currentState.current = this.currentState.requested;
+        this.currentState.requested = this.state.none;
+    }
 }
-Func.prototype.value_of = function(){
-  return this.formula
+ThreadAutomata.prototype  = new Thread;
+extend(ThreadAutomata, Automata);
+ThreadAutomata.prototype.constructor = ThreadAutomata;
+function ThreadAutomata(state, currentState, solicitor, processor){
+	if (arguments.length){
+		Automata.call(this, state, currentState, solicitor);
+		Thread.call(this, ThreadAutomata.prototype.run, processor);
+	}
 }
-Func.prototype.value_in = function(param){
-  var param = this.sanitize_params(param)
-  var formula = this.formula
-  for(var i in param){
-     var rp = param[i]
-     if (typeof(param[i]) === "function")
-       rp = param[i]()
-     if (param[i] instanceof Func)
-       rp = param[i].value_in()
-     formula = formula.replace( new RegExp("{" + i + "}", "g"), rp )
-  }
-  try{
-   return eval(formula)
-  } catch(err){
-   return formula
-  }
+ThreadAutomata.prototype.run = function(processors_time){
+	if (this.now)
+		this.before = this.now
+	this.now    = processors_time
+	Automata.prototype.run.call(this, this.now, this.before);
 }
-Func.prototype.set_param = function(param){
-  this.param = this.sanitize_params(param)
-  return this
-}
-Func.prototype._in = function(param){
-  var that = this
-  param = this.sanitize_params(param)
-  return function(){
-    return that.value_in(param)
-  }
-}
-Func.prototype.sanitize_params = function(param){
-    param = param || this.param || {}
-    try{ param = param.plain() } catch(err){;}
-    return param
-}
-Func.prototype.add = function(){
-  var func = this
-  for (var i=0; i<arguments.length; i++)
-      func = new Func(func.formula + " + " + new Func(arguments[i]).formula)
-  return func
-}
-Func.prototype.add$B = function(){
-   this.formula = this.add.apply(this, arguments).formula
-   return this
-}
-Func.prototype.sub = function(){
-  var func = this
-  for (var i=0; i<arguments.length; i++)
-      func = new Func(func.formula + " - (" + new Func(arguments[i]).formula + ")")
-  return func
-}
-Func.prototype.sub$B = function(){
-   this.formula = this.sub.apply(this, arguments).formula
-   return this
-}
-Func.prototype.mul = function(){
- var func = new Func( "(" + this.formula + ")" )
-  for (var i=0; i<arguments.length; i++)
-      func = new Func(func.formula + " * (" + new Func(arguments[i]).formula + ")")
-  return func
-}
-Func.prototype.mul$B = function(){
-   this.formula = this.mul.apply(this, arguments).formula
-   return this
-}
-Func.prototype.div = function(){
- var func = new Func( "(" + this.formula + ")" )
-  for (var i=0; i<arguments.length; i++)
-      func = new Func(func.formula + " / (" + new Func(arguments[i]).formula + ")")
-  return func
-}
-Func.prototype.div$B = function(){
-   this.formula = this.div.apply(this, arguments).formula
-   return this
-}
-Func.prototype.method_missing = function (method, obj, params){ 
-    if (params && params[0] == "")
-      params.shift()
-    if ( Math[method] === "undefinded" || !( Math[method] instanceof Function ))
-      throw "TypeError: " + obj + "." + method + "is not a function."
-    if (params && (params instanceof Array) )
-      for(var i=0; i<params.length; i++)
-        params[i] = (eval(params[i]) instanceof Object)? eval(params[i]).value_of() : eval(params[i])
-    params.unshift(this.formula.toString())
-    while (params[params.length-1] == null)
-       params.pop()
-    return new Func(method + "(" + params.join(',') + ")")
-}
- Trail.prototype.constructor = Trail
- function Trail(obj){
-   obj.trail = []
-   if (obj instanceof Func)
-     ;
- }
-Vector.prototype.constructor = Vector;
-Vector.add = function(){
-  return argument.shift.add(argument)
-}
-  Vector.add = function(vectAdd){
-	var vectRes = [];
-	alert(arguments)
-	for (var i=0; i< vectAdd[0].length; i++)
-		vectRes[i] = 0;
-	for (var i=0; i<vectAdd[i].length; i++){
-		for (var j=0; j<vectAdd[j].length; j++){		    
-			vectRes[j] += vectAdd[i][j]
-			alert(vectRes)
+Device.prototype = new Processor
+extend(Device, ThreadAutomata)  
+Device.prototype.constructor = Device
+function Device(view, state, currentState, parent){
+	var that    = this
+	this._class = that
+	state = state || Device.STATE
+      state.self_keys().each(function(key){  
+		   ["up", "steady", "down"].each(function(substate){
+		     Device.prototype[state + "_" + substate] = function(){;}
+		})})
+	this.solicitors = [
+			[
+			function(){
+				;
+			},
+			function(){
+				;
+			},
+			function(){
+				;
 			}
-     }
-	return vectRes
- }
- Vector.subs = function(vectSubs){
-	var vectRes = [];
-	for (var i=0; i< vectSubs[0].length; i++)
-		vectRes[i] = 0;
-	for (var i=0; i<vectSubs[i].length; i++)
-		for (var j=0; j<vectSubs[j].length; j++)
-			vectRes[j] -= vectSubs[i][j]
-	return vectRes
- }
- Vector.dot = function(vectors){
-	if ((vectors.length >= 2) && 
-		(typeof (vectors[0]) == Array) && 
-		(typeof (vectors[1]) == Array) &&
-		(vectors[0].length == vectors[1].length)){
-		var dt = 0
-		for (var i=0; i<vectors[0].length; i++)
-			dt += vectors[0][i] * vectors[1][i]
-		return dt
+		],
+		 	[
+			function(){
+				;
+			},
+			function (){
+				 ;
+				this.gateRunner(this.now)
+				this.childRunner(this.now);
+			},
+			function(){
+				;
+			}
+		],
+		[
+			function(){
+				;
+			},
+			function(){
+				 ;
+				this.childRunner(this.now);
+			},
+			function(){
+				;
+			}
+		],
+		 	[
+			function(){
+				;
+			},
+			function(){
+				 ;
+				this.gateRunner(this.now)
+			},
+			function(){
+				;
+			}
+		],
+		 	[
+			function(){
+				;
+			},
+			function(){
+				;
+			},
+			function(){
+				;
+			}
+		]
+	]
+	if (view)
+		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
+	this.lookup = new Lookup();
+	this.eventDispatcher = new EventDispatcher(this.lookup);
+	this.currentState = currentState ||
+						{ 	previous:  Device.STATE.suspended,
+							current:   Device.STATE.suspended,
+							requested: Device.STATE.running
+						}
+	this.gates		   = []
+	this.getSolicitors = function() { return that.solicitors; }
+	this.getStates	   = function() { return state; }
+	this.openDevice	   = _$innerObject(this, "device")
+	function initialize(){ 
+		that.eventDispatcher.device = that
+		that.register(that.eventDispatcher, that.eventDispatcher.shift)
+		if (that.self_events)
+			that.eventDispatcher.joinPorts(that.self_events)
+		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
 	}
-	return undefined			
+	if (arguments.length)	
+		initialize();
 }
-Vector.cross = function(vectors){	
-	if ((vectors.length >= 2) && 
-		(typeof (vectors[0]) == Array) && 
-		(typeof (vectors[1]) == Array) &&
-		(vectors[0].length == vectors[1].length)){
-		var cross = [ 	[vectors[0][1] * vectors[1][2] - vectors[0][2] * vectors[1][1]],
-						[vectors[0][2] * vectors[1][0] - vectors[0][0] * vectors[1][2]],
-						[vectors[0][0] * vectors[1][1] - vectors[0][1] * vectors[1][0]]]
-		return cross
+Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+Device.prototype.gateRunner = function(){
+		for (var i=0; i<this.gates.length; i++)
+			this.gates[i].run( this.now, this.before )
+}
+Device.prototype.childRunner = function(){
+	if (this.currentState != this.getStates().killed) {
+		this.now = arguments[0]
+		for (var i in this.threads)
+			try {
+				this.threads[i].solicitor.call(this.threads[i].object, this.now);
+			}
+			catch (e) {
+			}
 	}
-	return undefined			
 }
-Vector.dCross = function(vector1, vector2, vector3){
-	var vectorAux = new Array();
-	vectorAux = cross(vector1, vector2);
-	vectorAux = cross(this.vectorAux, vector3);
-	return vectorAux;
-}
-Vector.scale = function(vector, number){
- 	var sc = []
-	if ((typeof(vector) == Number) && (typeof(number) == Vector)){
-		var aux = number
-		number  = vector
-		vector  = aux
+Device.prototype.newGate = function(el, ClassCons, config){
+	try {
+		var Cons = this.openDevice(ClassCons)
+		var view = this.view || null
+		var ob = new Cons(el, view, config)
+        ob.device = this
+		this.gates.push( ob )
+		return ob
+	} catch (e) {
+		if ($K_debug_level >= $KC_dl.DEVELOPER)
+			alert("No event handlers were found.\nException: " + e.toSource())
 	}
-	if (typeof(vector) == Array)
-		for (var i=0; i<vector.length; i++)
-			sc[i] = vector[i] * number
-	else sc = vector * number
-	return sc	
- }
- Vector.projection = function(vector1, vector2){
-	var resultVect = new Array();
-	var dt1 = 0
-	var dt2 = 0
-	var vectors= new Array(2);
-	vectors[0]= verctor1;
-	vectors[1]= vector2;
-	this.dt1 = Vector.prototype.dot (vectors)
-	var dt2 = 0
-	for (var i=0; i<vectors[1].length; i++)
-		this.dt2 += vectors[1][i] * vectors[1][i]
-	var ortoResult = dt1/dt2
-	for (var i=0; i<vectors[0].length; i++)
-	this.resultVect[i]= (vectors[1][i] * ortoResult)
-	return this.resultVect;				
 }
-Vector.linearCombination$U = function(vectorSet){
-	var norm = Matrix.normalize(vectorSet)
-	var nz = 0		
-	var li = true;	
-	for (var i = 0; i < norm.length && li; i++) {
-		for (var j = 0; j < norm[i].length; j++) 
-			if (norm[i][j] == 0) 
-				nz++
-		if (nz == norm[i].length)
-			li = false
+Device.prototype.attend = function(date, mssg){
+	this["attend_"+ mssg.name](date, mssg)  
+}
+Device.prototype._y = function(htmlElement, stopAt){
+	stopAt = stopAt || null
+	if (typeof(stopAt) === "string")
+		stopAt = document.getElementById(stopAt)
+	if (stopAt !== htmlElement && htmlElement.offsetParent)
+		return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
+	return 0
+}
+Device.prototype._x = function(htmlElement, stopAt){
+	stopAt = stopAt || null
+	if (typeof(stopAt) === "string")
+		stopAt = document.getElementById(stopAt)
+	if (stopAt && htmlElement && stopAt === htmlElement)
+		return 0
+	if (htmlElement.offsetParent)
+		return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
+	return 0
+}
+Device.prototype.y_calc = function(){
+	if (this.view) {
+		this.y = this._y(this.view)
+		return this.y
 	}
-	return li;	
+	return null
 }
-Vector.box = function(vectors){
-	if ((vectors.length >= 3) &&
-	(typeof(vectors[0]) == Array) &&
-	(vectors[0].length == 3) &&
-	(typeof(vectors[1]) == Array) &&
-	(typeof(vectors[2]) == Array) &&
-	(vectors[0].length == vectors[1].length) &&
-	(vectors[1].length == vectors[2].length)) {
-		return vectors[0][0] * vectors[1][1] * vectors[2][2] +
-		vectors[1][0] * vectors[2][1] * vectors[0][2] +
-		vectors[0][1] * vectors[1][2] * vectors[2][0] -
-		vectors[0][2] * vectors[1][1] * vectors[2][0] -
-		vectors[1][2] * vectors[2][1] * vectors[0][0] -
-		vectors[2][2] * vectors[1][0] * vectors[0][1]
+Device.prototype.x_calc = function(){
+	if (this.view) {
+		this.x = this._x(this.view)
+		return this.x
 	}
-	return undefined
+	return null
 }
-Vector.coplanar$U = function(vector){
-	switch (vector.length) {
-		case 0:
-			return undefined
-		case 1:
-		case 2:
-			return true
+Device.prototype.fireEvent = function (mssg){
+	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
+	  this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg.clone())
+}
+Device.prototype.addPort = function (mssg_name, device){
+	this.eventDispatcher.addPort(mssg_name, device)
+}
+Device.prototype.newMessage = function(type, name, data){
+	if (type && name)
+		return systemEv(type , {name: name, data: data || "no extra data available"}, this)
+}
+Device.prototype.sendMessage = function(type, name, data, receiptant){
+	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
+}
+Device.prototype.method_missing = function (method, obj, params){
+  if (this.respond_to$U(method.underscore()))
+    return method.underscore.apply(this, params)
+  obj = obj || ""
+  params = params || []
+  throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
+}
+EventDispatcher.prototype = new ThreadAutomata
+EventDispatcher.prototype.constructor = EventDispatcher
+function EventDispatcher(lookup){
+	var that = this; 
+	this.ids   = 0
+	this.ports = {
 	}
-	var dim = vector[0].length
-	for (var i = 1; i < vector.length; i++) 
-		if (dim != vector[i].length) 
-			throw "Invalid dimensions"
-	for (var i = 2; i < vector.length; i++) 
-		if (Vector.box(vector[0], vector[1], vector[i])) 
-			return false
-	return true
+	this.inqueue = []
+	this.clss = that	
+	this.getId = function(){return ++that.ids;}
+	lookup.add(this)
 }
-Vector.angle = function(vectors){
-	var arc
-	if ((vectors.length >= 3) && (typeof(vectors[0]) == Array) )
-	 	arc = arcos (dot (u/module(u)), (v/module(v)))
-	return arc
+EventDispatcher.prototype.enqueue = function(mssg){
+	var ev = this
+	mssg.received = {id: ev.getId(), time: new Date()};
+	this.inqueue.push(mssg)
+	return mssg.received.id
 }
-Vector.module = function(vectModule){
- 	var suma
-	if (typeof(vectModule) == Array )	
- 		for (var i = 0; i < vectModule.length; i++)
- 	 		suma += vectModule[i] * vectModule[i]
-	else
-	    for (var i = 0; i < vectModule.length; i++)
- 	 		suma += vectModule.Coord[i] * vectModule.Coord[i]
-	return Math.sqrt(suma)
- }
- Vector.toCylindrical = function(vectors){
-	var i
-	for (i=0; i<vectors.length; i++)
-		if ((vectors[i].length <= 3) && typeof(vectors == Array)){
-			vectors[i][0] = Math.sqrt((vectors[i][0]*vectors[i][0])+(vectors[i][1]*vectors[1]))
-			vectors[i][1] = arctg (vectors[i][1]/vectors[i][0])
+EventDispatcher.prototype.addPort = function (event, device){
+	if (this.ports[event])
+		this.ports[event].push(device)
+}
+EventDispatcher.prototype.joinPorts = function (listArray){
+	for (var i=0; i<listArray.length; i++)
+		this.ports[listArray[i]] = []
+}
+EventDispatcher.prototype.delPort = function (event, device){
+	if (this.clss.ports[event])
+		for (var i=0; i<this.clss.ports.length; i++)
+			if (this.clss.ports[i] === device)
+				this.clss.ports[i].splice(i,1)
+}
+EventDispatcher.prototype.fireEvent = function(event){
+	if (this.clss.ports[event.name])
+		for (var i=0; i<this.clss.ports[event.name].length; i++)
+			this.clss.ports[event.name][i](event);
+}
+EventDispatcher.prototype.shift = function(){ 
+	for (var i=0; i<this.inqueue.length; i++)
+		try {
+			var mssg = this.inqueue[i]
+			if (mssg.status[mssg.current] === "closed")
+				this.inqueue.splice(i, 1)
+			if (this.inqueue[i]) {
+				mssg = this.inqueue[i]
+				if (mssg.status[mssg.current] === "sent") {
+					this.device.attend(arguments[0], mssg)
+					mssg.current++
+				}
+			}
+		} catch (e) {
+			if ($K_debug_level >= $KC_dl.PROGRAMMER)
+			   alert("No event handler for message. \nException: " + e.toSource())
 		}
-	if ((vectors.length >= 3) && typeof(vectors == Array)) {
-		vectors[0] = Math.sqrt((vectors[0] * vectors[0]) + (vectors[1] * vectors[1]))
-		vectors[1] = arctg(vectors[1] / vectors[0])
-	}
-	return vectors
+	return true;
 }
-Vector.prototype.torque = function (point, vect){
-	return cross(subs(vect.origin, point), vect);
+EventDispatcher.prototype.run = function(){
+	return shift.apply(this, arguments)
 }
-	Vector.scale = function(vector, number){
-		var sc = []
-		if (typeof(vector) == Number) {
-			var aux = number
-			number = vector
-			vector = aux
-		}
-		if (typeof(vector) == Array) 
-			for (var i = 0; i < vector.length; i++) 
-				sc[i] = vector[i] * number
-		else 
-			for (var i = 0; i < vector.Coord.length; i++) 
-				sc[i] = vector.Coord[i] * number
-		return sc
+function _stitchWorlds(gate, solicitor){
+	return function(e){
+		e = e || window.event
+		try{
+		 return gate[solicitor](e, this)
+		} catch (err) {
+			Exception.parse(err) }
 	}
-	Vector.prototype.scale$B = function(vector, number){
-		if (typeof(vector) == Number) {
-			var aux = number
-			number = vector
-			vector = aux
+}
+function Gate(element, parent, config){
+    var that = this
+    var args = arguments
+    function initialize(){
+	if (element){
+	    if (typeof(element) === "string")
+		if (document.getElementById(element))
+		    element = document.getElementById(element)
+	    else{
+		var element_name = element
+		element = document.createElement("div")
+		element.setAttribute('id', element_name)
+		if (parent){
+		    if (typeof (parent) === "string" )
+			parent = document.getElementById(parent)
+		    if (parent) parent.appendChild(element)
 		}
-		if (typeof(vector) == Array) 
-			for (var i = 0; i < vector.length; i++) 
-				vector[i] = vector[i] * number
-		else 
-			for (var i = 0; i < vector.Coord.length; i++) 
-				vector.Coord[i] = vector.Coord[i] * number
-		return vector
+	    }
+	    that.panel = element
 	}
+	if (!element) {
+	    that.panel = document.createElement("div")
+	    if (parent)
+		parent.appendChild(that.panel)
+	    else
+		document.body.appendChild(that.panel)
+	}
+<<<<<<< HEAD
+	if (config)
+	    that.merge$B(config)
+	that.keys(/do_.*/).each(function(handler){
+        handler.match( /do_(.*)/ )
+        that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+	})
+	that.threads = []
+    }
+    if (arguments.length)
+	initialize()
+}
+Gate.prototype.listen = function(event, handler){
+    this.panel[event] = _stitchWorlds(this, handler)
+}
+Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } 
+Gate.prototype.applySkin = function(skin){
+    var div = document.createElement("div")
+    div.setAttribute("class", skin)
+    this.panel.appendChild(div)
+}
+Gate.prototype.run = function(now, before){
+    for (var i=0; i<this.threads.length; i++)
+    this.threads[i].run(now, before)
+}
+Gate.prototype.new_effect = function(eff){
+    this.threads.push(eff)
+    return eff
+}
+Lookup.prototype.constructor = Lookup
+function Lookup(){
+    this.levers = []
+    this.ports = []
+    this.applications = []
+    this.eventDispatcher = null
+    this.global = []
+    this.view = null
+}
+Lookup.prototype.add = function(obj){
+    if (obj.isPrototypeOf(EventDispatcher)) 
+        this.eventDispatcher = obj
+	else this.global.push(obj)
+}
+Lookup.prototype.get = function(interfc){
+	var objects = []
+	for (var i=0; i<this.global.length; i++)
+		if (interfc.isPrototypeOf(this.global[i]))
+			if (this.global[i].lookupGet)
+				objects.push(this.global[i].lookupGet())
+			else
+				objects.push(this.global[i])
+}
+Lookup.prototype.off = function(object){
+	for (var i=0; i<this.global.length; i++)
+		if (this.global[i] == object)
+			this.global.splice(i,1);
+}
+var systemEv = (function(){
+    return (function $_sev(type, event, behalf){
+	var args = arguments
+	function setup(){
+	    var sEvs = {
+		"sync": {	type    : "synchronous",					
+		    name	: null,
+		    creation: {creator: null, time: null},		
+		    current : 0,								
+		    status  : ["sent", "attended", "closed"],	
+		    event   : {}
+		}
+	    }
+	    newOb = sEvs[type]
+	    newOb.name             = event.name
+	    newOb.event[event.name]= event
+	    newOb.creation.creator = (typeof (behalf) === "object")? behalf : null
+	    newOb.creation.time    = new Date()
+	    return newOb
+	}
+	var ob_msg = setup(  )
+	$_sev.yield(ob_msg)
+	return  ob_msg; })
+})()
+var p = new PackageManager("/home/txema/work/lluvia-Project/util/compress-core/../..")
+=======
 Vector.angle  = function(vectors){
     var arc
     if ((vectors.length >= 3) && (typeof(vectors[0]) == Array)) 
@@ -3915,5 +3968,10 @@ Expression.math = {
 Expression.parse = function(string){
   return string.split(/,/) 
 }
+<<<<<<< HEAD
+var p = new PackageManager("/home/txema/jose/lluvia-Project/util/compress-core/../..")
+=======
 var p = new PackageManager("/home/laura/work/lluvia-Project/util/compress-core/../..")
+>>>>>>> f00ba322a6a16e0dcd88b8d4c45a4e7277b9be60
+>>>>>>> a0969216bca72f18998cb0afc288c5d18dc39a47
 p.get_catalog()

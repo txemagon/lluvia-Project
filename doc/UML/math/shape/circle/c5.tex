@@ -1,0 +1,42 @@
+\newcommand*{\R}{2}
+\coordinate (O) at (0,0);
+\coordinate (C) at (3,3);
+\coordinate (R) at (20:\R);
+\coordinate (P) at (5,1);
+\coordinate (D) at (-2,1);
+\coordinate (E) at ($ (P)+(D) $);
+\coordinate (L) at (7,2);
+
+
+\node [dot=C] at (C) {};
+\node [dot=P] at (P) {};
+
+% AXIS
+\draw [help lines] (0,0) grid (7,7);
+\draw [<->] (0,7) node [left] {$y$} -- (0,0) node [below left] {(0,0)} -- (7,0) node [below] {$x$};
+
+% Lines
+\begin{scope}[thick]
+    \draw (C) circle (\R);
+    \draw [extended line=4cm] (P) -- ++(D);
+    \draw [color=blue] ($(P)!(C)!(E)$) -- node [left] {$l$} (C); % distance from center to line.
+\end{scope}
+
+% Arrows
+\begin{scope}[->,>=latex]
+   % Feet
+   % \begin{scope}[color=red]
+   %    \draw (O) -- node[above] {$\vec{f}_c$} (C); % Circle
+   %    \draw (O) -- node[above] {$\vec{f}_l$} (P); % Straight Line
+   % \end{scope}
+
+   % Free Vectors
+   \begin{scope}[color=blue]
+      \draw (C) -- node[above] {$\vec{r}_c$} ++(R); % Circle
+      \draw (P) -- node[above] {$\vec{r}_l$} ++(D); % Straight Line
+   \end{scope}
+
+   \draw (P) -- node [above] {$\vec{PC}$} (C);
+\end{scope}
+
+\draw (L) node [above, yshift=10,fill=white, rounded corners, draw] {$ l = \frac{\left | \vec{r}_l \times \vec{PC}\right |}{\left | \vec{r}_l \right |} $};

@@ -54,6 +54,16 @@ function Automata(states, initialState, solicitor) {
         requested: this.state.none
     };
     this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
+
+    var current
+    Object.defineProperty(this, "current", {
+        get: function() {
+            return current
+        },
+        set: function(value) {
+            current = value
+        }
+    })
 }
 
 /**

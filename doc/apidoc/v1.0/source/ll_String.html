@@ -132,7 +132,7 @@ String.prototype.class_name = function() {
 <span id='Kernel-CoreExt-String-method-index'>/**
 </span> * @method   index
  * Returns the index of the first occurrence of the given substring or pattern
- * &#39;regexp&#39; in str. Returns null if not found. If the second parameter is
+ * 'regexp' in str. Returns null if not found. If the second parameter is
  * present, it specifies the position in the string to begin the search.
  *
  *
@@ -154,7 +154,7 @@ String.prototype.index = function() {
             return pos
         var find = this.substr(pos, this.length - pos)
     }
-    if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39; &amp;&amp; str[1] == &#39;[&#39; &amp;&amp; str[str.length - 2] == &#39;]&#39;) {
+    if (str[0] == '/' &amp;&amp; str[str.length - 1] == '/' &amp;&amp; str[1] == '[' &amp;&amp; str[str.length - 2] == ']') {
         var min = this.length
         var entradoAlMenosUnaVez = false
         for (var i = 2; i &lt; str.length - 2; i++)
@@ -264,8 +264,8 @@ String.prototype.ljust = function() {
 <span id='Kernel-CoreExt-String-method-lstrip'>/**
 </span> * @method      lstrip
  *
- * Returns a copy of string with leading whitespace removed. See also &#39;Kernel.CoreExt.String#rstrip&#39;
- * and &#39;Kernel.CoreExt.String#strip&#39;.
+ * Returns a copy of string with leading whitespace removed. See also 'Kernel.CoreExt.String#rstrip'
+ * and 'Kernel.CoreExt.String#strip'.
  *
  * @return      {String} string
  *
@@ -538,7 +538,7 @@ String.prototype.rindex = function(search) {
  *
  *    &quot;hello&quot;.center(4)            //=&gt; &quot;hello&quot;
  *    &quot;hello&quot;.center(20)           //=&gt; &quot;       hello        &quot;
- *    &quot;hello&quot;.center(20, &#39;123&#39;)    //=&gt; &quot;1231231hello12312312&quot;
+ *    &quot;hello&quot;.center(20, '123')    //=&gt; &quot;1231231hello12312312&quot;
  */
 String.prototype.center = function(length, padding) {
     if (arguments.length == 0 || arguments.length &gt; 2)
@@ -683,7 +683,7 @@ String.prototype.chr = function() {
  *
  *    &quot;hello&quot;.rjust(4)            //=&gt; &quot;hello&quot;
  *    &quot;hello&quot;.rjust(20)           //=&gt; &quot;               hello&quot;
- *    &quot;hello&quot;.rjust(20, &#39;1234&#39;)   //=&gt; &quot;123412341234123hello&quot;
+ *    &quot;hello&quot;.rjust(20, '1234')   //=&gt; &quot;123412341234123hello&quot;
  *
  **/
 String.prototype.rjust = function() {
@@ -707,7 +707,7 @@ String.prototype.rjust = function() {
  * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric
  * or the rightmost character if there are no alphanumerics in the string. Incrementing a digit always results in another digit,
  * and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character
- * set&#39;s collating sequence.
+ * set's collating sequence.
  *
  * @param        {String} Str
  * @return       {String} Str
@@ -727,21 +727,21 @@ String.prototype.succ = function() {
     var i
     var vuelta = true
     for (i = this.length - 1; i &gt;= 0 &amp;&amp; vuelta; i--) {
-        if (this[i] == &#39;&gt;&#39; || this[i] == &#39;&lt;&#39;)
+        if (this[i] == '&gt;' || this[i] == '&lt;')
             str = this[i] + str
-        else if (this[i] == &#39;z&#39; || this[i] == &#39;Z&#39;)
-            str = (this[i] == &#39;z&#39; ? &#39;a&#39; : &#39;A&#39;) + str
-        else if (this[i] == &#39;9&#39;)
-            str = &#39;0&#39; + str
+        else if (this[i] == 'z' || this[i] == 'Z')
+            str = (this[i] == 'z' ? 'a' : 'A') + str
+        else if (this[i] == '9')
+            str = '0' + str
         else
             str = String.fromCharCode(this[i].charCodeAt() + 1) + str
-        vuelta = this[i] == &#39;z&#39; || this[i] == &#39;Z&#39; || this[i] == &#39;9&#39; || this[i] == &#39;&lt;&#39; || this[i] == &#39;&gt;&#39;
+        vuelta = this[i] == 'z' || this[i] == 'Z' || this[i] == '9' || this[i] == '&lt;' || this[i] == '&gt;'
     }
-    if (this[0] == &#39;&lt;&#39; &amp;&amp; i &lt; 0 &amp;&amp; (this[2] == &#39;z&#39; || this[2] == &#39;Z&#39;))
+    if (this[0] == '&lt;' &amp;&amp; i &lt; 0 &amp;&amp; (this[2] == 'z' || this[2] == 'Z'))
         return &quot;&lt;&lt;&quot; + str[2] + str.substr(2, str.length - 2)
-    else if (this[0] == &#39;&lt;&#39; &amp;&amp; i &lt; 0 &amp;&amp; this[2] == &#39;9&#39;)
+    else if (this[0] == '&lt;' &amp;&amp; i &lt; 0 &amp;&amp; this[2] == '9')
         return &quot;&lt;&lt;&quot; + str[2].succ() + str.substr(2, str.length - 2)
-    return i &lt; 0 &amp;&amp; (this[0] == &#39;z&#39; || this[0] == &#39;Z&#39;) ? str[0] + str : i &lt; 0 &amp;&amp; this[0] == &#39;9&#39; ? str[0].succ() + str : this.substr(0, i + 1) + str
+    return i &lt; 0 &amp;&amp; (this[0] == 'z' || this[0] == 'Z') ? str[0] + str : i &lt; 0 &amp;&amp; this[0] == '9' ? str[0].succ() + str : this.substr(0, i + 1) + str
 }
 
 <span id='Kernel-CoreExt-String-method-next'>/**
@@ -815,7 +815,7 @@ String.prototype.to_i = function() {
 String.prototype.to_f = function() {
     //Exception
     if (arguments.length &gt; 0)
-    //throw (&quot;This function doesn&#39;t need arguments&quot;)
+    //throw (&quot;This function doesn't need arguments&quot;)
         return null
 
     return isNaN(parseFloat(this)) ? 0.0 : parseFloat(this);
@@ -885,7 +885,7 @@ String.prototype.partition = function() {
     var pos = this.search(arguments[0])
     if (pos &lt; 0)
         ary = [this.substr(0, this.length), &quot;&quot;, &quot;&quot;]
-    else if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39;)
+    else if (str[0] == '/' &amp;&amp; str[str.length - 1] == '/')
         ary = [this.substr(0, pos), this.substr(pos, str.length - 2), this.substr(pos + str.length - 2, this.length - pos)]
     else
         ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
@@ -905,7 +905,7 @@ String.prototype.partition = function() {
  *     &quot;     Madrid Barcelona    &quot;.rstrip()   //=&gt; &quot;     Madrid Barcelona&quot;
  **/
 String.prototype.rstrip = function() {
-    return this.replace(/\s+$/g, &#39;&#39;)
+    return this.replace(/\s+$/g, '')
 }
 
 <span id='Kernel-CoreExt-String-method-upto'>/**
@@ -920,7 +920,7 @@ String.prototype.rstrip = function() {
  *
  * ### Example
  *
- *         &quot;a8&quot;.upto(&quot;b6&quot;, function(obj){return obj + &#39; &#39;})
+ *         &quot;a8&quot;.upto(&quot;b6&quot;, function(obj){return obj + ' '})
  *
  *          //=&gt; a8 a9 b0 b1 b2 b3 b4 b5 b6
  *
@@ -948,10 +948,10 @@ String.prototype.upto = function(end, block) {
  *
  * ### Example
  *
- *      &quot;hello&quot;.each_char(function(obj){return obj + &#39; &#39;})
+ *      &quot;hello&quot;.each_char(function(obj){return obj + ' '})
  *      //=&gt; &quot;h e l l o &quot;
  *
- *      &quot;hello&quot;.each_char(function(obj){return obj + &#39;/&#39;})
+ *      &quot;hello&quot;.each_char(function(obj){return obj + '/'})
  *      //=&gt; &quot;h/e/l/l/o/&quot;
  **/
 String.prototype.each_char = function() {
@@ -1046,7 +1046,7 @@ String.prototype.sum = function() {
  * @return    {String}
  *
  * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed
- * by the given characterhey&#39;re firstly intersected. Otherways the first param is returned.
+ * by the given characterhey're firstly intersected. Otherways the first param is returned.
  *
  * ### Example
  *     &quot;Peter&quot;.intersection(&quot;P&quot;)   //=&gt; &quot;P&quot;
@@ -1176,7 +1176,7 @@ String.prototype.each_line = function(split) {
  *
  * ### Example
  *
- *      &quot;hello\u0639&quot;.each_codepoint(function(obj){return obj + &#39; &#39;})
+ *      &quot;hello\u0639&quot;.each_codepoint(function(obj){return obj + ' '})
  *
  *      //=&gt; &quot;104 101 108 108 111 1593 &quot;
  *
@@ -1224,8 +1224,8 @@ String.prototype.rpartition = function() {
         return ary
     } else {
         auxstr = str.substr(2, str.length - 3)
-        var pos = str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39; ? this.lastIndexOf(auxstr) : this.lastIndexOf(str)
-        if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39;)
+        var pos = str[0] == '/' &amp;&amp; str[str.length - 1] == '/' ? this.lastIndexOf(auxstr) : this.lastIndexOf(str)
+        if (str[0] == '/' &amp;&amp; str[str.length - 1] == '/')
             ary = [this.substr(0, pos - 1), this.substr(pos - 1, auxstr.length + 1), this.substr(pos + auxstr.length, this.length - pos)]
         else
             ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
@@ -1371,14 +1371,14 @@ String.prototype.to_str = function() {
  *
  * ### Example
  *
- * &#39;  2  &#39;.to_r()       //=&gt; (2/1)
- * &#39;300/2&#39;.to_r()       //=&gt; (150/1)
- * &#39;-9.2&#39;.to_r()        //=&gt; (-46/5)
- * &#39;-9.2e2&#39;.to_r()      //=&gt; (-920/1)
- * &#39;1_234_567&#39;.to_r()   //=&gt; (1234567/1)
- * &#39;21 june 09&#39;.to_r()  //=&gt; (21/1)
- * &#39;21/06/09&#39;.to_r()    //=&gt; (7/2)
- * &#39;bwv 1079&#39;.to_r()    //=&gt; (0/1)
+ * '  2  '.to_r()       //=&gt; (2/1)
+ * '300/2'.to_r()       //=&gt; (150/1)
+ * '-9.2'.to_r()        //=&gt; (-46/5)
+ * '-9.2e2'.to_r()      //=&gt; (-920/1)
+ * '1_234_567'.to_r()   //=&gt; (1234567/1)
+ * '21 june 09'.to_r()  //=&gt; (21/1)
+ * '21/06/09'.to_r()    //=&gt; (7/2)
+ * 'bwv 1079'.to_r()    //=&gt; (0/1)
  **/
 String.prototype.to_r = function() {
     var str1 //String auxiliar
@@ -1499,7 +1499,7 @@ function intMcd() {
  * @return      {number} the length of string in bytes.
  *
  * ### Example
- *     &#39;abcde&#39;.bytesize()   //=&gt; 5
+ *     'abcde'.bytesize()   //=&gt; 5
  *
  **/
 
