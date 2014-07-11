@@ -1,20 +1,24 @@
 /**
- * @classDescription Creates a vector.
+ * @class mathematics.geometry.Vector
+ * Creates a vector.
+ *
+ *
+ */
+Vector.prototype.constructor = Vector
+
+/**
+ * VALID INPUT!
+ *
+ * PARAMETER TYPES
+ * ([ Vector | Coordinates | Array( {Coordinates} ) ])
  *
  * @param  {}
  * @return {Vector}
  * @constructor
+ *
  */
-Vector.prototype.constructor = Vector
-
 
 function Vector() {
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([ Vector | Coordinates | Array( {Coordinates} ) ])*
-     */
     var coord_temp = []
     var coordinate_system
     var that = this
@@ -22,15 +26,14 @@ function Vector() {
 
     var argument = []
 
-        function is_valid_cs$U(cs) {
-            return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
-                return el == cs || val
-            })
-        }
+    function is_valid_cs$U(cs) {
+        return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+            return el == cs || val
+        })
+    }
 
     for (var i = 0; i < arguments.length; i++)
         this.Coord.push(arguments[i])
-
 
     // arguments is not array, just array-like
     for (var i = 0; i < arguments.length; i++)
@@ -40,7 +43,6 @@ function Vector() {
     for (var i = 0; i < argument.length; i++)
         if (is_valid_cs$U(arguments[i]))
             argument.push(argument.splice(i, 1)[0])
-
 
     if (typeof(argument[argument.length - 1]) == "string")
         coordinate_system = argument[argument.length - 1]
@@ -90,16 +92,21 @@ function Vector() {
         transformCoordinates()
     }
 
-
     //calculates the vector module
     this._module = this.module()
 
-
     //calculates the unit vector
     this.uVector = this.scale(1 / this._module)
-
 }
 
+/**
+ * @method is_valid_cs$U
+ * @static
+ * Checks if the type of coordinates system is a cartesian one
+ *
+ * @param  {String}  cs Type of coordinates system
+ * @return {Boolean}    Returns true if system is cartesian and false if not
+ */
 Vector.is_valid_cs$U = function(cs) {
     return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
         return el == cs || val
@@ -107,10 +114,21 @@ Vector.is_valid_cs$U = function(cs) {
 }
 
 /**
+ * @method has_same_dimension_as$U
  * Compares the dimension of two vectors
  *
- * @param {Vector} vector_to_compare Vector which dimensions are to be checked
+ * ###Example:
+ *     var a = new Vector(2,3)
+ *     var b = new Vector(9,8)
+ *     a.has_same_dimension_as$U(b)
+ *     //=> true
  *
+ *     var a = new Vector(9,4)
+ *     var b = new Vector(1,8,5)
+ *     a.has_same_dimension_as$U(b)
+ *     //=> false
+ *
+ * @param {Vector} vector_to_compare Vector which dimensions are to be checked
  * @return {Boolean} Returns true if dimensions are equal and false if not
  */
 Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
@@ -123,16 +141,14 @@ Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
  * Checks if two vector have the same number of coordinates.
  * If not, fills the missing coordinates with zeros
  *
- * @param {Vector} vector_to_compare Vector to compare to the given one
- *
  * Example:
- * var a = new Vector(4, 2, 6)
- * var b = new Vector(2, 3)
+ *     var a = new Vector(4, 2, 6)
+ *     var b = new Vector(2, 3)
+ *     a.standarize_coordinates(b)
+ *     b.Coord
+ *     //=> [2, 3, 0]
  *
- * a.standarize_coordinates(b)
- * b.Coord
- *
- * //=> [2, 3, 0]
+ * @param {Vector} vector_to_compare Vector to compare to the given one
  *
  */
 Vector.prototype.standarize_coordinates = function(vector_to_compare) {
@@ -154,6 +170,11 @@ Vector.prototype.standarize_coordinates = function(vector_to_compare) {
 /**
  * Transforms the given vector into its unitarian
  *
+ * ###Example:
+ *    var e = new Vector(5,6)
+ *    e.unit().Coord
+ *    //=> [0.6401843996644798, 0.7682212795973759]
+ *
  * @return {Vector} Returns the unitarian vector
  */
 Vector.prototype.unit = function() {
@@ -161,27 +182,23 @@ Vector.prototype.unit = function() {
 }
 
 /**
+ * @method parseInput
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
- * @memberOf    {vector}
- * @method      lenght        returns a number whitch is the final result of the vector lenght.
- * @param       (Vector)      vector array of at least vector. Only one vector will be processed.
+ *  VALID INPUT!
  *
- * @return      (Vector)      length
+ *   PARAMETER TYPES
+ *   ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])
+ *
+ *
+ * @param       {Vector}      vector Array of at least one vector. Only one vector will be processed.
+ * @return      {Vector}      Return an array of vectors
  *
  * Comments:   This function works creating a vector from the length of the biggest vector to add,
- *            which initial elements are '0', and replace 0 by the addition of the terms of the vectors.
+ *             which initial elements are '0', and replace 0 by the addition of the terms of the vectors.
+ *
  */
 Vector.prototype.parseInput = function(args) {
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])*
-     *
-     * return an array of vectors
-     */
-
 
     var argument = []
     for (var i = 0; i < arguments.length; i++)
@@ -227,7 +244,13 @@ Vector.prototype.parseInput = function(args) {
     return out
 }
 
-
+/**
+ * @method cloneCoords
+ * description
+ *
+ * @param  {[type]} vectCpy [description]
+ *
+ */
 Vector.prototype.cloneCoords = function(vectCpy) {
     for (var i = 0; i < vectCpy.Coord.length; i++)
         this.Coord[i] = vectCpy.Coord[i]
@@ -235,21 +258,30 @@ Vector.prototype.cloneCoords = function(vectCpy) {
     this._module = this.module()
 }
 
+/**
+ * @method add
+ * description
+ *
+ * VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param {Vector} vectAdd Vector to add to this
+ * @return {Vector} Returns a new Vector with result of the addition
+ */
 Vector.prototype.add = function(vectAdd) {
     /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([ Vector | Coordinates | Array( {[Vector | Coordinates}] ])*
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
+     
      */
     var vectRes = [];
 
@@ -270,25 +302,28 @@ Vector.prototype.add = function(vectAdd) {
     return new Vector(vectRes)
 }
 
-
+/**
+ * add$B
+ *
+ * Bang methods ...$B operates in `this` object.
+ * (see Vector#add)
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ */
 Vector.prototype.add$B = function(vectAdd) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var vectRes = Vector.prototype.add.apply(this, arguments)
     this.cloneCoords(vectRes)
 
@@ -304,29 +339,25 @@ Vector.prototype.add$B = function(vectAdd) {
  *
  * @return      (vector)      lenght
  *
- * Coded by: blitobaz
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
  *
  *Comments:   This function works creating a vector from the length of the biggest vector to substract,
  *            witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
  */
 Vector.prototype.subs = function(vectSubs) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var vectRes = [];
 
     for (var i = 0; i < this.Coord.length; i++)
@@ -348,32 +379,33 @@ Vector.prototype.subs = function(vectSubs) {
     return new Vector(vectRes)
 }
 
-
+/**
+ * @method subs$B
+ * description
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ * @param  {[type]} vectSubs [description]
+ * @return {[type]}          [description]
+ */
 Vector.prototype.subs$B = function(vectSubs) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
-
     var vectRes = Vector.prototype.subs.apply(this, arguments)
     this.cloneCoords(vectRes)
 
     return vectRes
 }
-
 
 /**
  * Returns the scalar product of two vectors. Over an array of vectors the dot variation it's operated
@@ -385,6 +417,23 @@ Vector.prototype.subs$B = function(vectSubs) {
  *
  * r = v1·v2·v3 = v11 x v21 x v31 +  v12 x v22 x v32 + v13 x v23 x v33
  *
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is two.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
  * @memberOf    {Vector}
  * @method      dot         Returns a number that is the scalar product of two vectors.
  * @param       {Vector}    Vectors Array of at least two Vector. Only two vectors will be processed.
@@ -392,25 +441,6 @@ Vector.prototype.subs$B = function(vectSubs) {
  * @return      {Number}    Scalar product
  */
 Vector.prototype.dot = function(vectors) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is two.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
-
     var dt = 0
     var vectors = Vector.prototype.parseInput.apply(this, arguments)
     vectors.push(new Vector(this.Coord))
@@ -443,29 +473,25 @@ function _simple_cross(vector1, vectorArray) {
  * This fuction return the vector product of 2 vectors size 3.
  * @method      cross        returns a vector which is the result of 2 vector product
  *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
  * @param {Object} vectors
  *
  *
  */
 Vector.prototype.cross = function(vectors) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
-
     vectCross = Vector.prototype.parseInput.apply(this, arguments)
     vectCross.push(new Vector(this.Coord))
 
@@ -475,8 +501,12 @@ Vector.prototype.cross = function(vectors) {
     return _simple_cross(vectCross.shift(), vectCross)
 }
 
-
-
+/**
+ * [_simple_cross$B description]
+ * @param  {[type]} vector1     [description]
+ * @param  {[type]} vectorArray [description]
+ * @return {[type]}             [description]
+ */
 function _simple_cross$B(vector1, vectorArray) {
     var vector2 = vectorArray.shift()
     var vectAux = new Vector(vector1.Coord[1] * vector2.Coord[2] - vector1.Coord[2] * vector2.Coord[1],
@@ -492,28 +522,29 @@ function _simple_cross$B(vector1, vectorArray) {
     return _simple_cross(vectAux, vectorArray)
 }
 
-
+/**
+ * @method cross$B
+ * description
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param  {[type]} vectors [description]
+ * @return {[type]}         [description]
+ */
 Vector.prototype.cross$B = function(vectors) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
-
-
-
     vectCross$B = Vector.prototype.parseInput.apply(this, arguments)
     vectCross$B.push(new Vector(this.Coord))
 
@@ -521,36 +552,34 @@ Vector.prototype.cross$B = function(vectors) {
         throw "At least one operand needed in cross product."
 
     return _simple_cross$B(vectCross & B.shift(), vectCross$B)
-
 }
 
 /**
- * Returns the vector product of three vectors ((vector1 * vector2)*vector3).
- * @memberOf    {Vector}
  * @method      dCross      Returns an Array which is the vector product of three vectors.
+ * Returns the vector product of three vectors ((vector1 * vector2)*vector3).
+ *
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is three.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
  * @param       {Vector}    Vector Array of at least two components.
  * @var         {vectorAux} Two parameters vector product.
  * @return      {Vector}        Vector product
  */
 Vector.prototype.dCross = function(vector1, vector2, vector3) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is three.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var vectorAux = new Array();
     vectorAux = cross(vector1, vector2);
     vectorAux = cross(this.vectorAux, vector3);
@@ -558,25 +587,32 @@ Vector.prototype.dCross = function(vector1, vector2, vector3) {
     return vectorAux;
 }
 
+/**
+ * @method dCross$B
+ * description
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is three.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param  {[type]} vector1 [description]
+ * @param  {[type]} vector2 [description]
+ * @param  {[type]} vector3 [description]
+ * @return {[type]}         [description]
+ */
 Vector.prototype.dCross$B = function(vector1, vector2, vector3) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is three.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var vectorAux = new Array();
     vectorAux = cross(vector1, vector2);
     vectorAux = cross(this.vectorAux, vector3);
@@ -587,23 +623,23 @@ Vector.prototype.dCross$B = function(vector1, vector2, vector3) {
 /**
  * scale takes one vector and a number and returns the product of the scalar and the vecor.
  * Vector can be one scalar or an array of scalars. The order in the parameters is not important.
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * It can operate a vector and one number.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
  * @param {Vector} vector   One vector for the scalar product.
  * @param {Number} number   One scalar for the scalar product.
  *
  * @return {Var} Returns either a number or an array with the scalar product of a Vector and a number
  */
 Vector.prototype.scale = function(number) {
-    /**
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * It can operate a vector and one number.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var sc = []
 
     for (var i = 0; i < this.Coord.length; i++)
@@ -612,20 +648,27 @@ Vector.prototype.scale = function(number) {
     return sc
 }
 
+/**
+ * @method scale$B
+ * description
+ *
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * It can operate a vector and one number.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param  {[type]} vector [description]
+ * @param  {[type]} number [description]
+ *
+ * @return {[type]}        [description]
+ */
 Vector.prototype.scale$B = function(vector, number) {
-
-    /**
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * It can operate a vector and one number.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     for (var i = 0; i < this.Coord.length; i++)
         vector.Coord[i] = vector.Coord[i] * number
 
@@ -633,62 +676,63 @@ Vector.prototype.scale$B = function(vector, number) {
 }
 
 /**
+ * @method projection
  * Projection of one vector over another.
- * @memberOf    {Vector}
+ *
+ * VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates] [Vector | Coordinates])
+ * (Array( {[Vector | Coordinates] [Vector | Coordinates]} )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is two.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
  * @method      projection  Dice two vectors, we want obtain the orthogonal projection of one vector on another.
  * @param       {Vector}    Vectors Array of at least two vectors. Only two vectors will be processed
- 
  *
  * @return      {Vector}    Proyection returns a vector
  */
 Vector.prototype.projection = function(vector1) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates] [Vector | Coordinates])
-     * (Array( {[Vector | Coordinates] [Vector | Coordinates]} )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is two.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     if (vector1.lentgh < 1 && this.length < 1)
         throw "Invalid vector dimension"
     if (vector1.length != this.length && this.length < 1)
         throw "Lengths of vectors are different"
     else
         return new Vector(vector1.scale(this.dot(vector1) / vector1.dot(vector1)))
-
 }
 
+/**
+ * @method projection$B
+ * description
+ *
+ * VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates] [Vector | Coordinates])
+ * (Array( {[Vector | Coordinates] [Vector | Coordinates]} )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is two.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param  {[type]} vector1 [description]
+ * @return {[type]}         [description]
+ */
 Vector.prototype.projection$B = function(vector1) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates] [Vector | Coordinates])
-     * (Array( {[Vector | Coordinates] [Vector | Coordinates]} )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is two.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
-
     vectProject = this.projection(vector1)
 
     for (var i = 0; i < vectProject.length; i++)
@@ -698,37 +742,31 @@ Vector.prototype.projection$B = function(vector1) {
 }
 
 /**
+ * @method      linearCombination
  * This function compares vectors for finding a common point on its.
  *
- * @memberOf    {vector}
- * @method      linearCombination       returns true or false if there are or not linear combination.
- * @param       (vector)      vector array of at least vector.
+ * VALID INPUT!
  *
- * @return      (boolean)     boolean
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])
+ * (Array( {[Vector | Coordinates}] )
  *
- * Coded by: blitobaz
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
  *
- *Comments:   This function works creating a vector from the length of the biggest vector to substract,
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param       {vector}      vector Array of at least vector.
+ * @return      {boolean}     Returns true or false if there are or not linear combination.
+ *
+ * Comments:   This function works creating a vector from the length of the biggest vector to substract,
  *            witch initial elements are '0', and replace 0 by the substract of the terms of the vectors.
  */
 Vector.prototype.linearCombination$U = function(vectorSet) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var norm = Matrix.normalize(vectorSet)
     var nz = 0 // Number of zeros)
     var li = true; // Linear independence
@@ -736,38 +774,36 @@ Vector.prototype.linearCombination$U = function(vectorSet) {
         for (var j = 0; j < norm[i].length; j++)
             if (norm[i][j] == 0)
                 nz++
-        if (nz == norm[i].length)
-            li = false
+                if (nz == norm[i].length)
+                    li = false
     }
-    return li;
+    return li
 }
 
 /**
+ * @method box
  * Returns the mixed triple product
- * @memberOf    {Vectors}
- * @method      box             Return .
+ *
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is three.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
  * @param       {Vectors}       Vectors Array of at least two Vector.only two vectors will be processed.
  * @return      {Number}        Box
  */
 Vector.prototype.box = function(vectors) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is three.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     if ((vectors.length >= 3) &&
         (typeof(vectors[0]) == Array) &&
         (vectors[0].length == 3) &&
@@ -788,31 +824,28 @@ Vector.prototype.box = function(vectors) {
 }
 
 /**
+ * @method      coplanar
  * Says if the vectors are in the same plane
- * @memberOf    {Vector}
- * @method      coplanar        Returns true or false if the vectors are in the same plane.
- * @param       {Vector}        Vectors Array of at least two Vector.Only two vectors will be processed.
  *
- * @return      {Boolean}       True or false.
+ *  VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * ([Vector | Coordinates])*
+ * (Array( {[Vector | Coordinates}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param       {Vector}        Vectors Array of at least two Vector.Only two vectors will be processed.
+ * @return      {Boolean}       Returns true or false if the vectors are in the same plane.
  */
 Vector.prototype.coplanar$U = function(vector) {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     * ([Vector | Coordinates])*
-     * (Array( {[Vector | Coordinates}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     switch (vector.length) {
         case 0:
             return undefined
@@ -834,13 +867,12 @@ Vector.prototype.coplanar$U = function(vector) {
     return true
 }
 
-// Calcular el angulo de este vector con otro.
 /**
- * Calculate the angle between two vectors
- * @memberOf    {Vectors}
- * @method      angle           Return the angle between two vectors.
+ * @method      angle
+ * Calculates the angle between two vectors
+ *
  * @param       {Vectors}
- * @return      {Number}        Angle
+ * @return      {Number}        Return the angle between two vectors.
  */
 Vector.prototype.angle = function() {
     v1 = new Vector(1, 1, 1)
@@ -852,38 +884,34 @@ Vector.prototype.angle = function() {
             return angle2 - angle1
         } else
             return Math.acos(this.dot(v1) / this.module() / v1.module())
-        else
-            throw "Invalid Input, angle() method needs/recives a vector of dimension " + this.Coord.length + "."
+    else
+        throw "Invalid Input, angle() method needs/recives a vector of dimension " + this.Coord.length + "."
 }
 
 /**
+ * @method      module        returns a number whitch is the final result of the vector lenght.
  * This function can add two or more vectors. It adds the common part of vector from different dimensions.
  *
- * @memberOf    {vector}
- * @method      module        returns a number whitch is the final result of the vector lenght.
- * @param       (vector)      vector array of at least vector. Only one vector will be processed.
+ *  VALID INPUT!
  *
+ *   PARAMETER TYPES
+ *
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * The maximum number of vectors (as vectors or amount of coordinates) is one.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
+ *
+ * @param       (vector)      vector array of at least vector. Only one vector will be processed.
  * @return      (number)      module
  *
  */
 Vector.prototype.module = function() {
-
-    /**
-     *  VALID INPUT!
-     *
-     *   PARAMETER TYPES
-     *
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * The maximum number of vectors (as vectors or amount of coordinates) is one.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
-     */
     var suma = 0
     for (var i = 0; i < this.Coord.length; i++)
         suma += this.Coord[i] * this.Coord[i]
@@ -916,7 +944,6 @@ Vector.prototype.toCylindrical = function() {
 }
 
 // todo: toSpherical
-
 Vector.prototype.toSpherical = function() {
     coords = []
     v2 = new Vector(this.Coord[0], this.Coord[1], this.Coord[2])
@@ -927,40 +954,36 @@ Vector.prototype.toSpherical = function() {
 }
 
 // todo: toPolar
-
 /**
+ * @method      torque       returns a vector which is the torque of another two vectors.
  * This function calculates the torque of two vectors.
  *
- * @memberOf    {vector}
- * @method      torque       returns a vector which is the torque of another two vectors.
+ * VALID INPUT!
+ *
+ *   PARAMETER TYPES
+ * (Vector Number)
+ * (Array( {[Vector | Number}] )
+ *
+ *   DIMENSIONS
+ * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
+ * Minimal dimension is 1.
+ * With dimension = 0 return this.
+ * It can operate a vector and one number.
+ *
+ *   CAPTION
+ * {} = Data type
+ * Coordinates = Number[]
  *
  * @param       (point, aplicationPoint, vector)    aplication point is a point of the vector.
- *
  * @return      (vector)     torque
  *
- *
- *
- *Comments:     this function creates a vector with two points (point and aplicationPoint)
+ * Comments:    this function creates a vector with two points (point and aplicationPoint)
  *              and calculates the cross of the resultant vector and the other vector.
  */
 Vector.prototype.torque = function(point, vect) {
 
     /**
-     *  VALID INPUT!
      *
-     *   PARAMETER TYPES
-     * (Vector Number)
-     * (Array( {[Vector | Number}] )
-     *
-     *   DIMENSIONS
-     * Paremeters dimensions must have the same dimensions as the this Vector. Otherwise raises different dimension error.
-     * Minimal dimension is 1.
-     * With dimension = 0 return this.
-     * It can operate a vector and one number.
-     *
-     *   CAPTION
-     * {} = Data type
-     * Coordinates = Number[]
      */
     return cross(subs(vect.origin, point), vect);
 }
@@ -1032,13 +1055,13 @@ Vector.prototype.is_equal_to$U = function(vec) {
         for (var i = 0; i < this.Coord.length; i++)
             if (this.Coord[i] == vec.Coord[i])
                 r_eq++
-            else
-                r_eq--
+                else
+                    r_eq--
 
-        if (r_eq == this.Coord.length)
-            return true
-        else
-            return false
+                    if (r_eq == this.Coord.length)
+                        return true
+                    else
+                        return false
     } else
         return false
 }
