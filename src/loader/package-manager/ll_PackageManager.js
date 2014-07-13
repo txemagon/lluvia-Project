@@ -20,24 +20,31 @@ function PackageManager(uri) {
 PackageManager.all_packages = []
 PackageManager.offers = []
 
-PackageManager.wait = function() {
-    //if(!$K_script_response)
-    setTimeout(10, PackageManager.wait)
+PackageManager.include_script = function(url, callback){
+
+ var script = document.createElement("script")
+ script.type = "text/javascript";
+
+ if (script.readyState){  //IE
+    script.onreadystatechange = function(){
+     if (script.readyState == "loaded" ||
+         script.readyState == "complete"){
+           script.onreadystatechange = null;
+           callback($K_script_response);
+        }
+     };
+ } else {  //Others
+   script.onload = function(){
+     callback($K_script_response);
+   };
+ }
+ script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-PackageManager.include_script = function(src) {
-    $K_script_response = 0
-    var script = document.createElement('script')
-    script.setAttribute('type', 'text/javascript')
-    script.src = src
-    script.async = false
-    document.getElementsByTagName('head')[0].appendChild(script)
-    this.wait()
-}
-
-PackageManager.prototype.get_catalog = function() {
+PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
-        PackageManager.include_script(this.uri + "/dist/" + "catalog.js")
+        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback)
 }
 
 PackageManager.prototype.create_catalog = function(initial_package) {
@@ -50,6 +57,10 @@ PackageManager.prototype.create_catalog = function(initial_package) {
             PackageManager.offers.push(pk.offers[i].package)
         }
     })
+
+    if(typeof required_packages == 'function')
+        required_packages()
+
 }
 
 PackageManager.prototype.is_in$U = function(name_package) {
@@ -100,11 +111,37 @@ PackageManager.find_package = function(name_package) {
     return package
 }
 
-PackageManager.drop = function(server, name_package) {
-    if (PackageManager.is_offer$U(name_package)) {
-        var package = PackageManager.find_package(name_package)
-        for (var i = 0; i < package.files.length; i++) {
-            PackageManager.include_script(server.uri + package._path + package.files[i].name)
+
+PackageManager.drop = function() {
+    //var callback = arguments.pop()
+    var name_packages = arguments    
+
+    for(var i=0; i<name_packages.length; i++){
+        if (PackageManager.is_offer$U(name_packages[i])) {
+            PackageManager.package_uncharged.push(name_packages[i])
         }
     }
+}
+// drop() debe aceptar array y multiples argumentos, la unica limitacion es que le ultimo arg sea un bloque(mirar aply)
+// En drop() si no se pasa un bloque, debe almacenarlo en un array de paquetes que estan por cargar
+// download debe coger todos esos paquetes que estan sin cargar y cargarlos para despues ejecutar el bloque que se le pase
+
+// Variable de clase para almacenar todos los paquetes que faltan por cargar
+PackageManager.package_uncharged = []
+
+PackageManager.download = function(callback){
+        var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
+
+        connection.onopen = function() {
+            connection.send('{"type": "charge_packages", "body":"' +  PackageManager.package_uncharged + '"}')
+        }
+
+        connection.onmessage = function(e) {
+            eval.call(null, e.data)
+            callback()
+        }
+
+        connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error)
+        }
 }

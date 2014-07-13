@@ -158,7 +158,9 @@ var $K_script_response =
 			"package": "browser",
 			"description": "Facilities to ensure browser compatibility.",
 		 }
-,
+],
+	"requires": [],
+	"offers": [
 		   {
 			"_path": "/src/engine/",
 			"files": [
@@ -178,9 +180,7 @@ var $K_script_response =
 			"package": "engine",
 			"description": "Event and execution control.",
 		 }
-],
-	"requires": [],
-	"offers": [,
+,
 		   {
 			"_path": "/src/mathematics/",
 			"files": [

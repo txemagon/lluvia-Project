@@ -19,10 +19,15 @@ root_package.save({files: ["lluvia.js"], path: Path.join(__dirname, "../../dist"
 var text = FileReader.cat(filelist, process.stdout)
 text = (new Sanitize(text)).multilines().singles().empty().text
 
-var load_package_manager = "var p = new PackageManager(\""+ initial_package +"\")\n" + 
-                           "p.get_catalog()\n" //+ 
-                           //"p.create_catalog()" 
+var bring_lluvia =  "function bring_lluvia(){"                                 + "\n" + 
+                    "    var p = new PackageManager('"+ initial_package +"')"  + "\n" + 
+                    "    p.get_catalog(p.create_catalog)"                      + "\n" + 
+                    "    // Esta parte esta dentro de create_catalog()"        + "\n" + 
+                    "    //if(typeof required_packages == 'function')"         + "\n" +
+                    "    //    required_packages()"                            + "\n" +
+	                "    PackageManager.download(main)"                        + "\n" + 
+                    "}" 
 
-FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"),text + load_package_manager)
+FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"),text + bring_lluvia)
 FileReader.create_file(Path.join(__dirname, "../../dist/catalog.js"), "var $K_script_response = " + root_package.inspect())
 
