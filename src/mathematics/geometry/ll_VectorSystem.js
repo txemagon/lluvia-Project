@@ -14,6 +14,53 @@ function VectorSystem(vectors) {
 
 }
 
+VectorSystem._this = this
+
+/**
+ * @method check_integrity
+ * @static
+ * description
+ *
+ * @return {[type]} [description]
+ */
+VectorSystem.check_integrity = function() { //doesn't work yet
+    //class that checks that everything that gets in and out of vectorSystem is a vector
+    //needs to evaluate this
+    var that = this
+    var method_name = []
+    var type_check = 0
+    var is_vec
+    var res = true
+
+    for (var i = 0; i < arguments[0].length; i++) {
+        method_name[i] = arguments[0][i][0]
+        type_check[i] = arguments[0][i][1]
+    }
+
+    function check_me(type_of_check, met_name) {
+        if (type_of_check)
+            j
+        else {
+            for (var i = 0; i < that.length; i++)
+                if (!that instanceof VectorSystem || that[i] instanceof Vector)
+                    res = false
+        }
+
+    }
+
+    for (var j = 0; j < method_name.length; j++)
+        check_me(type_check[j], method_name[j])
+
+
+}
+
+/**
+ * @method push
+ * description
+ *
+ * @param  {[type]} elements [description]
+ * @return {[type]}          [description]
+ */
 VectorSystem.prototype.push = function(elements) {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] instanceof Array) {
@@ -30,6 +77,7 @@ VectorSystem.prototype.push = function(elements) {
         }
     }
 }
+
 /**
  * @method push_with_index
  * Pushed vectors into this according to a given position
@@ -78,22 +126,6 @@ VectorSystem.prototype.to_a = function() {
     var a = []
     for (var i = 0; i < this.length; i++)
         a.push(this[i].Coord)
-    return a
-}
-
-/**
- * @method check_integrity
- * @static
- * description
- *
- * @return {[type]} [description]
- */
-VectorSystem.check_integrity = function() {
-    //class that checks that everything that gets in and out of vectorSystem is a vector
-    var a = true
-    for (var i = 0; i < this.length; i++)
-        if (!this[i] instanceof Vector)
-            a = false
     return a
 }
 
@@ -155,32 +187,23 @@ VectorSystem.prototype.uniq$B = function() {
 }
 
 /**
- * @method inject
- * [description]
- *
- * @return {[]} [description]
- */
-VectorSystem.prototype.inject = function(vec) {
-
-}
-
-/**
- * @method inject_with_index
- * [description]
- *
- * @return {[]} [description]
- */
-VectorSystem.prototype.inject_with_index = function(arg) {
-
-}
-
-/**
  * @method merge
  * [description]
  *
+ * ###Example
+ *    var a = new VectorSystem(new Vector(3,2), new Vector(1,6))
+ *    var b = new VectorSystem(new Vector(8,6))
+ *    var c = a.merge(b)
+ *    c.to_a()
+ *    //=> [[3,2], [1,6], [8,6]]
+ *
  * @return {[]} [description]
  */
-VectorSystem.prototype.merge = function() {}
+VectorSystem.prototype.merge = function() {
+    alert("hey")
+    for (var i = 0; i < arguments.length; i++)
+        this.push(arguments[i])
+}
 
 /**
  * @method splice
@@ -198,4 +221,13 @@ VectorSystem.prototype.splice = function() {}
  */
 VectorSystem.prototype.unshift = function() {}
 
-VectorSystem.check_integrity()
+
+
+VectorSystem.methods_to_check = [
+    ["push", 1],
+    ["push_with_index", 1],
+    ["map$B", 1],
+    ["uniq$B", 1]
+]
+
+VectorSystem.check_integrity(VectorSystem.methods_to_check)
