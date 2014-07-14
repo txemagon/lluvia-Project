@@ -26,7 +26,7 @@ function $timeStamp(){
 
 function LogFileIncluded(file_source){
   this.template = [
-    &quot;&lt;div class=&#39;_LogFile&#39;&gt;&quot;,
+    &quot;&lt;div class='_LogFile'&gt;&quot;,
     file_source.name,
     &quot; [&quot; + $timeStamp() + &quot;]&quot;,
     &quot;: &quot;,
@@ -41,14 +41,14 @@ LogFileIncluded.prototype.toString = function(){
 
 function LogModuleLoad(module_source){
   this.template = [
-      &quot;&lt;div class=&#39;_LogModule&#39;&gt;&quot;,
-      &quot;&lt;h3 class=&#39;_LogModuleName&#39;&gt; MODULE: &quot;,
+      &quot;&lt;div class='_LogModule'&gt;&quot;,
+      &quot;&lt;h3 class='_LogModuleName'&gt; MODULE: &quot;,
       &quot;I02:Module Name&quot;,
       &quot;&lt;/h3&gt;\n&quot;,
-      &quot;&lt;span class=&#39;_LogModulePath&#39;&gt;&amp;nbsp;&amp;nbsp;(&quot;,
+      &quot;&lt;span class='_LogModulePath'&gt;&amp;nbsp;&amp;nbsp;(&quot;,
       &quot;I05: Module Path&quot;,
       &quot;)&lt;/span&gt;\n&lt;br/&gt;&quot;,
-      &quot;&lt;span class=&#39;_LogModuleDescription&#39;&gt;&quot;,
+      &quot;&lt;span class='_LogModuleDescription'&gt;&quot;,
       &quot;I08: Module Description&quot;,
       &quot;&lt;/span&gt;\n&lt;br/&gt;&quot;,
       &quot;Load Start Time: &quot;,
@@ -90,7 +90,7 @@ LogModuleLoad.prototype.toString = function(){
   this.template[20] = &quot;&quot;
   for (var i=0; i&lt;this.files.length; i++)
     this.template[20] += this.files[i].toString()
-  return this.template.join(&#39;\n&#39;)
+  return this.template.join('\n')
 }
 </pre>
 </body>

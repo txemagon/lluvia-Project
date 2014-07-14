@@ -17,8 +17,7 @@ assert("Fixed Vector accepts free_vector and foot",
     'a._head', '[6,9]',
     'var a = new FixedVector( new Vector(2,3), new Vector(4,6) )')
 
-assert("Fixed Vector also accepts _head and foot.",
-    'a.Coord', '[1,1]',
+assert("Fixed Vector also accepts _head and foot.", 'a.Coord', '[1,1]',
     'var a = new FixedVector( [3,5], [2,4], "abs" )')
 
 assert("Fixed Vector 'abs' can be in any position - 1.",

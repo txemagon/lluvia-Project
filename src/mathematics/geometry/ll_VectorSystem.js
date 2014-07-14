@@ -87,7 +87,7 @@ VectorSystem.prototype.push = function(elements) {
 VectorSystem.prototype.push_with_index = function() {
     var new_index = []
     var args = []
-    var position = 0
+    var position = this.length
     var number = 0
 
     for (var i = 0; i < arguments.length; i++) {
@@ -178,6 +178,7 @@ VectorSystem.prototype.uniq$B = function() {
             if (eq == true) {
                 a.erase$B(a[j])
                 lgh--
+                j--
             }
         }
     }
@@ -206,12 +207,42 @@ VectorSystem.prototype.merge = function() {
 }
 
 /**
+ * @method merge
+ * [description]
+ *
+ * @return {[]} [description]
+ */
+VectorSystem.prototype.merge = function() { //push does the same thing. Is it necessary?
+
+}
+
+/**
  * @method splice
  * [description]
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.splice = function() {}
+VectorSystem.prototype.splice = function() {
+    var index = arguments[0] || 0
+    var to_remove = arguments[1] || 0
+    var to_add = []
+    var aux = []
+
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Vector)
+            to_add.push(arguments[i])
+
+    for (var i = 0; i < index; i++)
+        aux[i] = this[i]
+
+    for (var i = 0; i < to_add.length; i++)
+        aux[i + index] = to_add[i]
+
+    for (var i = (index + to_remove - 1); i < this.length; i++)
+        aux[index + to_add.length] = this[i]
+
+    return new VectorSystem(aux)
+}
 
 /**
  * @method unshift
@@ -219,9 +250,10 @@ VectorSystem.prototype.splice = function() {}
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.unshift = function() {}
-
-
+VectorSystem.prototype.unshift = function() {
+    var a = this.push_with_index(arguments)
+    return a
+}
 
 VectorSystem.methods_to_check = [
     ["push", 1],

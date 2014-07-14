@@ -16,15 +16,24 @@ var WebSocketServer = require('ws').Server,
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
 
-        var pk = root_package.find_package(message)
-            // var filelist = pk.get_files()
+        var msg = JSON.parse(message)
 
-        // var text = FileReader.cat(filelist, process.stdout)
-        // text = (new Sanitize(text)).multilines().singles().empty().text
+        switch (msg.type) {
+            case "charge_packages":
+                var text = ""
+                var packages = msg.body.length ? msg.body.split(",") : []
 
-        //ws.send(text)
-        ws.send("function Line(){;}")
+                for (var i = 0; i < packages.length; i++) {
+                    var pk = root_package.find_package(packages[i])
+                    var filelist = pk.get_files()
 
+                    text += FileReader.cat(filelist, process.stdout)
+                }
+
+                text = (new Sanitize(text)).multilines().singles().empty().text
+                ws.send(text)
+                break
+        }
     })
 })
 
