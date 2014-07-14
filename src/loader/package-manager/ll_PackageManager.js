@@ -15,7 +15,7 @@ function PackageManager(uri) {
     this.catalog = []
     this.offers = []
 
-    var socket = new Socket()
+    //var socket = new Socket()
 }
 
 
