@@ -2527,27 +2527,28 @@ function PackageManager(uri) {
     this.packages_server = []
     this.catalog = []
     this.offers = []
+    var socket = new Socket()
 }
 PackageManager.all_packages = []
 PackageManager.offers = []
 PackageManager.include_script = function(url, callback) {
     var script = document.createElement("script")
-    script.type = "text/javascript";
+    script.type = "text/javascript"
     if (script.readyState) { 
         script.onreadystatechange = function() {
             if (script.readyState == "loaded" ||
                 script.readyState == "complete") {
-                script.onreadystatechange = null;
-                callback($K_script_response);
+                script.onreadystatechange = null
+                callback($K_script_response)
             }
-        };
+        }
     } else { 
         script.onload = function() {
-            callback($K_script_response);
-        };
+            callback($K_script_response)
+        }
     }
-    script.src = url;
-    document.getElementsByTagName("head")[0].appendChild(script);
+    script.src = url
+    document.getElementsByTagName("head")[0].appendChild(script)
 }
 PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
@@ -2605,7 +2606,6 @@ PackageManager.drop = function() {
     if (typeof arguments[arguments.length - 1] === 'function')
         var callback = arguments[arguments.length - 1]
     var name_packages = arguments
-    alert(callback)
     for (var i = 0; i < name_packages.length; i++) {
         if (PackageManager.is_offer$U(name_packages[i])) {
             PackageManager.package_uncharged.push(name_packages[i])
@@ -2623,6 +2623,7 @@ PackageManager.download = function(callback) {
     connection.onmessage = function(e) {
         eval.call(null, e.data)
         callback()
+        PackageManager.package_uncharged.length = 0
     }
     connection.onerror = function(error) {
         console.log('WebSocket Error ' + error)
