@@ -53,23 +53,23 @@ assert("An Array can be transformed into an array of vectors and create a Vector
     'c.to_a()', '[ [2, 3], [5, 4], [6, 8], [1, 1] ]',
     'var c = new VectorSystem([2,3,5,4,6,8].to_v(), new Vector(1,1))')
 
-assert("Uniq$B",
+assert("uniq$B erases repeated element from array",
     'c.to_a()', '[ [1, 1] ]',
     'var c = new VectorSystem(new Vector(1,1), new Vector(1,1)); \
      c.uniq$B()')
 
-assert("Uniq$B",
+assert("uniq$B erases repeated elements from array",
     'c.to_a()', '[ [1, 1] ]',
     'var c = new VectorSystem(new Vector(1,1), new Vector(1,1), new Vector(1,1)); \
      c.uniq$B()')
 
-assert("Uniq$B",
+assert("uniq$B erases repeated elements from array any position",
     'a.to_a()', '[ [2,3], [1, 6] ]',
     'var a = new VectorSystem(new Vector(2,3), new Vector(2,3), new Vector(2,3), new Vector(1,6), new Vector(1,6)); \
      a.uniq$B()')
 
 
-assert("Uniq$B",
+assert("splice erases elements from array and adds new ones",
     'b.to_a()', '[ [2, 3], [1, 6], [5, 9], [7, 1] ]',
     'var a = new VectorSystem(new Vector(2,3), new Vector(1,6), new Vector(2,3), new Vector(2,3), new Vector(1,6), new Vector(7,1)); \
      var b = a.splice(2, 3, new Vector(5,9))')

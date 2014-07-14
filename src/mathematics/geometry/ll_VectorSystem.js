@@ -14,8 +14,6 @@ function VectorSystem(vectors) {
 
 }
 
-VectorSystem._this = this
-
 /**
  * @method check_integrity
  * @static
@@ -23,34 +21,18 @@ VectorSystem._this = this
  *
  * @return {[type]} [description]
  */
-VectorSystem.check_integrity = function() { //doesn't work yet
+VectorSystem.prototype.check_integrity = function() { //doesn't work yet
     //class that checks that everything that gets in and out of vectorSystem is a vector
     //needs to evaluate this
-    var that = this
-    var method_name = []
-    var type_check = 0
-    var is_vec
-    var res = true
-
-    for (var i = 0; i < arguments[0].length; i++) {
-        method_name[i] = arguments[0][i][0]
-        type_check[i] = arguments[0][i][1]
-    }
-
-    function check_me(type_of_check, met_name) {
-        if (type_of_check)
-            j
-        else {
-            for (var i = 0; i < that.length; i++)
-                if (!that instanceof VectorSystem || that[i] instanceof Vector)
-                    res = false
-        }
-
-    }
-
-    for (var j = 0; j < method_name.length; j++)
-        check_me(type_check[j], method_name[j])
-
+    var checks = false
+    if (arguments instanceof Array)
+        for (var i = 0; i < arguments.length; i++)
+            if (arguments[i] instanceof Vector)
+                checks = true
+            else
+                throw "VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it"
+    else
+        throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array"
 
 }
 
@@ -200,20 +182,9 @@ VectorSystem.prototype.uniq$B = function() {
  *
  * @return {[]} [description]
  */
-VectorSystem.prototype.merge = function() {
-    alert("hey")
+VectorSystem.prototype.merge = function() { //push does the same thing. Is it necessary?
     for (var i = 0; i < arguments.length; i++)
         this.push(arguments[i])
-}
-
-/**
- * @method merge
- * [description]
- *
- * @return {[]} [description]
- */
-VectorSystem.prototype.merge = function() { //push does the same thing. Is it necessary?
-
 }
 
 /**
@@ -254,12 +225,3 @@ VectorSystem.prototype.unshift = function() {
     var a = this.push_with_index(arguments)
     return a
 }
-
-VectorSystem.methods_to_check = [
-    ["push", 1],
-    ["push_with_index", 1],
-    ["map$B", 1],
-    ["uniq$B", 1]
-]
-
-VectorSystem.check_integrity(VectorSystem.methods_to_check)
