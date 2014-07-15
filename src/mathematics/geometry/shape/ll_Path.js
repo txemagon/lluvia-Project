@@ -10,7 +10,6 @@
  * @property {Number} total_length Total length of the line.
  *
  */
-
 Path.prototype = new Array
 //extend(Path, Line)
 Path.prototype.constructor = Path

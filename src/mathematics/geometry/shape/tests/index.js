@@ -20,12 +20,14 @@ var _test_index = [ /* We first bring lluvia */
     "../../../../kernel/foundation/architecture/ll_Module.js",
     "../../../../kernel/foundation/architecture/ll_Class.js",
     "../../ll_Vector.js",
-    "../ll_Line.js",
-    "../ll_Circle.js",
-    "../ll_StraightLine.js",
     "../ll_Path.js",
+    "../ll_Line.js",
+    "../ll_StraightLine.js",
+    "../ll_Triangle.js",
+    "../ll_Circle.js",
     /* And we then bring asserts */
     //"line_tests.js",
-    "straight_line_test.js",
+    //"straight_line_test.js",
+    "triangle_tests.js"
     //"path_tests.js"
 ]

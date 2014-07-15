@@ -104,31 +104,31 @@ function FixedVector(input) {
     var free_vector
     this.foot = new Vector()
 
-        function check_arg(arg) {
-            if (arg instanceof String || typeof(arg) === "string")
-                is_head = arg
+    function check_arg(arg) {
+        if (arg instanceof String || typeof(arg) === "string")
+            is_head = arg
 
-            if (arg instanceof Array)
-                if (typeof(arg[0]) === "number")
-                    if (!free_vector)
-                        free_vector = new Vector(arg)
-                    else
-                        that.foot = new Vector(arg)
-                    else
-                        for (var i = 0; i < arg.length; i++)
-                            check_arg(arg[i])
-
-            if (arg instanceof Vector)
+        if (arg instanceof Array)
+            if (typeof(arg[0]) === "number")
                 if (!free_vector)
-                    free_vector = arg
+                    free_vector = new Vector(arg)
                 else
-                    that.foot = arg
+                    that.foot = new Vector(arg)
+        else
+            for (var i = 0; i < arg.length; i++)
+                check_arg(arg[i])
 
-            if (arg instanceof FixedVector) {
-                Vector.call(that, arg)
-                Vector.call(that.foot, new Vector(arg.foot))
-            }
+        if (arg instanceof Vector)
+            if (!free_vector)
+                free_vector = arg
+            else
+                that.foot = arg
+
+        if (arg instanceof FixedVector) {
+            Vector.call(that, arg)
+            Vector.call(that.foot, new Vector(arg.foot))
         }
+    }
 
     for (var i = 0; i < arguments.length; i++)
         check_arg(arguments[i])
@@ -200,16 +200,16 @@ FixedVector.prototype.add = function(vec) {
     var checks = false
     var new_free
 
-        function checkVec(vect) {
-            if (that._head.Coord.eql$U(vect.foot.Coord)) {
-                checks = true
-            } else {
-                checks = false
-                throw ("Invalid operation for fixed vectors." +
-                    " First vector head must be equal to second's foot")
-            }
-            that = vect
+    function checkVec(vect) {
+        if (that._head.Coord.eql$U(vect.foot.Coord)) {
+            checks = true
+        } else {
+            checks = false
+            throw ("Invalid operation for fixed vectors." +
+                " First vector head must be equal to second's foot")
         }
+        that = vect
+    }
 
     vec = Vector.prototype.parseInput.apply(this, arguments)
 
@@ -239,12 +239,12 @@ FixedVector.prototype.add = function(vec) {
 FixedVector.prototype.subs = function(vec) {
     var new_free, new_foot
 
-        vec = Vector.prototype.parseInput.apply(this, arguments)
+    vec = Vector.prototype.parseInput.apply(this, arguments)
 
-        new_foot = this._head
-        new_free = vec[vec.length - 1]._head.subs(this._head)
+    new_foot = this._head
+    new_free = vec[vec.length - 1]._head.subs(this._head)
 
-        return new FixedVector(new_free, new_foot)
+    return new FixedVector(new_free, new_foot)
 }
 
 /**
@@ -283,10 +283,10 @@ FixedVector.prototype.scle = function(number) { //todo: scale from Vector needs 
  */
 FixedVector.prototype.virial = function() {
     var new_free, virial
-        new_free = new Vector(this.Coord)
-        virial = new_free.dot(this.foot)
+    new_free = new Vector(this.Coord)
+    virial = new_free.dot(this.foot)
 
-        return virial
+    return virial
 }
 
 /**
