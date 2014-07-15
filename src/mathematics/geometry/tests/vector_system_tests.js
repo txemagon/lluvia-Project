@@ -68,8 +68,17 @@ assert("uniq$B erases repeated elements from array any position",
     'var a = new VectorSystem(new Vector(2,3), new Vector(2,3), new Vector(2,3), new Vector(1,6), new Vector(1,6)); \
      a.uniq$B()')
 
+assert("Class can merge two VectorSystem",
+    'a.to_a()', '[ [5, 5], [1, 1], [8, 8], [4, 4], [6,5] ]',
+    'var a = new VectorSystem(new Vector(5,5), new Vector(1,1), new Vector(8,8)); \
+     a.merge(new VectorSystem(new Vector(4,4), new Vector(6,5)))')
 
 assert("splice erases elements from array and adds new ones",
     'b.to_a()', '[ [2, 3], [1, 6], [5, 9], [7, 1] ]',
     'var a = new VectorSystem(new Vector(2,3), new Vector(1,6), new Vector(2,3), new Vector(2,3), new Vector(1,6), new Vector(7,1)); \
      var b = a.splice(2, 3, new Vector(5,9))')
+
+assert("unshift adds new vectors at the beginning of the VectorSystem",
+    'a.to_a()', '[ [6, 4], [9, 5], [3, 2], [6, 8] ]',
+    'var a = new VectorSystem(new Vector(3,2), new Vector(6,8)); \
+     a.unshift(new Vector(6,4), new Vector(9,5))')
