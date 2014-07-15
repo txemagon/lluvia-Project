@@ -64,6 +64,12 @@ VectorSystem.prototype.push = function(elements) {
  * @method push_with_index
  * Pushed vectors into this according to a given position
  *
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(5,9), new Vector(1,6))
+ *     a.push_with_index(0, new Vector(3,2))
+ *     a.to_a()
+ *     //=> [[3,2], [5,9], [1,6]]
+ *
  * @return {VectorSystem} Returns this
  */
 VectorSystem.prototype.push_with_index = function() {
@@ -99,8 +105,12 @@ VectorSystem.prototype.push_with_index = function() {
 
 /**
  * @method to_a
- * Transforms the coordinates of all the vectors of the Vector System into an array
+ * Transforms the coordinates of all the vectors of a VectorSystem into an array
  *
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(5,9), new Vector(1,6), new Vector(3,2))
+ *     a.to_a
+ *     //=> [[5,9], [1,6], [3,2]]
  *
  * @return {Array}
  */
@@ -140,9 +150,15 @@ VectorSystem.prototype.map$B = function(block) { //doesn't work yet
 
 /**
  * @method uniq$B
- * [description]
+ * Searches the array for repeated elements and erases them
  *
- * @return {[]} [description]
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(3,2), new Vector(1,6), new Vector(1,6), new Vector(1,6))
+ *     a.uniq$B()
+ *     a.to_a()
+ *     //=> [[3,2], [1,6]]
+ *
+ * @return {VectorSystem} Returns modified this
  */
 VectorSystem.prototype.uniq$B = function() {
     var a = []
@@ -171,7 +187,7 @@ VectorSystem.prototype.uniq$B = function() {
 
 /**
  * @method merge
- * [description]
+ * Merges two VectorSystem
  *
  * ###Example
  *    var a = new VectorSystem(new Vector(3,2), new Vector(1,6))
@@ -180,18 +196,25 @@ VectorSystem.prototype.uniq$B = function() {
  *    c.to_a()
  *    //=> [[3,2], [1,6], [8,6]]
  *
- * @return {[]} [description]
+ * @return {VectorSystem} Returns modified this
  */
 VectorSystem.prototype.merge = function() { //push does the same thing. Is it necessary?
     for (var i = 0; i < arguments.length; i++)
         this.push(arguments[i])
+    return this
 }
 
 /**
  * @method splice
- * [description]
+ * Removes and adds vectors to a VectorSystem according to an index and a number of parameters
  *
- * @return {[]} [description]
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(3,2), new Vector(1,6), new Vector(1,1), new Vector(2,2))
+ *     a.splice(2, 2, new Vector(8,6))
+ *     a.to_a()
+ *     //=> [[3,2], [1,6], [8,6]]
+ *
+ * @return {VectorSystem} Returns a VectorSystem with the new parameters
  */
 VectorSystem.prototype.splice = function() {
     var index = arguments[0] || 0
@@ -217,11 +240,20 @@ VectorSystem.prototype.splice = function() {
 
 /**
  * @method unshift
- * [description]
+ * Pushes new vectors at the beginning of the VectorSystem
  *
- * @return {[]} [description]
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(5,5), new Vector(1,1), new Vector(8,8))
+ *     a.unshift(new Vector(4,4))
+ *     a.to_a()
+ *     //=> [[4,4], [5,5], [1,1], [8,8]]
+ *
+ * @return {VectorSystem} Returns this modified
  */
 VectorSystem.prototype.unshift = function() {
-    var a = this.push_with_index(arguments)
-    return a
+    var t = []
+    for (var i = 0; i < arguments.length; i++)
+        t[i] = arguments[i]
+
+    return this.push_with_index(0, t)
 }

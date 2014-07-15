@@ -26,31 +26,31 @@ function Line() {
  * @return {Number} Distance between lines or one line and point
  */
 Line.distance = function(destination, departure) {
-     // Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
+    // Si es un vector creo una linea paralela a la primera para hacer los calculos(lo hice asi por compatibilidad con lo anterior, prometo mejorarlo!!)
     if (departure instanceof Vector)
         departure = new StraightLine(departure, new Vector(
             departure.get_coord(0) + (1 * (destination.dictor.get_coord(0))),
             departure.get_coord(1) + (1 * (destination.director.get_coord(1)))))
     var d = 0
     if (!Line.intersects$U(destination, departure)) {
-    //if(departure inDtanceof Vecto  r)
-    //	departure = Dew StraightLine(departure, 0D0)
-    // Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
-    //                         __   _     _
-    //dist(P,r) = Area/Base = |RP x d| / |d|
-    var RP = new Vector(
-        destination.get_initial_point().get_coord(0) - departure.get_initial_point().get_coord(0),
-        destination.get_initial_point().get_coord(1) - departure.get_initial_point().get_coord(1),
-        0)
-    var d = new Vector(
-        destination.get_initial_point().get_coord(0) - destination.get_final_point().get_coord(0),
-        destination.get_initial_point().get_coord(1) - destination.get_final_point().get_coord(1),
-        0)
-    var RP_module = RP.cross(d).module()
-    var d_module = d.module()
-    d = RP_module / d_module
-}
-return d
+        //if(departure inDtanceof Vecto  r)
+        //	departure = Dew StraightLine(departure, 0D0)
+        // Al ser paralelas la distancia entre rectas se convierte a una distancia entre un punto y una recta.
+        //                         __   _     _
+        //dist(P,r) = Area/Base = |RP x d| / |d|
+        var RP = new Vector(
+            destination.get_initial_point().get_coord(0) - departure.get_initial_point().get_coord(0),
+            destination.get_initial_point().get_coord(1) - departure.get_initial_point().get_coord(1),
+            0)
+        var d = new Vector(
+            destination.get_initial_point().get_coord(0) - destination.get_final_point().get_coord(0),
+            destination.get_initial_point().get_coord(1) - destination.get_final_point().get_coord(1),
+            0)
+        var RP_module = RP.cross(d).module()
+        var d_module = d.module()
+        d = RP_module / d_module
+    }
+    return d
 }
 
 
