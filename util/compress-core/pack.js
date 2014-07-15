@@ -30,7 +30,7 @@ var bring_lluvia = "function bring_lluvia(){" + "\n" +
     "    // Esta parte esta dentro de create_catalog()" + "\n" +
     "    //if(typeof required_packages == 'function')" + "\n" +
     "    //    required_packages()" + "\n" +
-    "    PackageManager.download(main)" + "\n" +
+    "    //PackageManager.download(main)" + "\n" +
     "}"
 
 FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"), text + bring_lluvia)

@@ -14,8 +14,7 @@ function PackageManager(uri) {
     this.packages_server = []
     this.catalog = []
     this.offers = []
-
-    //var socket = new Socket()
+    this.socket = new Socket('ws:localhost:8081')
 }
 
 
@@ -51,7 +50,8 @@ PackageManager.prototype.get_catalog = function(callback) {
 
 PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
-    var pk = new Package(initial_package)
+    
+    var pk = new Package(initial_package, this)
     PackageManager.all_packages.push(pk)
     pk.catalog()
     pk.through(function(pk) {
@@ -60,8 +60,10 @@ PackageManager.prototype.create_catalog = function(initial_package) {
         }
     })
 
-    if (typeof required_packages == 'function')
-        required_packages()
+     if (typeof required_packages == 'function')
+         required_packages()
+
+     PackageManager.download(main)
 }
 
 PackageManager.prototype.is_in$U = function(name_package) {
@@ -135,21 +137,29 @@ PackageManager.package_uncharged = []
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
-    connection.onopen = function() {
-        connection.send('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}')
-    }
+    // var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
+    // //alert(PackageManager.package_uncharged)
+    //  connection.onopen = function() {
+    //      connection.send('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}')
+    //  }
 
-    connection.onmessage = function(e) {
-        eval.call(null, e.data)
+    //  connection.onmessage = function(e) {
+    //      eval.call(null, e.data)
+    //      callback()
+    //      PackageManager.package_uncharged.length = 0
+    //  }
+
+    //  connection.onerror = function(error) {
+    //      console.log('WebSocket Error ' + error)
+    //  }
+
+    if(PackageManager.package_uncharged.length == 0)
         callback()
-        PackageManager.package_uncharged.length = 0
-    }
 
-    connection.onerror = function(error) {
-        console.log('WebSocket Error ' + error)
+    for(var i=0; i<PackageManager.package_uncharged.length; i++){
+        var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
+        //alert(pk.package_manager.uri)
+        pk.package_manager.socket.open_socket()
+        pk.package_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}', eval.call, callback)
     }
-
-    //this.socket.open_socket()
-    //this.socket.communication(msg)
 }

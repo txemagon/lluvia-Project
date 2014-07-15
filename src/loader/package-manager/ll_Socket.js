@@ -17,14 +17,22 @@ Socket.prototype.close_socket = function() {
     }
 }
 
-Socket.prototype.communication = function(msg, callback) {
+Socket.prototype.communication = function(msg, block, callback) {
     var that = this
+
     this.connection.onopen = function() {
         that.connection.send(msg)
     }
+
     this.connection.onmessage = function(e) {
-        that.received_msg = e.data
+        this.received_msg = e.data
+        if(typeof block === 'function')
+            block(e.data)
         if (typeof callback === 'function')
-            callback(e.data)
+            callback()
+    }
+
+    connection.onerror = function(error) {
+        console.log('WebSocket Error ' + error)
     }
 }

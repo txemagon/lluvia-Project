@@ -1,8 +1,9 @@
 /**
  * 
  */
-function Package(pk){
+function Package(pk, my_manager){
  this.pk = pk || {}
+ this.my_manager = my_manager || {}
 }
 
 /**
@@ -27,7 +28,7 @@ Package.prototype.catalog = function(already){
             for(var a=0; a<this[dependencies[i]].length; a++){
                 if(!is_already_there$U(this[dependencies[i]][a]._path)){
                     already_there.push(this[dependencies[i]][a]._path)
-                    var new_pk = new Package(this[dependencies[i]][a])
+                    var new_pk = new Package(this[dependencies[i]][a], this.my_manager)
                     new_pk.catalog(already_there)
                     this[dependencies[i]][a] = new_pk
                 }

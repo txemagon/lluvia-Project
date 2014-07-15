@@ -1,6 +1,6 @@
 
 ThreadAutomata.prototype  = new Thread;
-extend(ThreadAutomata, Automata);
+//extend(ThreadAutomata, Automata);
 
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 
