@@ -1,4 +1,4 @@
-var conversation = "" 
+var conversation = ""
 var users = []
 var n = 0
 var WebSocketServer = require('ws').Server,
@@ -10,15 +10,12 @@ wss.on('connection', function(ws) {
     ws.on('message', function(message) {
 
         var msg = JSON.parse(message)
-        
+
         switch (msg.type) {
             case "new_msg":
                 conversation += msg.body + "\n"
-                for(var i=0; i<users.length; i++)
+                for (var i = 0; i < users.length; i++)
                     users[i].send(conversation)
-                break
-
-            case "new_user":
                 break
         }
     })

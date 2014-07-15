@@ -149,4 +149,7 @@ PackageManager.download = function(callback) {
     connection.onerror = function(error) {
         console.log('WebSocket Error ' + error)
     }
+
+    //this.socket.open_socket()
+    //this.socket.communication(msg)
 }

@@ -6,7 +6,7 @@ function loaded() {
 
 
 function required_packages() {
-    PackageManager.drop("shape")
+
 }
 
 function main() {

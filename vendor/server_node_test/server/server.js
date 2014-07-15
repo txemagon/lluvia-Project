@@ -15,7 +15,6 @@ var WebSocketServer = require('ws').Server,
     })
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
-
         var msg = JSON.parse(message)
 
         switch (msg.type) {
@@ -32,6 +31,10 @@ wss.on('connection', function(ws) {
 
                 text = (new Sanitize(text)).multilines().singles().empty().text
                 ws.send(text)
+                break
+
+            case "test":
+                ws.send("Server works")
                 break
         }
     })
