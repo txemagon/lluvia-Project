@@ -22,7 +22,6 @@ PackageManager.all_packages = []
 PackageManager.offers = []
 
 PackageManager.include_script = function(url, callback) {
-
     var script = document.createElement("script")
     script.type = "text/javascript"
 
@@ -45,12 +44,16 @@ PackageManager.include_script = function(url, callback) {
 
 PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
-        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback)
+        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback.bind(this))
+}
+
+PackageManager.prototype.test = function(){
+    alert(this.socket)
 }
 
 PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
-    
+
     var pk = new Package(initial_package, this)
     PackageManager.all_packages.push(pk)
     pk.catalog()
@@ -133,33 +136,16 @@ PackageManager.drop = function() {
 
 PackageManager.package_uncharged = []
 
-// download debe utilizar la clase socket
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    // var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
-    // //alert(PackageManager.package_uncharged)
-    //  connection.onopen = function() {
-    //      connection.send('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}')
-    //  }
-
-    //  connection.onmessage = function(e) {
-    //      eval.call(null, e.data)
-    //      callback()
-    //      PackageManager.package_uncharged.length = 0
-    //  }
-
-    //  connection.onerror = function(error) {
-    //      console.log('WebSocket Error ' + error)
-    //  }
-
     if(PackageManager.package_uncharged.length == 0)
         callback()
 
-    for(var i=0; i<PackageManager.package_uncharged.length; i++){
-        var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
-        //alert(pk.package_manager.uri)
-        pk.package_manager.socket.open_socket()
-        pk.package_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}', eval.call, callback)
-    }
+    //if (window.WebSocket)
+        for(var i=0; i<PackageManager.package_uncharged.length; i++){
+            var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
+            pk.my_manager.socket.open_socket()
+            pk.my_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}', eval, callback)
+        }
 }

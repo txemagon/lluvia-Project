@@ -8,7 +8,8 @@ function Socket(uri, protocols) {
 }
 
 Socket.prototype.open_socket = function() {
-    this.connection = new WebSocket(this.uri, this.protocols)
+    //this.connection = new WebSocket(this.uri, this.protocols)
+    //alert(this.connection.toSource())
 }
 
 Socket.prototype.close_socket = function() {
@@ -20,11 +21,13 @@ Socket.prototype.close_socket = function() {
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
 
-    this.connection.onopen = function() {
-        that.connection.send(msg)
+    connection = new WebSocket(this.uri, this.protocols)
+
+    connection.onopen = function() {
+        connection.send(msg)
     }
 
-    this.connection.onmessage = function(e) {
+    connection.onmessage = function(e) {
         this.received_msg = e.data
         if(typeof block === 'function')
             block(e.data)

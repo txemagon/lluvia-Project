@@ -2456,7 +2456,6 @@ function Socket(uri, protocols) {
     this.received_msg = ""
 }
 Socket.prototype.open_socket = function() {
-    this.connection = new WebSocket(this.uri, this.protocols)
 }
 Socket.prototype.close_socket = function() {
     connection.onclose = function() {
@@ -2465,10 +2464,11 @@ Socket.prototype.close_socket = function() {
 }
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
-    this.connection.onopen = function() {
-        that.connection.send(msg)
+    connection = new WebSocket(this.uri, this.protocols)
+    connection.onopen = function() {
+        connection.send(msg)
     }
-    this.connection.onmessage = function(e) {
+    connection.onmessage = function(e) {
         this.received_msg = e.data
         if(typeof block === 'function')
             block(e.data)
@@ -2567,12 +2567,13 @@ PackageManager.include_script = function(url, callback) {
 }
 PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
-        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback)
+        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback.bind(this))
+}
+PackageManager.prototype.test = function(){
+    alert(this.socket)
 }
 PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
-    function a (that){return that}
-    alert(a())
     var pk = new Package(initial_package, this)
     PackageManager.all_packages.push(pk)
     pk.catalog()
@@ -2636,11 +2637,11 @@ PackageManager.package_uncharged = []
 PackageManager.download = function(callback) {
     if(PackageManager.package_uncharged.length == 0)
         callback()
-    for(var i=0; i<PackageManager.package_uncharged.length; i++){
-        var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
-        pk.package_manager.socket.open_socket()
-        pk.package_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}', eval.call, callback)
-    }
+        for(var i=0; i<PackageManager.package_uncharged.length; i++){
+            var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
+            pk.my_manager.socket.open_socket()
+            pk.my_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged + '"}', eval, callback)
+        }
 }
 function giveme_node(id){
   var node = document.getElementById(id)
