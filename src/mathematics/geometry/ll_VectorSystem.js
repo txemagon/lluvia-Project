@@ -44,20 +44,24 @@ VectorSystem.prototype.check_integrity = function() { //doesn't work yet
  * @return {[type]}          [description]
  */
 VectorSystem.prototype.push = function(elements) {
-    for (var i = 0; i < arguments.length; i++) {
-        if (arguments[i] instanceof Array) {
-            for (var j = 0; j < arguments[i].length; j++)
-                if (arguments[i][j] instanceof Vector)
-                    Array.prototype.push.call(this, arguments[i][j])
-                else
-                    throw ("VectorSystem#push: Invalid input.\n" + arguments[i][j] + " must be a Vector or derived from it")
-        } else {
-            if (arguments[i] instanceof Vector)
-                Array.prototype.push.call(this, arguments[i])
-            else
-                throw ("VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it")
-        }
-    }
+    var a = []
+    for (var i = 0; i < arguments.length; i++)
+        a[i] = arguments[i]
+
+    // for (var i = 0; i < arguments.length; i++) {
+    //     if (arguments[i] instanceof Array) {
+    //         for (var j = 0; j < arguments[i].length; j++)
+    //             if (arguments[i][j] instanceof Vector)
+    //                 Array.prototype.push.call(this, arguments[i][j])
+    //             else
+    //                 throw ("VectorSystem#push: Invalid input.\n" + arguments[i][j] + " must be a Vector or derived from it")
+    //     } else {
+    //         if (arguments[i] instanceof Vector)
+    //             Array.prototype.push.call(this, arguments[i])
+    //         else
+    //             throw ("VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it")
+    //     }
+    // }
 }
 
 /**
