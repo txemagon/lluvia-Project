@@ -16,24 +16,35 @@ function VectorSystem(vectors) {
 
 /**
  * @method check_integrity
- * @static
- * description
+ * Checks if a method's parameters are Array, Vector or VectorSystem or if it returns a VectorSystem
  *
  * @return {[type]} [description]
  */
-VectorSystem.prototype.check_integrity = function() { //doesn't work yet
-    //class that checks that everything that gets in and out of vectorSystem is a vector
-    //needs to evaluate this
+VectorSystem.prototype.check_integrity = function(args, type_op) { //doesn't work yet
     var checks = false
-    if (arguments instanceof Array)
+    var type_op = type_op || 0 //0: Default, incoming parameters. 1: Outgoing parameters, by request
+
+    if (type_op == 0) {
+        if (arguments instanceof Array || arguments instanceof VectorSystem)
+            for (var i = 0; i < arguments.length; i++)
+                if (arguments[i] instanceof Vector)
+                    checks = true
+                else
+                    throw "VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it"
+        else
+        if (arguments instanceof Vector)
+            checks = true
+        else
+            throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array 2"
+    } else {
         for (var i = 0; i < arguments.length; i++)
-            if (arguments[i] instanceof Vector)
+            if (arguments[i] instanceof VectorSystem)
                 checks = true
             else
-                throw "VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it"
-    else
-        throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array"
+                throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array 3"
+    }
 
+    return checks
 }
 
 /**
@@ -43,10 +54,18 @@ VectorSystem.prototype.check_integrity = function() { //doesn't work yet
  * @param  {[type]} elements [description]
  * @return {[type]}          [description]
  */
-VectorSystem.prototype.push = function(elements) {
+VectorSystem.prototype.push = function() {
     var a = []
+    alert(arguments.length)
     for (var i = 0; i < arguments.length; i++)
         a[i] = arguments[i]
+
+    var can_operate = this.check_integrity(a)
+
+    if (can_operate)
+        for (var i = 0; i < a.length; i++)
+            Array.prototype.push.apply(a[i])
+
 
     // for (var i = 0; i < arguments.length; i++) {
     //     if (arguments[i] instanceof Array) {
