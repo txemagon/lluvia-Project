@@ -15,8 +15,10 @@ function PackageManager(uri) {
     this.catalog = []
     this.offers = []
     this.socket = new Socket('ws:localhost:8081')
-}
+    this.package_uncharged = []
 
+    PackageManager.all_packages_managers.push(this)
+}
 
 PackageManager.all_packages = []
 PackageManager.offers = []
@@ -125,7 +127,8 @@ PackageManager.drop = function() {
 
     for (var i = 0; i < name_packages.length; i++) {
         if (PackageManager.is_offer$U(name_packages[i])) {
-            PackageManager.package_uncharged.push(name_packages[i])
+            var pk = PackageManager.find_package(name_packages[i])
+            pk.my_manager.package_uncharged.push(pk.package)
         }
     }
 
@@ -133,19 +136,27 @@ PackageManager.drop = function() {
         PackageManager.download(callback)
 }
 
-
+PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
-PackageManager.download = function(callback) {
-    if (PackageManager.package_uncharged.length == 0)
-        callback()
-        //if (window.WebSocket)
-    for (var i = 0; i < PackageManager.package_uncharged.length; i++) {
-        var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
-        pk.my_manager.socket.open_socket()
-        pk.my_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged[i] + '"}', eval, callback)
-        pk.my_manager.socket.close_socket()
-    }
+PackageManager.download = function(callback) {  
+    //if (window.WebSocket)
+    for(var i = 0; i < PackageManager.all_packages_managers.length; i++){
+        if(PackageManager.all_packages_managers[i].package_uncharged.length){
+            var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
+            var pm = PackageManager.all_packages_managers[i]
+            pm.socket.open_socket()
+            if(i == PackageManager.all_packages_managers.length-1)
+                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+            else
+                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+            pm.socket.close_socket()
+
+            PackageManager.all_packages_managers[i].package_uncharged = []
+        } else {
+            callback()    
+        }
+    }  
 }

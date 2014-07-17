@@ -1131,6 +1131,7 @@ Array.prototype.collect = function() {
             collectable.push(Array.prototype.collect.yield(this[i]))
     return collectable
 }
+Array.prototype.alias("map", "collect")
 Array.prototype.select_if = function() {
     var collectable = []
     for (var i = 0; i < this.length; i++)
@@ -2544,6 +2545,8 @@ function PackageManager(uri) {
     this.catalog = []
     this.offers = []
     this.socket = new Socket('ws:localhost:8081')
+    this.package_uncharged = []
+    PackageManager.all_packages_managers.push(this)
 }
 PackageManager.all_packages = []
 PackageManager.offers = []
@@ -2628,22 +2631,31 @@ PackageManager.drop = function() {
     var name_packages = arguments
     for (var i = 0; i < name_packages.length; i++) {
         if (PackageManager.is_offer$U(name_packages[i])) {
-            PackageManager.package_uncharged.push(name_packages[i])
+            var pk = PackageManager.find_package(name_packages[i])
+            pk.my_manager.package_uncharged.push(pk.package)
         }
     }
     if (callback)
         PackageManager.download(callback)
 }
+PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 PackageManager.download = function(callback) {
-    if (PackageManager.package_uncharged.length == 0)
-        callback()
-    for (var i = 0; i < PackageManager.package_uncharged.length; i++) {
-        var pk = PackageManager.find_package(PackageManager.package_uncharged[i])
-        pk.my_manager.socket.open_socket()
-        pk.my_manager.socket.communication('{"type": "charge_packages", "body":"' + PackageManager.package_uncharged[i] + '"}', eval, callback)
-        pk.my_manager.socket.close_socket()
-    }
+    for(var i = 0; i < PackageManager.all_packages_managers.length; i++){
+        if(PackageManager.all_packages_managers[i].package_uncharged.length){
+            var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
+            var pm = PackageManager.all_packages_managers[i]
+            pm.socket.open_socket()
+            if(i == PackageManager.all_packages_managers.length-1)
+                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+            else
+                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+            pm.socket.close_socket()
+            PackageManager.all_packages_managers[i].package_uncharged = []
+        } else {
+            callback()    
+        }
+    }  
 }
 function giveme_node(id){
   var node = document.getElementById(id)
@@ -2935,7 +2947,7 @@ $Logger.prototype.log = function(message, severity){
 	}
 }
 function bring_lluvia(){
-    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..')
+    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')
