@@ -16,39 +16,39 @@ function VectorSystem(vectors) {
 
 /**
  * @method check_integrity
- * Checks if a method's parameters are Array, Vector or VectorSystem or if it returns a VectorSystem
+ * Checks if a method's parameters are Array, Vector or VectorSystem
  *
- * @return {[type]} [description]
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(1,4), new Vector(9,12))
+ *     a.to_a()
+ *     //=> [[1,4], [9,12]]
+ *
+ *     var b = new VectorSystem(new Vector(1,4), [9,12])
+ *     b.to_a()
+ *     //=> "VectorSystem#push: Invalid input. [9, 12] must be a Vector or derived from it"
+ *
+ * @return {Boolean} Returns true if parameters check, false if not
  */
-VectorSystem.prototype.check_integrity = function(args, type_op) { //doesn't work yet
+VectorSystem.prototype.check_integrity = function(args) {
     var checks = false
-    var type_op = type_op || 0 //0: Default, incoming parameters. 1: Outgoing parameters, by request
 
-    if (type_op == 0) {
-        if (args instanceof Array || args instanceof VectorSystem) {
-            for (var i = 0; i < arguments.length; i++)
-                if (args[i] instanceof Vector)
-                    checks = true
-                else {
-                    if (a[i] instanceof Array)
-                        for (var j = 0; j < a[i].length; j++)
-                            if (args[i] instanceof Vector)
-                                checks = true
-                            else
-                                throw "VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it"
-                }
-        } else {
-            if (args instanceof Vector)
-                checks = true
-            else
-                throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array 2"
-        }
-    } else {
+    if (args instanceof Array || args instanceof VectorSystem) {
         for (var i = 0; i < args.length; i++)
-            if (args[i] instanceof VectorSystem)
+            if (args[i] instanceof Vector)
                 checks = true
-            else
-                throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array 3"
+            else {
+                if (a[i] instanceof Array)
+                    for (var j = 0; j < a[i].length; j++)
+                        if (args[i] instanceof Vector)
+                            checks = true
+                        else
+                            throw "VectorSystem#push: Invalid input.\n" + arguments[i] + " must be a Vector or derived from it"
+            }
+    } else {
+        if (args instanceof Vector)
+            checks = true
+        else
+            throw "VectorSystem#push: Invalid input.\n" + arguments + " must be a VectorSystem or an Array 2"
     }
 
     return checks
@@ -56,10 +56,16 @@ VectorSystem.prototype.check_integrity = function(args, type_op) { //doesn't wor
 
 /**
  * @method push
- * description
+ * Adds new vectors to the VectorSystem
  *
- * @param  {[type]} elements [description]
- * @return {[type]}          [description]
+ * ###Example:
+ *     var a = new VectorSystem(new Vector(4,3), new Vector(8,5))
+ *     a.push(new Vector(6,6))
+ *     a.to_a()
+ *     //[[4,3], [8,5], [6,6]]
+ *
+ * @param {Vector | Array | VectorSystem} Element/s to include in the VectorSystem
+ *
  */
 VectorSystem.prototype.push = function() {
     var a = []
@@ -78,7 +84,7 @@ VectorSystem.prototype.push = function() {
                 if (a[i][j] instanceof Vector)
                     Array.prototype.push.call(this, a[i][j])
         } else
-            alert(a.toSource())
+            throw "Invalid type of argument. It must be a Vector or an Array or a VectorSystem"
 
 
     // for (var i = 0; i < arguments.length; i++) {
@@ -151,7 +157,7 @@ VectorSystem.prototype.push_with_index = function() {
  *     a.to_a
  *     //=> [[5,9], [1,6], [3,2]]
  *
- * @return {Array}
+ * @return {Array} Returns array of coordinates
  */
 VectorSystem.prototype.to_a = function() {
     var a = []
@@ -173,17 +179,17 @@ VectorSystem.prototype.distribute$B = function(op2) {
  * @method map$B
  * description
  *
- * @param {Function} block Function to be used to modified the VectorSystem
+ * @param {Function} block Function to modified the VectorSystem
  * @return {Array}
  */
 // VectorSystem.prototype.map$B = function(block) { //doesn't work yet
-
 //     var res = Array.prototype.collect.apply(this, arguments)
+//
 //     this.clear()
-
+//
 //     for (var i = 0; i < res.length; i++)
 //         this[i] = res[i]
-
+//
 //     return this
 // }
 Array.prototype.alias("map$B", "collect")
@@ -213,7 +219,7 @@ VectorSystem.prototype.uniq$B = function() {
     for (var i = 0; i < lgh; i++) {
         for (var j = (i + 1); j < lgh; j++) {
             eq = a[i].is_equal_to$U(a[j])
-            if (eq == true) {
+            if (eq) {
                 a.erase$B(a[j])
                 lgh--
                 j--
