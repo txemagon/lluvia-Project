@@ -263,8 +263,7 @@ Array.prototype.collect = function() {
  * Alias of Array#collect
  *
  */
-//Array.prototype.alias("map", "collect")
-//
+Array.prototype.alias("map", "collect")
 
 
 /**

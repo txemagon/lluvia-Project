@@ -23,9 +23,18 @@ assert("A group of vectors can be added to VectorSystem",
         a.push(new Vector(5,6), new Vector(9,8))')
 
 assert("A VectorSystem can be mapped",
-    'a.to_a()', '[ [5, 3], [1, 2] ]',
+    'c', '[ [29,17], [5,12] ]',
     'var a = new VectorSystem(new Vector(25,9), new Vector(1,4)); \
-        a.map$B(Math.sqrt)')
+        var b = new Vector(4,8); \
+        var c = [ ];\
+        var res = a.map$B(function(obj){return obj.add(b)}); \
+        for(var i=0; i<res.length; i++){ c[i] = res[i].Coord}')
+
+assert("A VectorSystem can be mapped - 2",
+    'res', '[ 3.605551275463989, 7.810249675906654 ]',
+    'var a = new VectorSystem(new Vector(2,3), new Vector(5,6)); \
+        var res = a.map$B(function(obj){; \
+        return obj.module() })')
 
 assert("A new vector can be pushed with index to a VectorSystem",
     'a.to_a()', '[ [2, 3], [25, 9], [4, 7] ]',
