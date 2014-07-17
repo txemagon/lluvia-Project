@@ -9,33 +9,34 @@ function Socket(uri, protocols) {
 
 Socket.prototype.open_socket = function() {
     //this.connection = new WebSocket(this.uri, this.protocols)
-    //alert(this.connection.toSource())
 }
 
 Socket.prototype.close_socket = function() {
-    connection.onclose = function() {
-        connection.send('socket closed')
+    var that = this
+
+    this.connection.onclose = function() {
+        that.connection.send('socket closed')
     }
 }
 
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
 
-    connection = new WebSocket(this.uri, this.protocols)
+    this.connection = new WebSocket(this.uri, this.protocols)
 
-    connection.onopen = function() {
-        connection.send(msg)
+    this.connection.onopen = function() {
+        that.connection.send(msg)
     }
 
-    connection.onmessage = function(e) {
-        this.received_msg = e.data
-        if(typeof block === 'function')
+    this.connection.onmessage = function(e) {
+        that.received_msg = e.data
+        if (typeof block === 'function')
             block(e.data)
         if (typeof callback === 'function')
             callback()
     }
 
-    connection.onerror = function(error) {
+    this.connection.onerror = function(error) {
         console.log('WebSocket Error ' + error)
     }
 }
