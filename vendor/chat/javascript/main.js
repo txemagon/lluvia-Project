@@ -1,6 +1,5 @@
-
 function required_packages() {
-    PackageManager.drop("engine")
+    //PackageManager.drop("engine")
 }
 
 function main() {
@@ -11,8 +10,8 @@ function main() {
 
 
 //todo: Refactorizar cuando tenga la clase socket
-function comunication(type, body){
-    var connection = new WebSocket('ws:localhost:8082', ['soap', 'xmpp'])
+function comunication(type, body) {
+    var connection = new WebSocket('ws:http://www.novaws.es:443/lluvia-Project/vendor/server_node_test/server/', ['soap', 'xmpp'])
 
     connection.onopen = function() {
         connection.send('{"type": "' + type + '", "body":"' + body + '"}')

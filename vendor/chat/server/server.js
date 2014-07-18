@@ -3,7 +3,7 @@ var users = []
 var n = 0
 var WebSocketServer = require('ws').Server,
     wss = new WebSocketServer({
-        port: 8082
+        port: 443
     })
 wss.on('connection', function(ws) {
     users.push(ws)

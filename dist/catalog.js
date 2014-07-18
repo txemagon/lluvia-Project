@@ -158,6 +158,27 @@ var $K_script_response =
 			"package": "browser",
 			"description": "Facilities to ensure browser compatibility.",
 		 }
+,
+		   {
+			"_path": "/src/engine/",
+			"files": [
+				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
+				{"name": "ll_Thread.js", "description": "Thread functionality."},
+				{"name": "ll_State.js", "description": "Each of the states of an Automaton."},
+				{"name": "ll_Automata.js", "description": "Finite automaton."},
+				{"name": "ll_AutomataGear.js", "description": ""},
+				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
+				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},
+				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
+				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
+				{"name": "ll_Lookup.js", "description": ""},
+				{"name": "ll_MessageEvent.js", "description": "Message generator."}],
+			"provides": [],
+			"requires": [],
+			"offers": [],
+			"package": "engine",
+			"description": "Event and execution control.",
+		 }
 ],
 	"requires": [],
 	"offers": [
@@ -222,27 +243,6 @@ var $K_script_response =
 			"offers": [],
 			"package": "mathematics",
 			"description": "Mathematics library.",
-		 }
-,
-		   {
-			"_path": "/src/engine/",
-			"files": [
-				{"name": "ll_Processor.js", "description": "Manage multiple threads."},
-				{"name": "ll_Thread.js", "description": "Thread functionality."},
-				{"name": "ll_State.js", "description": "Each of the states of an Automaton."},
-				{"name": "ll_Automata.js", "description": "Finite automaton."},
-				{"name": "ll_AutomataGear.js", "description": ""},
-				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
-				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},
-				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
-				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
-				{"name": "ll_Lookup.js", "description": ""},
-				{"name": "ll_MessageEvent.js", "description": "Message generator."}],
-			"provides": [],
-			"requires": [],
-			"offers": [],
-			"package": "engine",
-			"description": "Event and execution control.",
 		 }
 ],
 	"package": "lluvia",

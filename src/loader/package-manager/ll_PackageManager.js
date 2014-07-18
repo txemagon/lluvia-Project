@@ -14,7 +14,7 @@ function PackageManager(uri) {
     this.packages_server = []
     this.catalog = []
     this.offers = []
-    this.socket = new Socket('ws:localhost:8081')
+    this.socket = new Socket('ws:novaws.es:443/lluvia-Project/vendor/server_node_test/server/')
     this.package_uncharged = []
 
     PackageManager.all_packages_managers.push(this)
@@ -141,14 +141,14 @@ PackageManager.package_uncharged = []
 
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
-PackageManager.download = function(callback) {  
+PackageManager.download = function(callback) {
     //if (window.WebSocket)
-    for(var i = 0; i < PackageManager.all_packages_managers.length; i++){
-        if(PackageManager.all_packages_managers[i].package_uncharged.length){
+    for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+        if (PackageManager.all_packages_managers[i].package_uncharged.length) {
             var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
             var pm = PackageManager.all_packages_managers[i]
             pm.socket.open_socket()
-            if(i == PackageManager.all_packages_managers.length-1)
+            if (i == PackageManager.all_packages_managers.length - 1)
                 pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
             else
                 pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
@@ -156,7 +156,7 @@ PackageManager.download = function(callback) {
 
             PackageManager.all_packages_managers[i].package_uncharged = []
         } else {
-            callback()    
+            callback()
         }
-    }  
+    }
 }

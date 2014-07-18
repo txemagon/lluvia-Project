@@ -42,8 +42,8 @@ function Automata(states, initial_state, solicitor) {
             none: State.NONE
         }
 
-    // Always -1 
-    this.state.none = State.NONE
+    // Always -1
+    //this.state.none = State.NONE
     this.currentState = new AutomataGear(initial_state)
 
     this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
