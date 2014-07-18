@@ -3,6 +3,7 @@ function required_packages() {
 }
 
 function main() {
+    var user = prompt("Who you are?", Your name)
     var chat_device = new ChatDevice("chat")
 }
 
@@ -11,7 +12,7 @@ function main() {
 
 //todo: Refactorizar cuando tenga la clase socket
 function comunication(type, body) {
-    var connection = new WebSocket('ws:http://www.novaws.es:443/lluvia-Project/vendor/server_node_test/server/', ['soap', 'xmpp'])
+    var connection = new WebSocket('ws:novaws.es:443/lluvia-Project/vendor/chat/server', ['soap', 'xmpp'])
 
     connection.onopen = function() {
         connection.send('{"type": "' + type + '", "body":"' + body + '"}')
