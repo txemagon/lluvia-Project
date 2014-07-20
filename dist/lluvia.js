@@ -2453,7 +2453,6 @@ function Socket(uri, protocols) {
     var that = this
     this.uri = uri || ""
     this.protocols = protocols || ['soap', 'xmpp']
-    this.connection = {}
     this.received_msg = ""
 }
 Socket.prototype.open_socket = function() {
@@ -2466,19 +2465,20 @@ Socket.prototype.close_socket = function() {
 }
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
-    this.connection = new WebSocket(this.uri, this.protocols)
+    this.connection = new WebSocket("ws:localhost:8081")
     this.connection.onopen = function() {
         that.connection.send(msg)
     }
     this.connection.onmessage = function(e) {
         that.received_msg = e.data
-        if (typeof block === 'function')
+        if (typeof block === 'function'){
             block(e.data)
+        }
         if (typeof callback === 'function')
             callback()
     }
     this.connection.onerror = function(error) {
-        console.log('WebSocket Error ' + error)
+        that.console.log('WebSocket Error ' + error)
     }
 }
 function Package(pk, my_manager){
@@ -3492,7 +3492,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..')
+    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')

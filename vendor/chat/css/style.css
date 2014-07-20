@@ -25,3 +25,12 @@ body {
     font-size:20px;
     font-weight:bold;
 }
+
+#reading_area{
+    height: 400px;
+    width: 420px;
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px;
+    overflow: auto;
+    overflow-x: hidden;
+}
