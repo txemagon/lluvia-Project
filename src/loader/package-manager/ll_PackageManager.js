@@ -46,11 +46,7 @@ PackageManager.include_script = function(url, callback) {
 
 PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
-        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback.bind(this))
-}
-
-PackageManager.prototype.test = function() {
-    alert(this.socket)
+        PackageManager.include_script("../../dist/" + "catalog.js", callback.bind(this))
 }
 
 PackageManager.prototype.create_catalog = function(initial_package) {
@@ -142,21 +138,23 @@ PackageManager.package_uncharged = []
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    //if (window.WebSocket)
-    for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
-        if (PackageManager.all_packages_managers[i].package_uncharged.length) {
-            var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
-            var pm = PackageManager.all_packages_managers[i]
-            pm.socket.open_socket()
-            if (i == PackageManager.all_packages_managers.length - 1)
-                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
-            else
-                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
-            pm.socket.close_socket()
+    if (window.WebSocket)
+        for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+            if (PackageManager.all_packages_managers[i].package_uncharged.length) {
+                var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
+                var pm = PackageManager.all_packages_managers[i]
+                pm.socket.open_socket()
+                if (i == PackageManager.all_packages_managers.length - 1)
+                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+                else
+                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+                pm.socket.close_socket()
 
-            PackageManager.all_packages_managers[i].package_uncharged = []
-        } else {
-            callback()
-        }
-    }
+                PackageManager.all_packages_managers[i].package_uncharged = []
+            } else {
+                callback()
+            }
+        } else
+            console.log("This navegator not support websocket")
+
 }

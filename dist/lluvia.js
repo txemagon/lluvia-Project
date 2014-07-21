@@ -2453,9 +2453,13 @@ function Socket(uri, protocols) {
     var that = this
     this.uri = uri || ""
     this.protocols = protocols || ['soap', 'xmpp']
+    this.connection = new WebSocket("ws:localhost:8081")
     this.received_msg = ""
 }
-Socket.prototype.open_socket = function() {
+Socket.prototype.open_socket = function(callback) {
+    this.connection.onopen = function() {
+        callback()
+    }
 }
 Socket.prototype.close_socket = function() {
     var that = this
@@ -2465,20 +2469,36 @@ Socket.prototype.close_socket = function() {
 }
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
-    this.connection = new WebSocket("ws:localhost:8081")
-    this.connection.onopen = function() {
-        that.connection.send(msg)
-    }
-    this.connection.onmessage = function(e) {
-        that.received_msg = e.data
-        if (typeof block === 'function'){
-            block(e.data)
+    function msg() {
+        alert("msg")
+        this.connection.send(msg)
+        this.connection.onmessage = function(e) {
+            that.received_msg = e.data
+            if (typeof block === 'function') {
+                block(e.data)
+            }
+            if (typeof callback === 'function')
+                callback()
         }
-        if (typeof callback === 'function')
-            callback()
+        this.connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error)
+        }
     }
-    this.connection.onerror = function(error) {
-        that.console.log('WebSocket Error ' + error)
+    if (this.connection.readyState != 1) {
+        this.open_socket(msg.bind(this))
+    } else {
+        this.connection.send(msg)
+        this.connection.onmessage = function(e) {
+            that.received_msg = e.data
+            if (typeof block === 'function') {
+                block(e.data)
+            }
+            if (typeof callback === 'function')
+                callback()
+        }
+        this.connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error)
+        }
     }
 }
 function Package(pk, my_manager){
@@ -2571,10 +2591,7 @@ PackageManager.include_script = function(url, callback) {
 }
 PackageManager.prototype.get_catalog = function(callback) {
     if (!this.catalog.length)
-        PackageManager.include_script(this.uri + "/dist/" + "catalog.js", callback.bind(this))
-}
-PackageManager.prototype.test = function() {
-    alert(this.socket)
+        PackageManager.include_script("../../dist/" + "catalog.js", callback.bind(this))
 }
 PackageManager.prototype.create_catalog = function(initial_package) {
     var that = this
@@ -2641,21 +2658,23 @@ PackageManager.drop = function() {
 PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 PackageManager.download = function(callback) {
-    for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
-        if (PackageManager.all_packages_managers[i].package_uncharged.length) {
-            var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
-            var pm = PackageManager.all_packages_managers[i]
-            pm.socket.open_socket()
-            if (i == PackageManager.all_packages_managers.length - 1)
-                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
-            else
-                pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
-            pm.socket.close_socket()
-            PackageManager.all_packages_managers[i].package_uncharged = []
-        } else {
-            callback()
-        }
-    }
+    if (window.WebSocket)
+        for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+            if (PackageManager.all_packages_managers[i].package_uncharged.length) {
+                var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
+                var pm = PackageManager.all_packages_managers[i]
+                pm.socket.open_socket()
+                if (i == PackageManager.all_packages_managers.length - 1)
+                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+                else
+                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+                pm.socket.close_socket()
+                PackageManager.all_packages_managers[i].package_uncharged = []
+            } else {
+                callback()
+            }
+        } else
+            console.log("This navegator not support websocket")
 }
 function giveme_node(id){
   var node = document.getElementById(id)
@@ -3492,7 +3511,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
+    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')
