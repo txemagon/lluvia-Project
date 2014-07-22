@@ -3501,7 +3501,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..', 'localhost:8081')
+    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8081')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')
