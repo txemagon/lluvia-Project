@@ -38,7 +38,7 @@ function ChatDevice(view){
 
 ChatDevice.prototype.new_user = function(body){
     this.user = body
-    this.socket.communication('{"type": "new_user", "body":"' + body + '"}', 
+    this.socket.send_msg('{"type": "new_user", "body":"' + body + '"}', 
         function(e){document.getElementById("reading_area").innerHTML += e + "<br>"},
         function(){reading_area.scrollTop = 180000}
     )
@@ -46,7 +46,7 @@ ChatDevice.prototype.new_user = function(body){
 }
 
 ChatDevice.prototype.new_msg = function(msg){
-    this.socket.communication('{"type": "new_msg", "user": "' + this.user + '" ,"body": "'+ msg +'"}',
+    this.socket.send_msg('{"type": "new_msg", "user": "' + this.user + '" ,"body": "'+ msg +'"}',
         function(e){document.getElementById("reading_area").innerHTML += e + "<br>"},
         function(){reading_area.scrollTop = 180000}
     )

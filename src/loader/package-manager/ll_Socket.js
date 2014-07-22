@@ -5,41 +5,64 @@ function Socket(uri, protocols) {
     this.connection = new WebSocket("ws:localhost:8081")
 
     this.received_msg = ""
-
-    //this.connection.onopen = function() {}
-
-    //alert(1)
 }
 
 Socket.prototype.open_socket = function(callback) {
+    var that = this
+
     this.connection.onopen = function() {
         callback()
+        //callback.bind(this)
     }
 }
 
-Socket.prototype.close_socket = function() {
+Socket.prototype.close_socket = function(msg) {
     var that = this
 
     this.connection.onclose = function() {
-        that.connection.send('socket closed')
+        that.connection.send(msg)
     }
 }
 
+// Hacer alguna combpobacion de que el socket esta abierto!!!!
+Socket.prototype.communication = function(msg){
+alert(msg)
+    var that = this 
 
+    this.connection.send(msg)
 
+    this.connection.onmessage = function(e) {
+        that.received_msg = e.data
+        if (typeof block === 'function')
+            block(e.data)
+        if (typeof callback === 'function')
+            callback()
+    }
 
+    this.connection.onerror = function(error) {
+        console.log('WebSocket Error ' + error)
+    }
+
+}
+
+Socket.prototype.send_msg = function(msg, block, callback) {
+    if (this.connection.readyState != 1) 
+        this.open_socket(this.communication.bind(this,msg, block, callback))
+    else 
+        this.communication(msg, block, callback)
+}
+/*
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
+    var message = msg
 
-    function msg() {
-        alert("msg")
-        this.connection.send(msg)
+    function aux() {
+        this.connection.send(message)
 
         this.connection.onmessage = function(e) {
             that.received_msg = e.data
             if (typeof block === 'function') {
                 block(e.data)
-                //alert("llego")
             }
             if (typeof callback === 'function')
                 callback()
@@ -48,26 +71,14 @@ Socket.prototype.communication = function(msg, block, callback) {
         this.connection.onerror = function(error) {
             console.log('WebSocket Error ' + error)
         }
+
     }
 
     if (this.connection.readyState != 1) {
-        this.open_socket(msg.bind(this))
+        this.open_socket(aux.bind(this))
     } else {
-        this.connection.send(msg)
-
-        this.connection.onmessage = function(e) {
-            that.received_msg = e.data
-            if (typeof block === 'function') {
-                block(e.data)
-                //alert("llego")
-            }
-            if (typeof callback === 'function')
-                callback()
-        }
-
-        this.connection.onerror = function(error) {
-            console.log('WebSocket Error ' + error)
-        }
+        aux.bind(this)
     }
 
 }
+*/

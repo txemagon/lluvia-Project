@@ -2457,49 +2457,37 @@ function Socket(uri, protocols) {
     this.received_msg = ""
 }
 Socket.prototype.open_socket = function(callback) {
+    var that = this
     this.connection.onopen = function() {
         callback()
     }
 }
-Socket.prototype.close_socket = function() {
+Socket.prototype.close_socket = function(msg) {
     var that = this
     this.connection.onclose = function() {
-        that.connection.send('socket closed')
+        that.connection.send(msg)
     }
 }
-Socket.prototype.communication = function(msg, block, callback) {
-    var that = this
-    function msg() {
-        alert("msg")
-        this.connection.send(msg)
-        this.connection.onmessage = function(e) {
-            that.received_msg = e.data
-            if (typeof block === 'function') {
-                block(e.data)
-            }
-            if (typeof callback === 'function')
-                callback()
-        }
-        this.connection.onerror = function(error) {
-            console.log('WebSocket Error ' + error)
-        }
+Socket.prototype.communication = function(msg){
+alert(msg)
+    var that = this 
+    this.connection.send(msg)
+    this.connection.onmessage = function(e) {
+        that.received_msg = e.data
+        if (typeof block === 'function')
+            block(e.data)
+        if (typeof callback === 'function')
+            callback()
     }
-    if (this.connection.readyState != 1) {
-        this.open_socket(msg.bind(this))
-    } else {
-        this.connection.send(msg)
-        this.connection.onmessage = function(e) {
-            that.received_msg = e.data
-            if (typeof block === 'function') {
-                block(e.data)
-            }
-            if (typeof callback === 'function')
-                callback()
-        }
-        this.connection.onerror = function(error) {
-            console.log('WebSocket Error ' + error)
-        }
+    this.connection.onerror = function(error) {
+        console.log('WebSocket Error ' + error)
     }
+}
+Socket.prototype.send_msg = function(msg, block, callback) {
+    if (this.connection.readyState != 1) 
+        this.open_socket(this.communication.bind(this,msg, block, callback))
+    else 
+        this.communication(msg, block, callback)
 }
 function Package(pk, my_manager){
  this.pk = pk || {}
@@ -3511,7 +3499,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..')
+    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')

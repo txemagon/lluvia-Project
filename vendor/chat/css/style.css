@@ -28,7 +28,7 @@ body {
 
 #reading_area{
     height: 400px;
-    width: 420px;
+    width: 423px;
     border: 1px solid black;
     border-radius: 5px 5px 5px 5px;
     overflow: auto;
