@@ -25,7 +25,7 @@ var text = FileReader.cat(filelist, process.stdout)
 text = (new Sanitize(text)).multilines().singles().empty().text
 
 var bring_lluvia = "function bring_lluvia(){" + "\n" +
-    "    var p = new PackageManager('" + initial_package + "')" + "\n" +
+    "    var p = new PackageManager('" + initial_package + "', 'localhost:8081')" + "\n" +
     "    p.get_catalog(p.create_catalog)" + "\n" +
     "    // Esta parte esta dentro de create_catalog()" + "\n" +
     "    //if(typeof required_packages == 'function')" + "\n" +

@@ -2450,16 +2450,14 @@ Exception.parse = function(err, source_code){
      throw(err)
 }
 function Socket(uri, protocols) {
-    var that = this
     this.uri = uri || ""
     this.protocols = protocols || ['soap', 'xmpp']
-    this.connection = new WebSocket("ws:localhost:8081")
-    this.received_msg = ""
+    this.connection = new WebSocket("ws:" + this.uri)
 }
-Socket.prototype.open_socket = function(callback) {
+Socket.prototype.open_socket = function(msg, block, callback) {
     var that = this
     this.connection.onopen = function() {
-        callback()
+        that.communication(msg, block, callback)
     }
 }
 Socket.prototype.close_socket = function(msg) {
@@ -2468,12 +2466,15 @@ Socket.prototype.close_socket = function(msg) {
         that.connection.send(msg)
     }
 }
-Socket.prototype.communication = function(msg){
-alert(msg)
-    var that = this 
+Socket.prototype.is_open$U = function() {
+    if (this.connection.readyState == 1)
+        return true
+    return false
+}
+Socket.prototype.communication = function(msg, block, callback) {
+    var that = this
     this.connection.send(msg)
     this.connection.onmessage = function(e) {
-        that.received_msg = e.data
         if (typeof block === 'function')
             block(e.data)
         if (typeof callback === 'function')
@@ -2484,9 +2485,9 @@ alert(msg)
     }
 }
 Socket.prototype.send_msg = function(msg, block, callback) {
-    if (this.connection.readyState != 1) 
-        this.open_socket(this.communication.bind(this,msg, block, callback))
-    else 
+    if (!this.is_open$U())
+        this.open_socket(msg, block, callback)
+    else
         this.communication(msg, block, callback)
 }
 function Package(pk, my_manager){
@@ -2547,12 +2548,13 @@ Package.prototype.through = function(block, config){
         }
     }
 }
-function PackageManager(uri) {
+function PackageManager(uri, socket) {
     this.uri = uri
     this.packages_server = []
     this.catalog = []
     this.offers = []
-    this.socket = new Socket('ws:novaws.es:443/lluvia-Project/vendor/server_node_test/server/')
+    if (socket)
+        this.socket = new Socket(socket)
     this.package_uncharged = []
     PackageManager.all_packages_managers.push(this)
 }
@@ -3499,7 +3501,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
+    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..', 'localhost:8081')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')

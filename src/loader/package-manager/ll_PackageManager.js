@@ -9,12 +9,13 @@
  *
  * @param
  */
-function PackageManager(uri) {
+function PackageManager(uri, socket) {
     this.uri = uri
     this.packages_server = []
     this.catalog = []
     this.offers = []
-    this.socket = new Socket('ws:novaws.es:443/lluvia-Project/vendor/server_node_test/server/')
+    if (socket)
+        this.socket = new Socket(socket)
     this.package_uncharged = []
 
     PackageManager.all_packages_managers.push(this)
