@@ -2573,7 +2573,8 @@ PackageManager.include_script = function(url, callback) {
         }
     } else { 
         script.onload = function() {
-            callback($K_script_response)
+            if (typeof callback == "function")
+                callback($K_script_response)
         }
     }
     script.src = url
@@ -2648,23 +2649,38 @@ PackageManager.drop = function() {
 PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 PackageManager.download = function(callback) {
-    if (window.WebSocket)
+    if (!window.WebSocket) {
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
                 var pm = PackageManager.all_packages_managers[i]
-                pm.socket.open_socket()
                 if (i == PackageManager.all_packages_managers.length - 1)
-                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+                    pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
                 else
-                    pm.socket.communication('{"type": "charge_packages", "body":"' + packages + '"}', eval)
-                pm.socket.close_socket()
+                    pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval)
                 PackageManager.all_packages_managers[i].package_uncharged = []
             } else {
                 callback()
             }
-        } else
-            console.log("This navegator not support websocket")
+        }
+    } else {
+        for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+            if (PackageManager.all_packages_managers[i].package_uncharged.length) {
+                for (var e = 0; e < PackageManager.all_packages_managers[i].package_uncharged.length; e++) {
+                    var pk = PackageManager.find_package(PackageManager.all_packages_managers[i].package_uncharged[e])
+                    for (var a = 0; a < pk.files.length; a++) {
+                        var path = PackageManager.all_packages_managers[i].uri + pk._path + pk.files[a].name
+                        if (i == PackageManager.all_packages_managers.length - 1 && a == pk.files.length - 1)
+                            PackageManager.include_script(path, callback)
+                        else
+                            PackageManager.include_script(path)
+                    }
+                }
+            } else {
+                callback()
+            }
+        }
+    }
 }
 function giveme_node(id){
   var node = document.getElementById(id)
@@ -3501,7 +3517,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function bring_lluvia(){
-    var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8081')
+    var p = new PackageManager('/home/txema/jose/lluvia-Project/util/compress-core/../..', 'localhost:8081')
     p.get_catalog(p.create_catalog)
     // Esta parte esta dentro de create_catalog()
     //if(typeof required_packages == 'function')

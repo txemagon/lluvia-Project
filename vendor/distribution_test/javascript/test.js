@@ -6,8 +6,8 @@ function test() {
     //    })
 
     // 1º Carga de un paquete desde required_packages()
-    //var a = new Angle(0.75)
-    //alert(a.toSource())
+    var a = new Angle(0.75)
+    alert(a.toSource())
 
     // 2º Carga de un paquete drop()
     /*
@@ -32,5 +32,11 @@ function test() {
 
         alert(a.toSource() + " ; " + l.toSource())
     })
-    */
+*/
+    /*
+    PackageManager.include_script("http://www.novaws.es/lluvia-Project/src/mathematics/ll_Angle.js", function() {
+        var a = new Angle(0.3)
+        alert(a.toSource())
+    })
+*/
 }
