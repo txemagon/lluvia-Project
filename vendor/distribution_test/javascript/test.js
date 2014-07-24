@@ -1,14 +1,12 @@
 function test() {
     // Write your tests here.
-    //    PackageManager.drop("shape", function() {
-    //        var l = new Line()
-    //        alert(l.toSource())
-    //    })
 
     // 1º Carga de un paquete desde required_packages()
+    /*
     var a = new Angle(0.75)
-    alert(a.toSource())
+    var b = new Line()
 
+         */
     // 2º Carga de un paquete drop()
     /*
     PackageManager.drop("mathematics", function() {
@@ -20,9 +18,9 @@ function test() {
         var l = new Line()
         alert(l.toSource())
     })
-    */
-    // 3º Carga de un paquete con download() y drop()
+     */
     /*
+    // 3º Carga de un paquete con download() y drop()
     PackageManager.drop("mathematics")
     PackageManager.drop("shape")
 
@@ -30,13 +28,7 @@ function test() {
         var a = new Angle(0.33)
         var l = new Line()
 
-        alert(a.toSource() + " ; " + l.toSource())
+        //  alert(a.toSource() + " ; " + l.toSource())
     })
-*/
-    /*
-    PackageManager.include_script("http://www.novaws.es/lluvia-Project/src/mathematics/ll_Angle.js", function() {
-        var a = new Angle(0.3)
-        alert(a.toSource())
-    })
-*/
+     */
 }

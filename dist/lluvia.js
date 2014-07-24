@@ -2563,6 +2563,7 @@ PackageManager.offers = []
 PackageManager.include_script = function(url, callback) {
     var script = document.createElement("script")
     script.type = "text/javascript"
+    script.async = false
     if (script.readyState) { 
         script.onreadystatechange = function() {
             if (script.readyState == "loaded" ||
@@ -2573,8 +2574,9 @@ PackageManager.include_script = function(url, callback) {
         }
     } else { 
         script.onload = function() {
-            if (typeof callback == "function")
+            if (typeof callback == "function") {
                 callback($K_script_response)
+            }
         }
     }
     script.src = url
@@ -2670,9 +2672,9 @@ PackageManager.download = function(callback) {
                     var pk = PackageManager.find_package(PackageManager.all_packages_managers[i].package_uncharged[e])
                     for (var a = 0; a < pk.files.length; a++) {
                         var path = PackageManager.all_packages_managers[i].uri + pk._path + pk.files[a].name
-                        if (i == PackageManager.all_packages_managers.length - 1 && a == pk.files.length - 1)
+                        if (i == PackageManager.all_packages_managers.length - 1 && e == PackageManager.all_packages_managers[i].package_uncharged.length - 1 && a == pk.files.length - 1) {
                             PackageManager.include_script(path, callback)
-                        else
+                        } else
                             PackageManager.include_script(path)
                     }
                 }
