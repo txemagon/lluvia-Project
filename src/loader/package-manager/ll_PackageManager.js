@@ -142,7 +142,7 @@ PackageManager.package_uncharged = []
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    if (window.WebSocket) {
+    if (!window.WebSocket) {
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
