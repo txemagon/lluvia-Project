@@ -17,7 +17,7 @@ function FilePath(path){
 
 /**
  * @method normalize
- * Normalize the path
+ * Normalize the path.
  *
  * ### Example
  *
@@ -54,7 +54,7 @@ FilePath.prototype.normalize = function(path){
     old_path = old_path.replace(/\\{2,}/g, "\\")
     var path_normalized = ""
     
-    for(;old_path.length > 0;){
+    while(old_path.length > 0){
        //How many positions will be moved.
        var move = (old_path.search(/(\/|\\)/)+1)>0 ? old_path.search(/(\/|\\)/)+1 : old_path.length
        //The size of the remaining path.
@@ -88,10 +88,31 @@ FilePath.prototype.normalize = function(path){
 
 
 /*
- *
+ * @method join  
+ * Join all arguments together and normalize the resulting path. 
  *
  */
 
-FilePath.prototype.join = function(){
-;
+FilePath.prototype.join = function(args){
+    var path_complete=""
+    for(var i = 0; i<arguments.length; i++){
+       if(typeof(arguments[i]) === "string"){
+           var path_fragment = arguments[i]
+               if(path_complete[path_complete.length-1] != "/\//")
+                   path_complete += "/"
+           path_complete += path_fragment
+       }
+    }
+    return FilePath.prototype.normalize(path_complete)
 }
+
+
+
+
+
+
+
+
+
+
+

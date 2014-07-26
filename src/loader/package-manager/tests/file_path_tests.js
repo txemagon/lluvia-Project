@@ -25,7 +25,10 @@ assert("FilePath#normalize 5. ",
 	'var a = new FilePath("Home"); \
          a.normalize()')
 
-
+assert("FilePath#normalize 6. ",
+	'a.normalize()', '"/Home/Dan/Work"',
+	'var a = new FilePath("/Home\\\\Dan/Work");\
+	a.normalize()')
 
  /*No se puede hacer aqui este ejemplo:
  *var a = new FilePath("Work\\dan\\..\\joe\\js\\..")
@@ -34,15 +37,27 @@ assert("FilePath#normalize 5. ",
  * Dan un problema las backslashes.
  */
 
-assert("FilePath#normalize 6. ",
+assert("FilePath#normalize 7. ",
 	'a.normalize()', '"Work\\\\joe\\\\"',
 	'var a = new FilePath("Work\\\\dan\\\\..\\\\joe\\\\js\\\\.."); \
          a.normalize()')
 
 assert("FilePath#join 1. ",
-	'a.join("/foo", "bar", "baz/asdf")', '"/foo/bar/baz/asdf"',
+	'a.join("/Work", "/pep", "/project/lluvia")', '"/Work/pep/project/lluvia"',
 	'var a = new FilePath()')
 
 assert("FilePath#join 2. ",
-	'a.join("/foo", "bar", "baz/asdf", "quux", "..")', '"/foo/bar/baz/asdf"',
+	'a.join("/Work", "pep", "project/lluvia")', '"/Work/pep/project/lluvia"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 3. ",
+	'a.join("/Work", "pep", "project/lluvia", "js", "..")', '"/Work/pep/project/lluvia/"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 4. ",
+	'a.join("/Work", "pep", "/..", "project/../lluvia", "js")', '"/Work/lluvia/js"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 5. ",
+	'a.join("/Work", "/pep", 5, {},"/project/lluvia")', '"/Work/pep/project/lluvia"',
 	'var a = new FilePath()')
