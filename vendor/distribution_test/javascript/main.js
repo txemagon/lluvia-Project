@@ -6,8 +6,8 @@ function loaded() {
 
 
 function required_packages() {
-    PackageManager.drop("mathematics")
-    // PackageManager.drop("shape")
+    //PackageManager.drop("mathematics")
+    //PackageManager.drop("shape")
 }
 
 function main() {
