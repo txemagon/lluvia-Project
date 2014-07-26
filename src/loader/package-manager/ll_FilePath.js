@@ -43,9 +43,11 @@ function FilePath(path){
  *
  * @return {String} path_normalized The path normalized. 
  */
-FilePath.prototype.normalize = function(){
+FilePath.prototype.normalize = function(path){
 
-    var old_path = this.path
+    var old_path = path || this.path
+    if(old_path == undefined)
+	return "Path undefined"
         
     //Avoid multiple consecutive slashes. 
     old_path = old_path.replace(/\/{2,}/g, "/")
@@ -82,4 +84,14 @@ FilePath.prototype.normalize = function(){
     }
     
     return path_normalized
+}
+
+
+/*
+ *
+ *
+ */
+
+FilePath.prototype.join = function(){
+;
 }
