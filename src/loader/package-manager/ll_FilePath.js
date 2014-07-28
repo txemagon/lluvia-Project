@@ -48,7 +48,13 @@ FilePath.prototype.normalize = function(path){
     var old_path = path || this.path
     if(old_path == undefined)
 	return "Path undefined"
-        
+    var slash= this.slash_used(old_path)    
+
+    if(slash == "/")
+	old_path = old_path.replace(/\\/g, "/") 
+    else
+	old_path = old_path.replace(/\//g, "\\") 
+
     //Avoid multiple consecutive slashes. 
     old_path = old_path.replace(/\/{2,}/g, "/")
     old_path = old_path.replace(/\\{2,}/g, "\\")
@@ -73,10 +79,12 @@ FilePath.prototype.normalize = function(path){
             if(filter.search(/\\/) != -1){
                 filter = filter.replace(/\\/g, "\\\\")
             }
+	    if(filter.search(/^(\.\/|\.\\)/) == -1 && filter.length != 1 ? true : filter.search(/^\./) == -1){
            //Adds to the new path the new fragment already filtered
            path_normalized += filter
            //Change the final index is used to clear the end of the path in case of .. .
            var final_index = path_normalized.length - (filter.length+1)
+	   }
         }
        //It updates the old path
        var aux = old_path.slice((move), old_path.length)
@@ -94,21 +102,44 @@ FilePath.prototype.normalize = function(path){
  */
 
 FilePath.prototype.join = function(args){
+
+    var slash = this.slash_used.apply(null, arguments)
     var path_complete=""
-    for(var i = 0; i<arguments.length; i++){
+    for(var i = 0; i < arguments.length; i++){
        if(typeof(arguments[i]) === "string"){
            var path_fragment = arguments[i]
-               if(path_complete[path_complete.length-1] != "/\//")
-                   path_complete += "/"
+               if(path_complete[path_complete.length-1] != slash && path_fragment[0] != slash)
+                   path_complete += slash
            path_complete += path_fragment
        }
     }
     return FilePath.prototype.normalize(path_complete)
 }
 
-
-
-
+/*
+ *
+ *
+ */
+FilePath.prototype.slash_used = function(args){
+    var count_slash     = 0
+    var count_backslash = 0
+    for(var i = 0; i < arguments.length; i++){
+        if(typeof(arguments[i]) != "string")
+	    continue
+	if(arguments[i].match(/\//g) != null)
+	count_slash += arguments[i].match(/\//g).length
+	else
+	    if(arguments[i].match(/\\/g) != null)
+		count_backslash += arguments[i].match(/\\/g).length
+    }
+    if(count_slash>count_backslash)
+	return "/"
+    else
+        if(count_slash<count_backslash)
+	   return "\\\\"
+	else
+	    return "/"
+}
 
 
 

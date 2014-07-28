@@ -6,7 +6,7 @@ assert("FilePath#normalize 1. ",
 	a.normalize()')
 
 assert("FilePath#normalize 2. ",
-	'a.normalize()', '"./Work/me/"',
+	'a.normalize()', '"Work/me/"',
 	'var a = new FilePath("./Work/me/proyect/.."); \
          a.normalize()')
 
@@ -42,6 +42,11 @@ assert("FilePath#normalize 7. ",
 	'var a = new FilePath("Work\\\\dan\\\\..\\\\joe\\\\js\\\\.."); \
          a.normalize()')
 
+assert("FilePath#normalize 8. ",
+	'a.normalize()', '"/.Work./me/proyect/"',
+	'var a = new FilePath("/.Work./me/./proyect/."); \
+         a.normalize()')
+
 assert("FilePath#join 1. ",
 	'a.join("/Work", "/pep", "/project/lluvia")', '"/Work/pep/project/lluvia"',
 	'var a = new FilePath()')
@@ -60,4 +65,20 @@ assert("FilePath#join 4. ",
 
 assert("FilePath#join 5. ",
 	'a.join("/Work", "/pep", 5, {},"/project/lluvia")', '"/Work/pep/project/lluvia"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 6. ",
+	'a.join("\\\\Work", "\\\\pep", "\\\\project\\\\lluvia")', '"\\\\Work\\\\pep\\\\project\\\\lluvia"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 7. ",
+	'a.join("/Work", "\\\\pep", "\\\\project/lluvia")', '"/Work/pep/project/lluvia"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 8. ",
+	'a.join("Work", "pep", "project\\\\lluvia")', '"\\\\Work\\\\pep\\\\project\\\\lluvia"',
+	'var a = new FilePath()')
+
+assert("FilePath#join 9. ",
+	'a.join("Work", "pep", "project", "lluvia")', '"/Work/pep/project/lluvia"',
 	'var a = new FilePath()')
