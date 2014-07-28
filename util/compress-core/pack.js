@@ -25,13 +25,23 @@ var text = FileReader.cat(filelist, process.stdout)
 text = (new Sanitize(text)).multilines().singles().empty().text
 
 var bring_lluvia = "function bring_lluvia(){" + "\n" +
-    "    var p = new PackageManager('" + initial_package + "', 'localhost:8081')" + "\n" +
-    "    p.get_catalog(p.create_catalog)" + "\n" +
+    "    function load_packages(){ " + "\n" +
+    "        var p = new PackageManager($K_script_response, '" + initial_package + "', 'localhost:8081')" + "\n" +
+    "        p.create_catalog($K_script_response, init_program)" + "\n" +
+    "    }" + "\n" +
+    "    function init_program(){" + "\n" +
+    "        if(typeof required_packages == 'function')" + "\n" +
+    "            required_packages()" + "\n" +
+    "        PackageManager.download(main)" + "\n" +
+    "    }" + "\n" +
+    "    PackageManager.include_script('../../dist/catalog.js' , load_packages)" + "\n" +
+    "    //p.get_catalog(p.create_catalog)" + "\n" +
     "    // Esta parte esta dentro de create_catalog()" + "\n" +
-    "    //if(typeof required_packages == 'function')" + "\n" +
-    "    //    required_packages()" + "\n" +
-    "    //PackageManager.download(main)" + "\n" +
     "}"
+
+
+
+
 
 FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"), text + bring_lluvia)
 FileReader.create_file(Path.join(__dirname, "../../dist/catalog.js"), "var $K_script_response = " + root_package.inspect())

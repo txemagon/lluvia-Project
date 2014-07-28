@@ -10,15 +10,16 @@
  * @param
  */
 function PackageManager(uri, socket) {
-    this.uri = uri
+    this.uri = uri || ""
     this.packages_server = []
     this.catalog = []
     this.offers = []
-    if (socket)
+    if (typeof socket != "undefined")
         this.socket = new Socket(socket)
     this.package_uncharged = []
 
     PackageManager.all_packages_managers.push(this)
+    
 }
 
 PackageManager.all_packages = []
@@ -34,13 +35,13 @@ PackageManager.include_script = function(url, callback) {
             if (script.readyState == "loaded" ||
                 script.readyState == "complete") {
                 script.onreadystatechange = null
-                callback($K_script_response)
+                callback()
             }
         }
     } else { //Others
         script.onload = function() {
             if (typeof callback == "function") {
-                callback($K_script_response)
+                callback()
             }
         }
     }
@@ -53,22 +54,20 @@ PackageManager.prototype.get_catalog = function(callback) {
         PackageManager.include_script("../../dist/" + "catalog.js", callback.bind(this))
 }
 
-PackageManager.prototype.create_catalog = function(initial_package) {
+PackageManager.prototype.create_catalog = function(initial_package, callback) {
     var that = this
-
     var pk = new Package(initial_package, this)
     PackageManager.all_packages.push(pk)
     pk.catalog()
     pk.through(function(pk) {
-        for (var i = 0; i < pk.offers.length; i++) {
-            PackageManager.offers.push(pk.offers[i].package)
-        }
+        if(typeof pk.offers != "undefined")
+            for (var i = 0; i < pk.offers.length; i++) {
+                PackageManager.offers.push(pk.offers[i].package)
+            }
     })
 
-    if (typeof required_packages == 'function')
-        required_packages()
-
-    PackageManager.download(main)
+    if (typeof callback == "function")
+        callback()
 }
 
 PackageManager.prototype.is_in$U = function(name_package) {
@@ -142,7 +141,7 @@ PackageManager.package_uncharged = []
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    if (!window.WebSocket) {
+    if (window.WebSocket) {
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
@@ -154,7 +153,8 @@ PackageManager.download = function(callback) {
 
                 PackageManager.all_packages_managers[i].package_uncharged = []
             } else {
-                callback()
+                if (i == PackageManager.all_packages_managers.length - 1)
+                    callback()
             }
         }
     } else {
@@ -171,7 +171,8 @@ PackageManager.download = function(callback) {
                     }
                 }
             } else {
-                callback()
+                if (i == PackageManager.all_packages_managers.length - 1)
+                    callback()
             }
         }
     }
