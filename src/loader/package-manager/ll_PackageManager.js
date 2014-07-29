@@ -19,7 +19,7 @@ function PackageManager(uri, socket) {
     this.package_uncharged = []
 
     PackageManager.all_packages_managers.push(this)
-    
+
 }
 
 PackageManager.all_packages = []
@@ -60,7 +60,7 @@ PackageManager.prototype.create_catalog = function(initial_package, callback) {
     PackageManager.all_packages.push(pk)
     pk.catalog()
     pk.through(function(pk) {
-        if(typeof pk.offers != "undefined")
+        if (typeof pk.offers != "undefined")
             for (var i = 0; i < pk.offers.length; i++) {
                 PackageManager.offers.push(pk.offers[i].package)
             }
@@ -141,7 +141,7 @@ PackageManager.package_uncharged = []
 // download debe diferenciar entre servidoer con websocket y sin ellos
 // download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    if (window.WebSocket) {
+    if (!window.WebSocket) {
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
@@ -158,22 +158,29 @@ PackageManager.download = function(callback) {
             }
         }
     } else {
+        var array_path = []
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 for (var e = 0; e < PackageManager.all_packages_managers[i].package_uncharged.length; e++) {
                     var pk = PackageManager.find_package(PackageManager.all_packages_managers[i].package_uncharged[e])
                     for (var a = 0; a < pk.files.length; a++) {
                         var path = PackageManager.all_packages_managers[i].uri + pk._path + pk.files[a].name
-                        if (i == PackageManager.all_packages_managers.length - 1 && e == PackageManager.all_packages_managers[i].package_uncharged.length - 1 && a == pk.files.length - 1) {
-                            PackageManager.include_script(path, callback)
-                        } else
-                            PackageManager.include_script(path)
+                        array_path.push(path)
                     }
                 }
-            } else {
-                if (i == PackageManager.all_packages_managers.length - 1)
-                    callback()
             }
+        }
+
+        if (array_path.length) {
+            for (var i = 0; i < array_path.length; i++) {
+                if (i != array_path.length - 1)
+                    PackageManager.include_script(array_path[i])
+                else {
+                    PackageManager.include_script(array_path[i], callback)
+                }
+            }
+        } else {
+            callback()
         }
     }
 }

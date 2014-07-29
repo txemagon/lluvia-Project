@@ -24,22 +24,35 @@ root_package.save({
 var text = FileReader.cat(filelist, process.stdout)
 text = (new Sanitize(text)).multilines().singles().empty().text
 
-var bring_lluvia = "function bring_lluvia(){" + "\n" +
-    "    function load_packages(){ " + "\n" +
-    "        var p = new PackageManager($K_script_response, '" + initial_package + "', 'localhost:8081')" + "\n" +
-    "        p.create_catalog($K_script_response, init_program)" + "\n" +
-    "    }" + "\n" +
-    "    function init_program(){" + "\n" +
-    "        if(typeof required_packages == 'function')" + "\n" +
+var bring_lluvia = "function bring_lluvia() {" + "\n" +
+    "    function init_program() {" + "\n" +
+    "        if (typeof required_packages == 'function')" + "\n" +
     "            required_packages()" + "\n" +
     "        PackageManager.download(main)" + "\n" +
     "    }" + "\n" +
-    "    PackageManager.include_script('../../dist/catalog.js' , load_packages)" + "\n" +
-    "    //p.get_catalog(p.create_catalog)" + "\n" +
-    "    // Esta parte esta dentro de create_catalog()" + "\n" +
+    "    function load_dependencies() {" + "\n" +
+    "        if (typeof $K_app_dependencies != 'undefined') {" + "\n" +
+    "            var app_path = location.pathname.replace(/\\/[^\\/]*\\.html?/, '')" + "\n" +
+    "            var app_rel_path = '/javascript/'" + "\n" +
+    "            var app_package = new PackageManager(app_path + app_rel_path)" + "\n" +
+    "            app_package.create_catalog($K_app_dependencies)" + "\n" +
+    "            for (var i = 0; i < $K_app_dependencies.files.length; i++) {" + "\n" +
+    "                if (i != $K_app_dependencies.files.length - 1)" + "\n" +
+    "                    PackageManager.include_script(app_path + app_rel_path + $K_app_dependencies.path + $K_app_dependencies.files[i].name)" + "\n" +
+    "                else {" + "\n" +
+    "                    PackageManager.include_script(app_path + app_rel_path + $K_app_dependencies.path + $K_app_dependencies.files[i].name, init_program)" + "\n" +
+    "                }" + "\n" +
+    "            }" + "\n" +
+    "        } else {" + "\n" +
+    "            init_program()" + "\n" +
+    "        }" + "\n" +
+    "    }" + "\n" +
+    "    function load_packages() {" + "\n" +
+    "        var p = new PackageManager('" + initial_package + "', 'localhost:8081')" + "\n" +
+    "        p.create_catalog($K_script_response, load_dependencies)" + "\n" +
+    "    }" + "\n" +
+    "    PackageManager.include_script('../../dist/catalog.js', load_packages)" + "\n" +
     "}"
-
-
 
 
 

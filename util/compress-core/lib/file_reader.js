@@ -6,12 +6,12 @@
 /**
  * @method constructor
  * Creates a FileReader over a file in the filesystem.
- * Filereaders objects are pointing to files (mainly in a foreign server). Loading 
+ * Filereaders objects are pointing to files (mainly in a foreign server). Loading
  * is deferred due to latency issues.
- *  
+ *
  * @param {String} path Path to the file.
  */
-function FileReader(path){
+function FileReader(path) {
 
     this.path = path
     this.text = ""
@@ -44,21 +44,26 @@ FileReader.prototype.read = function(force) {
  *
  *     Filereader.cat("/home/john/file.js")
  *     Filereader.cat(["~/a.js", "~john/b.js"])
- *     
+ *
  * @param  {String | Array} files Name of the files to be read. (Absolute or relative)
  * @return {String}  text Files contentents concatenated
  */
 FileReader.cat = function(files) {
     var text = ""
-
-    for(var i=0; i<files.length; i++){
-    	try{
-            text += FileReader.fs.readFileSync(files[i], 'utf8')
-            text += "\n"
+    if (Array.isArray(files)) {
+        for (var i = 0; i < files.length; i++) {
+            try {
+                text += FileReader.fs.readFileSync(files[i], 'utf8')
+                text += "\n"
+            } catch (e) {
+                console.dir("Warning:  no such file " + files[i])
+            }
         }
-        catch(e){console.dir("Warning:  no such file " + files[i])}
+    } else {
+        text += FileReader.fs.readFileSync(files[i], 'utf8')
+        text += "\n"
     }
-    
+
     return text
 }
 
@@ -71,11 +76,11 @@ FileReader.cat = function(files) {
  *
  *     var verse = "Con diez cañones por banda..."
  *     Filereader.create_file("espronceda.txt", verse)
- *     
+ *
  * @param  {String} name Name of the file.
  * @return {String} text File content.
  */
-FileReader.create_file = function(name, text){
+FileReader.create_file = function(name, text) {
     FileReader.fs.writeFileSync(name, text)
 }
 
