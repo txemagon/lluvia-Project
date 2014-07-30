@@ -138,23 +138,26 @@ PackageManager.drop = function() {
 PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 
-// download debe diferenciar entre servidoer con websocket y sin ellos
-// download debe elegir entre uno de ellos en funcion de las capacidades del cliente
 PackageManager.download = function(callback) {
-    if (!window.WebSocket) {
+    if (window.WebSocket) {
+        var pk_uncharged = 0
+        for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+            pk_uncharged += PackageManager.all_packages_managers[i].package_uncharged.length
+        }
+
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             if (PackageManager.all_packages_managers[i].package_uncharged.length) {
                 var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
                 var pm = PackageManager.all_packages_managers[i]
-                if (i == PackageManager.all_packages_managers.length - 1)
+                if (pk_uncharged == 1) {
+                    pk_uncharged--
                     pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
-                else
+                } else {
+                    pk_uncharged--
                     pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+                }
 
                 PackageManager.all_packages_managers[i].package_uncharged = []
-            } else {
-                if (i == PackageManager.all_packages_managers.length - 1)
-                    callback()
             }
         }
     } else {
