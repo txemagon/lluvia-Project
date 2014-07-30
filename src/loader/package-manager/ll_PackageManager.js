@@ -144,21 +144,24 @@ PackageManager.download = function(callback) {
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
             pk_uncharged += PackageManager.all_packages_managers[i].package_uncharged.length
         }
+        if (pk_uncharged != 0) {
+            for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
+                if (PackageManager.all_packages_managers[i].package_uncharged.length) {
+                    var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
+                    var pm = PackageManager.all_packages_managers[i]
+                    if (pk_uncharged == 1) {
+                        pk_uncharged--
+                        pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
+                    } else {
+                        pk_uncharged--
+                        pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+                    }
 
-        for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
-            if (PackageManager.all_packages_managers[i].package_uncharged.length) {
-                var packages = PackageManager.all_packages_managers[i].package_uncharged.join()
-                var pm = PackageManager.all_packages_managers[i]
-                if (pk_uncharged == 1) {
-                    pk_uncharged--
-                    pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval, callback)
-                } else {
-                    pk_uncharged--
-                    pm.socket.send_msg('{"type": "charge_packages", "body":"' + packages + '"}', eval)
+                    PackageManager.all_packages_managers[i].package_uncharged = []
                 }
-
-                PackageManager.all_packages_managers[i].package_uncharged = []
             }
+        } else {
+            callback()
         }
     } else {
         var array_path = []
