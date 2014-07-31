@@ -2651,7 +2651,6 @@ PackageManager.drop = function() {
 PackageManager.all_packages_managers = []
 PackageManager.package_uncharged = []
 PackageManager.download = function(callback) {
-    alert(1)
     if (window.WebSocket) {
         var pk_uncharged = 0
         for (var i = 0; i < PackageManager.all_packages_managers.length; i++) {
