@@ -1,0 +1,170 @@
+/* Reset {{{
+***********************************************************
+* reset.css from Eric Meyer
+* http://ericmeyerweb.com/
+***********************************************************/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/***********************************************************/
+/* END Eric Meyer reset.css }}} */
+/* Body {{{ */
+body {
+    font-family:
+    "Arial",
+    "Helvetica",
+    "Verdana",
+    "Geneva",
+    sans-serif;
+    font-size: 12pt;
+    margin: auto;
+}
+/* }}} */
+/* Intro {{{ */
+#intro{
+    display: none;
+}
+/* }}} */
+/* Header {{{ */
+#header{
+    width: 1264px;
+    height: 200px;
+    margin: auto;
+    border: solid 1px black;
+}
+#header_container{
+    width: 1244px;
+    height: 180px;
+    margin: auto;
+    margin-top: 10px;
+    border: solid 1px black;
+}
+#header_intro{
+    display: none;
+}
+#header_menu_left{
+    position: absolute;
+}
+#header li{
+    margin-top: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: "Arial",
+    "Helvetica",
+    "Verdana",
+    "Geneva",
+    sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    color: "#4d4d4dff";
+}
+#logo{
+    position: absolute;
+    top: 70px;
+    left: 600px;
+}
+#header_menu_right{
+    float: right;
+}
+/* }}} */
+/* Main {{{ */
+#main_section{
+    width: 1264px;
+    margin: auto;
+    display: block;
+    border: solid 1px black;
+}
+#vertical_line1{
+    margin-top: 40px;
+    border: solid 1px gray;
+}
+#vertical_line2{
+    margin-top: 10px;
+    border: solid 1px gray;
+}
+#vertical_line3{
+    margin-top: 225px;
+    border: solid 1px gray;
+}
+#vertical_line4{
+    margin-top: 10px;
+    border: solid 1px gray;
+}
+#first_box{
+    width: 550px;
+    height: 250px;
+    margin-top: -253px;
+    margin-left: 70px;
+    border: solid 1px black;
+}
+#blue_banner_top{
+    width: 548px;
+    height: 10px;
+    border: solid 1px blue;
+}
+#blue_banner_bottom{
+    width: 548px;
+    height: 10px;
+    margin-top: 228px;
+    border: solid 1px blue;
+}
+#cogs_and_chain{
+    margin-top: -293px;
+    margin-right: 60px;
+    float: right;
+}
+#second_box{
+    width: 500px;
+    height: 350px;
+    margin-top: 200px;
+    margin-left: 680px;
+    border: solid 1px purple;
+}
+/* }}} */
+/* Footer {{{ */
+#footer{
+    width: 1264px;
+    height: 100px;
+    margin: auto;
+    border: solid 1px blue;
+}
+/* }}} */
