@@ -9,6 +9,10 @@ var initial_package = __dirname + '/../..'
 var root_package = new Package(initial_package, "/src")
 var filelist = []
 
+var server_status = process.argv[2] == "p" ? "production" : "development"
+var info_server = JSON.parse(FileReader.cat(Path.join(initial_package, "/src/server.json")))
+var path_lluvia = server_status == "production" ? info_server.production.protocol + info_server.production.server_name + "/lluvia-Project" : Path.join(__dirname, '/../..')
+
 root_package.catalog()
 root_package.through(function(pk) {
     filelist = filelist.concat(pk.get_files())
@@ -54,7 +58,7 @@ var bring_lluvia = "function bring_lluvia() {" + "\n" +
     "    PackageManager.include_script('../../dist/catalog.js', load_packages)" + "\n" +
     "}"
 
+FileReader.create_file(Path.join(path_lluvia, "/dist/lluvia.js"), text + bring_lluvia)
+FileReader.create_file(Path.join(path_lluvia, "/dist/catalog.js"), "var $K_script_response = " + root_package.inspect())
 
-
-FileReader.create_file(Path.join(__dirname, "../../dist/lluvia.js"), text + bring_lluvia)
-FileReader.create_file(Path.join(__dirname, "../../dist/catalog.js"), "var $K_script_response = " + root_package.inspect())
+console.log("Lluvia " + server_status + " pack created in: \n" + __dirname + "/dist/ ")

@@ -60,7 +60,7 @@ FileReader.cat = function(files) {
             }
         }
     } else {
-        text += FileReader.fs.readFileSync(files[i], 'utf8')
+        text += FileReader.fs.readFileSync(files, 'utf8')
         text += "\n"
     }
 

@@ -26,7 +26,6 @@ Socket.prototype.is_open$U = function() {
     return false
 }
 
-// Hacer alguna combpobacion de que el socket esta abierto!!!!
 Socket.prototype.communication = function(msg, block, callback) {
     var that = this
 
