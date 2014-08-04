@@ -108,16 +108,104 @@ body {
 /* Main {{{ */
 #main_section{
     width: 1264px;
-    display: block;
+    position: relative;
+}
+#vertical_line{
+    width: 550px;
+    margin-top: -851px;
+    margin-left: 70px;
+    border: solid 1px #ccc;
+}
+.horizontal_line{
+    height: 1px;
+    background-color: #ccc;
+    margin-top: 20px;
+}
+#horizontal_line1{
+    margin-top: 60px;
+}
+#horizontal_line3{
+    margin-top: 275px;
+}
+#horizontal_line5{
+    margin-top: 120px;
+}
+#horizontal_line7{
+    margin-top: 308px;
+}
+#dark_lines{
+}
+#main_container{
+    width: 1264px;
+    position: relative;
+}
+#first_box{
+    width: 550px;
+    height: 316px;
+    margin-top: 60px;
+    border: solid 1px #666;
+}
+.banner_blue{
+    width: 548px;
+    height: 18px;
+    background-color: blue;
+    border: solid 1px blue;
+}
+#blue_banner_middle{
+    height: 276px;
+}
+#cogs_and_chain{
+    position: absolute;
+    top: 0px;
+    left: 635px;
+    /*margin-top: -44px;*/
+}
+#second_box{
+    width: 500px;
+    height: 350px;
+    margin-top: 120px;
+    margin-left: 640px;
+    border: solid 1px purple;
+}
+.banner_purple{
+    width: 200x;
+    height: 20px;
+    background-color: purple;
+}
+#purple_banner_middle{
+    height: 310px;
+}
+/* }}} */
+/* Footer {{{ */
+#footer{
+    width: 1264px;
+    height: 100px;
+}
+/* }}} */
+
+
+/* try-outs*/
+    /*
+#left_side{
+    width: 630px;
+    display: inline-block;
+    border: solid 1px red;
+}
+#right_side{
+    width: 620px;
+    display: inline-block;
+    border: solid 1px green;
 }
 .vertical_line{
-    border: solid 1px #ccc;  
+    width: 1px;
+    margin-left: 10px;
+    border: solid 1px #ccc;
 }
 #vertical_line1{
-    margin-top: 40px;
+    top: 100px;
 }
 #vertical_line2{
-    margin-top: 10px;
+    top: 10px;
 }
 #vertical_line3{
     margin-top: 225px;
@@ -126,14 +214,9 @@ body {
     margin-top: 10px;
 }
 .horizontal_line{
-
-}
-#first_box{
-    width: 550px;
-    height: 250px;
-    margin-top: -253px;
-    margin-left: 70px;
-    border: solid 1px #666;
+    position: absolute;
+    width: 10px;
+    border: solid 1px #ccc;
 }
 .banner{
     width: 548px;
@@ -143,24 +226,4 @@ body {
 #blue_banner_bottom{
     margin-top: 228px;
 }
-#cogs_and_chain{
-    margin-top: -293px;
-    margin-right: 60px;
-    float: right;
-}
-#second_box{
-    width: 500px;
-    height: 350px;
-    margin-top: 200px;
-    margin-left: 680px;
-    border: solid 1px purple;
-}
-/* }}} */
-/* Footer {{{ */
-#footer{
-    width: 1264px;
-    height: 100px;
-    margin: auto;
-    border: solid 1px blue;
-}
-/* }}} */
+*/
