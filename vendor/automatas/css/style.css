@@ -1,0 +1,7 @@
+#page {
+	width: 1000px;
+	margin: 0 auto 0 auto;
+	border: 1px solid black;
+	border-style: none solid;
+	padding: 0px 4em;
+}

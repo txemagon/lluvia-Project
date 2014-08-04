@@ -33,30 +33,36 @@
  */
 Automata.prototype.constructor = Automata;
 
-function Automata(states, initial_state, solicitor) {
+function Automata(states, solicitor, initial_state) {
 
     if (states instanceof Array)
         states = new(ApplyProxyConstructor(Enumeration, states))
-    if (!states)
-        this.state = {
-            none: State.NONE
-        }
+    this.state = states ? states : {}
 
-    // Always -1
-    //this.state.none = State.NONE
-    this.currentState = new AutomataGear(initial_state)
+    // Always none equals -1
+    this.state.none = State.NONE
 
-    this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
+    // todo: Make a proxyConstructor that handles the link via the this parameter.
+    this.current = new AutomataGear(initial_state, this)
 
-    var current
-    Object.defineProperty(this, "current", {
-        get: function() {
-            return current
+    this.solicitor = (solicitor || solicitor != null) ?
+        solicitor :
+        new Array(new Array(null, null, null));
+
+    // State none doesn't execute anything, neither raises an error.
+
+    this.solicitor[this.state.none] = [
+
+        function() {
+            return "none_up"
         },
-        set: function(value) {
-            current = value
+        function() {
+            return "none_steady"
+        },
+        function() {
+            return "none_down"
         }
-    })
+    ]
 }
 
 /**
@@ -72,7 +78,7 @@ function Automata(states, initial_state, solicitor) {
  *     //=>    supended: 	{2:{}})
  *     //=> }
  *
- * Every value, dispite an object, behaves as a number.
+ * Every value, despite it is actually an object, it behaves as a number.
  *
  *     this.state.running.phase2 == 2
  *     //=> true
@@ -105,47 +111,19 @@ function Automata(states, initial_state, solicitor) {
 
 
 /**
- * @method drive_state
- * Executes the solicitor functions related to the fsm state.
- * All arguments are passed to solicitors.
- *
- */
-Automata.prototype.drive_state = function() {
-
-    var base = this.state_name[this.currentState.current]
-    var down = base + "_down"
-    var steady = base + "_steady"
-    var up = base + "_up"
-
-    if (this.currentState.requested != this.state.none) {
-        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-        if (this[down])
-            this[down]()
-
-        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-        if (this[up])
-            this[up]()
-
-    }
-
-    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-    if (this[steady])
-        this[steady]()
-
-}
-
-/**
  * @method	  run
  * Behavior of the automata according to its internal state.
  * This function takes care of state transitions.
  *
  */
 Automata.prototype.run = function() {
-
+    return this.solicitor[this.current][0]()
+        /*
     Automata.prototype.drive_state.apply(this, arguments)
     if (this.currentState.requested != this.state.none) {
         this.currentState.previous = this.currentState.current;
         this.currentState.current = this.currentState.requested;
         this.currentState.requested = this.state.none;
     }
+    */
 }

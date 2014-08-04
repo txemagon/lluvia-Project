@@ -3117,26 +3117,42 @@ Object.defineProperty(State.prototype, "_run", {
 State.REGIME = new Enumeration("up", "steady", "down")
 State.NONE = new State("-1")
 Automata.prototype.constructor = Automata;
-function Automata(states, initial_state, solicitor) {
+function Automata(states, solicitor, initial_state) {
     if (states instanceof Array)
         states = new(ApplyProxyConstructor(Enumeration, states))
-    if (!states)
-        this.state = {
-            none: State.NONE
-        }
-    this.currentState = new AutomataGear(initial_state)
-    this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
-    var current
-    Object.defineProperty(this, "current", {
-        get: function() {
-            return current
+    this.state = states ? states : {}
+    this.state.none = State.NONE
+    this.current = new AutomataGear(initial_state, this)
+    this.solicitor = (solicitor || solicitor != null) ?
+        solicitor :
+        new Array(new Array(null, null, null));
+    this.solicitor[this.state.none] = [
+        function() {
+            return "none_up"
         },
-        set: function(value) {
-            current = value
+        function() {
+            return "none_steady"
+        },
+        function() {
+            return "none_down"
         }
-    })
+    ]
 }
-Automata.prototype.drive_state = function() {
+Automata.prototype.run = function() {
+    return this.solicitor[this.current][0]()
+}
+function AutomataGear(initial_state, automata) {
+    this.previous = State.NONE
+    this.current = State.NONE
+    this.requested = initial_state || State.NONE
+}
+AutomataGear.prototype.value = function() {
+    return this.current
+}
+AutomataGear.prototype.toString = function() {
+    return this.current.toString()
+}
+AutomataGear.prototype.drive_state = function() {
     var base = this.state_name[this.currentState.current]
     var down = base + "_down"
     var steady = base + "_steady"
@@ -3152,19 +3168,6 @@ Automata.prototype.drive_state = function() {
     this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
     if (this[steady])
         this[steady]()
-}
-Automata.prototype.run = function() {
-    Automata.prototype.drive_state.apply(this, arguments)
-    if (this.currentState.requested != this.state.none) {
-        this.currentState.previous = this.currentState.current;
-        this.currentState.current = this.currentState.requested;
-        this.currentState.requested = this.state.none;
-    }
-}
-function AutomataGear(initial_state) {
-    this.previous = State.NONE
-    this.current = State.NONE
-    this.requested = initial_state || State.NONE
 }
 ThreadAutomata.prototype  = new Thread;
 ThreadAutomata.prototype.constructor = ThreadAutomata;
@@ -3558,7 +3561,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
