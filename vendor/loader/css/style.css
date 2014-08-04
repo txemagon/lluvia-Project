@@ -1,0 +1,36 @@
+body {
+    font-family: arial, Sans, Helvetica;
+    color: #222;
+}
+
+#page {
+    width: 1000px;
+    margin: 0px auto 0 auto;
+}
+
+#title {
+    color: #33C;
+    font-size:32px;
+    font-weight:bold;
+}
+
+#subtitle {
+    color: #116;
+    font-size:32px;
+    font-weight:bold
+}
+
+#subsubtitle {
+    color: #B40431;
+    font-size:20px;
+    font-weight:bold;
+}
+
+#reading_area{
+    height: 400px;
+    width: 423px;
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px;
+    overflow: auto;
+    overflow-x: hidden;
+}
