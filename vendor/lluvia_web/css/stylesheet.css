@@ -110,17 +110,18 @@ body {
     width: 1264px;
     position: relative;
 }
+.display_inline{
+    display: inline-block;
+}
 #vertical_line{
     width: 550px;
     margin-top: -1260px;
     margin-left: 70px;
-    display: inline-block;
     border: solid 1px #ccc;
 }
 .dark_lines_vertical{
     width: 1px;
     height: 450px;
-    display: inline-block;
     background-color: #666;
 }
 .horizontal_line{
@@ -187,7 +188,7 @@ body {
     border: solid 1px blue;
 }
 #blue_banner_middle{
-    height: 278px;
+    height: 277px;
 }
 #cogs_and_chain{
     width: 620px;
@@ -200,21 +201,21 @@ body {
     margin-bottom: -20px;
 }
 #first_wheel{
-    margin-left: -258px;
+    margin-left: -259px;
 }
 #gear_inside1{
     margin-left: -71px;
     margin-bottom: 34px;
 }
 #third_wheel{
-    margin-left: 199px;
+    margin-left: 201px;
 }
 #gear_inside2{
-    margin-left: -46px;
-    margin-bottom: 29px;
+    margin-left: -47px;
+    margin-bottom: 28px;
 }
 #fourth_wheel{
-    margin-left: -100px;
+    margin-left: -99px;
     margin-bottom: -78px;
 }
 #gear_inside3{
@@ -224,6 +225,15 @@ body {
 #wheel_handle{
     margin-left: -78px;
     margin-bottom: -200px;
+}
+#chain{
+    width: 450px;
+    height: 18px;
+    background-image: url('../images/chain_link.svg');
+    background-repeat: repeat-x;
+    background-position: left;
+    margin-top: 90px;
+    margin-left: -13px;
 }
 #second_box{
     width: 500px;
@@ -250,48 +260,3 @@ body {
     height: 100px;
 }
 /* }}} */
-
-
-/* try-outs*/
-    /*
-#left_side{
-    width: 630px;
-    display: inline-block;
-    border: solid 1px red;
-}
-#right_side{
-    width: 620px;
-    display: inline-block;
-    border: solid 1px green;
-}
-.vertical_line{
-    width: 1px;
-    margin-left: 10px;
-    border: solid 1px #ccc;
-}
-#vertical_line1{
-    top: 100px;
-}
-#vertical_line2{
-    top: 10px;
-}
-#vertical_line3{
-    margin-top: 225px;
-}
-#vertical_line4{
-    margin-top: 10px;
-}
-.horizontal_line{
-    position: absolute;
-    width: 10px;
-    border: solid 1px #ccc;
-}
-.banner{
-    width: 548px;
-    height: 10px;
-    border: solid 1px blue;
-}
-#blue_banner_bottom{
-    margin-top: 228px;
-}
-*/
