@@ -1,5 +1,3 @@
-<!-- La busqueda de la felicidad -->
-
 <!DOCTYPE HTML>
 <html lang="en">
     <head>
@@ -12,7 +10,13 @@
     <body onload="bring_lluvia()">       
         <span id="title">lluvia</span><span id="subtitle">Project</span><span id="subsubtitle">/loader</span><br><br>
                
-        <div id="ll:test" data-type="device" data-self_events="self_event1"  data-attend_event="attend_event1">
+        <div id="test1" class="ll:Device" data-type="TestDevice" data-self_events="event1, event2, event3" data-add_port="event1:test2">
+        </div>
+
+        <div id="test2" class="ll:Device" data-type="TestDevice" data-self_events="event1" data-add_port="attend_event2">
+        </div>
+
+        <div id="test3" class="lluvia:Gate" data-type="TestGate">test_gate
         </div>
     </body>
 </html>
