@@ -112,17 +112,35 @@ body {
 }
 #vertical_line{
     width: 550px;
-    margin-top: -851px;
+    margin-top: -1260px;
     margin-left: 70px;
+    display: inline-block;
     border: solid 1px #ccc;
+}
+.dark_lines_vertical{
+    width: 1px;
+    height: 450px;
+    display: inline-block;
+    background-color: #666;
 }
 .horizontal_line{
     height: 1px;
     background-color: #ccc;
     margin-top: 20px;
 }
+.dark_lines_horizontal{
+    width: 700px;
+    height: 1px;
+    background-color: #666;
+}
 #horizontal_line1{
     margin-top: 60px;
+}
+#dark_line2{
+    width: 670px;
+}
+#dark_line3{
+    width: 670px;
 }
 #horizontal_line3{
     margin-top: 275px;
@@ -130,10 +148,27 @@ body {
 #horizontal_line5{
     margin-top: 120px;
 }
+#dark_line6{
+    width: 670px;
+    margin-left: 594px;
+}
+#dark_line7{
+    width: 670px;
+    margin-left: 594px;
+}
+.right_dark_line{
+    margin-left: 564px;
+}
+#dark_line9{
+    margin-bottom: 107px;
+}
+#dark_line10{
+    margin-top: -383px;
+    margin-left: 550px;
+    margin-bottom: 423px;
+}
 #horizontal_line7{
     margin-top: 308px;
-}
-#dark_lines{
 }
 #main_container{
     width: 1264px;
@@ -141,39 +176,72 @@ body {
 }
 #first_box{
     width: 550px;
-    height: 316px;
-    margin-top: 60px;
+    height: 320px;
+    margin-top: -499px;
     border: solid 1px #666;
 }
 .banner_blue{
     width: 548px;
-    height: 18px;
+    height: 20px;
     background-color: blue;
     border: solid 1px blue;
 }
 #blue_banner_middle{
-    height: 276px;
+    height: 278px;
 }
 #cogs_and_chain{
+    width: 620px;
     position: absolute;
-    top: 0px;
+    top: -860px;
     left: 635px;
-    /*margin-top: -44px;*/
+}
+#second_wheel{
+    margin-left: 135px;
+    margin-bottom: -20px;
+}
+#first_wheel{
+    margin-left: -258px;
+}
+#gear_inside1{
+    margin-left: -71px;
+    margin-bottom: 34px;
+}
+#third_wheel{
+    margin-left: 199px;
+}
+#gear_inside2{
+    margin-left: -46px;
+    margin-bottom: 29px;
+}
+#fourth_wheel{
+    margin-left: -100px;
+    margin-bottom: -78px;
+}
+#gear_inside3{
+    margin-left: -92px;
+    margin-bottom: 52px;
+}
+#wheel_handle{
+    margin-left: -78px;
+    margin-bottom: -200px;
 }
 #second_box{
     width: 500px;
     height: 350px;
-    margin-top: 120px;
+    margin-top: -370px;
     margin-left: 640px;
     border: solid 1px purple;
 }
 .banner_purple{
     width: 200x;
-    height: 20px;
+    height: 21px;
     background-color: purple;
 }
 #purple_banner_middle{
     height: 310px;
+}
+#space_at_end{
+    height: 100px;
 }
 /* }}} */
 /* Footer {{{ */
