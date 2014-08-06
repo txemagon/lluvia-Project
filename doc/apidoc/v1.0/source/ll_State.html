@@ -75,7 +75,7 @@
  *     a.run.steady = function(name) {
  *         if (this.door == &quot;opened&quot;)
  *             return &quot;2 people inside&quot;
- *         return &quot;Can't see anybody. The door is closed.&quot;
+ *         return &quot;Can&#39;t see anybody. The door is closed.&quot;
  *     }
  *     a.regime = State.REGIME.steady
  *
@@ -114,7 +114,7 @@ State.prototype.constructor = State
  *                                Constructor.
  */
 function State(label) {
-    /*  Don't check anything but existance.
+    /*  Don&#39;t check anything but existance.
         Just try to execute for profiling purposes.
     */
     VersionNumber.apply(this, arguments)
@@ -198,6 +198,7 @@ Object.defineProperty(State.prototype, &quot;_run&quot;, {
  * Possible values for a state: up, steady and down.
  * up and down states provide a way politely enter and leave the state.
  */
-State.REGIME = new Enumeration(&quot;up&quot;, &quot;steady&quot;, &quot;down&quot;)</pre>
+State.REGIME = new Enumeration(&quot;up&quot;, &quot;steady&quot;, &quot;down&quot;)
+State.NONE = new State(&quot;-1&quot;)</pre>
 </body>
 </html>

@@ -119,13 +119,13 @@ kola.greet();
 alert(kola.b);
 kola.wave();
 
-   Once we've settle down the necesity of super we can do things like:
+   Once we&#39;ve settle down the necesity of super we can do things like:
 
    c.include(Father)
 
 
 CONTENT:
-It's not posible to include a Module using an anonimous class. If '-&gt;' means .prototype
+It&#39;s not posible to include a Module using an anonimous class. If &#39;-&gt;&#39; means .prototype
 
 4-&gt;3-&gt;2-&gt;1
 and
@@ -141,12 +141,12 @@ Oh! Loneliness fields,
 Oh! Gloomy hills
 
 Now 1 is deriving from b.
-It's possible to make copies of 4,3,2 and 1, but not to reopen them again
+It&#39;s possible to make copies of 4,3,2 and 1, but not to reopen them again
 
 
 
-Include on Class or Module inside a Class (We've to take into account both prototype chains)
-if (typeof Function.include !== 'function') {
+Include on Class or Module inside a Class (We&#39;ve to take into account both prototype chains)
+if (typeof Function.include !== &#39;function&#39;) {
     Function.prototype.include = function (superclass) {
         function $F() {}
         $F.prototype = new superclass
@@ -219,7 +219,7 @@ There are two posible strategies. Extending (widering) prototype with a copy of 
   But if,
   c = new Class();
   d = new Class();
-  c.xxx = 3 doesn't change d.xxx
+  c.xxx = 3 doesn&#39;t change d.xxx
 
   When xxx is an object, xxx is holding a pointer to the object.
 

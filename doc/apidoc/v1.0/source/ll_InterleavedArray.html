@@ -17,6 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-InterleavedArray'>/**
 </span> * @class  Kernel.Foundation.Enumerable.InterleavedArray
+ * @extends Kernel.JSNative.Array
  * Creates an array with subindexes as in [semantic version controlling](http://semver.org/).
  * It is the complementary class of Enumeration {@link Kernel.Foundation.Enumerable.Enumeration}
  *
@@ -99,7 +100,7 @@ function InterleavedArray(elements) {
           | subarray
          [7, 8] -&gt; IA
 */
-    Object.defineProperty(this, 'subarray', {
+    Object.defineProperty(this, &#39;subarray&#39;, {
         value: [],
         enumerable: false,
         writable: true

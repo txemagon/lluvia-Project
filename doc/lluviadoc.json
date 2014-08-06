@@ -3,6 +3,7 @@
     "--seo": true,
     "--output": "apidoc/v1.0",
     "--external": [
+        "Class",
         "Hash",
         "AutoHash",
         "Constant",

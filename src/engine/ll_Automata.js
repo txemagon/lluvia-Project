@@ -5,6 +5,51 @@
  * made of the previous, the current and the requested one. During state transition, several solicitor functions
  * get executed: down function of the current state, up solicitor of the requested state and finally we arrive to the
  * steady state.
+ * @uses Kernel.Foundation.Enumerable.EnumerationOf
+ * @uses Engine.State
+ * @uses  Engine.StateGear
+ *
+ * ## States
+ *
+ * States refers to each of the states of a Finite Machine Automaton. See {@link Engine.State State}
+ * for a very detailed explanation.
+ *
+ * ### Warning
+ *
+ *   Avoid using run for naming a state.
+ *
+ * ## Solicitors
+ *
+ * Solicitors are the drivers that run every single {@link Engine.State state}. Despite
+ * you can manually add the drivers to every state, the Automata constructor comes with a
+ * facility to specify all the drivers at once.
+ *
+ * Define an object as in the following example to be used as the solicitor constructor param:
+ *
+ *     {
+ *            walking: function() {
+ *                return "I'm walking"
+ *            },
+ *            running: [
+ *
+ *                function() {
+ *                    return "I'm running"
+ *                }, {
+ *                    slow: function() {
+ *                        return "I'm running slow"
+ *                    },
+ *                    "slow.steady": function() {
+ *                        return "But steadily"
+ *                    },
+ *                    fast: function() {
+ *                        return "I'm running fast"
+ *                    }
+ *                }
+ *            ]
+ *        }
+ *
+ * See that when no substates are given you can directly define a function driver.
+ * Notice too, that defining a regime driver is made by typing between quotes
  */
 
 /**
@@ -23,46 +68,54 @@
  *
  *     var a = new Automata(["killing", ["running", ["phase1", "phase2"], "supended" ]])
  *
+ * If you want to request a given state upon start, please mark with an asterisk, as in this example.
+ *
+ *     var a = new Automata(["killing", ["running", ["*phase1", "phase2"], "supended" ]])
  *
  * @param  {Object | Array}   states Possibles states of an automata (Enumeration).
  *                                   Array is an extesnsion for Hierarchical State Machines.
- * @param  {Object}   initialState	 Initial state of the automata.
+ *                                   Avoid calling run to a state.
  * @param  {Array}    solicitor		 State Manager functions. An array with three functions (up, steady, down).
  * @return {Automata}				 New created state machine automata..
  * @constructor
  */
 Automata.prototype.constructor = Automata;
 
-function Automata(states, solicitor, initial_state) {
+function Automata(states, solicitor) {
+
+    function find_initial_state(state_level, initial_state) {
+        initial_state = initial_state || ""
+
+        for (var i = 0; i < state_level.length; i++) {
+            if (state_level[i] instanceof Array) {
+                initial_state += "." + state_level[i - 1]
+                return find_initial_state(state_level[i], initial_state)
+            }
+            if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
+                if (/^\*/.test(state_level[i])) {
+                    state_level[i] = state_level[i].substring(1)
+                    return initial_state + "." + state_level[i]
+                }
+            }
+        }
+
+    }
+
+    var i_state = find_initial_state(states).substring(1).split(".")
 
     if (states instanceof Array)
-        states = new(ApplyProxyConstructor(Enumeration, states))
-    this.state = states ? states : {}
+        states = new(ProxyConstructor(EnumerationOf, State, states))
+    this.state = states ? states : new Enumeration()
 
-    // Always none equals -1
-    this.state.none = State.NONE
+    // Always none equals to -1
+    this.state.none = new State(State.NONE)
+
+    var initial_state
+    for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
 
     // todo: Make a proxyConstructor that handles the link via the this parameter.
-    this.current = new AutomataGear(initial_state, this)
-
-    this.solicitor = (solicitor || solicitor != null) ?
-        solicitor :
-        new Array(new Array(null, null, null));
-
-    // State none doesn't execute anything, neither raises an error.
-
-    this.solicitor[this.state.none] = [
-
-        function() {
-            return "none_up"
-        },
-        function() {
-            return "none_steady"
-        },
-        function() {
-            return "none_down"
-        }
-    ]
+    this.current = new StateGear(this, initial_state)
+    this.current.zip(solicitor)
 }
 
 /**
@@ -117,7 +170,8 @@ function Automata(states, solicitor, initial_state) {
  *
  */
 Automata.prototype.run = function() {
-    return this.solicitor[this.current][0]()
+    var s = this.current.valueOf()
+    return s[s]()
         /*
     Automata.prototype.drive_state.apply(this, arguments)
     if (this.currentState.requested != this.state.none) {

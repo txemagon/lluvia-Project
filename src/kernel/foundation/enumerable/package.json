@@ -17,6 +17,9 @@
         "name": "ll_Enumeration.js",
         "description": "Object with keys associated to consecutive numbers."
     }, {
+        "name": "ll_EnumerationOf.js",
+        "description": "Enumerations made of a derived class of VersionNumber."
+    }, {
         "name": "ll_Map.js",
         "description": "True Map where objects can be keys."
     }, {

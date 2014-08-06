@@ -16,32 +16,32 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">assert(&quot;Object#attr_reader creates the getter function.&quot;,
-       &quot;me.get_name()&quot; , &quot;'Txema'&quot;,
-       &quot;Class_Person(function(name){ this.name = name; this.attr_reader('name');  }); me = new Person('Txema')&quot;)
+       &quot;me.get_name()&quot; , &quot;&#39;Txema&#39;&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_reader(&#39;name&#39;);  }); me = new Person(&#39;Txema&#39;)&quot;)
 
 assert(&quot;Object#attr_reader creates the getter function in its own camel case version.&quot;,
-       &quot;me.getName()&quot; , &quot;'Txema'&quot;,
-       &quot;Class_Person(function(name){ this.name = name; this.attr_reader('name');  }); me = new Person('Txema')&quot;)
+       &quot;me.getName()&quot; , &quot;&#39;Txema&#39;&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_reader(&#39;name&#39;);  }); me = new Person(&#39;Txema&#39;)&quot;)
 
 
 assert(&quot;Object#attr_writer creates the setter function.&quot;,
-       &quot;me.name&quot; , &quot;'Juan'&quot;,
-       &quot;Class_Person(function(name){ this.name = name; this.attr_writer('name');  }); me = new Person('Txema'); me.set_name('Juan')&quot;)
+       &quot;me.name&quot; , &quot;&#39;Juan&#39;&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_writer(&#39;name&#39;);  }); me = new Person(&#39;Txema&#39;); me.set_name(&#39;Juan&#39;)&quot;)
 
 assert(&quot;Object#attr_accessor creates the setter and the getter functions.&quot;,
-       &quot;me.get_name()&quot; , &quot;'Juan'&quot;,
-       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor('name');  });\
-        me = new Person('Txema'); \
-	me.set_name('Juan')&quot;)
+       &quot;me.get_name()&quot; , &quot;&#39;Juan&#39;&quot;,
+       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor(&#39;name&#39;);  });\
+        me = new Person(&#39;Txema&#39;); \
+	me.set_name(&#39;Juan&#39;)&quot;)
 
-assert(&quot;Object#attr_reader, Object#attr_writer and Object#attr_accessor create the class variable if it doesn't exist.&quot;,
+assert(&quot;Object#attr_reader, Object#attr_writer and Object#attr_accessor create the class variable if it doesn&#39;t exist.&quot;,
        &quot;me.get_name()&quot; , &quot;null&quot;,
-       &quot;Class_Person(function(){ this.attr_reader('name');  }); me = new Person();&quot;)
+       &quot;Class_Person(function(){ this.attr_reader(&#39;name&#39;);  }); me = new Person();&quot;)
 
 assert(&quot;Object#attr_accessor works with something different of strings.&quot;,
        &quot;me.get_age() + 2;&quot; , &quot;39&quot;,
-       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor('age'); });\
-        me = new Person('Txema'); \
+       &quot;Class_Person(function(name){ this.name = name; this.attr_accessor(&#39;age&#39;); });\
+        me = new Person(&#39;Txema&#39;); \
 	me.set_age(37);&quot;)
 
 </pre>
