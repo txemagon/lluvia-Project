@@ -81,30 +81,45 @@
 function Enumeration(constants) {
     Object.defineProperty(this, &quot;ia&quot;, {
         value: new(ApplyProxyConstructor(InterleavedArray, arguments)),
-        enumerable: false,
+        enumerable: false
     })
 
-    /* this.ia
-       {
-	      &quot;0&quot;: &quot;spades&quot;,
-	      &quot;1&quot;: &quot;hearts&quot;,
-	      &quot;1.1&quot;: &quot;red&quot;,
-	      &quot;1.2&quot;: &quot;black&quot;,
-	      &quot;2&quot;: &quot;diamonds&quot;,
-	      &quot;3&quot;: &quot;clovers&quot;
-       }
-     will be turned inside this into:
-         {
-       &quot;spades&quot;: 0,
-       &quot;hearts&quot;: { 1,
-       	           &quot;red&quot;: 1,
-       	           &quot;black&quot;: 2
-                  },
-        &quot;diamonds&quot;: 2,
-        &quot;clovers&quot;: 3
-        }
-        in the following lines.
-     */
+    this.transpose()
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-transpose'>/**
+</span> * @method transpose
+ * Takes an InterleavedArray and inverts it, due to InterleavedArray and Enumeration reciprocity.
+ * Not enumerable, not configurable, not writable.
+ *
+ * Given the following InterleavedArray,
+ *
+ *        {
+ *        &quot;0&quot;: &quot;spades&quot;,
+ *        &quot;1&quot;: &quot;hearts&quot;,
+ *        &quot;1.1&quot;: &quot;red&quot;,
+ *        &quot;1.2&quot;: &quot;black&quot;,
+ *        &quot;2&quot;: &quot;diamonds&quot;,
+ *        &quot;3&quot;: &quot;clovers&quot;
+ *       }
+ *
+ * will be turned inside this into:
+ *         {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1.1,
+ *                   &quot;black&quot;: 1.2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ *  through this method.
+ *
+ * @param  {Class} [Type=VersionNumber] Class for assigning values
+ */
+Enumeration.prototype.transpose = function(Type) {
+    Type = Type || VersionNumber
 
     var keys = this.ia.keys()
     for (var k = 0; k &lt; keys.length; k++) {
@@ -118,11 +133,69 @@ function Enumeration(constants) {
             if (parent in deep)
                 deep = deep[parent]
         }
-        deep[ia_value] = new VersionNumber(keys[k])
+        deep[ia_value] = new Type(keys[k])
         Object.defineProperty(deep[ia_value], &quot;name&quot;, {
             value: ia_value
         })
     }
-}</pre>
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-each'>/**
+</span> * @method  each
+ * Iterates over key-value pairs inside the enumeration.
+ *
+ * ### Example
+ *
+ *   Let a be defined as
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ *  with the following inner structure:
+ *
+ *        {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1,
+ *                   &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ *   When called
+ *
+ *     a.each(function(key, value) {;})
+ *
+ * key-value pairs will be:
+ *
+ * | key      | value  |
+ * |----------|-------:|
+ * | spades   | 0      |
+ * | hearts   | 1      |
+ * | red      | 1.1    |
+ * | black    | 1.2    |
+ * | diamonds | 2      |
+ * | clovers  | 3      |
+ *
+ */
+Enumeration.prototype.each = function() {
+    var that = this
+    this.ia.keys().each(function(key) {
+        Enumeration.prototype.each.yield(that.ia[key], key)
+    })
+}
+
+Object.defineProperties(Enumeration.prototype, {
+    transpose: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    each: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    }
+})</pre>
 </body>
 </html>

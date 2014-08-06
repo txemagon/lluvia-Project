@@ -50,37 +50,33 @@
  */
 Automata.prototype.constructor = Automata;
 
-function Automata(states, initialState, solicitor) {
+function Automata(states, solicitor, initial_state) {
 
     if (states instanceof Array)
-        states = new(ApplyProxyConstructor(Enumeration, states))
-    this.state = states == null ? {
-        none: -1
-    } : states;
-    if (!this.state.none)
-        this.state.none = -1
-
-    this.stateChange = {
-        up: 0,
-        steady: 1,
-        down: 2
-    };
-    this.currentState = initialState != null ? initialState : {
-        previous: this.state.none,
-        current: this.state.none,
-        requested: this.state.none
-    };
-    this.solicitor = (solicitor || solicitor != null) ? solicitor : new Array(new Array(null, null, null));
-
-    var current
-    Object.defineProperty(this, &quot;current&quot;, {
-        get: function() {
-            return current
-        },
-        set: function(value) {
-            current = value
-        }
+        states = new(ProxyConstructor(EnumerationOf, State, states))
+    this.state = states ? states : new Enumeration()
+    this.state.each(function(state, value) {
+        alert(state + &quot;: &quot; + value)
     })
+
+    // Always none equals -1
+    this.state.none = State.NONE
+
+    // todo: Make a proxyConstructor that handles the link via the this parameter.
+    this.current = new StateGear(this, initial_state)
+
+    this.solicitor = (solicitor || solicitor != null) ?
+        solicitor :
+        new Array(new Array(null, null, null));
+
+    // State none doesn&#39;t execute anything, neither raises an error.
+
+    this.solicitor[this.state.none] = [
+
+        function() {},
+        function() {},
+        function() {}
+    ]
 }
 
 <span id='Engine-Automata-property-state'>/**
@@ -96,7 +92,7 @@ function Automata(states, initialState, solicitor) {
  *     //=&gt;    supended: 	{2:{}})
  *     //=&gt; }
  *
- * Every value, dispite an object, behaves as a number.
+ * Every value, despite it is actually an object, it behaves as a number.
  *
  *     this.state.running.phase2 == 2
  *     //=&gt; true
@@ -128,36 +124,6 @@ function Automata(states, initialState, solicitor) {
  */
 
 
-<span id='Engine-Automata-method-drive_state'>/**
-</span> * @method drive_state
- * Executes the solicitor functions related to the fsm state.
- * All arguments are passed to solicitors.
- *
- */
-Automata.prototype.drive_state = function() {
-
-    var base = this.state_name[this.currentState.current]
-    var down = base + &quot;_down&quot;
-    var steady = base + &quot;_steady&quot;
-    var up = base + &quot;_up&quot;
-
-    if (this.currentState.requested != this.state.none) {
-        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-        if (this[down])
-            this[down]()
-
-        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-        if (this[up])
-            this[up]()
-
-    }
-
-    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-    if (this[steady])
-        this[steady]()
-
-}
-
 <span id='Engine-Automata-method-run'>/**
 </span> * @method	  run
  * Behavior of the automata according to its internal state.
@@ -165,13 +131,15 @@ Automata.prototype.drive_state = function() {
  *
  */
 Automata.prototype.run = function() {
-
+    return this.solicitor[this.current][0]()
+        /*
     Automata.prototype.drive_state.apply(this, arguments)
     if (this.currentState.requested != this.state.none) {
         this.currentState.previous = this.currentState.current;
         this.currentState.current = this.currentState.requested;
         this.currentState.requested = this.state.none;
     }
+    */
 }</pre>
 </body>
 </html>

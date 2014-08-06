@@ -17,22 +17,22 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js">assert( &quot;Module #1. Creating Modules&quot;,
         &quot;a&quot;, &quot;Module&quot;,
-        &quot;Module('MyModule'); a = MyModule.constructor&quot;
+        &quot;Module(&#39;MyModule&#39;); a = MyModule.constructor&quot;
       )
 
 assert( &quot;Module.constants #1. List of all available constants&quot;,
-        &quot;list&quot;, &quot;['MyModule', 'YourModule']&quot;,
-        &quot;Module('MyModule'); Module('YourModule'); \
+        &quot;list&quot;, &quot;[&#39;MyModule&#39;, &#39;YourModule&#39;]&quot;,
+        &quot;Module(&#39;MyModule&#39;); Module(&#39;YourModule&#39;); \
         list = Module.constant_names();&quot;
       )
 
 assert( &quot;Module#alias_method #1. Creates a copy of a function&quot;,
-        &quot;r&quot;, &quot;'hello'&quot;,
-        &quot;Module('MyModule'); \
+        &quot;r&quot;, &quot;&#39;hello&#39;&quot;,
+        &quot;Module(&#39;MyModule&#39;); \
          MyModule.greet = function(){;\
-            return 'hello';\
+            return &#39;hello&#39;;\
           };\
-          MyModule.alias_method('hello', 'greet'); \
+          MyModule.alias_method(&#39;hello&#39;, &#39;greet&#39;); \
           r = MyModule.hello();\
          &quot;
       )

@@ -42,8 +42,8 @@ function Module(module_name, block){
 
     eval.call( null,
                module_name +
-               &quot; = $global_space['$constants']['&quot; +
-               module_name + &quot;']&quot; )
+               &quot; = $global_space[&#39;$constants&#39;][&#39;&quot; +
+               module_name + &quot;&#39;]&quot; )
     return module
   }
 

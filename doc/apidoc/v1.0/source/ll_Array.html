@@ -60,18 +60,18 @@ Array.reflect = function() {
     var result
     var return_value = {}
 
-        function duplicate(original_method) {
-            Array.prototype[original_method + &quot;$B&quot;] = function() {
-                var substitute = Array.prototype[original_method].apply(this, arguments)
+    function duplicate(original_method) {
+        Array.prototype[original_method + &quot;$B&quot;] = function() {
+            var substitute = Array.prototype[original_method].apply(this, arguments)
 
-                this.clear()
-                for (var i = 0; i &lt; substitute.length; i++)
-                    this[i] = substitute[i]
+            this.clear()
+            for (var i = 0; i &lt; substitute.length; i++)
+                this[i] = substitute[i]
 
-                return this
-            }
-            return [original_method + &quot;$B&quot;, Array.prototype[original_method + &quot;$B&quot;]]
+            return this
         }
+        return [original_method + &quot;$B&quot;, Array.prototype[original_method + &quot;$B&quot;]]
+    }
 
     for (var i = 0; i &lt; arguments.length; i++)
         if (arguments[i] instanceof Array)
@@ -196,7 +196,7 @@ Array.prototype.count = function(obj) {
         ))
             count++
 
-    return count
+            return count
 }
 
 
@@ -208,12 +208,12 @@ Array.prototype.count = function(obj) {
  * ### Example
  *
  *     var sentence   = &quot;&quot;
- *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\'t&quot;, &quot;I&quot;]
+ *     var to_my_boss = [&quot;job&quot;, &quot;this&quot;, &quot;like&quot;, &quot;don\&#39;t&quot;, &quot;I&quot;]
  *     to_my_boss.reverse_each(function(element){
  *                                sentence += (element + &quot; &quot;).toUpperCase()
  *                             })
  *     sentence
- *     //=&gt; &quot;I DON'T LIKE THIS JOB &quot;
+ *     //=&gt; &quot;I DON&#39;T LIKE THIS JOB &quot;
  *
  * @param  {function(Object)}  block Called once with every element
  *
@@ -261,7 +261,7 @@ Array.prototype.collect = function() {
         for (var i = 0; i &lt; this.length; i++)
             collectable.push(Array.prototype.collect.yield(this[i]))
 
-        return collectable
+    return collectable
 }
 
 
@@ -280,8 +280,7 @@ Array.prototype.collect = function() {
  * Alias of Array#collect
  *
  */
-//Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
-//
+Array.prototype.alias(&quot;map&quot;, &quot;collect&quot;)
 
 
 <span id='Kernel-CoreExt-Array-method-mapS-B'>/**
@@ -323,7 +322,7 @@ Array.prototype.collect = function() {
  *                          included in the final array.
  *                          If not, it will be deleted.
  * @return  {Array} Returns all items that have passed the condition.
- *                  If an item can't pass the condition, it is deleted.
+ *                  If an item can&#39;t pass the condition, it is deleted.
  *
  */
 Array.prototype.select_if = function() {
@@ -613,7 +612,7 @@ Array.prototype.erase_at$B = function() {
         return null
     if (arguments.length &gt; 1)
         return null
-        //throw (&quot;Wrong number of parameters&quot;)
+            //throw (&quot;Wrong number of parameters&quot;)
     if (arguments[0] &gt; this.length)
         return null
     this.splice(arguments[0], 1)
@@ -703,10 +702,10 @@ Array.prototype.replace = function() {
         return null
     if (arguments.length &gt; 1)
         return null
-        //throw(&quot;wrong number of arguments&quot;)
+            //throw(&quot;wrong number of arguments&quot;)
     if (!(arguments[0] instanceof Array))
         return null
-        //throw(&quot;Invalid parameter type: Array expected.&quot;)
+            //throw(&quot;Invalid parameter type: Array expected.&quot;)
     this.clear()
     for (var i = 0; i &lt; arguments[0].length; i++)
         this[i] = arguments[0][i]
@@ -761,10 +760,10 @@ Array.prototype.delete$B = function(obj) {
         else
             return null
 
-            while ((position = this.indexOf(obj)) != null &amp;&amp; position != -1)
-                this.splice(position, 1)
+    while ((position = this.indexOf(obj)) != null &amp;&amp; position != -1)
+        this.splice(position, 1)
 
-            return obj
+    return obj
 }
 
 
@@ -779,7 +778,7 @@ Array.prototype.delete$B = function(obj) {
  *     // =&gt; true
  *
  *     var names = [&quot;carlos&quot;,&quot;jordan&quot;,&quot;david&quot;,&quot;susan&quot;]
- *     newName = names.include$U('susan')
+ *     newName = names.include$U(&#39;susan&#39;)
  *     // =&gt; true
  *
  * @param  {Object} Object that the method will search for.
@@ -924,7 +923,7 @@ Array.prototype.merge = function(ary2) {
  *     //=&gt; [1,2,3,4,5,6,7,8,9]
  *
  * @param {Number} Position to stop deleting data of the array.
- * @return {Array} Returns the array elements that haven't been deleted.
+ * @return {Array} Returns the array elements that haven&#39;t been deleted.
  */
 Array.prototype.drop = function() {
     if (arguments.length &gt; 1 || arguments.length &lt; 1)
@@ -1296,7 +1295,7 @@ Array.prototype.shuffle = function() {
  *     numbers.transpose()
  *     //=&gt; [[1,1,1],[2,2,2],[3,3,3]]
  *
- *     var words = [['hola','pedro','cristobal'],['adios','juan','colon']]
+ *     var words = [[&#39;hola&#39;,&#39;pedro&#39;,&#39;cristobal&#39;],[&#39;adios&#39;,&#39;juan&#39;,&#39;colon&#39;]]
  *     words.transpose()
  *     //=&gt; [[hola, adios], [pedro, juan], [cristobal, colon]]
  *
@@ -1651,7 +1650,9 @@ Array.prototype.combination = function(number) {
     if (!is_a_number(number))
         throw &quot;Array#combination. Parameter must be a number.&quot;
     if (number == 0)
-        return [[]]
+        return [
+            []
+        ]
     if (number &gt; this.length)
         return []
     if (number == this.length)
@@ -1700,19 +1701,19 @@ Array.prototype.__secure_combination = function(number, base, initial) {
  *
  * ### Example
  *
- *      var cities = ['Madrid', 'barcelona', 'Valencia', 'alicante']
+ *      var cities = [&#39;Madrid&#39;, &#39;barcelona&#39;, &#39;Valencia&#39;, &#39;alicante&#39;]
  *      cities.sort_by()
  *      //=&gt; [Madrid,Valencia,alicante,barcelona]
  *
  *      cities.sort_by( function(el){
  *                        return el.toLowerCase()
  *                       })
- *      //=&gt; ['alicante', 'barcelona', 'Madrid', 'Valencia']
+ *      //=&gt; [&#39;alicante&#39;, &#39;barcelona&#39;, &#39;Madrid&#39;, &#39;Valencia&#39;]
  *
  *      cities.sort_by( function(el){
  *                        return el.length
  *                       })
- *      //=&gt; ['Madrid', 'Valencia', 'Barcelona']
+ *      //=&gt; [&#39;Madrid&#39;, &#39;Valencia&#39;, &#39;Barcelona&#39;]
  *
  *
  * @param {(function(Object):Object)=} Block. Maps to provide a comparison item.
@@ -1732,10 +1733,10 @@ Array.prototype.sort_by = function() {
         else
             indexed.sort()
 
-            for (var i = 0; i &lt; this.length; i++)
-                ordered.push(indexed[i][1])
+        for (var i = 0; i &lt; this.length; i++)
+            ordered.push(indexed[i][1])
 
-            return ordered
+        return ordered
     } else
         return this.sort()
 
@@ -1828,7 +1829,67 @@ Array.prototype.compose = function() {
     }
     return roller
 }
+<span id='Kernel-CoreExt-Array-method-to_v'>/**
+</span> * @method to_v
+ * Creates  from this an array of n dimensions vectors
+ *
+ * @return {Array} Array of vectors
+ */
+Array.prototype.to_v = function(dim) {
+    var coord1 = 0
+    var coord2 = 0
+    var vec_array = []
+    var dimension = dim || 2
 
+    if (this.length % dimension == 0) {
+        for (var i = 0; i &lt; this.length; i++) {
+            if (coord1 == 0)
+                coord1 = this[i]
+            else
+                coord2 = this[i]
+            if (coord1 != 0 &amp;&amp; coord2 != 0) {
+                vec_array.push(new Vector(coord1, coord2))
+                coord1 = 0
+                coord2 = 0
+            }
+        }
+        return vec_array
+
+    } else
+        throw &quot;Odd number of arguments. Add one more number to create array&quot;
+
+}
+
+Array.prototype.get_cool_var_names = function() {
+    var a = [
+        &quot;billa&quot;,
+        &quot;bacoa&quot;,
+        &quot;co&quot;,
+        &quot;bara&quot;,
+        &quot;bie&quot;,
+        &quot;ita&quot;,
+        &quot;celona&quot;,
+        &quot;tolo&quot;,
+        &quot;ritar&quot;,
+        &quot;itono&quot;,
+        &quot;ba&quot;,
+        &quot;manolo&quot;,
+        &quot;reinols&quot;,
+        &quot;simpson&quot;,
+        &quot;tolome&quot;,
+        &quot;ices&quot;,
+        &quot;avillosho&quot;,
+        &quot;icela&quot;,
+        &quot;ademedir&quot;
+    ]
+
+    var cool_names = []
+
+    for (var i = 0; i &lt; a.length; i++)
+        cool_names[i] = &quot;var &quot; + a[i]
+
+    return cool_names
+}
 
 <span id='Kernel-CoreExt-Array-static-method-includes'>/**
 </span> * @method includes
@@ -1902,19 +1963,18 @@ function _rotate(number, array1, array2) {
         arg = 0
     else
         arg++
-    for (var i = arg; i != number; i++) {
-        array2[i] = array1[pos]
-        if (i == (array1.length - 1))
-            i = -1;
-        pos++
-    }
+        for (var i = arg; i != number; i++) {
+            array2[i] = array1[pos]
+            if (i == (array1.length - 1))
+                i = -1;
+            pos++
+        }
     return array2
 }
 
 function getRandomArbitary(min, max) {
     return Math.random() * (max - min) + min;
 }
-
 
 /*
  * This function returns a transposed array.

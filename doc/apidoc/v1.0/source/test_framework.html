@@ -15,8 +15,8 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">var _test_panel_name = '_testResults'
-var $LLGvn // It's necessary to hold the evaluation in a globlal variable to keep garbage collector's hands out of the code
+  <pre class="prettyprint lang-js">var _test_panel_name = &#39;_testResults&#39;
+var $LLGvn // It&#39;s necessary to hold the evaluation in a globlal variable to keep garbage collector&#39;s hands out of the code
 
         function _test_equals(value1, value2){
            var ERROR = 0.00001
@@ -45,13 +45,13 @@ var $LLGvn // It's necessary to hold the evaluation in a globlal variable to kee
          var start_index = 0
            do{
             start_index++
-           }while(code.charAt(last_name_pos + start_index) != '(' )           
+           }while(code.charAt(last_name_pos + start_index) != &#39;(&#39; )           
            opened_par++
            do{
              start_index++
-             if (code.charAt(last_name_pos + start_index) == '(' )
+             if (code.charAt(last_name_pos + start_index) == &#39;(&#39; )
                opened_par++
-             if (code.charAt(last_name_pos + start_index) == ')' )
+             if (code.charAt(last_name_pos + start_index) == &#39;)&#39; )
                opened_par--
            }while(opened_par)
            code = code.replace(code.substr(last_name_pos, start_index + 1), return_value)
@@ -103,15 +103,15 @@ function _make_test(kind){
           var i = _test_equals(testing, waited)? 0 : 1
           
 	  var this_sample = &quot;&quot; 
-          this_sample += &quot;&lt;div class='TestSample'&gt;&quot;
-          this_sample += &quot;&lt;h3 class='TestSample_&quot; + res[i] + &quot;'&gt;&quot;
+          this_sample += &quot;&lt;div class=&#39;TestSample&#39;&gt;&quot;
+          this_sample += &quot;&lt;h3 class=&#39;TestSample_&quot; + res[i] + &quot;&#39;&gt;&quot;
           this_sample += test_res + test_text + sentence + sep + res[i] + test_res
           this_sample += &quot;&lt;/h3&gt;&quot;
-          this_sample += &quot;&lt;p class='TestCode'&gt;&quot;
+          this_sample += &quot;&lt;p class=&#39;TestCode&#39;&gt;&quot;
           this_sample += &quot;Given: &lt;br/&gt;&quot;
           this_sample += beautify(before_test)
           this_sample += &quot;&lt;/p&gt;&quot;
-          this_sample += &quot;&lt;p class='TestDescription'&gt;&quot;
+          this_sample += &quot;&lt;p class=&#39;TestDescription&#39;&gt;&quot;
           this_sample += &quot;&lt;b&gt;The results were:&lt;/b&gt; &lt;br/&gt;&quot;
           this_sample += &quot;Real Value: &quot; + _testing + &quot; =&gt; &quot; +  _test_value || &quot;null&quot;
           this_sample += &quot;&lt;br/&gt;Waited Value: &quot; + _waited + &quot;&lt;br/&gt;&quot;
@@ -126,7 +126,7 @@ function _make_test(kind){
           return function(title, given_block){
             
             var this_sample = &quot;&quot; 
-            this_sample += &quot;&lt;div class='TestGiven'&gt;&quot;
+            this_sample += &quot;&lt;div class=&#39;TestGiven&#39;&gt;&quot;
             this_sample += &quot;&lt;h3&gt;Given: &quot; + title + &quot;&lt;/h3&gt;&quot;
             this_sample += &quot;&lt;p&gt;&quot;
             this_sample += beautify(given_block)
@@ -138,7 +138,7 @@ function _make_test(kind){
 }
 
 var _clean_tests = function(){
-  document.getElementById(_test_panel_name).innerHTML = ''
+  document.getElementById(_test_panel_name).innerHTML = &#39;&#39;
 }
 
 
@@ -149,10 +149,10 @@ function init_testframework(){
  given  = _make_test(&quot;given&quot;)
  
  for (var i=0; i&lt;_test_index.length; i++){
-	    var script = document.createElement('script')
-	    script.setAttribute('type', 'text/javascript')
-	    script.setAttribute('src', _test_index[i] )
-	    document.getElementsByTagName('head')[0].appendChild(script)
+	    var script = document.createElement(&#39;script&#39;)
+	    script.setAttribute(&#39;type&#39;, &#39;text/javascript&#39;)
+	    script.setAttribute(&#39;src&#39;, _test_index[i] )
+	    document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script)
 	}
 }
 

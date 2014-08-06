@@ -3,6 +3,56 @@
  * @extends Kernel.Foundation.DataType.VersionNumber
  * Defines each of the states of an Automata.
  *
+ * Automata states are a Enumeration of States
+ * (see {@link Kernel.Foundation.Enumerable.Enumeration Enumeration} and
+ * {@link Kernel.Foundation.Enumerable.EnumerationOf EnumerationOf}
+ * )
+ *
+ * Remember that Enumerations are composed by
+ * {@link Kernel.Foundation.DataType.VersionNumber VersionNumbers} or its derivatives.
+ * (Constants with steroids)
+ *
+ * Defining my_enum.
+ *
+ *     var my_enum = new Enumeration("phase0", "phase1")
+ *
+ * will result in the following exucition:
+ *
+ *      //=> my_enum.phase0 = new VersionNumber(0)
+ *      //=> my_enum.phase1 = new VersionNumber(1)
+ *
+ * States can be executed in the following way:
+ *
+ *     var s = my_enum.phase0
+ *     s[s]()  // Execution
+ *
+ * ### How to define what to execute?
+ *
+ * Simply define the run method.
+ *
+ *     s.run = function(name) {
+ *         return "Hi, " + name
+ *     }
+ *
+ * And run:
+ *
+ *     s.run("Txema")
+ *
+ * Every state can be subdivided into regimes (up, steady and down), with their own drivers.
+ *
+ *     s.run.steady = function(name) {
+ *         return name + " you are running steadily."
+ *     }
+ *
+ * Enable a particular regime and both drivers will be run.
+ *
+ *     s.run.regime = State.REGIME.steady
+ *     s[s]("Txema")
+ *     //=> ["Hi, Txema", "Txema you are running steadily."]
+ *
+ * Notice the response is array composed by the return value of the general driver and the
+ * one received by the regime one.
+ *
  * ### Example
  *
  * Create a new State for an automata.
@@ -84,6 +134,10 @@
  * 1. responses[0] is the response of the general driver, and
  * 1. responses[1] is the response of the substate driver.
  *
+ * ## Warning
+ *
+ *   Avoid using run for naming a state.
+ *
  */
 
 State.prototype = new VersionNumber
@@ -125,7 +179,7 @@ function State(label) {
     /* Override this.run for common actions */
     this.run = function() {}
     this[this] = function() {
-        State.prototype._run.apply(that, arguments)
+        return State.prototype._run.apply(that, arguments)
     }
 }
 
@@ -159,7 +213,6 @@ State.prototype._run = function() {
         this.before_hooks[i].apply(this, args)
 
     response[0] = this.run.apply(this, arguments)
-
     if (this.run[this.regime.name])
         response[1] = this.run[this.regime.name].apply(this, arguments)
 
@@ -167,6 +220,8 @@ State.prototype._run = function() {
     if (this.after_hooks.length)
         for (var i = this.after_hooks.length - 1; i >= 0; i--)
             this.after_hooks[i].apply(this, args)
+
+    return response
 }
 Object.defineProperty(State.prototype, "_run", {
     value: State.prototype._run,

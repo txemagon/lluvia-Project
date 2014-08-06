@@ -1,5 +1,6 @@
 /**
  * @class  Kernel.Foundation.Enumerable.InterleavedArray
+ * @extends Kernel.JSNative.Array
  * Creates an array with subindexes as in [semantic version controlling](http://semver.org/).
  * It is the complementary class of Enumeration {@link Kernel.Foundation.Enumerable.Enumeration}
  *

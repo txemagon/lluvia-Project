@@ -64,30 +64,45 @@
 function Enumeration(constants) {
     Object.defineProperty(this, "ia", {
         value: new(ApplyProxyConstructor(InterleavedArray, arguments)),
-        enumerable: false,
+        enumerable: false
     })
 
-    /* this.ia
-       {
-	      "0": "spades",
-	      "1": "hearts",
-	      "1.1": "red",
-	      "1.2": "black",
-	      "2": "diamonds",
-	      "3": "clovers"
-       }
-     will be turned inside this into:
-         {
-       "spades": 0,
-       "hearts": { 1,
-       	           "red": 1,
-       	           "black": 2
-                  },
-        "diamonds": 2,
-        "clovers": 3
-        }
-        in the following lines.
-     */
+    this.transpose()
+}
+
+/**
+ * @method transpose
+ * Takes an InterleavedArray and inverts it, due to InterleavedArray and Enumeration reciprocity.
+ * Not enumerable, not configurable, not writable.
+ *
+ * Given the following InterleavedArray,
+ *
+ *        {
+ *        "0": "spades",
+ *        "1": "hearts",
+ *        "1.1": "red",
+ *        "1.2": "black",
+ *        "2": "diamonds",
+ *        "3": "clovers"
+ *       }
+ *
+ * will be turned inside this into:
+ *         {
+ *       "spades": 0,
+ *       "hearts": { 1,
+ *                   "red": 1.1,
+ *                   "black": 1.2
+ *                  },
+ *        "diamonds": 2,
+ *        "clovers": 3
+ *        }
+ *
+ *  through this method.
+ *
+ * @param  {Class} [Type=VersionNumber] Class for assigning values
+ */
+Enumeration.prototype.transpose = function(Type) {
+    Type = Type || VersionNumber
 
     var keys = this.ia.keys()
     for (var k = 0; k < keys.length; k++) {
@@ -101,9 +116,69 @@ function Enumeration(constants) {
             if (parent in deep)
                 deep = deep[parent]
         }
-        deep[ia_value] = new VersionNumber(keys[k])
+        deep[ia_value] = new Type(keys[k])
         Object.defineProperty(deep[ia_value], "name", {
             value: ia_value
         })
     }
 }
+
+/**
+ * @method  each
+ * Iterates over key-value pairs inside the enumeration.
+ *
+ * ### Example
+ *
+ *   Let a be defined as
+ *
+ *     var a = new Enumeration("spades", "hearts", [ "red", "black"], "diamonds", "clovers")
+ *
+ *  with the following inner structure:
+ *
+ *        {
+ *       "spades": 0,
+ *       "hearts": { 1,
+ *                   "red": 1,
+ *                   "black": 2
+ *                  },
+ *        "diamonds": 2,
+ *        "clovers": 3
+ *        }
+ *
+ *   When called
+ *
+ *     a.each(function(key, value) {;})
+ *
+ * key-value pairs will be:
+ *
+ * | key      | value  |
+ * |----------|-------:|
+ * | spades   | 0      |
+ * | hearts   | 1      |
+ * | red      | 1.1    |
+ * | black    | 1.2    |
+ * | diamonds | 2      |
+ * | clovers  | 3      |
+ *
+ */
+Enumeration.prototype.each = function() {
+    var that = this
+    this.ia.keys().each(function(key) {
+        Enumeration.prototype.each.yield(that.ia[key], key)
+    })
+}
+
+Object.defineProperties(Enumeration.prototype, {
+    transpose: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    each: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    }
+})
+
+//todo: Needed include$U. Depends on making module Enumerable and mixing.

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='StateGear'>/**
+</span> * @class StateGear
+ * Drives the automata into different states.
+ */
+
+<span id='StateGear-method-constructor'>/**
+</span> * @method  constructor
+ *
+ */
+
+function StateGear(automata, initial_state) {
+    this.automata = automata
+    this.previous = State.NONE
+    this.current = State.NONE
+    this.requested = initial_state || State.NONE
+
+}
+
+StateGear.prototype.valueOf = function() {
+    return this.current
+}
+
+StateGear.prototype.toString = function() {
+    return this.current.toString()
+}
+<span id='StateGear-method-drive_state'>/**
+</span> * @method drive_state
+ * Executes the solicitor functions related to the fsm state.
+ * All arguments are passed to solicitors.
+ *
+ */
+StateGear.prototype.drive_state = function() {
+
+    var base = this.state_name[this.currentState.current]
+    var down = base + &quot;_down&quot;
+    var steady = base + &quot;_steady&quot;
+    var up = base + &quot;_up&quot;
+
+    if (this.currentState.requested != this.state.none) {
+        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
+        if (this[down])
+            this[down]()
+
+        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
+        if (this[up])
+            this[up]()
+
+    }
+
+    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
+    if (this[steady])
+        this[steady]()
+
+}</pre>
+</body>
+</html>

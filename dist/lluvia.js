@@ -2269,7 +2269,14 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false,    })    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new VersionNumber(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}
+function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false    })    this.transpose()}Enumeration.prototype.transpose = function(Type) {    Type = Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(key) {        Enumeration.prototype.each.yield(that.ia[key], key)    })}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
+Enumeration.prototype.constructor = EnumerationOf
+EnumerationOf.prototype.super = Enumeration
+function EnumerationOf(type) {
+    var args = Array.prototype.slice.call(arguments, 1)
+    Enumeration.apply(this, args[0])
+    this.transpose(type)
+}
 function Map() {
 }
 InterleavedArray.prototype = new Array
@@ -3091,7 +3098,7 @@ function State(label) {
     })
     this.run = function() {}
     this[this] = function() {
-        State.prototype._run.apply(that, arguments)
+        return State.prototype._run.apply(that, arguments)
     }
 }
 State.prototype._run = function() {
@@ -3107,6 +3114,7 @@ State.prototype._run = function() {
     if (this.after_hooks.length)
         for (var i = this.after_hooks.length - 1; i >= 0; i--)
             this.after_hooks[i].apply(this, args)
+    return response
 }
 Object.defineProperty(State.prototype, "_run", {
     value: State.prototype._run,
@@ -3117,42 +3125,46 @@ Object.defineProperty(State.prototype, "_run", {
 State.REGIME = new Enumeration("up", "steady", "down")
 State.NONE = new State("-1")
 Automata.prototype.constructor = Automata;
-function Automata(states, solicitor, initial_state) {
-    if (states instanceof Array)
-        states = new(ApplyProxyConstructor(Enumeration, states))
-    this.state = states ? states : {}
-    this.state.none = State.NONE
-    this.current = new AutomataGear(initial_state, this)
-    this.solicitor = (solicitor || solicitor != null) ?
-        solicitor :
-        new Array(new Array(null, null, null));
-    this.solicitor[this.state.none] = [
-        function() {
-            return "none_up"
-        },
-        function() {
-            return "none_steady"
-        },
-        function() {
-            return "none_down"
+function Automata(states, solicitor) {
+    function find_initial_state(state_level, initial_state) {
+        initial_state = initial_state || ""
+        for (var i = state_level.length - 1; i >= 0; i--) {
+            if (state_level[i] instanceof Array) {
+                initial_state += "." + state_level[i - 1]
+                return find_initial_state(state_level[i], initial_state)
+            } else if (/^\*/.test(state_level[i])) {
+                state_level[i] = state_level[i].substring(1)
+                initial_state += "." + state_level[i]
+            }
         }
-    ]
+        return initial_state
+    }
+    var i_state = find_initial_state(states).substring(1).split(".")
+    if (states instanceof Array)
+        states = new(ProxyConstructor(EnumerationOf, State, states))
+    this.state = states ? states : new Enumeration()
+    this.state.none = new State(State.NONE)
+    var initial_state
+    for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
+    this.current = new StateGear(this, initial_state)
+    this.current.zip(solicitor)
 }
 Automata.prototype.run = function() {
     return this.solicitor[this.current][0]()
 }
-function AutomataGear(initial_state, automata) {
+function StateGear(automata, initial_state) {
+    this.automata = automata
     this.previous = State.NONE
     this.current = State.NONE
     this.requested = initial_state || State.NONE
 }
-AutomataGear.prototype.value = function() {
+StateGear.prototype.valueOf = function() {
     return this.current
 }
-AutomataGear.prototype.toString = function() {
+StateGear.prototype.toString = function() {
     return this.current.toString()
 }
-AutomataGear.prototype.drive_state = function() {
+StateGear.prototype.drive_state = function() {
     var base = this.state_name[this.currentState.current]
     var down = base + "_down"
     var steady = base + "_steady"
@@ -3168,6 +3180,42 @@ AutomataGear.prototype.drive_state = function() {
     this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
     if (this[steady])
         this[steady]()
+}
+StateGear.prototype.zip = function(solicitors, base_state) {
+    base_state = base_state || this.automata.state
+    function add_state(name, driver) {
+        var base = base_state
+        name = name.split(".")
+        if (name.length == 1)
+            base[i].run = driver
+        else {
+            while (name.length > 1) {
+                var current
+                try {
+                    base = base[current = name.shift()]
+                } catch (e) {
+                    throw "State " + current + " is not defined."
+                }
+            }
+            var regime = name.shift()
+            var included = false
+            State.REGIME.each(function(k, v) {
+                if (k == regime)
+                    included = true
+            })
+            if (!included)
+                throw "Invalid regime " + regime + "."
+            base.run[regime] = driver
+        }
+    }
+    for (var i in solicitors) {
+        if (solicitors[i] instanceof Function)
+            add_state(i, solicitors[i])
+        else if (solicitors[i] instanceof Array) {
+            add_state(i, solicitors[i].shift())
+            this.zip(solicitors[i][0], base_state[i])
+        }
+    }
 }
 ThreadAutomata.prototype  = new Thread;
 ThreadAutomata.prototype.constructor = ThreadAutomata;
@@ -3561,7 +3609,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
