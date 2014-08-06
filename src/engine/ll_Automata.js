@@ -86,16 +86,19 @@ function Automata(states, solicitor) {
     function find_initial_state(state_level, initial_state) {
         initial_state = initial_state || ""
 
-        for (var i = state_level.length - 1; i >= 0; i--) {
+        for (var i = 0; i < state_level.length; i++) {
             if (state_level[i] instanceof Array) {
                 initial_state += "." + state_level[i - 1]
                 return find_initial_state(state_level[i], initial_state)
-            } else if (/^\*/.test(state_level[i])) {
-                state_level[i] = state_level[i].substring(1)
-                initial_state += "." + state_level[i]
+            }
+            if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
+                if (/^\*/.test(state_level[i])) {
+                    state_level[i] = state_level[i].substring(1)
+                    return initial_state + "." + state_level[i]
+                }
             }
         }
-        return initial_state
+
     }
 
     var i_state = find_initial_state(states).substring(1).split(".")
@@ -167,7 +170,8 @@ function Automata(states, solicitor) {
  *
  */
 Automata.prototype.run = function() {
-    return this.solicitor[this.current][0]()
+    var s = this.current.valueOf()
+    return s[s]()
         /*
     Automata.prototype.drive_state.apply(this, arguments)
     if (this.currentState.requested != this.state.none) {

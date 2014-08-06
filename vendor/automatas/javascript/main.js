@@ -22,9 +22,11 @@ function main() {
     }
 
     var a = new Automata(["walking", "running", ["*slow", "fast"]], solicitors)
-    alert(a.current.requested)
+
     var s = a.state.running.slow
     s.regime = State.REGIME.steady
-    alert(s[s]())
+    a.current.current = a.current.requested
+    alert(a.run())
+
 
 }
