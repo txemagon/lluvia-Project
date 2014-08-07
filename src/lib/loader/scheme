@@ -1,0 +1,47 @@
+Loader:
+
+    Atributos:
+        id="name"                          >> Nombre del objeto.
+        id="son_name$father_name"          >> Nombre del objeeto y de quien es hijo.
+      * class="ll-class"                   >> Clase de la que se creara el objeto.
+        class="ll-class_name$father_name"  >> Clase de la que se creara el objeto y su padre.
+        data-params="params"               >> Parametros que se pasaran al constructor.
+        data-block="block"                 >> Bloque se pueda pasar al constructor.
+        data-run-<method_name>="params"    >> Ejecuta el metodo que se indique.
+        data-method-<singlenton>="block"   >> Si exite se redefine, sino, se crea un metodo singlenton.
+        data-initialize="this.function_name(params); this.function_name(params)"  >> Ejecuta todos los metodos que se indiquen. 
+      (*=obligatorio)
+    
+    Notas:
+        $ == pertenece
+        - == espacio de nombre
+
+    Consideraciones:
+        - Si un gate esta dentro de un div de la clase device ese gate pertenece al device.
+        - Probar si se respetan los saltos de linea dentro de los atributos.
+        - Se debe poder pasar codigo a lluvia en comentarios, ejemplo:
+            <!-- 
+                #!lluvia
+                menu::ll-Menu(param1, param2) # Is a comment  (device sin etiqueta)
+            ->
+        - Los nombres de las variables que se utilizen en los comentarios no se pueden repetir en los id. 
+        - A la hora de analizar los comentarios leer dos veces y crear una tabla como hace C.
+
+
+    Example: 
+        <div id="son_id$father_id" class="ll-FondoApp" data-params="'fondo'" data-block="function(){}" data-run-add_port="'go_to', pant" data-method-singleton="block">
+
+    Pasos a la hora de ejecutarlo:
+        - Se debe leer una primera vez todos los nodos del DOM y almacenar el nombre de las variables.
+        - se debe leer una segunda vez para realizar todas las acciones que se le indiquen a traves de los atributos de las etiquetas HTML. 
+        - Cargar main()
+
+
+    Pasos a la hora de diseñarlo:
+        - Crear una clase Parse para analizar los atributos y los comentarios.
+        - ...
+
+
+
+// TODO: Refactor fireEvent() para hacerlo mas agil.
+// TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.
