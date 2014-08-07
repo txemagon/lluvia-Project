@@ -42,8 +42,8 @@
  *
  *     	//  private static vars
  *     	Device.call(this, null)
- *     	this.newGate("llaveEnMano", ButtonGate)
- *      // Device#newGate inject a device property inside
+ *     	this.new_gate("llaveEnMano", ButtonGate)
+ *      // Device#new_gate inject a device property inside
  *      // the ButtonGate object pointing to _this_.
  *     	this.solicitors[this.state.running][this.stateChange.steady] = function(){
  *     		that.gates[0].panel.innerHTML = new Date()
@@ -67,7 +67,7 @@
  *
  * @property {Array} solicitors The three functions (up, steady and down) that drive any state.
  *
- * @property {Object} eventDispatcher EventDispatcher object. Handles in and out communications.
+ * @property {Object} event_dispatcher event_dispatcher object. Handles in and out communications.
  * @property {Object} currentState    Holds the current state of the device.
  * @property currentState.previous    Record of the previous state.
  * @property currentState.current     State we are currently in.
@@ -77,126 +77,63 @@
  */
 
 Device.prototype = new Processor
-//extend(Device, ThreadAutomata)  // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
+extend(Device, ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
 
-/** 
+/**
  * @method constructor
  * Creates a Device.
  *
  * @param {String | HTMLElement} [view] (optional) A possible view associated with the Device.
  * @param {Object} [state] (optional) Default Device states -as ll_Enumeration- are: suspended, running, suspending, killing and killed.
- * @param {Object} [currentState={ previous: state.suspended, current: state.suspended, requested: state.running }] Sets the initial conditions for the device to start.
+ * @param {Object} [current_state={ previous: state.suspended, current: state.suspended, requested: state.running }] Sets the initial conditions for the device to start.
  * @param {Object} [parent=Processor] Parent Device or processor this Device belongs to.
  *
  */
 
-function Device(view, state, currentState, parent){
-	/* Inheritance initialization */
+function Device(view, state, current_state, parent) {
+    /* Class accesors*/
+    var that = this
+    this._class = that
 
+    state = state || Device.STATE
 
-	/* Class accesors*/
-	var that    = this
-	this._class = that
+    this.solicitors = {
+        running: function() {
+            this.gate_runner(this.now)
+            this.child_runner(this.now);
+        },
+        suspending: function() {
+            this.child_runner(this.now);
+        },
+        killing: function() {
+            this.gate_runner(this.now)
+        }
+    }
 
-	state = state || Device.STATE
+    /* Instance vars */
+    if (view)
+        this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
+    this.lookup = new Lookup();
+    this.event_dispatcher = new event_dispatcher(this.lookup);
 
-      state.self_keys().each(function(key){  // Define overridable functions
-		   ["up", "steady", "down"].each(function(substate){
-		     Device.prototype[state + "_" + substate] = function(){;}
-		})})
+    this.gates = []
 
-		//todo: refactor to Hashes along with states
-	this.solicitors = [
-		/* suspended */	[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		],
-		/* running */ 	[
-			function(){
-				;
-			},
-			function (){
-				/* TO DO */ ;
-				this.gateRunner(this.now)
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		/* suspending */[
-			function(){
-				;
-			},
-			function(){
-				/* TO DO */ ;
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		/* killing */ 	[
-			function(){
-				;
-			},
-			function(){
-				/* TO DO */ ;
-				this.gateRunner(this.now)
-			},
-			function(){
-				;
-			}
-		],
-		/* killed */ 	[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		]
-	]
+    this.open_device = _$innerObject(this, "device")
 
-	/* Instance vars */
-	if (view)
-		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
-	this.lookup = new Lookup();
-	this.eventDispatcher = new EventDispatcher(this.lookup);
-	this.currentState = currentState ||
-						{ 	previous:  Device.STATE.suspended,
-							current:   Device.STATE.suspended,
-							requested: Device.STATE.running
-						}
-	this.gates		   = []
+    /* construction */
+    function initialize() { // Use that. This would refer to the function object.
+        that.event_dispatcher.device = that
+        that.register(that.event_dispatcher, that.event_dispatcher.shift)
+        if (that.self_events)
+            that.event_dispatcher.joinPorts(that.self_events)
+        ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
+        that.switch("running")
+    }
 
-	/* privileged functions (mainly public static accessors)*/
-	this.getSolicitors = function() { return that.solicitors; }
-	this.getStates	   = function() { return state; }
-	this.openDevice	   = _$innerObject(this, "device")
-	/* construction */
-	function initialize(){ // Use that. This would refer to the function object.
-		that.eventDispatcher.device = that
-		that.register(that.eventDispatcher, that.eventDispatcher.shift)
-		if (that.self_events)
-			that.eventDispatcher.joinPorts(that.self_events)
-		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
-	}
-
-	if (arguments.length)	// Avoid registering during prototype copy while inheritance process
-		initialize();
+    if (arguments.length) // Avoid registering during prototype copy while inheritance process
+        initialize();
 
 
 }
@@ -208,88 +145,59 @@ function Device(view, state, currentState, parent){
 Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 
 /**
-* @method state_substate
-* Dynamic
-*
-* Default method to handle any state.
-*
-* ###Example
-*
-*     Device.prototype.running_steady = function(){;}
-*
-* When functionality is required, override the required method.
-*/
-
-/**
- * @method getSolicitors
- *
- * Return the array of solicitors.
- *
- * @return {Array} Array of three functions (up, steady and running) by state, packed in a global array.
- */
-
-/**
- * @method getStates
- * Return the list of all possible states for this Device.
- *
- * @return {Array} List of states.
- */
-
-/**
- * @method gateRunner
+ * @method gate_runner
  * @private
  *
  * Simulates multithreading for each gate by calling the run method.
  */
-Device.prototype.gateRunner = function(){
+Device.prototype.gate_runner = function() {
 
-		for (var i=0; i<this.gates.length; i++)
-			this.gates[i].run( this.now, this.before )
+    for (var i = 0; i < this.gates.length; i++)
+        this.gates[i].run(this.now, this.before)
 
 }
 
 /**
- * @method childRunner
+ * @method child_runner
  * @private
  *
  * Simulates multithreading for each device attached to this one.
  */
-Device.prototype.childRunner = function(){
-	if (this.currentState != this.getStates().killed) {
-		this.now = arguments[0]
-		for (var i in this.threads)
-			try {
-				this.threads[i].solicitor.call(this.threads[i].object, this.now);
-			}
-			catch (e) {
+Device.prototype.child_runner = function() {
+    if (this.currentState != this.state.killed) {
+        this.now = arguments[0]
+        for (var i in this.threads)
+            try {
+                this.threads[i].solicitor.call(this.threads[i].object, this.now);
+            } catch (e) {
 
-			}
-	}
+            }
+    }
 
-	// If they are devices we shall call them just in case they are running
+    // If they are devices we shall call them just in case they are running
 
 }
 
 /**
- * @method newGate
+ * @method new_gate
  *
  * Creates a new Object using a derived class of Gate and attaches it to the gates array own property.
  *
  * @param {String | HTMLElement} el See (@link Gate)
  * @param {Function} ClassCons Class constructor deriving from Gate.
  */
-Device.prototype.newGate = function(el, ClassCons, config){
-	try {
-		var Cons = this.openDevice(ClassCons)
-		var view = this.view || null
-		var ob = new Cons(el, view, config)
+Device.prototype.new_gate = function(el, ClassCons, config) {
+    try {
+        var Cons = this.open_device(ClassCons)
+        var view = this.view || null
+        var ob = new Cons(el, view, config)
         ob.device = this
-		this.gates.push( ob )
-		return ob
-	} catch (e) {
-		if ($K_debug_level >= $KC_dl.DEVELOPER)
-			alert("No event handlers were found.\nException: " + e.toSource())
-	}
+        this.gates.push(ob)
+        return ob
+    } catch (e) {
+        if ($K_debug_level >= $KC_dl.DEVELOPER)
+            alert("No event handlers were found.\nException: " + e.toSource())
+    }
 }
 
 /**
@@ -308,62 +216,62 @@ Device.prototype.newGate = function(el, ClassCons, config){
  *
  *  Make the previous definition in a derived class.
  */
-Device.prototype.attend = function(date, mssg){
-	this["attend_"+ mssg.name](date, mssg)  // If attend_ method doesn't exist then we shall provide a generic dispatcher.
+Device.prototype.attend = function(date, mssg) {
+    this["attend_" + mssg.name](date, mssg) // If attend_ method doesn't exist then we shall provide a generic dispatcher.
 }
 
-Device.prototype._y = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt !== htmlElement && htmlElement.offsetParent)
-		return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
-	return 0
+Device.prototype._y = function(htmlElement, stopAt) {
+    stopAt = stopAt || null
+    if (typeof(stopAt) === "string")
+        stopAt = document.getElementById(stopAt)
+    if (stopAt !== htmlElement && htmlElement.offsetParent)
+        return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
+    return 0
 }
 
-Device.prototype._x = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt && htmlElement && stopAt === htmlElement)
-		return 0
-	if (htmlElement.offsetParent)
-		return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
-	return 0
+Device.prototype._x = function(htmlElement, stopAt) {
+    stopAt = stopAt || null
+    if (typeof(stopAt) === "string")
+        stopAt = document.getElementById(stopAt)
+    if (stopAt && htmlElement && stopAt === htmlElement)
+        return 0
+    if (htmlElement.offsetParent)
+        return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
+    return 0
 }
 
-Device.prototype.y_calc = function(){
-	if (this.view) {
-		this.y = this._y(this.view)
-		return this.y
-	}
-	return null
+Device.prototype.y_calc = function() {
+    if (this.view) {
+        this.y = this._y(this.view)
+        return this.y
+    }
+    return null
 }
 
-Device.prototype.x_calc = function(){
-	if (this.view) {
-		this.x = this._x(this.view)
-		return this.x
-	}
-	return null
+Device.prototype.x_calc = function() {
+    if (this.view) {
+        this.x = this._x(this.view)
+        return this.x
+    }
+    return null
 }
 
 /**
- * @method fireEvent
+ * @method fire_event
  *
  * Notifies to all the listeners that this device has generated an event.
  *
  * @param {Object} mssg The message to be triggered.
  */
-Device.prototype.fireEvent = function (mssg){
-	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
-	  /* Attending a mssg in one queue remains different from another queue */
-	  this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg.clone())
+Device.prototype.fire_event = function(mssg) {
+    for (var i = 0; i < this.event_dispatcher.ports[mssg.name].length; i++)
+    /* Attending a mssg in one queue remains different from another queue */
+        this.event_dispatcher.ports[mssg.name][i].event_dispatcher.enqueue(mssg.clone())
 
 }
 
 /**
- * @method addPort
+ * @method add_port
  *
  * Adds an specific port (reference to a listener) to the selected event listeners list.
  *
@@ -371,12 +279,12 @@ Device.prototype.fireEvent = function (mssg){
  * @param {Object} device Device to be added to the ports array
  *
  */
-Device.prototype.addPort = function (mssg_name, device){
-	this.eventDispatcher.addPort(mssg_name, device)
+Device.prototype.add_port = function(mssg_name, device) {
+    this.event_dispatcher.add_port(mssg_name, device)
 }
 
 /**
- * @method newMessage
+ * @method new_message
  *
  * Creates new message.
  *
@@ -385,14 +293,17 @@ Device.prototype.addPort = function (mssg_name, device){
  * @param {String} data If defined, gives extra information about the event
  *
  */
-Device.prototype.newMessage = function(type, name, data){
-      // logger.innerHTML += "data: " +  systemEv(type , {name: name, data: data || "no extra data available"}, this).toSource() + "<br/>"
-	if (type && name)
-		return systemEv(type , {name: name, data: data || "no extra data available"}, this)
+Device.prototype.new_message = function(type, name, data) {
+    // logger.innerHTML += "data: " +  systemEv(type , {name: name, data: data || "no extra data available"}, this).toSource() + "<br/>"
+    if (type && name)
+        return systemEv(type, {
+            name: name,
+            data: data || "no extra data available"
+        }, this)
 }
 
 /**
- * @method sendMessage
+ * @method send_message
  *
  * Sends a message to a particular device, without using the listeners list.
  *
@@ -402,8 +313,8 @@ Device.prototype.newMessage = function(type, name, data){
  * @param {Object} receiptant Device that receives the message
  *
  */
-Device.prototype.sendMessage = function(type, name, data, receiptant){
-	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
+Device.prototype.send_message = function(type, name, data, receiptant) {
+    receiptant.event_dispatcher.enqueue(this.new_message(type, name, data))
 
 }
 
@@ -419,11 +330,10 @@ Device.prototype.sendMessage = function(type, name, data, receiptant){
  * @param {Array} params List of the parameter taken by the method
  *
  */
-Device.prototype.method_missing = function (method, obj, params){
-  if (this.respond_to$U(method.underscore()))
-    return method.underscore.apply(this, params)
-  obj = obj || ""
-  params = params || []
-  throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
+Device.prototype.method_missing = function(method, obj, params) {
+    if (this.respond_to$U(method.underscore()))
+        return method.underscore.apply(this, params)
+    obj = obj || ""
+    params = params || []
+    throw (new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name + ". Params: " + params.join(', ')))
 }
-

@@ -82,6 +82,7 @@
 Automata.prototype.constructor = Automata;
 
 function Automata(states, solicitor) {
+    var that = this
 
     function find_initial_state(state_level, initial_state) {
         initial_state = initial_state || ""
@@ -106,6 +107,10 @@ function Automata(states, solicitor) {
     if (states instanceof Array)
         states = new(ProxyConstructor(EnumerationOf, State, states))
     this.state = states ? states : new Enumeration()
+
+    this.state.each(function(k, v) {
+        v.owner = that
+    })
 
     // Always none equals to -1
     this.state.none = new State(State.NONE)

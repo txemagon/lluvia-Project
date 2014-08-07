@@ -2269,7 +2269,7 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false    })    this.transpose()}Enumeration.prototype.transpose = function(Type) {    Type = Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(key) {        Enumeration.prototype.each.yield(that.ia[key], key)    })}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
+function Enumeration(constants) {    Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),        enumerable: false    })    this.transpose()}Enumeration.prototype.transpose = function(Type) {    Type = Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value        })    }}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(string_key) {        var key = string_key.split(".")        var value = that        for (var i = 0; i < key.length; value = value[that.ia[key.slice(0, i + 1).join('.')]], i++);        Enumeration.prototype.each.yield(that.ia[string_key], value)    })}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
 Enumeration.prototype.constructor = EnumerationOf
 EnumerationOf.prototype.super = Enumeration
 function EnumerationOf(type) {
@@ -3169,6 +3169,7 @@ State.REGIME = new Enumeration("up", "steady", "down")
 State.NONE = new State("-1")
 Automata.prototype.constructor = Automata;
 function Automata(states, solicitor) {
+    var that = this
     function find_initial_state(state_level, initial_state) {
         initial_state = initial_state || ""
         for (var i = 0; i < state_level.length; i++) {
@@ -3188,6 +3189,9 @@ function Automata(states, solicitor) {
     if (states instanceof Array)
         states = new(ProxyConstructor(EnumerationOf, State, states))
     this.state = states ? states : new Enumeration()
+    this.state.each(function(k, v) {
+        v.owner = that
+    })
     this.state.none = new State(State.NONE)
     var initial_state
     for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
@@ -3284,183 +3288,127 @@ ThreadAutomata.prototype.run = function(processors_time){
 	Automata.prototype.run.call(this, this.now, this.before);
 }
 Device.prototype = new Processor
+extend(Device, ThreadAutomata) 
 Device.prototype.constructor = Device
-function Device(view, state, currentState, parent){
-	var that    = this
-	this._class = that
-	state = state || Device.STATE
-      state.self_keys().each(function(key){  
-		   ["up", "steady", "down"].each(function(substate){
-		     Device.prototype[state + "_" + substate] = function(){;}
-		})})
-	this.solicitors = [
-			[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function (){
-				 ;
-				this.gateRunner(this.now)
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		[
-			function(){
-				;
-			},
-			function(){
-				 ;
-				this.childRunner(this.now);
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function(){
-				 ;
-				this.gateRunner(this.now)
-			},
-			function(){
-				;
-			}
-		],
-		 	[
-			function(){
-				;
-			},
-			function(){
-				;
-			},
-			function(){
-				;
-			}
-		]
-	]
-	if (view)
-		this.view = (typeof (view) === "string"? document.getElementById(view) : view)
-	this.lookup = new Lookup();
-	this.eventDispatcher = new EventDispatcher(this.lookup);
-	this.currentState = currentState ||
-						{ 	previous:  Device.STATE.suspended,
-							current:   Device.STATE.suspended,
-							requested: Device.STATE.running
-						}
-	this.gates		   = []
-	this.getSolicitors = function() { return that.solicitors; }
-	this.getStates	   = function() { return state; }
-	this.openDevice	   = _$innerObject(this, "device")
-	function initialize(){ 
-		that.eventDispatcher.device = that
-		that.register(that.eventDispatcher, that.eventDispatcher.shift)
-		if (that.self_events)
-			that.eventDispatcher.joinPorts(that.self_events)
-		ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
-	}
-	if (arguments.length)	
-		initialize();
+function Device(view, state, current_state, parent) {
+    var that = this
+    this._class = that
+    state = state || Device.STATE
+    this.solicitors = {
+        running: function() {
+            this.gate_runner(this.now)
+            this.child_runner(this.now);
+        },
+        suspending: function() {
+            this.child_runner(this.now);
+        },
+        killing: function() {
+            this.gate_runner(this.now)
+        }
+    }
+    if (view)
+        this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
+    this.lookup = new Lookup();
+    this.event_dispatcher = new event_dispatcher(this.lookup);
+    this.gates = []
+    this.open_device = _$innerObject(this, "device")
+    function initialize() { 
+        that.event_dispatcher.device = that
+        that.register(that.event_dispatcher, that.event_dispatcher.shift)
+        if (that.self_events)
+            that.event_dispatcher.joinPorts(that.self_events)
+        ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
+        that.switch("running")
+    }
+    if (arguments.length) 
+        initialize();
 }
 Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
-Device.prototype.gateRunner = function(){
-		for (var i=0; i<this.gates.length; i++)
-			this.gates[i].run( this.now, this.before )
+Device.prototype.gate_runner = function() {
+    for (var i = 0; i < this.gates.length; i++)
+        this.gates[i].run(this.now, this.before)
 }
-Device.prototype.childRunner = function(){
-	if (this.currentState != this.getStates().killed) {
-		this.now = arguments[0]
-		for (var i in this.threads)
-			try {
-				this.threads[i].solicitor.call(this.threads[i].object, this.now);
-			}
-			catch (e) {
-			}
-	}
+Device.prototype.child_runner = function() {
+    if (this.currentState != this.state.killed) {
+        this.now = arguments[0]
+        for (var i in this.threads)
+            try {
+                this.threads[i].solicitor.call(this.threads[i].object, this.now);
+            } catch (e) {
+            }
+    }
 }
-Device.prototype.newGate = function(el, ClassCons, config){
-	try {
-		var Cons = this.openDevice(ClassCons)
-		var view = this.view || null
-		var ob = new Cons(el, view, config)
+Device.prototype.new_gate = function(el, ClassCons, config) {
+    try {
+        var Cons = this.open_device(ClassCons)
+        var view = this.view || null
+        var ob = new Cons(el, view, config)
         ob.device = this
-		this.gates.push( ob )
-		return ob
-	} catch (e) {
-		if ($K_debug_level >= $KC_dl.DEVELOPER)
-			alert("No event handlers were found.\nException: " + e.toSource())
-	}
+        this.gates.push(ob)
+        return ob
+    } catch (e) {
+        if ($K_debug_level >= $KC_dl.DEVELOPER)
+            alert("No event handlers were found.\nException: " + e.toSource())
+    }
 }
-Device.prototype.attend = function(date, mssg){
-	this["attend_"+ mssg.name](date, mssg)  
+Device.prototype.attend = function(date, mssg) {
+    this["attend_" + mssg.name](date, mssg) 
 }
-Device.prototype._y = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt !== htmlElement && htmlElement.offsetParent)
-		return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
-	return 0
+Device.prototype._y = function(htmlElement, stopAt) {
+    stopAt = stopAt || null
+    if (typeof(stopAt) === "string")
+        stopAt = document.getElementById(stopAt)
+    if (stopAt !== htmlElement && htmlElement.offsetParent)
+        return htmlElement.offsetTop + Device.prototype._y(htmlElement.offsetParent, stopAt)
+    return 0
 }
-Device.prototype._x = function(htmlElement, stopAt){
-	stopAt = stopAt || null
-	if (typeof(stopAt) === "string")
-		stopAt = document.getElementById(stopAt)
-	if (stopAt && htmlElement && stopAt === htmlElement)
-		return 0
-	if (htmlElement.offsetParent)
-		return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
-	return 0
+Device.prototype._x = function(htmlElement, stopAt) {
+    stopAt = stopAt || null
+    if (typeof(stopAt) === "string")
+        stopAt = document.getElementById(stopAt)
+    if (stopAt && htmlElement && stopAt === htmlElement)
+        return 0
+    if (htmlElement.offsetParent)
+        return htmlElement.offsetLeft + Device.prototype._x(htmlElement.offsetParent, stopAt)
+    return 0
 }
-Device.prototype.y_calc = function(){
-	if (this.view) {
-		this.y = this._y(this.view)
-		return this.y
-	}
-	return null
+Device.prototype.y_calc = function() {
+    if (this.view) {
+        this.y = this._y(this.view)
+        return this.y
+    }
+    return null
 }
-Device.prototype.x_calc = function(){
-	if (this.view) {
-		this.x = this._x(this.view)
-		return this.x
-	}
-	return null
+Device.prototype.x_calc = function() {
+    if (this.view) {
+        this.x = this._x(this.view)
+        return this.x
+    }
+    return null
 }
-Device.prototype.fireEvent = function (mssg){
-	for (var i=0; i<this.eventDispatcher.ports[mssg.name].length; i++)
-	  this.eventDispatcher.ports[mssg.name][i].eventDispatcher.enqueue(mssg.clone())
+Device.prototype.fire_event = function(mssg) {
+    for (var i = 0; i < this.event_dispatcher.ports[mssg.name].length; i++)
+        this.event_dispatcher.ports[mssg.name][i].event_dispatcher.enqueue(mssg.clone())
 }
-Device.prototype.addPort = function (mssg_name, device){
-	this.eventDispatcher.addPort(mssg_name, device)
+Device.prototype.add_port = function(mssg_name, device) {
+    this.event_dispatcher.add_port(mssg_name, device)
 }
-Device.prototype.newMessage = function(type, name, data){
-	if (type && name)
-		return systemEv(type , {name: name, data: data || "no extra data available"}, this)
+Device.prototype.new_message = function(type, name, data) {
+    if (type && name)
+        return systemEv(type, {
+            name: name,
+            data: data || "no extra data available"
+        }, this)
 }
-Device.prototype.sendMessage = function(type, name, data, receiptant){
-	receiptant.eventDispatcher.enqueue(this.newMessage(type, name, data))
+Device.prototype.send_message = function(type, name, data, receiptant) {
+    receiptant.event_dispatcher.enqueue(this.new_message(type, name, data))
 }
-Device.prototype.method_missing = function (method, obj, params){
-  if (this.respond_to$U(method.underscore()))
-    return method.underscore.apply(this, params)
-  obj = obj || ""
-  params = params || []
-  throw(new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name +". Params: " + params.join(', ') ))
+Device.prototype.method_missing = function(method, obj, params) {
+    if (this.respond_to$U(method.underscore()))
+        return method.underscore.apply(this, params)
+    obj = obj || ""
+    params = params || []
+    throw (new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name + ". Params: " + params.join(', ')))
 }
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher

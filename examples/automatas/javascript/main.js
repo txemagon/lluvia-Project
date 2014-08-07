@@ -45,5 +45,5 @@ function main() {
     alert(a.run())
     a.switch("running.slow")
     alert(a.run())
-
+    var b = a.current.valueOf()
 }

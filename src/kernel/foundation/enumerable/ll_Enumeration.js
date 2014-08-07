@@ -163,8 +163,13 @@ Enumeration.prototype.transpose = function(Type) {
  */
 Enumeration.prototype.each = function() {
     var that = this
-    this.ia.keys().each(function(key) {
-        Enumeration.prototype.each.yield(that.ia[key], key)
+    this.ia.keys().each(function(string_key) {
+        // string_key is string 1.2.3 for instance
+        // Get the VersionNumber 1.2.3 for the value.
+        var key = string_key.split(".")
+        var value = that
+        for (var i = 0; i < key.length; value = value[that.ia[key.slice(0, i + 1).join('.')]], i++);
+        Enumeration.prototype.each.yield(that.ia[string_key], value)
     })
 }
 
