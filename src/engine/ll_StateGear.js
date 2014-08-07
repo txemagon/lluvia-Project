@@ -33,17 +33,17 @@ StateGear.prototype.toString = function() {
  *
  */
 StateGear.prototype.drive_state = function() {
+    var s = this.current
 
-    if (this.requested != this.state.none) {
+    if (this.requested != this.automata.state.none) {
         // Close old state
-        var s = this.current
         s.regime = State.REGIME.down
         s[s].apply(s, arguments)
 
         // Spin the gear
-        this.current.previous = this.current.current;
-        this.current.current = this.current.requested;
-        this.current.requested = this.state.none;
+        this.previous = this.current;
+        this.current = this.requested;
+        this.requested = this.automata.state.none;
 
         // Open new state
         var s = this.current
