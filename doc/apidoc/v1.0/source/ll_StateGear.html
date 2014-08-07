@@ -15,12 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='StateGear'>/**
-</span> * @class StateGear
+  <pre class="prettyprint lang-js"><span id='Engine-StateGear'>/**
+</span> * @class Engine.StateGear
  * Drives the automata into different states.
  */
 
-<span id='StateGear-method-constructor'>/**
+<span id='Engine-StateGear-method-constructor'>/**
 </span> * @method  constructor
  *
  */
@@ -40,34 +40,115 @@ StateGear.prototype.valueOf = function() {
 StateGear.prototype.toString = function() {
     return this.current.toString()
 }
-<span id='StateGear-method-drive_state'>/**
+
+
+<span id='Engine-StateGear-method-drive_state'>/**
 </span> * @method drive_state
  * Executes the solicitor functions related to the fsm state.
- * All arguments are passed to solicitors.
+ * All arguments are passed to solicitors. If a new state is requested, it
+ * spins the gear to next position.
  *
  */
 StateGear.prototype.drive_state = function() {
+    var s = this.current
 
-    var base = this.state_name[this.currentState.current]
-    var down = base + &quot;_down&quot;
-    var steady = base + &quot;_steady&quot;
-    var up = base + &quot;_up&quot;
+    if (this.requested != this.automata.state.none) {
+        // Close old state
+        s.regime = State.REGIME.down
+        s[s].apply(s, arguments)
 
-    if (this.currentState.requested != this.state.none) {
-        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-        if (this[down])
-            this[down]()
+        // Spin the gear
+        this.previous = this.current;
+        this.current = this.requested;
+        this.requested = this.automata.state.none;
 
-        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-        if (this[up])
-            this[up]()
-
+        // Open new state
+        var s = this.current
+        s.regime = State.REGIME.up
+        s[s].apply(s, arguments)
+        s.regime = State.REGIME.steady
     }
 
-    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-    if (this[steady])
-        this[steady]()
+    return s[s].apply(s, arguments)
+}
 
+<span id='Engine-StateGear-method-zip'>/**
+</span> * @method zip
+ * Assigns the function driver to the state object.
+ *
+ *    var solicitors = {
+ *           walking: function() {
+ *               return &quot;I&#39;m walking&quot;
+ *           },
+ *           running: [
+ *
+ *               function() {
+ *                   return &quot;I&#39;m running&quot;
+ *               }, {
+ *                   slow:
+ *
+ *                       function() {
+ *                           return &quot;I&#39;m running slow&quot;
+ *                       },
+ *                   &quot;slow.steady: function() {
+ *                       return &quot;But steadily&quot;
+ *
+ *                       },
+ *                   fast: function() {
+ *                       return &quot;I&#39;m running fast&quot;
+ *                   }
+ *               }
+ *           ]
+ *       }
+ *
+ * ## Notice
+ *
+ * Function drivers must come first in the Array
+ * Only already defined states are valid attributes
+ *
+ * @param  {[type]} solicitors [description]
+ * @return {[type]}            [description]
+ */
+StateGear.prototype.zip = function(solicitors, base_state) {
+    base_state = base_state || this.automata.state
+
+    function add_state(name, driver) {
+        var base = base_state
+
+        name = name.split(&quot;.&quot;)
+        if (name.length == 1)
+            base[i].run = driver
+        else {
+            while (name.length &gt; 1) {
+                var current
+                try {
+                    base = base[current = name.shift()]
+                } catch (e) {
+                    throw &quot;State &quot; + current + &quot; is not defined.&quot;
+                }
+            }
+            var regime = name.shift()
+            var included = false
+            State.REGIME.each(function(k, v) {
+                if (k == regime)
+                    included = true
+            })
+            if (!included)
+                throw &quot;Invalid regime &quot; + regime + &quot;.&quot;
+
+            base.run[regime] = driver
+        }
+    }
+
+    for (var i in solicitors) {
+        if (solicitors[i] instanceof Function)
+            add_state(i, solicitors[i])
+        else if (solicitors[i] instanceof Array) {
+            add_state(i, solicitors[i].shift())
+            this.zip(solicitors[i][0], base_state[i])
+        }
+
+    }
 }</pre>
 </body>
 </html>

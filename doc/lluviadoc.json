@@ -15,6 +15,7 @@
         "StraightLine",
         "Thread",
         "Automata",
+        "State",
         "ThreadAutomata",
         "Processor"
     ],

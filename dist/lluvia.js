@@ -3195,6 +3195,12 @@ function Automata(states, solicitor) {
     this.current.zip(solicitor)
 }
 Automata.prototype.switch = function(state) {
+    if (Object.prototype.toString.call(state) == "[object String]") {
+        state = state.split(".")
+        var s
+        for (s = this.state; state.length; s = s[state.shift()]);
+        state = s
+    }
     this.current.requested = state
 }
 Automata.prototype.run = function() {
@@ -3213,13 +3219,13 @@ StateGear.prototype.toString = function() {
     return this.current.toString()
 }
 StateGear.prototype.drive_state = function() {
-    if (this.requested != this.state.none) {
-        var s = this.current
+    var s = this.current
+    if (this.requested != this.automata.state.none) {
         s.regime = State.REGIME.down
         s[s].apply(s, arguments)
-        this.current.previous = this.current.current;
-        this.current.current = this.current.requested;
-        this.current.requested = this.state.none;
+        this.previous = this.current;
+        this.current = this.requested;
+        this.requested = this.automata.state.none;
         var s = this.current
         s.regime = State.REGIME.up
         s[s].apply(s, arguments)
