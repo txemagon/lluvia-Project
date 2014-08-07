@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple App</title>
+    <script type="text/javascript" src="ll_Loader.js"></script>
+	<link rel="stylesheet" href="css.css">
+</head>
+<body onload="main()">
+     <!--
+         #!lluvia
+         menu::ll-Menu(param1, param2) # Is a comment
+         menu.addPort("go to", banner)
+     -->
+     <!--
+     #frame>(#banner.ll-ConveyorBelt>#screen$$.ll-Screen*4)+#general_menu.ll-Gate[data-initialize="this.newEffect('sliding', 0, -100); this.newEffect('blend', '#000066')"]>a#menu.ll-Gate[href=#][data-params="{do_onclick: fireEvent('go to', 'screen $$')}"]{screen $$}*4
+     -->
+
+     <div id="frame">
+     	<div id="banner" class="ll-ConveyorBelt">
+     		<div id="screen01" class="ll-Screen"></div>
+     		<div id="screen02" class="ll-Screen"></div>
+     		<div id="screen03" class="ll-Screen"></div>
+     		<div id="screen04" class="ll-Screen"></div>
+     	</div>
+     	<div id="general_menu$menu" class="ll-Gate" data-initialize="this.newEffect('sliding', 0, -100); this.newEffect('blend', '#000066')">
+     		<a href="#" id="$menu" class="ll-Gate" data-params="{do_onclick: fireEvent('go to', 'screen 01')}">screen 01</a>
+     		<a href="#" id="$menu" class="ll-Gate" data-params="{do_onclick: fireEvent('go to', 'screen 02')}">screen 02</a>
+     		<a href="#" id="$menu" class="ll-Gate" data-params="{do_onclick: fireEvent('go to', 'screen 03')}">screen 03</a>
+     		<a href="#" id="$menu" class="ll-Gate" data-params="{do_onclick: fireEvent('go to', 'screen 04')}">screen 04</a>
+     	</div>
+     </div>
+     <div id="frame2"></div>
+</body>
+</html>

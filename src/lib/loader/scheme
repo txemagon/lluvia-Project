@@ -32,16 +32,22 @@ Loader:
         <div id="son_id$father_id" class="ll-FondoApp" data-params="'fondo'" data-block="function(){}" data-run-add_port="'go_to', pant" data-method-singleton="block">
 
     Pasos a la hora de ejecutarlo:
-        - Se debe leer una primera vez todos los nodos del DOM y almacenar el nombre de las variables.
-        - se debe leer una segunda vez para realizar todas las acciones que se le indiquen a traves de los atributos de las etiquetas HTML. 
-        - Cargar main()
+        - El loader recoge todos los nodos del body del html.
+        - El loader separa los nodos que son de lluvia de los que no.
+        - El loader manda el valor de los atributos de los nodos de lluvia al parser.
+        - El parser analiza los valores pasados y devuelve lo que se tiene que ejecutar como un string.
+        - El loader ejecuta lo que obtiene del parser.
+        - Se carga main()
 
 
     Pasos a la hora de diseñarlo:
         - Crear una clase Parse para analizar los atributos y los comentarios.
+        - Crear un clase interprete para diferenciar en un string si es algun elemento de programacion.
         - ...
 
-
+    Tabla de simbolos:
+        - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.
+        - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanos.
 
 // TODO: Refactor fireEvent() para hacerlo mas agil.
 // TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.
