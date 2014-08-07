@@ -6,22 +6,15 @@ function Loader(){
 Loader.lluvia_nodes = []
 
 Loader.get_lluvia_nodes = function(actual_node){
-    for(var i = 0; i<actual_node.children.length; i++){
-    	if(actual_node.children[i].children.length)
-    		Loader.get_lluvia_nodes(actual_node.children[i])
-        if(Loader.is_lluvia_element$U(actual_node.children[i].className)){
-    	//alert(actual_node.children[i].className)
-        	Loader.lluvia_nodes.push(actual_node.children[i])
-        }
-    }
-}
+    var actual_node = actual_node || {}
 
-Loader.get_lluvia_comments = function(actual_node){
-    for(var i = 0; i<actual_node.children.length; i++){
-    	if(actual_node.children[i].children.length)
-    		Loader.get_lluvia_comments(actual_node.children[i])
-        if(actual_node.children[i].nodeType == 1)
-        	alert(actual_node.children[i].nodeType)
+    for(var i = 0; i<actual_node.childNodes.length; i++){
+    	if(actual_node.childNodes[i].childNodes.length)
+    		Loader.get_lluvia_nodes(actual_node.childNodes[i])
+            if(actual_node.childNodes[i].className != undefined && Loader.is_lluvia_element$U(actual_node.childNodes[i].className))
+        	    Loader.lluvia_nodes.push(actual_node.childNodes[i])
+            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE)
+                Loader.lluvia_nodes.push(actual_node.childNodes[i])
     }
 }
 
@@ -34,12 +27,14 @@ Loader.is_lluvia_element$U = function(element, separator) {
     return false
 }
 
+Loader.is_lluvia_comment$U = function() {}
+
 Loader.prototype.gather_nodes = function(){}
 
 Loader.prototype.analize_nodes = function(){}
 
 function main(){
 	var l = new Loader()
-	Loader.get_lluvia_comments(document)
 	Loader.get_lluvia_nodes(document)
+    alert(Loader.lluvia_nodes.length)
 }
