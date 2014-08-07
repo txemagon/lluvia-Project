@@ -137,6 +137,7 @@
  * ## Warning
  *
  *   Avoid using run for naming a state.
+ *   Only steady regime is allowed to return a value.
  *
  */
 

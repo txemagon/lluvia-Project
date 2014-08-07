@@ -162,7 +162,9 @@ function Automata(states, solicitor) {
  *
  */
 
-
+Automata.prototype.switch = function(state) {
+    this.current.requested = state
+}
 /**
  * @method	  run
  * Behavior of the automata according to its internal state.
@@ -170,14 +172,5 @@ function Automata(states, solicitor) {
  *
  */
 Automata.prototype.run = function() {
-    var s = this.current.valueOf()
-    return s[s]()
-        /*
-    Automata.prototype.drive_state.apply(this, arguments)
-    if (this.currentState.requested != this.state.none) {
-        this.currentState.previous = this.currentState.current;
-        this.currentState.current = this.currentState.requested;
-        this.currentState.requested = this.state.none;
-    }
-    */
+    return this.current.drive_state()
 }

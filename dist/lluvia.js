@@ -3194,9 +3194,11 @@ function Automata(states, solicitor) {
     this.current = new StateGear(this, initial_state)
     this.current.zip(solicitor)
 }
+Automata.prototype.switch = function(state) {
+    this.current.requested = state
+}
 Automata.prototype.run = function() {
-    var s = this.current.valueOf()
-    return s[s]()
+    return this.current.drive_state()
 }
 function StateGear(automata, initial_state) {
     this.automata = automata
@@ -3211,21 +3213,19 @@ StateGear.prototype.toString = function() {
     return this.current.toString()
 }
 StateGear.prototype.drive_state = function() {
-    var base = this.state_name[this.currentState.current]
-    var down = base + "_down"
-    var steady = base + "_steady"
-    var up = base + "_up"
-    if (this.currentState.requested != this.state.none) {
-        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-        if (this[down])
-            this[down]()
-        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-        if (this[up])
-            this[up]()
+    if (this.requested != this.state.none) {
+        var s = this.current
+        s.regime = State.REGIME.down
+        s[s].apply(s, arguments)
+        this.current.previous = this.current.current;
+        this.current.current = this.current.requested;
+        this.current.requested = this.state.none;
+        var s = this.current
+        s.regime = State.REGIME.up
+        s[s].apply(s, arguments)
+        s.regime = State.REGIME.steady
     }
-    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-    if (this[steady])
-        this[steady]()
+    return s[s].apply(s, arguments)
 }
 StateGear.prototype.zip = function(solicitors, base_state) {
     base_state = base_state || this.automata.state

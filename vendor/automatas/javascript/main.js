@@ -1,7 +1,11 @@
 function main() {
     var solicitors = {
         walking: function() {
-            return "I'm walking"
+            return "I'm walking with my shoes."
+        },
+        "walking.down": function() {
+            alert("Im taking my shoes off.")
+
         },
         running: [
 
@@ -18,15 +22,15 @@ function main() {
                     return "I'm running fast"
                 }
             }
-        ]
+        ],
+        "running.up": function() {
+            alert("Im putting my sneakers on.")
+        }
     }
 
-    var a = new Automata(["walking", "running", ["*slow", "fast"]], solicitors)
-
-    var s = a.state.running.slow
-    s.regime = State.REGIME.steady
-    a.current.current = a.current.requested
+    var a = new Automata(["*walking", "running", ["slow", "fast"]], solicitors)
     alert(a.run())
-
+    a.switch(a.state.running)
+    alert(a.run())
 
 }

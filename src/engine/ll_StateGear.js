@@ -28,31 +28,31 @@ StateGear.prototype.toString = function() {
 /**
  * @method drive_state
  * Executes the solicitor functions related to the fsm state.
- * All arguments are passed to solicitors.
+ * All arguments are passed to solicitors. If a new state is requested, it
+ * spins the gear to next position.
  *
  */
 StateGear.prototype.drive_state = function() {
 
-    var base = this.state_name[this.currentState.current]
-    var down = base + "_down"
-    var steady = base + "_steady"
-    var up = base + "_up"
+    if (this.requested != this.state.none) {
+        // Close old state
+        var s = this.current
+        s.regime = State.REGIME.down
+        s[s].apply(s, arguments)
 
-    if (this.currentState.requested != this.state.none) {
-        this.solicitor[this.currentState.current][this.stateChange.down].apply(this, arguments)
-        if (this[down])
-            this[down]()
+        // Spin the gear
+        this.current.previous = this.current.current;
+        this.current.current = this.current.requested;
+        this.current.requested = this.state.none;
 
-        this.solicitor[this.currentState.requested][this.stateChange.up].apply(this, arguments)
-        if (this[up])
-            this[up]()
-
+        // Open new state
+        var s = this.current
+        s.regime = State.REGIME.up
+        s[s].apply(s, arguments)
+        s.regime = State.REGIME.steady
     }
 
-    this.solicitor[this.currentState.current][this.stateChange.steady].apply(this, arguments)
-    if (this[steady])
-        this[steady]()
-
+    return s[s].apply(s, arguments)
 }
 
 /**
