@@ -140,6 +140,10 @@ body {
 #dark_line2{
     width: 670px;
 }
+#blue_banner_top{
+    margin-top: -22px;
+    width: 700px;
+}
 #dark_line3{
     width: 670px;
 }
@@ -161,12 +165,17 @@ body {
     margin-left: 564px;
 }
 #dark_line9{
-    margin-bottom: 107px;
+    margin-bottom: 106px;
 }
 #dark_line10{
     margin-top: -383px;
     margin-left: 550px;
     margin-bottom: 423px;
+}
+#purple_banner_top{
+    width: 630px;
+    margin-top: -21px;
+    float: right;
 }
 #horizontal_line7{
     margin-top: 308px;
@@ -182,13 +191,14 @@ body {
     border: solid 1px #666;
 }
 .banner_blue{
-    width: 548px;
+    width: 547px;
     height: 20px;
     background-color: blue;
     border: solid 1px blue;
 }
 #blue_banner_middle{
-    height: 277px;
+    height: 298px;
+    background-color: #fff;
 }
 #cogs_and_chain{
     width: 620px;
@@ -238,7 +248,7 @@ body {
 #second_box{
     width: 500px;
     height: 350px;
-    margin-top: -370px;
+    margin-top: -371px;
     margin-left: 640px;
     border: solid 1px purple;
 }
@@ -248,7 +258,8 @@ body {
     background-color: purple;
 }
 #purple_banner_middle{
-    height: 310px;
+    height: 332px;
+    background-color: #fff;
 }
 #space_at_end{
     height: 100px;
