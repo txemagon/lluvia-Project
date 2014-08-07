@@ -22,6 +22,51 @@
  * made of the previous, the current and the requested one. During state transition, several solicitor functions
  * get executed: down function of the current state, up solicitor of the requested state and finally we arrive to the
  * steady state.
+ * @uses Kernel.Foundation.Enumerable.EnumerationOf
+ * @uses Engine.State
+ * @uses  Engine.StateGear
+ *
+ * ## States
+ *
+ * States refers to each of the states of a Finite Machine Automaton. See {@link Engine.State State}
+ * for a very detailed explanation.
+ *
+ * ### Warning
+ *
+ *   Avoid using run for naming a state.
+ *
+ * ## Solicitors
+ *
+ * Solicitors are the drivers that run every single {@link Engine.State state}. Despite
+ * you can manually add the drivers to every state, the Automata constructor comes with a
+ * facility to specify all the drivers at once.
+ *
+ * Define an object as in the following example to be used as the solicitor constructor param:
+ *
+ *     {
+ *            walking: function() {
+ *                return &quot;I&#39;m walking&quot;
+ *            },
+ *            running: [
+ *
+ *                function() {
+ *                    return &quot;I&#39;m running&quot;
+ *                }, {
+ *                    slow: function() {
+ *                        return &quot;I&#39;m running slow&quot;
+ *                    },
+ *                    &quot;slow.steady&quot;: function() {
+ *                        return &quot;But steadily&quot;
+ *                    },
+ *                    fast: function() {
+ *                        return &quot;I&#39;m running fast&quot;
+ *                    }
+ *                }
+ *            ]
+ *        }
+ *
+ * See that when no substates are given you can directly define a function driver.
+ * Notice too, that defining a regime driver is made by typing between quotes
  */
 
 <span id='Engine-Automata-method-constructor'>/**
@@ -40,43 +85,54 @@
  *
  *     var a = new Automata([&quot;killing&quot;, [&quot;running&quot;, [&quot;phase1&quot;, &quot;phase2&quot;], &quot;supended&quot; ]])
  *
+ * If you want to request a given state upon start, please mark with an asterisk, as in this example.
+ *
+ *     var a = new Automata([&quot;killing&quot;, [&quot;running&quot;, [&quot;*phase1&quot;, &quot;phase2&quot;], &quot;supended&quot; ]])
  *
  * @param  {Object | Array}   states Possibles states of an automata (Enumeration).
  *                                   Array is an extesnsion for Hierarchical State Machines.
- * @param  {Object}   initialState	 Initial state of the automata.
+ *                                   Avoid calling run to a state.
  * @param  {Array}    solicitor		 State Manager functions. An array with three functions (up, steady, down).
  * @return {Automata}				 New created state machine automata..
  * @constructor
  */
 Automata.prototype.constructor = Automata;
 
-function Automata(states, solicitor, initial_state) {
+function Automata(states, solicitor) {
+
+    function find_initial_state(state_level, initial_state) {
+        initial_state = initial_state || &quot;&quot;
+
+        for (var i = 0; i &lt; state_level.length; i++) {
+            if (state_level[i] instanceof Array) {
+                initial_state += &quot;.&quot; + state_level[i - 1]
+                return find_initial_state(state_level[i], initial_state)
+            }
+            if (Object.prototype.toString.call(state_level[i]) === &quot;[object String]&quot;) {
+                if (/^\*/.test(state_level[i])) {
+                    state_level[i] = state_level[i].substring(1)
+                    return initial_state + &quot;.&quot; + state_level[i]
+                }
+            }
+        }
+
+    }
+
+    var i_state = find_initial_state(states).substring(1).split(&quot;.&quot;)
 
     if (states instanceof Array)
         states = new(ProxyConstructor(EnumerationOf, State, states))
     this.state = states ? states : new Enumeration()
-    this.state.each(function(state, value) {
-        alert(state + &quot;: &quot; + value)
-    })
 
-    // Always none equals -1
-    this.state.none = State.NONE
+    // Always none equals to -1
+    this.state.none = new State(State.NONE)
+
+    var initial_state
+    for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
 
     // todo: Make a proxyConstructor that handles the link via the this parameter.
     this.current = new StateGear(this, initial_state)
-
-    this.solicitor = (solicitor || solicitor != null) ?
-        solicitor :
-        new Array(new Array(null, null, null));
-
-    // State none doesn&#39;t execute anything, neither raises an error.
-
-    this.solicitor[this.state.none] = [
-
-        function() {},
-        function() {},
-        function() {}
-    ]
+    this.current.zip(solicitor)
 }
 
 <span id='Engine-Automata-property-state'>/**
@@ -124,6 +180,23 @@ function Automata(states, solicitor, initial_state) {
  */
 
 
+<span id='Engine-Automata-method-switch'>/**
+</span> * @method switch
+ * Selects a new state to be updated to in next run.
+ *
+ * @param  {String | State} state this.state.running.slow or &quot;running.slow&quot; for instance.
+ */
+Automata.prototype.switch = function(state) {
+    if (Object.prototype.toString.call(state) == &quot;[object String]&quot;) {
+        state = state.split(&quot;.&quot;)
+        var s
+        for (s = this.state; state.length; s = s[state.shift()]);
+        state = s
+    }
+    this.current.requested = state
+}
+
+
 <span id='Engine-Automata-method-run'>/**
 </span> * @method	  run
  * Behavior of the automata according to its internal state.
@@ -131,15 +204,7 @@ function Automata(states, solicitor, initial_state) {
  *
  */
 Automata.prototype.run = function() {
-    return this.solicitor[this.current][0]()
-        /*
-    Automata.prototype.drive_state.apply(this, arguments)
-    if (this.currentState.requested != this.state.none) {
-        this.currentState.previous = this.currentState.current;
-        this.currentState.current = this.currentState.requested;
-        this.currentState.requested = this.state.none;
-    }
-    */
+    return this.current.drive_state()
 }</pre>
 </body>
 </html>

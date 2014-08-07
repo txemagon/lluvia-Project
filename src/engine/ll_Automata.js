@@ -162,6 +162,13 @@ function Automata(states, solicitor) {
  *
  */
 
+
+/**
+ * @method switch
+ * Selects a new state to be updated to in next run.
+ *
+ * @param  {String | State} state this.state.running.slow or "running.slow" for instance.
+ */
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
         state = state.split(".")
