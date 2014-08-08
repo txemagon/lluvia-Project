@@ -3274,9 +3274,10 @@ StateGear.prototype.zip = function(solicitors, base_state) {
     }
 }
 ThreadAutomata.prototype  = new Thread;
+ThreadAutomata.extend(Automata);
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 function ThreadAutomata(state, currentState, solicitor, processor){
-	if (arguments.length){
+    if (arguments.length){
 		Automata.call(this, state, currentState, solicitor);
 		Thread.call(this, ThreadAutomata.prototype.run, processor);
 	}
@@ -3288,6 +3289,7 @@ ThreadAutomata.prototype.run = function(processors_time){
 	Automata.prototype.run.call(this, this.now, this.before);
 }
 Device.prototype = new Processor
+Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
 function Device(view, state, current_state, parent) {
     var that = this
@@ -3308,7 +3310,7 @@ function Device(view, state, current_state, parent) {
     if (view)
         this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
     this.lookup = new Lookup();
-    this.event_dispatcher = new event_dispatcher(this.lookup);
+    this.event_dispatcher = new EventDispatcher(this.lookup);
     this.gates = []
     this.open_device = _$innerObject(this, "device")
     function initialize() { 

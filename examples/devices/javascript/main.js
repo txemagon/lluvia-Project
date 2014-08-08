@@ -1,3 +1,4 @@
 function main() {
-	alert("Hello")
+	alert("Running main")
+    var count_down = new CountDown(120)
 }
