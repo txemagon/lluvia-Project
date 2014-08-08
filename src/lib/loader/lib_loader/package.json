@@ -1,7 +1,0 @@
-{	"package": "lib_loader",
-	"description": ".",
-	"files": [
-		{"name": "ll_Parse.js",    "description": ""}
-	],
-	"requires": []
-}

@@ -1,7 +1,0 @@
-{	"package": "loader",
-	"description": ".",
-	"files": [
-		{"name": "ll_Loader.js",    "description": ""}
-	],
-	"requires": ["lib_loader"]
-}
