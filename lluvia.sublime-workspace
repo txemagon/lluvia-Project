@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"cl",
+				"clasify_element"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"p",
+				"params"
+			],
+			[
+				"ll",
+				"lluvia_nodes"
+			],
+			[
 				"stre",
 				"string_key"
 			],
@@ -64,42 +80,29 @@
 	"buffers":
 	[
 		{
-			"file": "src/engine/ll_Device.js",
+			"file": "src/lib/builder/ll_Builder.js",
 			"settings":
 			{
-				"buffer_size": 10823,
+				"buffer_size": 2006,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "examples/devices/index.html",
+			"file": "src/lib/builder/TableSymbols.js",
 			"settings":
 			{
-				"buffer_size": 426,
+				"buffer_size": 161,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "examples/devices/css/general.css",
+			"contents": "Loader:\n\n    Atributos:\n        id=\"name\"                          >> Nombre del objeto.\n        id=\"son_name$father_name\"          >> Nombre del objeeto y de quien es hijo.\n      * class=\"ll-class\"                   >> Clase de la que se creara el objeto.\n        class=\"ll-class_name$father_name\"  >> Clase de la que se creara el objeto y su padre.\n        data-params=\"params\"               >> Parametros que se pasaran al constructor.\n        data-block=\"block\"                 >> Bloque se pueda pasar al constructor.\n        data-run-<method_name>=\"params\"    >> Ejecuta el metodo que se indique.\n        data-method-<singlenton>=\"block\"   >> Si exite se redefine, sino, se crea un metodo singlenton.\n        data-initialize=\"this.function_name(params); this.function_name(params)\"  >> Ejecuta todos los metodos que se indiquen.\n      (*=obligatorio)\n\n    Notas:\n        $ == pertenece\n        - == espacio de nombre\n\n    Consideraciones:\n        - Si un gate esta dentro de un div de la clase device ese gate pertenece al device.\n        - Probar si se respetan los saltos de linea dentro de los atributos.\n        - Se debe poder pasar codigo a lluvia en comentarios, ejemplo:\n            <!--\n                #!lluvia\n                menu::ll-Menu(param1, param2) # Is a comment  (device sin etiqueta)\n            ->\n        - Los nombres de las variables que se utilizen en los comentarios no se pueden repetir en los id.\n        - A la hora de analizar los comentarios leer dos veces y crear una tabla como hace C.\n\n\n    Example:\n        <div id=\"son_id$father_id\" class=\"ll-FondoApp\" data-params=\"'fondo'\" data-block=\"function(){}\" data-run-add_port=\"'go_to', pant\" data-method-singleton=\"block\">\n\n    Pasos a la hora de ejecutarlo:\n        - El loader recoge todos los nodos del body del html.\n        - El loader separa los nodos que son de lluvia de los que no.\n        - El loader manda el valor de los atributos de los nodos de lluvia al parser.\n        - El parser analiza los valores pasados y devuelve lo que se tiene que ejecutar como un string.\n        - El loader ejecuta lo que obtiene del parser.\n        - Se carga main()\n\n\n    Pasos a la hora de diseñarlo:\n        - Crear una clase Parse para analizar los atributos y los comentarios.\n        - Crear un clase interprete para diferenciar en un string si es algun elemento de programacion.\n        - ...\n\n    Como recoger los valores:\n        - Se debe \n\n    Tabla de simbolos:\n        - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.\n        - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanos.\n\n// TODO: Refactor fireEvent() para hacerlo mas agil.\n// TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.",
+			"file": "src/lib/builder/scheme",
+			"file_size": 2858,
+			"file_write_time": 1407509016000000,
 			"settings":
 			{
-				"buffer_size": 28,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "examples/devices/javascript/dependencies.js",
-			"settings":
-			{
-				"buffer_size": 188,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "util/install-sublime-packages",
-			"settings":
-			{
-				"buffer_size": 206,
+				"buffer_size": 2848,
 				"line_ending": "Unix"
 			}
 		},
@@ -107,20 +110,28 @@
 			"file": "examples/devices/javascript/main.js",
 			"settings":
 			{
-				"buffer_size": 35,
+				"buffer_size": 218,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/engine/ll_State.js",
+			"file": "examples/devices/index.html",
 			"settings":
 			{
-				"buffer_size": 6470,
+				"buffer_size": 495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dist/lluvia.js",
+			"settings":
+			{
+				"buffer_size": 123230,
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "lluvia",
 	"command_palette":
 	{
 		"height": 54.0,
@@ -151,11 +162,7 @@
 	},
 	"console":
 	{
-		"height": 139.0,
-		"history":
-		[
-			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
-		]
+		"height": 139.0
 	},
 	"distraction_free":
 	{
@@ -168,6 +175,14 @@
 	},
 	"file_history":
 	[
+		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
+		"/home/jose/work/lluvia-Project/src/engine/ll_State.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
+		"/home/jose/work/lluvia-Project/util/install-sublime-packages",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
+		"/home/jose/work/lluvia-Project/examples/devices/index.html",
+		"/home/jose/work/lluvia-Project/src/engine/ll_Device.js",
 		"/home/imasen/work/lluvia-Project/util/sublime-text-3/pack-lluvia.sublime-build",
 		"/home/imasen/work/lluvia-Project/examples/chat/index.html",
 		"/home/imasen/work/lluvia-Project/examples/automatas/index.html",
@@ -198,7 +213,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 105.0,
+		"height": 0.0,
 		"where_history":
 		[
 			""
@@ -209,6 +224,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"nodes[i]",
+			"//extend",
+			"extend",
 			"currentState",
 			"sendMessage",
 			"newMessage",
@@ -258,53 +276,131 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/engine/ll_Device.js",
-					"semi_transient": false,
+					"file": "src/lib/builder/ll_Builder.js",
 					"settings":
 					{
-						"buffer_size": 10823,
+						"buffer_size": 2006,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2834,
-								2834
+								1847,
+								1847
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 1380.0,
+						"translation.x": 72.0,
+						"translation.y": 878.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "examples/devices/index.html",
-					"semi_transient": false,
+					"file": "src/lib/builder/TableSymbols.js",
 					"settings":
 					{
-						"buffer_size": 426,
+						"buffer_size": 161,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								347,
-								347
+								68,
+								68
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/lib/builder/scheme",
+					"settings":
+					{
+						"buffer_size": 2848,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2430,
+								2430
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 459.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "examples/devices/javascript/main.js",
+					"settings":
+					{
+						"buffer_size": 218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								194,
+								194
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "examples/devices/index.html",
+					"settings":
+					{
+						"buffer_size": 495,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								446,
+								446
 							]
 						],
 						"settings":
@@ -317,152 +413,32 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "examples/devices/css/general.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 28,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								26,
-								26
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/CSS/CSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "examples/devices/javascript/dependencies.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 188,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								104,
-								104
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "util/install-sublime-packages",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 206,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								206,
-								206
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "examples/devices/javascript/main.js",
-					"semi_transient": false,
+					"file": "dist/lluvia.js",
 					"settings":
 					{
-						"buffer_size": 35,
+						"buffer_size": 123230,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								31,
-								31
+								110732,
+								110732
 							]
 						],
 						"settings":
 						{
-							"open_with_edit": true,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 57896.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/engine/ll_State.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6470,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4838,
-								4838
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4485.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -507,7 +483,6 @@
 	{
 		"height": 0.0
 	},
-	"project": "lluvia.sublime-project",
 	"replace":
 	{
 		"height": 72.0
@@ -529,24 +504,10 @@
 		],
 		"width": 0.0
 	},
-	"select_symbol":
-	{
-		"height": 0.0,
-		"selected_items":
-		[
-		],
-		"width": 0.0
-	},
-	"settings":
-	{
-	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 294.0,
-	"status_bar_visible": true,
-	"template_settings":
-	{
-	}
+	"status_bar_visible": true
 }
