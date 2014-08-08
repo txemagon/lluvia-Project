@@ -77,7 +77,7 @@
  */
 
 Device.prototype = new Processor
-//extend(Device, ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
+Device.extend(ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
 
@@ -96,7 +96,6 @@ function Device(view, state, current_state, parent) {
     /* Class accesors*/
     var that = this
     this._class = that
-
     state = state || Device.STATE
 
     this.solicitors = {
@@ -116,7 +115,7 @@ function Device(view, state, current_state, parent) {
     if (view)
         this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
     this.lookup = new Lookup();
-    this.event_dispatcher = new event_dispatcher(this.lookup);
+    this.event_dispatcher = new EventDispatcher(this.lookup);
 
     this.gates = []
 

@@ -219,7 +219,6 @@ There are two posible strategies. Extending (widering) prototype with a copy of 
 
 Function.prototype.extend = function(superclass, args){
   var that = this
-
   var s = new superclass()
   s.keys().each( function(k) {
        if (typeof(that.prototype[k]) == "undefined")

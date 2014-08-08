@@ -1,6 +1,6 @@
 
 ThreadAutomata.prototype  = new Thread;
-//extend(ThreadAutomata, Automata);
+ThreadAutomata.extend(Automata);
 
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 
@@ -11,14 +11,15 @@ ThreadAutomata.prototype.constructor = ThreadAutomata;
 
 /**
  * @method constructor
- * 
+ *
  * @param {Object} state			Available automata states.
  * @param {Object} currentState	    Initial automata state.
  * @param {Object} solicitor		Functions state managers.
  * @return {ThreadAutomata}			Newly created automata.
  */
 function ThreadAutomata(state, currentState, solicitor, processor){
-	if (arguments.length){
+
+    if (arguments.length){
 		Automata.call(this, state, currentState, solicitor);
 		Thread.call(this, ThreadAutomata.prototype.run, processor);
 	}
