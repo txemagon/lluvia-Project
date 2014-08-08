@@ -68,16 +68,16 @@
  * @property {Array} solicitors The three functions (up, steady and down) that drive any state.
  *
  * @property {Object} event_dispatcher event_dispatcher object. Handles in and out communications.
- * @property {Object} currentState    Holds the current state of the device.
- * @property currentState.previous    Record of the previous state.
- * @property currentState.current     State we are currently in.
- * @property currentState.requested   State to change in the next run.
+ * @property {Object} current_state    Holds the current state of the device.
+ * @property current_state.previous    Record of the previous state.
+ * @property current_state.current     State we are currently in.
+ * @property current_state.requested   State to change in the next run.
  *
  * @property {Array} gates List of all attached Gates.
  */
 
 Device.prototype = new Processor
-extend(Device, ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
+//extend(Device, ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
 
@@ -128,7 +128,7 @@ function Device(view, state, current_state, parent) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-        ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
+        ThreadAutomata.call(that, state, that.current_state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
 
@@ -164,7 +164,7 @@ Device.prototype.gate_runner = function() {
  * Simulates multithreading for each device attached to this one.
  */
 Device.prototype.child_runner = function() {
-    if (this.currentState != this.state.killed) {
+    if (this.current_state != this.state.killed) {
         this.now = arguments[0]
         for (var i in this.threads)
             try {

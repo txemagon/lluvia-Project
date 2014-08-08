@@ -12,7 +12,8 @@
  * ## States
  *
  * States refers to each of the states of a Finite Machine Automaton. See {@link Engine.State State}
- * for a very detailed explanation.
+ * for a very detailed explanation. States are injected with an attribute 'owner' that refers to
+ * the automata.
  *
  * ### Warning
  *

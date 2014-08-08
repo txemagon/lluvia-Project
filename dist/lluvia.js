@@ -3288,7 +3288,6 @@ ThreadAutomata.prototype.run = function(processors_time){
 	Automata.prototype.run.call(this, this.now, this.before);
 }
 Device.prototype = new Processor
-extend(Device, ThreadAutomata) 
 Device.prototype.constructor = Device
 function Device(view, state, current_state, parent) {
     var that = this
@@ -3317,7 +3316,7 @@ function Device(view, state, current_state, parent) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-        ThreadAutomata.call(that, state, that.currentState, that.solicitors, parent || $Processor);
+        ThreadAutomata.call(that, state, that.current_state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
     if (arguments.length) 
@@ -3329,7 +3328,7 @@ Device.prototype.gate_runner = function() {
         this.gates[i].run(this.now, this.before)
 }
 Device.prototype.child_runner = function() {
-    if (this.currentState != this.state.killed) {
+    if (this.current_state != this.state.killed) {
         this.now = arguments[0]
         for (var i in this.threads)
             try {
