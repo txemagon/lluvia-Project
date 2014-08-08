@@ -115,7 +115,7 @@ body {
 }
 #vertical_line{
     width: 550px;
-    margin-top: -1260px;
+    margin-top: -1560px;
     margin-left: 70px;
     border: solid 1px #ccc;
 }
@@ -170,7 +170,7 @@ body {
 #dark_line10{
     margin-top: -383px;
     margin-left: 550px;
-    margin-bottom: 423px;
+    margin-bottom: 896px;
 }
 #purple_banner_top{
     width: 630px;
@@ -180,6 +180,24 @@ body {
 #horizontal_line7{
     margin-top: 308px;
 }
+#orange_banner_top{
+    width: 700px;
+    margin-top: 150px;
+}
+.banner_orange{
+    width: 550px;
+    height: 22px;
+    background-color: #ff7f00;
+}
+#horizontal_line11{
+    margin-top: -22px;
+}
+.dark_line_orange{
+    width: 750px;
+}
+#horizontal_line13{
+    margin-top: 275px;
+}
 #main_container{
     width: 1264px;
     position: relative;
@@ -188,13 +206,12 @@ body {
     width: 550px;
     height: 320px;
     margin-top: -499px;
-    border: solid 1px #666;
+    border: solid 1px #4E72AE;
 }
 .banner_blue{
-    width: 547px;
-    height: 20px;
-    background-color: blue;
-    border: solid 1px blue;
+    width: 549px;
+    height: 22px;
+    background-color: #4E72AE;
 }
 #blue_banner_middle{
     height: 298px;
@@ -203,7 +220,7 @@ body {
 #cogs_and_chain{
     width: 620px;
     position: absolute;
-    top: -860px;
+    top: -1332px;
     left: 635px;
 }
 #second_wheel{
@@ -245,21 +262,67 @@ body {
     margin-top: 90px;
     margin-left: -13px;
 }
+#eagle{
+    width: 104px;
+    height: 108px;
+    background-image: url("../images/eagle.svg");
+    margin-top: -696px;
+    margin-left: -72px;
+}
 #second_box{
     width: 500px;
-    height: 350px;
-    margin-top: -371px;
+    height: 352px;
+    margin-top: -256px;
     margin-left: 640px;
-    border: solid 1px purple;
+    border: solid 1px #B21687;
 }
 .banner_purple{
     width: 200x;
     height: 21px;
-    background-color: purple;
+    background-color: #B21687;
 }
 #purple_banner_middle{
     height: 332px;
     background-color: #fff;
+}
+#third_box{
+    width: 550px;
+    height: 320px;
+    margin-top: 151px;
+    border: solid 1px #ff7f00;
+}
+#orange_banner_middle{
+    height: 300px;
+    background-color: #fff;
+}
+#pelton_wheel{
+    width: 641px;
+    height: 277px;
+    margin-left: 550px;
+    margin-top: -300px;
+}
+#pelton{
+    width: 229px;
+    height: 228px;
+    background-image: url("../images/pelton_wheel.svg");
+    background-repeat: no-repeat;
+    margin-left: 270px;
+    margin-top: 45px;
+}
+#belt{
+    width: 382px;
+    height: 46px;
+    background-image: url("../images/belt.svg");
+    background-repeat: no-repeat;
+    margin-top: -137px;
+}
+#fish{
+    width: 78px;
+    height: 42px;
+    background-image: url("../images/fish.svg");
+    background-repeat: no-repeat;
+    float: right;
+    margin-top: -140px;
 }
 #space_at_end{
     height: 100px;
@@ -269,5 +332,22 @@ body {
 #footer{
     width: 1264px;
     height: 100px;
+}
+.banner_green{
+    height: 20px;
+    background-color: #237C26;
+}
+#green_banner_middle{
+    height: 98px;
+    width: 1000px;
+    margin: auto;
+    margin-top: -20px;
+    background-color: #fff;
+    border: solid 1px #237C26;
+}
+#green_banner_bottom{
+    width: 1000px;
+    margin: auto;
+    margin-top: -20px;
 }
 /* }}} */
