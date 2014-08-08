@@ -139,17 +139,6 @@ var $K_script_response =
 					"package": "package_manager",
 					"description": ".",
 				 }
-,
-				   {
-					"_path": "/src/loader/loader_html/",
-					"files": [
-						{"name": "ll_LoaderHtml.js", "description": "."}],
-					"provides": [],
-					"requires": [],
-					"offers": [],
-					"package": "loader_html",
-					"description": ".",
-				 }
 ],
 			"offers": [],
 			"package": "loader",
@@ -190,6 +179,27 @@ var $K_script_response =
 			"offers": [],
 			"package": "engine",
 			"description": "Event and execution control.",
+		 }
+,
+		   {
+			"_path": "/src/lib/",
+			"files": [],
+			"provides": [],
+			"requires": [
+				   {
+					"_path": "/src/lib/builder/",
+					"files": [
+						{"name": "ll_Builder.js", "description": "."}],
+					"provides": [],
+					"requires": [],
+					"offers": [],
+					"package": "builder",
+					"description": ".",
+				 }
+],
+			"offers": [],
+			"package": "lib",
+			"description": ".",
 		 }
 ],
 	"requires": [],

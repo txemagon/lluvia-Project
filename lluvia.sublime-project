@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings": {
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true,
+		"trim_trailing_white_space_on_save": true
+	},
+    "build_systems":
+    [
+        {
+            "name": "lluvia",
+            "shell_cmd": "node ${project_path}/util/compress-core/pack.js"
+        }
+    ]
+}
