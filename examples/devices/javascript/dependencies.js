@@ -3,6 +3,7 @@ var $K_app_dependencies = {
     "description": "Device Example",
     "path": "",
     "files": [
-        {"name": "main.js", "description": "function main"}
+        {"name": "class/count_down.js", "description": "Countdown clock"},
+        {"name": "main.js",             "description": "function main"}
     ]
 }

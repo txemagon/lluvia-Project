@@ -1,8 +1,8 @@
 /**
-  * 
+  *
   */
 function Builder(){
-	
+    this.table_symbols = []
 }
 
 Builder.lluvia_nodes = []
@@ -13,14 +13,10 @@ Builder.get_lluvia_nodes = function(actual_node){
     for(var i = 0; i<actual_node.childNodes.length; i++){
     	if(actual_node.childNodes[i].childNodes.length)
     		Builder.get_lluvia_nodes(actual_node.childNodes[i])
-            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className)){
+            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className))
         	    Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].id)
-            }
-            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue)){
+            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue))
                 Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].nodeValue)
-            }
     }
 }
 
@@ -43,6 +39,30 @@ Builder.is_lluvia_comment$U = function(comment, token){
     return false
 }
 
-Builder.prototype.gather_nodes = function(){}
+Builder.prototype.analize_node = function(node){
+    var node = node || {}
+    var type = node.className.split("-")
+    var result = {name: node.id, type: type[1], params: node.dataset.params}
 
-Builder.prototype.analize_nodes = function(){}
+    return result
+}
+
+Builder.prototype.create_elements = function(nodes) {
+    var nodes = nodes || []
+
+    for(var i = 0; i < nodes.length; i++){
+        var result = this.analize_node(nodes[i])
+        switch(this.clasify_element(result)){
+            case "object":
+                eval.call(null, "var " + result.name + " = new " + result.type + "(" + result.params + ")")
+                break
+        }
+    }
+}
+
+Builder.prototype.clasify_element = function(element){
+    var element = element || {}
+
+    if(element.type != "undefined")
+        return "object"
+}

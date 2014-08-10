@@ -203,7 +203,7 @@ function rectangle(coord,dimen){
 }
 rectangle.prototype.getRectDimen = function(){
 			return new Point(this.x1 - this.x0, this.y1 - this.y0);
-} 
+}
 rectangle.prototype.getRectCoord = function(){
 	return new Point(this.x0, this.y0);
 }
@@ -229,7 +229,7 @@ Continue.prototype.set = function (magnitude){
 Continue.prototype.clone = function(){
 	var copy = new Continue(this.magnitude);
 	copy.magnitude0 = this.magnitude0;
-	return copy;	
+	return copy;
 }
 Continue.prototype.derive = function(regard){
 	var derived = this.clone().magnitude;
@@ -240,7 +240,7 @@ Continue.prototype.derive = function(regard){
 		try{
 			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);
 		} catch (error) {
-			alert("The derivative is infinite: " + error.toString());	
+			alert("The derivative is infinite: " + error.toString());
 		}
 	return derived;
 }
@@ -256,7 +256,7 @@ Continue.prototype.differential = function (regard){
 Continue.prototype.integrate = function(amount){
 	var newValue = this.clone().magnitude;
 	for( var i in newValue)
-		newValue[i] += amount[i];	
+		newValue[i] += amount[i];
 	this.magnitude = newValue;
 }
 Time.prototype.constructor = Time;
@@ -878,8 +878,8 @@ String.prototype.next = function() {
     return this.succ.apply(this, arguments)
 }
 String.prototype.to_i = function() {
-    var base = 10 
-    var result = 0 
+    var base = 10
+    var result = 0
     if (arguments.length > 1)
         return null
     if (arguments.length != 0)
@@ -968,11 +968,11 @@ String.prototype.ascii_only$U = function() {
 }
 String.prototype.each_line = function(split) {
     var ary = this
-    var arycpy = [] 
-    var posEnd = 0 
-    var ind = 0 
+    var arycpy = []
+    var posEnd = 0
+    var ind = 0
     var regExp = /\n/g
-    var argZero = false 
+    var argZero = false
     if (arguments.length == 0 || arguments.length > 2)
         return null
     if (typeof(arguments[0]) !== "function") {
@@ -1066,30 +1066,30 @@ String.prototype.to_str = function() {
     return this.toString()
 }
 String.prototype.to_r = function() {
-    var str1 
-    var str2 
-    var op1 = "0/1" 
-    var op2 = 1 
+    var str1
+    var str2
+    var op1 = "0/1"
+    var op2 = 1
     var pos
     var mcd
     var dec
-    str1 = this.strip() 
-    if (str1.search(/^[\d\+.-]/g) == -1) 
+    str1 = this.strip()
+    if (str1.search(/^[\d\+.-]/g) == -1)
         return op1
-    str2 = str1 = str1.replace(/[_]/g, "") 
-    pos = str1.search(/\//g) 
+    str2 = str1 = str1.replace(/[_]/g, "")
+    pos = str1.search(/\//g)
     if (pos > 0) {
         str1 = str1.substring(0, pos)
         str2 = str2.substring(pos + 1)
     } else
         str2 = null
-    if (isNaN((op1 = parseFloat(str1)))) 
+    if (isNaN((op1 = parseFloat(str1))))
         return op1
     if (isNaN(str1) || isNaN(op2 = parseInt(str2)))
         op2 = 1
     dec = decimal(op1)
     op1 = op1 * Math.pow(10, dec)
-    if (op2 == 1) 
+    if (op2 == 1)
         op2 = Math.pow(10, dec)
     else
         op2 = op2 * Math.pow(10, dec)
@@ -1388,7 +1388,7 @@ Array.prototype.compact = function() {
     return ary
 }
 Array.prototype.merge = function(ary2) {
-    var ary = [] 
+    var ary = []
     for (var i = 0; i < this.length; i++)
         ary.push(this[i])
     for (var i = 0; i < ary2.length; i++)
@@ -1589,7 +1589,7 @@ Array.prototype.eql$U = function(model) {
     return model.inject_with_index(true,
         function(el, index, acum) {
             if (typeof(el) === "number")
-                return acum && el == that[index] 
+                return acum && el == that[index]
             return acum && ((el != null) ? el.eql$U(that[index]) : true)
         });
 }
@@ -1939,7 +1939,7 @@ basic_proto()
                                                        throw ('Method missing: ' + object + '.' + method + '(' + argument + ')' )\n\
                                                      return " + parent_class + "[method].apply(object, argument) \n\
                                                   }; ")
-  $global_space[class_name].call(eval(class_name + "({initialize: true})")) 
+  $global_space[class_name].call(eval(class_name + "({initialize: true})"))
   Class.all.push(new_class)
   alert(new_class)
   return new_class
@@ -2450,7 +2450,7 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
     }
 }
 InterleavedArray.prototype.infiltrate = function(position, element) {
-    var ia = new(ApplyProxyConstructor(InterleavedArray, element)) 
+    var ia = new(ApplyProxyConstructor(InterleavedArray, element))
     var subarray = this.go(position)
     var l = subarray.length
     for (var i = 0; i < ia.subarray.length; i++)
@@ -2621,7 +2621,7 @@ Exception.parse = function(err, source_code){
    if ( m && (m.length == 3) )
      if ( (obj = eval(m[1])) instanceof Object){
       actual_parameters = get_params(m[2], m[1])
-      return obj.method_missing(m[2], m[1],  actual_parameters) 
+      return obj.method_missing(m[2], m[1],  actual_parameters)
      }
    var obj = null
    var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
@@ -2706,7 +2706,7 @@ Package.prototype.catalog = function(already){
             }
         }
 }
-Package.prototype.through = function(block, config){ 
+Package.prototype.through = function(block, config){
     var config = config || {}
     config.last_package = config.last_package || this
     config.already_there = config.already_there || []
@@ -2753,7 +2753,7 @@ PackageManager.include_script = function(url, callback) {
     var script = document.createElement("script")
     script.type = "text/javascript"
     script.async = false
-    if (script.readyState) { 
+    if (script.readyState) {
         script.onreadystatechange = function() {
             if (script.readyState == "loaded" ||
                 script.readyState == "complete") {
@@ -2761,7 +2761,7 @@ PackageManager.include_script = function(url, callback) {
                 callback()
             }
         }
-    } else { 
+    } else {
         script.onload = function() {
             if (typeof callback == "function") {
                 callback()
@@ -2917,20 +2917,20 @@ function ll_module_included(module_source){
 }
 function ll_file_included(file_source, module_source, last_file, last_module){
     module_loading[module_source.module].addFile(file_source)
-    if (last_file) 
+    if (last_file)
         ll_module_included(module_source)
     if (last_file && last_module)
       if (!$K_loading_app && $K_app_dependencies){
          $K_loading_app = true
-         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
+         _includeScript('dependencies.js', 'onload', '_includeDependencies()')
       }else
         ll_start()
 }
 function highlight(language){
     dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
     code = document.getElementsByTagName('pre')
-    for (var i = 0; i < code.length; i++) 
-        if (code[i].className == language) 
+    for (var i = 0; i < code.length; i++)
+        if (code[i].className == language)
             dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
 }
 function ll_start(){
@@ -2944,8 +2944,8 @@ function sanitize(code){
     return code.replace("&lt;", "<")
 }
 function run(code_fragment){
-    var snippets = document.getElementsByName(code_fragment)	
-    for (var i = 0; i < snippets.length; i++) 	    
+    var snippets = document.getElementsByName(code_fragment)
+    for (var i = 0; i < snippets.length; i++)
         eval(sanitize(snippets[i].innerHTML))
 }
 function clear(div){
@@ -3011,11 +3011,11 @@ LogModuleLoad.prototype.addFile = function(file_source){
 }
 LogModuleLoad.prototype.endLoad = function(){
   this.end   = new Date().getTime()
-  this.template[14] = $timeStamp()     
+  this.template[14] = $timeStamp()
   this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
   return this.toString()
 }
-LogModuleLoad.prototype.toString = function(){  
+LogModuleLoad.prototype.toString = function(){
   this.template[20] = ""
   for (var i=0; i<this.files.length; i++)
     this.template[20] += this.files[i].toString()
@@ -3043,7 +3043,7 @@ function CodeBlockFinder(snippet, start_after, delimiters, counted_character){
     if (this.search_start < 0)
         throw "Impossible to set up the CodeBlockFinder" +
               "with params: " + arguments.toSource()
-    this.source    = snippet + " " 
+    this.source    = snippet + " "
     this.reset()
 }
 CodeBlockFinder.States  = new Enumeration("searching", "scanning", "ended")
@@ -3051,12 +3051,12 @@ CodeBlockFinder.prototype.reset = function(){
 	this.initial    = this.search_start
     this.final      = this.search_start
     this.status     = CodeBlockFinder.States.searching
-    this.delimiter  = this.delimiters.open  
+    this.delimiter  = this.delimiters.open
     this.nested     = 0
     this.lines_read = 0
 }
 CodeBlockFinder.prototype.start = function(){
-	var car  = null 
+	var car  = null
 	var text = []
     while(car = this.source[this.initial]){
     	if (car == this.counted_character)
@@ -3065,9 +3065,9 @@ CodeBlockFinder.prototype.start = function(){
     		case CodeBlockFinder.States.searching:
 	    		if (car == this.delimiter){
 	    			text.push(car)
-	    			this.delimiter = this.delimiters.close 
+	    			this.delimiter = this.delimiters.close
 	    			this.status    = CodeBlockFinder.States.scanning
-	    		}      
+	    		}
 	    		break;
 	    	case CodeBlockFinder.States.scanning:
 	    	    text.push(car)
@@ -3078,7 +3078,7 @@ CodeBlockFinder.prototype.start = function(){
 	    				this.nested--
 	    			else
 	    			    this.status = CodeBlockFinder.States.ended
-	    		}      
+	    		}
 	    		break;
 	    	case CodeBlockFinder.States.ended:
 	    	   this.text = text.join("")
@@ -3098,7 +3098,7 @@ CodeBlockFinder.parse_params = function(string_of_params){
    var possible_param = string_of_params.split(/,\s*/)
    var items = possible_param.length
    var position_line = 0
-   var position_initialize = 1  
+   var position_initialize = 1
    for (var i=0; i<items; i++){
         if (!possible_param[i].match(/function\s+initialize/))
             position_line++
@@ -3110,7 +3110,7 @@ CodeBlockFinder.parse_params = function(string_of_params){
         var closure = ""
         var closure_param = new CodeBlockFinder(possible_param.slice(i).join(','), /function/, {open: '(', close: ')'}, ',')
         closure_param.start()
-        var delta = closure_param.lines_read 
+        var delta = closure_param.lines_read
         closure_param     = new CodeBlockFinder(possible_param.slice(i).join(','), '{', null, ',')
         closure_param.start()
         delta +=  closure_param.lines_read + (position_initialize)
@@ -3140,7 +3140,7 @@ function JavascriptSource (file_name) {
 	this.lines = this.source.split("\n")
 	JavascriptSource.read_files[file_name] = this
 }
-JavascriptSource.prototype.line = function(line_number){ 
+JavascriptSource.prototype.line = function(line_number){
 	return this.lines[line_number-1]
 }
 JavascriptSource.prototype.lines_from = function(start, end){
@@ -3173,7 +3173,7 @@ function $Logger(html_element, severity){
 $Logger.prototype.log = function(message, severity){
 	severity = severity || this.severity
 	if ($K_debug_level >= $KC_dl[severity]){
-		this.panel.innerHTML = "[" + new Date().toLocaleTimeString() + "]:" + severity + ": " + 
+		this.panel.innerHTML = "[" + new Date().toLocaleTimeString() + "]:" + severity + ": " +
 		                       message + "<br/>\n" + this.panel.innerHTML
 		this.logs.push(message)
 	}
@@ -3413,9 +3413,10 @@ StateGear.prototype.zip = function(solicitors, base_state) {
     }
 }
 ThreadAutomata.prototype  = new Thread;
+//ThreadAutomata.extend(Automata);
 ThreadAutomata.prototype.constructor = ThreadAutomata;
 function ThreadAutomata(state, currentState, solicitor, processor){
-	if (arguments.length){
+    if (arguments.length){
 		Automata.call(this, state, currentState, solicitor);
 		Thread.call(this, ThreadAutomata.prototype.run, processor);
 	}
@@ -3427,7 +3428,7 @@ ThreadAutomata.prototype.run = function(processors_time){
 	Automata.prototype.run.call(this, this.now, this.before);
 }
 Device.prototype = new Processor
-//extend(Device, ThreadAutomata) 
+//Device.extend(ThreadAutomata)
 Device.prototype.constructor = Device
 function Device(view, state, current_state, parent) {
     var that = this
@@ -3448,10 +3449,10 @@ function Device(view, state, current_state, parent) {
     if (view)
         this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
     this.lookup = new Lookup();
-    this.event_dispatcher = new event_dispatcher(this.lookup);
+    this.event_dispatcher = new EventDispatcher(this.lookup);
     this.gates = []
     this.open_device = _$innerObject(this, "device")
-    function initialize() { 
+    function initialize() {
         that.event_dispatcher.device = that
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
@@ -3459,7 +3460,7 @@ function Device(view, state, current_state, parent) {
         ThreadAutomata.call(that, state, that.current_state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
-    if (arguments.length) 
+    if (arguments.length)
         initialize();
 }
 Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
@@ -3491,7 +3492,7 @@ Device.prototype.new_gate = function(el, ClassCons, config) {
     }
 }
 Device.prototype.attend = function(date, mssg) {
-    this["attend_" + mssg.name](date, mssg) 
+    this["attend_" + mssg.name](date, mssg)
 }
 Device.prototype._y = function(htmlElement, stopAt) {
     stopAt = stopAt || null
@@ -3552,12 +3553,12 @@ Device.prototype.method_missing = function(method, obj, params) {
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher
 function EventDispatcher(lookup){
-	var that = this; 
+	var that = this;
 	this.ids   = 0
 	this.ports = {
 	}
 	this.inqueue = []
-	this.clss = that	
+	this.clss = that
 	this.getId = function(){return ++that.ids;}
 	lookup.add(this)
 }
@@ -3586,7 +3587,7 @@ EventDispatcher.prototype.fireEvent = function(event){
 		for (var i=0; i<this.clss.ports[event.name].length; i++)
 			this.clss.ports[event.name][i](event);
 }
-EventDispatcher.prototype.shift = function(){ 
+EventDispatcher.prototype.shift = function(){
 	for (var i=0; i<this.inqueue.length; i++)
 		try {
 			var mssg = this.inqueue[i]
@@ -3658,7 +3659,7 @@ function Gate(element, parent, config){
 Gate.prototype.listen = function(event, handler){
     this.panel[event] = _stitchWorlds(this, handler)
 }
-Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } 
+Gate.prototype.getCanvas = function(){ return this.panel.lastChild; }
 Gate.prototype.applySkin = function(skin){
     var div = document.createElement("div")
     div.setAttribute("class", skin)
@@ -3682,7 +3683,7 @@ function Lookup(){
     this.view = null
 }
 Lookup.prototype.add = function(obj){
-    if (obj.isPrototypeOf(EventDispatcher)) 
+    if (obj.isPrototypeOf(EventDispatcher))
         this.eventDispatcher = obj
 	else this.global.push(obj)
 }
@@ -3705,11 +3706,11 @@ var systemEv = (function(){
 	var args = arguments
 	function setup(){
 	    var sEvs = {
-		"sync": {	type    : "synchronous",					
+		"sync": {	type    : "synchronous",
 		    name	: null,
-		    creation: {creator: null, time: null},		
-		    current : 0,								
-		    status  : ["sent", "attended", "closed"],	
+		    creation: {creator: null, time: null},
+		    current : 0,
+		    status  : ["sent", "attended", "closed"],
 		    event   : {}
 		}
 	    }
@@ -3725,6 +3726,7 @@ var systemEv = (function(){
 	return  ob_msg; })
 })()
 function Builder(){
+    this.table_symbols = []
 }
 Builder.lluvia_nodes = []
 Builder.get_lluvia_nodes = function(actual_node){
@@ -3732,14 +3734,10 @@ Builder.get_lluvia_nodes = function(actual_node){
     for(var i = 0; i<actual_node.childNodes.length; i++){
     	if(actual_node.childNodes[i].childNodes.length)
     		Builder.get_lluvia_nodes(actual_node.childNodes[i])
-            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className)){
+            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className))
         	    Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].id)
-            }
-            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue)){
+            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue))
                 Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].nodeValue)
-            }
     }
 }
 Builder.is_lluvia_element$U = function(element, separator) {
@@ -3751,13 +3749,34 @@ Builder.is_lluvia_element$U = function(element, separator) {
 }
 Builder.is_lluvia_comment$U = function(comment, token){
     var comment = comment || ""
-    var token = token || "#!lluvia"
-    if(comment.search(token))
+    var token = token || "#!ll"
+    var not_found = -1
+    if(comment.search(token) != not_found)
         return true
     return false
 }
-Builder.prototype.gather_nodes = function(){}
-Builder.prototype.analize_nodes = function(){}
+Builder.prototype.analize_node = function(node){
+    var node = node || {}
+    var type = node.className.split("-")
+    var result = {name: node.id, type: type[1], params: node.dataset.params}
+    return result
+}
+Builder.prototype.create_elements = function(nodes) {
+    var nodes = nodes || []
+    for(var i = 0; i < nodes.length; i++){
+        var result = this.analize_node(nodes[i])
+        switch(this.clasify_element(result)){
+            case "object":
+                alert("var " + result.name + " = new " + result.type + "(" + result.params + ")")
+                break
+        }
+    }
+}
+Builder.prototype.clasify_element = function(element){
+    var element = element || {}
+    if(element.type != "undefined")
+        return "object"
+}
 function bring_lluvia() {
     function init_program() {
         if (typeof required_packages == 'function')
