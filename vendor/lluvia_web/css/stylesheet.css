@@ -94,11 +94,12 @@ body {
 }
 .header_menu{
     height: 180px;
-    width: 579px;
+    width: 542px;
+    margin-left: 15px;
     display: inline-block;
 }
 #logo{
-    margin-bottom: 35px;
+    margin-bottom: 15px;
     display: inline-block;
 }
 #header_menu_right{
@@ -113,11 +114,16 @@ body {
 .display_inline{
     display: inline-block;
 }
+#main_container{
+    position: absolute;
+    top: -1334px;
+    border: solid 1px red;
+}
 #vertical_line{
     width: 550px;
-    margin-top: -1560px;
     margin-left: 70px;
     border: solid 1px #ccc;
+    /*overflow: hidden;*/
 }
 .dark_lines_vertical{
     width: 1px;
@@ -130,7 +136,7 @@ body {
     margin-top: 20px;
 }
 .dark_lines_horizontal{
-    width: 700px;
+    width: 750px;
     height: 1px;
     background-color: #666;
 }
@@ -138,7 +144,7 @@ body {
     margin-top: 60px;
 }
 #dark_line2{
-    width: 670px;
+    width: 760px;
 }
 #blue_banner_top{
     margin-top: -22px;
@@ -162,7 +168,7 @@ body {
     margin-left: 594px;
 }
 .right_dark_line{
-    margin-left: 564px;
+    margin-left: 514px;
 }
 #dark_line9{
     margin-bottom: 106px;
@@ -170,7 +176,7 @@ body {
 #dark_line10{
     margin-top: -383px;
     margin-left: 550px;
-    margin-bottom: 896px;
+    margin-bottom: 897px;
 }
 #purple_banner_top{
     width: 630px;
@@ -203,7 +209,7 @@ body {
     position: relative;
 }
 #first_box{
-    width: 550px;
+    width: 549px;
     height: 320px;
     margin-top: -499px;
     border: solid 1px #4E72AE;
@@ -217,10 +223,28 @@ body {
     height: 298px;
     background-color: #fff;
 }
+#cloud{
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.blue_text{
+    margin-top: 40px;
+    margin-left: 120px;
+}
+#blue_intro{
+    font-size: 18pt;
+    margin-left: 120px;
+    margin-top: -40px;
+}
+#download{
+    float: right;
+    margin-right: 20px;
+    margin-top: -40px;
+}
 #cogs_and_chain{
     width: 620px;
     position: absolute;
-    top: -1332px;
+    top: 0px;
     left: 635px;
 }
 #second_wheel{
@@ -235,14 +259,14 @@ body {
     margin-bottom: 34px;
 }
 #third_wheel{
-    margin-left: 201px;
+    margin-left: 202px;
 }
 #gear_inside2{
     margin-left: -47px;
     margin-bottom: 28px;
 }
 #fourth_wheel{
-    margin-left: -99px;
+    margin-left: -98px;
     margin-bottom: -78px;
 }
 #gear_inside3{
@@ -263,18 +287,31 @@ body {
     margin-left: -13px;
 }
 #eagle{
-    width: 104px;
-    height: 108px;
+    width: 710px;
+    height: 69px;
     background-image: url("../images/eagle.svg");
+    background-repeat: no-repeat;
+    background-position: right;
     margin-top: -696px;
     margin-left: -72px;
+}
+.black_line{
+    height: 1px;
+    width: 642px;
+    background-color: #666;
+}
+#black_line2{
+    margin-top: 17px;
 }
 #second_box{
     width: 500px;
     height: 352px;
-    margin-top: -256px;
+    margin-top: -217px;
     margin-left: 640px;
     border: solid 1px #B21687;
+}
+#menu_first_part{
+    width: 498px;
 }
 .banner_purple{
     width: 200x;
@@ -298,7 +335,7 @@ body {
 #pelton_wheel{
     width: 641px;
     height: 277px;
-    margin-left: 550px;
+    margin-left: 552px;
     margin-top: -300px;
 }
 #pelton{
@@ -317,21 +354,19 @@ body {
     margin-top: -137px;
 }
 #fish{
-    width: 78px;
-    height: 42px;
+    width: 150px;
+    height: 80px;
     background-image: url("../images/fish.svg");
     background-repeat: no-repeat;
     float: right;
-    margin-top: -140px;
-}
-#space_at_end{
-    height: 100px;
+    margin-top: -170px;
 }
 /* }}} */
 /* Footer {{{ */
 #footer{
-    width: 1264px;
+    width: 1266px;
     height: 100px;
+    border: none;
 }
 .banner_green{
     height: 20px;
