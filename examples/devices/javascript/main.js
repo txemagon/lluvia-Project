@@ -3,10 +3,9 @@ function require_package(){
 }
 
 function main() {
-    var l = new Builder()
-    Builder.get_lluvia_nodes(document)
-    l.create_elements(Builder.lluvia_nodes)
+    var b = new Builder()
+    b.get_lluvia_nodes(document)
+    b.build()
 
-    alert(count_down)
-
+    alert(count_down.initial_time)
 }
