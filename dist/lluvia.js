@@ -475,78 +475,82 @@ Number.eql$U = function(model, value){
    return this == model
 }
 isNumber = is_number = is_a_number = isANumber = isNumber$U = is_number$U = is_a_number$U = isANumber$U = function(op){ return !isNaN(op) }
-Function.prototype.bind = function(object){
-	var f = this
-	return function(){ f.apply(object, arguments) }
+Function.prototype.bind = function(object) {
+    var f = this
+    return function() {
+        f.apply(object, arguments)
+    }
 }
-Function.prototype.bind_params = function(){
-	var args = arguments
-	var f = this
-	return function(){ f.apply(f, args) }
+Function.prototype.bind_params = function() {
+    var args = arguments
+    var f = this
+    return function() {
+        f.apply(f, args)
+    }
 }
-Function.prototype.yield = function(){
-     for (var i=this.arguments.length-1; i>=0; i--)
+Function.prototype.yield = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
             return this.arguments[i].apply(this, arguments)
 }
-Function.prototype.block_given$U = function(){
-     var given = false
-     for (var i=this.arguments.length-1; !given && i>=0; i--)
+Function.prototype.block_given$U = function() {
+    var given = false
+    for (var i = this.arguments.length - 1; !given && i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
-           given = this.arguments[i]
-     return given
+            given = this.arguments[i]
+    return given
 }
-Function.prototype.deconstruct = function(){
-  return { name: this.name,
-           params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: this.toSource().match(/{(.*)}/)[1]
-           }
-}
-Function.deconstruct = function(src){
-  return { name: src.match(/function\s+([^\(]+)/)[1],
-           params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: src.match(/{(.*)}/)[1]
-           }
-}
-Function.prototype.extend = function(superclass, args){
-  var that = this
-  var s = new superclass()
-  s.keys().each( function(k) {
-       if (typeof(that.prototype[k]) == "undefined")
-         that.prototype[k] = s[k];
-     } )
-  superclass.keys().each( function(k) {
-       that.prototype[k] = superclass[k];
-     } )
-  if ( this.Class && this.Class.before_extended && ( typeof(this.Class.before_extended) == "function" ) )
-    this.super.Class.before_extended.apply(this, args)
-  if ( this.Class && this.Class.after_extended && ( typeof(this.Class.after_extended) == "function" ) )
-    this.super.Class.after_extended(this)
-}
-Function.prototype.reflect = function(){
-  var result
-  var return_value = {}
-  var calling_class = eval(this.name)
-  function duplicate(original_method){
-    calling_class.prototype[original_method + "$B"] = function(){
-      var substitute = calling_class.prototype[original_method].apply(this, arguments)
-  for (var i=0; i<substitute.length; i++)
-    this[i] = substitute[i]
-      return this
+Function.prototype.deconstruct = function() {
+    return {
+        name: this.name,
+        params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: this.toSource().match(/{(.*)}/)[1]
     }
-    return [ original_method + "$B", calling_class.prototype[original_method + "$B"] ]
-  }
-  for(var i=0; i<arguments.length; i++)
-    if (arguments[i] instanceof Array)
-      for(var j=0; j<arguments[i].length; j++){
-  result = duplicate(arguments[i][j])
-    return_value[result[0]] = result[1]
-      }
-    else {
-      result = duplicate(arguments[i])
-  return_value[result[0]] = result[1]
+}
+Function.deconstruct = function(src) {
+    return {
+        name: src.match(/function\s+([^\(]+)/)[1],
+        params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: src.match(/{(.*)}/)[1]
     }
-  return return_value
+}
+Function.prototype.extend = function(superclass, args) {
+    var that = this
+    var s = new superclass()
+    s.keys().each(function(k) {
+        that.prototype[k] = s[k];
+    })
+    superclass.keys().each(function(k) {
+        that.prototype[k] = superclass[k];
+    })
+    if (this.Class && this.Class.before_extended && (typeof(this.Class.before_extended) == "function"))
+        this.super.Class.before_extended.apply(this, args)
+    if (this.Class && this.Class.after_extended && (typeof(this.Class.after_extended) == "function"))
+        this.super.Class.after_extended(this)
+}
+Function.prototype.reflect = function() {
+    var result
+    var return_value = {}
+    var calling_class = eval(this.name)
+    function duplicate(original_method) {
+        calling_class.prototype[original_method + "$B"] = function() {
+            var substitute = calling_class.prototype[original_method].apply(this, arguments)
+            for (var i = 0; i < substitute.length; i++)
+                this[i] = substitute[i]
+            return this
+        }
+        return [original_method + "$B", calling_class.prototype[original_method + "$B"]]
+    }
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j < arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+    return return_value
 }
 String.prototype.capitalize = function() {
     word = this.toLowerCase()
@@ -3128,7 +3132,6 @@ Automata.prototype.constructor = Automata;
 function Automata(states, solicitor) {
     var that = this
     function initialize() {
-        alert("Automata: " + states)
         function find_initial_state(state_level, initial_state) {
             initial_state = initial_state || ""
             for (var i = 0; i < state_level.length; i++) {
@@ -3162,7 +3165,6 @@ function Automata(states, solicitor) {
 }
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
-        alert("Automata: " + this.state)
         state = state.split(".")
         var s
         for (s = this.state; state.length; s = s[state.shift()]);
@@ -3254,21 +3256,21 @@ ThreadAutomata.prototype.run = function(processors_time) {
 Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
 function Device(view, state, parent) {
     var that = this
     this._class = that
     state = state || Device.STATE
     this.solicitors = {
         running: function() {
-            this.gate_runner(this.now)
-            this.child_runner(this.now);
+            this.owner.gate_runner(this.now)
+            this.owner.child_runner(this.now);
         },
         suspending: function() {
-            this.child_runner(this.now);
+            this.owner.child_runner(this.now);
         },
         killing: function() {
-            this.gate_runner(this.now)
+            this.owner.gate_runner(this.now)
         }
     }
     if (view)

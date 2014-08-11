@@ -86,7 +86,6 @@ function Automata(states, solicitor) {
     var that = this
 
     function initialize() {
-        alert("Automata: " + states)
 
         function find_initial_state(state_level, initial_state) {
             initial_state = initial_state || ""
@@ -184,7 +183,6 @@ function Automata(states, solicitor) {
  */
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
-        alert("Automata: " + this.state)
         state = state.split(".")
         var s
         for (s = this.state; state.length; s = s[state.shift()]);
