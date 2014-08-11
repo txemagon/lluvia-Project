@@ -19,7 +19,6 @@ function CountDown(initial_time) {
 
 }
 
-
 CountDown.prototype.start = function() {
     this.switch("running")
 }

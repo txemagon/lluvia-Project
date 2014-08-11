@@ -3,8 +3,7 @@ function require_package() {
 }
 
 function main() {
-
-    var count_down = new CountDown(120)
-    count_down.run()
-    alert(count_down.current)
+    var ll = {}
+    var b = new Builder(ll)
+    b.build()
 }
