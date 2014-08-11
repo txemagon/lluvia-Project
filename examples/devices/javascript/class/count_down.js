@@ -4,11 +4,7 @@ CountDown.prototype.constructor = CountDown
 function CountDown(initial_time) {
     this.initial_time = initial_time
     this.time_passed
-<<<<<<< HEAD
-    /*
-=======
 
->>>>>>> da6990b75332a7c1b10a600ed3b37e28a89979ec
     if (arguments.length)
         Device.call(this, arguments)
 
@@ -23,11 +19,6 @@ function CountDown(initial_time) {
 
 }
 
-<<<<<<< HEAD
-/*
-=======
-
->>>>>>> da6990b75332a7c1b10a600ed3b37e28a89979ec
 CountDown.prototype.start = function() {
     this.switch("running")
 }
