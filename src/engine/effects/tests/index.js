@@ -1,0 +1,26 @@
+var _test_index = [ /* We first bring lluvia */
+    "../../../kernel/ll_Kernel.js",
+    "../../../kernel/core-ext/ll_Number.js",
+    "../../../kernel/core-ext/ll_Function.js",
+    "../../../mathematics/ll_Expression.js",
+    "../../../mathematics/geometry/ll_Vector.js",
+    "../../../kernel/ll_Exception.js",
+    "../../../kernel/core-ext/ll_Object.js",
+    "../../../kernel/foundation/enumerable/ll_Hash.js",
+    "../../../kernel/foundation/architecture/ll_ApplyProxyConstructor.js",
+    "../../../kernel/foundation/architecture/ll_Module.js",
+    "../../../kernel/foundation/architecture/ll_ProxyConstructor.js",
+    "../../../kernel/foundation/enumerable/ll_InterleavedArray.js",
+    "../../../kernel/foundation/data-type/ll_VersionNumber.js",
+    "../../../kernel/foundation/enumerable/ll_Enumeration.js",
+    "../../../browser/ll_CodeBlockFinder.js",
+    "../../../browser/ll_JavascriptSource.js",
+    "../../../kernel/core-ext/ll_Array.js",
+    "../../../kernel/core-ext/ll_String.js",
+    "../../../kernel/foundation/architecture/ll_Class.js",
+    "../../../kernel/facilities/class/ll_ClassFactory.js",
+    "../../ll_Thread.js",
+    "../ll_Interpolator.js",
+    /* And we then bring asserts */
+    "interpolator_tests.js"
+]

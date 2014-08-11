@@ -1,0 +1,12 @@
+#container{
+    height: 200px;
+    position: relative;
+    border: solid 1px black;
+}
+#line{
+    width: 100px;
+    height: 20px;
+    background-color: #666;
+    position: absolute;
+    top: 20px;
+}
