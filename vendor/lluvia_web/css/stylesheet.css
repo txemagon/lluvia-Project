@@ -66,11 +66,13 @@ body {
 /* }}} */
 /* Header {{{ */
 .standard_features{
+    width: 1264px;
     margin: auto;
+}
+.common_border{
     border: solid 1px black;
 }
 #header{
-    width: 1264px;
     height: 202px;
     position: relative;
 }
@@ -107,146 +109,44 @@ body {
 }
 /* }}} */
 /* Main {{{ */
-#main_section{
-    width: 1264px;
+.common{
+    height: 460px;
     position: relative;
 }
-.display_inline{
-    display: inline-block;
+.left_side{
+    width: 620px;
+    border: solid 1px orange;
 }
-#main_container{
+.right_side{
+    width: 630px;
     position: absolute;
-    top: -1334px;
-    border: solid 1px red;
-}
-#vertical_line{
-    width: 550px;
-    margin-left: 70px;
-    border: solid 1px #ccc;
-    /*overflow: hidden;*/
-}
-.dark_lines_vertical{
-    width: 1px;
-    height: 450px;
-    background-color: #666;
+    right: 0px;
+    top: 0px;
+    border: solid 1px blue;
 }
 .horizontal_line{
     height: 1px;
     background-color: #ccc;
     margin-top: 20px;
 }
-.dark_lines_horizontal{
-    width: 750px;
-    height: 1px;
-    background-color: #666;
-}
-#horizontal_line1{
-    margin-top: 60px;
-}
-#dark_line2{
-    width: 760px;
-}
-#blue_banner_top{
-    margin-top: -22px;
+.box_header{
     width: 700px;
+    height: 20px;
+    border: solid 1px green;
 }
-#dark_line3{
-    width: 670px;
-}
-#horizontal_line3{
-    margin-top: 275px;
-}
-#horizontal_line5{
-    margin-top: 120px;
-}
-#dark_line6{
-    width: 670px;
-    margin-left: 594px;
-}
-#dark_line7{
-    width: 670px;
-    margin-left: 594px;
-}
-.right_dark_line{
-    margin-left: 514px;
-}
-#dark_line9{
-    margin-bottom: 106px;
-}
-#dark_line10{
-    margin-top: -383px;
-    margin-left: 550px;
-    margin-bottom: 897px;
-}
-#purple_banner_top{
-    width: 630px;
-    margin-top: -21px;
-    float: right;
-}
-#horizontal_line7{
-    margin-top: 308px;
-}
-#orange_banner_top{
-    width: 700px;
-    margin-top: 150px;
-}
-.banner_orange{
+.middle_section{
     width: 550px;
-    height: 22px;
-    background-color: #ff7f00;
+    border: solid 1px red;
 }
-#horizontal_line11{
-    margin-top: -22px;
+.box_footer{
+    width: 550px;
+    height: 20px;
+    border: solid 1px blue;
 }
-.dark_line_orange{
-    width: 750px;
+.right_footer{
+
 }
-#horizontal_line13{
-    margin-top: 275px;
-}
-#main_container{
-    width: 1264px;
-    position: relative;
-}
-#first_box{
-    width: 549px;
-    height: 320px;
-    margin-top: -499px;
-    border: solid 1px #4E72AE;
-}
-.banner_blue{
-    width: 549px;
-    height: 22px;
-    background-color: #4E72AE;
-}
-#blue_banner_middle{
-    height: 298px;
-    background-color: #fff;
-}
-#cloud{
-    margin-top: 30px;
-    margin-left: 10px;
-}
-.blue_text{
-    margin-top: 40px;
-    margin-left: 120px;
-}
-#blue_intro{
-    font-size: 18pt;
-    margin-left: 120px;
-    margin-top: -40px;
-}
-#download{
-    float: right;
-    margin-right: 20px;
-    margin-top: -40px;
-}
-#cogs_and_chain{
-    width: 620px;
-    position: absolute;
-    top: 0px;
-    left: 635px;
-}
+/* Cogs and Wheels {{{ */
 #second_wheel{
     margin-left: 135px;
     margin-bottom: -20px;
@@ -286,81 +186,7 @@ body {
     margin-top: 90px;
     margin-left: -13px;
 }
-#eagle{
-    width: 710px;
-    height: 69px;
-    background-image: url("../images/eagle.svg");
-    background-repeat: no-repeat;
-    background-position: right;
-    margin-top: -696px;
-    margin-left: -72px;
-}
-.black_line{
-    height: 1px;
-    width: 642px;
-    background-color: #666;
-}
-#black_line2{
-    margin-top: 17px;
-}
-#second_box{
-    width: 500px;
-    height: 352px;
-    margin-top: -217px;
-    margin-left: 640px;
-    border: solid 1px #B21687;
-}
-#menu_first_part{
-    width: 498px;
-}
-.banner_purple{
-    width: 200x;
-    height: 21px;
-    background-color: #B21687;
-}
-#purple_banner_middle{
-    height: 332px;
-    background-color: #fff;
-}
-#third_box{
-    width: 550px;
-    height: 320px;
-    margin-top: 151px;
-    border: solid 1px #ff7f00;
-}
-#orange_banner_middle{
-    height: 300px;
-    background-color: #fff;
-}
-#pelton_wheel{
-    width: 641px;
-    height: 277px;
-    margin-left: 552px;
-    margin-top: -300px;
-}
-#pelton{
-    width: 229px;
-    height: 228px;
-    background-image: url("../images/pelton_wheel.svg");
-    background-repeat: no-repeat;
-    margin-left: 270px;
-    margin-top: 45px;
-}
-#belt{
-    width: 382px;
-    height: 46px;
-    background-image: url("../images/belt.svg");
-    background-repeat: no-repeat;
-    margin-top: -137px;
-}
-#fish{
-    width: 150px;
-    height: 80px;
-    background-image: url("../images/fish.svg");
-    background-repeat: no-repeat;
-    float: right;
-    margin-top: -170px;
-}
+/* }}} */
 /* }}} */
 /* Footer {{{ */
 #footer{
