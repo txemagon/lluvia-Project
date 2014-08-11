@@ -27,7 +27,7 @@
 
 InterleavedArray.prototype = new Array
 InterleavedArray.prototype.constructor = InterleavedArray
-
+InterleavedArray.prototype.super = Array
 /**
  * @method constructor
  * Creates a new InterleavedArray

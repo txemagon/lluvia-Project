@@ -199,5 +199,5 @@ Automata.prototype.switch = function(state) {
  *
  */
 Automata.prototype.run = function() {
-    return this.current.drive_state()
+    return this.current.drive_state.apply(this.current, arguments)
 }

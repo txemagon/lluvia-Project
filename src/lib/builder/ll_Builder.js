@@ -4,6 +4,7 @@
 function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
+    this.space_name = null
     this.table_symbols = new TableSymbols()
 
     if (arguments.length)
@@ -73,12 +74,11 @@ Builder.prototype.create_element = function(node, type) {
 
     switch (type) {
         case "object":
-            if (typeof this.space_name == "undefined") {
+            if (typeof this.space_name == "undefined")
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
-            } else {
+            else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
-                alert(node.name)
-            }
+
             break
     }
 }
