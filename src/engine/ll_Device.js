@@ -82,6 +82,13 @@ Device.prototype.constructor = Device
 
 
 /**
+ * Device default states
+ * @property {Object} Device.STATE Enumeration constant.
+ */
+
+Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
+
+/**
  * @method constructor
  * Creates a Device.
  *
@@ -92,30 +99,29 @@ Device.prototype.constructor = Device
  *
  */
 
-function Device(view, state, current_state, parent) {
+function Device(view, state, parent) {
     /* Class accesors*/
     var that = this
     this._class = that
     state = state || Device.STATE
-
     this.solicitors = {
         running: function() {
-            this.gate_runner(this.now)
-            this.child_runner(this.now);
+            this.owner.gate_runner(this.now)
+            this.owner.child_runner(this.now);
         },
         suspending: function() {
-            this.child_runner(this.now);
+            this.owner.child_runner(this.now);
         },
         killing: function() {
-            this.gate_runner(this.now)
+            this.owner.gate_runner(this.now)
         }
     }
 
     /* Instance vars */
     if (view)
         this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
-    this.lookup = new Lookup();
-    this.event_dispatcher = new EventDispatcher(this.lookup);
+
+    this.event_dispatcher = new EventDispatcher();
 
     this.gates = []
 
@@ -123,11 +129,12 @@ function Device(view, state, current_state, parent) {
 
     /* construction */
     function initialize() { // Use that. This would refer to the function object.
+
         that.event_dispatcher.device = that
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-        ThreadAutomata.call(that, state, that.current_state, that.solicitors, parent || $Processor);
+        ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
 
@@ -136,12 +143,6 @@ function Device(view, state, current_state, parent) {
 
 
 }
-
-/**
- * Device default states
- * @property {Object} Device.STATE Enumeration constant.
- */
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 
 /**
  * @method gate_runner

@@ -1,4 +1,4 @@
-function require_package(){
+function require_package() {
     PackageManager.drop("builder")
 }
 

@@ -3,45 +3,51 @@
  * Extends JavaScript native Function
  */
 
-Function.prototype.bind = function(object){
-	var f = this
-	return function(){ f.apply(object, arguments) }
+Function.prototype.bind = function(object) {
+    var f = this
+    return function() {
+        f.apply(object, arguments)
+    }
 }
 
-Function.prototype.bind_params = function(){
-	var args = arguments
-	var f = this
-	return function(){ f.apply(f, args) }
+Function.prototype.bind_params = function() {
+    var args = arguments
+    var f = this
+    return function() {
+        f.apply(f, args)
+    }
 }
 
-Function.prototype.yield = function(){
-     for (var i=this.arguments.length-1; i>=0; i--)
+Function.prototype.yield = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
             return this.arguments[i].apply(this, arguments)
 }
 
-Function.prototype.block_given$U = function(){
-     var given = false
-     for (var i=this.arguments.length-1; !given && i>=0; i--)
+Function.prototype.block_given$U = function() {
+    var given = false
+    for (var i = this.arguments.length - 1; !given && i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
-           given = this.arguments[i]
-     return given
+            given = this.arguments[i]
+    return given
 }
 
 /* Takes a function and prepare it to clone with the Function constructor.
-*/
-Function.prototype.deconstruct = function(){
-  return { name: this.name,
-           params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: this.toSource().match(/{(.*)}/)[1]
-           }
+ */
+Function.prototype.deconstruct = function() {
+    return {
+        name: this.name,
+        params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: this.toSource().match(/{(.*)}/)[1]
+    }
 }
 
-Function.deconstruct = function(src){
-  return { name: src.match(/function\s+([^\(]+)/)[1],
-           params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: src.match(/{(.*)}/)[1]
-           }
+Function.deconstruct = function(src) {
+    return {
+        name: src.match(/function\s+([^\(]+)/)[1],
+        params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: src.match(/{(.*)}/)[1]
+    }
 }
 
 /*
@@ -217,23 +223,24 @@ There are two posible strategies. Extending (widering) prototype with a copy of 
    Please extend only in the initialize method.
 */
 
-Function.prototype.extend = function(superclass, args){
-  var that = this
-  var s = new superclass()
-  s.keys().each( function(k) {
-       if (typeof(that.prototype[k]) == "undefined")
-         that.prototype[k] = s[k];
-     } )
+Function.prototype.extend = function(superclass, args) {
+    var that = this
+    var s = new superclass()
+    s.keys().each(function(k) {
+        // Uncomment the following if you don't want to override function definition
+        // if (typeof(that.prototype[k]) == "undefined")
+        that.prototype[k] = s[k];
+    })
 
-  superclass.keys().each( function(k) {
-       that.prototype[k] = superclass[k];
-     } )
+    superclass.keys().each(function(k) {
+        that.prototype[k] = superclass[k];
+    })
 
-  if ( this.Class && this.Class.before_extended && ( typeof(this.Class.before_extended) == "function" ) )
-    this.super.Class.before_extended.apply(this, args)
+    if (this.Class && this.Class.before_extended && (typeof(this.Class.before_extended) == "function"))
+        this.super.Class.before_extended.apply(this, args)
 
-  if ( this.Class && this.Class.after_extended && ( typeof(this.Class.after_extended) == "function" ) )
-    this.super.Class.after_extended(this)
+    if (this.Class && this.Class.after_extended && (typeof(this.Class.after_extended) == "function"))
+        this.super.Class.after_extended(this)
 
 }
 
@@ -260,33 +267,32 @@ Function.prototype.extend = function(superclass, args){
  *      var method_list = ["map", "collect"]
  *      Array.reflect(method_list)
  */
-Function.prototype.reflect = function(){
-  var result
-  var return_value = {}
-  var calling_class = eval(this.name)
+Function.prototype.reflect = function() {
+    var result
+    var return_value = {}
+    var calling_class = eval(this.name)
 
-  function duplicate(original_method){
-    calling_class.prototype[original_method + "$B"] = function(){
-      var substitute = calling_class.prototype[original_method].apply(this, arguments)
+    function duplicate(original_method) {
+        calling_class.prototype[original_method + "$B"] = function() {
+            var substitute = calling_class.prototype[original_method].apply(this, arguments)
 
-  //this.clear()
-  for (var i=0; i<substitute.length; i++)
-    this[i] = substitute[i]
+            //this.clear()
+            for (var i = 0; i < substitute.length; i++)
+                this[i] = substitute[i]
 
-      return this
+            return this
+        }
+        return [original_method + "$B", calling_class.prototype[original_method + "$B"]]
     }
-    return [ original_method + "$B", calling_class.prototype[original_method + "$B"] ]
-  }
 
-  for(var i=0; i<arguments.length; i++)
-    if (arguments[i] instanceof Array)
-      for(var j=0; j<arguments[i].length; j++){
-  result = duplicate(arguments[i][j])
-    return_value[result[0]] = result[1]
-      }
-    else {
-      result = duplicate(arguments[i])
-  return_value[result[0]] = result[1]
-    }
-  return return_value
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j < arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+    return return_value
 }
