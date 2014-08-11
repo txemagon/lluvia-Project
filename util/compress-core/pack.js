@@ -52,7 +52,7 @@ var bring_lluvia = "function bring_lluvia() {" + "\n" +
     "        }" + "\n" +
     "    }" + "\n" +
     "    function load_packages() {" + "\n" +
-    "        var p = new PackageManager('" + initial_package + "', 'localhost:8082')" + "\n" +
+    "        var p = new PackageManager('" + initial_package + "')" + "\n" +
     "        p.create_catalog($K_script_response, load_dependencies)" + "\n" +
     "    }" + "\n" +
     "    PackageManager.include_script('../../dist/catalog.js', load_packages)" + "\n" +
