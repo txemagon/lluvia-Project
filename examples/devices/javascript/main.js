@@ -3,7 +3,7 @@ function require_package() {
 }
 
 function main() {
-    var b = new Builder()
-    b.get_lluvia_nodes(document)
+    var ll = {}
+    var b = new Builder("ll_")
     b.build()
 }

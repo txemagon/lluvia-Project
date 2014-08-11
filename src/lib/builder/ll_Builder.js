@@ -1,8 +1,10 @@
 /**
  *
  */
-function Builder() {
+function Builder(prefix, space_name) {
     this.lluvia_nodes = []
+    this.prefix = prefix || ""
+    this.space_name = space_name
     this.table_symbols = new TableSymbols()
 }
 
@@ -38,11 +40,11 @@ Builder.is_lluvia_comment$U = function(comment, token) {
     return false
 }
 
-Builder.prototype.analize_node = function(node) {
+Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
     var type = node.className.split("-")
     var result = {
-        name: node.id,
+        name: prefix + node.id,
         type: type[1],
         params: node.dataset.params,
         data_set: node.dataset
@@ -58,13 +60,17 @@ Builder.prototype.clasify_element = function(element) {
         return "object"
 }
 
-Builder.prototype.create_element = function(node, type, prefix) {
+Builder.prototype.create_element = function(node, type) {
     var nodes = node || {}
     var prefix = prefix || ""
 
     switch (type) {
         case "object":
-            eval.call(null, "var " + prefix + node.name + " = new " + node.type + "(" + node.params + ")")
+            if (typeof this.space_name == "undefined") {
+                eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
+            } else {
+                this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
+            }
             break
     }
 }
@@ -109,9 +115,22 @@ Builder.prototype.run_methods = function(element) {
         eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
 }
 
+Builder.prototype.search_prefix = function(node_body) {
+    var prefix = ""
+
+    if (node_body.dataset.lluviaPrefix)
+        prefix = node_body.dataset.lluviaPrefix
+    return prefix
+}
+
 Builder.prototype.build = function() {
+    this.get_lluvia_nodes(document)
+
+    if (this.prefix == "")
+        this.prefix = this.search_prefix(document.body)
+
     for (var i = 0; i < this.lluvia_nodes.length; i++) {
-        var analize_result = this.analize_node(this.lluvia_nodes[i])
+        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
         this.create_element(analize_result, clasify_result)
         //this.create_methods_element(analize_result)

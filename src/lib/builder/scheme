@@ -29,6 +29,10 @@ Loader:
 
     Consideraciones para su uso:
         - A la hora de crear los elementos se puede especificar si se quiere poner un prefijo delante de las variables (ll_, lluvia_, ...). Si se pone se respeta las variables que crea html5 para la gestion de etiquetas, sino se sobre escriben esas variables. Se comprobo que en el css se puede seguir poniendo el nombre original del DIV aunque se sobrescriban las variables.
+        - Se puede pasar el prefijo para las variables en:
+            + La etiqueta body:  data-lluvia-prefix = "ll$".
+            + En el constructor del builder.
+        - se puede crear el espacio de nombre y pasarlo al builder en el constructor.
 
 
     Example:
