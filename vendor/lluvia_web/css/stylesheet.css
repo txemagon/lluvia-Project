@@ -114,8 +114,9 @@ body {
     position: relative;
 }
 .left_side{
-    width: 620px;
+    width: 630px;
     border: solid 1px orange;
+    margin-top: -319px;
 }
 .right_side{
     width: 630px;
@@ -136,17 +137,35 @@ body {
 }
 .middle_section{
     width: 550px;
+    height: 317px;
+    margin: auto;
+    margin-top: -22px;
     border: solid 1px red;
 }
 .box_footer{
     width: 550px;
     height: 20px;
+    margin: auto;
+    margin-top: -22px;
     border: solid 1px blue;
 }
-.right_footer{
-
+.box_margin_left{
+    margin-left: 80px;
+}
+.right_header{
+    margin-left: -70px;
+}
+.first_line{
+    margin-top: 50px;
+}
+.second_line{
+    margin-top: 275px;
 }
 /* Cogs and Wheels {{{ */
+#cogs_and_chain{
+    margin-top: -52px;
+    margin-left: 13px;
+}
 #second_wheel{
     margin-left: 135px;
     margin-bottom: -20px;
@@ -185,6 +204,49 @@ body {
     background-position: left;
     margin-top: 90px;
     margin-left: -13px;
+}
+/* }}} */
+/* Eagle {{{ */
+#eagle{
+    width: 670px;
+    height: 69px;
+    background-image: url("../images/eagle.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-top: 110px;
+}
+.black_line{
+    height: 1px;
+    width: 610px;
+    background-color: #666;
+}
+#black_line_bottom{
+    margin-top: 17px;
+}
+/* }}} */
+/* Pelton Wheel {{{ */
+#pelton{
+    width: 229px;
+    height: 228px;
+    background-image: url("../images/pelton_wheel.svg");
+    background-repeat: no-repeat;
+    margin-left: 270px;
+    margin-top: 45px;
+}
+#belt{
+    width: 382px;
+    height: 46px;
+    background-image: url("../images/belt.svg");
+    background-repeat: no-repeat;
+    margin-top: -137px;
+}
+#fish{
+    width: 150px;
+    height: 80px;
+    background-image: url("../images/fish.svg");
+    background-repeat: no-repeat;
+    float: right;
+    margin-top: -170px;
 }
 /* }}} */
 /* }}} */
