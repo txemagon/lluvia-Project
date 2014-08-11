@@ -3552,22 +3552,24 @@ var systemEv = (function(){
 	$_sev.yield(ob_msg)
 	return  ob_msg; })
 })()
-function Builder(){
+function TableSymbols(elements){
+    var elements = elements || []
 }
-Builder.lluvia_nodes = []
-Builder.get_lluvia_nodes = function(actual_node){
+TableSymbols.prototype.insert = function() {}
+TableSymbols.prototype.search = function() {}
+function Builder(){
+    this.lluvia_nodes = []
+    this.table_symbols = new TableSymbols()
+}
+Builder.prototype.get_lluvia_nodes = function(actual_node){
     var actual_node = actual_node || {}
     for(var i = 0; i<actual_node.childNodes.length; i++){
     	if(actual_node.childNodes[i].childNodes.length)
-    		Builder.get_lluvia_nodes(actual_node.childNodes[i])
-            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className)){
-        	    Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].id)
-            }
-            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue)){
-                Builder.lluvia_nodes.push(actual_node.childNodes[i])
-                alert(actual_node.childNodes[i].nodeValue)
-            }
+    		this.get_lluvia_nodes(actual_node.childNodes[i])
+            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className))
+        	    this.lluvia_nodes.push(actual_node.childNodes[i])
+            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue))
+                this.lluvia_nodes.push(actual_node.childNodes[i])
     }
 }
 Builder.is_lluvia_element$U = function(element, separator) {
@@ -3585,8 +3587,33 @@ Builder.is_lluvia_comment$U = function(comment, token){
         return true
     return false
 }
-Builder.prototype.gather_nodes = function(){}
-Builder.prototype.analize_nodes = function(){}
+Builder.prototype.analize_node = function(node){
+    var node = node || {}
+    var type = node.className.split("-")
+    var result = {name: node.id, type: type[1], params: node.dataset.params}
+    return result
+}
+Builder.prototype.clasify_element = function(element){
+    var element = element || {}
+    if(element.type != "undefined")
+        return "object"
+}
+Builder.prototype.create_element = function(node, type, prefix) {
+    var nodes = node || {}
+    var prefix = prefix || ""
+    switch(type){
+        case "object":
+            eval.call(null, "var " + prefix + node.name + " = new " + node.type + "(" + node.params + ")")
+            break
+    }
+}
+Builder.prototype.build = function(){
+    for(var i=0; i<this.lluvia_nodes.length;i ++){
+        var analize_result = this.analize_node(this.lluvia_nodes[i])
+        var clasify_result = this.clasify_element(analize_result)
+        this.create_element(analize_result, clasify_result)
+    }
+}
 function bring_lluvia() {
     function init_program() {
         if (typeof required_packages == 'function')
