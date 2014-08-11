@@ -6,7 +6,7 @@ function CountDown(initial_time){
     this.time_passed
 
     if (arguments.length)
-        Device.apply(this, arguments)
+        Device.call(this, null)
 
     this.state.running.run.steady = function(date) {
         this.owner.time_passed += date - this.last_time
