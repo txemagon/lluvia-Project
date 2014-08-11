@@ -7,7 +7,12 @@ function CountDown(initial_time){
     alert("Objeto creado")
 /*
     if (arguments.length)
+<<<<<<< HEAD
+        Device.call(this, null)
+
+=======
         Device.apply(this, arguments)
+>>>>>>> 90435685da58e9f45de04cd4ffd8c946c539a6c0
     this.state.running.run.steady = function(date) {
         this.owner.time_passed += date - this.last_time
         this.last_time = date

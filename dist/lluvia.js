@@ -3127,36 +3127,42 @@ State.NONE = new State("-1")
 Automata.prototype.constructor = Automata;
 function Automata(states, solicitor) {
     var that = this
-    function find_initial_state(state_level, initial_state) {
-        initial_state = initial_state || ""
-        for (var i = 0; i < state_level.length; i++) {
-            if (state_level[i] instanceof Array) {
-                initial_state += "." + state_level[i - 1]
-                return find_initial_state(state_level[i], initial_state)
-            }
-            if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
-                if (/^\*/.test(state_level[i])) {
-                    state_level[i] = state_level[i].substring(1)
-                    return initial_state + "." + state_level[i]
+    function initialize() {
+        alert("Automata: " + states)
+        function find_initial_state(state_level, initial_state) {
+            initial_state = initial_state || ""
+            for (var i = 0; i < state_level.length; i++) {
+                if (state_level[i] instanceof Array) {
+                    initial_state += "." + state_level[i - 1]
+                    return find_initial_state(state_level[i], initial_state)
+                }
+                if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
+                    if (/^\*/.test(state_level[i])) {
+                        state_level[i] = state_level[i].substring(1)
+                        return initial_state + "." + state_level[i]
+                    }
                 }
             }
         }
+        var i_state = (find_initial_state(states) || "").substring(1).split(".")
+        if (states instanceof Array)
+            states = new(ProxyConstructor(EnumerationOf, State, states))
+        that.state = states ? states : new Enumeration()
+        that.state.each(function(k, v) {
+            v.owner = that
+        })
+        that.state.none = new State(State.NONE)
+        var initial_state
+        for (initial_state = that.state; i_state.length; initial_state = initial_state[i_state.shift()]);
+        that.current = new StateGear(that, initial_state)
+        that.current.zip(solicitor)
     }
-    var i_state = find_initial_state(states).substring(1).split(".")
-    if (states instanceof Array)
-        states = new(ProxyConstructor(EnumerationOf, State, states))
-    this.state = states ? states : new Enumeration()
-    this.state.each(function(k, v) {
-        v.owner = that
-    })
-    this.state.none = new State(State.NONE)
-    var initial_state
-    for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
-    this.current = new StateGear(this, initial_state)
-    this.current.zip(solicitor)
+    if (arguments.length)
+        initialize()
 }
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
+        alert("Automata: " + this.state)
         state = state.split(".")
         var s
         for (s = this.state; state.length; s = s[state.shift()]);
@@ -3230,25 +3236,26 @@ StateGear.prototype.zip = function(solicitors, base_state) {
         }
     }
 }
-ThreadAutomata.prototype  = new Thread;
+ThreadAutomata.prototype = new Thread;
 ThreadAutomata.extend(Automata);
 ThreadAutomata.prototype.constructor = ThreadAutomata;
-function ThreadAutomata(state, currentState, solicitor, processor){
-    if (arguments.length){
-		Automata.call(this, state, currentState, solicitor);
-		Thread.call(this, ThreadAutomata.prototype.run, processor);
-	}
+function ThreadAutomata(state, solicitor, processor) {
+    if (arguments.length) {
+        Automata.call(this, state, solicitor);
+        Thread.call(this, ThreadAutomata.prototype.run, processor);
+    }
 }
-ThreadAutomata.prototype.run = function(processors_time){
-	if (this.now)
-		this.before = this.now
-	this.now    = processors_time
-	Automata.prototype.run.call(this, this.now, this.before);
+ThreadAutomata.prototype.run = function(processors_time) {
+    if (this.now)
+        this.before = this.now
+    this.now = processors_time
+    Automata.prototype.run.call(this, this.now, this.before);
 }
 Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
-function Device(view, state, current_state, parent) {
+Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+function Device(view, state, parent) {
     var that = this
     this._class = that
     state = state || Device.STATE
@@ -3266,8 +3273,7 @@ function Device(view, state, current_state, parent) {
     }
     if (view)
         this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
-    this.lookup = new Lookup();
-    this.event_dispatcher = new EventDispatcher(this.lookup);
+    this.event_dispatcher = new EventDispatcher();
     this.gates = []
     this.open_device = _$innerObject(this, "device")
     function initialize() { 
@@ -3275,13 +3281,12 @@ function Device(view, state, current_state, parent) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-        ThreadAutomata.call(that, state, that.current_state, that.solicitors, parent || $Processor);
+        ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
     if (arguments.length) 
         initialize();
 }
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
 Device.prototype.gate_runner = function() {
     for (var i = 0; i < this.gates.length; i++)
         this.gates[i].run(this.now, this.before)
@@ -3370,62 +3375,66 @@ Device.prototype.method_missing = function(method, obj, params) {
 }
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher
-function EventDispatcher(lookup){
-	var that = this; 
-	this.ids   = 0
-	this.ports = {
-	}
-	this.inqueue = []
-	this.clss = that	
-	this.getId = function(){return ++that.ids;}
-	lookup.add(this)
+function EventDispatcher() {
+    var that = this; 
+    this.ids = 0
+    this.ports = {
+    }
+    this.inqueue = []
+    this.clss = that 
+    this.getId = function() {
+        return ++that.ids;
+    }
 }
-EventDispatcher.prototype.enqueue = function(mssg){
-	var ev = this
-	mssg.received = {id: ev.getId(), time: new Date()};
-	this.inqueue.push(mssg)
-	return mssg.received.id
+EventDispatcher.prototype.enqueue = function(mssg) {
+    var ev = this
+    mssg.received = {
+        id: ev.getId(),
+        time: new Date()
+    };
+    this.inqueue.push(mssg)
+    return mssg.received.id
 }
-EventDispatcher.prototype.addPort = function (event, device){
-	if (this.ports[event])
-		this.ports[event].push(device)
+EventDispatcher.prototype.addPort = function(event, device) {
+    if (this.ports[event])
+        this.ports[event].push(device)
 }
-EventDispatcher.prototype.joinPorts = function (listArray){
-	for (var i=0; i<listArray.length; i++)
-		this.ports[listArray[i]] = []
+EventDispatcher.prototype.joinPorts = function(listArray) {
+    for (var i = 0; i < listArray.length; i++)
+        this.ports[listArray[i]] = []
 }
-EventDispatcher.prototype.delPort = function (event, device){
-	if (this.clss.ports[event])
-		for (var i=0; i<this.clss.ports.length; i++)
-			if (this.clss.ports[i] === device)
-				this.clss.ports[i].splice(i,1)
+EventDispatcher.prototype.delPort = function(event, device) {
+    if (this.clss.ports[event])
+        for (var i = 0; i < this.clss.ports.length; i++)
+            if (this.clss.ports[i] === device)
+                this.clss.ports[i].splice(i, 1)
 }
-EventDispatcher.prototype.fireEvent = function(event){
-	if (this.clss.ports[event.name])
-		for (var i=0; i<this.clss.ports[event.name].length; i++)
-			this.clss.ports[event.name][i](event);
+EventDispatcher.prototype.fireEvent = function(event) {
+    if (this.clss.ports[event.name])
+        for (var i = 0; i < this.clss.ports[event.name].length; i++)
+            this.clss.ports[event.name][i](event);
 }
-EventDispatcher.prototype.shift = function(){ 
-	for (var i=0; i<this.inqueue.length; i++)
-		try {
-			var mssg = this.inqueue[i]
-			if (mssg.status[mssg.current] === "closed")
-				this.inqueue.splice(i, 1)
-			if (this.inqueue[i]) {
-				mssg = this.inqueue[i]
-				if (mssg.status[mssg.current] === "sent") {
-					this.device.attend(arguments[0], mssg)
-					mssg.current++
-				}
-			}
-		} catch (e) {
-			if ($K_debug_level >= $KC_dl.PROGRAMMER)
-			   alert("No event handler for message. \nException: " + e.toSource())
-		}
-	return true;
+EventDispatcher.prototype.shift = function() { 
+    for (var i = 0; i < this.inqueue.length; i++)
+        try {
+            var mssg = this.inqueue[i]
+            if (mssg.status[mssg.current] === "closed")
+                this.inqueue.splice(i, 1)
+            if (this.inqueue[i]) {
+                mssg = this.inqueue[i]
+                if (mssg.status[mssg.current] === "sent") {
+                    this.device.attend(arguments[0], mssg)
+                    mssg.current++
+                }
+            }
+        } catch (e) {
+            if ($K_debug_level >= $KC_dl.PROGRAMMER)
+                alert("No event handler for message. \nException: " + e.toSource())
+        }
+    return true;
 }
-EventDispatcher.prototype.run = function(){
-	return shift.apply(this, arguments)
+EventDispatcher.prototype.run = function() {
+    return shift.apply(this, arguments)
 }
 function _stitchWorlds(gate, solicitor){
 	return function(e){
@@ -3629,7 +3638,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

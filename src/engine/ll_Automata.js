@@ -85,43 +85,50 @@ Automata.prototype.constructor = Automata;
 function Automata(states, solicitor) {
     var that = this
 
-    function find_initial_state(state_level, initial_state) {
-        initial_state = initial_state || ""
+    function initialize() {
+        alert("Automata: " + states)
 
-        for (var i = 0; i < state_level.length; i++) {
-            if (state_level[i] instanceof Array) {
-                initial_state += "." + state_level[i - 1]
-                return find_initial_state(state_level[i], initial_state)
-            }
-            if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
-                if (/^\*/.test(state_level[i])) {
-                    state_level[i] = state_level[i].substring(1)
-                    return initial_state + "." + state_level[i]
+        function find_initial_state(state_level, initial_state) {
+            initial_state = initial_state || ""
+
+            for (var i = 0; i < state_level.length; i++) {
+                if (state_level[i] instanceof Array) {
+                    initial_state += "." + state_level[i - 1]
+                    return find_initial_state(state_level[i], initial_state)
+                }
+                if (Object.prototype.toString.call(state_level[i]) === "[object String]") {
+                    if (/^\*/.test(state_level[i])) {
+                        state_level[i] = state_level[i].substring(1)
+                        return initial_state + "." + state_level[i]
+                    }
                 }
             }
+
         }
 
+        var i_state = (find_initial_state(states) || "").substring(1).split(".")
+
+        if (states instanceof Array)
+            states = new(ProxyConstructor(EnumerationOf, State, states))
+        that.state = states ? states : new Enumeration()
+
+        that.state.each(function(k, v) {
+            v.owner = that
+        })
+
+        // Always none equals to -1
+        that.state.none = new State(State.NONE)
+
+        var initial_state
+        for (initial_state = that.state; i_state.length; initial_state = initial_state[i_state.shift()]);
+
+        // todo: Make a proxyConstructor that handles the link via the this parameter.
+        that.current = new StateGear(that, initial_state)
+        that.current.zip(solicitor)
+
     }
-
-    var i_state = find_initial_state(states).substring(1).split(".")
-
-    if (states instanceof Array)
-        states = new(ProxyConstructor(EnumerationOf, State, states))
-    this.state = states ? states : new Enumeration()
-
-    this.state.each(function(k, v) {
-        v.owner = that
-    })
-
-    // Always none equals to -1
-    this.state.none = new State(State.NONE)
-
-    var initial_state
-    for (initial_state = this.state; i_state.length; initial_state = initial_state[i_state.shift()]);
-
-    // todo: Make a proxyConstructor that handles the link via the this parameter.
-    this.current = new StateGear(this, initial_state)
-    this.current.zip(solicitor)
+    if (arguments.length)
+        initialize()
 }
 
 /**
@@ -177,6 +184,7 @@ function Automata(states, solicitor) {
  */
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
+        alert("Automata: " + this.state)
         state = state.split(".")
         var s
         for (s = this.state; state.length; s = s[state.shift()]);
