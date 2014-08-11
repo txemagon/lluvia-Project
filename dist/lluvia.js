@@ -3000,6 +3000,67 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
+Interpolator.prototype = new Thread
+Interpolator.prototype.constructor = Interpolator
+function Interpolator(initial_point, final_point, variation) {
+    this.current_point = this.initial_point = initial_point
+    this.final_point = final_point
+    this.variation = variation
+}
+Interpolator.prototype.run = function() {
+    if (this.variation instanceof Object && "add" in this.variation)
+        this.current_point.add$B(this.variation)
+    else
+        this.current_point += this.variation
+}
+MoveEffect.prototype = new ThreadAutomata
+MoveEffect.prototype.constructor = MoveEffect
+function MoveEffect(processor, gate) {
+    alert("hi")
+    var that = this
+    var state = this.state = new Enumeration("initial_position", "transition", "final_position")
+    this.movement = new Interpolator(this.gate.line.style.margin.left, 500, 10)
+    this.solicitors = [
+        [
+            function() {;
+            },
+            function() {;
+            },
+            function() {;
+            }
+        ],
+        [
+            function() {;
+            },
+            function() {
+                while (that.movement.current_point < this.movement.final_point)
+                    that.movement.run()
+            },
+            function() {;
+            }
+        ],
+        [
+            function() {;
+            },
+            function() {;
+            },
+            function() {;
+            }
+        ]
+    ]
+    function initialize() {
+        that.gate = gate
+        try {
+            if (that.state) {
+                ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, processor)
+            }
+        } catch (e) {
+            alert("No event handlers were found.\nException: " + e.toSource())
+        }
+    }
+    if (arguments.length)
+        initialize()
+}
 Processor.prototype.constructor = Processor;
 function Processor(){
 	this.now	 = new Date();
@@ -3710,7 +3771,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..', 'localhost:8082')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

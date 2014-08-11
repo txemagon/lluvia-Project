@@ -10,7 +10,8 @@ function EffectHandler(view) {
 
         that.move_eff = that.new_gate("line", Gate, {
             do_onclick: function(event, element) {
-                this.move_eff[view].move_effect = this.move_eff.new_effect(new MoveEffect(this.move_eff.device, this.move_eff))
+                this[element].m_effect = this.new_effect(new MoveEffect(this.device, this))
+                this[element].m_effect.current.requested = this[element].m_effect.state.transition
             }
         })
     }

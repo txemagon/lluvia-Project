@@ -115,15 +115,15 @@ body {
 }
 .left_side{
     width: 630px;
-    border: solid 1px orange;
-    margin-top: -319px;
+    margin-top: -331px;
+    /*border: solid 1px orange;*/
 }
 .right_side{
     width: 630px;
     position: absolute;
     right: 0px;
     top: 0px;
-    border: solid 1px blue;
+    /*border: solid 1px blue;*/
 }
 .horizontal_line{
     height: 1px;
@@ -133,21 +133,22 @@ body {
 .box_header{
     width: 700px;
     height: 20px;
-    border: solid 1px green;
+    /*border: solid 1px green;*/
 }
 .middle_section{
-    width: 550px;
-    height: 317px;
+    width: 552px;
+    height: 330px;
     margin: auto;
-    margin-top: -22px;
-    border: solid 1px red;
+    margin-top: -20px;
+    background-color: #fff;
+    /*border: solid 1px red;*/
 }
 .box_footer{
-    width: 550px;
+    width: 553dpx;
     height: 20px;
     margin: auto;
-    margin-top: -22px;
-    border: solid 1px blue;
+    margin-top: -21px;
+    /*border: solid 1px blue;*/
 }
 .box_margin_left{
     margin-left: 80px;
@@ -159,7 +160,25 @@ body {
     margin-top: 50px;
 }
 .second_line{
-    margin-top: 275px;
+    margin-top: 288px;
+}
+.blue{
+    background-color: #4E72AE;
+}
+.purple{
+    background-color: #B21687;
+}
+.orange{
+    background-color: #FF7F00;
+}
+#blue_banner_middle{
+    border: solid 1px #4E72AE;
+}
+#purple_banner_middle{
+    border: solid 1px #B21687;
+}
+#orange_banner_middle{
+    border: solid 1px #FF7F00;
 }
 /* Cogs and Wheels {{{ */
 #cogs_and_chain{
