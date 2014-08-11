@@ -4,6 +4,6 @@ function require_package() {
 
 function main() {
     var ll = {}
-    var b = new Builder("ll_")
+    var b = new Builder(ll)
     b.build()
 }

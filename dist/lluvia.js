@@ -3567,11 +3567,17 @@ TableSymbols.prototype.search = function(element) {
             return true
     return false
 }
-function Builder(prefix, space_name) {
+function Builder() {
     this.lluvia_nodes = []
-    this.prefix = prefix || ""
-    this.space_name = space_name
+    this.prefix = ""
     this.table_symbols = new TableSymbols()
+    if (arguments.length)
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] == "string")
+                this.prefix = arguments[i]
+            else if (typeof arguments[i] == "object")
+                this.space_name = arguments[i]
+        }
 }
 Builder.prototype.get_lluvia_nodes = function(actual_node) {
     var actual_node = actual_node || {}
@@ -3624,6 +3630,7 @@ Builder.prototype.create_element = function(node, type) {
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             } else {
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
+                alert(node.name)
             }
             break
     }
