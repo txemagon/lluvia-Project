@@ -475,78 +475,82 @@ Number.eql$U = function(model, value){
    return this == model
 }
 isNumber = is_number = is_a_number = isANumber = isNumber$U = is_number$U = is_a_number$U = isANumber$U = function(op){ return !isNaN(op) }
-Function.prototype.bind = function(object){
-	var f = this
-	return function(){ f.apply(object, arguments) }
+Function.prototype.bind = function(object) {
+    var f = this
+    return function() {
+        f.apply(object, arguments)
+    }
 }
-Function.prototype.bind_params = function(){
-	var args = arguments
-	var f = this
-	return function(){ f.apply(f, args) }
+Function.prototype.bind_params = function() {
+    var args = arguments
+    var f = this
+    return function() {
+        f.apply(f, args)
+    }
 }
-Function.prototype.yield = function(){
-     for (var i=this.arguments.length-1; i>=0; i--)
+Function.prototype.yield = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
             return this.arguments[i].apply(this, arguments)
 }
-Function.prototype.block_given$U = function(){
-     var given = false
-     for (var i=this.arguments.length-1; !given && i>=0; i--)
+Function.prototype.block_given$U = function() {
+    var given = false
+    for (var i = this.arguments.length - 1; !given && i >= 0; i--)
         if (typeof(this.arguments[i]) === "function")
-           given = this.arguments[i]
-     return given
+            given = this.arguments[i]
+    return given
 }
-Function.prototype.deconstruct = function(){
-  return { name: this.name,
-           params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: this.toSource().match(/{(.*)}/)[1]
-           }
-}
-Function.deconstruct = function(src){
-  return { name: src.match(/function\s+([^\(]+)/)[1],
-           params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
-           body: src.match(/{(.*)}/)[1]
-           }
-}
-Function.prototype.extend = function(superclass, args){
-  var that = this
-  var s = new superclass()
-  s.keys().each( function(k) {
-       if (typeof(that.prototype[k]) == "undefined")
-         that.prototype[k] = s[k];
-     } )
-  superclass.keys().each( function(k) {
-       that.prototype[k] = superclass[k];
-     } )
-  if ( this.Class && this.Class.before_extended && ( typeof(this.Class.before_extended) == "function" ) )
-    this.super.Class.before_extended.apply(this, args)
-  if ( this.Class && this.Class.after_extended && ( typeof(this.Class.after_extended) == "function" ) )
-    this.super.Class.after_extended(this)
-}
-Function.prototype.reflect = function(){
-  var result
-  var return_value = {}
-  var calling_class = eval(this.name)
-  function duplicate(original_method){
-    calling_class.prototype[original_method + "$B"] = function(){
-      var substitute = calling_class.prototype[original_method].apply(this, arguments)
-  for (var i=0; i<substitute.length; i++)
-    this[i] = substitute[i]
-      return this
+Function.prototype.deconstruct = function() {
+    return {
+        name: this.name,
+        params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: this.toSource().match(/{(.*)}/)[1]
     }
-    return [ original_method + "$B", calling_class.prototype[original_method + "$B"] ]
-  }
-  for(var i=0; i<arguments.length; i++)
-    if (arguments[i] instanceof Array)
-      for(var j=0; j<arguments[i].length; j++){
-  result = duplicate(arguments[i][j])
-    return_value[result[0]] = result[1]
-      }
-    else {
-      result = duplicate(arguments[i])
-  return_value[result[0]] = result[1]
+}
+Function.deconstruct = function(src) {
+    return {
+        name: src.match(/function\s+([^\(]+)/)[1],
+        params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(","),
+        body: src.match(/{(.*)}/)[1]
     }
-  return return_value
+}
+Function.prototype.extend = function(superclass, args) {
+    var that = this
+    var s = new superclass()
+    s.keys().each(function(k) {
+        that.prototype[k] = s[k];
+    })
+    superclass.keys().each(function(k) {
+        that.prototype[k] = superclass[k];
+    })
+    if (this.Class && this.Class.before_extended && (typeof(this.Class.before_extended) == "function"))
+        this.super.Class.before_extended.apply(this, args)
+    if (this.Class && this.Class.after_extended && (typeof(this.Class.after_extended) == "function"))
+        this.super.Class.after_extended(this)
+}
+Function.prototype.reflect = function() {
+    var result
+    var return_value = {}
+    var calling_class = eval(this.name)
+    function duplicate(original_method) {
+        calling_class.prototype[original_method + "$B"] = function() {
+            var substitute = calling_class.prototype[original_method].apply(this, arguments)
+            for (var i = 0; i < substitute.length; i++)
+                this[i] = substitute[i]
+            return this
+        }
+        return [original_method + "$B", calling_class.prototype[original_method + "$B"]]
+    }
+    for (var i = 0; i < arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j < arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+    return return_value
 }
 String.prototype.capitalize = function() {
     word = this.toLowerCase()
@@ -3128,7 +3132,6 @@ Automata.prototype.constructor = Automata;
 function Automata(states, solicitor) {
     var that = this
     function initialize() {
-        alert("Automata: " + states)
         function find_initial_state(state_level, initial_state) {
             initial_state = initial_state || ""
             for (var i = 0; i < state_level.length; i++) {
@@ -3162,7 +3165,6 @@ function Automata(states, solicitor) {
 }
 Automata.prototype.switch = function(state) {
     if (Object.prototype.toString.call(state) == "[object String]") {
-        alert("Automata: " + this.state)
         state = state.split(".")
         var s
         for (s = this.state; state.length; s = s[state.shift()]);
@@ -3254,21 +3256,21 @@ ThreadAutomata.prototype.run = function(processors_time) {
 Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
 function Device(view, state, parent) {
     var that = this
     this._class = that
     state = state || Device.STATE
     this.solicitors = {
         running: function() {
-            this.gate_runner(this.now)
-            this.child_runner(this.now);
+            this.owner.gate_runner(this.now)
+            this.owner.child_runner(this.now);
         },
         suspending: function() {
-            this.child_runner(this.now);
+            this.owner.child_runner(this.now);
         },
         killing: function() {
-            this.gate_runner(this.now)
+            this.owner.gate_runner(this.now)
         }
     }
     if (view)
@@ -3552,66 +3554,136 @@ var systemEv = (function(){
 	$_sev.yield(ob_msg)
 	return  ob_msg; })
 })()
-function TableSymbols(elements){
-    var elements = elements || []
+function TableSymbols(elements) {
+    this.elements = elements || []
 }
-TableSymbols.prototype.insert = function() {}
-TableSymbols.prototype.search = function() {}
-function Builder(){
+TableSymbols.prototype.insert = function(element) {
+    this.elements.push(element)
+}
+TableSymbols.prototype.search = function(element) {
+    var element = element || {}
+    for (var i = 0; i < this.elements.length; i++)
+        if (this.elements.name == element.name)
+            return true
+    return false
+}
+function Builder() {
     this.lluvia_nodes = []
+    this.prefix = ""
     this.table_symbols = new TableSymbols()
+    if (arguments.length)
+        for (var i = 0; i < arguments.length; i++) {
+            if (typeof arguments[i] == "string")
+                this.prefix = arguments[i]
+            else if (typeof arguments[i] == "object")
+                this.space_name = arguments[i]
+        }
 }
-Builder.prototype.get_lluvia_nodes = function(actual_node){
+Builder.prototype.get_lluvia_nodes = function(actual_node) {
     var actual_node = actual_node || {}
-    for(var i = 0; i<actual_node.childNodes.length; i++){
-    	if(actual_node.childNodes[i].childNodes.length)
-    		this.get_lluvia_nodes(actual_node.childNodes[i])
-            if(actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className))
-        	    this.lluvia_nodes.push(actual_node.childNodes[i])
-            else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue))
-                this.lluvia_nodes.push(actual_node.childNodes[i])
+    for (var i = 0; i < actual_node.childNodes.length; i++) {
+        if (actual_node.childNodes[i].childNodes.length)
+            this.get_lluvia_nodes(actual_node.childNodes[i])
+        if (actual_node.childNodes[i].className != undefined && Builder.is_lluvia_element$U(actual_node.childNodes[i].className))
+            this.lluvia_nodes.push(actual_node.childNodes[i])
+        else if (actual_node.childNodes[i].nodeType == Node.COMMENT_NODE && Builder.is_lluvia_comment$U(actual_node.childNodes[i].nodeValue))
+            this.lluvia_nodes.push(actual_node.childNodes[i])
     }
 }
 Builder.is_lluvia_element$U = function(element, separator) {
-	var separator = separator || "-"
-	var previous_word = element.split(separator)
-    if(previous_word[0] == "lluvia" || previous_word[0] == "ll")
-    	return true
-    return false
-}
-Builder.is_lluvia_comment$U = function(comment, token){
-    var comment = comment || ""
-    var token = token || "#!ll"
-    var not_found = -1
-    if(comment.search(token) != not_found)
+    var separator = separator || "-"
+    var previous_word = element.split(separator)
+    if (previous_word[0] == "lluvia" || previous_word[0] == "ll")
         return true
     return false
 }
-Builder.prototype.analize_node = function(node){
+Builder.is_lluvia_comment$U = function(comment, token) {
+    var comment = comment || ""
+    var token = token || "#!ll"
+    var not_found = -1
+    if (comment.search(token) != not_found)
+        return true
+    return false
+}
+Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
     var type = node.className.split("-")
-    var result = {name: node.id, type: type[1], params: node.dataset.params}
+    var result = {
+        name: prefix + node.id,
+        type: type[1],
+        params: node.dataset.params,
+        data_set: node.dataset
+    }
     return result
 }
-Builder.prototype.clasify_element = function(element){
+Builder.prototype.clasify_element = function(element) {
     var element = element || {}
-    if(element.type != "undefined")
+    if (element.type != "undefined")
         return "object"
 }
-Builder.prototype.create_element = function(node, type, prefix) {
+Builder.prototype.create_element = function(node, type) {
     var nodes = node || {}
     var prefix = prefix || ""
-    switch(type){
+    switch (type) {
         case "object":
-            eval.call(null, "var " + prefix + node.name + " = new " + node.type + "(" + node.params + ")")
+            if (typeof this.space_name == "undefined") {
+                eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
+            } else {
+                this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
+                alert(node.name)
+            }
             break
     }
 }
-Builder.prototype.build = function(){
-    for(var i=0; i<this.lluvia_nodes.length;i ++){
-        var analize_result = this.analize_node(this.lluvia_nodes[i])
+Builder.prototype.create_methods_element = function() {
+    var dataset = element.data_set || {}
+    var new_methods = []
+    function search_new_methods() {
+        for (var i in dataset)
+            if (i.search("method$") == 0) {
+                var method = {
+                    name: i.replace("method$", ""),
+                    block: dataset[i]
+                }
+                methods.push(method)
+            }
+    }
+    search_new_methods()
+    for (var i = 0; i < new_methods.length; i++)
+        eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
+}
+Builder.prototype.run_methods = function(element) {
+    var dataset = element.data_set || {}
+    var methods = []
+    function search_methods() {
+        for (var i in dataset)
+            if (i.search("run$") == 0) {
+                var method = {
+                    name: i.replace("run$", ""),
+                    params: dataset[i]
+                }
+                methods.push(method)
+            }
+    }
+    search_methods()
+    for (var i = 0; i < methods.length; i++)
+        eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
+}
+Builder.prototype.search_prefix = function(node_body) {
+    var prefix = ""
+    if (node_body.dataset.lluviaPrefix)
+        prefix = node_body.dataset.lluviaPrefix
+    return prefix
+}
+Builder.prototype.build = function() {
+    this.get_lluvia_nodes(document)
+    if (this.prefix == "")
+        this.prefix = this.search_prefix(document.body)
+    for (var i = 0; i < this.lluvia_nodes.length; i++) {
+        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
         this.create_element(analize_result, clasify_result)
+        this.run_methods(analize_result)
     }
 }
 function bring_lluvia() {
@@ -3638,7 +3710,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

@@ -86,7 +86,7 @@ Device.prototype.constructor = Device
  * @property {Object} Device.STATE Enumeration constant.
  */
 
-Device.STATE = new Enumeration("suspended", "running", "suspending", "killing", "killed")
+Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
 
 /**
  * @method constructor
@@ -106,14 +106,14 @@ function Device(view, state, parent) {
     state = state || Device.STATE
     this.solicitors = {
         running: function() {
-            this.gate_runner(this.now)
-            this.child_runner(this.now);
+            this.owner.gate_runner(this.now)
+            this.owner.child_runner(this.now);
         },
         suspending: function() {
-            this.child_runner(this.now);
+            this.owner.child_runner(this.now);
         },
         killing: function() {
-            this.gate_runner(this.now)
+            this.owner.gate_runner(this.now)
         }
     }
 
