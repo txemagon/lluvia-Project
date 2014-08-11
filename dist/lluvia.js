@@ -2285,6 +2285,7 @@ function Map() {
 }
 InterleavedArray.prototype = new Array
 InterleavedArray.prototype.constructor = InterleavedArray
+InterleavedArray.prototype.super = Array
 function InterleavedArray(elements) {
     Object.defineProperty(this, 'subarray', {
         value: [],
@@ -3234,7 +3235,7 @@ Automata.prototype.switch = function(state) {
     this.current.requested = state
 }
 Automata.prototype.run = function() {
-    return this.current.drive_state()
+    return this.current.drive_state.apply(this.current, arguments)
 }
 function StateGear(automata, initial_state) {
     this.automata = automata
@@ -3631,6 +3632,7 @@ TableSymbols.prototype.search = function(element) {
 function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
+    this.space_name = null
     this.table_symbols = new TableSymbols()
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
@@ -3687,12 +3689,10 @@ Builder.prototype.create_element = function(node, type) {
     var prefix = prefix || ""
     switch (type) {
         case "object":
-            if (typeof this.space_name == "undefined") {
+            if (typeof this.space_name == "undefined")
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
-            } else {
+            else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
-                alert(node.name)
-            }
             break
     }
 }
