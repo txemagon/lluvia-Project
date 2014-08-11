@@ -1,11 +1,10 @@
 //CountDown.prototype = new Device
 CountDown.prototype.constructor = CountDown
 
-function CountDown(initial_time){
+function CountDown(initial_time) {
     this.initial_time = initial_time
     this.time_passed
-    alert("Objeto creado")
-/*
+    /*
     if (arguments.length)
         Device.apply(this, arguments)
     this.state.running.run.steady = function(date) {
@@ -18,6 +17,7 @@ function CountDown(initial_time){
     }
 */
 }
+
 /*
 CountDown.prototype.start = function() {
     this.switch("running")

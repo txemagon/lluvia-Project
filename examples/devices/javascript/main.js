@@ -6,6 +6,4 @@ function main() {
     var b = new Builder()
     b.get_lluvia_nodes(document)
     b.build()
-
-    alert(count_down.initial_time)
 }

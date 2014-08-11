@@ -5,7 +5,7 @@
 		[
 			[
 				"cl",
-				"clasify_element"
+				"clasify_result"
 			],
 			[
 				"re",
@@ -83,26 +83,23 @@
 			"file": "src/lib/builder/ll_Builder.js",
 			"settings":
 			{
-				"buffer_size": 2006,
+				"buffer_size": 2440,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/lib/builder/TableSymbols.js",
+			"file": "src/lib/builder/table_symbols.js",
 			"settings":
 			{
-				"buffer_size": 161,
+				"buffer_size": 234,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Loader:\n\n    Atributos:\n        id=\"name\"                          >> Nombre del objeto.\n        id=\"son_name$father_name\"          >> Nombre del objeeto y de quien es hijo.\n      * class=\"ll-class\"                   >> Clase de la que se creara el objeto.\n        class=\"ll-class_name$father_name\"  >> Clase de la que se creara el objeto y su padre.\n        data-params=\"params\"               >> Parametros que se pasaran al constructor.\n        data-block=\"block\"                 >> Bloque se pueda pasar al constructor.\n        data-run-<method_name>=\"params\"    >> Ejecuta el metodo que se indique.\n        data-method-<singlenton>=\"block\"   >> Si exite se redefine, sino, se crea un metodo singlenton.\n        data-initialize=\"this.function_name(params); this.function_name(params)\"  >> Ejecuta todos los metodos que se indiquen.\n      (*=obligatorio)\n\n    Notas:\n        $ == pertenece\n        - == espacio de nombre\n\n    Consideraciones:\n        - Si un gate esta dentro de un div de la clase device ese gate pertenece al device.\n        - Probar si se respetan los saltos de linea dentro de los atributos.\n        - Se debe poder pasar codigo a lluvia en comentarios, ejemplo:\n            <!--\n                #!lluvia\n                menu::ll-Menu(param1, param2) # Is a comment  (device sin etiqueta)\n            ->\n        - Los nombres de las variables que se utilizen en los comentarios no se pueden repetir en los id.\n        - A la hora de analizar los comentarios leer dos veces y crear una tabla como hace C.\n\n\n    Example:\n        <div id=\"son_id$father_id\" class=\"ll-FondoApp\" data-params=\"'fondo'\" data-block=\"function(){}\" data-run-add_port=\"'go_to', pant\" data-method-singleton=\"block\">\n\n    Pasos a la hora de ejecutarlo:\n        - El loader recoge todos los nodos del body del html.\n        - El loader separa los nodos que son de lluvia de los que no.\n        - El loader manda el valor de los atributos de los nodos de lluvia al parser.\n        - El parser analiza los valores pasados y devuelve lo que se tiene que ejecutar como un string.\n        - El loader ejecuta lo que obtiene del parser.\n        - Se carga main()\n\n\n    Pasos a la hora de diseñarlo:\n        - Crear una clase Parse para analizar los atributos y los comentarios.\n        - Crear un clase interprete para diferenciar en un string si es algun elemento de programacion.\n        - ...\n\n    Como recoger los valores:\n        - Se debe \n\n    Tabla de simbolos:\n        - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.\n        - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanos.\n\n// TODO: Refactor fireEvent() para hacerlo mas agil.\n// TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.",
 			"file": "src/lib/builder/scheme",
-			"file_size": 2858,
-			"file_write_time": 1407509016000000,
 			"settings":
 			{
-				"buffer_size": 2848,
+				"buffer_size": 3382,
 				"line_ending": "Unix"
 			}
 		},
@@ -110,7 +107,7 @@
 			"file": "examples/devices/javascript/main.js",
 			"settings":
 			{
-				"buffer_size": 218,
+				"buffer_size": 194,
 				"line_ending": "Unix"
 			}
 		},
@@ -126,17 +123,29 @@
 			"file": "dist/lluvia.js",
 			"settings":
 			{
-				"buffer_size": 123230,
+				"buffer_size": 106529,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/package.json",
+			"settings":
+			{
+				"buffer_size": 210,
+				"line_ending": "Windows"
 			}
 		}
 	],
 	"build_system": "lluvia",
 	"command_palette":
 	{
-		"height": 54.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"",
+				"Package Control: Install Package"
+			],
 			[
 				"install pa",
 				"Package Control: Install Package"
@@ -158,7 +167,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 467.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -175,6 +184,7 @@
 	},
 	"file_history":
 	[
+		"/home/jose/work/lluvia-Project/src/lib/builder/TableSymbols.js",
 		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
 		"/home/jose/work/lluvia-Project/src/engine/ll_State.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
@@ -224,6 +234,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"main",
 			"nodes[i]",
 			"//extend",
 			"extend",
@@ -276,7 +287,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -284,15 +295,15 @@
 					"file": "src/lib/builder/ll_Builder.js",
 					"settings":
 					{
-						"buffer_size": 2006,
+						"buffer_size": 2440,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1847,
-								1847
+								2232,
+								2232
 							]
 						],
 						"settings":
@@ -301,26 +312,26 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 72.0,
-						"translation.y": 878.0,
+						"translation.x": 0.0,
+						"translation.y": 827.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/lib/builder/TableSymbols.js",
+					"file": "src/lib/builder/table_symbols.js",
 					"settings":
 					{
-						"buffer_size": 161,
+						"buffer_size": 234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								68,
-								68
+								115,
+								115
 							]
 						],
 						"settings":
@@ -338,15 +349,15 @@
 					"file": "src/lib/builder/scheme",
 					"settings":
 					{
-						"buffer_size": 2848,
+						"buffer_size": 3382,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2430,
-								2430
+								2988,
+								2988
 							]
 						],
 						"settings":
@@ -356,7 +367,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 459.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -366,15 +377,15 @@
 					"file": "examples/devices/javascript/main.js",
 					"settings":
 					{
-						"buffer_size": 218,
+						"buffer_size": 194,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								194,
-								194
+								0,
+								0
 							]
 						],
 						"settings":
@@ -399,8 +410,8 @@
 						"selection":
 						[
 							[
-								446,
-								446
+								396,
+								396
 							]
 						],
 						"settings":
@@ -420,15 +431,15 @@
 					"file": "dist/lluvia.js",
 					"settings":
 					{
-						"buffer_size": 123230,
+						"buffer_size": 106529,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								110732,
-								110732
+								105307,
+								105307
 							]
 						],
 						"settings":
@@ -436,7 +447,33 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 57896.0,
+						"translation.y": 54925.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/package.json",
+					"settings":
+					{
+						"buffer_size": 210,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								170,
+								170
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

@@ -7,8 +7,8 @@ Loader:
         class="ll-class_name$father_name"  >> Clase de la que se creara el objeto y su padre.
         data-params="params"               >> Parametros que se pasaran al constructor.
         data-block="block"                 >> Bloque se pueda pasar al constructor.
-        data-run-<method_name>="params"    >> Ejecuta el metodo que se indique.
-        data-method-<singlenton>="block"   >> Si exite se redefine, sino, se crea un metodo singlenton.
+        data-run$<method_name>="params"    >> Ejecuta el metodo que se indique.
+        data-method$<singlenton>="block"   >> Si exite se redefine, sino, se crea un metodo singlenton.
         data-initialize="this.function_name(params); this.function_name(params)"  >> Ejecuta todos los metodos que se indiquen.
       (*=obligatorio)
 
@@ -52,6 +52,7 @@ Loader:
         - Para div necesita
 
     Tabla de simbolos:
+        - En la primera pasada se guarda todas las variables que se puedan al analizar lexicamnete la informacion.
         - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.
         - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanos.
 
