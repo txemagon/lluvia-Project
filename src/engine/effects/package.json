@@ -5,7 +5,10 @@
         "name": "ll_Interpolator.js",
         "description": "Interpolates objects and numbers"
     }, {
-        "name": "ll_MoveEffect.js",
+        "name": "ll_MoveLeftEffect.js",
+        "description": "Effect to move an element"
+    }, {
+        "name": "ll_RectangleEffect.js",
         "description": "Effect to move an element"
     }]
 }

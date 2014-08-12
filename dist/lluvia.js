@@ -3561,22 +3561,69 @@ var systemEv = (function(){
 	$_sev.yield(ob_msg)
 	return  ob_msg; })
 })()
-MoveEffect.prototype = new ThreadAutomata
-MoveEffect.prototype.constructor = MoveEffect
-MoveEffect.prototype.super = ThreadAutomata
-function MoveEffect(view, final_coord, initial_coord) {
+MoveLeftEffect.prototype = new ThreadAutomata
+MoveLeftEffect.prototype.constructor = MoveLeftEffect
+MoveLeftEffect.prototype.super = ThreadAutomata
+function MoveLeftEffect(view, final_coord, initial_coord, velocity) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
     this.final_coord = final_coord
     this.coord = this.initial_coord = initial_coord
-    this.velocity = [20, 15]
+    this.velocity = velocity || [70, 0]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
                 that.coord[i] += that.velocity[i] * (now - before) / 1000
-            that.view.innerHTML = that.coord
+            that.view.style.width = "" + that.coord[0] + "px"
+            if (that.coord[0] >= that.final_coord[0])
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+MoveDownEffect.prototype = new ThreadAutomata
+MoveDownEffect.prototype.constructor = MoveDownEffect
+MoveDownEffect.prototype.super = ThreadAutomata
+function MoveDownEffect(view, final_coord, initial_coord, velocity) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = velocity || [0, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.height = "" + that.coord[1] + "px"
+            if (that.coord[1] >= that.final_coord[1])
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+RectangleEffect.prototype = new ThreadAutomata
+RectangleEffect.prototype.constructor = RectangleEffect
+RectangleEffect.prototype.super = ThreadAutomata
+function RectangleEffect(view, final_coord, initial_coord, velocity) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = velocity || [51, 3]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.width = "" + that.coord[0] + "px"
+            that.view.style.height = "" + that.coord[1] + "px"
+            if (that.coord[0] >= that.final_coord[0])
+                that.switch("stopped")
         }
     }
     ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
@@ -3736,7 +3783,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

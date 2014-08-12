@@ -116,14 +116,12 @@ body {
 .left_side{
     width: 630px;
     margin-top: -331px;
-    /*border: solid 1px orange;*/
 }
 .right_side{
     width: 630px;
     position: absolute;
     right: 0px;
     top: 0px;
-    /*border: solid 1px blue;*/
 }
 .horizontal_line{
     height: 1px;
@@ -133,7 +131,6 @@ body {
 .box_header{
     width: 700px;
     height: 20px;
-    /*border: solid 1px green;*/
 }
 .middle_section{
     width: 552px;
@@ -141,14 +138,12 @@ body {
     margin: auto;
     margin-top: -20px;
     background-color: #fff;
-    /*border: solid 1px red;*/
 }
 .box_footer{
     width: 553dpx;
     height: 20px;
     margin: auto;
     margin-top: -21px;
-    /*border: solid 1px blue;*/
 }
 .box_margin_left{
     margin-left: 80px;
