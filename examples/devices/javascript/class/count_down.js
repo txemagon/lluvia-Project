@@ -13,6 +13,8 @@ function CountDown(view, initial_time) {
         that.time_passed += (date - that.last_time)
         that.last_time = date
         that.view.innerHTML = /\d{2}:\d{2}:\d{2}/.exec((new Date(that.remain())).toUTCString())
+        if(that.remain() <= 1000)
+            that.pause()
     }
 
     this.state.running.run.up = function(date) {

@@ -1,0 +1,11 @@
+{
+    "package": "Effects",
+    "description": "Gate's Effect Library",
+    "files": [{
+        "name": "ll_Interpolator.js",
+        "description": "Interpolates objects and numbers"
+    }, {
+        "name": "ll_MoveEffect.js",
+        "description": "Effect to move an element"
+    }]
+}

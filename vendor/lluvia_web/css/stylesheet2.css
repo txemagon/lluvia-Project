@@ -66,13 +66,11 @@ body {
 /* }}} */
 /* Header {{{ */
 .standard_features{
-    width: 1264px;
     margin: auto;
-}
-.common_border{
     border: solid 1px black;
 }
 #header{
+    width: 1264px;
     height: 202px;
     position: relative;
 }
@@ -109,81 +107,145 @@ body {
 }
 /* }}} */
 /* Main {{{ */
-.common{
-    height: 460px;
+#main_section{
+    width: 1264px;
     position: relative;
 }
-.left_side{
-    width: 630px;
-    margin-top: -331px;
-    /*border: solid 1px orange;*/
+.display_inline{
+    display: inline-block;
 }
-.right_side{
-    width: 630px;
+#main_container{
     position: absolute;
-    right: 0px;
-    top: 0px;
-    /*border: solid 1px blue;*/
+    top: -1334px;
+    border: solid 1px red;
+}
+#vertical_line{
+    width: 550px;
+    margin-left: 70px;
+    border: solid 1px #ccc;
+    /*overflow: hidden;*/
+}
+.dark_lines_vertical{
+    width: 1px;
+    height: 450px;
+    background-color: #666;
 }
 .horizontal_line{
     height: 1px;
     background-color: #ccc;
     margin-top: 20px;
 }
-.box_header{
+.dark_lines_horizontal{
+    width: 750px;
+    height: 1px;
+    background-color: #666;
+}
+#horizontal_line1{
+    margin-top: 60px;
+}
+#dark_line2{
+    width: 760px;
+}
+#blue_banner_top{
+    margin-top: -22px;
     width: 700px;
-    height: 20px;
-    /*border: solid 1px green;*/
 }
-.middle_section{
-    width: 552px;
-    height: 330px;
-    margin: auto;
-    margin-top: -20px;
-    background-color: #fff;
-    /*border: solid 1px red;*/
+#dark_line3{
+    width: 670px;
 }
-.box_footer{
-    width: 553dpx;
-    height: 20px;
-    margin: auto;
+#horizontal_line3{
+    margin-top: 275px;
+}
+#horizontal_line5{
+    margin-top: 120px;
+}
+#dark_line6{
+    width: 670px;
+    margin-left: 594px;
+}
+#dark_line7{
+    width: 670px;
+    margin-left: 594px;
+}
+.right_dark_line{
+    margin-left: 514px;
+}
+#dark_line9{
+    margin-bottom: 106px;
+}
+#dark_line10{
+    margin-top: -383px;
+    margin-left: 550px;
+    margin-bottom: 897px;
+}
+#purple_banner_top{
+    width: 630px;
     margin-top: -21px;
-    /*border: solid 1px blue;*/
+    float: right;
 }
-.box_margin_left{
-    margin-left: 80px;
+#horizontal_line7{
+    margin-top: 308px;
 }
-.right_header{
-    margin-left: -70px;
+#orange_banner_top{
+    width: 700px;
+    margin-top: 150px;
 }
-.first_line{
-    margin-top: 50px;
+.banner_orange{
+    width: 550px;
+    height: 22px;
+    background-color: #ff7f00;
 }
-.second_line{
-    margin-top: 288px;
+#horizontal_line11{
+    margin-top: -22px;
 }
-.blue{
-    background-color: #4E72AE;
+.dark_line_orange{
+    width: 750px;
 }
-.purple{
-    background-color: #B21687;
+#horizontal_line13{
+    margin-top: 275px;
 }
-.orange{
-    background-color: #FF7F00;
+#main_container{
+    width: 1264px;
+    position: relative;
 }
-#blue_banner_middle{
+#first_box{
+    width: 549px;
+    height: 320px;
+    margin-top: -499px;
     border: solid 1px #4E72AE;
 }
-#purple_banner_middle{
-    border: solid 1px #B21687;
+.banner_blue{
+    width: 549px;
+    height: 22px;
+    background-color: #4E72AE;
 }
-#orange_banner_middle{
-    border: solid 1px #FF7F00;
+#blue_banner_middle{
+    height: 298px;
+    background-color: #fff;
 }
-/* Cogs and Wheels {{{ */
+#cloud{
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.blue_text{
+    margin-top: 40px;
+    margin-left: 120px;
+}
+#blue_intro{
+    font-size: 18pt;
+    margin-left: 120px;
+    margin-top: -40px;
+}
+#download{
+    float: right;
+    margin-right: 20px;
+    margin-top: -40px;
+}
 #cogs_and_chain{
-    margin-top: -52px;
-    margin-left: 13px;
+    width: 620px;
+    position: absolute;
+    top: 0px;
+    left: 635px;
 }
 #second_wheel{
     margin-left: 135px;
@@ -224,26 +286,58 @@ body {
     margin-top: 90px;
     margin-left: -13px;
 }
-/* }}} */
-/* Eagle {{{ */
 #eagle{
-    width: 670px;
+    width: 710px;
     height: 69px;
     background-image: url("../images/eagle.svg");
     background-repeat: no-repeat;
     background-position: right;
-    margin-top: 110px;
+    margin-top: -696px;
+    margin-left: -72px;
 }
 .black_line{
     height: 1px;
-    width: 610px;
+    width: 642px;
     background-color: #666;
 }
-#black_line_bottom{
+#black_line2{
     margin-top: 17px;
 }
-/* }}} */
-/* Pelton Wheel {{{ */
+#second_box{
+    width: 500px;
+    height: 352px;
+    margin-top: -217px;
+    margin-left: 640px;
+    border: solid 1px #B21687;
+}
+#menu_first_part{
+    width: 498px;
+}
+.banner_purple{
+    width: 200x;
+    height: 21px;
+    background-color: #B21687;
+}
+#purple_banner_middle{
+    height: 332px;
+    background-color: #fff;
+}
+#third_box{
+    width: 550px;
+    height: 320px;
+    margin-top: 151px;
+    border: solid 1px #ff7f00;
+}
+#orange_banner_middle{
+    height: 300px;
+    background-color: #fff;
+}
+#pelton_wheel{
+    width: 641px;
+    height: 277px;
+    margin-left: 552px;
+    margin-top: -300px;
+}
 #pelton{
     width: 229px;
     height: 228px;
@@ -267,7 +361,6 @@ body {
     float: right;
     margin-top: -170px;
 }
-/* }}} */
 /* }}} */
 /* Footer {{{ */
 #footer{

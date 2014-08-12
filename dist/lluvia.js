@@ -3003,6 +3003,22 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
+Interpolator.prototype = new Thread
+Interpolator.prototype.constructor = Interpolator
+function Interpolator(initial_point, final_point, variation) {
+    this.current_point = this.initial_point = initial_point
+    this.final_point = final_point
+    this.variation = variation
+}
+Interpolator.prototype.run = function() {
+    if (this.variation instanceof Object && "add" in this.variation)
+        this.current_point.add$B(this.variation)
+    else
+        this.current_point += this.variation
+}
+MoveEffect.prototype = new ThreadAutomata
+MoveEffect.prototype.constructor = MoveEffect
+function MoveEffect(processor, gate) {}
 Processor.prototype.constructor = Processor;
 function Processor(){
 	this.now	 = new Date();
@@ -3630,7 +3646,7 @@ Builder.prototype.create_element = function(node, type) {
     var prefix = prefix || ""
     switch (type) {
         case "object":
-            if (typeof this.space_name == "undefined")
+            if (this.space_name == null)
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
@@ -3712,7 +3728,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..', 'localhost:8082')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

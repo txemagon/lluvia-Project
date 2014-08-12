@@ -74,7 +74,7 @@ Builder.prototype.create_element = function(node, type) {
 
     switch (type) {
         case "object":
-            if (typeof this.space_name == "undefined")
+            if (this.space_name == null)
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
