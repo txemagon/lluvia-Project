@@ -83,24 +83,27 @@ Builder.prototype.create_element = function(node, type) {
     }
 }
 
-Builder.prototype.create_methods_element = function() {
+Builder.prototype.create_methods_element = function(element) {
     var dataset = element.data_set || {}
+    var element_class = element.type || ""
     var new_methods = []
 
     function search_new_methods() {
-        for (var i in dataset)
-            if (i.search("method$") == 0) {
+        for (var i in dataset) {
+            if (i.search("method") == 0) {
                 var method = {
                     name: i.replace("method$", ""),
                     block: dataset[i]
                 }
-                methods.push(method)
+                new_methods.push(method)
             }
+        }
     }
 
     search_new_methods()
-    for (var i = 0; i < new_methods.length; i++)
-        eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
+    for (var i = 0; i < new_methods.length; i++) {
+        eval(element.name + "." + new_methods[i].name + "=" + new_methods[i].block)
+    }
 }
 
 Builder.prototype.run_methods = function(element) {
@@ -109,7 +112,7 @@ Builder.prototype.run_methods = function(element) {
 
     function search_methods() {
         for (var i in dataset)
-            if (i.search("run$") == 0) {
+            if (i.search("run") == 0) {
                 var method = {
                     name: i.replace("run$", ""),
                     params: dataset[i]
@@ -141,7 +144,7 @@ Builder.prototype.build = function() {
         var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
         this.create_element(analize_result, clasify_result)
-        //this.create_methods_element(analize_result)
+        this.create_methods_element(analize_result)
         this.run_methods(analize_result)
     }
 }

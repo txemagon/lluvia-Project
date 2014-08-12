@@ -59,6 +59,6 @@ Loader:
         - En la primera pasada se guarda todas las variables que se puedan al analizar lexicamnete la informacion.
         - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.
         - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanos.
-
+// TODO: que method$ cree el metodo sino existe.(ya lo tendria q hacer pero x lo q sea no funciona :(
 // TODO: Refactor fireEvent() para hacerlo mas agil.
 // TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.

@@ -13,7 +13,7 @@ function CountDown(view, initial_time) {
         that.time_passed += (date - that.last_time)
         that.last_time = date
         that.view.innerHTML = /\d{2}:\d{2}:\d{2}/.exec((new Date(that.remain())).toUTCString())
-        if(that.remain() <= 1000)
+        if (that.remain() <= 1000)
             that.pause()
     }
 
@@ -33,4 +33,8 @@ CountDown.prototype.pause = function() {
 
 CountDown.prototype.remain = function() {
     return this.initial_time - this.time_passed
+}
+
+CountDown.prototype.attend_press_pause = function() {
+    this.pause()
 }
