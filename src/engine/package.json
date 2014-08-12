@@ -34,6 +34,8 @@
 	    }, {
 	        "name": "ll_MessageEvent.js",
 	        "description": "Message generator."
-	    }],
-	    "provides": ["effects"]
+	    }, {
+	        "name": "effects/ll_MoveEffect.js",
+	        "description": "Movement Effect"
+	    }]
 	}

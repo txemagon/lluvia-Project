@@ -3003,22 +3003,6 @@ $Logger.prototype.log = function(message, severity){
 		this.logs.push(message)
 	}
 }
-Interpolator.prototype = new Thread
-Interpolator.prototype.constructor = Interpolator
-function Interpolator(initial_point, final_point, variation) {
-    this.current_point = this.initial_point = initial_point
-    this.final_point = final_point
-    this.variation = variation
-}
-Interpolator.prototype.run = function() {
-    if (this.variation instanceof Object && "add" in this.variation)
-        this.current_point.add$B(this.variation)
-    else
-        this.current_point += this.variation
-}
-MoveEffect.prototype = new ThreadAutomata
-MoveEffect.prototype.constructor = MoveEffect
-function MoveEffect(processor, gate) {}
 Processor.prototype.constructor = Processor;
 function Processor(){
 	this.now	 = new Date();
@@ -3257,9 +3241,10 @@ StateGear.prototype.zip = function(solicitors, base_state) {
         }
     }
 }
-ThreadAutomata.prototype = new Thread;
-ThreadAutomata.extend(Automata);
-ThreadAutomata.prototype.constructor = ThreadAutomata;
+ThreadAutomata.prototype = new Thread
+ThreadAutomata.extend(Automata)
+ThreadAutomata.prototype.constructor = ThreadAutomata
+ThreadAutomata.prototype.super = Automata
 function ThreadAutomata(state, solicitor, processor) {
     if (arguments.length) {
         Automata.call(this, state, solicitor);
@@ -3457,67 +3442,70 @@ EventDispatcher.prototype.shift = function() {
 EventDispatcher.prototype.run = function() {
     return shift.apply(this, arguments)
 }
-function _stitchWorlds(gate, solicitor){
-	return function(e){
-		e = e || window.event
-		try{
-		 return gate[solicitor](e, this)
-		} catch (err) {
-			Exception.parse(err) }
-	}
+function _stitchWorlds(gate, solicitor) {
+    return function(e) {
+        e = e || window.event
+        try {
+            return gate[solicitor](e, this)
+        } catch (err) {
+            Exception.parse(err)
+        }
+    }
 }
-function Gate(element, parent, config){
+function Gate(element, parent, config) {
     var that = this
     var args = arguments
-    function initialize(){
-	if (element){
-	    if (typeof(element) === "string")
-		if (document.getElementById(element))
-		    element = document.getElementById(element)
-	    else{
-		var element_name = element
-		element = document.createElement("div")
-		element.setAttribute('id', element_name)
-		if (parent){
-		    if (typeof (parent) === "string" )
-			parent = document.getElementById(parent)
-		    if (parent) parent.appendChild(element)
-		}
-	    }
-	    that.panel = element
-	}
-	if (!element) {
-	    that.panel = document.createElement("div")
-	    if (parent)
-		parent.appendChild(that.panel)
-	    else
-		document.body.appendChild(that.panel)
-	}
-	if (config)
-	    that.merge$B(config)
-	that.keys(/do_.*/).each(function(handler){
-        handler.match( /do_(.*)/ )
-        that.panel[RegExp.$1] = _stitchWorlds(that, handler)
-	})
-	that.threads = []
+    function initialize() {
+        if (element) {
+            if (typeof(element) === "string")
+                if (document.getElementById(element))
+                    element = document.getElementById(element)
+                else {
+                    var element_name = element
+                    element = document.createElement("div")
+                    element.setAttribute('id', element_name)
+                    if (parent) {
+                        if (typeof(parent) === "string")
+                            parent = document.getElementById(parent)
+                        if (parent) parent.appendChild(element)
+                    }
+                }
+            that.panel = element
+        }
+        if (!element) {
+            that.panel = document.createElement("div")
+            if (parent)
+                parent.appendChild(that.panel)
+            else
+                document.body.appendChild(that.panel)
+        }
+        if (config)
+            that.merge$B(config)
+        that.keys(/do_.*/).each(function(handler) {
+            handler.match(/do_(.*)/)
+            that.panel[RegExp.$1] = _stitchWorlds(that, handler)
+        })
+        that.threads = []
     }
     if (arguments.length)
-	initialize()
+        initialize()
 }
-Gate.prototype.listen = function(event, handler){
+Gate.prototype.listen = function(event, handler) {
     this.panel[event] = _stitchWorlds(this, handler)
 }
-Gate.prototype.getCanvas = function(){ return this.panel.lastChild; } 
-Gate.prototype.applySkin = function(skin){
+Gate.prototype.getCanvas = function() {
+    return this.panel.lastChild;
+} 
+Gate.prototype.applySkin = function(skin) {
     var div = document.createElement("div")
     div.setAttribute("class", skin)
     this.panel.appendChild(div)
 }
-Gate.prototype.run = function(now, before){
-    for (var i=0; i<this.threads.length; i++)
-    this.threads[i].run(now, before)
+Gate.prototype.run = function(now, before) {
+    for (var i = 0; i < this.threads.length; i++)
+        this.threads[i].run(now, before)
 }
-Gate.prototype.new_effect = function(eff){
+Gate.prototype.new_effect = function(eff) {
     this.threads.push(eff)
     return eff
 }
@@ -3573,6 +3561,26 @@ var systemEv = (function(){
 	$_sev.yield(ob_msg)
 	return  ob_msg; })
 })()
+MoveEffect.prototype = new ThreadAutomata
+MoveEffect.prototype.constructor = MoveEffect
+MoveEffect.prototype.super = ThreadAutomata
+function MoveEffect(view, final_coord, initial_coord) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = [20, 15]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.innerHTML = that.coord
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
 function TableSymbols(elements) {
     this.elements = elements || []
 }

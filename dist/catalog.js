@@ -173,20 +173,9 @@ var $K_script_response =
 				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
 				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
 				{"name": "ll_Lookup.js", "description": ""},
-				{"name": "ll_MessageEvent.js", "description": "Message generator."}],
-			"provides": [
-				   {
-					"_path": "/src/engine/effects/",
-					"files": [
-						{"name": "ll_Interpolator.js", "description": "Interpolates objects and numbers"},
-						{"name": "ll_MoveEffect.js", "description": "Effect to move an element"}],
-					"provides": [],
-					"requires": [],
-					"offers": [],
-					"package": "Effects",
-					"description": "Gate's Effect Library",
-				 }
-],
+				{"name": "ll_MessageEvent.js", "description": "Message generator."},
+				{"name": "effects/ll_MoveEffect.js", "description": "Movement Effect"}],
+			"provides": [],
 			"requires": [],
 			"offers": [],
 			"package": "engine",
