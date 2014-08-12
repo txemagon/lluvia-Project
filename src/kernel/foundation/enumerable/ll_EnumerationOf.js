@@ -46,6 +46,8 @@ EnumerationOf.prototype.super = Enumeration
  */
 function EnumerationOf(type) {
     var args = Array.prototype.slice.call(arguments, 1)
+    if (args[0] instanceof Enumeration)
+        args[0] = [args[0]] // For copy constructor purposes.
     Enumeration.apply(this, args[0])
     this.transpose(type)
 }

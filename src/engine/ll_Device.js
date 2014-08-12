@@ -103,32 +103,33 @@ function Device(view, state, parent) {
     /* Class accesors*/
     var that = this
     this._class = that
-    state = state || Device.STATE
-    this.solicitors = {
-        running: function() {
-            this.owner.gate_runner(this.now)
-            this.owner.child_runner(this.now);
-        },
-        suspending: function() {
-            this.owner.child_runner(this.now);
-        },
-        killing: function() {
-            this.owner.gate_runner(this.now)
-        }
-    }
-
-    /* Instance vars */
-    if (view)
-        this.view = (typeof(view) === "string" ? document.getElementById(view) : view)
-
-    this.event_dispatcher = new EventDispatcher();
-
-    this.gates = []
-
-    this.open_device = _$innerObject(this, "device")
 
     /* construction */
     function initialize() { // Use that. This would refer to the function object.
+
+        state = state || new EnumerationOf(State, Device.STATE)
+        that.solicitors = {
+            running: function() {
+                this.owner.gate_runner(that.now)
+                this.owner.child_runner(that.now);
+            },
+            suspending: function() {
+                this.owner.child_runner(that.now);
+            },
+            killing: function() {
+                this.owner.gate_runner(that.now)
+            }
+        }
+
+        /* Instance vars */
+        if (view)
+            that.view = (typeof(view) === "string" ? document.getElementById(view) : view)
+
+        that.event_dispatcher = new EventDispatcher();
+
+        that.gates = []
+
+        that.open_device = _$innerObject(that, "device")
 
         that.event_dispatcher.device = that
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
