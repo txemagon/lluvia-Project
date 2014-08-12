@@ -62,8 +62,11 @@
  * @param {String...} constants List of constants to be used as an InterleavedArray.
  */
 function Enumeration(constants) {
+    var args = arguments // Copy of arguments
+    if (constants instanceof Enumeration)
+        args = constants.ia // Copy constructor trick.
     Object.defineProperty(this, "ia", {
-        value: new(ApplyProxyConstructor(InterleavedArray, arguments)),
+        value: new(ApplyProxyConstructor(InterleavedArray, args)),
         enumerable: false
     })
 

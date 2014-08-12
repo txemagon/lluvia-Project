@@ -2,7 +2,7 @@ body{
 	font-family: arial;
 }
 
-#count_down{
+.Clock{
 	width: 100px;
     opacity: 0.6;
 	background-color: #051000;
