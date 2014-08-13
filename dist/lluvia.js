@@ -211,6 +211,66 @@ rectangle.prototype.elarge = function (despl){
 	this.x1 += despl.x;
 	this.y1 += despl.y;}
 Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+$KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
+MethodMissingError.prototype.constructor = MethodMissingError
+function MethodMissingError(){
+  Error.apply(this, arguments)
+  this.name = "MethodMissingError"
+}
+Exception.prototype.constructor = Exception
+function Exception(){
+}
+Exception.is$U = function(err, type){
+  var error_with = false
+  if ( /function call/i.test(type) ){
+    error_with = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
+    if (error_with)
+      error_with = error_with[1]
+    else throw(err);
+    }
+  if ( /method call/i.test(type) )
+    error_with = err.toString().match(/TypeError:\s*([^\.]+)\.([^\.]+)\s+is not a function.*/)
+  if ( /singleton method/i.test(type) )
+    error_with = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
+  return error_with
+}
+Exception.closures = 0
+Exception.parse = function(err, source_code){
+  var actual_parameters = []
+  function get_params(method_name, obj_name){
+      var search_text = obj_name ? (obj_name + ".") : ""
+      search_text += method_name
+      var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
+      var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
+      params = params.replace(/\(\s*/, "")
+      params = params.replace(/\s*\)\s*$/, "")
+      var actual_parameters = CodeBlockFinder.parse_params(params)
+      for (var i=0; i<actual_parameters.length; i++)
+           actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
+           return actual_parameters
+  }
+   var obj = null
+   var m = err.toString().match(/TypeError:\s*([^\.]+)\.([^\s]*)\s+is not a function.*/)
+   if ( m && (m.length == 3) )
+     if ( (obj = eval(m[1])) instanceof Object){
+      actual_parameters = get_params(m[2], m[1])
+      return obj.method_missing(m[2], m[1],  actual_parameters) 
+     }
+   var obj = null
+   var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
+   if ( m && (m.length == 2) ){
+      actual_parameters = get_params(m[1])
+       return method_missing(err, m[1], actual_parameters )
+      }
+   var obj = null
+   var m = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
+  if ( m && (m.length == 3) )
+     if ( (obj = eval(m[1])) instanceof Object){
+       actual_parameters = get_params()
+       return obj.method_missing(m[2], m[1],  actual_parameters)
+     }
+     throw(err)
+}
 Object.prototype.to_a = function() {
     return [this]
 }
@@ -2403,65 +2463,137 @@ ArrayClass.prototype.constructor = ArrayClass
 function ArrayClass() {
     this.length = 0
 }
-$KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
-MethodMissingError.prototype.constructor = MethodMissingError
-function MethodMissingError(){
-  Error.apply(this, arguments)
-  this.name = "MethodMissingError"
-}
-Exception.prototype.constructor = Exception
-function Exception(){
-}
-Exception.is$U = function(err, type){
-  var error_with = false
-  if ( /function call/i.test(type) ){
-    error_with = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
-    if (error_with)
-      error_with = error_with[1]
-    else throw(err);
-    }
-  if ( /method call/i.test(type) )
-    error_with = err.toString().match(/TypeError:\s*([^\.]+)\.([^\.]+)\s+is not a function.*/)
-  if ( /singleton method/i.test(type) )
-    error_with = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
-  return error_with
-}
-Exception.closures = 0
-Exception.parse = function(err, source_code){
-  var actual_parameters = []
-  function get_params(method_name, obj_name){
-      var search_text = obj_name ? (obj_name + ".") : ""
-      search_text += method_name
-      var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
-      var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
-      params = params.replace(/\(\s*/, "")
-      params = params.replace(/\s*\)\s*$/, "")
-      var actual_parameters = CodeBlockFinder.parse_params(params)
-      for (var i=0; i<actual_parameters.length; i++)
-           actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
-           return actual_parameters
+function giveme_node(id){
+  var node = document.getElementById(id)
+  if (!node){
+    node = document.createElement("div")
+    node.setAttribute("id", id)
+    document.getElementsByTagName("body")[0].appendChild(node)
   }
-   var obj = null
-   var m = err.toString().match(/TypeError:\s*([^\.]+)\.([^\s]*)\s+is not a function.*/)
-   if ( m && (m.length == 3) )
-     if ( (obj = eval(m[1])) instanceof Object){
-      actual_parameters = get_params(m[2], m[1])
-      return obj.method_missing(m[2], m[1],  actual_parameters) 
-     }
-   var obj = null
-   var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
-   if ( m && (m.length == 2) ){
-      actual_parameters = get_params(m[1])
-       return method_missing(err, m[1], actual_parameters )
-      }
-   var obj = null
-   var m = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
-  if ( m && (m.length == 3) )
-     if ( (obj = eval(m[1])) instanceof Object){
-       actual_parameters = get_params()
-       return obj.method_missing(m[2], m[1],  actual_parameters)
-     }
-     throw(err)
+  return node
+}
+function get_log_load(){
+    return lluvia_load =giveme_node("lluvia_load")
+}
+function explain(div, title, text){
+    var whole_html_text = ""
+    if (div) {
+        whole_html_text += title + ": " + text + "<br/>\n"
+        div.innerHTML += whole_html_text
+    }
+}
+function ll_module_to_include(module_source){
+    explain(get_log_load(), "About to load module", module_source.module)
+    module_loading[module_source.module] = new LogModuleLoad(module_source)
+}
+function ll_module_included(module_source){
+    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
+}
+function ll_file_included(file_source, module_source, last_file, last_module){
+    module_loading[module_source.module].addFile(file_source)
+    if (last_file) 
+        ll_module_included(module_source)
+    if (last_file && last_module)
+      if (!$K_loading_app && $K_app_dependencies){
+         $K_loading_app = true
+         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
+      }else
+        ll_start()
+}
+function highlight(language){
+    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
+    code = document.getElementsByTagName('pre')
+    for (var i = 0; i < code.length; i++) 
+        if (code[i].className == language) 
+            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
+}
+function ll_start(){
+  try{
+    highlight('javascript')
+  } catch(err){;}
+  if (typeof(main) == "function")
+      try{ main() } catch (err) { Exception.parse(err) }
+}
+function sanitize(code){
+    return code.replace("&lt;", "<")
+}
+function run(code_fragment){
+    var snippets = document.getElementsByName(code_fragment)	
+    for (var i = 0; i < snippets.length; i++) 	    
+        eval(sanitize(snippets[i].innerHTML))
+}
+function clear(div){
+    div = div || "debug"
+    giveme_node("debug").innerHTML = ""
+}
+var module_loading = {}
+function $timeStamp(){
+  var dat = new Date()
+  var timestamp = ""
+  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
+  return timestamp
+}
+function LogFileIncluded(file_source){
+  this.template = [
+    "<div class='_LogFile'>",
+    file_source.name,
+    " [" + $timeStamp() + "]",
+    ": ",
+    file_source.description,
+    "</div>"
+  ]
+}
+LogFileIncluded.prototype.toString = function(){
+  return this.template.join("")
+}
+function LogModuleLoad(module_source){
+  this.template = [
+      "<div class='_LogModule'>",
+      "<h3 class='_LogModuleName'> MODULE: ",
+      "I02:Module Name",
+      "</h3>\n",
+      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
+      "I05: Module Path",
+      ")</span>\n<br/>",
+      "<span class='_LogModuleDescription'>",
+      "I08: Module Description",
+      "</span>\n<br/>",
+      "Load Start Time: ",
+      "I11: start Time",
+      "<br/>\n",
+      "Load Finish Time: ",
+      "I14: Finish Time: ",
+      "<br/>\n",
+      "Load Time: ",
+      "I17: Elapsed Time: ",
+      " s.<br/>",
+      "FILES:<br/>",
+      "I20: FILES",
+      "<br/>",
+      "</div>"
+    ]
+ this.start = new Date().getTime()
+ this.end   = new Date().getTime()
+ this.template[11] = $timeStamp()
+ this.template[2]  = module_source.module
+ this.template[5]  = module_source.path
+ this.template[8]  = module_source.description
+ this.files = []
+}
+LogModuleLoad.prototype.addFile = function(file_source){
+ this.files.push(new LogFileIncluded(file_source))
+}
+LogModuleLoad.prototype.endLoad = function(){
+  this.end   = new Date().getTime()
+  this.template[14] = $timeStamp()     
+  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
+  return this.toString()
+}
+LogModuleLoad.prototype.toString = function(){  
+  this.template[20] = ""
+  for (var i=0; i<this.files.length; i++)
+    this.template[20] += this.files[i].toString()
+  return this.template.join('\n')
 }
 function Socket(uri, protocols) {
     this.uri = uri || ""
@@ -2714,138 +2846,6 @@ PackageManager.download = function(callback) {
         }
     }
 }
-function giveme_node(id){
-  var node = document.getElementById(id)
-  if (!node){
-    node = document.createElement("div")
-    node.setAttribute("id", id)
-    document.getElementsByTagName("body")[0].appendChild(node)
-  }
-  return node
-}
-function get_log_load(){
-    return lluvia_load =giveme_node("lluvia_load")
-}
-function explain(div, title, text){
-    var whole_html_text = ""
-    if (div) {
-        whole_html_text += title + ": " + text + "<br/>\n"
-        div.innerHTML += whole_html_text
-    }
-}
-function ll_module_to_include(module_source){
-    explain(get_log_load(), "About to load module", module_source.module)
-    module_loading[module_source.module] = new LogModuleLoad(module_source)
-}
-function ll_module_included(module_source){
-    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
-}
-function ll_file_included(file_source, module_source, last_file, last_module){
-    module_loading[module_source.module].addFile(file_source)
-    if (last_file) 
-        ll_module_included(module_source)
-    if (last_file && last_module)
-      if (!$K_loading_app && $K_app_dependencies){
-         $K_loading_app = true
-         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
-      }else
-        ll_start()
-}
-function highlight(language){
-    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
-    code = document.getElementsByTagName('pre')
-    for (var i = 0; i < code.length; i++) 
-        if (code[i].className == language) 
-            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
-}
-function ll_start(){
-  try{
-    highlight('javascript')
-  } catch(err){;}
-  if (typeof(main) == "function")
-      try{ main() } catch (err) { Exception.parse(err) }
-}
-function sanitize(code){
-    return code.replace("&lt;", "<")
-}
-function run(code_fragment){
-    var snippets = document.getElementsByName(code_fragment)	
-    for (var i = 0; i < snippets.length; i++) 	    
-        eval(sanitize(snippets[i].innerHTML))
-}
-function clear(div){
-    div = div || "debug"
-    giveme_node("debug").innerHTML = ""
-}
-var module_loading = {}
-function $timeStamp(){
-  var dat = new Date()
-  var timestamp = ""
-  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
-  return timestamp
-}
-function LogFileIncluded(file_source){
-  this.template = [
-    "<div class='_LogFile'>",
-    file_source.name,
-    " [" + $timeStamp() + "]",
-    ": ",
-    file_source.description,
-    "</div>"
-  ]
-}
-LogFileIncluded.prototype.toString = function(){
-  return this.template.join("")
-}
-function LogModuleLoad(module_source){
-  this.template = [
-      "<div class='_LogModule'>",
-      "<h3 class='_LogModuleName'> MODULE: ",
-      "I02:Module Name",
-      "</h3>\n",
-      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
-      "I05: Module Path",
-      ")</span>\n<br/>",
-      "<span class='_LogModuleDescription'>",
-      "I08: Module Description",
-      "</span>\n<br/>",
-      "Load Start Time: ",
-      "I11: start Time",
-      "<br/>\n",
-      "Load Finish Time: ",
-      "I14: Finish Time: ",
-      "<br/>\n",
-      "Load Time: ",
-      "I17: Elapsed Time: ",
-      " s.<br/>",
-      "FILES:<br/>",
-      "I20: FILES",
-      "<br/>",
-      "</div>"
-    ]
- this.start = new Date().getTime()
- this.end   = new Date().getTime()
- this.template[11] = $timeStamp()
- this.template[2]  = module_source.module
- this.template[5]  = module_source.path
- this.template[8]  = module_source.description
- this.files = []
-}
-LogModuleLoad.prototype.addFile = function(file_source){
- this.files.push(new LogFileIncluded(file_source))
-}
-LogModuleLoad.prototype.endLoad = function(){
-  this.end   = new Date().getTime()
-  this.template[14] = $timeStamp()     
-  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
-  return this.toString()
-}
-LogModuleLoad.prototype.toString = function(){  
-  this.template[20] = ""
-  for (var i=0; i<this.files.length; i++)
-    this.template[20] += this.files[i].toString()
-  return this.template.join('\n')
-}
 function navigator_version() { return navigator.appVersion }
 function is_firefox(ffversion){
 	ffversion = ffversion || ""
@@ -3004,66 +3004,71 @@ $Logger.prototype.log = function(message, severity){
 	}
 }
 Processor.prototype.constructor = Processor;
-function Processor(){
-	this.now	 = new Date();
-	this.events  = new Event();
-	this.threads = new Array();
+function Processor() {
+    this.now = new Date();
+    this.events = new Event();
+    this.threads = new Array();
 }
-Processor.prototype.register = function(cObject, solicitorF){
-	var obj = null
-	var fun = null
-	if (cObject){
-		obj = cObject
-		if (solicitorF)
-			fun = solicitorF
-		else if (cObject.run)
-			fun = cObject.run
-		if (!fun)
-			throw "The current processor can´t get a valid solicitor"
-	}
-	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
-}
-Processor.prototype.kill = function(rObject, solicitorF){
-	for (var i in this.threads)
-		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
-			this.threads.slice(i,i+1);
-}
-Processor.prototype.step = function (date){
-	this.now = date || new Date();
-	try {
-	  for (var i=0; i<this.threads.length; i++)
-            this.threads[i].solicitor.call(this.threads[i].object, this.now);
+Processor.prototype.register = function(cObject, solicitorF) {
+    var obj = null
+    var fun = null
+    if (cObject) {
+        obj = cObject
+        if (solicitorF)
+            fun = solicitorF
+        else if (cObject.run)
+            fun = cObject.run
+        if (!fun)
+            throw "The current processor can´t get a valid solicitor"
     }
-    catch (e) {
-    }
+    this.threads.push({
+        object: cObject,
+        solicitor: (solicitorF ? solicitorF : cObject.run)
+    });
 }
-Processor.prototype.run = function (date){
-    this.now =  new Date();
+Processor.prototype.kill = function(rObject, solicitorF) {
+    for (var i in this.threads)
+        if (this.threads[i] == {
+            object: rObject,
+            solicitor: solicitorF
+        })
+            this.threads.slice(i, i + 1);
+}
+Processor.prototype.step = function(date) {
+    this.now = date || new Date();
     try {
-	this.step(this.now)
+        for (var i = 0; i < this.threads.length; i++)
+            this.threads[i].solicitor.call(this.threads[i].object, this.now);
+    } catch (e) {
     }
-    catch (e) {
+}
+Processor.prototype.run = function(date) {
+    this.now = new Date();
+    try {
+        this.step(this.now)
+    } catch (e) {
     }
     setTimeout(this.run.bind(this), 20);
 }
-Processor.prototype.start = function(){
+Processor.prototype.start = function() {
     this.run()
     return this;
 }
-Processor.prototype.newThread = function(){
+Processor.prototype.newThread = function() {
     var t = new Thread(null, this)
-    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
+    t.run = Processor.prototype.newThread.block_given$U() || function() {;
+    }
     return t;
 }
-Processor.prototype.get = Processor.prototype.get = function (object) {
+Processor.prototype.get = Processor.prototype.get = function(object) {
     var collect = []
     var len = this.threads.length
-    for (var i=0; i<len; i++) {
-	var candidate = this.threads[i].object
-       if ( candidate && !collect.include$U(candidate) &&
-	    ( candidate == object ||  candidate instanceof object )
-	  )
-      collect.push(candidate)
+    for (var i = 0; i < len; i++) {
+        var candidate = this.threads[i].object
+        if (candidate && !collect.include$U(candidate) &&
+            (candidate == object || candidate instanceof object)
+        )
+            collect.push(candidate)
     }
     return collect
 }
