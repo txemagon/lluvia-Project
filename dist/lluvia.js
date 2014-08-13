@@ -3628,6 +3628,33 @@ function RectangleEffect(view, final_coord, initial_coord, velocity) {
     }
     ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
 }
+RotateEffect.prototype = new ThreadAutomata
+RotateEffect.prototype.constructor = RotateEffect
+RotateEffect.prototype.super = ThreadAutomata
+function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.angle = angle
+    this.final_coord = final_coord || [0, 0]
+    this.coord = this.initial_coord = initial_coord || [0, 0]
+    this.velocity = velocity || [20, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            if (angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
 function TableSymbols(elements) {
     this.elements = elements || []
 }
@@ -3790,7 +3817,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

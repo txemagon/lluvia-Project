@@ -28,4 +28,12 @@ function main() {
     var down2 = new Gate('line5')
     down2.new_effect(new MoveDownEffect('line5', [20, 300], [0, 0]))
     $Processor.register(down2)
+
+    var rotator = new Gate('rotator')
+    rotator.new_effect(new RotateEffect('rotator', 180))
+    $Processor.register(rotator)
+
+    var image_rotator = new Gate('image_rotator')
+    image_rotator.new_effect(new RotateEffect('image_rotator', 360))
+    $Processor.register(image_rotator)
 }

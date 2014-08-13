@@ -42,6 +42,9 @@
 	        "description": "Movement Effect"
 	    }, {
 	        "name": "effects/ll_RectangleEffect.js",
-	        "description": "Movement Effect"
+	        "description": "Rectangle Effect"
+	    }, {
+	        "name": "effects/ll_RotationEffect.js",
+	        "description": "Rotation Effect"
 	    }]
 	}
