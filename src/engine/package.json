@@ -34,6 +34,14 @@
 	    }, {
 	        "name": "ll_MessageEvent.js",
 	        "description": "Message generator."
-	    }],
-	    "provides": ["effects"]
+	    }, {
+	        "name": "effects/ll_MoveLeftEffect.js",
+	        "description": "Movement Effect"
+	    }, {
+	        "name": "effects/ll_MoveDownEffect.js",
+	        "description": "Movement Effect"
+	    }, {
+	        "name": "effects/ll_RectangleEffect.js",
+	        "description": "Movement Effect"
+	    }]
 	}

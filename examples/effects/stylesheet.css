@@ -1,0 +1,43 @@
+#container{
+    width: 1264px;
+    height: 300px;
+    margin: auto;
+    position: relative;
+    border: solid 1px #000;
+}
+#line{
+    width: 1px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    top: 20px;
+}
+#line2{
+    width: 1px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    left: 20px;
+}
+#line3{
+    width: 1px;
+    height: 1px;
+    background-color: #4E72AE;
+    position: absolute;
+    top:20px;
+    left: 20px;
+}
+#line4{
+    width: 1px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    top: 200px;
+}
+#line5{
+    width: 1px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    left: 322px;
+}

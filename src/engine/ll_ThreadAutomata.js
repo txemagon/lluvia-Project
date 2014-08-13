@@ -1,7 +1,8 @@
-ThreadAutomata.prototype = new Thread;
-ThreadAutomata.extend(Automata);
+ThreadAutomata.prototype = new Thread
+ThreadAutomata.extend(Automata)
 
-ThreadAutomata.prototype.constructor = ThreadAutomata;
+ThreadAutomata.prototype.constructor = ThreadAutomata
+ThreadAutomata.prototype.super = Automata
 
 /**
  * @class Engine.ThreadAutomata
@@ -33,7 +34,6 @@ function ThreadAutomata(state, solicitor, processor) {
  * @method	  run
  *
  */
-
 ThreadAutomata.prototype.run = function(processors_time) {
     if (this.now)
         this.before = this.now
