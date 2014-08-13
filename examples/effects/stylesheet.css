@@ -1,6 +1,6 @@
 #container{
     width: 1264px;
-    height: 300px;
+    height: 600px;
     margin: auto;
     position: relative;
     border: solid 1px #000;
@@ -40,4 +40,17 @@
     background-color: #ccc;
     position: absolute;
     left: 322px;
+}
+#rotator{
+    width: 80px;
+    height: 10px;
+    background-color: #B21687;
+    position: absolute;
+    top: 300px;
+    left: 100px;
+}
+#image_rotator{
+    position: absolute;
+    top: 300px;
+    left: 500px;
 }

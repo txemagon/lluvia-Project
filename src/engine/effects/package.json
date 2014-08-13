@@ -6,9 +6,15 @@
         "description": "Interpolates objects and numbers"
     }, {
         "name": "ll_MoveLeftEffect.js",
-        "description": "Effect to move an element"
+        "description": "Effect to move an element to the left"
+    }, {
+        "name": "ll_MoveDownEffect.js",
+        "description": "Effect to move an element down"
     }, {
         "name": "ll_RectangleEffect.js",
-        "description": "Effect to move an element"
+        "description": "Effect to create a rectangle"
+    }, {
+        "name": "ll_RotationEffect.js",
+        "description": "Effect to rotate an element"
     }]
 }
