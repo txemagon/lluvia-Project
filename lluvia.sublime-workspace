@@ -4,16 +4,16 @@
 		"selected_items":
 		[
 			[
+				"ele",
+				"element"
+			],
+			[
 				"cl",
 				"class_css"
 			],
 			[
 				"el",
 				"element"
-			],
-			[
-				"ele",
-				"element_pointer"
 			],
 			[
 				"new",
@@ -127,55 +127,23 @@
 			"file": "examples/devices/index.html",
 			"settings":
 			{
-				"buffer_size": 801,
+				"buffer_size": 1046,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/lib/builder/ll_Builder.js",
+			"file": "examples/devices/javascript/main.js",
 			"settings":
 			{
-				"buffer_size": 4574,
+				"buffer_size": 182,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "util/compress-core/lib/package.js",
+			"file": "examples/devices/css/general.css",
 			"settings":
 			{
-				"buffer_size": 11402,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/package.json",
-			"settings":
-			{
-				"buffer_size": 259,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/test.js",
-			"settings":
-			{
-				"buffer_size": 74,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "util/compress-core/pack.js",
-			"settings":
-			{
-				"buffer_size": 3101,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "dist/lluvia.js",
-			"settings":
-			{
-				"buffer_size": 24768,
+				"buffer_size": 260,
 				"line_ending": "Unix"
 			}
 		}
@@ -228,26 +196,33 @@
 	},
 	"file_history":
 	[
+		"/home/jose/work/lluvia-Project/examples/effects/javascript/main.js",
+		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
+		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
+		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/package.json",
+		"/home/jose/work/lluvia-Project/src/engine/ll_Processor.js",
+		"/home/jose/work/lluvia-Project/dist/lluvia.js",
+		"/home/jose/work/lluvia-Project/util/compress-core/pack.js",
+		"/home/jose/work/lluvia-Project/src/test.js",
+		"/home/jose/work/lluvia-Project/util/compress-core/lib/package.js",
+		"/home/jose/work/lluvia-Project/src/package.json",
+		"/home/jose/work/lluvia-Project/examples/devices/index.html",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/keypad.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/button_gate.js",
-		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
 		"/home/jose/work/lluvia-Project/src/engine/ll_Device.js",
 		"/home/jose/work/lluvia-Project/src/engine/ll_EventDispatcher.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
 		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
-		"/home/jose/work/lluvia-Project/dist/lluvia.js",
 		"/home/jose/work/lluvia-Project/src/lib/builder/table_symbols.js",
-		"/home/jose/work/lluvia-Project/src/package.json",
 		"/home/jose/.config/sublime-text-2/Packages/User/JavascriptBeautify.sublime-settings",
 		"/home/jose/.config/sublime-text-2/Packages/Javascript Beautify/JavascriptBeautify.sublime-settings",
 		"/home/jose/work/lluvia-Project/src/lib/builder/TableSymbols.js",
 		"/home/jose/work/lluvia-Project/src/engine/ll_State.js",
 		"/home/jose/work/lluvia-Project/util/install-sublime-packages",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/dependencies.js",
-		"/home/jose/work/lluvia-Project/examples/devices/index.html",
 		"/home/imasen/work/lluvia-Project/util/sublime-text-3/pack-lluvia.sublime-build",
 		"/home/imasen/work/lluvia-Project/examples/chat/index.html",
 		"/home/imasen/work/lluvia-Project/examples/automatas/index.html",
@@ -289,6 +264,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"watch",
+			"TableSymbols",
+			"consol",
 			"(){",
 			"add",
 			"alert",
@@ -349,6 +327,7 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -356,15 +335,15 @@
 					"file": "examples/devices/index.html",
 					"settings":
 					{
-						"buffer_size": 801,
+						"buffer_size": 1046,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								488,
-								488
+								998,
+								998
 							]
 						],
 						"settings":
@@ -381,166 +360,53 @@
 				},
 				{
 					"buffer": 1,
-					"file": "src/lib/builder/ll_Builder.js",
+					"file": "examples/devices/javascript/main.js",
 					"settings":
 					{
-						"buffer_size": 4574,
+						"buffer_size": 182,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4084,
-								4084
+								179,
+								179
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2244.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "util/compress-core/lib/package.js",
+					"file": "examples/devices/css/general.css",
 					"settings":
 					{
-						"buffer_size": 11402,
+						"buffer_size": 260,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5025,
-								5025
+								253,
+								253
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2565.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/package.json",
-					"settings":
-					{
-						"buffer_size": 259,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								259,
-								259
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/CSS/CSS.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/test.js",
-					"settings":
-					{
-						"buffer_size": 74,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								72,
-								72
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "util/compress-core/pack.js",
-					"settings":
-					{
-						"buffer_size": 3101,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								804,
-								804
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 102.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "dist/lluvia.js",
-					"settings":
-					{
-						"buffer_size": 24768,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 11662.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
