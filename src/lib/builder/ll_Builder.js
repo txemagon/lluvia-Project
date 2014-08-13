@@ -50,10 +50,15 @@ Builder.is_lluvia_comment$U = function(comment, token) {
 
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
-    var type = node.className.split("-")
+    var descompose_node = node.className.split(" ")
+    var class_css = descompose_node[1]
+    var type = descompose_node[0].split("-")
+
     var result = {
+        id: node.id,
         name: prefix + node.id,
         type: type[1],
+        class_css: class_css,
         params: node.dataset.params,
         data_set: node.dataset
     }
@@ -69,16 +74,13 @@ Builder.prototype.clasify_element = function(element) {
 }
 
 Builder.prototype.create_element = function(node, type) {
-    var nodes = node || {}
-    var prefix = prefix || ""
-
     switch (type) {
         case "object":
             if (this.space_name == null)
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
-
+            node.id.className = node.class_css
             break
     }
 }

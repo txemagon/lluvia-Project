@@ -26,6 +26,7 @@ Loader:
             ->
         - Los nombres de las variables que se utilizen en los comentarios no se pueden repetir en los id.
         - A la hora de analizar los comentarios leer dos veces y crear una tabla como hace C.
+        - En class se puede definir diferentes clases para los estilos: class="ll-class Clock"
 
     Consideraciones para su uso:
         - A la hora de crear los elementos se puede especificar si se quiere poner un prefijo delante de las variables (ll_, lluvia_, ...). Si se pone se respeta las variables que crea html5 para la gestion de etiquetas, sino se sobre escriben esas variables. Se comprobo que en el css se puede seguir poniendo el nombre original del DIV aunque se sobrescriban las variables.

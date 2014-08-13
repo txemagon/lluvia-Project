@@ -11,13 +11,3 @@ body{
     text-align: center;
     border: 4px double #009966;
 }
-
-#count_down2{
-    width: 100px;
-    opacity: 0.6;
-    background-color: #051000;
-    color: #00DD00;
-    padding: 3ex;
-    text-align: center;
-    border: 4px double #009966;
-}
