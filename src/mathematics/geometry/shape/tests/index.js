@@ -6,6 +6,8 @@ var _test_index = [ /* We first bring lluvia */
     "../../../../kernel/core-ext/ll_Number.js",
     "../../../../kernel/core-ext/ll_Function.js",
     "../../../../kernel/core-ext/ll_Object.js",
+    "../../../../kernel/foundation/enumerable/ll_Hash.js",
+    "../../../../kernel/foundation/architecture/ll_Module.js",
     "../../../../kernel/foundation/enumerable/ll_Enumeration.js",
     "../../../../kernel/foundation/enumerable/ll_InterleavedArray.js",
     "../../../../kernel/foundation/architecture/ll_ApplyProxyConstructor.js",
@@ -20,14 +22,15 @@ var _test_index = [ /* We first bring lluvia */
     "../../../../kernel/foundation/architecture/ll_Module.js",
     "../../../../kernel/foundation/architecture/ll_Class.js",
     "../../ll_Vector.js",
-    "../ll_Path.js",
     "../ll_Line.js",
     "../ll_StraightLine.js",
-    "../ll_Triangle.js",
+    "../ll_Path.js",
+    //"../ll_Triangle.js",
     "../ll_Circle.js",
     /* And we then bring asserts */
     //"line_tests.js",
     //"straight_line_test.js",
-    "triangle_tests.js"
+    //"triangle_tests.js"
+    "circle_tests.js"
     //"path_tests.js"
 ]

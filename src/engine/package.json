@@ -49,5 +49,11 @@
 	    }, {
 	        "name": "effects/ll_SideRotationEffect.js",
 	        "description": "Rotation Effect"
+	    }, {
+	        "name": "effects/ll_SideRotationEffect.js",
+	        "description": "Rotation Effect"
+	    }, {
+	        "name": "effects/ll_BackgroundMoveEffect.js",
+	        "description": "Spring Effect"
 	    }]
 	}

@@ -3636,15 +3636,16 @@ function RectangleEffect(view, final_coord, initial_coord, velocity) {
 RotateEffect.prototype = new ThreadAutomata
 RotateEffect.prototype.constructor = RotateEffect
 RotateEffect.prototype.super = ThreadAutomata
-function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+function RotateEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3654,7 +3655,7 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
             that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }
@@ -3663,16 +3664,17 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
 SideRotationEffect.prototype = new ThreadAutomata
 SideRotationEffect.prototype.constructor = SideRotationEffect
 SideRotationEffect.prototype.super = ThreadAutomata
-function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_coord) {
+function SideRotationEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.origin = origin || [0, 0]
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3687,7 +3689,63 @@ function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_
             that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+SideRotationEffect.prototype = new ThreadAutomata
+SideRotationEffect.prototype.constructor = SideRotationEffect
+SideRotationEffect.prototype.super = ThreadAutomata
+function SideRotationEffect(view, config) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.transformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.webkitTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.mozTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            if (that.angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+BackgroundMoveEffect.prototype = new ThreadAutomata
+BackgroundMoveEffect.prototype.constructor = BackgroundMoveEffect
+BackgroundMoveEffect.prototype.super = ThreadAutomata
+function BackgroundMoveEffect(view, config) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = config.final_coord
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [70, 0]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.backgroundPosition = "" + that.coord[0] + "%" + that.coord[1] + "%"
+            if (that.final_coord && that.coord[0] >= that.final_coord[0])
                 that.switch("stopped")
         }
     }
@@ -3869,6 +3927,1079 @@ Builder.prototype.build = function() {
         }
     }
 }
+Angle.prototype.constructor = Angle
+Angle.mode = "rad"  
+Angle.valid_modes = ["rad", "deg"]
+var PI = Math.PI
+function Angle(){
+  var that = this
+  this._value
+  function parseInput(args){
+    if (typeof(args[0] === "number"))
+      that._value = args[0]
+    if (typeof(args[0]) === "string"){
+       var formula = args[0].replace(/\s+/g, "")
+       formula = formula.replace(/pi/gi, "PI").replace(/PI/g, Math.PI)
+       var k = formula.indexOf("º") == -1 ? 1 : Math.PI / 180
+       that._value = k * eval(formula.match( /[^º]*/ ).toString())
+    }
+  }
+  if (arguments.length > 0)
+    parseInput(arguments)
+}
+Angle.prototype.valueOf = function(){
+  return this._value
+}
+Angle.prototype.canonical = function(){
+  var canon = this.value()
+  var sign = canon  > 0 ? 1 : -1 
+  while (canon > 2 * Math.PI || canon < 0)
+    canon -= (sign) * 2 * Math.PI
+  return canon
+}
+Angle.prototype.rounds = function(){
+  var canon = this.value()
+  var rounds = 0
+  var sign = canon  > 0 ? 1 : -1 
+  while (canon > 2 * Math.PI || canon < 0){
+    canon -= (sign) * 2 * Math.PI
+    rounds += sign
+  }
+  return rounds
+}
+Angle.prototype.equals = function(angle){
+  var max = angle.value_of() > this.value_of() ? angle.value_of(): this.value_of();
+  var min = angle.value_of() + this.value_of() - max
+  while (max > min)
+    max -= 2 * Math.PI
+  return max == min
+}
+Angle.prototype.to_str = function(mode){ 
+  mode = mode || Angle.mode
+  mode = mode.toLowerCase()
+  if (Angle.mode == "deg")
+    return Angle.to_deg(this)
+  return this.value()
+}
+Angle.to_deg = function (angle){
+  if (! (angle instanceof Angle) )
+    angle = new Angle(angle)
+  return angle.value() * 180 / Math.PI
+}
+Expression.prototype = new String("")
+Expression.prototype.constructor = Expression
+function Expression(formula){
+  this.formula = formula || ""
+}
+Expression.prototype.toString = function () {
+  return this.formula
+}
+Expression.prototype.toSource = function () {
+  return this.to_s
+}
+Expression.prototype.valueOf = function () {
+  return this.to_s
+}
+Expression.math = {
+  constants: [ "E", "LN2", "LN10", "LOG2E", "LOG10E", "PI", "SQRT1_2", "SQRT2" ],
+  functions: [ "abs", "acos", "asin", "atan", "atan2", "ceil", "cos", "exp", 
+               "floor", "log", "max", "min", "pow", "random", "round", "sin", 
+	       "sqrt", "tan" ]
+}
+Expression.parse = function(string){
+  return string.split(/,/) 
+}
+Complex.prototype.constructor = Complex    
+Complex.prefix_sep = false  
+Complex.sep = "i"          
+Complex.valid_binomial_sep = ["i", "j"]
+Complex.valid_polar_sep    = [";", ":", "\\|", "\\("]
+Complex.output_mode = "binomial"
+Complex.valid_output_modes = ["binomial", "polar", "exponential"]
+function Complex () {
+  var that = this
+  this._real = 0
+  this._img  = 0
+  this._k_pi = 0
+  function parse_input(args){
+    if (args[0] instanceof Complex){
+     that._real = args[0].real()
+     that._img  = args[0].img()
+    }
+    if (args[0] instanceof Array){
+      that._real = args[0][0] || 0
+      that._img  = args[0][1] || 0
+    }
+    if (args.length == 2 && 
+	typeof(args[0]) == "number" ||
+	typeof(args[1]) == "number" )
+	if (typeof(args[2]) == "string" && args[2][0].toLowerCase() == "p")
+	  args[0] = "" + args[0] + ";" + args[1]
+      else{
+        that._real = args[0] || 0
+        that._img  = args[1] || 0
+      }
+    if ( typeof(args[0]) == "string"){
+      var text = args[0].replace(/,/g, ".")
+      if (Complex.is_valid_binomial(args[0])){
+	   that._real = eval( Complex.get_members("real", text).join(" ") ) || 0
+	   that._img  = eval( Complex.get_members("img" , text).join(" ") ) || 0
+      }
+      if (Complex.is_valid_polar(args[0])){
+         var mod = eval( Complex.get_members("mod", text).join(" ") ) || 0
+         var ang = new Angle( Complex.get_members("arg", text) )
+         var arg = ang.value() || 0
+	   that._real = mod * Math.cos( arg )
+	   that._img  = mod * Math.sin( arg )
+	   that._k_pi = ang.rounds()
+      }
+    }
+  }
+  if (arguments.length != 0)
+    parse_input(arguments)
+}
+Complex.prototype.real = function(){
+  return this._real
+}
+Complex.prototype.re = function(){
+  return this.real()
+}
+Complex.prototype.img = function(){
+  return this._img
+}
+Complex.prototype.im = function(){ 
+  return this.img()
+}
+Complex.prototype.imag = function(){ 
+  return this.img()
+}
+Complex.prototype.imaginary = function(){ 
+  return this.img()
+}
+Complex.prototype.valueOf = function(){
+  return [this.real(), this.img()]
+}
+Complex.prototype.to_str = function(mode){
+  mode = mode || Complex.output_mode.toLowerCase()
+  mode = mode.toLowerCase()
+  if ( mode[0] == "p" )  
+    return "polar"
+  return this.real() + _dress_img(this.img())  
+}
+Complex.prototype.toString = function(){
+  return this.to_str()
+}
+Complex.prototype.equals = function(re, im){
+  var model 
+  if ( typeof(re) == "number" || typeof(im) == "number")
+       model = new Complex(re, im)
+  else 
+         model = new Complex(re)
+  return _$same_number(model.real(),this.real()) && _$same_number(model.img(), this.img())
+}
+Complex.prototype.identical = function(re, im){
+  var model 
+  if ( typeof(re) == "number" || typeof(im) == "number")
+       model = new Complex(re, im)
+  else 
+         model = new Complex(re)
+  return _$same_number(model.real(),this.real()) && 
+         _$same_number(model.img(), this.img() ) &&
+         _$same_number(model._k_pi, this._k_pi)  
+}
+Complex.prototype.is_real$U = function(){
+  return this.img() == 0
+}
+Complex.prototype.is_img$U = function(){
+  return this.real() == 0
+}
+Complex.prototype.is_im$U = function(){
+  return this.is_img$u()
+}
+Complex.prototype.is_imag$U = function(){
+  return this.is_img$u()
+}
+Complex.prototype.is_imaginary$U = function(){
+  return this.is_img$u()
+}
+Complex.prototype.module = function(){
+  var r = this.real();
+  var i = this.img();
+  return Math.sqrt( r * r + i * i )
+}
+Complex.prototype.arg = function(){
+}
+Complex.prototype.argument = function(){ 
+  return this.arg()
+}
+Complex.get_members = function(real, text){
+  real = real.toLowerCase()
+  if (real[0] == "r" || real[0] == "i"){ 
+    real = real.indexOf("r") == 0
+    var terms = _split_terms(text)
+    var result = []
+    terms.each(function(el){
+       if (real && !el.include_some_of$U(Complex.valid_binomial_sep))
+         result.push(el)
+       if (!real && el.include_some_of$U(Complex.valid_binomial_sep))
+         result.push(el.replace(new RegExp("[" + Complex.valid_binomial_sep +"]", "g"), ""))
+       })
+    return result
+  }else{
+    var module = real[0] == "m"
+    text = text.replace(/\s+/g, "")
+    if (module)
+      return text.match( /^[\d\.,]+/ )
+    else{
+      return text.match( new RegExp( "[" + Complex.valid_polar_sep.join("") + "](.*)$") )[1] || 0
+      }
+  }
+}
+Complex.is_valid_binomial = function (text){
+  text = text.replace(/\s/g, "")
+  return text.search(new RegExp( "[^"+ Complex.valid_binomial_sep.join("") + "\\d\\.,\\+-]" )) == -1 &&
+         _complex_not_at_the_same_time( text, ["\\.", ","]) && 
+         _complex_not_at_the_same_time(text, Complex.valid_binomial_sep)
+}
+Complex.is_valid_polar = function (text){
+  text = text.replace(/\s/g, "").replace(/;;/g, ";")
+  return text.search( new RegExp("^[\\d\.,]+[" + Complex.valid_polar_sep + "].*º?$", "g") ) != -1 &&
+         _complex_not_at_the_same_time( text, ["\\.", ","]) && 
+         !Complex.is_valid_binomial(text)
+ }
+function _append_complex_sep( term ){
+  if (Complex.prefix_sep)
+    return Complex.sep + term
+  return term + Complex.sep
+}
+function _dress_img(term){
+  var sign = term < 0 ? " - " : " + "
+  return sign + _append_complex_sep(Math.abs(term))
+}
+function _split_terms(text){
+  var terms = []
+  text.split("+").each(function(el){ 
+    el.split("-").each_with_index( function (subel, index){
+      if (subel.length != 0)
+        subel = (index == 0? "+" : "-" ) + subel 
+      if ( (subel.search(/\d/) == -1) &&
+	   subel.include_some_of$U(Complex.valid_binomial_sep) )
+        subel += "1"
+      terms.push(subel)
+    })
+  })
+  return terms
+}
+function _complex_not_at_the_same_time(text, incompatibilities){
+  var counters = {}
+  for (var i=0; i<incompatibilities.length; i++)
+    counters[incompatibilities[i]] = 0;
+  incompatibilities.each(function(el){
+        if (text.search(el) != -1)
+        counters[el] = 1
+      })
+  var sum = 0
+  for (var i=0; i<incompatibilities.length; i++)
+    sum += counters[incompatibilities[i]];
+  return sum < 2
+}
+function _$same_number(op1, op2){
+  return Math.abs(op1 - op2) < Object._$NUM_ERR
+}
+Func.prototype.constructor = Func
+function Func(formula, param){
+   if (arguments[0] instanceof Func)
+     return new Func(arguments[0].formula, arguments[0].param)
+   if (typeof(formula) != "string")
+     return null;
+   this.formula = formula.replace( /\s+/g, "")
+   this.param = this.sanitize_params(param)
+}
+Func.prototype.equals = function(model){
+  if (!(model instanceof Func))
+    model = new Func(model)
+  return this.formula.replace(/\s+/g, "") == model.formula.replace(/\s+/g, "")
+}
+Func.prototype.value_of = function(){
+  return this.formula
+}
+Func.prototype.value_in = function(param){
+  var param = this.sanitize_params(param)
+  var formula = this.formula
+  for(var i in param){
+     var rp = param[i]
+     if (typeof(param[i]) === "function")
+       rp = param[i]()
+     if (param[i] instanceof Func)
+       rp = param[i].value_in()
+     formula = formula.replace( new RegExp("{" + i + "}", "g"), rp )
+  }
+  try{
+   return eval(formula)
+  } catch(err){
+   return formula
+  }
+}
+Func.prototype.set_param = function(param){
+  this.param = this.sanitize_params(param)
+  return this
+}
+Func.prototype._in = function(param){
+  var that = this
+  param = this.sanitize_params(param)
+  return function(){
+    return that.value_in(param)
+  }
+}
+Func.prototype.sanitize_params = function(param){
+    param = param || this.param || {}
+    try{ param = param.plain() } catch(err){;}
+    return param
+}
+Func.prototype.add = function(){
+  var func = this
+  for (var i=0; i<arguments.length; i++)
+      func = new Func(func.formula + " + " + new Func(arguments[i]).formula)
+  return func
+}
+Func.prototype.add$B = function(){
+   this.formula = this.add.apply(this, arguments).formula
+   return this
+}
+Func.prototype.sub = function(){
+  var func = this
+  for (var i=0; i<arguments.length; i++)
+      func = new Func(func.formula + " - (" + new Func(arguments[i]).formula + ")")
+  return func
+}
+Func.prototype.sub$B = function(){
+   this.formula = this.sub.apply(this, arguments).formula
+   return this
+}
+Func.prototype.mul = function(){
+ var func = new Func( "(" + this.formula + ")" )
+  for (var i=0; i<arguments.length; i++)
+      func = new Func(func.formula + " * (" + new Func(arguments[i]).formula + ")")
+  return func
+}
+Func.prototype.mul$B = function(){
+   this.formula = this.mul.apply(this, arguments).formula
+   return this
+}
+Func.prototype.div = function(){
+ var func = new Func( "(" + this.formula + ")" )
+  for (var i=0; i<arguments.length; i++)
+      func = new Func(func.formula + " / (" + new Func(arguments[i]).formula + ")")
+  return func
+}
+Func.prototype.div$B = function(){
+   this.formula = this.div.apply(this, arguments).formula
+   return this
+}
+Func.prototype.method_missing = function (method, obj, params){ 
+    if (params && params[0] == "")
+      params.shift()
+    if ( Math[method] === "undefinded" || !( Math[method] instanceof Function ))
+      throw "TypeError: " + obj + "." + method + "is not a function."
+    if (params && (params instanceof Array) )
+      for(var i=0; i<params.length; i++)
+        params[i] = (eval(params[i]) instanceof Object)? eval(params[i]).value_of() : eval(params[i])
+    params.unshift(this.formula.toString())
+    while (params[params.length-1] == null)
+       params.pop()
+    return new Func(method + "(" + params.join(',') + ")")
+}
+ Trail.prototype.constructor = Trail
+ function Trail(obj){
+   obj.trail = []
+   if (obj instanceof Func)
+     ;
+ }
+Vector.prototype.constructor = Vector;
+Vector.add = function(){
+  return argument.shift.add(argument)
+}
+  Vector.add = function(vectAdd){
+	var vectRes = [];
+	alert(arguments)
+	for (var i=0; i< vectAdd[0].length; i++)
+		vectRes[i] = 0;
+	for (var i=0; i<vectAdd[i].length; i++){
+		for (var j=0; j<vectAdd[j].length; j++){		    
+			vectRes[j] += vectAdd[i][j]
+			alert(vectRes)
+			}
+     }
+	return vectRes
+ }
+ Vector.subs = function(vectSubs){
+	var vectRes = [];
+	for (var i=0; i< vectSubs[0].length; i++)
+		vectRes[i] = 0;
+	for (var i=0; i<vectSubs[i].length; i++)
+		for (var j=0; j<vectSubs[j].length; j++)
+			vectRes[j] -= vectSubs[i][j]
+	return vectRes
+ }
+ Vector.dot = function(vectors){
+	if ((vectors.length >= 2) && 
+		(typeof (vectors[0]) == Array) && 
+		(typeof (vectors[1]) == Array) &&
+		(vectors[0].length == vectors[1].length)){
+		var dt = 0
+		for (var i=0; i<vectors[0].length; i++)
+			dt += vectors[0][i] * vectors[1][i]
+		return dt
+	}
+	return undefined			
+}
+Vector.cross = function(vectors){	
+	if ((vectors.length >= 2) && 
+		(typeof (vectors[0]) == Array) && 
+		(typeof (vectors[1]) == Array) &&
+		(vectors[0].length == vectors[1].length)){
+		var cross = [ 	[vectors[0][1] * vectors[1][2] - vectors[0][2] * vectors[1][1]],
+						[vectors[0][2] * vectors[1][0] - vectors[0][0] * vectors[1][2]],
+						[vectors[0][0] * vectors[1][1] - vectors[0][1] * vectors[1][0]]]
+		return cross
+	}
+	return undefined			
+}
+Vector.dCross = function(vector1, vector2, vector3){
+	var vectorAux = new Array();
+	vectorAux = cross(vector1, vector2);
+	vectorAux = cross(this.vectorAux, vector3);
+	return vectorAux;
+}
+Vector.scale = function(vector, number){
+ 	var sc = []
+	if ((typeof(vector) == Number) && (typeof(number) == Vector)){
+		var aux = number
+		number  = vector
+		vector  = aux
+	}
+	if (typeof(vector) == Array)
+		for (var i=0; i<vector.length; i++)
+			sc[i] = vector[i] * number
+	else sc = vector * number
+	return sc	
+ }
+ Vector.projection = function(vector1, vector2){
+	var resultVect = new Array();
+	var dt1 = 0
+	var dt2 = 0
+	var vectors= new Array(2);
+	vectors[0]= verctor1;
+	vectors[1]= vector2;
+	this.dt1 = Vector.prototype.dot (vectors)
+	var dt2 = 0
+	for (var i=0; i<vectors[1].length; i++)
+		this.dt2 += vectors[1][i] * vectors[1][i]
+	var ortoResult = dt1/dt2
+	for (var i=0; i<vectors[0].length; i++)
+	this.resultVect[i]= (vectors[1][i] * ortoResult)
+	return this.resultVect;				
+}
+Vector.linearCombination$U = function(vectorSet){
+	var norm = Matrix.normalize(vectorSet)
+	var nz = 0		
+	var li = true;	
+	for (var i = 0; i < norm.length && li; i++) {
+		for (var j = 0; j < norm[i].length; j++) 
+			if (norm[i][j] == 0) 
+				nz++
+		if (nz == norm[i].length)
+			li = false
+	}
+	return li;	
+}
+Vector.box = function(vectors){
+	if ((vectors.length >= 3) &&
+	(typeof(vectors[0]) == Array) &&
+	(vectors[0].length == 3) &&
+	(typeof(vectors[1]) == Array) &&
+	(typeof(vectors[2]) == Array) &&
+	(vectors[0].length == vectors[1].length) &&
+	(vectors[1].length == vectors[2].length)) {
+		return vectors[0][0] * vectors[1][1] * vectors[2][2] +
+		vectors[1][0] * vectors[2][1] * vectors[0][2] +
+		vectors[0][1] * vectors[1][2] * vectors[2][0] -
+		vectors[0][2] * vectors[1][1] * vectors[2][0] -
+		vectors[1][2] * vectors[2][1] * vectors[0][0] -
+		vectors[2][2] * vectors[1][0] * vectors[0][1]
+	}
+	return undefined
+}
+Vector.coplanar$U = function(vector){
+	switch (vector.length) {
+		case 0:
+			return undefined
+		case 1:
+		case 2:
+			return true
+	}
+	var dim = vector[0].length
+	for (var i = 1; i < vector.length; i++) 
+		if (dim != vector[i].length) 
+			throw "Invalid dimensions"
+	for (var i = 2; i < vector.length; i++) 
+		if (Vector.box(vector[0], vector[1], vector[i])) 
+			return false
+	return true
+}
+Vector.angle = function(vectors){
+	var arc
+	if ((vectors.length >= 3) && (typeof(vectors[0]) == Array) )
+	 	arc = arcos (dot (u/module(u)), (v/module(v)))
+	return arc
+}
+Vector.module = function(vectModule){
+ 	var suma
+	if (typeof(vectModule) == Array )	
+ 		for (var i = 0; i < vectModule.length; i++)
+ 	 		suma += vectModule[i] * vectModule[i]
+	else
+	    for (var i = 0; i < vectModule.length; i++)
+ 	 		suma += vectModule.Coord[i] * vectModule.Coord[i]
+	return Math.sqrt(suma)
+ }
+ Vector.toCylindrical = function(vectors){
+	var i
+	for (i=0; i<vectors.length; i++)
+		if ((vectors[i].length <= 3) && typeof(vectors == Array)){
+			vectors[i][0] = Math.sqrt((vectors[i][0]*vectors[i][0])+(vectors[i][1]*vectors[1]))
+			vectors[i][1] = arctg (vectors[i][1]/vectors[i][0])
+		}
+	if ((vectors.length >= 3) && typeof(vectors == Array)) {
+		vectors[0] = Math.sqrt((vectors[0] * vectors[0]) + (vectors[1] * vectors[1]))
+		vectors[1] = arctg(vectors[1] / vectors[0])
+	}
+	return vectors
+}
+Vector.prototype.torque = function (point, vect){
+	return cross(subs(vect.origin, point), vect);
+}
+	Vector.scale = function(vector, number){
+		var sc = []
+		if (typeof(vector) == Number) {
+			var aux = number
+			number = vector
+			vector = aux
+		}
+		if (typeof(vector) == Array) 
+			for (var i = 0; i < vector.length; i++) 
+				sc[i] = vector[i] * number
+		else 
+			for (var i = 0; i < vector.Coord.length; i++) 
+				sc[i] = vector.Coord[i] * number
+		return sc
+	}
+	Vector.prototype.scale$B = function(vector, number){
+		if (typeof(vector) == Number) {
+			var aux = number
+			number = vector
+			vector = aux
+		}
+		if (typeof(vector) == Array) 
+			for (var i = 0; i < vector.length; i++) 
+				vector[i] = vector[i] * number
+		else 
+			for (var i = 0; i < vector.Coord.length; i++) 
+				vector.Coord[i] = vector.Coord[i] * number
+		return vector
+	}
+Vector.angle  = function(vectors){
+    var arc
+    if ((vectors.length >= 3) && (typeof(vectors[0]) == Array)) 
+        arc = arcos(dot(u / module(u)), (v / module(v)))
+    return arc
+}
+Vector.toCylindrical = function(vectors){
+    var i
+    for (i = 0; i < vectors.length; i++) 
+        if ((vectors[i].length <= 3) && typeof(vectors == Array)) {
+            vectors[i][0] = Math.sqrt((vectors[i][0] * vectors[i][0]) + (vectors[i][1] * vectors[1]))
+            vectors[i][1] = arctg(vectors[i][1] / vectors[i][0])
+        }
+    if ((vectors.length >= 3) && typeof(vectors == Array)) {
+        vectors[0] = Math.sqrt((vectors[0] * vectors[0]) + (vectors[1] * vectors[1]))
+        vectors[1] = arctg(vectors[1] / vectors[0])
+    }
+    return vectors
+}
+FixedVector.prototype = new Vector
+FixedVector.prototype.constructor = FixedVector
+FixedVector.super = Vector
+function FixedVector(input) {
+    var that = this
+    if (!input)
+        input = []
+    var is_head = false
+    var free_vector
+    this.foot = new Vector()
+    function check_arg(arg) {
+        if (arg instanceof String || typeof(arg) === "string")
+            is_head = arg
+        if (arg instanceof Array)
+            if (typeof(arg[0]) === "number")
+                if (!free_vector)
+                    free_vector = new Vector(arg)
+                else
+                    that.foot = new Vector(arg)
+        else
+            for (var i = 0; i < arg.length; i++)
+                check_arg(arg[i])
+        if (arg instanceof Vector)
+            if (!free_vector)
+                free_vector = arg
+            else
+                that.foot = arg
+        if (arg instanceof FixedVector) {
+            Vector.call(that, arg)
+            Vector.call(that.foot, new Vector(arg.foot))
+        }
+    }
+    for (var i = 0; i < arguments.length; i++)
+        check_arg(arguments[i])
+    free_vector = free_vector || new Vector(0, 0)
+    this.foot = this.foot || new Vector(0, 0)
+    this.foot.standarize_coordinates(free_vector)
+    if (is_head)
+        free_vector = free_vector.subs(this.foot)
+    Object.defineProperty(this, "_head", {
+        value: this.foot.add(free_vector),
+        enumerable: false
+    })
+    Vector.call(this, free_vector)
+}
+FixedVector.prototype.eql$U = function(vector_to_compare) {
+    if (this.foot.eql$U(vector_to_compare.foot) && this.Coord.eql$U(vector_to_compare.Coord))
+        return true
+    return false
+}
+FixedVector.prototype.add = function(vec) {
+    var that = this
+    var first_time = true
+    var checks = false
+    var new_free
+    function checkVec(vect) {
+        if (that._head.Coord.eql$U(vect.foot.Coord)) {
+            checks = true
+        } else {
+            checks = false
+            throw ("Invalid operation for fixed vectors." +
+                " First vector head must be equal to second's foot")
+        }
+        that = vect
+    }
+    vec = Vector.prototype.parseInput.apply(this, arguments)
+    for (var i = 0; i < vec.length; i++)
+        checkVec(vec[i])
+    if (checks)
+        new_free = vec[vec.length - 1]._head.subs(this.foot)
+    return new FixedVector(new_free, this.foot)
+}
+FixedVector.prototype.subs = function(vec) {
+    var new_free, new_foot
+    vec = Vector.prototype.parseInput.apply(this, arguments)
+    new_foot = this._head
+    new_free = vec[vec.length - 1]._head.subs(this._head)
+    return new FixedVector(new_free, new_foot)
+}
+FixedVector.prototype.scle = function(number) { 
+    scalable = new Vector(this.Coord)
+    scalable = scalable.scale(number)
+    fv_foot = this.foot.scale(number)
+    return new FixedVector(scalable, fv_foot)
+}
+FixedVector.prototype.virial = function() {
+    var new_free, virial
+    new_free = new Vector(this.Coord)
+    virial = new_free.dot(this.foot)
+    return virial
+}
+FixedVector.prototype.planar_momentum = function(plane_pt) {
+    var vector_r = new FixedVector(this.foot, plane_pt.foot)
+    var unitary = plane_pt.unit()
+    var vec_module = this.module()
+    var res = vector_r.cross(unitary).scale(vec_module)
+    return res
+}
+require("vector")
+function ReferenceFrame(drift, trihedron_components){
+   this.drift = drift
+   this.transformation_matrix = trihedron_components
+}
+ReferenceFrame.prototype.coord_of = function (point){
+}
+Vector.prototype.constructor = Vector
+function Vector() {
+    var coord_temp = []
+    var coordinate_system
+    var that = this
+    this.Coord = []
+    var argument = []
+    function is_valid_cs$U(cs) {
+        return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+            return el == cs || val
+        })
+    }
+    for (var i = 0; i < arguments.length; i++)
+        this.Coord.push(arguments[i])
+    for (var i = 0; i < arguments.length; i++)
+        argument[i] = arguments[i]
+    for (var i = 0; i < argument.length; i++)
+        if (is_valid_cs$U(arguments[i]))
+            argument.push(argument.splice(i, 1)[0])
+    if (typeof(argument[argument.length - 1]) == "string")
+        coordinate_system = argument[argument.length - 1]
+    else
+        coordinate_system = "cart"
+    function transformCoordinates() {
+        if (coordinate_system == "pol") {
+            that.Coord[0] = coord_temp[0] * Math.cos(coord_temp[1])
+            that.Coord[1] = coord_temp[0] * Math.sin(coord_temp[1])
+        }
+        if (coordinate_system == "cyl") {
+            that.Coord[0] = coord_temp[0] * Math.cos(coord_temp[1])
+            that.Coord[1] = coord_temp[0] * Math.sin(coord_temp[1])
+            that.Coord[2] = coord_temp[2]
+        }
+        if (coordinate_system == "sph") {
+            that.Coord[0] = coord_temp[0] * Math.sin(coord_temp[1]) * Math.cos(coord_temp[2])
+            that.Coord[1] = coord_temp[0] * Math.sin(coord_temp[1]) * Math.sin(coord_temp[2])
+            that.Coord[2] = coord_temp[0] * Math.cos(coord_temp[1])
+        }
+        if (coordinate_system == "cart") {
+            for (i = 0; i < coord_temp.length; i++)
+                that.Coord[i] = coord_temp[i]
+        }
+    }
+    if (argument[0] instanceof Vector)
+        for (var i = 0; i < argument[0].Coord.length; i++)
+            this.Coord[i] = argument[0].Coord[i]
+    else {
+        if (typeof(argument[0]) == "number")
+            for (var i = 0; i < argument.length; i++)
+                if (typeof(argument[i]) == "number")
+                    coord_temp[i] = argument[i]
+        if (argument[0] instanceof Array)
+            for (var i = 0; i < argument[0].length; i++)
+                coord_temp[i] = argument[0][i]
+        transformCoordinates()
+    }
+    this._module = this.module()
+    this.uVector = this.scale(1 / this._module)
+}
+Vector.is_valid_cs$U = function(cs) {
+    return typeof(cs) == "string" && Vector.valid_cs.inject(true, function(el, val) {
+        return el == cs || val
+    })
+}
+Vector.prototype.has_same_dimension_as$U = function(vector_to_compare) {
+    if (this.Coord.length == vector_to_compare.Coord.length)
+        return true
+    return false
+}
+Vector.prototype.standarize_coordinates = function(vector_to_compare) {
+    if (this.Coord.length >= vector_to_compare.Coord.length) {
+        var difference = this.Coord.length - vector_to_compare.Coord.length
+        for (var i = 0; i < difference; i++) {
+            vector_to_compare.Coord.push(0)
+        }
+    }
+    if (this.Coord.length <= vector_to_compare.Coord.length) {
+        var difference = vector_to_compare.Coord.length - this.Coord.length
+        for (var i = 0; i < difference; i++) {
+            this.Coord.push(0)
+        }
+    }
+}
+Vector.prototype.unit = function() {
+    return new Vector(this.uVector || this.scale(1 / this._module))
+}
+Vector.prototype.parseInput = function(args) {
+    var argument = []
+    for (var i = 0; i < arguments.length; i++)
+        argument[i] = arguments[i]
+    function convertToArray() {
+        var output = []
+        if (argument[0] instanceof Array && argument[0][0] instanceof Vector)
+            return argument[0];
+        if (argument[0] instanceof Vector)
+            return [argument[0]]
+        if (typeof(argument[0]) == "number" || argument[0] instanceof Number) {
+            for (var i = 0; i < argument.length; i++)
+                output[i] = argument[i].valueOf()
+            return [new Vector(output)]
+        }
+        if (argument[0] instanceof Array) {
+            if (!(argument[0][0] instanceof Vector))
+                output = [new Vector(argument[0])]
+        }
+        return output
+    }
+    var out = convertToArray()
+    for (var i = 0; i < out.length; i++)
+        if (out[i].Coord.length != this.Coord.length)
+            throw ("Invalid vector dimension for vector " + (i + 1) + ". Got: " + out[i].Coord.length + "D. Expected: " + this.Coord.length + "D.")
+    return out
+}
+Vector.prototype.cloneCoords = function(vectCpy) {
+    for (var i = 0; i < vectCpy.Coord.length; i++)
+        this.Coord[i] = vectCpy.Coord[i]
+    this._module = this.module()
+}
+Vector.prototype.add = function(vectAdd) {
+    var vectRes = [];
+    function addVector(vector) {
+        for (var i = 0; i < vector.Coord.length; i++) {
+            if (!vectRes[i])
+                vectRes[i] = 0
+            vectRes[i] += vector.Coord[i]
+        }
+    }
+    vectAdd = Vector.prototype.parseInput.apply(this, arguments)
+    addVector(this)
+    for (var i = 0; i < vectAdd.length; i++)
+        addVector(vectAdd[i])
+    return new Vector(vectRes)
+}
+Vector.prototype.add$B = function(vectAdd) {
+    var vectRes = Vector.prototype.add.apply(this, arguments)
+    this.cloneCoords(vectRes)
+    return vectRes
+}
+Vector.prototype.subs = function(vectSubs) {
+    var vectRes = [];
+    for (var i = 0; i < this.Coord.length; i++)
+        vectRes[i] = this.Coord[i];
+    function subsVector(vector) {
+        for (var i = 0; i < vector.Coord.length; i++) {
+            if (!vectRes[i])
+                vectRes[i] = 0
+            vectRes[i] -= vector.Coord[i]
+        }
+    }
+    vectSubs = Vector.prototype.parseInput.apply(this, arguments)
+    for (var i = 0; i < vectSubs.length; i++)
+        subsVector(vectSubs[i])
+    return new Vector(vectRes)
+}
+Vector.prototype.subs$B = function(vectSubs) {
+    var vectRes = Vector.prototype.subs.apply(this, arguments)
+    this.cloneCoords(vectRes)
+    return vectRes
+}
+Vector.prototype.dot = function(vectors) {
+    var dt = 0
+    var vectors = Vector.prototype.parseInput.apply(this, arguments)
+    vectors.push(new Vector(this.Coord))
+    if (vectors.length >= 2)
+        for (var cor = 0; cor < vectors[0].Coord.length; cor++) {
+            var aux = 1
+            for (var v = 0; v < vectors.length; v++)
+                aux *= (vectors[v].Coord[cor] || 0)
+            dt += aux
+        } else
+            throw "There must be at least two vectors for the scalar product"
+    return dt
+}
+function _simple_cross(vector1, vectorArray) {
+    var vector2 = vectorArray.shift()
+    var vectAux = new Vector(vector1.Coord[1] * vector2.Coord[2] - vector1.Coord[2] * vector2.Coord[1],
+        vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2],
+        vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0])
+    if (vectorArray.length == 0)
+        return vectAux
+    return _simple_cross(vectAux, vectorArray)
+}
+Vector.prototype.cross = function(vectors) {
+    vectCross = Vector.prototype.parseInput.apply(this, arguments)
+    vectCross.push(new Vector(this.Coord))
+    if (vectCross.length < 2)
+        throw "At least one operand needed in cross product."
+    return _simple_cross(vectCross.shift(), vectCross)
+}
+function _simple_cross$B(vector1, vectorArray) {
+    var vector2 = vectorArray.shift()
+    var vectAux = new Vector(vector1.Coord[1] * vector2.Coord[2] - vector1.Coord[2] * vector2.Coord[1],
+        vector1.Coord[2] * vector2.Coord[0] - vector1.Coord[0] * vector2.Coord[2],
+        vector1.Coord[0] * vector2.Coord[1] - vector1.Coord[1] * vector2.Coord[0])
+    if (vectorArray.lenth == 0) {
+        for (var i = 0; i < vectAux.Coord.length; i++)
+            this.Coord[i] = vecAux.Coord[i]
+        return vectAux
+    }
+    return _simple_cross(vectAux, vectorArray)
+}
+Vector.prototype.cross$B = function(vectors) {
+    vectCross$B = Vector.prototype.parseInput.apply(this, arguments)
+    vectCross$B.push(new Vector(this.Coord))
+    if (vectCross$B.length < 2)
+        throw "At least one operand needed in cross product."
+    return _simple_cross$B(vectCross & B.shift(), vectCross$B)
+}
+Vector.prototype.dCross = function(vector1, vector2, vector3) {
+    var vectorAux = new Array();
+    vectorAux = cross(vector1, vector2);
+    vectorAux = cross(this.vectorAux, vector3);
+    return vectorAux;
+}
+Vector.prototype.dCross$B = function(vector1, vector2, vector3) {
+    var vectorAux = new Array();
+    vectorAux = cross(vector1, vector2);
+    vectorAux = cross(this.vectorAux, vector3);
+    return vectorAux;
+}
+Vector.prototype.scale = function(number) {
+    var sc = []
+    for (var i = 0; i < this.Coord.length; i++)
+        sc[i] = this.Coord[i] * number
+    return sc
+}
+Vector.prototype.scale$B = function(vector, number) {
+    for (var i = 0; i < this.Coord.length; i++)
+        vector.Coord[i] = vector.Coord[i] * number
+    return vector
+}
+Vector.prototype.projection = function(vector1) {
+    if (vector1.lentgh < 1 && this.length < 1)
+        throw "Invalid vector dimension"
+    if (vector1.length != this.length && this.length < 1)
+        throw "Lengths of vectors are different"
+    else
+        return new Vector(vector1.scale(this.dot(vector1) / vector1.dot(vector1)))
+}
+Vector.prototype.projection$B = function(vector1) {
+    vectProject = this.projection(vector1)
+    for (var i = 0; i < vectProject.length; i++)
+        this.Coord[i] += vectProject[i]
+    return this
+}
+Vector.prototype.linearCombination$U = function(vectorSet) {
+    var norm = Matrix.normalize(vectorSet)
+    var nz = 0 
+    var li = true; 
+    for (var i = 0; i < norm.length && li; i++) {
+        for (var j = 0; j < norm[i].length; j++)
+            if (norm[i][j] == 0)
+                nz++
+                if (nz == norm[i].length)
+                    li = false
+    }
+    return li
+}
+Vector.prototype.box = function(vectors) {
+    if ((vectors.length >= 3) &&
+        (typeof(vectors[0]) == Array) &&
+        (vectors[0].length == 3) &&
+        (typeof(vectors[1]) == Array) &&
+        (typeof(vectors[2]) == Array) &&
+        (vectors[0].length == vectors[1].length) &&
+        (vectors[1].length == vectors[2].length)) {
+        return vectors[0][0] * vectors[1][1] * vectors[2][2] +
+            vectors[1][0] * vectors[2][1] * vectors[0][2] +
+            vectors[0][1] * vectors[1][2] * vectors[2][0] -
+            vectors[0][2] * vectors[1][1] * vectors[2][0] -
+            vectors[1][2] * vectors[2][1] * vectors[0][0] -
+            vectors[2][2] * vectors[1][0] * vectors[0][1]
+    }
+    return undefined
+}
+Vector.prototype.coplanar$U = function(vector) {
+    switch (vector.length) {
+        case 0:
+            return undefined
+        case 1:
+        case 2:
+            return true
+    }
+    var dim = vector[0].length
+    for (var i = 1; i < vector.length; i++)
+        if (dim != vector[i].length)
+            throw "Invalid dimensions"
+    for (var i = 2; i < vector.length; i++)
+        if (Vector.box(vector[0], vector[1], vector[i]))
+            return false
+    return true
+}
+Vector.prototype.angle = function() {
+    v1 = new Vector(1, 1, 1)
+    Vector.apply(v1, arguments) 
+    if (v1.Coord.length == this.Coord.length)
+        if (this.Coord.length == 2) {
+            var angle2 = Math.acos(v1.Coord[0] / v1.module()) 
+            var angle1 = Math.acos(this.Coord[0] / this.module()) 
+            return angle2 - angle1
+        } else
+            return Math.acos(this.dot(v1) / this.module() / v1.module())
+    else
+        throw "Invalid Input, angle() method needs/recives a vector of dimension " + this.Coord.length + "."
+}
+Vector.prototype.module = function() {
+    var suma = 0
+    for (var i = 0; i < this.Coord.length; i++)
+        suma += this.Coord[i] * this.Coord[i]
+    return Math.sqrt(suma)
+}
+Vector.prototype.toCylindrical = function() {
+    coords = []
+    v2 = new Vector(this.Coord[0], this.Coord[1])
+    coords[0] = Math.sqrt(pow(this.Coord[0], 2) + Math.pow(this.Coord[1], 2))
+    coords[1] = Math.atan2(this.Coord[1] / this.Coord[0])
+    coords[2] = this.Coord[2]
+    return coords
+}
+Vector.prototype.toSpherical = function() {
+    coords = []
+    v2 = new Vector(this.Coord[0], this.Coord[1], this.Coord[2])
+    coords[0] = Math.sqrt(Math.pow(this.Coord[0], 2) + Math.pow(this.Coord[1], 2) + Math.pow(this.Coord[2], 2))
+    coords[1] = Math.acos(this.Coord[2] / coords[0])
+    coords[2] = Math.acos(this.Coord[0] / (coords[0] * Math.sin(coords[1])))
+    return coords
+}
+Vector.prototype.torque = function(point, vect) {
+    return cross(subs(vect.origin, point), vect);
+}
+Vector.prototype.value_of = function() {
+    return this.Coord
+}
+Vector.prototype.get_coord = function() {
+    if (arguments.length == 0) 
+        return this.value_of()
+    if (arguments[0] > this.length)
+        return null
+    if (arguments[0] >= 'a' && arguments[0] <= 'z' || arguments[0] >= 'A' && arguments[0] <= 'Z') {
+        var pos = arguments[0] >= 'a' && arguments[0] <= 'z' ? arguments[0].charCodeAt(0) - "z".charCodeAt(0) + (this.Coord.length - 1) : arguments[0].charCodeAt(0) - "Z".charCodeAt(0) + (this.Coord.length - 1)
+        return this.Coord[pos]
+    }
+    return this.Coord[arguments[0]] || 0
+}
+Vector.prototype.eql$U = function(model) {
+    model = new Vector(model)
+    return model.Coord.eql$U(this.Coord)
+}
+Vector.valid_cs = ["pol", "cart", "cyl", "sph"]
+Vector.prototype.get = function(coordinate) {
+    return this.Coord[coordinate] || 0
+}
+Vector.prototype.is_equal_to$U = function(vec) {
+    var r_eq = 0
+    if (this.Coord.length == vec.Coord.length) {
+        for (var i = 0; i < this.Coord.length; i++)
+            if (this.Coord[i] == vec.Coord[i])
+                r_eq++
+                else
+                    r_eq--
+                    if (r_eq == this.Coord.length)
+                        return true
+                    else
+                        return false
+    } else
+        return false
+}
+Vector.prototype._ = Vector.prototype.get
 function bring_lluvia() {
     function init_program() {
         if (typeof required_packages == 'function')
@@ -3893,7 +5024,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

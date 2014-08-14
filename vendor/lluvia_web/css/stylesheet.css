@@ -113,6 +113,14 @@ body {
     height: 460px;
     position: relative;
 }
+#main_container{
+    width: 552px;
+    margin-left: 80px;
+    border: solid 1px #ccc;
+}
+#main_wrapper{
+    margin-left: -80px;
+}
 .left_side{
     width: 630px;
     margin-top: -331px;
@@ -121,7 +129,7 @@ body {
     width: 630px;
     position: absolute;
     right: 0px;
-    top: 0px;
+    top: 1px;
 }
 .horizontal_line{
     height: 1px;
@@ -134,13 +142,13 @@ body {
 }
 .middle_section{
     width: 552px;
-    height: 330px;
+    height: 328px;
     margin: auto;
     margin-top: -20px;
     background-color: #fff;
 }
 .box_footer{
-    width: 553dpx;
+    width: 554px;
     height: 20px;
     margin: auto;
     margin-top: -21px;
@@ -175,6 +183,26 @@ body {
 #orange_banner_middle{
     border: solid 1px #FF7F00;
 }
+/* Boxes inside {{{ */
+.inside_image{
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.text{
+    margin-top: 40px;
+    margin-left: 120px;
+}
+.intro{
+    font-size: 18pt;
+    margin-left: 120px;
+    margin-top: -40px;
+}
+.icon{
+    float: right;
+    margin-right: 20px;
+    margin-top: -40px;
+}
+/* }}} */
 /* Cogs and Wheels {{{ */
 #cogs_and_chain{
     margin-top: -52px;
@@ -212,7 +240,7 @@ body {
 }
 #handle{
     margin-left: -70px;
-    margin-bottom: -200px;
+    margin-bottom: -204px;
 }
 #chain{
     width: 450px;
@@ -221,21 +249,21 @@ body {
     background-repeat: repeat-x;
     background-position: left;
     margin-top: 90px;
-    margin-left: -13px;
+    margin-left: -12px;
 }
 /* }}} */
 /* Eagle {{{ */
 #eagle{
-    width: 670px;
     height: 69px;
     background-image: url("../images/eagle.svg");
     background-repeat: no-repeat;
     background-position: right;
-    margin-top: 110px;
+    margin-top: -19px;
 }
 .black_line{
+    width: 1px;
     height: 1px;
-    width: 610px;
+    margin-top: 110px;
     background-color: #666;
 }
 #black_line_bottom{
@@ -285,6 +313,19 @@ body {
     margin-top: -20px;
     background-color: #fff;
     border: solid 1px #237C26;
+}
+.footer_text{
+    margin-left: 30px;
+    margin-top: 30px;
+    font-size: 10pt;
+}
+#footer_icon_container{
+    margin: auto;
+    margin-left: 230px;
+    margin-top: -35px;
+}
+.footer_icon{
+    margin-right: 10px;
 }
 #green_banner_bottom{
     width: 1000px;
