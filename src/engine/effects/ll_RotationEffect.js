@@ -2,26 +2,17 @@ RotateEffect.prototype = new ThreadAutomata
 RotateEffect.prototype.constructor = RotateEffect
 RotateEffect.prototype.super = ThreadAutomata
 
-/**
- * [RotateEffect description]
- * Coordinate: [3, 56]
- * @param {[type]} view          [description]
- * @param {[type]} final_coord   [description]
- * @param {[type]} initial_coord [description]
- * @param {[type]} velocity      [description]
- */
-
-//angle: 90
-function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+function RotateEffect(view, config) {
 
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
 
     var solicitors = {
         "running": function(now, before) {
@@ -34,7 +25,7 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
             that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
 
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }

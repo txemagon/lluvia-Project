@@ -3636,15 +3636,16 @@ function RectangleEffect(view, final_coord, initial_coord, velocity) {
 RotateEffect.prototype = new ThreadAutomata
 RotateEffect.prototype.constructor = RotateEffect
 RotateEffect.prototype.super = ThreadAutomata
-function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+function RotateEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3654,7 +3655,7 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
             that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }
@@ -3663,16 +3664,17 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
 SideRotationEffect.prototype = new ThreadAutomata
 SideRotationEffect.prototype.constructor = SideRotationEffect
 SideRotationEffect.prototype.super = ThreadAutomata
-function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_coord) {
+function SideRotationEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.origin = origin || [0, 0]
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3687,30 +3689,51 @@ function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_
             that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }
     ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
 }
-function TableSymbols(elements) {
+function SymbolsTable(elements) {
     this.elements = elements || []
 }
-TableSymbols.prototype.insert = function(element) {
+SymbolsTable.prototype.insert = function(name, value) {
+    var element = {
+        name: name,
+        value: value
+    }
     this.elements.push(element)
 }
-TableSymbols.prototype.search = function(element) {
+SymbolsTable.prototype.update_value = function(position, new_value) {
+    this.elements[position].value = new_value
+}
+SymbolsTable.prototype.search = function(element) {
     var element = element || {}
     for (var i = 0; i < this.elements.length; i++)
         if (this.elements.name == element.name)
             return true
     return false
 }
+SymbolsTable.prototype.is_in$U = function(element) {
+    var element = element || {}
+    for (var i = 0; i < this.elements.length; i++)
+        if (this.elements.name == element.name)
+            return true
+    return false
+}
+SymbolsTable.prototype.test = function(element) {
+    var element = element || {}
+    if (!this.search(element.name)) {
+        this.insert(element)
+    } else {}
+    return no_idea
+}
 function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
     this.space_name = null
-    this.table_symbols = new TableSymbols()
+    this.symbols_table = new SymbolsTable()
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
             if (typeof arguments[i] == "string")
@@ -3826,10 +3849,13 @@ Builder.prototype.build = function() {
     for (var i = 0; i < this.lluvia_nodes.length; i++) {
         var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
+        if (!this.symbols_table.search(analize_result, clasify_result))
+            this.symbols_table.insert(analize_result)
         this.create_element(analize_result, clasify_result)
         this.create_methods_element(analize_result)
         this.run_methods(analize_result)
     }
+    console.log(this.symbols_table.elements.toSource())
 }
 function bring_lluvia() {
     function init_program() {

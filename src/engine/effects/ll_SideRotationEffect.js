@@ -11,17 +11,18 @@ SideRotationEffect.prototype.super = ThreadAutomata
  * @param {[type]} final_coord   [description]
  * @param {[type]} initial_coord [description]
  */
-function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_coord) {
+function SideRotationEffect(view, config) {
 
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.origin = origin || [0, 0]
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
 
     var solicitors = {
         "running": function(now, before) {
@@ -39,7 +40,7 @@ function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
 
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }

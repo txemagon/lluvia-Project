@@ -134,13 +134,13 @@ body {
 }
 .middle_section{
     width: 552px;
-    height: 330px;
+    height: 328px;
     margin: auto;
     margin-top: -20px;
     background-color: #fff;
 }
 .box_footer{
-    width: 553dpx;
+    width: 554px;
     height: 20px;
     margin: auto;
     margin-top: -21px;
@@ -175,6 +175,26 @@ body {
 #orange_banner_middle{
     border: solid 1px #FF7F00;
 }
+/* Boxes inside {{{ */
+.inside_image{
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.text{
+    margin-top: 40px;
+    margin-left: 120px;
+}
+.intro{
+    font-size: 18pt;
+    margin-left: 120px;
+    margin-top: -40px;
+}
+.icon{
+    float: right;
+    margin-right: 20px;
+    margin-top: -40px;
+}
+/* }}} */
 /* Cogs and Wheels {{{ */
 #cogs_and_chain{
     margin-top: -52px;
@@ -212,7 +232,7 @@ body {
 }
 #handle{
     margin-left: -70px;
-    margin-bottom: -200px;
+    margin-bottom: -204px;
 }
 #chain{
     width: 450px;
@@ -226,7 +246,7 @@ body {
 /* }}} */
 /* Eagle {{{ */
 #eagle{
-    width: 670px;
+    width: 69px;
     height: 69px;
     background-image: url("../images/eagle.svg");
     background-repeat: no-repeat;
@@ -234,8 +254,8 @@ body {
     margin-top: 110px;
 }
 .black_line{
+    width: 1px;
     height: 1px;
-    width: 610px;
     background-color: #666;
 }
 #black_line_bottom{
@@ -250,6 +270,7 @@ body {
     background-repeat: no-repeat;
     margin-left: 270px;
     margin-top: 45px;
+    border: solid 1px red;
 }
 #belt{
     width: 382px;
@@ -285,6 +306,18 @@ body {
     margin-top: -20px;
     background-color: #fff;
     border: solid 1px #237C26;
+}
+.footer_text{
+    margin-left: 30px;
+    margin-top: 30px;
+}
+#footer_icon_container{
+    margin: auto;
+    margin-left: 230px;
+    margin-top: -40px;
+}
+.footer_icon{
+
 }
 #green_banner_bottom{
     width: 1000px;

@@ -194,7 +194,7 @@ var $K_script_response =
 				   {
 					"_path": "/src/lib/builder/",
 					"files": [
-						{"name": "table_symbols.js", "description": "."},
+						{"name": "symbols_table.js", "description": "."},
 						{"name": "ll_Builder.js", "description": "."}],
 					"provides": [],
 					"requires": [],
