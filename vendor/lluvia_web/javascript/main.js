@@ -17,7 +17,8 @@ function main() {
 
     var gear_inside3 = new Gate('gear_inside3')
     gear_inside3.new_effect(new SideRotationEffect('gear_inside3', {
-        origin: [50, 57]
+        origin: [50, 57],
+        velocity: [40, 40]
     }))
     $Processor.register(gear_inside3)
 
@@ -27,15 +28,25 @@ function main() {
     }))
     $Processor.register(handle)
 
-    var black_line_top = new Gate('black_line_top')
-    black_line_top.new_effect(new MoveLeftEffect('black_line_top'), [610, 0], [0, 0])
-    $Processor.register(black_line_top)
-
-    var black_line_bottom = new Gate('black_line_bottom')
-    black_line_bottom.new_effect(new MoveLeftEffect('black_line_bottom', [610, 17], [0, 0]))
-    $Processor.register(black_line_bottom)
+    var chain = new Gate('chain')
+    chain.new_effect(new BackgroundMoveEffect('chain', {
+        velocity: [2, 0]
+    }))
+    $Processor.register(chain)
 
     var pelton = new Gate('pelton')
     pelton.new_effect(new RotateEffect('pelton'))
     $Processor.register(pelton)
+
+    var eagle = new Gate('eagle')
+    eagle.new_effect(new MoveLeftEffect('eagle', [667, 17], [0, 0], [78, 0]))
+    $Processor.register(eagle)
+
+    var black_line_top = new Gate('black_line_top')
+    black_line_top.new_effect(new MoveLeftEffect('black_line_top', [605, 0], [0, 0]))
+    $Processor.register(black_line_top)
+
+    var black_line_bottom = new Gate('black_line_bottom')
+    black_line_bottom.new_effect(new MoveLeftEffect('black_line_bottom', [605, 17], [0, 0]))
+    $Processor.register(black_line_bottom)
 }

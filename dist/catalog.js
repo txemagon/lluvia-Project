@@ -178,7 +178,9 @@ var $K_script_response =
 				{"name": "effects/ll_MoveDownEffect.js", "description": "Movement Effect"},
 				{"name": "effects/ll_RectangleEffect.js", "description": "Rectangle Effect"},
 				{"name": "effects/ll_RotationEffect.js", "description": "Rotation Effect"},
-				{"name": "effects/ll_SideRotationEffect.js", "description": "Rotation Effect"}],
+				{"name": "effects/ll_SideRotationEffect.js", "description": "Rotation Effect"},
+				{"name": "effects/ll_SideRotationEffect.js", "description": "Rotation Effect"},
+				{"name": "effects/ll_BackgroundMoveEffect.js", "description": "Spring Effect"}],
 			"provides": [],
 			"requires": [],
 			"offers": [],
@@ -207,9 +209,7 @@ var $K_script_response =
 			"package": "lib",
 			"description": ".",
 		 }
-],
-	"requires": [],
-	"offers": [
+,
 		   {
 			"_path": "/src/mathematics/",
 			"files": [
@@ -254,8 +254,8 @@ var $K_script_response =
 							"_path": "/src/mathematics/geometry/shape/",
 							"files": [
 								{"name": "ll_Line.js", "description": "."},
-								{"name": "ll_Path.js", "description": "."},
-								{"name": "ll_StraightLine.js", "description": "."}],
+								{"name": "ll_StraightLine.js", "description": "."},
+								{"name": "ll_Path.js", "description": "."}],
 							"provides": [],
 							"requires": [],
 							"offers": [],
@@ -265,6 +265,7 @@ var $K_script_response =
 ],
 					"package": "geometry",
 					"description": ".",
+					"require": [],
 				 }
 ],
 			"requires": [],
@@ -273,6 +274,8 @@ var $K_script_response =
 			"description": "Mathematics library.",
 		 }
 ],
+	"requires": [],
+	"offers": [],
 	"package": "lluvia",
 	"description": "lluvia loader. User application loader. Booter.",
  }

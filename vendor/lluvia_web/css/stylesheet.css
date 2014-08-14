@@ -113,6 +113,14 @@ body {
     height: 460px;
     position: relative;
 }
+#main_container{
+    width: 552px;
+    margin-left: 80px;
+    border: solid 1px #ccc;
+}
+#main_wrapper{
+    margin-left: -80px;
+}
 .left_side{
     width: 630px;
     margin-top: -331px;
@@ -121,7 +129,7 @@ body {
     width: 630px;
     position: absolute;
     right: 0px;
-    top: 0px;
+    top: 1px;
 }
 .horizontal_line{
     height: 1px;
@@ -241,21 +249,21 @@ body {
     background-repeat: repeat-x;
     background-position: left;
     margin-top: 90px;
-    margin-left: -13px;
+    margin-left: -12px;
 }
 /* }}} */
 /* Eagle {{{ */
 #eagle{
-    width: 69px;
     height: 69px;
     background-image: url("../images/eagle.svg");
     background-repeat: no-repeat;
     background-position: right;
-    margin-top: 110px;
+    margin-top: -19px;
 }
 .black_line{
     width: 1px;
     height: 1px;
+    margin-top: 110px;
     background-color: #666;
 }
 #black_line_bottom{
@@ -270,7 +278,6 @@ body {
     background-repeat: no-repeat;
     margin-left: 270px;
     margin-top: 45px;
-    border: solid 1px red;
 }
 #belt{
     width: 382px;
@@ -310,14 +317,15 @@ body {
 .footer_text{
     margin-left: 30px;
     margin-top: 30px;
+    font-size: 10pt;
 }
 #footer_icon_container{
     margin: auto;
     margin-left: 230px;
-    margin-top: -40px;
+    margin-top: -35px;
 }
 .footer_icon{
-
+    margin-right: 10px;
 }
 #green_banner_bottom{
     width: 1000px;
