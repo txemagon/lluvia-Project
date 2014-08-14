@@ -48,6 +48,10 @@ Builder.is_lluvia_comment$U = function(comment, token) {
     return false
 }
 
+Builder.prototype.analize = function() {
+
+}
+
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
     var descompose_node = node.className.split(" ")
@@ -136,20 +140,76 @@ Builder.prototype.search_prefix = function(node_body) {
     return prefix
 }
 
+// TODO: hacer build del Builder con una tabla de simbolos. Good luck!!
 Builder.prototype.build = function() {
+    var round = 2
+    var element_creates = []
     this.get_lluvia_nodes(document)
 
     if (this.prefix == "")
         this.prefix = this.search_prefix(document.body)
 
+    function is_in$U(name) {
+        var result = false
+        for (var i = 0; i < element_creates.length; i++)
+            if (element_creates[i] == name)
+                result = true
+        return result
+    }
+
+    for (var a = 0; a < round; a++) {
+        for (var i = 0; i < this.lluvia_nodes.length; i++) {
+            var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+            var clasify_result = this.clasify_element(analize_result)
+            if (!is_in$U(analize_result.name)) {
+                try {
+                    this.create_element(analize_result, clasify_result)
+                    this.create_methods_element(analize_result)
+                    this.run_methods(analize_result)
+                    element_creates.push(analize_result.name)
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+    }
+    /*
+    // First lap
+    var num_variables = []
     for (var i = 0; i < this.lluvia_nodes.length; i++) {
         var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
-        if (!this.symbols_table.search(analize_result, clasify_result))
-            this.symbols_table.insert(analize_result)
-        this.create_element(analize_result, clasify_result)
-        this.create_methods_element(analize_result)
-        this.run_methods(analize_result)
+        if (!this.symbols_table.is_in$U(this.lluvia_nodes[i]))
+            this.symbols_table.insert(analize_result.name, analize_result)
+            //this.create_element(analize_result, clasify_result)
+            //this.create_methods_element(analize_result)
+            //this.run_methods(analize_result)
+        if (clasify_result == "object")
+            num_variables.push(analize_result.name)
     }
-    console.log(this.symbols_table.elements.toSource())
+    alert(num_variables.toSource())
+
+    // Second lap
+    for (var i = 0; i < this.lluvia_nodes.length; i++) {
+
+    }
+    /*
+    for (var i = 0; i < this.lluvia_nodes.length; i++) {
+        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+        var clasify_result = this.clasify_element(analize_result)
+    }
+
+
+*/
 }
+
+/*
+    Build con symbols_table:
+
+    Primero y ante todo buscar las variables del loader. Teniendo en cuenta que todo
+    son objetos(o casi todo) no deberia ser muy dificil.
+
+    Dos pasadas:
+        - La primera para almacenar todas las variables y si tienen valor.
+        - La segunda para actualizar todos los valores que sean necesarios.
+*/

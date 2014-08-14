@@ -14,14 +14,16 @@ SymbolsTable.prototype.update_value = function(position, new_value) {
     this.elements[position].value = new_value
 }
 
-// Que devuelva la posicion donde se encuentra el elemento
-SymbolsTable.prototype.search = function(element) {
-    var element = element || {}
+SymbolsTable.prototype.position = function(element) {
+    var position = null
+    var name = element.name || ""
 
-    for (var i = 0; i < this.elements.length; i++)
-        if (this.elements.name == element.name)
-            return true
-    return false
+    for (var i = 0; i < this.elements.length; i++) {
+        if (name == this.elements[i])
+            position = i
+    }
+
+    return position
 }
 
 SymbolsTable.prototype.is_in$U = function(element) {
@@ -32,7 +34,7 @@ SymbolsTable.prototype.is_in$U = function(element) {
             return true
     return false
 }
-
+/*
 SymbolsTable.prototype.test = function(element) {
     var element = element || {}
 
@@ -42,3 +44,4 @@ SymbolsTable.prototype.test = function(element) {
 
     return no_idea
 }
+*/
