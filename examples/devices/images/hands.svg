@@ -390,9 +390,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="460"
-     inkscape:cy="620"
+     inkscape:zoom="0.5"
+     inkscape:cx="467.07107"
+     inkscape:cy="422.0101"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="true"
@@ -793,7 +793,7 @@
      style="display:inline">
     <path
        style="fill:none;stroke:#cc0000;stroke-width:20;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 491.0406,514.84577 -0.0406,-310"
+       d="m 499.58134,519.02255 -0.0406,-310"
        id="path5155"
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0" />

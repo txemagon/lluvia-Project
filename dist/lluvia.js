@@ -3693,13 +3693,29 @@ function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_
     }
     ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
 }
-function TableSymbols(elements) {
+function SymbolsTable(elements) {
     this.elements = elements || []
 }
-TableSymbols.prototype.insert = function(element) {
+SymbolsTable.prototype.insert = function(name, value) {
+    var element = {
+        name: name,
+        value: value
+    }
     this.elements.push(element)
 }
-TableSymbols.prototype.search = function(element) {
+SymbolsTable.prototype.update_value = function(position, new_value) {
+    this.elements[position].value = new_value
+}
+SymbolsTable.prototype.position = function(element) {
+    var position = null
+    var name = element.name || ""
+    for (var i = 0; i < this.elements.length; i++) {
+        if (name == this.elements[i])
+            position = i
+    }
+    return position
+}
+SymbolsTable.prototype.is_in$U = function(element) {
     var element = element || {}
     for (var i = 0; i < this.elements.length; i++)
         if (this.elements.name == element.name)
@@ -3710,7 +3726,7 @@ function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
     this.space_name = null
-    this.table_symbols = new TableSymbols()
+    this.symbols_table = new SymbolsTable()
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
             if (typeof arguments[i] == "string")
@@ -3744,6 +3760,8 @@ Builder.is_lluvia_comment$U = function(comment, token) {
     if (comment.search(token) != not_found)
         return true
     return false
+}
+Builder.prototype.analize = function() {
 }
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
@@ -3820,15 +3838,33 @@ Builder.prototype.search_prefix = function(node_body) {
     return prefix
 }
 Builder.prototype.build = function() {
+    var round = 2
+    var element_creates = []
     this.get_lluvia_nodes(document)
     if (this.prefix == "")
         this.prefix = this.search_prefix(document.body)
-    for (var i = 0; i < this.lluvia_nodes.length; i++) {
-        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
-        var clasify_result = this.clasify_element(analize_result)
-        this.create_element(analize_result, clasify_result)
-        this.create_methods_element(analize_result)
-        this.run_methods(analize_result)
+    function is_in$U(name) {
+        var result = false
+        for (var i = 0; i < element_creates.length; i++)
+            if (element_creates[i] == name)
+                result = true
+        return result
+    }
+    for (var a = 0; a < round; a++) {
+        for (var i = 0; i < this.lluvia_nodes.length; i++) {
+            var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+            var clasify_result = this.clasify_element(analize_result)
+            if (!is_in$U(analize_result.name)) {
+                try {
+                    this.create_element(analize_result, clasify_result)
+                    this.create_methods_element(analize_result)
+                    this.run_methods(analize_result)
+                    element_creates.push(analize_result.name)
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
     }
 }
 function bring_lluvia() {
@@ -3855,7 +3891,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..')
+        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
