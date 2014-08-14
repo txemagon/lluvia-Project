@@ -54,3 +54,11 @@
     top: 300px;
     left: 500px;
 }
+#side_rotator{
+    width: 80px;
+    height: 10px;
+    background-color: #FF7F00;
+    position: absolute;
+    top: 50px;
+    left: 700px;
+}

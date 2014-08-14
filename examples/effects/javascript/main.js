@@ -36,4 +36,8 @@ function main() {
     var image_rotator = new Gate('image_rotator')
     image_rotator.new_effect(new RotateEffect('image_rotator', 360))
     $Processor.register(image_rotator)
+
+    var side_rotator = new Gate('side_rotator')
+    side_rotator.new_effect(new SideRotationEffect('side_rotator', 180))
+    $Processor.register(side_rotator)
 }

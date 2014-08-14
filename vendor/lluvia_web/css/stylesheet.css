@@ -203,11 +203,15 @@ body {
     margin-bottom: -78px;
 }
 #gear_inside3{
-    margin-left: -92px;
-    margin-bottom: 52px;
+    margin-left: -88px;
+    margin-bottom: 50px;
 }
-#wheel_handle{
+#wheel_circle{
     margin-left: -78px;
+    margin-bottom: -175px;
+}
+#handle{
+    margin-left: -70px;
     margin-bottom: -200px;
 }
 #chain{

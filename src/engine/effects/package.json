@@ -16,5 +16,8 @@
     }, {
         "name": "ll_RotationEffect.js",
         "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_SideRotationEffect.js",
+        "description": "Effect to rotate an element"
     }]
 }
