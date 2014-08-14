@@ -11,3 +11,11 @@ body{
     text-align: center;
     border: 4px double #009966;
 }
+
+.Watch{
+    width: 400px;
+}
+
+#hands{
+    margin: 0 0 0 -400px;
+}

@@ -1,9 +1,9 @@
 var $K_app_dependencies = {
-    "package": "my_app",
-    "description": ".",
+    "package": "lluviaProject's website",
+    "description": "a website for lluviaProject",
     "path": "",
     "files": [{
         "name": "main.js",
-        "description": ""
+        "description": "website's main file"
     }]
 }

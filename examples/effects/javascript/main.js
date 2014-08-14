@@ -9,7 +9,35 @@ function main() {
          * }
          */
 
-    bar.new_effect(new MoveEffect('line', [200, 20], [0, 0]))
+    bar.new_effect(new MoveLeftEffect('line', [400, 20], [0, 0]))
 
     $Processor.register(bar) // Start calling periodically bar#run
+
+    var down = new Gate('line2')
+    down.new_effect(new MoveDownEffect('line2', [20, 250], [0, 0]))
+    $Processor.register(down)
+
+    var diagonal = new Gate('line3')
+    diagonal.new_effect(new RectangleEffect('line3', [300, 70], [0, 0]))
+    $Processor.register(diagonal)
+
+    var horizontal = new Gate('line')
+    horizontal.new_effect(new MoveLeftEffect('line4', [550, 20], [0, 0]))
+    $Processor.register(horizontal)
+
+    var down2 = new Gate('line5')
+    down2.new_effect(new MoveDownEffect('line5', [20, 300], [0, 0]))
+    $Processor.register(down2)
+
+    var rotator = new Gate('rotator')
+    rotator.new_effect(new RotateEffect('rotator', 180))
+    $Processor.register(rotator)
+
+    var image_rotator = new Gate('image_rotator')
+    image_rotator.new_effect(new RotateEffect('image_rotator', 360))
+    $Processor.register(image_rotator)
+
+    var side_rotator = new Gate('side_rotator')
+    side_rotator.new_effect(new SideRotationEffect('side_rotator', 180))
+    $Processor.register(side_rotator)
 }

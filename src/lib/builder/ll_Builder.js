@@ -5,7 +5,7 @@ function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
     this.space_name = null
-    this.table_symbols = new TableSymbols()
+    this.symbols_table = new SymbolsTable()
 
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
@@ -48,12 +48,21 @@ Builder.is_lluvia_comment$U = function(comment, token) {
     return false
 }
 
+Builder.prototype.analize = function() {
+
+}
+
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
-    var type = node.className.split("-")
+    var descompose_node = node.className.split(" ")
+    var class_css = descompose_node[1]
+    var type = descompose_node[0].split("-")
+
     var result = {
+        id: node.id,
         name: prefix + node.id,
         type: type[1],
+        class_css: class_css,
         params: node.dataset.params,
         data_set: node.dataset
     }
@@ -69,38 +78,38 @@ Builder.prototype.clasify_element = function(element) {
 }
 
 Builder.prototype.create_element = function(node, type) {
-    var nodes = node || {}
-    var prefix = prefix || ""
-
     switch (type) {
         case "object":
             if (this.space_name == null)
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
-
+            node.id.className = node.class_css
             break
     }
 }
 
-Builder.prototype.create_methods_element = function() {
+Builder.prototype.create_methods_element = function(element) {
     var dataset = element.data_set || {}
+    var element_class = element.type || ""
     var new_methods = []
 
     function search_new_methods() {
-        for (var i in dataset)
-            if (i.search("method$") == 0) {
+        for (var i in dataset) {
+            if (i.search("method") == 0) {
                 var method = {
                     name: i.replace("method$", ""),
                     block: dataset[i]
                 }
-                methods.push(method)
+                new_methods.push(method)
             }
+        }
     }
 
     search_new_methods()
-    for (var i = 0; i < new_methods.length; i++)
-        eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
+    for (var i = 0; i < new_methods.length; i++) {
+        eval(element.name + "." + new_methods[i].name + "=" + new_methods[i].block)
+    }
 }
 
 Builder.prototype.run_methods = function(element) {
@@ -109,7 +118,7 @@ Builder.prototype.run_methods = function(element) {
 
     function search_methods() {
         for (var i in dataset)
-            if (i.search("run$") == 0) {
+            if (i.search("run") == 0) {
                 var method = {
                     name: i.replace("run$", ""),
                     params: dataset[i]
@@ -131,17 +140,76 @@ Builder.prototype.search_prefix = function(node_body) {
     return prefix
 }
 
+// TODO: hacer build del Builder con una tabla de simbolos. Good luck!!
 Builder.prototype.build = function() {
+    var round = 2
+    var element_creates = []
     this.get_lluvia_nodes(document)
 
     if (this.prefix == "")
         this.prefix = this.search_prefix(document.body)
 
+    function is_in$U(name) {
+        var result = false
+        for (var i = 0; i < element_creates.length; i++)
+            if (element_creates[i] == name)
+                result = true
+        return result
+    }
+
+    for (var a = 0; a < round; a++) {
+        for (var i = 0; i < this.lluvia_nodes.length; i++) {
+            var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+            var clasify_result = this.clasify_element(analize_result)
+            if (!is_in$U(analize_result.name)) {
+                try {
+                    this.create_element(analize_result, clasify_result)
+                    this.create_methods_element(analize_result)
+                    this.run_methods(analize_result)
+                    element_creates.push(analize_result.name)
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+    }
+    /*
+    // First lap
+    var num_variables = []
     for (var i = 0; i < this.lluvia_nodes.length; i++) {
         var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
-        this.create_element(analize_result, clasify_result)
-        //this.create_methods_element(analize_result)
-        this.run_methods(analize_result)
+        if (!this.symbols_table.is_in$U(this.lluvia_nodes[i]))
+            this.symbols_table.insert(analize_result.name, analize_result)
+            //this.create_element(analize_result, clasify_result)
+            //this.create_methods_element(analize_result)
+            //this.run_methods(analize_result)
+        if (clasify_result == "object")
+            num_variables.push(analize_result.name)
     }
+    alert(num_variables.toSource())
+
+    // Second lap
+    for (var i = 0; i < this.lluvia_nodes.length; i++) {
+
+    }
+    /*
+    for (var i = 0; i < this.lluvia_nodes.length; i++) {
+        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+        var clasify_result = this.clasify_element(analize_result)
+    }
+
+
+*/
 }
+
+/*
+    Build con symbols_table:
+
+    Primero y ante todo buscar las variables del loader. Teniendo en cuenta que todo
+    son objetos(o casi todo) no deberia ser muy dificil.
+
+    Dos pasadas:
+        - La primera para almacenar todas las variables y si tienen valor.
+        - La segunda para actualizar todos los valores que sean necesarios.
+*/

@@ -211,6 +211,66 @@ rectangle.prototype.elarge = function (despl){
 	this.x1 += despl.x;
 	this.y1 += despl.y;}
 Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
+$KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
+MethodMissingError.prototype.constructor = MethodMissingError
+function MethodMissingError(){
+  Error.apply(this, arguments)
+  this.name = "MethodMissingError"
+}
+Exception.prototype.constructor = Exception
+function Exception(){
+}
+Exception.is$U = function(err, type){
+  var error_with = false
+  if ( /function call/i.test(type) ){
+    error_with = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
+    if (error_with)
+      error_with = error_with[1]
+    else throw(err);
+    }
+  if ( /method call/i.test(type) )
+    error_with = err.toString().match(/TypeError:\s*([^\.]+)\.([^\.]+)\s+is not a function.*/)
+  if ( /singleton method/i.test(type) )
+    error_with = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
+  return error_with
+}
+Exception.closures = 0
+Exception.parse = function(err, source_code){
+  var actual_parameters = []
+  function get_params(method_name, obj_name){
+      var search_text = obj_name ? (obj_name + ".") : ""
+      search_text += method_name
+      var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
+      var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
+      params = params.replace(/\(\s*/, "")
+      params = params.replace(/\s*\)\s*$/, "")
+      var actual_parameters = CodeBlockFinder.parse_params(params)
+      for (var i=0; i<actual_parameters.length; i++)
+           actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
+           return actual_parameters
+  }
+   var obj = null
+   var m = err.toString().match(/TypeError:\s*([^\.]+)\.([^\s]*)\s+is not a function.*/)
+   if ( m && (m.length == 3) )
+     if ( (obj = eval(m[1])) instanceof Object){
+      actual_parameters = get_params(m[2], m[1])
+      return obj.method_missing(m[2], m[1],  actual_parameters) 
+     }
+   var obj = null
+   var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
+   if ( m && (m.length == 2) ){
+      actual_parameters = get_params(m[1])
+       return method_missing(err, m[1], actual_parameters )
+      }
+   var obj = null
+   var m = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
+  if ( m && (m.length == 3) )
+     if ( (obj = eval(m[1])) instanceof Object){
+       actual_parameters = get_params()
+       return obj.method_missing(m[2], m[1],  actual_parameters)
+     }
+     throw(err)
+}
 Object.prototype.to_a = function() {
     return [this]
 }
@@ -2403,65 +2463,137 @@ ArrayClass.prototype.constructor = ArrayClass
 function ArrayClass() {
     this.length = 0
 }
-$KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
-MethodMissingError.prototype.constructor = MethodMissingError
-function MethodMissingError(){
-  Error.apply(this, arguments)
-  this.name = "MethodMissingError"
-}
-Exception.prototype.constructor = Exception
-function Exception(){
-}
-Exception.is$U = function(err, type){
-  var error_with = false
-  if ( /function call/i.test(type) ){
-    error_with = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
-    if (error_with)
-      error_with = error_with[1]
-    else throw(err);
-    }
-  if ( /method call/i.test(type) )
-    error_with = err.toString().match(/TypeError:\s*([^\.]+)\.([^\.]+)\s+is not a function.*/)
-  if ( /singleton method/i.test(type) )
-    error_with = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
-  return error_with
-}
-Exception.closures = 0
-Exception.parse = function(err, source_code){
-  var actual_parameters = []
-  function get_params(method_name, obj_name){
-      var search_text = obj_name ? (obj_name + ".") : ""
-      search_text += method_name
-      var src = source_code || (new JavascriptSource(err.fileName)).code_from(err.lineNumber-1)
-      var params  = new CodeBlockFinder( src, search_text, {open:'(', close: ')'}).start()
-      params = params.replace(/\(\s*/, "")
-      params = params.replace(/\s*\)\s*$/, "")
-      var actual_parameters = CodeBlockFinder.parse_params(params)
-      for (var i=0; i<actual_parameters.length; i++)
-           actual_parameters[i] = eval( "(" + actual_parameters[i] + ")" )
-           return actual_parameters
+function giveme_node(id){
+  var node = document.getElementById(id)
+  if (!node){
+    node = document.createElement("div")
+    node.setAttribute("id", id)
+    document.getElementsByTagName("body")[0].appendChild(node)
   }
-   var obj = null
-   var m = err.toString().match(/TypeError:\s*([^\.]+)\.([^\s]*)\s+is not a function.*/)
-   if ( m && (m.length == 3) )
-     if ( (obj = eval(m[1])) instanceof Object){
-      actual_parameters = get_params(m[2], m[1])
-      return obj.method_missing(m[2], m[1],  actual_parameters) 
-     }
-   var obj = null
-   var m = err.toString().match(/ReferenceError:\s*([^\.]+)\s+is not defined.*/)
-   if ( m && (m.length == 2) ){
-      actual_parameters = get_params(m[1])
-       return method_missing(err, m[1], actual_parameters )
-      }
-   var obj = null
-   var m = err.toString().match(/\s*([^\.]+)\.([^\.]+)\s+is undefined.*/)
-  if ( m && (m.length == 3) )
-     if ( (obj = eval(m[1])) instanceof Object){
-       actual_parameters = get_params()
-       return obj.method_missing(m[2], m[1],  actual_parameters)
-     }
-     throw(err)
+  return node
+}
+function get_log_load(){
+    return lluvia_load =giveme_node("lluvia_load")
+}
+function explain(div, title, text){
+    var whole_html_text = ""
+    if (div) {
+        whole_html_text += title + ": " + text + "<br/>\n"
+        div.innerHTML += whole_html_text
+    }
+}
+function ll_module_to_include(module_source){
+    explain(get_log_load(), "About to load module", module_source.module)
+    module_loading[module_source.module] = new LogModuleLoad(module_source)
+}
+function ll_module_included(module_source){
+    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
+}
+function ll_file_included(file_source, module_source, last_file, last_module){
+    module_loading[module_source.module].addFile(file_source)
+    if (last_file) 
+        ll_module_included(module_source)
+    if (last_file && last_module)
+      if (!$K_loading_app && $K_app_dependencies){
+         $K_loading_app = true
+         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
+      }else
+        ll_start()
+}
+function highlight(language){
+    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
+    code = document.getElementsByTagName('pre')
+    for (var i = 0; i < code.length; i++) 
+        if (code[i].className == language) 
+            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
+}
+function ll_start(){
+  try{
+    highlight('javascript')
+  } catch(err){;}
+  if (typeof(main) == "function")
+      try{ main() } catch (err) { Exception.parse(err) }
+}
+function sanitize(code){
+    return code.replace("&lt;", "<")
+}
+function run(code_fragment){
+    var snippets = document.getElementsByName(code_fragment)	
+    for (var i = 0; i < snippets.length; i++) 	    
+        eval(sanitize(snippets[i].innerHTML))
+}
+function clear(div){
+    div = div || "debug"
+    giveme_node("debug").innerHTML = ""
+}
+var module_loading = {}
+function $timeStamp(){
+  var dat = new Date()
+  var timestamp = ""
+  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
+  return timestamp
+}
+function LogFileIncluded(file_source){
+  this.template = [
+    "<div class='_LogFile'>",
+    file_source.name,
+    " [" + $timeStamp() + "]",
+    ": ",
+    file_source.description,
+    "</div>"
+  ]
+}
+LogFileIncluded.prototype.toString = function(){
+  return this.template.join("")
+}
+function LogModuleLoad(module_source){
+  this.template = [
+      "<div class='_LogModule'>",
+      "<h3 class='_LogModuleName'> MODULE: ",
+      "I02:Module Name",
+      "</h3>\n",
+      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
+      "I05: Module Path",
+      ")</span>\n<br/>",
+      "<span class='_LogModuleDescription'>",
+      "I08: Module Description",
+      "</span>\n<br/>",
+      "Load Start Time: ",
+      "I11: start Time",
+      "<br/>\n",
+      "Load Finish Time: ",
+      "I14: Finish Time: ",
+      "<br/>\n",
+      "Load Time: ",
+      "I17: Elapsed Time: ",
+      " s.<br/>",
+      "FILES:<br/>",
+      "I20: FILES",
+      "<br/>",
+      "</div>"
+    ]
+ this.start = new Date().getTime()
+ this.end   = new Date().getTime()
+ this.template[11] = $timeStamp()
+ this.template[2]  = module_source.module
+ this.template[5]  = module_source.path
+ this.template[8]  = module_source.description
+ this.files = []
+}
+LogModuleLoad.prototype.addFile = function(file_source){
+ this.files.push(new LogFileIncluded(file_source))
+}
+LogModuleLoad.prototype.endLoad = function(){
+  this.end   = new Date().getTime()
+  this.template[14] = $timeStamp()     
+  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
+  return this.toString()
+}
+LogModuleLoad.prototype.toString = function(){  
+  this.template[20] = ""
+  for (var i=0; i<this.files.length; i++)
+    this.template[20] += this.files[i].toString()
+  return this.template.join('\n')
 }
 function Socket(uri, protocols) {
     this.uri = uri || ""
@@ -2714,138 +2846,6 @@ PackageManager.download = function(callback) {
         }
     }
 }
-function giveme_node(id){
-  var node = document.getElementById(id)
-  if (!node){
-    node = document.createElement("div")
-    node.setAttribute("id", id)
-    document.getElementsByTagName("body")[0].appendChild(node)
-  }
-  return node
-}
-function get_log_load(){
-    return lluvia_load =giveme_node("lluvia_load")
-}
-function explain(div, title, text){
-    var whole_html_text = ""
-    if (div) {
-        whole_html_text += title + ": " + text + "<br/>\n"
-        div.innerHTML += whole_html_text
-    }
-}
-function ll_module_to_include(module_source){
-    explain(get_log_load(), "About to load module", module_source.module)
-    module_loading[module_source.module] = new LogModuleLoad(module_source)
-}
-function ll_module_included(module_source){
-    get_log_load().innerHTML += module_loading[module_source.module].endLoad()
-}
-function ll_file_included(file_source, module_source, last_file, last_module){
-    module_loading[module_source.module].addFile(file_source)
-    if (last_file) 
-        ll_module_included(module_source)
-    if (last_file && last_module)
-      if (!$K_loading_app && $K_app_dependencies){
-         $K_loading_app = true
-         _includeScript('dependencies.js', 'onload', '_includeDependencies()') 
-      }else
-        ll_start()
-}
-function highlight(language){
-    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
-    code = document.getElementsByTagName('pre')
-    for (var i = 0; i < code.length; i++) 
-        if (code[i].className == language) 
-            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
-}
-function ll_start(){
-  try{
-    highlight('javascript')
-  } catch(err){;}
-  if (typeof(main) == "function")
-      try{ main() } catch (err) { Exception.parse(err) }
-}
-function sanitize(code){
-    return code.replace("&lt;", "<")
-}
-function run(code_fragment){
-    var snippets = document.getElementsByName(code_fragment)	
-    for (var i = 0; i < snippets.length; i++) 	    
-        eval(sanitize(snippets[i].innerHTML))
-}
-function clear(div){
-    div = div || "debug"
-    giveme_node("debug").innerHTML = ""
-}
-var module_loading = {}
-function $timeStamp(){
-  var dat = new Date()
-  var timestamp = ""
-  timestamp += dat.getHours() + " : " + dat.getMinutes() + " : " + dat.getSeconds()
-  return timestamp
-}
-function LogFileIncluded(file_source){
-  this.template = [
-    "<div class='_LogFile'>",
-    file_source.name,
-    " [" + $timeStamp() + "]",
-    ": ",
-    file_source.description,
-    "</div>"
-  ]
-}
-LogFileIncluded.prototype.toString = function(){
-  return this.template.join("")
-}
-function LogModuleLoad(module_source){
-  this.template = [
-      "<div class='_LogModule'>",
-      "<h3 class='_LogModuleName'> MODULE: ",
-      "I02:Module Name",
-      "</h3>\n",
-      "<span class='_LogModulePath'>&nbsp;&nbsp;(",
-      "I05: Module Path",
-      ")</span>\n<br/>",
-      "<span class='_LogModuleDescription'>",
-      "I08: Module Description",
-      "</span>\n<br/>",
-      "Load Start Time: ",
-      "I11: start Time",
-      "<br/>\n",
-      "Load Finish Time: ",
-      "I14: Finish Time: ",
-      "<br/>\n",
-      "Load Time: ",
-      "I17: Elapsed Time: ",
-      " s.<br/>",
-      "FILES:<br/>",
-      "I20: FILES",
-      "<br/>",
-      "</div>"
-    ]
- this.start = new Date().getTime()
- this.end   = new Date().getTime()
- this.template[11] = $timeStamp()
- this.template[2]  = module_source.module
- this.template[5]  = module_source.path
- this.template[8]  = module_source.description
- this.files = []
-}
-LogModuleLoad.prototype.addFile = function(file_source){
- this.files.push(new LogFileIncluded(file_source))
-}
-LogModuleLoad.prototype.endLoad = function(){
-  this.end   = new Date().getTime()
-  this.template[14] = $timeStamp()     
-  this.template[17] = "" + ( Math.round((this.end - this.start) / 10) / 100);
-  return this.toString()
-}
-LogModuleLoad.prototype.toString = function(){  
-  this.template[20] = ""
-  for (var i=0; i<this.files.length; i++)
-    this.template[20] += this.files[i].toString()
-  return this.template.join('\n')
-}
 function navigator_version() { return navigator.appVersion }
 function is_firefox(ffversion){
 	ffversion = ffversion || ""
@@ -3004,66 +3004,71 @@ $Logger.prototype.log = function(message, severity){
 	}
 }
 Processor.prototype.constructor = Processor;
-function Processor(){
-	this.now	 = new Date();
-	this.events  = new Event();
-	this.threads = new Array();
+function Processor() {
+    this.now = new Date();
+    this.events = new Event();
+    this.threads = new Array();
 }
-Processor.prototype.register = function(cObject, solicitorF){
-	var obj = null
-	var fun = null
-	if (cObject){
-		obj = cObject
-		if (solicitorF)
-			fun = solicitorF
-		else if (cObject.run)
-			fun = cObject.run
-		if (!fun)
-			throw "The current processor can´t get a valid solicitor"
-	}
-	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
-}
-Processor.prototype.kill = function(rObject, solicitorF){
-	for (var i in this.threads)
-		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
-			this.threads.slice(i,i+1);
-}
-Processor.prototype.step = function (date){
-	this.now = date || new Date();
-	try {
-	  for (var i=0; i<this.threads.length; i++)
-            this.threads[i].solicitor.call(this.threads[i].object, this.now);
+Processor.prototype.register = function(cObject, solicitorF) {
+    var obj = null
+    var fun = null
+    if (cObject) {
+        obj = cObject
+        if (solicitorF)
+            fun = solicitorF
+        else if (cObject.run)
+            fun = cObject.run
+        if (!fun)
+            throw "The current processor can´t get a valid solicitor"
     }
-    catch (e) {
-    }
+    this.threads.push({
+        object: cObject,
+        solicitor: (solicitorF ? solicitorF : cObject.run)
+    });
 }
-Processor.prototype.run = function (date){
-    this.now =  new Date();
+Processor.prototype.kill = function(rObject, solicitorF) {
+    for (var i in this.threads)
+        if (this.threads[i] == {
+            object: rObject,
+            solicitor: solicitorF
+        })
+            this.threads.slice(i, i + 1);
+}
+Processor.prototype.step = function(date) {
+    this.now = date || new Date();
     try {
-	this.step(this.now)
+        for (var i = 0; i < this.threads.length; i++)
+            this.threads[i].solicitor.call(this.threads[i].object, this.now);
+    } catch (e) {
     }
-    catch (e) {
+}
+Processor.prototype.run = function(date) {
+    this.now = new Date();
+    try {
+        this.step(this.now)
+    } catch (e) {
     }
     setTimeout(this.run.bind(this), 20);
 }
-Processor.prototype.start = function(){
+Processor.prototype.start = function() {
     this.run()
     return this;
 }
-Processor.prototype.newThread = function(){
+Processor.prototype.newThread = function() {
     var t = new Thread(null, this)
-    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
+    t.run = Processor.prototype.newThread.block_given$U() || function() {;
+    }
     return t;
 }
-Processor.prototype.get = Processor.prototype.get = function (object) {
+Processor.prototype.get = Processor.prototype.get = function(object) {
     var collect = []
     var len = this.threads.length
-    for (var i=0; i<len; i++) {
-	var candidate = this.threads[i].object
-       if ( candidate && !collect.include$U(candidate) &&
-	    ( candidate == object ||  candidate instanceof object )
-	  )
-      collect.push(candidate)
+    for (var i = 0; i < len; i++) {
+        var candidate = this.threads[i].object
+        if (candidate && !collect.include$U(candidate) &&
+            (candidate == object || candidate instanceof object)
+        )
+            collect.push(candidate)
     }
     return collect
 }
@@ -3401,7 +3406,7 @@ EventDispatcher.prototype.enqueue = function(mssg) {
     this.inqueue.push(mssg)
     return mssg.received.id
 }
-EventDispatcher.prototype.addPort = function(event, device) {
+EventDispatcher.prototype.add_port = function(event, device) {
     if (this.ports[event])
         this.ports[event].push(device)
 }
@@ -3561,33 +3566,156 @@ var systemEv = (function(){
 	$_sev.yield(ob_msg)
 	return  ob_msg; })
 })()
-MoveEffect.prototype = new ThreadAutomata
-MoveEffect.prototype.constructor = MoveEffect
-MoveEffect.prototype.super = ThreadAutomata
-function MoveEffect(view, final_coord, initial_coord) {
+MoveLeftEffect.prototype = new ThreadAutomata
+MoveLeftEffect.prototype.constructor = MoveLeftEffect
+MoveLeftEffect.prototype.super = ThreadAutomata
+function MoveLeftEffect(view, final_coord, initial_coord, velocity) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
     this.final_coord = final_coord
     this.coord = this.initial_coord = initial_coord
-    this.velocity = [20, 15]
+    this.velocity = velocity || [70, 0]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
                 that.coord[i] += that.velocity[i] * (now - before) / 1000
-            that.view.innerHTML = that.coord
+            that.view.style.width = "" + that.coord[0] + "px"
+            if (that.coord[0] >= that.final_coord[0])
+                that.switch("stopped")
         }
     }
     ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
 }
-function TableSymbols(elements) {
+MoveDownEffect.prototype = new ThreadAutomata
+MoveDownEffect.prototype.constructor = MoveDownEffect
+MoveDownEffect.prototype.super = ThreadAutomata
+function MoveDownEffect(view, final_coord, initial_coord, velocity) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = velocity || [0, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.height = "" + that.coord[1] + "px"
+            if (that.coord[1] >= that.final_coord[1])
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+RectangleEffect.prototype = new ThreadAutomata
+RectangleEffect.prototype.constructor = RectangleEffect
+RectangleEffect.prototype.super = ThreadAutomata
+function RectangleEffect(view, final_coord, initial_coord, velocity) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = velocity || [51, 3]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.width = "" + that.coord[0] + "px"
+            that.view.style.height = "" + that.coord[1] + "px"
+            if (that.coord[0] >= that.final_coord[0])
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+RotateEffect.prototype = new ThreadAutomata
+RotateEffect.prototype.constructor = RotateEffect
+RotateEffect.prototype.super = ThreadAutomata
+function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.angle = angle
+    this.final_coord = final_coord || [0, 0]
+    this.coord = this.initial_coord = initial_coord || [0, 0]
+    this.velocity = velocity || [20, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            if (angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+SideRotationEffect.prototype = new ThreadAutomata
+SideRotationEffect.prototype.constructor = SideRotationEffect
+SideRotationEffect.prototype.super = ThreadAutomata
+function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_coord) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.origin = origin || [0, 0]
+    this.angle = angle
+    this.final_coord = final_coord || [0, 0]
+    this.coord = this.initial_coord = initial_coord || [0, 0]
+    this.velocity = velocity || [20, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.transformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.webkitTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.mozTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            if (angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+function SymbolsTable(elements) {
     this.elements = elements || []
 }
-TableSymbols.prototype.insert = function(element) {
+SymbolsTable.prototype.insert = function(name, value) {
+    var element = {
+        name: name,
+        value: value
+    }
     this.elements.push(element)
 }
-TableSymbols.prototype.search = function(element) {
+SymbolsTable.prototype.update_value = function(position, new_value) {
+    this.elements[position].value = new_value
+}
+SymbolsTable.prototype.position = function(element) {
+    var position = null
+    var name = element.name || ""
+    for (var i = 0; i < this.elements.length; i++) {
+        if (name == this.elements[i])
+            position = i
+    }
+    return position
+}
+SymbolsTable.prototype.is_in$U = function(element) {
     var element = element || {}
     for (var i = 0; i < this.elements.length; i++)
         if (this.elements.name == element.name)
@@ -3598,7 +3726,7 @@ function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
     this.space_name = null
-    this.table_symbols = new TableSymbols()
+    this.symbols_table = new SymbolsTable()
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
             if (typeof arguments[i] == "string")
@@ -3633,12 +3761,18 @@ Builder.is_lluvia_comment$U = function(comment, token) {
         return true
     return false
 }
+Builder.prototype.analize = function() {
+}
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
-    var type = node.className.split("-")
+    var descompose_node = node.className.split(" ")
+    var class_css = descompose_node[1]
+    var type = descompose_node[0].split("-")
     var result = {
+        id: node.id,
         name: prefix + node.id,
         type: type[1],
+        class_css: class_css,
         params: node.dataset.params,
         data_set: node.dataset
     }
@@ -3650,40 +3784,42 @@ Builder.prototype.clasify_element = function(element) {
         return "object"
 }
 Builder.prototype.create_element = function(node, type) {
-    var nodes = node || {}
-    var prefix = prefix || ""
     switch (type) {
         case "object":
             if (this.space_name == null)
                 eval.call(null, "var " + node.name + " = new " + node.type + "(" + node.params + ")")
             else
                 this.space_name[node.name] = eval("new " + node.type + "(" + node.params + ")")
+            node.id.className = node.class_css
             break
     }
 }
-Builder.prototype.create_methods_element = function() {
+Builder.prototype.create_methods_element = function(element) {
     var dataset = element.data_set || {}
+    var element_class = element.type || ""
     var new_methods = []
     function search_new_methods() {
-        for (var i in dataset)
-            if (i.search("method$") == 0) {
+        for (var i in dataset) {
+            if (i.search("method") == 0) {
                 var method = {
                     name: i.replace("method$", ""),
                     block: dataset[i]
                 }
-                methods.push(method)
+                new_methods.push(method)
             }
+        }
     }
     search_new_methods()
-    for (var i = 0; i < new_methods.length; i++)
-        eval(element.name + "." + methods[i].name + "(" + methods[i].params + ")")
+    for (var i = 0; i < new_methods.length; i++) {
+        eval(element.name + "." + new_methods[i].name + "=" + new_methods[i].block)
+    }
 }
 Builder.prototype.run_methods = function(element) {
     var dataset = element.data_set || {}
     var methods = []
     function search_methods() {
         for (var i in dataset)
-            if (i.search("run$") == 0) {
+            if (i.search("run") == 0) {
                 var method = {
                     name: i.replace("run$", ""),
                     params: dataset[i]
@@ -3702,14 +3838,33 @@ Builder.prototype.search_prefix = function(node_body) {
     return prefix
 }
 Builder.prototype.build = function() {
+    var round = 2
+    var element_creates = []
     this.get_lluvia_nodes(document)
     if (this.prefix == "")
         this.prefix = this.search_prefix(document.body)
-    for (var i = 0; i < this.lluvia_nodes.length; i++) {
-        var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
-        var clasify_result = this.clasify_element(analize_result)
-        this.create_element(analize_result, clasify_result)
-        this.run_methods(analize_result)
+    function is_in$U(name) {
+        var result = false
+        for (var i = 0; i < element_creates.length; i++)
+            if (element_creates[i] == name)
+                result = true
+        return result
+    }
+    for (var a = 0; a < round; a++) {
+        for (var i = 0; i < this.lluvia_nodes.length; i++) {
+            var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
+            var clasify_result = this.clasify_element(analize_result)
+            if (!is_in$U(analize_result.name)) {
+                try {
+                    this.create_element(analize_result, clasify_result)
+                    this.create_methods_element(analize_result)
+                    this.run_methods(analize_result)
+                    element_creates.push(analize_result.name)
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
     }
 }
 function bring_lluvia() {
@@ -3736,7 +3891,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

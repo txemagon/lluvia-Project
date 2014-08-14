@@ -1,7 +1,11 @@
-{	"package": "builder",
-	"description": ".",
-	"files": [
-	    {"name": "table_symbols.js",    "description": "."},
-		{"name": "ll_Builder.js",       "description": "."}
-	]
+{
+    "package": "builder",
+    "description": ".",
+    "files": [{
+        "name": "symbols_table.js",
+        "description": "."
+    }, {
+        "name": "ll_Builder.js",
+        "description": "."
+    }]
 }

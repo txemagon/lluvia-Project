@@ -11,12 +11,12 @@ Processor.prototype.constructor = Processor;
  * @method constructor
  * @return				{Processor}	retuns a new processor.
  */
-function Processor(){
+function Processor() {
 
-	// Variables member
-	this.now	 = new Date();
-	this.events  = new Event();
-	this.threads = new Array();
+    // Variables member
+    this.now = new Date();
+    this.events = new Event();
+    this.threads = new Array();
 }
 
 
@@ -28,21 +28,24 @@ function Processor(){
  * @param		{Thread}    cObject		Is the caller object to be porocessed through the thread interface.
  * @param		{Function}  solicitorF		Control loop object. Typically "run".
  */
-Processor.prototype.register = function(cObject, solicitorF){
-	var obj = null
-	var fun = null
-	if (cObject){
-		obj = cObject
-		if (solicitorF)
-			fun = solicitorF
-		else if (cObject.run)
-			fun = cObject.run
-		if (!fun)
-			throw "The current processor can´t get a valid solicitor"
+Processor.prototype.register = function(cObject, solicitorF) {
+    var obj = null
+    var fun = null
+    if (cObject) {
+        obj = cObject
+        if (solicitorF)
+            fun = solicitorF
+        else if (cObject.run)
+            fun = cObject.run
+        if (!fun)
+            throw "The current processor can´t get a valid solicitor"
 
-	}
+    }
 
-	this.threads.push({object: cObject, solicitor: (solicitorF? solicitorF: cObject.run) });
+    this.threads.push({
+        object: cObject,
+        solicitor: (solicitorF ? solicitorF : cObject.run)
+    });
 
 }
 
@@ -53,10 +56,13 @@ Processor.prototype.register = function(cObject, solicitorF){
  * @param		{Thread}		rObject		Object to be removed from the execution queue.
  * @param		{Function}	solicitorF  As far as an object can be processed by several parallel solicitors function, one can be removed. (This is a fairly overenthusiastic feature indeed)
  */
-Processor.prototype.kill = function(rObject, solicitorF){
-	for (var i in this.threads)
-		if (this.threads[i] == {object: rObject, solicitor: solicitorF})
-			this.threads.slice(i,i+1);
+Processor.prototype.kill = function(rObject, solicitorF) {
+    for (var i in this.threads)
+        if (this.threads[i] == {
+            object: rObject,
+            solicitor: solicitorF
+        })
+            this.threads.slice(i, i + 1);
 }
 
 /**
@@ -64,14 +70,13 @@ Processor.prototype.kill = function(rObject, solicitorF){
  *
  * @method		step
  */
-Processor.prototype.step = function (date){
+Processor.prototype.step = function(date) {
 
-	this.now = date || new Date();
-	try {
-	  for (var i=0; i<this.threads.length; i++)
+    this.now = date || new Date();
+    try {
+        for (var i = 0; i < this.threads.length; i++)
             this.threads[i].solicitor.call(this.threads[i].object, this.now);
-    }
-    catch (e) {
+    } catch (e) {
 
     }
 }
@@ -87,12 +92,11 @@ Processor.prototype.step = function (date){
  * @param {Date} date Parent's processor time.
  *
  */
-Processor.prototype.run = function (date){
-    this.now =  new Date();
+Processor.prototype.run = function(date) {
+    this.now = new Date();
     try {
-	this.step(this.now)
-    }
-    catch (e) {
+        this.step(this.now)
+    } catch (e) {
 
     }
 
@@ -104,7 +108,7 @@ Processor.prototype.run = function (date){
  *
  * Start Processor#run cycle.
  */
-Processor.prototype.start = function(){
+Processor.prototype.start = function() {
     this.run()
     return this;
 }
@@ -122,10 +126,11 @@ Processor.prototype.start = function(){
  *         "Love others as your code"
  *    })
  */
-Processor.prototype.newThread = function(){
+Processor.prototype.newThread = function() {
     var t = new Thread(null, this)
 
-    t.run = Processor.prototype.newThread.block_given$U() || function() {;}
+    t.run = Processor.prototype.newThread.block_given$U() || function() {;
+    }
     return t;
 }
 
@@ -140,16 +145,16 @@ Processor.prototype.newThread = function(){
  * @param {Object} object object or class reference.
  * @return {Array}  Array with collected objects or an empty array is anything is found.
  */
-Processor.prototype.get = Processor.prototype.get = function (object) {
+Processor.prototype.get = Processor.prototype.get = function(object) {
     var collect = []
 
     var len = this.threads.length
-    for (var i=0; i<len; i++) {
-	var candidate = this.threads[i].object
-       if ( candidate && !collect.include$U(candidate) &&
-	    ( candidate == object ||  candidate instanceof object )
-	  )
-      collect.push(candidate)
+    for (var i = 0; i < len; i++) {
+        var candidate = this.threads[i].object
+        if (candidate && !collect.include$U(candidate) &&
+            (candidate == object || candidate instanceof object)
+        )
+            collect.push(candidate)
     }
 
     return collect
@@ -157,6 +162,3 @@ Processor.prototype.get = Processor.prototype.get = function (object) {
 
 // Global Application Processor creation
 $Processor = new Processor().start()
-
-
-

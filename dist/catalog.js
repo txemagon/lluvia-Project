@@ -174,7 +174,11 @@ var $K_script_response =
 				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
 				{"name": "ll_Lookup.js", "description": ""},
 				{"name": "ll_MessageEvent.js", "description": "Message generator."},
-				{"name": "effects/ll_MoveEffect.js", "description": "Movement Effect"}],
+				{"name": "effects/ll_MoveLeftEffect.js", "description": "Movement Effect"},
+				{"name": "effects/ll_MoveDownEffect.js", "description": "Movement Effect"},
+				{"name": "effects/ll_RectangleEffect.js", "description": "Rectangle Effect"},
+				{"name": "effects/ll_RotationEffect.js", "description": "Rotation Effect"},
+				{"name": "effects/ll_SideRotationEffect.js", "description": "Rotation Effect"}],
 			"provides": [],
 			"requires": [],
 			"offers": [],
@@ -190,7 +194,7 @@ var $K_script_response =
 				   {
 					"_path": "/src/lib/builder/",
 					"files": [
-						{"name": "table_symbols.js", "description": "."},
+						{"name": "symbols_table.js", "description": "."},
 						{"name": "ll_Builder.js", "description": "."}],
 					"provides": [],
 					"requires": [],

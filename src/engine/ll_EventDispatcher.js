@@ -64,7 +64,7 @@ EventDispatcher.prototype.enqueue = function(mssg) {
  * @param {Object} device Device to be added to the ports array (dock).
  *
  */
-EventDispatcher.prototype.addPort = function(event, device) {
+EventDispatcher.prototype.add_port = function(event, device) {
     if (this.ports[event])
         this.ports[event].push(device)
 }
