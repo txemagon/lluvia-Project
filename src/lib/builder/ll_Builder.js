@@ -5,7 +5,7 @@ function Builder() {
     this.lluvia_nodes = []
     this.prefix = ""
     this.space_name = null
-    this.table_symbols = new TableSymbols()
+    this.symbols_table = new SymbolsTable()
 
     if (arguments.length)
         for (var i = 0; i < arguments.length; i++) {
@@ -145,8 +145,11 @@ Builder.prototype.build = function() {
     for (var i = 0; i < this.lluvia_nodes.length; i++) {
         var analize_result = this.analize_node(this.lluvia_nodes[i], this.prefix)
         var clasify_result = this.clasify_element(analize_result)
+        if (!this.symbols_table.search(analize_result, clasify_result))
+            this.symbols_table.insert(analize_result)
         this.create_element(analize_result, clasify_result)
         this.create_methods_element(analize_result)
         this.run_methods(analize_result)
     }
+    console.log(this.symbols_table.elements.toSource())
 }
