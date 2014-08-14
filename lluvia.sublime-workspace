@@ -4,8 +4,20 @@
 		"selected_items":
 		[
 			[
+				"cle",
+				"clean_text"
+			],
+			[
+				"t",
+				"text"
+			],
+			[
 				"ele",
-				"element"
+				"element_creates"
+			],
+			[
+				"anal",
+				"analize_node"
 			],
 			[
 				"cl",
@@ -124,26 +136,43 @@
 	"buffers":
 	[
 		{
-			"file": "examples/devices/index.html",
+			"file": "src/lib/builder/ll_Scanner.js",
 			"settings":
 			{
-				"buffer_size": 1046,
+				"buffer_size": 556,
+				"line_ending": "Unix",
+				"name": "function"
+			}
+		},
+		{
+			"file": "src/lib/builder/tests/index.js",
+			"settings":
+			{
+				"buffer_size": 371,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "examples/devices/javascript/main.js",
+			"file": "src/lib/builder/tests/scanner_test.js",
 			"settings":
 			{
-				"buffer_size": 182,
+				"buffer_size": 466,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "examples/devices/css/general.css",
+			"file": "vendor/demo/javascript/dependencies.js",
 			"settings":
 			{
-				"buffer_size": 260,
+				"buffer_size": 889,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/kernel/core-ext/ll_String.js",
+			"settings":
+			{
+				"buffer_size": 43023,
 				"line_ending": "Unix"
 			}
 		}
@@ -196,23 +225,29 @@
 	},
 	"file_history":
 	[
-		"/home/jose/work/lluvia-Project/examples/effects/javascript/main.js",
-		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
-		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
-		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/common/test_framework.js",
 		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
+		"/home/jose/work/lluvia-Project/examples/devices/index.html",
+		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
+		"/home/jose/work/lluvia-Project/src/package.json",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/index.html",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/Home.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/ControlPanel.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/DHTMLClasses/Godman.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/button_gate.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
+		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
+		"/home/jose/work/lluvia-Project/examples/effects/javascript/main.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
 		"/home/jose/work/lluvia-Project/src/lib/builder/package.json",
 		"/home/jose/work/lluvia-Project/src/engine/ll_Processor.js",
 		"/home/jose/work/lluvia-Project/dist/lluvia.js",
 		"/home/jose/work/lluvia-Project/util/compress-core/pack.js",
 		"/home/jose/work/lluvia-Project/src/test.js",
 		"/home/jose/work/lluvia-Project/util/compress-core/lib/package.js",
-		"/home/jose/work/lluvia-Project/src/package.json",
-		"/home/jose/work/lluvia-Project/examples/devices/index.html",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/keypad.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/button_gate.js",
 		"/home/jose/work/lluvia-Project/src/engine/ll_Device.js",
 		"/home/jose/work/lluvia-Project/src/engine/ll_EventDispatcher.js",
 		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
@@ -264,6 +299,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			")\n",
+			"newGate",
+			"name",
+			"i",
+			")\n",
+			"500",
 			"watch",
 			"TableSymbols",
 			"consol",
@@ -332,46 +373,46 @@
 			[
 				{
 					"buffer": 0,
-					"file": "examples/devices/index.html",
+					"file": "src/lib/builder/ll_Scanner.js",
 					"settings":
 					{
-						"buffer_size": 1046,
+						"buffer_size": 556,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								998,
-								998
+								531,
+								531
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
+							"auto_name": "function",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 51.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "examples/devices/javascript/main.js",
+					"file": "src/lib/builder/tests/index.js",
 					"settings":
 					{
-						"buffer_size": 182,
+						"buffer_size": 371,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								179,
-								179
+								301,
+								301
 							]
 						],
 						"settings":
@@ -387,26 +428,83 @@
 				},
 				{
 					"buffer": 2,
-					"file": "examples/devices/css/general.css",
+					"file": "src/lib/builder/tests/scanner_test.js",
 					"settings":
 					{
-						"buffer_size": 260,
+						"buffer_size": 466,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								253,
-								253
+								174,
+								174
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 159.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "vendor/demo/javascript/dependencies.js",
+					"settings":
+					{
+						"buffer_size": 889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								428,
+								428
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/kernel/core-ext/ll_String.js",
+					"settings":
+					{
+						"buffer_size": 43023,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								23060,
+								23060
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 13513.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

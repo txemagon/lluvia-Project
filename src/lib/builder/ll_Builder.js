@@ -52,6 +52,26 @@ Builder.prototype.analize = function() {
 
 }
 
+/*
+ * Debe leer y diferenciar todo lo que el texto contenga para que luego el analizador
+ * lo interprete correctamente.
+ *
+ * Que cojones tiene que diferenciar:
+ *    - Todas las palabras separadas por espacio o comas.
+ *    - Si va entre comillas es un string.
+ *    - Si es un valor numerico es un number
+ *    - Tipos de datos simples y como diferenciarlos:
+ *        + String: cada vez que se abra una comilla simple o doble y hasta que se vuelva a cerrar ese mismo tipo de comilla. Se debera tener cuidado con los caracteres especiales.
+          + Boolean: comparando si la palabra que acaba de leer es true o false. En realiddad diferenciar todas las palabras reservadas.
+          + Number: si es un numero se analiza hasta que acabe la serie sin espacios en blanco.
+ *    - Tipos de datos compuestos(por referencia): objeto, matriz.
+ *    - Tipos de datos especiales: null, undefined.
+
+ */
+Buidel.prototype.scanner = function(text) {
+
+}
+
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
     var descompose_node = node.className.split(" ")

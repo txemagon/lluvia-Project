@@ -3763,6 +3763,8 @@ Builder.is_lluvia_comment$U = function(comment, token) {
 }
 Builder.prototype.analize = function() {
 }
+Buidel.prototype.scanner = function(text) {
+}
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
     var descompose_node = node.className.split(" ")

@@ -148,8 +148,8 @@ String.prototype.index = function() {
         return min >= 0 && entradoAlMenosUnaVez ? min : null
     }
     return this.indexOf(arguments[0]) < 0 ? null : this.indexOf(arguments[0])
-    // todo: Falta que funcione al pasar por parametros
-    // ? y una letra, ya que da error de sintaxis
+        // todo: Falta que funcione al pasar por parametros
+        // ? y una letra, ya que da error de sintaxis
 }
 
 /**
@@ -199,7 +199,7 @@ String.prototype.insert = function() {
     var pos = arguments[0] >= 0 ? this.normalize_index(arguments[0]) : this.normalize_index(arguments[0]) + 1
     if (this.normalize_index(arguments[0]) == null)
         return null
-        //throw("index out of string")
+            //throw("index out of string")
     var str = ""
     for (var i = 0; i <= this.length; i++)
         if (i == pos) {
@@ -779,7 +779,7 @@ String.prototype.to_i = function() {
             return null
         else base = arguments[0]
 
-            return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
+    return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
 }
 
 /**
