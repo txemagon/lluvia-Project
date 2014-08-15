@@ -864,7 +864,7 @@ String.prototype.to_i = function() {
         if (isNaN(arguments[0]) || (arguments[0] < 2) || (arguments[0] > 36))
             return null
         else base = arguments[0]
-            return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
+    return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
 }
 String.prototype.to_f = function() {
     if (arguments.length > 0)
@@ -3821,7 +3821,7 @@ Builder.is_lluvia_comment$U = function(comment, token) {
 }
 Builder.prototype.analize = function() {
 }
-Buidel.prototype.scanner = function(text) {
+Builder.prototype.scanner = function(text) {
 }
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}
@@ -5024,7 +5024,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/lau/work/lluviaProject/util/compress-core/../..')
+        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

@@ -68,7 +68,7 @@ Builder.prototype.analize = function() {
  *    - Tipos de datos especiales: null, undefined.
 
  */
-Buidel.prototype.scanner = function(text) {
+Builder.prototype.scanner = function(text) {
 
 }
 
