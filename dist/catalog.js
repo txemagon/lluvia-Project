@@ -209,7 +209,9 @@ var $K_script_response =
 			"package": "lib",
 			"description": ".",
 		 }
-,
+],
+	"requires": [],
+	"offers": [
 		   {
 			"_path": "/src/mathematics/",
 			"files": [
@@ -274,8 +276,6 @@ var $K_script_response =
 			"description": "Mathematics library.",
 		 }
 ],
-	"requires": [],
-	"offers": [],
 	"package": "lluvia",
 	"description": "lluvia loader. User application loader. Booter.",
  }
