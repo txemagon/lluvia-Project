@@ -135,47 +135,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "src/lib/builder/ll_Scanner.js",
-			"settings":
-			{
-				"buffer_size": 556,
-				"line_ending": "Unix",
-				"name": "function"
-			}
-		},
-		{
-			"file": "src/lib/builder/tests/index.js",
-			"settings":
-			{
-				"buffer_size": 371,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/lib/builder/tests/scanner_test.js",
-			"settings":
-			{
-				"buffer_size": 466,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "vendor/demo/javascript/dependencies.js",
-			"settings":
-			{
-				"buffer_size": 889,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/kernel/core-ext/ll_String.js",
-			"settings":
-			{
-				"buffer_size": 43023,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "lluvia",
 	"command_palette":
@@ -225,13 +184,23 @@
 	},
 	"file_history":
 	[
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/world.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/main.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/section.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/css/general.css",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/index.html",
+		"/home/jose/work/lluvia-Project/src/kernel/core-ext/ll_String.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/scanner_test.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/index.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Scanner.js",
 		"/home/jose/work/lluvia-Project/src/lib/builder/tests/common/test_framework.js",
 		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
 		"/home/jose/work/lluvia-Project/examples/devices/index.html",
 		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
 		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
 		"/home/jose/work/lluvia-Project/src/package.json",
-		"/home/jose/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
 		"/home/jose/work/lluvia-Project/vendor/demo/index.html",
 		"/home/jose/work/lluvia-Project/vendor/demo/javascript/Home.js",
 		"/home/jose/work/lluvia-Project/vendor/demo/javascript/ControlPanel.js",
@@ -368,147 +337,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/lib/builder/ll_Scanner.js",
-					"settings":
-					{
-						"buffer_size": 556,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								531,
-								531
-							]
-						],
-						"settings":
-						{
-							"auto_name": "function",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 51.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/lib/builder/tests/index.js",
-					"settings":
-					{
-						"buffer_size": 371,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								301,
-								301
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/lib/builder/tests/scanner_test.js",
-					"settings":
-					{
-						"buffer_size": 466,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								174,
-								174
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 159.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "vendor/demo/javascript/dependencies.js",
-					"settings":
-					{
-						"buffer_size": 889,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								428,
-								428
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/kernel/core-ext/ll_String.js",
-					"settings":
-					{
-						"buffer_size": 43023,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23060,
-								23060
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 13513.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

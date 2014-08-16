@@ -4,7 +4,6 @@ body{
 
 #page{
     width: 800px;
-    height: 800px;
     position: relative;
     margin: auto;
 }
@@ -14,14 +13,14 @@ body{
 #screener{
     border: solid 1px black;
 	position: absolute;
-	margin: 100px 0 0 100px;
-    
+	margin: 25px 0 0 100px;
+
 }
 
 #logo{
     width: 75px;
-    position: absolute; 
-    top: 0; 
+    position: absolute;
+    top: 0;
     right: 0;
 }
 

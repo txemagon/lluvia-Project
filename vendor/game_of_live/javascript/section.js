@@ -1,7 +1,7 @@
 /**
-*/
-function Section(world, x, y, size){
-	this.world = world
+ */
+function Section(world, x, y, size) {
+    this.world = world
     this.x = x
     this.y = y
     this.size = size
@@ -9,24 +9,24 @@ function Section(world, x, y, size){
 }
 
 /**
-*/
-Section.prototype.activate = function(){
+ */
+Section.prototype.activate = function() {
     this.is_activate = true
 }
 
 /**
-*/
-Section.prototype.deactivate = function(){
+ */
+Section.prototype.deactivate = function() {
     this.is_activate = false
 }
 
 /**
-*/
-Section.prototype.draw = function(){
-	if(this.is_activate)
-		cxt.fillStyle = "black"
+ */
+Section.prototype.draw = function() {
+    if (this.is_activate)
+        cxt.fillStyle = "black"
     else
-    	cxt.fillStyle = "white"
+        cxt.fillStyle = "white"
 
-    cxt. fillRect(this.x, this.y, this.size, this.size) 
+    cxt.fillRect(this.x, this.y, this.size, this.size)
 }
