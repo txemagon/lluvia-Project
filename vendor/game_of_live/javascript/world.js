@@ -14,16 +14,6 @@ function World(init_poblation){
     this.last_array_sections = []
 
     Device.call(this, null, null)
-
-    this.state.running.run.up = function(){
-        that.create_board()
-        that.create_init_poblation(that.init_poblation)
-    }
-
-    this.state.running.run.steady = function(date) {
-        that.next_generation()
-        that.draw()  
-    }
 }
 
 /**
@@ -52,10 +42,10 @@ World.prototype.create_board = function(){
 /**
 */
 World.prototype.draw = function(){
-	cxt.clearRect(0, 0, this.height, this.width) 
+    cxt.clearRect(0, 0, this.height, this.width) 
 
     for(var i=0; i<this.array_sections.length; i++)
-    	for(var a=0; a<this.width/this.size_section; a++)
+        for(var a=0; a<this.width/this.size_section; a++)
             this.array_sections[i][a].draw(cxt)
 }
 
@@ -125,4 +115,41 @@ World.prototype.next_generation = function(){
     for(var i=0; i<deactivates.length; i++)
         deactivates[i].deactivate()
 
+}
+
+World.prototype.show_options = function(){
+    options.style.visibility = "visible"
+}
+
+World.prototype.attend_start = function(){
+    var that = this
+    this.show_options()
+    this.create_board()
+    this.create_init_poblation(that.init_poblation)
+
+    this.state.running.run.steady = function(date) {
+        that.next_generation()
+        that.draw()  
+    }
+
+    this.switch("running")
+}
+
+World.prototype.attend_pause = function(){
+    this.switch("suspended")
+}
+
+World.prototype.attend_next_step = function(){
+    this.switch("running")
+    this.next_generation()
+    this.draw()
+    this.switch("suspended")
+}
+
+World.prototype.attend_restart = function(){
+    this.attend_start()
+}
+
+World.prototype.attend_resume = function(){
+    this.switch("running")
 }

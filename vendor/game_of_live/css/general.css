@@ -2,26 +2,30 @@ body{
     font-family: sans, Arial, helvetica;
 }
 
-#page{
-    width: 800px;
-    height: 800px;
-    position: relative;
-    margin: auto;
+#title{
+    text-align:center;
+    margin: 100px 0 0 0;
 }
 
 
-
 #screener{
-    border: solid 1px black;
-	position: absolute;
-	margin: 100px 0 0 100px;
-    
+    display: block;
+    margin: -175px auto; 
+}
+
+
+#button_start{
+    display: block;
+    margin: -100px auto;
+}
+
+#options{
+    visibility: hidden;
+    text-align:center;
+    margin: 250px 0 0 0;
 }
 
 #logo{
     width: 75px;
-    position: absolute; 
-    top: 0; 
-    right: 0;
+    position:fixed; bottom:0px; right:0px;
 }
-

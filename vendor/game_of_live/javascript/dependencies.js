@@ -4,7 +4,8 @@ $K_app_dependencies =
         "description": "Boids Demo App.",
         "path": "",
         "files": [
-                { "name": "section.js",            "description": "" }, 
+                { "name": "section.js",            "description": "" },
+                { "name": "options_panel.js",            "description": "" }, 
 		        { "name": "world.js",              "description": "" },
 		        { "name": "main.js",               "description": "main function." },
 	    ]
