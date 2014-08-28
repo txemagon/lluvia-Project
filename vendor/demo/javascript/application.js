@@ -14,6 +14,6 @@ function main(){
 	//document.getElementById("ventanaMascara").style.length = creen.availWidth + "px"
 	var pc   = new ControlPanel_App("panelControl")
 	var pant = new Fondo_App("fondo")
-	pc.addPort("go_to", pant)
+	pc.add_port("go_to", pant)
 }
 

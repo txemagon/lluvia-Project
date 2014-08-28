@@ -10,18 +10,18 @@ function Scanner() {
  */
 Scanner.prototype.split = function(text) {
     var text = text || ""
-    var separators = separators || [" ", ","]
     var words = []
-    var actual_word = ""
+    var first_white = /^ /
+    var last_white = / $/
+    var several_white = /[ ]+/g
+    var comas = ","
 
-    for (var i = 0; i < text.length; i++) {
-        if (text[i] != " ") {
-            actual_word += text[i]
-        }
-        if (text[i] == " " && actual_word.length > 0) {
-            words.push(actual_word)
-            actual_word = ""
-        }
-    }
+    text = text.replace(several_white, " ")
+    text = text.replace(first_white, "")
+    text = text.replace(last_white, "")
+    text = text.replace(comas, " ")
+    alert(text)
+    words = text.split(" ")
+    
     return words
 }

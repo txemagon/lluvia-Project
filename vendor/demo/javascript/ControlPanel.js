@@ -17,12 +17,12 @@ function ControlPanel_App(view){
 
 	function initialize(){
 		Device.call(that, view)
-		that.newGate(that.view, SlideMenu)
-		that.newGate("home$MG", SenderMG)
-		that.newGate("llaveEnMano$MG", SenderMG)
-		that.newGate("servicios$MG", SenderMG)
-		that.newGate("plantillas$MG", SenderMG)
-		that.newGate("portafolio$MG", SenderMG)
+		that.new_gate(that.view, SlideMenu)
+		that.new_gate("home$MG", SenderMG)
+		that.new_gate("llaveEnMano$MG", SenderMG)
+		that.new_gate("servicios$MG", SenderMG)
+		that.new_gate("plantillas$MG", SenderMG)
+		that.new_gate("portafolio$MG", SenderMG)
 	}
 
 	if (arguments.length)
@@ -48,11 +48,11 @@ function SlideMenu(el){
 }
 
 SlideMenu.prototype.do_onmouseover = function(event, element){
-	this[this.el].slideMenu_over.currentState.requested = this[this.el].slideMenu_over.state.rising
+	this[this.el].slideMenu_over.switch("rising")
 }
 
 SlideMenu.prototype.do_onmouseout = function(event, element){
-	this[this.el].slideMenu_over.currentState.requested = this[this.el].slideMenu_over.state.descending
+	this[this.el].slideMenu_over.switch("descending")
 }
 
 
@@ -78,74 +78,60 @@ function SlideMenu_over(processor, gate){
 							current:   state.down,
 							requested: state.down
 						}
-	this.solicitors = [
-	/* down */
-	[
-	function(){
-		this.y = this.y0;
-		this.gate.panel.style.top = this.y + "px"
-	},
-	function(){
-		;
-	},
-	function(){
-		this.v = this.v0
-	}
-	],
-	/* rising */
-	[
-	function(){
-		this.before = this.now
-		this.time = this.now
-	},
-	function(){
-		this.v += (this.now - this.before) / 1000 * this.k * (this.y1 - this.y) - 0.009 * this.v * (1 - (this.y - this.y1) / (this.y0 - this.y1) )
-		this.y += ((this.now - this.before) / 1000 * this.v )
-		this.gate.panel.style.top = this.y + "px"
-		this.gate.panel.style.height = (this.y0 - this.y + this.h) + "px"
-		if (this.y <=  this.y1)
-			this.currentState.requested = state.top
-	},
-	function(){
-		;
-	}
-	],
-	/* top */
-	[
-	function(){
-		this.y = this.y1;
-		this.gate.panel.style.top = this.y + "px"
-	},
-	function(){
-		;
-	},
-	function(){
-		this.v = - this.v0
-	}
-	],
-	/* descending */
-	[
-	function(){
-		this.before = this.now
-		this.time   = this.now
-	},
-	function(){
-		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y)
-		this.y += (this.now - this.before) / 1000 * this.v
-		this.gate.panel.style.top = this.y + "px"
-		this.gate.panel.style.height = (this.y0 - this.y + this.h) + "px"
-		if (this.y >= this.y0)
-			this.currentState.requested = state.down
-	},
-	function(){
-		;
-	}
-	]
-	]
+	
+	var solicitors = {
+        "down.up": function(){
+            that.y = that.y0;
+		    that.gate.panel.style.top = that.y + "px"
+        },
+        down: function(){
+        },
+        "down.down": function(){
+            that.v = that.v0
+        },
+        "rising.up": function(){
+            that.before = that.now
+	        that.time = that.now
+        },
+        rising: function(){
+            that.v += (that.now - that.before) / 1000 * that.k * (that.y1 - that.y) - 0.009 * that.v * (1 - (that.y - that.y1) / (that.y0 - that.y1) )
+		    that.y += ((that.now - that.before) / 1000 * that.v )
+		    that.gate.panel.style.top = that.y + "px"
+		    that.gate.panel.style.height = (that.y0 - that.y + that.h) + "px"
+		    if (that.y <=  that.y1)
+			    that.switch("top")
+        },
+        "rising.down": function(){
+        },
+        "top.up": function(){
+            that.y = that.y1;
+		    that.gate.panel.style.top = that.y + "px"
+        },
+        top: function(){
+
+        },
+        "top.down": function(){
+            that.v = - that.v0	
+        },
+        "descending.up": function(){
+            that.before = that.now
+	        that.time   = that.now
+        },
+        descending: function(){
+            that.v += (that.now - that.before) / 1000 * that.k *(that.y0 - that.y)
+		    that.y += (that.now - that.before) / 1000 * that.v
+		    that.gate.panel.style.top = that.y + "px"
+		    that.gate.panel.style.height = (that.y0 - that.y + that.h) + "px"
+		    if (that.y >= that.y0)
+			    that.switch("down")
+        },
+        "descending.down": function(){
+        }
+    }
 
 	function initialize(){
 		that.gate = gate
-		ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, processor)
+		ThreadAutomata.call(that, ["down", "rising", "top", "descending"], solicitors)
 		that.h = that.gate.panel.offsetHeight
 		that.gate.panel.style.width = screen.width + "px"
 		that.gate.panel.style.zIndex = 1000
@@ -172,6 +158,6 @@ function SenderMG(el){
 
 SenderMG.prototype.do_onclick = function(event, element){
 	this.el.match(/(.*)\$MG/)
-	this.device.fireEvent(systemEv("sync", {name: "go_to", data: RegExp.$1}, this.device))
+	this.device.fire_event(systemEv("sync", {name: "go_to", data: RegExp.$1}, this.device))
 }
 

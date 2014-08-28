@@ -18,11 +18,11 @@ function Home_App(view){
 	function initialize(){
 		Device.call(that, view)
 		that.threads.push( new God("godHome", null, null, that) )
-		that.newGate("llaveEnMano", Sender)
-		that.newGate("servicios", Sender)
-		that.newGate("plantillas", Sender)
-		that.newGate("portafolios", Sender)
-		that.solicitors[that.getStates().killing][1] = that.killing
+		that.new_gate("llaveEnMano", Sender)
+		that.new_gate("servicios", Sender)
+		that.new_gate("plantillas", Sender)
+		that.new_gate("portafolios", Sender)
+		that.state.running.run.killing = that.killing
 	}
 
 	if (arguments.length)
@@ -74,15 +74,15 @@ function Sender(el){
 }
 
 Sender.prototype.do_onclick = function(event, element){
-	this.device.sendMessage("sync", "Har_Mageddon", null, this.device)
+	this.device.send_message("sync", "Har_Mageddon", null, this.device)
 }
 
 Sender.prototype.do_onmouseover = function(event, element){
-	this[this.el].edificio_over.currentState.requested = this[this.el].edificio_over.state.rising
+	this[this.el].edificio_over.switch("rising")
 }
 
 Sender.prototype.do_onmouseout = function(event, element){
-	this[this.el].edificio_over.currentState.requested = this[this.el].edificio_over.state.descending
+	this[this.el].edificio_over.switch("descending")
 }
 
 Edificio_over.prototype = new ThreadAutomata
@@ -107,76 +107,62 @@ function Edificio_over(processor, gate){
 							current:   state.down,
 							requested: state.down
 						}
-	this.solicitors = [
-	/* down */
-	[
-	function(){
-		this.y = this.y0;
-		this.shadow.style.top = (- this.k2 * this.y) + "px"
-		this.gate.panel.style.top = this.y + "px"
-	},
-	function(){
-		;
-	},
-	function(){
-		this.v = this.v0
-	}
-	],
-	/* rising */
-	[
-	function(){
-		this.before = this.now
-		this.time = this.now
-	},
-	function(){
-		this.v += (this.now - this.before) / 1000 * this.k * (this.y1 - this.y) - 0.009 * this.v * (1 - (this.y - this.y1) / (this.y0 - this.y1) )
-		this.y += ((this.now - this.before) / 1000 * this.v )
-		this.shadow.style.top = (- this.k2 * this.y) + "px"
-		this.gate.panel.style.top = this.y + "px"
-		if (this.y <=  this.y1)
-			this.currentState.requested = state.top
-	},
-	function(){
-		;
-	}
-	],
-	/* top */
-	[
-	function(){
-		this.y = this.y1;
-		this.shadow.style.top = (- this.k2 * this.y) + "px"
-		this.gate.panel.style.top = this.y + "px"
-	},
-	function(){
-		;
-	},
-	function(){
-		this.v = - this.v0
-	}
-	],
-	/* descending */
-	[
-	function(){
-		this.before = this.now
-		this.time   = this.now
-	},
-	function(){
-		this.v += (this.now - this.before) / 1000 * this.k *(this.y0 - this.y)
-		this.y += (this.now - this.before) / 1000 * this.v
-		this.gate.panel.style.top = this.y + "px"
-		this.shadow.style.top = (- this.k2 * this.y) + "px"
-		if (this.y >= this.y0)
-			this.currentState.requested = state.down
-	},
-	function(){
-		;
-	}
-	]
-	]
+
+    var solicitors = {
+        "down.up": function(){
+            that.y = that.y0;
+	        that.shadow.style.top = (- that.k2 * that.y) + "px"
+	        that.gate.panel.style.top = that.y + "px"
+        },
+        down: function(){
+        },
+        "down.down": function(){
+            that.v = that.v0
+        },
+        "rising.up": function(){
+            that.before = that.now
+	        that.time = that.now
+        },
+        rising: function(){
+            that.v += (that.now - that.before) / 1000 * that.k * (that.y1 - that.y) - 0.009 * that.v * (1 - (that.y - that.y1) / (that.y0 - that.y1) )
+	 	    that.y += ((that.now - that.before) / 1000 * that.v )
+	 	    that.shadow.style.top = (- that.k2 * that.y) + "px"
+	 	    that.gate.panel.style.top = that.y + "px"
+	 	    if (that.y <=  that.y1)
+	 		    that.switch("top")
+        },
+        "rising.down": function(){
+        },
+        "top.up": function(){
+            that.y = that.y1;
+	 	    that.shadow.style.top = (- that.k2 * that.y) + "px"
+	        that.gate.panel.style.top = that.y + "px"	
+        },
+        top: function(){
+
+        },
+        "top.down": function(){
+            that.v = - that.v0	
+        },
+        "descending.up": function(){
+            that.before = that.now
+	        that.time   = that.now
+        },
+        descending: function(){
+            that.v += (that.now - that.before) / 1000 * that.k *(that.y0 - that.y)
+	 	    that.y += (that.now - that.before) / 1000 * that.v
+	 	    that.gate.panel.style.top = that.y + "px"
+	 	    that.shadow.style.top = (- that.k2 * that.y) + "px"
+	 	    if (that.y >= that.y0)
+	 		    that.switch("down")
+        },
+        "descending.down": function(){
+        }
+    }
 
 	function initialize(){
 		that.gate = gate
-		ThreadAutomata.call(that, that.state, that.currentState, that.solicitors, processor)
+		ThreadAutomata.call(that, ["down", "rising", "top", "descending"], solicitors)
 		that.shadow = document.getElementById(that.gate.panel.getAttribute("id") + "R")
 		that.shadow.style.position = "relative"
 	}

@@ -28,7 +28,7 @@ function God(view, state, currentState, parent){
 		that.w_s = that.parent.view.offsetWidth
 		that.t_s = that.parent.y_calc() + that.parent.view.offsetHeight - that.h_s
 		that.l_s = that.parent.x_calc()
-		that.solicitors[that.state.running][that.stateChange.steady] = God.prototype.run
+		that.state.running.run.steady = God.prototype.run.bind(that)
 		that.view.style.clip = "rect(0px," + that.maxWidth + "px," + screen.height + "px, 0px)"
 		that.view.style.overflow = "hidden"
 		that.view.style.position = "absolute"
@@ -48,20 +48,19 @@ function God(view, state, currentState, parent){
 
 God.prototype.newMan = function(name){
     try {
-        var AHuman = this.openDevice(Human)
+        var AHuman = this.open_device(Human)
         var person = new AHuman(name) // new AHuman("simon", "powerwalk", 32, "D")//
         this.human.push(person)
 		setTimeout(this.generations.bind(this), 10000 + Math.random() * 10000)
     }
     catch (e) {
-        if ($K_debug_level >= $KC_dl.DEVELOPER)
+        //if ($K_debug_level >= $KC_dl.DEVELOPER)
             alert("No event handlers were found.\nException: " + e.toSource())
     }
 }
 
 God.prototype.generations = function(){
-	if ( this.currentState.current == this.getStates().running)
-		this.newMan(_random_prop(animations))
+	this.newMan(_random_prop(animations))
 }
 
 God.prototype.run = function(){
@@ -69,6 +68,7 @@ God.prototype.run = function(){
 		this.movieOrigin = arguments[0]
 		this.lastCycle = this.movieOrigin
 	}
+
     for (var i = 0; i < this.human.length; i++)
         this.human[i].run(arguments[0])
     this.lastCycle = arguments[0]
@@ -81,12 +81,13 @@ God.prototype.kill = function(human){
 		if (this.human[i] === human)
 			this.human.splice(i, 1)
 	} catch (e) {
-		if ($K_debug_level >= $KC_dl.PROGRAMMER)
+		//if ($K_debug_level >= $KC_dl.PROGRAMMER)
 			alert("God has some rebels that don't want to die.")
 	}
 }
 
 God.prototype.attend_Har_Mageddon = function(date, mssg){
+	alert("Har_Mageddon")
 	try {
 		while(this.human.length){
 			this.human[0].kill();
