@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple App</title>
+    <script src="../../dist/lluvia.js" language="JavaScript"> </script>
+    <script src="javascript/dependencies.js" language="JavaScript"> </script>
+	<link rel="stylesheet" href="css/general.css">
+</head>
+<body onload="bring_lluvia()">
+     <div id="frame">
+     	<div id="banner" class="ll-ConveyorBelt" data-params="'banner'">
+     		<div id="screen01" class="Screen"></div>
+     		<div id="screen02" class="Screen"></div>
+     		<div id="screen03" class="Screen"></div>
+     		<div id="screen04" class="Screen"></div>
+     	</div>
+     	<div id="general_menu" class="ll-GeneralMenu" data-params="general_menu" data-run$add_port="'go_to', banner">
+     		<a href="#" id="button_screener01">screen 01</a>
+     		<a href="#" id="button_screener02">screen 02</a>
+     		<a href="#" id="button_screener03">screen 03</a>
+     		<a href="#" id="button_screener04">screen 04</a>
+     	</div>
+     </div>
+</body>
+</html>
