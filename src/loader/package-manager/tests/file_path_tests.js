@@ -82,3 +82,8 @@ assert("FilePath#join 8. ",
 assert("FilePath#join 9. ",
 	'a.join("Work", "pep", "project", "lluvia")', '"/Work/pep/project/lluvia"',
 	'var a = new FilePath()')
+
+
+assert("FilePath#relative 1. ",
+	'a.relative("Home/dan", "Home/pep")', '"../"',
+	'var a = new FilePath()')

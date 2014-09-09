@@ -70,7 +70,7 @@ FilePath.prototype.normalize = function(path){
        var filter = old_path.slice(0, move)
        //Checks whether the extracted fragment is a special character. How come ..
        if( filter.search(/^(\.\.\/|\.\.\\)/) != -1 || (filter.search(/^\.\./) != -1 && filter.length == 2)){
-           //Extrae todo el path menos el final
+           //Extract all the path except the end.
            var aux = path_normalized.slice(0,final_index+1)
            path_normalized = aux
        }
@@ -80,10 +80,10 @@ FilePath.prototype.normalize = function(path){
                 filter = filter.replace(/\\/g, "\\\\")
             }
 	    if(filter.search(/^(\.\/|\.\\)/) == -1 && filter.length != 1 ? true : filter.search(/^\./) == -1){
-           //Adds to the new path the new fragment already filtered
-           path_normalized += filter
-           //Change the final index is used to clear the end of the path in case of .. .
-           var final_index = path_normalized.length - (filter.length+1)
+                //Adds to the new path the new fragment already filtered
+                path_normalized += filter
+                //Change the final index is used to clear the end of the path in case of .. .
+                var final_index = path_normalized.length - (filter.length+1)
 	   }
         }
        //It updates the old path
@@ -141,7 +141,29 @@ FilePath.prototype.slash_used = function(args){
 	    return "/"
 }
 
+FilePath.prototype.relative = function(path_from, path_to){
+    var old_from = path_from
+    var old_to = path_to
+    var relative_path = ""
 
+    for(var i=0; i<path_from.length; i++){
+       var path_from_move = (old_from.search(/(\/|\\)/)+1)>0 ? old_from.search(/(\/|\\)/)+1 : old_from.length
+       var path_to_move = (path_from.search(/(\/|\\)/)+1)>0 ? path_from.search(/(\/|\\)/)+1 : path_from.length
+       var compare_path_from = old_from.slice(0, path_from_move)
+       var compare_path_to = old_to.slice(0, path_to_move)
+    
+       if(compare_path_from != compare_path_to){
+    	  relative_path += "../"
+       }
+
+
+       var aux = old_from.slice(path_from_move, old_from.length)
+       old_from = aux
+       aux = old_to.slice(path_to_move, old_to.length)
+       old_to = aux
+    }
+    return relative_path
+}
 
 
 
