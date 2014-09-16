@@ -3891,7 +3891,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/jose/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
