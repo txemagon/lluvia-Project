@@ -19,5 +19,11 @@
     }, {
         "name": "ll_SideRotationEffect.js",
         "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_BackgroundMoveEffect.js",
+        "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_SpringEffect.js",
+        "description": "Effect to move an element back and forth"
     }]
 }

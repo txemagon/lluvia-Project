@@ -864,7 +864,7 @@ String.prototype.to_i = function() {
         if (isNaN(arguments[0]) || (arguments[0] < 2) || (arguments[0] > 36))
             return null
         else base = arguments[0]
-            return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
+    return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
 }
 String.prototype.to_f = function() {
     if (arguments.length > 0)
@@ -3636,15 +3636,16 @@ function RectangleEffect(view, final_coord, initial_coord, velocity) {
 RotateEffect.prototype = new ThreadAutomata
 RotateEffect.prototype.constructor = RotateEffect
 RotateEffect.prototype.super = ThreadAutomata
-function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
+function RotateEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3654,7 +3655,7 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
             that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
                 that.switch("stopped")
         }
     }
@@ -3663,16 +3664,17 @@ function RotateEffect(view, angle, velocity, final_coord, initial_coord) {
 SideRotationEffect.prototype = new ThreadAutomata
 SideRotationEffect.prototype.constructor = SideRotationEffect
 SideRotationEffect.prototype.super = ThreadAutomata
-function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_coord) {
+function SideRotationEffect(view, config) {
     var that = this
     if (Object.prototype.toString.call(view) == "[object String]")
         view = document.getElementById(view)
     this.view = view
-    this.origin = origin || [0, 0]
-    this.angle = angle
-    this.final_coord = final_coord || [0, 0]
-    this.coord = this.initial_coord = initial_coord || [0, 0]
-    this.velocity = velocity || [20, 20]
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
     var solicitors = {
         "running": function(now, before) {
             for (var i = that.coord.length - 1; i >= 0; i--)
@@ -3687,7 +3689,63 @@ function SideRotationEffect(view, origin, angle, velocity, final_coord, initial_
             that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
             that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
             that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
-            if (angle && that.coord[0] >= that.angle)
+            if (that.angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+SideRotationEffect.prototype = new ThreadAutomata
+SideRotationEffect.prototype.constructor = SideRotationEffect
+SideRotationEffect.prototype.super = ThreadAutomata
+function SideRotationEffect(view, config) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    config = config || {}
+    this.angle = config.angle
+    this.origin = config.origin || [0, 0]
+    this.final_coord = config.final_coord || [0, 0]
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [20, 20]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.transformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.webkitTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.mozTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.msTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.oTransformOrigin = '' + that.origin[0] + '%' + that.origin[1] + '%'
+            if (that.angle && that.coord[0] >= that.angle)
+                that.switch("stopped")
+        }
+    }
+    ThreadAutomata.call(this, ["stopped", "*running"], solicitors)
+}
+BackgroundMoveEffect.prototype = new ThreadAutomata
+BackgroundMoveEffect.prototype.constructor = BackgroundMoveEffect
+BackgroundMoveEffect.prototype.super = ThreadAutomata
+function BackgroundMoveEffect(view, config) {
+    var that = this
+    if (Object.prototype.toString.call(view) == "[object String]")
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = config.final_coord
+    this.coord = this.initial_coord = config.initial_coord || [0, 0]
+    this.velocity = config.velocity || [70, 0]
+    var solicitors = {
+        "running": function(now, before) {
+            for (var i = that.coord.length - 1; i >= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.backgroundPosition = "" + that.coord[0] + "%" + that.coord[1] + "%"
+            if (that.final_coord && that.coord[0] >= that.final_coord[0])
                 that.switch("stopped")
         }
     }
@@ -3762,6 +3820,8 @@ Builder.is_lluvia_comment$U = function(comment, token) {
     return false
 }
 Builder.prototype.analize = function() {
+}
+Builder.prototype.scanner = function(text) {
 }
 Builder.prototype.analize_node = function(node, prefix) {
     var node = node || {}

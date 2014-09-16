@@ -13,7 +13,7 @@ div {
 }
 
 #frame{
-	height:400px;
+	height:410px;
 	width: 400px;
 }
 
@@ -23,7 +23,7 @@ div {
 	margin: auto;
 }
 
-.ll-Screen {
+.Screen {
 	background-color: #330;
 	opacity: 0.8;
 	display: inline-block;

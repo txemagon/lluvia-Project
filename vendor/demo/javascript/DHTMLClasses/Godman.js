@@ -22,6 +22,7 @@ function God(view, state, currentState, parent) {
     this.human = []
 
     /* Inherit */
+<<<<<<< HEAD
     function initialize() {
         Device.apply(that, args)
         that.h_s = 160
@@ -44,6 +45,30 @@ function God(view, state, currentState, parent) {
 
     if (arguments.length)
         initialize()
+=======
+	function initialize(){
+		Device.apply(that, args)
+		that.h_s = 160
+		that.w_s = that.parent.view.offsetWidth
+		that.t_s = that.parent.y_calc() + that.parent.view.offsetHeight - that.h_s
+		that.l_s = that.parent.x_calc()
+		that.state.running.run.steady = God.prototype.run.bind(that)
+		that.view.style.clip = "rect(0px," + that.maxWidth + "px," + screen.height + "px, 0px)"
+		that.view.style.overflow = "hidden"
+		that.view.style.position = "absolute"
+		//that.view.style.backgroundColor = "#0000FF"
+		that.view.style.width    = that.w_s + "px"
+		that.view.style.height   = that.h_s + "px"
+		that.view.style.top      = that.t_s + "px"
+		that.view.style.left     = that.l_s + "px"
+		that.view.style.zIndex   = 1000
+		that.newMan( _random_prop(animations) )
+	}
+
+
+	if (arguments.length)
+		initialize()
+>>>>>>> 82a78e1761e816f872c7f2eca34c9b7826a1f3cf
 }
 
 God.prototype.newMan = function(name) {
@@ -51,13 +76,21 @@ God.prototype.newMan = function(name) {
         var AHuman = this.open_device(Human)
         var person = new AHuman(name) // new AHuman("simon", "powerwalk", 32, "D")//
         this.human.push(person)
+<<<<<<< HEAD
         setTimeout(this.generations.bind(this), 10000 + Math.random() * 10000)
     } catch (e) {
         if ($K_debug_level >= $KC_dl.DEVELOPER)
+=======
+		setTimeout(this.generations.bind(this), 10000 + Math.random() * 10000)
+    }
+    catch (e) {
+        //if ($K_debug_level >= $KC_dl.DEVELOPER)
+>>>>>>> 82a78e1761e816f872c7f2eca34c9b7826a1f3cf
             alert("No event handlers were found.\nException: " + e.toSource())
     }
 }
 
+<<<<<<< HEAD
 God.prototype.generations = function() {
     if (this.current.current == this.state.running)
         this.newMan(_random_prop(animations))
@@ -100,6 +133,49 @@ God.prototype.attend_Har_Mageddon = function(date, mssg) {
         if ($K_debug_level >= $KC_dl.PROGRAMMER)
             alert("Har Mageddon has failed.\nException: " + e.toSource())
     }
+=======
+God.prototype.generations = function(){
+	this.newMan(_random_prop(animations))
+}
+
+God.prototype.run = function(){
+	if (!this.movieOrigin) {
+		this.movieOrigin = arguments[0]
+		this.lastCycle = this.movieOrigin
+	}
+
+    for (var i = 0; i < this.human.length; i++)
+        this.human[i].run(arguments[0])
+    this.lastCycle = arguments[0]
+
+}
+
+God.prototype.kill = function(human){
+	try {
+	for (var i = 0; i < this.human.length; i++)
+		if (this.human[i] === human)
+			this.human.splice(i, 1)
+	} catch (e) {
+		//if ($K_debug_level >= $KC_dl.PROGRAMMER)
+			alert("God has some rebels that don't want to die.")
+	}
+}
+
+God.prototype.attend_Har_Mageddon = function(date, mssg){
+	alert("Har_Mageddon")
+	try {
+		while(this.human.length){
+			this.human[0].kill();
+		}
+		mssg.current++;
+		if (mssg.creation.creator && mssg.creation.creator[mssg.name + "_back"])
+			mssg.creation.creator[mssg.name + "_back"]("All dead")
+		this.currentState.requested = this.getStates().killed
+	} catch (e) {
+		if ($K_debug_level >= $KC_dl.PROGRAMMER)
+			alert("Har Mageddon has failed.\nException: " + e.toSource())
+	}
+>>>>>>> 82a78e1761e816f872c7f2eca34c9b7826a1f3cf
 }
 
 
