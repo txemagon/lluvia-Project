@@ -1,0 +1,10 @@
+{	"package": "utils",
+	"description": "Javascript extensions && global objects.",
+	"files": [
+		{"name": "ll_Events.js",        "description": "Core javascript for the global object."},
+		{"name": "ll_Geometry.js",      "description": "Exceptions."},
+		{"name": "ll_Physics.js",       "description": "Redefinition of Module class."}
+	],
+		"provides": [],
+		"offers": []
+}

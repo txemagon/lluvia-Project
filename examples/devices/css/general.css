@@ -1,0 +1,21 @@
+body{
+	font-family: arial;
+}
+
+.Clock{
+	width: 100px;
+    opacity: 0.6;
+	background-color: #051000;
+    color: #00DD00;
+    padding: 3ex;
+    text-align: center;
+    border: 4px double #009966;
+}
+
+.Watch{
+    width: 400px;
+}
+
+#hands{
+    margin: 0 0 0 -400px;
+}

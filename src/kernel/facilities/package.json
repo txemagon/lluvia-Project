@@ -1,0 +1,5 @@
+	{	"package": "facilities",
+		"description": "Javascript new classes and helpers.",
+        "provides": ["class"]
+	}
+

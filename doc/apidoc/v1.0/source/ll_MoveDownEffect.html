@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">MoveDownEffect.prototype = new ThreadAutomata
+MoveDownEffect.prototype.constructor = MoveDownEffect
+MoveDownEffect.prototype.super = ThreadAutomata
+
+<span id='global-method-'>/**
+</span> * [MoveDownEffect description]
+ * Coordinate: [3, 56]
+ * @param {[type]} view          [description]
+ * @param {[type]} final_coord   [description]
+ * @param {[type]} initial_coord [description]
+ * @param {[type]} velocity   [description]
+ */
+function MoveDownEffect(view, final_coord, initial_coord, velocity) {
+
+    var that = this
+    if (Object.prototype.toString.call(view) == &quot;[object String]&quot;)
+        view = document.getElementById(view)
+    this.view = view
+    this.final_coord = final_coord
+    this.coord = this.initial_coord = initial_coord
+    this.velocity = velocity || [0, 20]
+
+    var solicitors = {
+        &quot;running&quot;: function(now, before) {
+            for (var i = that.coord.length - 1; i &gt;= 0; i--)
+                that.coord[i] += that.velocity[i] * (now - before) / 1000
+            that.view.style.height = &quot;&quot; + that.coord[1] + &quot;px&quot;
+            if (that.coord[1] &gt;= that.final_coord[1])
+                that.switch(&quot;stopped&quot;)
+                //that.view.innerHTML = that.coord[0]
+        }
+    }
+
+    ThreadAutomata.call(this, [&quot;stopped&quot;, &quot;*running&quot;], solicitors)
+}</pre>
+</body>
+</html>

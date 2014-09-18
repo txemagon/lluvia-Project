@@ -1,23 +1,27 @@
+ThreadAutomata.prototype = new Thread
+ThreadAutomata.extend(Automata)
 
-ThreadAutomata.prototype  = new Thread;
-extend(ThreadAutomata, Automata);
-
-ThreadAutomata.prototype.constructor = ThreadAutomata;
+ThreadAutomata.prototype.constructor = ThreadAutomata
+ThreadAutomata.prototype.super = Automata
 
 /**
- * @classDescription Creates an automata for atomic processing.
+ * @class Engine.ThreadAutomata
+ * Creates an automata for atomic processing.
+ */
+
+/**
+ * @method constructor
  *
  * @param {Object} state			Available automata states.
- * @param {Object} currentState	    Initial automata state.
  * @param {Object} solicitor		Functions state managers.
  * @return {ThreadAutomata}			Newly created automata.
- * @constructor
  */
-function ThreadAutomata(state, currentState, solicitor, processor){
-	if (arguments.length){
-		Automata.call(this, state, currentState, solicitor);
-		Thread.call(this, ThreadAutomata.prototype.run, processor);
-	}
+function ThreadAutomata(state, solicitor, processor) {
+
+    if (arguments.length) {
+        Automata.call(this, state, solicitor);
+        Thread.call(this, ThreadAutomata.prototype.run, processor);
+    }
 }
 
 
@@ -27,16 +31,12 @@ function ThreadAutomata(state, currentState, solicitor, processor){
  * The main difference between ThreadAutomata#run and Automata#run lies on
  * the type of the solicitor functions, designed to make atomic operations.
  *
- * @memberOf {ThreadAutomata}
  * @method	  run
  *
  */
-
-ThreadAutomata.prototype.run = function(processors_time){
-	if (this.now)
-		this.before = this.now
-	this.now    = processors_time
-	Automata.prototype.run.call(this, this.now, this.before);
+ThreadAutomata.prototype.run = function(processors_time) {
+    if (this.now)
+        this.before = this.now
+    this.now = processors_time
+    Automata.prototype.run.call(this, this.now, this.before);
 }
-
-

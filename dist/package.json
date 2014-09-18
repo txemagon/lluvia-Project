@@ -1,0 +1,5 @@
+{
+    "package": "distribution",
+    "description": "lluvia Project as a single package.",
+    "files": ["lluvia.js"]
+}

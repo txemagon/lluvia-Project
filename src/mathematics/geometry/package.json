@@ -1,0 +1,19 @@
+{
+    "package": "geometry",
+    "description": ".",
+    "files": [{
+        "name": "Vector_Static.js",
+        "description": "Class Angle."
+    }, {
+        "name": "ll_FixedVector.js",
+        "description": "Class Angle."
+    }, {
+        "name": "ll_ReferenceFrame.js",
+        "description": "Class Angle."
+    }, {
+        "name": "ll_Vector.js",
+        "description": "Mathematical expression."
+    }],
+    "require": ["shape"],
+    "offers": ["shape"]
+}

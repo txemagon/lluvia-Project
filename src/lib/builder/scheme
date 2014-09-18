@@ -1,0 +1,77 @@
+Loader:
+
+    Atributos:
+        id="name"                          >> Nombre del objeto.
+        id="son_name$father_name"          >> Nombre del objeeto y de quien es hijo.
+      * class="ll-class"                   >> Clase de la que se creara el objeto.
+        class="ll-class_name$father_name"  >> Clase de la que se creara el objeto y su padre.
+        data-params="params"               >> Parametros que se pasaran al constructor.
+        data-block="block"                 >> Bloque se pueda pasar al constructor.
+        data-run$<method_name>="params"    >> Ejecuta el metodo que se indique.
+        data-method$<singlenton>="block"   >> Si exite se redefine, sino, se crea un metodo singlenton.
+        data-initialize="this.function_name(params); this.function_name(params)"  >> Ejecuta todos los metodos que se indiquen.
+      (*=obligatorio)
+
+    Notas:
+        $ == pertenece
+        - == espacio de nombre
+
+    Consideraciones:
+        - Si un gate esta dentro de un div de la clase device ese gate pertenece al device.
+        - Probar si se respetan los saltos de linea dentro de los atributos.
+        - Se debe poder pasar codigo a lluvia en comentarios, ejemplo:
+            <!--
+                #!lluvia
+                menu::ll-Menu(param1, param2) # Is a comment  (device sin etiqueta)
+            ->
+        - Los nombres de las variables que se utilizen en los comentarios no se pueden repetir en los id.
+        - A la hora de analizar los comentarios leer dos veces y crear una tabla como hace C.
+        - En class se puede definir diferentes clases para los estilos: class="ll-class Clock"
+
+    Consideraciones para su uso:
+        - A la hora de crear los elementos se puede especificar si se quiere poner un prefijo delante de las variables (ll_, lluvia_, ...). Si se pone se respeta las variables que crea html5 para la gestion de etiquetas, sino se sobre escriben esas variables. Se comprobo que en el css se puede seguir poniendo el nombre original del DIV aunque se sobrescriban las variables.
+        - Se puede pasar el prefijo para las variables en:
+            + La etiqueta body:  data-lluvia-prefix = "ll$".
+            + En el constructor del builder.
+        - se puede crear el espacio de nombre y pasarlo al builder en el constructor.
+
+
+    Example:
+        <div id="son_id$father_id" class="ll-FondoApp" data-params="'fondo'" data-block="function(){}" data-run-add_port="'go_to', pant" data-method-singleton="block">
+
+    Pasos a la hora de ejecutarlo:
+        - El loader recoge todos los nodos del body del html.
+        - El loader separa los nodos que son de lluvia de los que no.
+        - El loader manda el valor de los atributos de los nodos de lluvia al parser.
+        - El parser analiza los valores pasados y devuelve lo que se tiene que ejecutar como un string.
+        - El loader ejecuta lo que obtiene del parser.
+        - Se carga main()
+
+
+    Pasos a la hora de diseñarlo:
+        - Crear una clase Parse para analizar los atributos y los comentarios.
+        - Crear un clase interprete para diferenciar en un string si es algun elemento de programacion.
+        - ...
+
+    Como recoger los valores:
+        - Para div necesita
+
+    Tabla de simbolos:
+        - En la primera pasada se guarda todas las variables que se puedan al analizar lexicamnete la informacion.
+        - Se debe hacer una primera pasada para almacenar todos los nombres de variables y recoger la informacion de las variables de las que se puedean.
+        - Se debe hacer una segunda pasada para asociar valores a las variables que se quedaron huerfanas
+
+        - Comprobar nombre:
+            - si:
+                - si existe devolver lo que vale.
+                - pasar al siguiente.
+            - no:
+                - guardar el nombre.
+                - si puedo crearlo:
+                    - crearlo y guardar un puntero a la varable.
+                - no puedo crearlo:
+                    - paso al siguiente.
+
+// TODO: que method$ cree el metodo sino existe.(ya lo tendria q hacer pero x lo q sea no funciona :(
+// TODO: Refactor fireEvent() para hacerlo mas agil.
+// TODO: newEffect necesita poder elegir efectos de una biblioteca de efectos.

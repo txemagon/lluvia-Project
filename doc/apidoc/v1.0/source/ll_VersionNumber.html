@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-DataType-VersionNumber'>/**
+</span> * @class  Kernel.Foundation.DataType.VersionNumber
+ * Creates a class to manage version numbers. For instance: &quot;2.3.5&quot; or &quot;5.7.10.9&quot;.
+ *
+ *
+ * ## Inner Structure
+ *
+ *     new VersionNumber(&quot;2.3.5&quot;)
+ *     //=&gt; {2: {3: {5: {}}}}
+ *
+ * Notice that the above inline objects ( {} ) are instances of new VersionNumber too.
+ *
+ * Default actions can be obtained via #branch. See Hack section.
+ *
+ * ## Extensions
+ *
+ * Adding keys to these objects is not recommended. Adding enumerable properties is
+ * definitely not allowed. Use this extension capability to add branches. See #branch
+ * for further information.
+ *
+ * ## Notice
+ *
+ * These are not decimal numbers, therefore:
+ *
+ *     &quot;5.1&quot; is different to &quot;5.10&quot;
+ */
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-constructor'>/**
+</span> * @method constructor
+ * Creates a VersionNumber object
+ *
+ * ### Example
+ *
+ *     new VersionNumber(&quot;1.2.3&quot;)
+ *     new VersionNumber(&quot;1-2-3&quot;, &quot;-&quot;)
+ *
+ * @param {String|VersionNumber} initial_string Version number. Provide a VersionNumber to use the
+ *                                              copy constructor.
+ * @param {String} [sep=&quot;.&quot;]            String to delimitate major minor and patch numbers.
+ */
+function VersionNumber(initial_string, sep) {
+    /* Empty Object */
+    if (!initial_string || initial_string == &quot;&quot;)
+        return
+
+    /* Copy constructor */
+    if (initial_string instanceof VersionNumber) {
+        var level = this
+        initial_string.each(function(number, value, container) {
+            level[number] = new VersionNumber()
+            var branches = container.branches()
+            for (var i = branches.length - 1; i &gt;= 0; i--) {
+                level[branches[i]] = container[branches[i]]
+            }
+            level = level[number]
+        })
+        return
+    }
+
+    Object.defineProperty(this, &quot;sep&quot;, {
+        value: sep || &quot;.&quot;,
+        enumerable: false
+    })
+    var coefficients = initial_string.split(this.sep)
+
+    var last = this
+    for (var i = 0; i &lt; coefficients.length; i++)
+        last[coefficients[i]] = (last = new VersionNumber())
+}
+<span id='Kernel-Foundation-DataType-VersionNumber-property-sep'>/**
+</span> * @property {String} [sep=&quot;.&quot;] Separator in between major, minor and patch.
+ */
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-toString'>/**
+</span> * @method toString
+ * Prints the version number.
+ *
+ * ### Example
+ *
+ *     var v = new VersionNumber(&quot;7.4.1&quot;)
+ *     v.toString()
+ *     //=&gt; &quot;7.4.1&quot;
+ *
+ * @return {String} Printable version of VersionNumber objects.
+ */
+VersionNumber.prototype.toString = function() {
+    var obj = this
+    var text = &quot;&quot;
+    var key = null
+
+    while (key = Object.keys(obj)[0]) {
+        text += key + &quot;.&quot;
+        obj = obj[key]
+    }
+
+    return text.replace(/.$/, &quot;&quot;)
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-number_value'>/**
+</span> * @method number_value
+ * Returns the numeric key of VersionNumber.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.5.2&quot;)
+ *     a.era1 = new VersionNumber(&quot;2.7&quot;)
+ *     //=&gt; {
+ *     //=&gt;   1:    {5: {2: {}}},
+ *     //=&gt;   era1: {2: {7: {}}}
+ *     //=&gt; }
+ *     a.number_value()
+ *     //=&gt; 1
+ *
+ * The era1 key is discarded. _number\_value_ will only return the first numeric key.
+ *
+ * @return {Number | undefined} Numeric key of this.
+ */
+VersionNumber.prototype.number_value = function() {
+    for (var i in this)
+        if (!isNaN(i))
+            return parseInt(i)
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-number'>/**
+</span> * @method number
+ * Returns the object associated with the numeric key of VersionNumber.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.5.2&quot;)
+ *     a.era1 = new VersionNumber(&quot;2.7&quot;)
+ *     //=&gt; {
+ *     //=&gt;   1:    {5: {2: {}}},
+ *     //=&gt;   era1: {2: {7: {}}}
+ *     //=&gt; }
+ *     a.number()
+ *     //=&gt; {5: {2: {}}}
+ *
+ * The era1 key is discarded. If two numeric keys are present, only the first
+ * one will be taken into account.
+ *
+ * @return {Number | undefined} Value associated the numeric key.
+ */
+VersionNumber.prototype.number = function() {
+    for (var i in this)
+        if (!isNaN(i))
+            return this[i]
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-get'>/**
+</span> * @method get
+ * Returns the queried subelement.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.5.2&quot;)
+ *     //=&gt; {1: {5: {2: {}}}}
+ *     a.get(&quot;1.5&quot;)
+ *     //=&gt; {2: {}}
+ *
+ * @param  {String | VersionNumber} version &quot;1.5.3&quot; or new VersionNumber(&quot;1.5.3&quot;) for instance.
+ * @return {VersionNumber}         Reference to the object retrieved or null if not found.
+ */
+VersionNumber.prototype.get = function(version) {
+    if (!(version instanceof Array))
+        version = new String(version)
+    if (version instanceof String)
+        version = version.split(&quot;.&quot;)
+    if (version == &quot;&quot;)
+        return this
+
+    var key = version.shift()
+
+    if (!version.length)
+        return this[key]
+
+    return this[key].get(version)
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-last'>/**
+</span> * @method last
+ * Returns the last object.
+ *
+ * @return {VersionNumber}         Reference to last object retrieved.
+ */
+VersionNumber.prototype.last = function() {
+    var last = 0
+    var obj = this
+    while (key = Object.keys(obj)[0]) {
+        if (key)
+            last = obj
+        obj = obj[key]
+    }
+    return last
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-last_value'>/**
+</span> * @method last_value
+ * Returns the last value
+ *
+ * @return {VersionNumber}         Last object key.
+ */
+VersionNumber.prototype.last_value = function() {
+    var last = 0
+    var obj = this
+    while (key = Object.keys(obj)[0]) {
+        obj = obj[key]
+        if (key)
+            last = key
+    }
+    return last
+}
+
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-valueOf'>/**
+</span> * @method valueOf
+ * Yields the las integer of the number as a number or the value itself.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.2.3&quot;)
+ *     a.valueOf()
+ *     //=&gt; 3
+ *
+ *     a == 3
+ *     //=&gt; true
+ *
+ *     var a = new VersionNumber(&quot;1.2.a&quot;)
+ *     a.valueOf()
+ *     //=&gt; &quot;a&quot;
+ *
+ * @return {Number | String}
+ */
+VersionNumber.prototype.valueOf = function() {
+    var last = this.last_value()
+    return parseInt(last) || last
+}
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-branch'>/**
+</span> * @method branch
+ *
+ * ## Syntax
+ *
+ *     VersionNumber#branch(level, (&lt;label&gt;[, version_number])+ )
+ *     &lt;label&gt; ::= &quot;name[:value]&quot;
+ *
+ * When _value_ and _version\_number_ are present at the same time,
+ * _version\_number_ overrides value.
+ *
+ * _version\_number_ is frequently an instance of VersionNumber but can
+ * be anything but a string. When the value needs to be a string, convert
+ * it to String object.
+ *
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;2.3.5&quot;)
+ *     //=&gt; { 2: {3: {5: {}}}}
+ *     a.branch(&quot;&quot;, &quot;era1&quot;)
+ *     //=&gt; {
+ *     //=&gt;   2: {3: {5: {}}},
+ *     //=&gt;   era1: {}
+ *     //=&gt; }
+ *     a.branch(&quot;2.3&quot;, &quot;era1&quot;, &quot;era2&quot;)
+ *     //=&gt; {
+ *     //=&gt;   2: {3: {5: {},
+ *     //=&gt;           era1: {},
+ *     //=&gt;           era2: {}
+ *     //=&gt; }}}
+ *     a.branch(&quot;2.3&quot;, &quot;era1&quot;, &quot;era2:1.5.7&quot;)
+ *     //=&gt; {
+ *     //=&gt;   2: {3: {5: {},
+ *     //=&gt;           era1: {},
+ *     //=&gt;           era2: { 1: { 5: {7: {}}}}
+ *     //=&gt; }}}
+ *     a.branch(&quot;2.3&quot;, &quot;era1&quot;, &quot;era2&quot;, new VersionNumber(&quot;1.5.3&quot;), &quot;era4&quot;)
+ *     //=&gt; {
+ *     //=&gt;   2: {3: {5: {},
+ *     //=&gt;           era1: {},
+ *     //=&gt;           era2: { 1: { 5: {3: {}}}}
+ *     //=&gt; }}}
+ *
+ * VersionNumber can be used as labels: Please be careful. It can lead you to errors.
+ *
+ *     a.branch(&quot;2.3&quot;, new VersionNumber(&quot;1.3&quot;), function action(){} )
+ *     //=&gt; {
+ *     //=&gt;   2: {
+ *     //=&gt;        3: {&quot;1.3&quot;: function action(){} }
+ *     //=&gt;      }
+ *     //=&gt; }
+ *
+ * The above example can drive you to mistake a[&quot;1.3&quot;] as a is VersionNumber when it
+ * actually isn&#39;t.
+ *
+ * ## Hack
+ *
+ * Notice that defining a key with the value returned by toString can drive
+ * you to a default action.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.5.4&quot;)
+ *     a.branch(&quot;&quot;, &quot;1.5.4&quot;, function action() {
+ *         alert(&quot;Hello&quot;)
+ *     })
+ *     a[a]()
+ *
+ * This example triggers a &quot;Hello&quot; alert. When a is used as an index of toString()
+ * is automatically called, yielding the key of the function.
+ *
+ */
+VersionNumber.prototype.branch = function(version, first_label) {
+
+    if (!first_label || first_label == &quot;&quot;)
+        throw &quot;VersionNumber#branch: Anonymous branches not &quot; +
+            &quot;allowed. Provide first_label in function call.&quot;
+
+    if (version instanceof VersionNumber)
+        version = version.toString()
+    version = new String(version)
+    var insertion_point = this.get(version)
+    if (!insertion_point || !(insertion_point instanceof VersionNumber))
+        throw &quot;VersionNumber#branch: version (&quot; + version + &quot;) not found.&quot;
+
+    for (var i = 1; i &lt; arguments.length; i++) {
+        var label = arguments[i]
+        try {
+            label = label.toString()
+        } catch (e) {}
+
+        var parts = label.split(&quot;:&quot;)
+        if (parts[1])
+            parts[1] = new VersionNumber(parts[1].replace(/^\s+/g, &quot;&quot;).replace(/\s+$/g, &quot;&quot;))
+
+        var value = parts[1] || {}
+        if (i + 1 &lt; arguments.length &amp;&amp; typeof(arguments[i + 1]) !== &quot;string&quot;)
+            value = arguments[++i]
+
+
+        insertion_point[parts[0]] = value
+    }
+}
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-branches'>/**
+</span> * @method branches
+ * Returns all the subbranches of a VersionNumber
+ *
+ * ### Example
+ *
+ * Let the VersionNumber, v, be:
+ *
+ *     //=&gt; {
+ *     //=&gt;   1:    {5: {2: {}}},
+ *     //=&gt;   era1: {2: {7: {}}},
+ *     //=&gt;   era2: {2: {8: {}}}
+ *     //=&gt; }
+ *     v.branches()
+ *     //=&gt; [&quot;era1&quot;, &quot;era2&quot;]
+ *
+ * @return {Array} Branches (non numeric keys) of a level in a VersionNumber object.
+ */
+VersionNumber.prototype.branches = function() {
+    var response = []
+    for (var i in this)
+        if (isNaN(i) &amp;&amp; this.hasOwnProperty(i))
+            response.push(i)
+    return response
+}
+
+<span id='Kernel-Foundation-DataType-VersionNumber-method-each'>/**
+</span> * @method each
+ * Calls the block for every numeric value in this VersionNumber object.
+ *
+ * ### Example
+ *
+ *     var a = new VersionNumber(&quot;1.5.9&quot;)
+ *     //=&gt; { 1: { 5: { 9: {}}} }
+ *
+ *     a.each( function(number, value_of_number, container){;} )
+ *
+ * In the first call param values are:
+ *
+ *     number          //=&gt; 1
+ *     value_of_number //=&gt; { 5: { 9: {}}}
+ *     container       //=&gt; { 1: { 5: { 9: {}}} }
+ *
+ *
+ * @param  {function(Number,Object, Object)}      block Function block to be called.
+ */
+VersionNumber.prototype.each = function(block) {
+    if (!block || typeof(block) !== &quot;function&quot;)
+        return
+    var obj = this.number()
+    if (obj)
+        block(this.number_value(), obj, this)
+    if ((obj instanceof Object) &amp;&amp; &quot;each&quot; in obj &amp;&amp; typeof(obj.each) === &quot;function&quot;)
+        obj.each(block)
+}
+
+
+VersionNumber.stop_enum = function(method) {
+    for (var i = 0; i &lt; method.length; i++)
+        Object.defineProperty(VersionNumber.prototype, method[i], {
+            value: VersionNumber.prototype[method[i]],
+            enumerable: false
+        })
+}
+
+VersionNumber.stop_enum([
+    &quot;toString&quot;, &quot;valueOf&quot;,
+    &quot;number_value&quot;, &quot;number&quot;, &quot;get&quot;, &quot;last&quot;,
+    &quot;last_value&quot;, &quot;branch&quot;, &quot;branches&quot;, &quot;each&quot;
+])</pre>
+</body>
+</html>

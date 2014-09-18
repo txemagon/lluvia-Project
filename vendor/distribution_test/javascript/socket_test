@@ -1,0 +1,124 @@
+function PM(url, protocols) {
+    this.ws = new Socket(this.onopen.bind(this), PM.prototype.incoming_file.bind(this), url, protocols)
+    this.pending_files = []
+    this.pending = 0
+}
+
+PM.prototype.onopen = function(connection) {
+    this.connection = connection
+}
+
+PM.prototype.get_pending = function() {
+    if (!this.connection) {
+        alert("Hey jude")
+        setTimeout(2000, this.get_pending.bind(this))
+    } else
+        while (this.pending_files.length) {
+            this.pending++
+            this.connection.send(this.pending_files.unshift())
+        }
+    if (this.pending)
+        setTimeout(20, PM.prototype.get_pending.bind(this))
+
+}
+
+PM.prototype.incoming_file = function(data) {
+    alert("Hey")
+    eval.call(null, data)
+    this.pending--
+}
+
+PM.prototype.require = function(files) {
+    this.pending_files.push(arguments)
+    this.get_pending()
+}
+
+
+function test() {
+    // Write your tests here.
+    var p = new PM("ws:localhost:8081")
+    p.require("shape")
+
+    var l = new Line()
+    alert(l)
+
+}
+
+
+
+
+//////////////////////////
+
+function test() {
+
+    function PM() {
+
+    }
+
+    PM.prototype.drop = function(arg, callback) {
+        var connection = new WebSocket('ws:localhost:8081', ['soap', 'xmpp'])
+        var packages = arg
+
+        connection.onopen = function() {
+            connection.send(packages)
+        }
+
+        connection.onmessage = function(e) {
+            eval.call(null, e.data)
+            callback()
+        }
+
+        connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error)
+        }
+    }
+
+    PM.prototype.download = function(arg, callback) {
+
+    }
+
+    var pm = new PM()
+    pm.drop("shape", function() {
+        var l = new Line()
+        alert(l.toSource())
+    })
+}
+
+/////////////////////////
+
+function test() {
+    // Write your tests here.
+    //    PackageManager.drop("shape", function() {
+    //        var l = new Line()
+    //        alert(l.toSource())
+    //    })
+
+    // 1º Carga de un paquete desde required_packages()
+    //var a = new Angle(0.75)
+    //alert(a.toSource())
+
+    // 2º Carga de un paquete drop()
+    /*
+    PackageManager.drop("mathematics", function() {
+        var a = new Angle(0.63)
+        alert(a.toSource())
+    })
+    // Con dos necesita un tiempo entre ellos
+    PackageManager.drop("shape", function() {
+        var l = new Line()
+        alert(l.toSource())
+    })
+    */
+    // 3º Carga de un paquete con download() y drop()
+    /*
+    PackageManager.drop("mathematics")
+    PackageManager.drop("shape")
+
+    PackageManager.download(function() {
+        var a = new Angle(0.33)
+        var l = new Line()
+
+        alert(a.toSource() + " ; " + l.toSource())
+    })
+    */
+}

@@ -1,0 +1,32 @@
+body {
+	font-family: arial;
+}
+
+a {
+	text-decoration: none;
+}
+
+div {
+	border: 1px solid gray;
+	padding: 10px;
+	margin: 2px;
+}
+
+#frame{
+	height:410px;
+	width: 400px;
+}
+
+#banner {
+	height: 350px;
+	width: 1420px;
+	margin: auto;
+}
+
+.Screen {
+	background-color: #330;
+	opacity: 0.8;
+	display: inline-block;
+	width: 320px;
+	height: 320px;
+}

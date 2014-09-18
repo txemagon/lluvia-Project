@@ -1,0 +1,36 @@
+var _test_index = [ /* We first bring lluvia */
+    "../../../../utils/ll_Inheritance.js",
+    "../../../../kernel/ll_Kernel.js",
+    "../../../../kernel/ll_Exception.js",
+    "../../../ll_Expression.js",
+    "../../../../kernel/core-ext/ll_Number.js",
+    "../../../../kernel/core-ext/ll_Function.js",
+    "../../../../kernel/core-ext/ll_Object.js",
+    "../../../../kernel/foundation/enumerable/ll_Hash.js",
+    "../../../../kernel/foundation/architecture/ll_Module.js",
+    "../../../../kernel/foundation/enumerable/ll_Enumeration.js",
+    "../../../../kernel/foundation/enumerable/ll_InterleavedArray.js",
+    "../../../../kernel/foundation/architecture/ll_ApplyProxyConstructor.js",
+    "../../../../kernel/foundation/architecture/ll_ProxyConstructor.js",
+    "../../../../kernel/foundation/data-type/ll_VersionNumber.js",
+    "../../../../browser/ll_CodeBlockFinder.js",
+    "../../../../browser/ll_JavascriptSource.js",
+    //"../../../../kernel/ll_BasicObject.js",
+    "../../../../kernel/core-ext/ll_Array.js",
+    "../../../../kernel/core-ext/ll_String.js",
+    "../../../../kernel/foundation/enumerable/ll_Hash.js",
+    "../../../../kernel/foundation/architecture/ll_Module.js",
+    "../../../../kernel/foundation/architecture/ll_Class.js",
+    "../../ll_Vector.js",
+    "../ll_Line.js",
+    "../ll_StraightLine.js",
+    "../ll_Path.js",
+    //"../ll_Triangle.js",
+    "../ll_Circle.js",
+    /* And we then bring asserts */
+    //"line_tests.js",
+    //"straight_line_test.js",
+    //"triangle_tests.js"
+    "circle_tests.js"
+    //"path_tests.js"
+]

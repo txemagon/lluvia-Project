@@ -1,0 +1,411 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cle",
+				"clean_text"
+			],
+			[
+				"t",
+				"text"
+			],
+			[
+				"ele",
+				"element_creates"
+			],
+			[
+				"anal",
+				"analize_node"
+			],
+			[
+				"cl",
+				"class_css"
+			],
+			[
+				"el",
+				"element"
+			],
+			[
+				"new",
+				"new_methods"
+			],
+			[
+				"type",
+				"typeof"
+			],
+			[
+				"sp",
+				"space_name"
+			],
+			[
+				"lluvia",
+				"lluvia_nodes"
+			],
+			[
+				"node",
+				"node_body"
+			],
+			[
+				"get",
+				"get_lluvia_nodes"
+			],
+			[
+				"run",
+				"run_methods"
+			],
+			[
+				"sea",
+				"search_methods"
+			],
+			[
+				"name",
+				"name_methods"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"p",
+				"params"
+			],
+			[
+				"ll",
+				"lluvia_nodes"
+			],
+			[
+				"stre",
+				"string_key"
+			],
+			[
+				"initia",
+				"initial_state"
+			],
+			[
+				"inti",
+				"initial_state"
+			],
+			[
+				"state",
+				"state_level"
+			],
+			[
+				"fin",
+				"find_initial_state"
+			],
+			[
+				"stat",
+				"state_level"
+			],
+			[
+				"initi",
+				"initial_state"
+			],
+			[
+				"base",
+				"base_state"
+			],
+			[
+				"soli",
+				"solicitors"
+			],
+			[
+				"enu",
+				"enumerable"
+			],
+			[
+				"define",
+				"defineProperty"
+			],
+			[
+				"E",
+				"Enumeration"
+			],
+			[
+				"Enumer",
+				"EnumerationOf"
+			],
+			[
+				"proto",
+				"prototype"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "lluvia",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"install pa",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/world.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/main.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/section.js",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/css/general.css",
+		"/home/jose/work/lluvia-Project/vendor/game_of_live/index.html",
+		"/home/jose/work/lluvia-Project/src/kernel/core-ext/ll_String.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/scanner_test.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/index.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Scanner.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/tests/common/test_framework.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
+		"/home/jose/work/lluvia-Project/examples/devices/index.html",
+		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
+		"/home/jose/work/lluvia-Project/src/package.json",
+		"/home/jose/work/lluvia-Project/vendor/demo/index.html",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/Home.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/ControlPanel.js",
+		"/home/jose/work/lluvia-Project/vendor/demo/javascript/DHTMLClasses/Godman.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/button_gate.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
+		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
+		"/home/jose/work/lluvia-Project/examples/effects/javascript/main.js",
+		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
+		"/home/jose/work/lluvia-Project/src/lib/builder/package.json",
+		"/home/jose/work/lluvia-Project/src/engine/ll_Processor.js",
+		"/home/jose/work/lluvia-Project/dist/lluvia.js",
+		"/home/jose/work/lluvia-Project/util/compress-core/pack.js",
+		"/home/jose/work/lluvia-Project/src/test.js",
+		"/home/jose/work/lluvia-Project/util/compress-core/lib/package.js",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/keypad.js",
+		"/home/jose/work/lluvia-Project/src/engine/ll_Device.js",
+		"/home/jose/work/lluvia-Project/src/engine/ll_EventDispatcher.js",
+		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
+		"/home/jose/work/lluvia-Project/src/lib/builder/table_symbols.js",
+		"/home/jose/.config/sublime-text-2/Packages/User/JavascriptBeautify.sublime-settings",
+		"/home/jose/.config/sublime-text-2/Packages/Javascript Beautify/JavascriptBeautify.sublime-settings",
+		"/home/jose/work/lluvia-Project/src/lib/builder/TableSymbols.js",
+		"/home/jose/work/lluvia-Project/src/engine/ll_State.js",
+		"/home/jose/work/lluvia-Project/util/install-sublime-packages",
+		"/home/jose/work/lluvia-Project/examples/devices/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/util/sublime-text-3/pack-lluvia.sublime-build",
+		"/home/imasen/work/lluvia-Project/examples/chat/index.html",
+		"/home/imasen/work/lluvia-Project/examples/automatas/index.html",
+		"/home/imasen/work/lluvia-Project/examples/chat/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/vendor/boids/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Automata.js",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_InterleavedArray.js",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_Enumeration.js",
+		"/home/imasen/work/lluvia-Project/examples/automatas/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_StateGear.js",
+		"/home/imasen/work/lluvia-Project/doc/lluviadoc.json",
+		"/home/imasen/work/lluvia-Project/vendor/automatas/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_State.js",
+		"/home/imasen/work/lluvia-Project/src/components/Effect.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Gate.js",
+		"/home/imasen/work/lluvia-Project/vendor/simple_app/css/general.css",
+		"/home/imasen/work/lluvia-Project/vendor/simple_app/index.html",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/data-type/ll_VersionNumber.js",
+		"/home/imasen/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/package.json",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_EnumerationOf.js",
+		"/home/imasen/work/lluvia-Project/src/engine/package.js",
+		"/home/imasen/work/lluvia-Project/src/engine/package.json"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			")\n",
+			"newGate",
+			"name",
+			"i",
+			")\n",
+			"500",
+			"watch",
+			"TableSymbols",
+			"consol",
+			"(){",
+			"add",
+			"alert",
+			"that",
+			"this",
+			"name_methods",
+			"i",
+			"main",
+			"nodes[i]",
+			"//extend",
+			"extend",
+			"currentState",
+			"sendMessage",
+			"newMessage",
+			"addPort",
+			"fireEvent",
+			"eventDispatcher",
+			"openDevice",
+			"newGate",
+			"childRunner",
+			"gateRunner",
+			"getPreventDefault",
+			"current.",
+			"currentState",
+			" ",
+			"base",
+			"states",
+			"arguments",
+			"alert",
+			"this.automata.state",
+			"i",
+			"AutomataGear"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"current_state",
+			"send_message",
+			"new_message",
+			"add_port",
+			"fire_event",
+			"event_dispatcher",
+			"open_device",
+			"new_gate",
+			"child_runner",
+			"gate_runner",
+			"StateGear"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 122.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"replace":
+	{
+		"height": 72.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 294.0,
+	"status_bar_visible": true
+}

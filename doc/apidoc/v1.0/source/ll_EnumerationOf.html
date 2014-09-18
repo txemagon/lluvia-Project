@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-EnumerationOf'>/**
+</span> * @class Kernel.Foundation.Enumerable.EnumerationOf
+ * @extends Kernel.Foundation.Enumerable.Enumeration
+ * An Enumeration made of a subclass of VersionNumber
+ *
+ * Imagine a normal enumeration:
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ * leaving the following memory imprint:
+ *
+ *              {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1.1,
+ *                   &quot;black&quot;: 1.2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ * where all values are true VersionNumber instances.
+ *
+ * EnumerationOf provides us with a tool to work with VersionNumber subclasses.
+ */
+EnumerationOf.prototype = new Enumeration
+Enumeration.prototype.constructor = EnumerationOf
+EnumerationOf.prototype.super = Enumeration
+
+
+<span id='Kernel-Foundation-Enumerable-EnumerationOf-method-constructor'>/**
+</span> * @method constructor
+ *
+ * ### Example
+ *
+ *  Let State inherit from VersionNumber
+ *
+ *     var e = new EnumerationOf(State, [&quot;running&quot;, &quot;walking&quot;, [&quot;slow&quot;, &quot;fast&quot;]])
+ *
+ * will execute at a certain point:
+ *
+ *     obj.walking.slow = new State(&quot;1.1&quot;)
+ *
+ * @param {Class} type VersionNumber derivate to use for value construction.
+ * @param {Object...} [rest] Arguments to be passed to Enumeration constructor.
+ */
+function EnumerationOf(type) {
+    var args = Array.prototype.slice.call(arguments, 1)
+    if (args[0] instanceof Enumeration)
+        args[0] = [args[0]] // For copy constructor purposes.
+    Enumeration.apply(this, args[0])
+    this.transpose(type)
+}</pre>
+</body>
+</html>

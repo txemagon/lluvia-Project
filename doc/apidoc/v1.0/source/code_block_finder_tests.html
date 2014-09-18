@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">assert(&quot;Create new CodeBlockFinder without parameters.&quot;,
+    &quot;typeof a.value&quot;, &quot;&#39;function&#39;&quot;,
+    &quot;a = new CodeBlockFinder()&quot;)
+
+assert(&quot;Pass one parameter in CodeBlockFinder method.&quot;,
+  // Deja un espacio al final del string!!
+  &quot;a.source&quot;, &quot;&#39;1,2,3,4,5 &#39;&quot;,
+  &quot;a = new CodeBlockFinder(&#39;1,2,3,4,5&#39;)&quot;)
+
+assert(&quot;Start the Pushdown Automaton.&quot;,
+  &quot;a.text&quot;, &quot;&#39;{return 1+2}&#39;&quot;,
+  &quot;a = new CodeBlockFinder(&#39;function sum(){return 1+2}&#39;);  \
+  a.start()&quot;)
+
+assert(&quot;CodeBlockFinder can be reseted&quot;,
+      &quot;a.toString()&quot;, &quot;&#39;function (){ \
+this.initial    = this.search_start \
+   this.final      = this.search_start \
+   this.status     = CodeBlockFinder.States.searching \
+   this.delimiter  = this.delimiters.open  \
+   this.nested     = 0 \
+   this.lines_read = 0 \
+} &#39;&quot;,
+      &quot;a = new CodeBlockFinder().reset&quot;)
+
+assert(&quot;Count lines having the counted_character as line break.&quot;,
+  &quot;a.lines_read&quot;, &quot;4&quot;,
+  &quot;numbers = &#39;1,2,3,4,5&#39;;  \
+   a = new CodeBlockFinder(numbers, null, null, &#39;,&#39;);  \
+   a.start();&quot;)
+
+assert(&quot;Count line inside a block.&quot;,
+  &quot;a.lines_read&quot;, &quot;2&quot;,
+  &quot;fun = &#39;function sum(){var a = 1,  \
+                         var b = 2,  \
+                         return a+b}&#39;;  \
+   a = new CodeBlockFinder(fun, &#39;{&#39;, null, &#39;,&#39;);  \
+   a.start();&quot;)
+
+assert(&#39;CodeBlockFinder.parse_params returns an Object&#39;,
+      &#39;typeof a&#39;, &#39;&quot;object&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;2&quot;);&#39;)
+
+assert(&#39;CodeBlockFinder.parse_params can receive a parameter&#39;,
+      &#39;a.toString()&#39;, &#39;&quot;2&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;2&quot;);&#39;)
+
+assert(&#39;CodeBlockFinder.parse_params can receive a simple string of parameter&#39;,
+      &#39;a.toString()&#39;, &#39;&quot;2,3&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;2, 3&quot;);&#39;)
+
+assert(&#39;CodeBlockFinder.parse_params can receive a simple function string of parameters&#39;,
+      &#39;a.toString()&#39;, &#39;&quot;function(a, b){ return a + b }&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;function(a, b){\
+                         return a + b }&quot;);&#39;)
+
+
+assert(&#39;CodeBlockFinder.parse_params can receive a complex function string of parameters&#39;,
+      &#39;a.toSource()&#39;, &#39;&quot;2, 3, a + 2 * b / 5, function(a, b){\
+                          var j = 0; \
+                          for (var i=0; i&lt;3; i++);}&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;2, 3, a + 2 * b / 5, function(a, b){\
+                        var j = 0; \
+                        for (var i=0; i&lt;3; i++);}&quot;);&#39;)
+/*
+assert(&#39;CodeBlockFinder.parse_params can receive a complex function string of parameters&#39;,
+      &#39;a.toSource()&#39;, &#39;&quot;2, 3, a + 2 * b / 5, function(a, b){\
+                          var j = 0; \
+                          for (var i=0; i&lt;3; i++, j+=2*i % 3)}&quot;&#39;,
+      &#39;a = new CodeBlockFinder.parse_params(&quot;2, 3, a + 2 * b / 5, function(a, b){\
+                        var j = 0; \
+                        for (var i=0; i&lt;3; i++, j+=2*i % 3)}&quot;);&#39;)
+*/</pre>
+</body>
+</html>

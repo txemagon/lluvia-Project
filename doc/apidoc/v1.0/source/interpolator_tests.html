@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">alert(&quot;Interpolator tests&quot;)
+assert(&quot;New Interpolator can be created&quot;,
+    &quot;b&quot;, &quot;true&quot;,
+    &quot;var a = new Interpolator(new Vector(2,3), new Vector(5,6), new Vector(1,1)); \
+    if(a instanceof Interpolator) \
+        b = true&quot;)
+
+assert(&quot;New Interpolator can be created&quot;,
+    &quot;b&quot;, &quot;true&quot;,
+    &quot;var a = new Interpolator(2, 5, 1); \
+    if(a instanceof Interpolator) \
+        b = true&quot;)
+
+assert(&quot;New Interpolator can be created&quot;,
+    &quot;a.current_point&quot;, &quot;2&quot;,
+    &quot;var a = new Interpolator(2, 5, 1)&quot;)
+
+assert(&quot;New Interpolator can be created&quot;,
+    &quot;a.final_point&quot;, &quot;5&quot;,
+    &quot;var a = new Interpolator(2, 5, 1)&quot;)
+
+assert(&quot;New Interpolator can be created&quot;,
+    &quot;a.variation&quot;, &quot;1&quot;,
+    &quot;var a = new Interpolator(2, 5, 1)&quot;)
+
+assert(&quot;Interpolator can call run method&quot;,
+    &quot;a.current_point&quot;, &quot;5&quot;,
+    &quot;a = new Interpolator(2, 5, 1); \
+    while(a.current_point &lt; a.final_point) \
+    a.run()&quot;)
+
+assert(&quot;Interpolator can call run method with vectors&quot;,
+    &quot;a.current_point.get_coord()&quot;, &quot;[5,6]&quot;,
+    &quot;a = new Interpolator(new Vector(2,3), new Vector(5,6), new Vector(1,1)); \
+    while(a.current_point.module() &lt; a.final_point.module()) \
+    a.run()&quot;)</pre>
+</body>
+</html>

@@ -1,9 +1,9 @@
 #!/bin/bash
 # install-sublime-packages
 
-DESTINY="$HOME/.config/sublime-text-2/Packages/User/lluviaProject"
+DESTINY="$HOME/.config/sublime-text-3/Packages/User/lluviaProject"
 if [ ! -d $DESTINY ]; then
   mkdir -p $DESTINY
 fi
 
-cp -f sublime-text-2/*.sublime-snippet $DESTINY 
+cp -f sublime-text-2/*.sublime-snippet $DESTINY

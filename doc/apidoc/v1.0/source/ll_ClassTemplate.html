@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Kernel-Facilities-Class-ClassTemplate'>/**
+</span> * @class Kernel.Facilities.Class.ClassTemplate
+ */
+
+<span id='Kernel-Facilities-Class-ClassTemplate-method-get_constructor'>/**
+</span> * @method get_constructor
+ * Creates a function constructor to generate object like this.
+ * Default values are those present in this object.
+ *
+ * ### Example
+ *
+ *     var C = ({
+ *         package: &quot;Boid&quot;,
+ *         description: &quot;lluvia loader. User application loader. Booter.&quot;,
+ *         path: &quot;/kernel&quot;,
+ *         requires: [&quot;loader-v1.0&quot;],
+ *         provides: [&quot;utils&quot;, &quot;kernel~v2.0&quot;, &quot;engine&gt;v3.5&quot;, &quot;browser&quot;, &quot;mathematics&quot;],
+ *         offers:   [],
+ *         files:    [&quot;ClassSmthing.js&quot;, &quot;main.js&quot;]
+ *     }).get_constructor()
+ *
+ *     var pack = new C()
+ *     pack.toSource()
+ *     // =&gt; {
+ *     // =&gt;     package:&quot;Boid&quot;,
+ *     // =&gt;     description:&quot;lluvia loader. User application loader. Booter.&quot;,
+ *     // =&gt;     path:&quot;/kernel&quot;, requires:[&quot;loader-v1.0&quot;],
+ *     // =&gt;     provides:[&quot;utils&quot;, &quot;kernel~v2.0&quot;, &quot;engine&gt;v3.5&quot;, &quot;browser&quot;, &quot;mathematics&quot;],
+ *     // =&gt;     offers:[], files:[&quot;ClassSmthing.js&quot;, &quot;main.js&quot;]
+ *     // =&gt; }
+ *
+ * @return {Function}
+ */
+Object.defineProperty(Object.prototype, &quot;get_constructor&quot;, {
+    value: function() {
+        var that = this
+        return function() {
+            var index = 0
+            for (var i in that)
+                this[i] = that[i] || arguments[index++]
+        }
+    },
+    enumerable: false
+})
+
+<span id='Kernel-Facilities-Class-ClassTemplate-method-to_class'>/**
+</span> * @method to_class
+ * Creates a constructor function to generate objects like this.
+ *
+ * ### Example
+ *
+ *     ({
+ *         package: &quot;Boid&quot;,
+ *         description: &quot;lluvia loader. User application loader. Booter.&quot;,
+ *         path: &quot;/kernel&quot;,
+ *         requires: [&quot;loader-v1.0&quot;],
+ *         provides: [&quot;utils&quot;, &quot;kernel~v2.0&quot;, &quot;engine&gt;v3.5&quot;, &quot;browser&quot;, &quot;mathematics&quot;],
+ *         offers:   [],
+ *         files:    [&quot;ClassSmthing.js&quot;, &quot;main.js&quot;]
+ *     }).to_class(&quot;Package&quot;)
+ *
+ *     var p = new Package()
+ *
+ * @param  {String}    class_name
+ * @return {Function}  Class constructor
+ */
+Object.defineProperty(Object.prototype, &quot;to_class&quot;, {
+    value: function(class_name) {
+        return window[class_name] = this.get_constructor()
+    },
+    enumerable: false
+})
+</pre>
+</body>
+</html>

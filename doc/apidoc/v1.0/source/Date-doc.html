@@ -15,12 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Date'>/**
-</span> * @class Date
+  <pre class="prettyprint lang-js"><span id='Kernel-JSNative-Date'>/**
+</span> * @class Kernel.JSNative.Date
  *
  * Creates `Date` instances which let you work with dates and times.
  *
- * If you supply no arguments, the constructor creates a `Date` object for today's
+ * If you supply no arguments, the constructor creates a `Date` object for today&#39;s
  * date and time according to local time. If you supply some arguments but not
  * others, the missing arguments are set to 0. If you supply any arguments, you
  * must supply at least the year, month, and day. You can omit the hours, minutes,
@@ -59,14 +59,14 @@
  *
  *     // using static methods
  *     var start = Date.now();
- *     // the event you'd like to time goes here:
+ *     // the event you&#39;d like to time goes here:
  *     doSomethingForALongTime();
  *     var end = Date.now();
  *     var elapsed = end - start; // time in milliseconds
  *
  *     // if you have Date objects
  *     var start = new Date();
- *     // the event you'd like to time goes here:
+ *     // the event you&#39;d like to time goes here:
  *     doSomethingForALongTime();
  *     var end = new Date();
  *     var elapsed = end.getTime() - start.getTime(); // time in milliseconds
@@ -88,13 +88,13 @@
  *
  *     // use a function for the exact format desired...
  *     function ISODateString(d){
- *     function pad(n){return n&lt;10 ? '0'+n : n}
- *     return d.getUTCFullYear()+'-'
- *         + pad(d.getUTCMonth()+1)+'-'
- *         + pad(d.getUTCDate())+'T'
- *         + pad(d.getUTCHours())+':'
- *         + pad(d.getUTCMinutes())+':'
- *         + pad(d.getUTCSeconds())+'Z'}
+ *     function pad(n){return n&lt;10 ? &#39;0&#39;+n : n}
+ *     return d.getUTCFullYear()+&#39;-&#39;
+ *         + pad(d.getUTCMonth()+1)+&#39;-&#39;
+ *         + pad(d.getUTCDate())+&#39;T&#39;
+ *         + pad(d.getUTCHours())+&#39;:&#39;
+ *         + pad(d.getUTCMinutes())+&#39;:&#39;
+ *         + pad(d.getUTCSeconds())+&#39;Z&#39;}
  *
  *     var d = new Date();
  *     print(ISODateString(d)); // prints something like 2009-09-28T19:03:12Z
@@ -105,7 +105,7 @@
  * &lt;/div&gt;
  */
 
-<span id='Date-method-constructor'>/**
+<span id='Kernel-JSNative-Date-method-constructor'>/**
 </span> * @method constructor
  * Creates new Date object.
  *
@@ -140,7 +140,7 @@
 
 //Methods
 
-<span id='Date-static-method-now'>/**
+<span id='Kernel-JSNative-Date-static-method-now'>/**
 </span> * @method now
  * @static
  * Returns the numeric value corresponding to the current time.
@@ -155,7 +155,7 @@
  * @return {Number} Returns the number of milliseconds elapsed since 1 January 1970 00:00:00 UTC.
  */
 
-<span id='Date-static-method-parse'>/**
+<span id='Kernel-JSNative-Date-static-method-parse'>/**
 </span> * @method parse
  * @static
  * Parses a string representation of a date, and returns the number of milliseconds
@@ -165,7 +165,7 @@
  * milliseconds since January 1, 1970, 00:00:00 UTC. The local time zone is used to interpret
  * arguments that do not contain time zone information. This function is useful for setting date
  * values based on string values, for example in conjunction with the `setTime` method and the
- * {@link Date} object.
+ * {@link Kernel.JSNative.Date} object.
  *
  * Given a string representing a time, parse returns the time value. It accepts the IETF standard (RFC
  * 1123 Section 5.2.14 and elsewhere) date syntax: `&quot;Mon, 25 Dec 1995 13:30:00 GMT&quot;`. It understands
@@ -208,7 +208,7 @@
  * @return {Number} Number of milliseconds since January 1, 1970, 00:00:00, local time.
  */
 
-<span id='Date-static-method-UTC'>/**
+<span id='Kernel-JSNative-Date-static-method-UTC'>/**
 </span> * @method UTC
  * @static
  * Accepts the same parameters as the longest form of the constructor, and returns
@@ -249,7 +249,7 @@
 
 //Methods
 
-<span id='Date-method-getDate'>/**
+<span id='Kernel-JSNative-Date-method-getDate'>/**
 </span> * @method getDate
  * Returns the day of the month for the specified date according to local time.
  *
@@ -262,7 +262,7 @@
  * @return {Number} Value between 1 and 31.
  */
 
-<span id='Date-method-getDay'>/**
+<span id='Kernel-JSNative-Date-method-getDay'>/**
 </span> * @method getDay
  * Returns the day of the week for the specified date according to local time.
  *
@@ -279,7 +279,7 @@
  * Saturday (6).
  */
 
-<span id='Date-method-getFullYear'>/**
+<span id='Kernel-JSNative-Date-method-getFullYear'>/**
 </span> * @method getFullYear
  * Returns the year of the specified date according to local time.
  *
@@ -297,7 +297,7 @@
  * @return {Number} Four digit representation of the year.
  */
 
-<span id='Date-method-getHours'>/**
+<span id='Kernel-JSNative-Date-method-getHours'>/**
 </span> * @method getHours
  * Returns the hour for the specified date according to local time.
  *
@@ -310,7 +310,7 @@
  * @return {Number} Value between 0 and 23, using 24-hour clock.
  */
 
-<span id='Date-method-getMilliseconds'>/**
+<span id='Kernel-JSNative-Date-method-getMilliseconds'>/**
 </span> * @method getMilliseconds
  * Returns the milliseconds in the specified date according to local time.
  *
@@ -323,7 +323,7 @@
  * @return {Number} A number between 0 and 999.
  */
 
-<span id='Date-method-getMinutes'>/**
+<span id='Kernel-JSNative-Date-method-getMinutes'>/**
 </span> * @method getMinutes
  * Returns the minutes in the specified date according to local time.
  *
@@ -336,7 +336,7 @@
  * @return {Number} Value between 0 and 59.
  */
 
-<span id='Date-method-getMonth'>/**
+<span id='Kernel-JSNative-Date-method-getMonth'>/**
 </span> * @method getMonth
  * Returns the month in the specified date according to local time.
  *
@@ -349,7 +349,7 @@
  * @return {Number} An integer between 0 and 11. 0 corresponds to January, 1 to February, and so on.
  */
 
-<span id='Date-method-getSeconds'>/**
+<span id='Kernel-JSNative-Date-method-getSeconds'>/**
 </span> * @method getSeconds
  * Returns the seconds in the specified date according to local time.
  *
@@ -362,7 +362,7 @@
  * @return {Number} Value between 0 and 59.
  */
 
-<span id='Date-method-getTime'>/**
+<span id='Kernel-JSNative-Date-method-getTime'>/**
 </span> * @method getTime
  * Returns the numeric value corresponding to the time for the specified date according to
  * universal time.
@@ -397,7 +397,7 @@
  * @return {Number} Number of milliseconds since 1/1/1970 (GMT).
  */
 
-<span id='Date-method-getTimezoneOffset'>/**
+<span id='Kernel-JSNative-Date-method-getTimezoneOffset'>/**
 </span> * @method getTimezoneOffset
  * Returns the time-zone offset from UTC, in minutes, for the current locale.
  *
@@ -412,7 +412,7 @@
  * @return {Number} Minutes between GMT and local time.
  */
 
-<span id='Date-method-getUTCDate'>/**
+<span id='Kernel-JSNative-Date-method-getUTCDate'>/**
 </span> * @method getUTCDate
  * Returns the day (date) of the month in the specified date according to universal time.
  *
@@ -425,7 +425,7 @@
  * @return {Number} Integer between 1 and 31 representing the day.
  */
 
-<span id='Date-method-getUTCDay'>/**
+<span id='Kernel-JSNative-Date-method-getUTCDay'>/**
 </span> * @method getUTCDay
  * Returns the day of the week in the specified date according to universal time.
  *
@@ -439,7 +439,7 @@
  * Saturday (6).
  */
 
-<span id='Date-method-getUTCFullYear'>/**
+<span id='Kernel-JSNative-Date-method-getUTCFullYear'>/**
 </span> * @method getUTCFullYear
  * Returns the year in the specified date according to universal time.
  *
@@ -452,7 +452,7 @@
  * @return {Number} Four digit representation of the year.
  */
 
-<span id='Date-method-getUTCHours'>/**
+<span id='Kernel-JSNative-Date-method-getUTCHours'>/**
 </span> * @method getUTCHours
  * Returns the hours in the specified date according to universal time.
  *
@@ -465,7 +465,7 @@
  * @return {Number} Value between 0 and 23.
  */
 
-<span id='Date-method-getUTCMilliseconds'>/**
+<span id='Kernel-JSNative-Date-method-getUTCMilliseconds'>/**
 </span> * @method getUTCMilliseconds
  * Returns the milliseconds in the specified date according to universal time.
  *
@@ -478,7 +478,7 @@
  * @return {Number} Milliseconds portion of the Date.
  */
 
-<span id='Date-method-getUTCMinutes'>/**
+<span id='Kernel-JSNative-Date-method-getUTCMinutes'>/**
 </span> * @method getUTCMinutes
  * Returns the minutes in the specified date according to universal time.
  *
@@ -491,7 +491,7 @@
  * @return {Number} Value between 0 and 59.
  */
 
-<span id='Date-method-getUTCMonth'>/**
+<span id='Kernel-JSNative-Date-method-getUTCMonth'>/**
 </span> * @method getUTCMonth
  * Returns the month of the specified date according to universal time.
  *
@@ -504,7 +504,7 @@
  * @return {Number} Value between 0 (January) and 11 (December).
 */
 
-<span id='Date-method-getUTCSeconds'>/**
+<span id='Kernel-JSNative-Date-method-getUTCSeconds'>/**
 </span> * @method getUTCSeconds
  * Returns the seconds in the specified date according to universal time.
  *
@@ -517,7 +517,7 @@
  * @return {Number} Value between 0 and 59.
 */
 
-<span id='Date-method-setDate'>/**
+<span id='Kernel-JSNative-Date-method-setDate'>/**
 </span> * @method setDate
  * Sets the day of the month (1-31) for a specified date according to local time.
  *
@@ -534,7 +534,7 @@
  * @return {Number} New date represented as milliseconds.
 */
 
-<span id='Date-method-setFullYear'>/**
+<span id='Kernel-JSNative-Date-method-setFullYear'>/**
 </span> * @method setFullYear
  * Sets the full year (4 digits for 4-digit years) for a specified date according to
  * local time.
@@ -557,7 +557,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setHours'>/**
+<span id='Kernel-JSNative-Date-method-setHours'>/**
 </span> * @method setHours
  * Sets the hours (0-23) for a specified date according to local time.
  *
@@ -579,7 +579,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setMilliseconds'>/**
+<span id='Kernel-JSNative-Date-method-setMilliseconds'>/**
 </span> * @method setMilliseconds
  * Sets the milliseconds (0-999) for a specified date according to local time.
  *
@@ -594,7 +594,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setMinutes'>/**
+<span id='Kernel-JSNative-Date-method-setMinutes'>/**
 </span> * @method setMinutes
  * Sets the minutes (0-59) for a specified date according to local time.
  *
@@ -616,7 +616,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setMonth'>/**
+<span id='Kernel-JSNative-Date-method-setMonth'>/**
 </span> * @method setMonth
  * Sets the month (0-11) for a specified date according to local time.
  *
@@ -635,7 +635,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setSeconds'>/**
+<span id='Kernel-JSNative-Date-method-setSeconds'>/**
 </span> * @method setSeconds
  * Sets the seconds (0-59) for a specified date according to local time.
  *
@@ -654,7 +654,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setTime'>/**
+<span id='Kernel-JSNative-Date-method-setTime'>/**
 </span> * @method setTime
  * Sets the Date object to the time represented by a number of milliseconds since
  * January 1, 1970, 00:00:00 UTC, allowing for negative numbers for times prior.
@@ -670,7 +670,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCDate'>/**
+<span id='Kernel-JSNative-Date-method-setUTCDate'>/**
 </span> * @method setUTCDate
  * Sets the day of the month (1-31) for a specified date according to universal time.
  *
@@ -686,7 +686,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCFullYear'>/**
+<span id='Kernel-JSNative-Date-method-setUTCFullYear'>/**
 </span> * @method setUTCFullYear
  * Sets the full year (4 digits for 4-digit years) for a specified date according
  * to universal time.
@@ -709,7 +709,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCHours'>/**
+<span id='Kernel-JSNative-Date-method-setUTCHours'>/**
 </span> * @method setUTCHours
  * Sets the hour (0-23) for a specified date according to universal time.
  *
@@ -732,7 +732,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCMilliseconds'>/**
+<span id='Kernel-JSNative-Date-method-setUTCMilliseconds'>/**
 </span> * @method setUTCMilliseconds
  * Sets the milliseconds (0-999) for a specified date according to universal time.
  *
@@ -748,7 +748,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCMinutes'>/**
+<span id='Kernel-JSNative-Date-method-setUTCMinutes'>/**
 </span> * @method setUTCMinutes
  * Sets the minutes (0-59) for a specified date according to universal time.
  *
@@ -769,7 +769,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCMonth'>/**
+<span id='Kernel-JSNative-Date-method-setUTCMonth'>/**
 </span> * @method setUTCMonth
  * Sets the month (0-11) for a specified date according to universal time.
  *
@@ -789,7 +789,7 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-setUTCSeconds'>/**
+<span id='Kernel-JSNative-Date-method-setUTCSeconds'>/**
 </span> * @method setUTCSeconds
  * Sets the seconds (0-59) for a specified date according to universal time.
  *
@@ -808,11 +808,11 @@
  * @return {Number} New date represented as milliseconds.
  */
 
-<span id='Date-method-toDateString'>/**
+<span id='Kernel-JSNative-Date-method-toDateString'>/**
 </span> * @method toDateString
  * Returns the &quot;date&quot; portion of the Date as a human-readable string in American English.
  *
- * {@link Date} instances refer to a specific point in time. Calling `toString` will return the
+ * {@link Kernel.JSNative.Date} instances refer to a specific point in time. Calling `toString` will return the
  * date formatted in a human readable form in American English. In SpiderMonkey, this consists of the
  * date portion (day, month, and year) followed by the time portion (hours, minutes, seconds, and time
  * zone). Sometimes it is desirable to obtain a string of the date portion; such a thing can be
@@ -830,9 +830,9 @@
  * @return {String} Human-readable string, in local time.
  */
 
-<span id='Date-method-toLocaleDateString'>/**
+<span id='Kernel-JSNative-Date-method-toLocaleDateString'>/**
 </span> * @method toLocaleDateString
- * Returns the &quot;date&quot; portion of the Date as a string, using the current locale's
+ * Returns the &quot;date&quot; portion of the Date as a string, using the current locale&#39;s
  * conventions.
  *
  * The `toLocaleDateString` method relies on the underlying operating system in formatting dates. It
@@ -846,7 +846,7 @@
  * Methods such as `getDate`, `getMonth`, and `getFullYear` give more portable results than
  * `toLocaleDateString`. Use `toLocaleDateString` when the intent is to display to the user a string
  * formatted using the regional format chosen by the user. Be aware that this method, due to its
- * nature, behaves differently depending on the operating system and on the user's settings.
+ * nature, behaves differently depending on the operating system and on the user&#39;s settings.
  *
  * In the following example, `today` is a `Date` object:
  *
@@ -854,11 +854,11 @@
  *     today.toLocaleDateString()
  *
  * In this example, `toLocaleDateString` returns a string value that is similar to the following form.
- * The exact format depends on the platform, locale and user's settings.
+ * The exact format depends on the platform, locale and user&#39;s settings.
  *
  *     12/18/95
  *
- * You shouldn't use this method in contexts where you rely on a particular format or locale.
+ * You shouldn&#39;t use this method in contexts where you rely on a particular format or locale.
  *
  *     &quot;Last visit: &quot; + someDate.toLocaleDateString(); // Good example
  *     &quot;Last visit was at &quot; + someDate.toLocaleDateString(); // Bad example
@@ -867,9 +867,9 @@
  * on the country.
  */
 
-<span id='Date-method-toLocaleString'>/**
+<span id='Kernel-JSNative-Date-method-toLocaleString'>/**
 </span> * @method toLocaleString
- * Converts a date to a string, using the current locale's conventions. Overrides
+ * Converts a date to a string, using the current locale&#39;s conventions. Overrides
  * the `Object.toLocaleString` method.
  *
  * The `toLocaleString` method relies on the underlying operating system in formatting dates. It
@@ -884,7 +884,7 @@
  * give more portable results than `toLocaleString`. Use `toLocaleString` when the intent is to
  * display to the user a string formatted using the regional format chosen by the user. Be aware that
  * this method, due to its nature, behaves differently depending on the operating system and on the
- * user's settings.
+ * user&#39;s settings.
  *
  * In the following example, `today` is a `Date` object:
  *
@@ -892,11 +892,11 @@
  *     today.toLocaleString();
  *
  * In this example, `toLocaleString` returns a string value that is similar to the following form. The
- * exact format depends on the platform, locale and user's settings.
+ * exact format depends on the platform, locale and user&#39;s settings.
  *
  *     12/18/95 17:28:35
  *
- * You shouldn't use this method in contexts where you rely on a particular format or locale.
+ * You shouldn&#39;t use this method in contexts where you rely on a particular format or locale.
  *
  *     &quot;Last visit: &quot; + someDate.toLocaleString(); // Good example
  *     &quot;Last visit was at &quot; + someDate.toLocaleString(); // Bad example
@@ -905,9 +905,9 @@
  * on the country.
  */
 
-<span id='Date-method-toLocaleTimeString'>/**
+<span id='Kernel-JSNative-Date-method-toLocaleTimeString'>/**
 </span> * @method toLocaleTimeString
- * Returns the &quot;time&quot; portion of the Date as a string, using the current locale's
+ * Returns the &quot;time&quot; portion of the Date as a string, using the current locale&#39;s
  * conventions.
  *
  * The `toLocaleTimeString` method relies on the underlying operating system in formatting dates. It
@@ -918,7 +918,7 @@
  * Methods such as `getHours`, `getMinutes`, and `getSeconds` give more consistent results than
  * `toLocaleTimeString`. Use `toLocaleTimeString` when the intent is to display to the user a string
  * formatted using the regional format chosen by the user. Be aware that this method, due to its
- * nature, behaves differently depending on the operating system and on the user's settings.
+ * nature, behaves differently depending on the operating system and on the user&#39;s settings.
  *
  * In the following example, `today` is a `Date` object:
  *
@@ -930,7 +930,7 @@
  *
  *     17:28:35
  *
- * You shouldn't use this method in contexts where you rely on a particular format or locale.
+ * You shouldn&#39;t use this method in contexts where you rely on a particular format or locale.
  *
  *     &quot;Last visit: &quot; + someDate.toLocaleTimeString(); // Good example
  *     &quot;Last visit was at &quot; + someDate.toLocaleTimeString(); // Bad example
@@ -939,7 +939,7 @@
  * on the country.
  */
 
-<span id='Date-method-toString'>/**
+<span id='Kernel-JSNative-Date-method-toString'>/**
 </span> * @method toString
  * Returns a string representing the specified Date object. Overrides the
  * `Object.prototype.toString` method.
@@ -962,11 +962,11 @@
  * @return {String} Human-readable string of the date in local time.
  */
 
-<span id='Date-method-toTimeString'>/**
+<span id='Kernel-JSNative-Date-method-toTimeString'>/**
 </span> * @method toTimeString
  * Returns the &quot;time&quot; portion of the Date as a human-readable string.
  *
- * {@link Date} instances refer to a specific point in time. Calling `toString` will return the
+ * {@link Kernel.JSNative.Date} instances refer to a specific point in time. Calling `toString` will return the
  * date formatted in a human readable form in American English. In SpiderMonkey, this consists of the
  * date portion (day, month, and year) followed by the time portion (hours, minutes, seconds, and
  * time zone). Sometimes it is desirable to obtain a string of the time portion; such a thing can be
@@ -984,7 +984,7 @@
  * @return {String} Human-readable string of the date in local time.
  */
 
-<span id='Date-method-toUTCString'>/**
+<span id='Kernel-JSNative-Date-method-toUTCString'>/**
 </span> * @method toUTCString
  * Converts a date to a string, using the universal time convention.
  *
@@ -998,7 +998,7 @@
  * @return {String} String of the date in UTC.
  */
 
-<span id='Date-method-valueOf'>/**
+<span id='Kernel-JSNative-Date-method-valueOf'>/**
 </span> * @method valueOf
  * Returns the primitive value of a Date object. Overrides the
  * Object.prototype.valueOf method.
@@ -1018,12 +1018,12 @@
 
 // ECMAScript 5 methods
 
-<span id='Date-method-toJSON'>/**
+<span id='Kernel-JSNative-Date-method-toJSON'>/**
 </span> * @method toJSON
  * Returns a JSON representation of the Date object.
  *
  * Date instances refer to a specific point in time. Calling `toJSON()`
- * returns a JSON formatted string representing the Date object's
+ * returns a JSON formatted string representing the Date object&#39;s
  * value.  This method is generally intended to, by default, usefully
  * serialize Date objects during JSON serialization.
  *
@@ -1036,6 +1036,7 @@
  * **NOTE:** This method is part of the ECMAScript 5 standard.
  *
  * @return {String} Date value in `YYYY-MM-DDTHH-MM-SS.MMMZ` format.
- */</pre>
+ */
+</pre>
 </body>
 </html>

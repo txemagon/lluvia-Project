@@ -1,0 +1,25 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,calc,arrows,through,intersections}
+
+%opening
+\title{}
+\author{José M. González}
+
+\begin{document}
+
+
+\begin{tikzpicture}[dot/.style={circle,inner sep=1pt,fill,label={#1},name=#1},
+     extended line/.style={shorten >=-#1,shorten <=-#1},
+  extended line/.default=1cm,
+   one end extended/.style={shorten >=-#1},
+    one end extended/.default=1cm,
+ ]
+\input{__input_image__} 
+\end{tikzpicture}
+
+
+
+\end{document}

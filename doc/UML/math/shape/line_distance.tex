@@ -1,0 +1,32 @@
+% First point (A)
+\coordinate (A) at (1,1);
+
+% Second segment (B)
+\coordinate (B0) at (2,3);
+\coordinate (B1) at (6,5);
+
+% AXIS
+\draw [help lines] (0,0) grid (7,7);
+\draw [<->] (0,7) node [left] {$y$} -- (0,0) node [below left] {(0,0)} -- (7,0) node [below] {$x$};
+
+% Point A
+\filldraw (A) circle (1pt);
+
+% Segment B
+\draw [thick] (B0) node [above] {$B_0$} -- (B1) node [above] {$B_1$};
+\filldraw (B0) circle (1pt);
+\filldraw (B1) circle (1pt);
+
+% rp
+\draw [->,>=latex,color=blue] (A) -- node [midway,sloped,above] {$\vec{r}_p$} (B0);
+\draw (A) -- (B0);
+\draw [dashed] (.5,0) -- (3,5);
+
+% director
+\draw [->,>=latex,color=blue] (B0) -- (3,3.5);
+
+% Angle
+\draw (2,3)  +(1,1) node {$ \alpha $} ++(27:2) arc (27:63:2);
+
+
+

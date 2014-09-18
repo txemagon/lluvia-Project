@@ -1,3 +1,5 @@
 *.sw[op]
 *.*~
+vendor/distribution_test/javascript/test.js
+*workspace
 

@@ -15,25 +15,197 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Enumeration'>/**
-</span> * @class Enumeration
- *
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Enumerable-Enumeration'>/**
+</span> * @class Kernel.Foundation.Enumerable.Enumeration
  * Creates several symbolic constants
  *
- *    ###Example:
- *    Suit = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, &quot;diamonds&quot;, &quot;clovers&quot;)
- *    // =&gt; Object { spades=0, hearts=1, diamonds=2, clovers=3}
+ * ### Example:
  *
- *    Suit.hearts == 1
- *    // =&gt; true
+ *     Suit = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, &quot;diamonds&quot;, &quot;clovers&quot;)
+ *     // { spades: 0, hearts: 1, diamonds: 2, clovers: 3}
+ *
+ *     Suit.hearts == 1
+ *     // =&gt; true
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *     Object.keys(a.hearts)
+ *     // =&gt; red,black
+ *
+ *     a.hearts
+ *     // =&gt; 1
+ *
+ *     a.hearts.red
+ *     // =&gt; 1
+ *
+ * Attributes, as a.hearts, are holding
+ * {@link Kernel.Foundation.DataType.VersionNumber VersionNumber} objects.
+ *
+ * ### Inner Structure
+ *
+ *     {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *       	           &quot;red&quot;: 1,
+ *       	           &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *     }
+ *
+ * ### Sugar
+ *
+ *  Despite,
+ *
+ *     a.hearts.black == 2
+ *     //=&gt; true
+ *
+ * when stringifying,
+ *
+ *     a.hearts.black.toString()
+ *     //=&gt; &quot;1.2&quot;
+ *
+ * due to {@link Kernel.Foundation.DataType.VersionNumber VersionNumber} properties.
+ */
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-constructor'>/**
+</span> * @method constructor
+ * Create a list of constant given an
+ * {@link Kernel.Foundation.Enumerable.InterleavedArray InterleavedArray}
+ *
+ * ### Example
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ * @param {String...} constants List of constants to be used as an InterleavedArray.
+ */
+function Enumeration(constants) {
+    var args = arguments // Copy of arguments
+    if (constants instanceof Enumeration)
+        args = constants.ia // Copy constructor trick.
+    Object.defineProperty(this, &quot;ia&quot;, {
+        value: new(ApplyProxyConstructor(InterleavedArray, args)),
+        enumerable: false
+    })
+
+    this.transpose()
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-transpose'>/**
+</span> * @method transpose
+ * Takes an InterleavedArray and inverts it, due to InterleavedArray and Enumeration reciprocity.
+ * Not enumerable, not configurable, not writable.
+ *
+ * Given the following InterleavedArray,
+ *
+ *        {
+ *        &quot;0&quot;: &quot;spades&quot;,
+ *        &quot;1&quot;: &quot;hearts&quot;,
+ *        &quot;1.1&quot;: &quot;red&quot;,
+ *        &quot;1.2&quot;: &quot;black&quot;,
+ *        &quot;2&quot;: &quot;diamonds&quot;,
+ *        &quot;3&quot;: &quot;clovers&quot;
+ *       }
+ *
+ * will be turned inside this into:
+ *         {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1.1,
+ *                   &quot;black&quot;: 1.2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ *  through this method.
+ *
+ * @param  {Class} [Type=VersionNumber] Class for assigning values
+ */
+Enumeration.prototype.transpose = function(Type) {
+    Type = Type || VersionNumber
+
+    var keys = this.ia.keys()
+    for (var k = 0; k &lt; keys.length; k++) {
+        var ia_value = this.ia[keys[k]]
+        var deep = this
+        var key_chain = keys[k].split(&quot;.&quot;)
+
+        for (var i = 0; i &lt; key_chain.length - 1; i++) {
+            var parent = this.ia[key_chain.slice(0, i + 1).join(&quot;.&quot;)]
+
+            if (parent in deep)
+                deep = deep[parent]
+        }
+        deep[ia_value] = new Type(keys[k])
+        Object.defineProperty(deep[ia_value], &quot;name&quot;, {
+            value: ia_value
+        })
+    }
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-each'>/**
+</span> * @method  each
+ * Iterates over key-value pairs inside the enumeration.
+ *
+ * ### Example
+ *
+ *   Let a be defined as
+ *
+ *     var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ *  with the following inner structure:
+ *
+ *        {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1,
+ *                   &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ *   When called
+ *
+ *     a.each(function(key, value) {;})
+ *
+ * key-value pairs will be:
+ *
+ * | key      | value  |
+ * |----------|-------:|
+ * | spades   | 0      |
+ * | hearts   | 1      |
+ * | red      | 1.1    |
+ * | black    | 1.2    |
+ * | diamonds | 2      |
+ * | clovers  | 3      |
  *
  */
-function Enumeration(){
-	var en = {};
-	for (var i=0; i&lt;arguments.length; i++)
-		en[arguments[i]] = i	
-	return en;
+Enumeration.prototype.each = function() {
+    var that = this
+    this.ia.keys().each(function(string_key) {
+        // string_key is string 1.2.3 for instance
+        // Get the VersionNumber 1.2.3 for the value.
+        var key = string_key.split(&quot;.&quot;)
+        var value = that
+        for (var i = 0; i &lt; key.length; value = value[that.ia[key.slice(0, i + 1).join(&#39;.&#39;)]], i++);
+        Enumeration.prototype.each.yield(that.ia[string_key], value)
+    })
 }
-</pre>
+
+Object.defineProperties(Enumeration.prototype, {
+    transpose: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    each: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    }
+})
+
+//todo: Needed include$U. Depends on making module Enumerable and mixing.</pre>
 </body>
 </html>

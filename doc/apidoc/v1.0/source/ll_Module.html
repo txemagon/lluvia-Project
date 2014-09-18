@@ -15,9 +15,20 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">Module.prototype.constructor = Module
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Architecture-Module'>/**
+</span> * @class Kernel.Foundation.Architecture.Module
+ * Module class
+ */
+
+Module.prototype.constructor = Module
 Module._constants = new Hash()
 
+<span id='Kernel-Foundation-Architecture-Module-method-constructor'>/**
+</span> * @method constructor
+ *
+ * @param {String} module_name Name of the module
+ * @param {Function} block Configuration Block
+ */
 function Module(module_name, block){
   if (module_name){
     var module = new Module
@@ -31,8 +42,8 @@ function Module(module_name, block){
 
     eval.call( null,
                module_name +
-               &quot; = $global_space['$constants']['&quot; +
-               module_name + &quot;']&quot; )
+               &quot; = $global_space[&#39;$constants&#39;][&#39;&quot; +
+               module_name + &quot;&#39;]&quot; )
     return module
   }
 
@@ -50,7 +61,7 @@ function require(){
   //todo: define require to require another libraries not included in the index.js
 }
 
-<span id='global-method-alias_method'>/**
+<span id='Kernel-Foundation-Architecture-Module-method-alias_method'>/**
 </span> * @method alias_method
  *
  * Creates a copy of the old name function with the new name.
@@ -65,6 +76,7 @@ Module.prototype.alias_method = function(new_name, old_name){
 
   return this[new_name]
 }
-</pre>
+
+//todo: Create a mechanism to extend / include modules.</pre>
 </body>
 </html>

@@ -15,46 +15,56 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">
-Function.prototype.bind = function(object){
-	var f = this
-	return function(){ f.apply(object, arguments) }
+  <pre class="prettyprint lang-js"><span id='Kernel-CoreExt-Function'>/**
+</span> * @class Kernel.CoreExt.Function
+ * Extends JavaScript native Function
+ */
+
+Function.prototype.bind = function(object) {
+    var f = this
+    return function() {
+        f.apply(object, arguments)
+    }
 }
 
-Function.prototype.bind_params = function(){
-	var args = arguments
-	var f = this
-	return function(){ f.apply(f, args) }
+Function.prototype.bind_params = function() {
+    var args = arguments
+    var f = this
+    return function() {
+        f.apply(f, args)
+    }
 }
 
-Function.prototype.yield = function(){
-     for (var i=this.arguments.length-1; i&gt;=0; i--)
+Function.prototype.yield = function() {
+    for (var i = this.arguments.length - 1; i &gt;= 0; i--)
         if (typeof(this.arguments[i]) === &quot;function&quot;)
             return this.arguments[i].apply(this, arguments)
 }
 
-Function.prototype.block_given$U = function(){
-     var given = false
-     for (var i=this.arguments.length-1; !given &amp;&amp; i&gt;=0; i--)
+Function.prototype.block_given$U = function() {
+    var given = false
+    for (var i = this.arguments.length - 1; !given &amp;&amp; i &gt;= 0; i--)
         if (typeof(this.arguments[i]) === &quot;function&quot;)
-           given = this.arguments[i]
-     return given
+            given = this.arguments[i]
+    return given
 }
 
-<span id='global-property-'>/** Takes a function and prepare it to clone with the Function constructor.
-</span>*/
-Function.prototype.deconstruct = function(){
-  return { name: this.name,
-           params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(&quot;,&quot;),
-           body: this.toSource().match(/{(.*)}/)[1]
-           }
+/* Takes a function and prepare it to clone with the Function constructor.
+ */
+Function.prototype.deconstruct = function() {
+    return {
+        name: this.name,
+        params: this.toSource().match(/function[^\(]*\(([^)]*)\)/)[1].split(&quot;,&quot;),
+        body: this.toSource().match(/{(.*)}/)[1]
+    }
 }
 
-Function.deconstruct = function(src){
-  return { name: src.match(/function\s+([^\(]+)/)[1],
-           params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(&quot;,&quot;),
-           body: src.match(/{(.*)}/)[1]
-           }
+Function.deconstruct = function(src) {
+    return {
+        name: src.match(/function\s+([^\(]+)/)[1],
+        params: src.match(/function[^\(]*\(([^)]*)\)/)[1].split(&quot;,&quot;),
+        body: src.match(/{(.*)}/)[1]
+    }
 }
 
 /*
@@ -115,13 +125,13 @@ kola.greet();
 alert(kola.b);
 kola.wave();
 
-   Once we've settle down the necesity of super we can do things like:
+   Once we&#39;ve settle down the necesity of super we can do things like:
 
    c.include(Father)
 
 
 CONTENT:
-It's not posible to include a Module using an anonimous class. If '-&gt;' means .prototype
+It&#39;s not posible to include a Module using an anonimous class. If &#39;-&gt;&#39; means .prototype
 
 4-&gt;3-&gt;2-&gt;1
 and
@@ -137,12 +147,12 @@ Oh! Loneliness fields,
 Oh! Gloomy hills
 
 Now 1 is deriving from b.
-It's possible to make copies of 4,3,2 and 1, but not to reopen them again
+It&#39;s possible to make copies of 4,3,2 and 1, but not to reopen them again
 
 
 
-Include on Class or Module inside a Class (We've to take into account both prototype chains)
-if (typeof Function.include !== 'function') {
+Include on Class or Module inside a Class (We&#39;ve to take into account both prototype chains)
+if (typeof Function.include !== &#39;function&#39;) {
     Function.prototype.include = function (superclass) {
         function $F() {}
         $F.prototype = new superclass
@@ -215,7 +225,7 @@ There are two posible strategies. Extending (widering) prototype with a copy of 
   But if,
   c = new Class();
   d = new Class();
-  c.xxx = 3 doesn't change d.xxx
+  c.xxx = 3 doesn&#39;t change d.xxx
 
   When xxx is an object, xxx is holding a pointer to the object.
 
@@ -230,29 +240,30 @@ There are two posible strategies. Extending (widering) prototype with a copy of 
    Please extend only in the initialize method.
 */
 
-Function.prototype.extend = function(superclass, args){
-  var that = this
+Function.prototype.extend = function(superclass, args) {
+    var that = this
+    var s = new superclass()
+    s.keys().each(function(k) {
+        // Uncomment the following if you don&#39;t want to override function definition
+        // if (typeof(that.prototype[k]) == &quot;undefined&quot;)
+        that.prototype[k] = s[k];
+    })
 
-  var s = new superclass()
-  s.keys().each( function(k) {
-       if (typeof(that.prototype[k]) == &quot;undefined&quot;)
-         that.prototype[k] = s[k];
-     } )
+    superclass.keys().each(function(k) {
+        that.prototype[k] = superclass[k];
+    })
 
-  superclass.keys().each( function(k) {
-       that.prototype[k] = superclass[k];
-     } )
+    if (this.Class &amp;&amp; this.Class.before_extended &amp;&amp; (typeof(this.Class.before_extended) == &quot;function&quot;))
+        this.super.Class.before_extended.apply(this, args)
 
-  if ( this.Class &amp;&amp; this.Class.before_extended &amp;&amp; ( typeof(this.Class.before_extended) == &quot;function&quot; ) )
-    this.super.Class.before_extended.apply(this, args)
-
-  if ( this.Class &amp;&amp; this.Class.after_extended &amp;&amp; ( typeof(this.Class.after_extended) == &quot;function&quot; ) )
-    this.super.Class.after_extended(this)
+    if (this.Class &amp;&amp; this.Class.after_extended &amp;&amp; (typeof(this.Class.after_extended) == &quot;function&quot;))
+        this.super.Class.after_extended(this)
 
 }
-<span id='global-static-method-reflect'>/**
+
+
+<span id='Kernel-CoreExt-Function-method-reflect'>/**
 </span> * @method reflect
- * @static
  *
  * Creates a bang method version of the referred one.
  *
@@ -261,7 +272,8 @@ Function.prototype.extend = function(superclass, args){
  * If original method is an Array of Strings then performs reflection
  * over every mentioned method.
  *
- * ###Example
+ * ### Example
+ *
  *      // Create Array#map$B based on Array#map
  *      Array.reflect(&quot;map&quot;)
  *
@@ -272,36 +284,34 @@ Function.prototype.extend = function(superclass, args){
  *      var method_list = [&quot;map&quot;, &quot;collect&quot;]
  *      Array.reflect(method_list)
  */
-Function.prototype.reflect = function(){
-  var result
-  var return_value = {}
-  var calling_class = eval(this.name)
+Function.prototype.reflect = function() {
+    var result
+    var return_value = {}
+    var calling_class = eval(this.name)
 
-  function duplicate(original_method){
-    calling_class.prototype[original_method + &quot;$B&quot;] = function(){
-      var substitute = calling_class.prototype[original_method].apply(this, arguments)
+    function duplicate(original_method) {
+        calling_class.prototype[original_method + &quot;$B&quot;] = function() {
+            var substitute = calling_class.prototype[original_method].apply(this, arguments)
 
-  //this.clear()
-  for (var i=0; i&lt;substitute.length; i++)
-    this[i] = substitute[i]
+            //this.clear()
+            for (var i = 0; i &lt; substitute.length; i++)
+                this[i] = substitute[i]
 
-      return this
+            return this
+        }
+        return [original_method + &quot;$B&quot;, calling_class.prototype[original_method + &quot;$B&quot;]]
     }
-    return [ original_method + &quot;$B&quot;, calling_class.prototype[original_method + &quot;$B&quot;] ]
-  }
 
-  for(var i=0; i&lt;arguments.length; i++)
-    if (arguments[i] instanceof Array)
-      for(var j=0; j&lt;arguments[i].length; j++){
-  result = duplicate(arguments[i][j])
-    return_value[result[0]] = result[1]
-      }
-    else {
-      result = duplicate(arguments[i])
-  return_value[result[0]] = result[1]
-    }
-  return return_value
-}
-</pre>
+    for (var i = 0; i &lt; arguments.length; i++)
+        if (arguments[i] instanceof Array)
+            for (var j = 0; j &lt; arguments[i].length; j++) {
+                result = duplicate(arguments[i][j])
+                return_value[result[0]] = result[1]
+            } else {
+            result = duplicate(arguments[i])
+            return_value[result[0]] = result[1]
+        }
+    return return_value
+}</pre>
 </body>
 </html>

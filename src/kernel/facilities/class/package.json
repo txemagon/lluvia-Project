@@ -1,0 +1,8 @@
+{	"package": "class",
+		"description": "lluvia facilites for creating classes.",
+		"files": [ 
+			{"name": "ll_ClassFactory.js",          "description": "Utility for automating class creation."},
+			{"name": "ll_ClassTemplate.js",         "description": "Utility for creating a constructor giving a default object."}
+		]
+}
+

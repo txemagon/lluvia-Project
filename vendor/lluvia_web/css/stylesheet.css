@@ -1,0 +1,335 @@
+/* Reset {{{
+***********************************************************
+* reset.css from Eric Meyer
+* http://ericmeyerweb.com/
+***********************************************************/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/***********************************************************/
+/* END Eric Meyer reset.css }}} */
+/* Body {{{ */
+body {
+    font-family:
+    "Arial",
+    "Helvetica",
+    "Verdana",
+    "Geneva",
+    sans-serif;
+    font-size: 12pt;
+    margin: auto;
+}
+/* }}} */
+/* Intro {{{ */
+#intro{
+    display: none;
+}
+/* }}} */
+/* Header {{{ */
+.standard_features{
+    width: 1264px;
+    margin: auto;
+}
+.common_border{
+    border: solid 1px black;
+}
+#header{
+    height: 202px;
+    position: relative;
+}
+#header_container{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 1242px;
+    height: 180px;
+}
+#header_intro{
+    display: none;
+}
+#header li{
+    margin-top: 18px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #333;
+}
+.header_menu{
+    height: 180px;
+    width: 542px;
+    margin-left: 15px;
+    display: inline-block;
+}
+#logo{
+    margin-bottom: 15px;
+    display: inline-block;
+}
+#header_menu_right{
+    text-align: right;
+}
+/* }}} */
+/* Main {{{ */
+.common{
+    height: 460px;
+    position: relative;
+}
+#main_container{
+    width: 552px;
+    margin-left: 80px;
+    border: solid 1px #ccc;
+}
+#main_wrapper{
+    margin-left: -80px;
+}
+.left_side{
+    width: 630px;
+    margin-top: -331px;
+}
+.right_side{
+    width: 630px;
+    position: absolute;
+    right: 0px;
+    top: 1px;
+}
+.horizontal_line{
+    height: 1px;
+    background-color: #ccc;
+    margin-top: 20px;
+}
+.box_header{
+    width: 700px;
+    height: 20px;
+}
+.middle_section{
+    width: 552px;
+    height: 328px;
+    margin: auto;
+    margin-top: -20px;
+    background-color: #fff;
+}
+.box_footer{
+    width: 554px;
+    height: 20px;
+    margin: auto;
+    margin-top: -21px;
+}
+.box_margin_left{
+    margin-left: 80px;
+}
+.right_header{
+    margin-left: -70px;
+}
+.first_line{
+    margin-top: 50px;
+}
+.second_line{
+    margin-top: 288px;
+}
+.blue{
+    background-color: #4E72AE;
+}
+.purple{
+    background-color: #B21687;
+}
+.orange{
+    background-color: #FF7F00;
+}
+#blue_banner_middle{
+    border: solid 1px #4E72AE;
+}
+#purple_banner_middle{
+    border: solid 1px #B21687;
+}
+#orange_banner_middle{
+    border: solid 1px #FF7F00;
+}
+/* Boxes inside {{{ */
+.inside_image{
+    margin-top: 30px;
+    margin-left: 10px;
+}
+.text{
+    margin-top: 40px;
+    margin-left: 120px;
+}
+.intro{
+    font-size: 18pt;
+    margin-left: 120px;
+    margin-top: -40px;
+}
+.icon{
+    float: right;
+    margin-right: 20px;
+    margin-top: -40px;
+}
+/* }}} */
+/* Cogs and Wheels {{{ */
+#cogs_and_chain{
+    margin-top: -52px;
+    margin-left: 13px;
+}
+#second_wheel{
+    margin-left: 135px;
+    margin-bottom: -20px;
+}
+#first_wheel{
+    margin-left: -259px;
+}
+#gear_inside1{
+    margin-left: -71px;
+    margin-bottom: 34px;
+}
+#third_wheel{
+    margin-left: 202px;
+}
+#gear_inside2{
+    margin-left: -47px;
+    margin-bottom: 28px;
+}
+#fourth_wheel{
+    margin-left: -98px;
+    margin-bottom: -78px;
+}
+#gear_inside3{
+    margin-left: -88px;
+    margin-bottom: 50px;
+}
+#wheel_circle{
+    margin-left: -78px;
+    margin-bottom: -175px;
+}
+#handle{
+    margin-left: -70px;
+    margin-bottom: -204px;
+}
+#chain{
+    width: 450px;
+    height: 18px;
+    background-image: url('../images/chain_link.svg');
+    background-repeat: repeat-x;
+    background-position: left;
+    margin-top: 90px;
+    margin-left: -12px;
+}
+/* }}} */
+/* Eagle {{{ */
+#eagle{
+    height: 69px;
+    background-image: url("../images/eagle.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-top: -19px;
+}
+.black_line{
+    width: 1px;
+    height: 1px;
+    margin-top: 110px;
+    background-color: #666;
+}
+#black_line_bottom{
+    margin-top: 17px;
+}
+/* }}} */
+/* Pelton Wheel {{{ */
+#pelton{
+    width: 229px;
+    height: 228px;
+    background-image: url("../images/pelton_wheel.svg");
+    background-repeat: no-repeat;
+    margin-left: 270px;
+    margin-top: 45px;
+}
+#belt{
+    width: 382px;
+    height: 46px;
+    background-image: url("../images/belt.svg");
+    background-repeat: no-repeat;
+    margin-top: -137px;
+}
+#fish{
+    width: 150px;
+    height: 80px;
+    background-image: url("../images/fish.svg");
+    background-repeat: no-repeat;
+    float: right;
+    margin-top: -170px;
+}
+/* }}} */
+/* }}} */
+/* Footer {{{ */
+#footer{
+    width: 1266px;
+    height: 100px;
+    border: none;
+}
+.banner_green{
+    height: 20px;
+    background-color: #237C26;
+}
+#green_banner_middle{
+    height: 98px;
+    width: 1000px;
+    margin: auto;
+    margin-top: -20px;
+    background-color: #fff;
+    border: solid 1px #237C26;
+}
+.footer_text{
+    margin-left: 30px;
+    margin-top: 30px;
+    font-size: 10pt;
+}
+#footer_icon_container{
+    margin: auto;
+    margin-left: 230px;
+    margin-top: -35px;
+}
+.footer_icon{
+    margin-right: 10px;
+}
+#green_banner_bottom{
+    width: 1000px;
+    margin: auto;
+    margin-top: -20px;
+}
+/* }}} */

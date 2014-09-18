@@ -1,0 +1,9 @@
+{
+"package": "test",
+"description": "test_package",
+"files": [{"name": "test.js",       "description": "Test package."}],
+"requires": ["test"],
+"provides": [],
+"offers":   []
+}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Kernel-Foundation-Architecture-ProxyConstructor'>/**
+</span> * @class Kernel.Foundation.Architecture.ProxyConstructor
+ * Proxy class to apply all the given arguments of a constructor to another
+ *
+ * From [mdn new operator][https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new] notice:
+ *
+ * The object returned by the constructor function becomes
+ * the result of the whole new expression. If the constructor
+ * function doesn&#39;t explicitly return an object, the object
+ * created in step 1 is used instead. (Normally constructors don&#39;t
+ * return a value, but they can choose to do so if they want to override the
+ * normal object creation process.)
+ *
+ * ## Example
+ *
+ *    var b = new (ProxyConstructor(Enumeration, &quot;spades&quot;, &quot;hearts&quot;))
+ *    // =&gt; {spades:0, hearts:1}
+ *
+ */
+
+<span id='Kernel-Foundation-Architecture-ProxyConstructor-method-constructor'>/**
+</span> * @method constructor
+ * Use rest_of_arguments as comma separated list.
+ *
+ * @param {Function} Constructor Constructor to delegate new call.
+ */
+function ProxyConstructor(Constructor, rest_of_arguments) {
+    var args = Array.prototype.slice.call(arguments, 1)
+    return function() {
+            var $$F$$ = function() {}
+            $$F$$.prototype = Constructor.prototype
+            var obj = new $$F$$
+            var yield_back = Constructor.apply(obj, args)
+            return Object(yield_back) == yield_back ? yield_back : obj
+        }
+}</pre>
+</body>
+</html>

@@ -1,0 +1,95 @@
+\begin{sequencediagram}
+    \newthread{ff}{:Firefox}
+    \newinst{parser}{:Parser}
+    \newthread{sr}{:ScriptRunner}
+    \newinst{launcher}{:Launcher}
+    \newinst{fileloader}{:FilePackLoader}
+    \newinst{uviapmgr}{lluvia:PackageManager}
+    \newinst{apppmgr}{app:PackageManager}
+
+    \newthread{ps}{:PageServer}
+
+    \newthread{apps}{:AppServer}
+    \newthread{us}{:lluviaServer}
+
+    % Page request
+    \begin{call}{ff}{GET HTML}{ps}{index.html}
+    \end{call}
+
+    % Script parsing
+    \begin{call}{ff}{parse tags}{parser}{done}
+        \begin{call}{parser}{GET lluvia}{us}{lluvia.js}
+        \end{call}
+
+        \begin{messcall}{parser}{create}{launcher}
+        \end{messcall}
+        \begin{messcall}{parser}{create}{fileloader}
+        \end{messcall}
+    \end{call}
+
+    % Execute the script
+    \mess{ff}{onload}{sr}
+    \begin{call}{sr}{bring\_lluvia()}{launcher}{main()}
+        \begin{call}{launcher}{get("dependencies.js")}{fileloader}{dependencies.js}
+            \begin{sdblock}{Loop}{while files}
+                \begin{call}{fileloader}{GET PackageManager and friends}{us}{each file}
+                \end{call}
+            \end{sdblock}
+        \end{call}
+
+        % Got the PackageManger and related facilities.
+        \begin{call}{launcher}{create(lluviaServer)}{uviapmgr}{}
+            \begin{call}{uviapmgr}{test compression}{us}{:Boolean}
+            \end{call}
+        \end{call}
+
+        % Start getting lluvia packages
+        \begin{call}{launcher}{catalog("package.js")}{uviapmgr}{:PackageList}
+            \begin{call}{uviapmgr}{get("package.js"}{fileloader}{package.js}
+            \end{call}
+            \begin{sdblock}{Loop}{while subpackages}
+                \begin{call}{uviapmgr}{catalog("package.js")}{uviapmgr}{}
+                    \begin{call}{uviapmgr}{get("package.js"}{fileloader}{package.js}
+                    \end{call}
+                \end{call}
+            \end{sdblock}
+        \end{call}
+        \begin{call}{launcher}{fetch}{uviapmgr}{:Package}
+        \end{call}
+
+        % Start getting app packages
+        \begin{call}{launcher}{create(appServer)}{apppmgr}{}
+            \begin{call}{apppmgr}{test compression}{apps}{:Boolean}
+            \end{call}
+        \end{call}
+
+
+        \begin{call}{launcher}{catalog("package.js")}{apppmgr}{:PackageList}
+            \begin{call}{apppmgr}{get("package.js"}{fileloader}{package.js}
+            \end{call}
+            \begin{sdblock}{Loop}{while subpackages}
+                \begin{call}{apppmgr}{get("package.js"}{fileloader}{package.js}
+                \end{call}
+                \begin{call}{apppmgr}{catalog("package.js")}{apppmgr}{}
+                \end{call}
+            \end{sdblock}
+        \end{call}
+
+        \begin{call}{launcher}{fetch}{apppmgr}{:Package}
+            \begin{sdblock}{Alternative}{Depends on test result}
+                \begin{sdblock}{Alternative 1}{Server compressing}
+                    \begin{call}{apppmgr}{surrender(PackageList)}{apps}{single\_file.js}
+                    \end{call}
+                \end{sdblock}
+                \begin{sdblock}{Alternative 2}{FileLoader Fetching}
+                    \begin{call}{apppmgr}{get(filelist)}{fileloader}{}
+                    \end{call}
+                \end{sdblock}
+            \end{sdblock}
+        \end{call}
+
+
+    \end{call}
+
+
+\end{sequencediagram}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Interpolator.prototype = new Thread
+Interpolator.prototype.constructor = Interpolator
+
+function Interpolator(initial_point, final_point, variation) {
+    this.current_point = this.initial_point = initial_point
+    this.final_point = final_point
+    this.variation = variation
+    //a = &quot;0123456789abcdef&quot;
+    //a[i % a.length]
+}
+
+
+Interpolator.prototype.run = function() {
+    if (this.variation instanceof Object &amp;&amp; &quot;add&quot; in this.variation)
+        this.current_point.add$B(this.variation)
+    else
+        this.current_point += this.variation
+
+}</pre>
+</body>
+</html>

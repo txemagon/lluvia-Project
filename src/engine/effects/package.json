@@ -1,0 +1,29 @@
+{
+    "package": "Effects",
+    "description": "Gate's Effect Library",
+    "files": [{
+        "name": "ll_Interpolator.js",
+        "description": "Interpolates objects and numbers"
+    }, {
+        "name": "ll_MoveLeftEffect.js",
+        "description": "Effect to move an element to the left"
+    }, {
+        "name": "ll_MoveDownEffect.js",
+        "description": "Effect to move an element down"
+    }, {
+        "name": "ll_RectangleEffect.js",
+        "description": "Effect to create a rectangle"
+    }, {
+        "name": "ll_RotationEffect.js",
+        "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_SideRotationEffect.js",
+        "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_BackgroundMoveEffect.js",
+        "description": "Effect to rotate an element"
+    }, {
+        "name": "ll_SpringEffect.js",
+        "description": "Effect to move an element back and forth"
+    }]
+}

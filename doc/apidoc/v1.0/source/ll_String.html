@@ -15,43 +15,39 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='String'>/**
-</span> * @class       String
+  <pre class="prettyprint lang-js"><span id='Kernel-CoreExt-String'>/**
+</span> * @class       Kernel.CoreExt.String
  * Define method for string
  */
 
 
-
-<span id='String-method-capitalize'>/**
-</span> * @member String
- * @method  capitalize
+<span id='Kernel-CoreExt-String-method-capitalize'>/**
+</span> * @method  capitalize
  * Returns a copy of string with the first character converted to uppercase and the
  * remainder to lowercase.
  *
  * @return {String} String. The string with his first letter in uppercase.
  *
- * ###Comments:    Case conversion is effective only in ASCII region.
+ * ### Comments:    Case conversion is effective only in ASCII region.
  *
- * ###Example
+ * ### Example
  *
  *      var text = &quot;hello&quot;   // giving a value to text
  *      text.capitalize()    //=&gt; &quot;Hello&quot;
  */
-
-String.prototype.capitalize = function(){
-  word = this.toLowerCase()
-  return word.replace(word[0], word[0].toUpperCase())
+String.prototype.capitalize = function() {
+    word = this.toLowerCase()
+    return word.replace(word[0], word[0].toUpperCase())
 }
 
-<span id='String-method-humanize'>/**
-</span> * @member   String
- * @method   humanize
+<span id='Kernel-CoreExt-String-method-humanize'>/**
+</span> * @method   humanize
  *
  * Changes the underscore or camelCase string and returns a string which has each word separated with one space
  *
  * @return   {String} String
  *
- * ###Example
+ * ### Example
  *
  *      &quot;TheRollingStones&quot;.humanize()      //=&gt;&quot;the rolling stones&quot;
  *
@@ -60,152 +56,139 @@ String.prototype.capitalize = function(){
  *      &quot;theRolling_stones&quot;.humanize()    //=&gt;&quot;the rolling stones&quot;
  *
  */
-
-
-
-String.prototype.humanize = function(){
-  var word = this.strip()
-  var first = word[0]
-  word = word.substring(1).replace(/_+/g, &quot; &quot;).replace(/([A-Z])/g, &quot; $1&quot; ).replace(/\s+/g, &quot; &quot;)
-  to_lower = word.downcase()
-  return first + (to_lower? to_lower: word)
+String.prototype.humanize = function() {
+    var word = this.strip()
+    var first = word[0]
+    word = word.substring(1).replace(/_+/g, &quot; &quot;).replace(/([A-Z])/g, &quot; $1&quot;).replace(/\s+/g, &quot; &quot;)
+    to_lower = word.downcase()
+    return first + (to_lower ? to_lower : word)
 }
 
 
-<span id='String-method-underscore'>/**
-</span> * @member   String
- * @method   underscore
+<span id='Kernel-CoreExt-String-method-underscore'>/**
+</span> * @method   underscore
  *
  * returns a underscored string
  *
- * ###Example:
+ * ### Example:
  *
- *      &quot;TheRollingStone&quot;.underscore()   //=&gt; &quot;The rolling stones&quot;
+ *      &quot;TheRollingStone&quot;.underscore()   //=&gt; &quot;The_rolling_stones&quot;
  *
  *
  * @return {String} string
  *
  */
+String.prototype.underscore = function() {
 
-
-
-String.prototype.underscore = function(){
-
-  return this.humanize().replace(/\s+_*/g, &quot;_&quot;)
+    return this.humanize().replace(/\s+_*/g, &quot;_&quot;)
 }
 
-<span id='String-method-camel_case'>/**
-</span> * @member  String
- * @method  camel_case
+<span id='Kernel-CoreExt-String-method-camel_case'>/**
+</span> * @method  camel_case
  *
  * Returns the same string in camel case form.
  *
  *
- * ###Example
+ * ### Example
  *
  *     &quot;the_rollings stones&quot;.camel_case() //=&gt; &quot;theRollingStones&quot;
  * @return  {String} String
  *
- * ###Comments:
+ * ### Comments:
+ *
  * &quot;seek_case&quot;
  *
  **/
+String.prototype.camel_case = function() {
+    var sentence = &quot;&quot;
+    var first = this.strip()[0]
+    this.strip().split(/[\s_]+/g).each(function(word) {
+        sentence += word[0].toUpperCase()
+        sentence += word.substring(1)
+    })
 
-String.prototype.camel_case = function(){
-  var sentence = &quot;&quot;
-  var first = this.strip()[0]
-  this.strip().split(/[\s_]+/g ).each(function(word){
-    sentence += word[0].toUpperCase()
-    sentence += word.substring(1)
-})
-
-  return first + sentence.substring(1)
+    return first + sentence.substring(1)
 }
 
-<span id='String-method-class_name'>/**
-</span> * @member String
- * @method class_name
+<span id='Kernel-CoreExt-String-method-class_name'>/**
+</span> * @method class_name
  *
  * Takes the String passed and returns a camelCase class name.
  *
  * @return      {String} Returns camelCase name of class
  *
  */
-String.prototype.class_name = function(){
-  var sentence = &quot;&quot;
-  var first = this.strip()[0]
-  this.strip().split(/[\s_]+/g ).each(function(word){
-    sentence += word[0].toUpperCase()
-    sentence += word.substring(1)
-})
+String.prototype.class_name = function() {
+    var sentence = &quot;&quot;
+    var first = this.strip()[0]
+    this.strip().split(/[\s_]+/g).each(function(word) {
+        sentence += word[0].toUpperCase()
+        sentence += word.substring(1)
+    })
 
-  return first.toUpperCase() + sentence.substring(1)
+    return first.toUpperCase() + sentence.substring(1)
 }
 
-<span id='String-method-index'>/**
-</span> * @member   String
- * @method   index
+<span id='Kernel-CoreExt-String-method-index'>/**
+</span> * @method   index
  * Returns the index of the first occurrence of the given substring or pattern
- * 'regexp' in str. Returns null if not found. If the second parameter is
+ * &#39;regexp&#39; in str. Returns null if not found. If the second parameter is
  * present, it specifies the position in the string to begin the search.
  *
  *
  * @param       {string} string/regex
  * @return      {Number} Index Index of char
  *
- * ###Example
+ * ### Example
  *      &quot;hello&quot;.index(&quot;e&quot;)  //=&gt; 1
  */
-
-
-String.prototype.index = function(){
-  if (arguments.length == 0 || arguments.length &gt; 2)
+String.prototype.index = function() {
+    if (arguments.length == 0 || arguments.length &gt; 2)
     //throw (&quot;wrong number of arguments&quot;)
-    return null
-  var pos
-  var str = arguments[0].toString()
-  if (arguments.length &gt; 1){
-     pos = this.normalize_index(arguments[1])
-     if(pos == null)
-       return pos
-     var find = this.substr(pos, this.length - pos)
-  }
-  if (str[0] == '/' &amp;&amp; str[str.length-1] == '/' &amp;&amp; str[1] == '[' &amp;&amp; str[str.length-2] == ']'){
-    var min = this.length
-    var entradoAlMenosUnaVez = false
-    for(var i=2;i&lt;str.length - 2; i++)
-      if (min &gt;= find.search(str[i]) &amp;&amp; find.search(str[i]) &gt;= 0){
-         min = find.search(str[i])+pos
-         entradoAlMenosUnaVez = true
-         }
-    return min &gt;= 0 &amp;&amp; entradoAlMenosUnaVez? min : null
-  }
-  return this.indexOf(arguments[0]) &lt; 0? null : this.indexOf(arguments[0])
-// todo: Falta que funcione al pasar por parametros
-// ? y una letra, ya que da error de sintaxis
+        return null
+    var pos
+    var str = arguments[0].toString()
+    if (arguments.length &gt; 1) {
+        pos = this.normalize_index(arguments[1])
+        if (pos == null)
+            return pos
+        var find = this.substr(pos, this.length - pos)
+    }
+    if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39; &amp;&amp; str[1] == &#39;[&#39; &amp;&amp; str[str.length - 2] == &#39;]&#39;) {
+        var min = this.length
+        var entradoAlMenosUnaVez = false
+        for (var i = 2; i &lt; str.length - 2; i++)
+            if (min &gt;= find.search(str[i]) &amp;&amp; find.search(str[i]) &gt;= 0) {
+                min = find.search(str[i]) + pos
+                entradoAlMenosUnaVez = true
+            }
+        return min &gt;= 0 &amp;&amp; entradoAlMenosUnaVez ? min : null
+    }
+    return this.indexOf(arguments[0]) &lt; 0 ? null : this.indexOf(arguments[0])
+        // todo: Falta que funcione al pasar por parametros
+        // ? y una letra, ya que da error de sintaxis
 }
 
-<span id='String-method-normalize_index'>/**
-</span> * @member   String
- * @method   normalize_index
+<span id='Kernel-CoreExt-String-method-normalize_index'>/**
+</span> * @method   normalize_index
  *
  * Converts an negative index passed to positive valid index
  *
  * @param       {Number} number
  * @return      {Number} number equivalent positive index
  *
- * ###Comments:
+ * ### Comments:
  * In case of abs() of number more than this.length, returns null, else returns index
  *
  */
-String.prototype.normalize_index = function(){
-  if (typeof(arguments[0]) === &quot;number&quot;)
-     if (arguments[0] &lt; 0? Math.abs(arguments[0]) &lt;= this.length : Math.abs(arguments[0]) &lt;= this.length - 1)
-      return arguments[0] &lt; 0? arguments[0] + this.length : arguments[0]
-  return null
+String.prototype.normalize_index = function() {
+    if (typeof(arguments[0]) === &quot;number&quot;)
+        if (arguments[0] &lt; 0 ? Math.abs(arguments[0]) &lt;= this.length : Math.abs(arguments[0]) &lt;= this.length - 1)
+            return arguments[0] &lt; 0 ? arguments[0] + this.length : arguments[0]
+    return null
 }
 
-<span id='String-method-insert'>/**
+<span id='Kernel-CoreExt-String-method-insert'>/**
 </span> * @method      insert
  *
  * Inserts other string before the character at the given index, modifying str.
@@ -213,42 +196,41 @@ String.prototype.normalize_index = function(){
  * given character. The intent is to insert a String so that it starts at the given index.
  *
  * @param       {number} index
- * @param       {string} string
- * @return      {String} A string that insert
+ * @return      {String} string A string that insert
  *
- * ###Comments:
+ * ### Comments:
  * giving the position and a new string the function will insert the new string next to the given position.
  *
- * ###Example
+ * ### Example
  *      &quot;hello&quot;.insert(2, &quot;haha&quot;)
  *      //=&gt; hehahallo
  */
-String.prototype.insert = function(){
-  if (arguments.length == 0 || arguments.length &gt; 2)
+String.prototype.insert = function() {
+    if (arguments.length == 0 || arguments.length &gt; 2)
     //throw (&quot;wrong number of arguments&quot;)
-    return null
-  if (arguments[0] == this.length)
-    return this + arguments[1]
-  else if (arguments[0] == -(this.length + 1))
-    return arguments[1] + this
-  var pos = arguments[0] &gt;= 0? this.normalize_index(arguments[0]) : this.normalize_index(arguments[0]) + 1
-  if (this.normalize_index(arguments[0]) == null)
-    return null
-    //throw(&quot;index out of string&quot;)
-  var str = &quot;&quot;
-  for(var i=0;i&lt;=this.length;i++)
-     if(i == pos){
-       str = str + arguments[1]
-       var add = true
-     }
-     else if(!i==0 &amp;&amp; add)
-       str = str + this[i - 1]
-          else
-            str = str + this[i]
-  return str
+        return null
+    if (arguments[0] == this.length)
+        return this + arguments[1]
+    else if (arguments[0] == -(this.length + 1))
+        return arguments[1] + this
+    var pos = arguments[0] &gt;= 0 ? this.normalize_index(arguments[0]) : this.normalize_index(arguments[0]) + 1
+    if (this.normalize_index(arguments[0]) == null)
+        return null
+            //throw(&quot;index out of string&quot;)
+    var str = &quot;&quot;
+    for (var i = 0; i &lt;= this.length; i++)
+        if (i == pos) {
+            str = str + arguments[1]
+            var add = true
+        } else
+    if (!i == 0 &amp;&amp; add)
+        str = str + this[i - 1]
+    else
+        str = str + this[i]
+    return str
 }
 
-<span id='String-method-ljust'>/**
+<span id='Kernel-CoreExt-String-method-ljust'>/**
 </span> * @method   ljust
  *
  * Fills the string until completes the number or character passed as parameter
@@ -257,97 +239,99 @@ String.prototype.insert = function(){
  *
  *
  * @param       {Number} number
- * @param       {string} string
- * @return      {String} string
+ * @param       {string} padd_char Character to padd with.
  *
- * ###Comments: Adjust the position of the parameter extending it to the max position
+ * ### Comments: Adjust the position of the parameter extending it to the max position
  *
- * ###Example
+ * ### Example
  *      &quot;hello&quot;.ljust(10,&quot;p&quot;)
  *      //=&gt; helloppppp
  */
-String.prototype.ljust = function(){
-  var str = this
-  var j = 0
-  for(var i = 0; i &lt; (arguments[0] - this.length); i++)
-    if (arguments.length &gt; 1 &amp;&amp; arguments[1].length &gt; 1)
-      str = str + arguments[1][i % arguments[1].length]
-    else if (arguments.length &gt; 1)
-        str = str + arguments[1]
+String.prototype.ljust = function() {
+    var str = this
+    var j = 0
+    for (var i = 0; i &lt; (arguments[0] - this.length); i++)
+        if (arguments.length &gt; 1 &amp;&amp; arguments[1].length &gt; 1)
+            str = str + arguments[1][i % arguments[1].length]
         else
-         str = str + &quot; &quot;
-  return str
+    if (arguments.length &gt; 1)
+        str = str + arguments[1]
+    else
+        str = str + &quot; &quot;
+    return str
 }
 
-<span id='String-method-lstrip'>/**
+<span id='Kernel-CoreExt-String-method-lstrip'>/**
 </span> * @method      lstrip
  *
- * Returns a copy of string with leading whitespace removed. See also 'String#rstrip'
- * and 'String#strip'.
+ * Returns a copy of string with leading whitespace removed. See also &#39;Kernel.CoreExt.String#rstrip&#39;
+ * and &#39;Kernel.CoreExt.String#strip&#39;.
  *
- * @param       {string} string
  * @return      {String} string
  *
- * ###Example
+ * ### Example
+ *
+ *     &quot;   ham&quot;.lstrip()
+ *     // =&gt; &quot;ham&quot;
  *
  */
-String.prototype.lstrip = function(){
-  return this.replace(/^\s+/g,&quot;&quot;)
+String.prototype.lstrip = function() {
+    return this.replace(/^\s+/g, &quot;&quot;)
 }
 
-<span id='String-method-swapcase'>/**
+<span id='Kernel-CoreExt-String-method-swapcase'>/**
 </span> * @method   swapcase
  *
  * Returns a copy of string with uppercase alphabetic characters converted to lowercase
  * and lowercase characters converted to uppercase.
  *
- * @param       {string} string
  * @return      {String} string
  *
- * ###Comments: Case conversion is effective only in ASCII region.
+ * ### Comments:
  *
- * ###Example
+ * Case conversion is effective only in ASCII region.
+ *
+ * ### Example
+ *
  *      &quot;Hello&quot;.swapcase()
  *      //=&gt; hELLO
  *
  */
-String.prototype.swapcase= function(){
-  var str = []
-  for(var i = 0; i &lt; this.length;i++){
-    if ((this[i].charCodeAt(0) &gt; 64) &amp;&amp; (this[i].charCodeAt(0) &lt; 97)){
-      str[i] = this[i].toLowerCase()
+String.prototype.swapcase = function() {
+    var str = []
+    for (var i = 0; i &lt; this.length; i++) {
+        if ((this[i].charCodeAt(0) &gt; 64) &amp;&amp; (this[i].charCodeAt(0) &lt; 97)) {
+            str[i] = this[i].toLowerCase()
+        } else {
+            str[i] = this[i].toUpperCase()
+        }
     }
-    else{
-      str[i] = this[i].toUpperCase()
-    }
-  }
-  var word = str.join(&quot;&quot;)
-  return word
+    var word = str.join(&quot;&quot;)
+    return word
 }
 
-<span id='String-method-emptyS-'>/**
+<span id='Kernel-CoreExt-String-method-emptyS-'>/**
 </span> * @method   empty$
  *
  * Returns true if self contains no elements
  *
- * @param      {String}string
  * @return     {Boolean} Boolean Returns true if empty and false if not
  *
- * ###Comments:     asks if the variable contains values
+ * ### Comments:     asks if the variable contains values
  *
- * ###Example:
+ * ### Example:
  *      &quot;hello&quot;.empty$U()   //=&gt; false
  *      &quot;&quot;.empty$U()        //=&gt; true
  *
  */
-String.prototype.empty$U = function(){
-   if(arguments.length &gt; 0)
-      //throw (&quot;wrong number of arguments. This function not needs arguments&quot;)
-      return null
-   return this.length&gt;0? false : true
+String.prototype.empty$U = function() {
+    if (arguments.length &gt; 0)
+    //throw (&quot;wrong number of arguments. This function not needs arguments&quot;)
+        return null
+    return this.length &gt; 0 ? false : true
 }
 
-<span id='String-method-downcase'>/**
+<span id='Kernel-CoreExt-String-method-downcase'>/**
 </span> * @method   downcase
  *
  * Returns a copy of string with all uppercase letters replaced with their lowercase counterparts.
@@ -358,19 +342,19 @@ String.prototype.empty$U = function(){
  * @param      {Arguments} This
  * @return     {string} String. Returns this modified with character Ascii of this downcase
  *
- * ###Comments: Turns everything to downcase.
+ * ### Comments: Turns everything to downcase.
  *
- * ###Example
+ * ### Example
  *
  *     &quot;hEllO&quot;.downcase() //=&gt; &quot;hello&quot;
  *     &quot;hello&quot;.downcase() //=&gt;  null
  *
  */
-String.prototype.downcase = function(){
-   return this.toLowerCase() == this? null : this.toLowerCase()
+String.prototype.downcase = function() {
+    return this.toLowerCase() == this ? null : this.toLowerCase()
 }
 
-<span id='String-method-casecmp'>/**
+<span id='Kernel-CoreExt-String-method-casecmp'>/**
 </span> * @method     casecmp
  *
  * Compares two strings and returns 0 if the two strings are equals.
@@ -381,26 +365,26 @@ String.prototype.downcase = function(){
  * @param     {String} String
  * @return    {Number} Returns -1 (less than), 0 (equals), 1 (greater than)
  *
- * ###Comments: Case-insensitive version of ruby String.
+ * ### Comments: Case-insensitive version of ruby String.
  *
- * ###Example
+ * ### Example
  *
  *     &quot;abcdef&quot;.casecmp(&quot;abcde&quot;)     //=&gt; 1
  *     &quot;aBcDeF&quot;.casecmp(&quot;abcdef&quot;)    //=&gt; 0
  *     &quot;abcdef&quot;.casecmp(&quot;abcdefg&quot;)   //=&gt; -1
  *     &quot;abcdef&quot;.casecmp(&quot;ABCDEF&quot;)    //=&gt; 0
  */
-String.prototype.casecmp = function(){
+String.prototype.casecmp = function() {
 
-  if (arguments.length &lt; 1)
-   throw(&quot;ArgumentError: Wrong number of arguments&quot;)
-  var str1 = this.toLowerCase()
-  var str2 = arguments[0].toLowerCase()
-  return ( ( str1 == str2 ) ? 0 : ( ( str1 &gt; str2 ) ? 1 : -1 ) );
+    if (arguments.length &lt; 1)
+        throw (&quot;ArgumentError: Wrong number of arguments&quot;)
+    var str1 = this.toLowerCase()
+    var str2 = arguments[0].toLowerCase()
+    return ((str1 == str2) ? 0 : ((str1 &gt; str2) ? 1 : -1));
 
 }
 
-<span id='String-method-ord'>/**
+<span id='Kernel-CoreExt-String-method-ord'>/**
 </span> * @method   ord
  *
  * Returns the integer ordinal of a one-character string.
@@ -408,26 +392,26 @@ String.prototype.casecmp = function(){
  * @param       {String}  One letter only from ASCII code.
  * @return      {String}
  *
- * ###Comments:   This function works using a javascript function(.charCodeAt).
+ * ### Comments:   This function works using a javascript function(.charCodeAt).
  *
- * ###Example
+ * ### Example
  *     &quot;A&quot;.ord()     //=&gt; 65
  *     &quot;B&quot;.ord()     //=&gt; 66
  *     &quot;a&quot;.ord()     //=&gt; 97
  *     &quot;b&quot;.ord()     //=&gt; 98
  */
-String.prototype.ord = function(){
-   return this.charCodeAt(0)
+String.prototype.ord = function() {
+    return this.charCodeAt(0)
 }
 
-<span id='String-method-oct'>/**
+<span id='Kernel-CoreExt-String-method-oct'>/**
 </span> * @method       oct
  * This function make an octal value from a number.
  *
  * @param        {String}     Number between -7 and 7 and discard the rest.
  * @return       {String}     Return an octal value .
  *
- * ###Comments: This function works using a javascript function(parseInt). Returns
+ * ### Comments: This function works using a javascript function(parseInt). Returns
  * a copy of str with uppercase alphabetic characters converted to lowercase and
  * lowercase characters converted to uppercase. Note: case conversion is effective
  * only in ASCII region.
@@ -435,166 +419,162 @@ String.prototype.ord = function(){
  *
  *
  */
-String.prototype.oct = function(){
-  oct = this.match( /^[(-7)-7]+/)
-  oct= oct || [&quot;0&quot;]
-  return parseInt(oct[0], 8)
+String.prototype.oct = function() {
+    oct = this.match(/^[(-7)-7]+/)
+    oct = oct || [&quot;0&quot;]
+    return parseInt(oct[0], 8)
 }
 
-<span id='String-method-reverse'>/**
+<span id='Kernel-CoreExt-String-method-reverse'>/**
 </span> * @method       reverse
  *
  * Returns a reversed version of an introduced string
  *
- * @param        {String}
  * @return       {String}     Return the reverse from a string.
  *
- * ###Comments: This function use a &quot;.reverse&quot; from array class.
+ * ### Comments: This function use a &quot;.reverse&quot; from array class.
  *
- * ###Example:
+ * ### Example:
  * &quot;pacoelmejor&quot;.reverse()
  *
  * //=&gt; &quot;rojemleocap&quot;
  */
-String.prototype.reverse = function(){
-   return this.split(&quot;&quot;).reverse().join(&quot;&quot;)
+String.prototype.reverse = function() {
+    return this.split(&quot;&quot;).reverse().join(&quot;&quot;)
 }
 
-<span id='String-method-includeS-U'>/**
+<span id='Kernel-CoreExt-String-method-includeS-U'>/**
 </span> * @method       include$U
  *
  * Returns true if str contains the given string or character.
  *
- * @param        {String}
- * @return       {True o false}
+ * ### Comments:   Responds if the atribute given is contained in the variable
  *
- * ###Comments:   Responds if the atribute given is contained in the variable
- *
- * ###Example
+ * ### Example
  *     &quot;Happy&quot;.include$U(&quot;a&quot;)     //=&gt; true
  *     &quot;Happy&quot;.include$U(&quot;app&quot;)   //=&gt; true
  *     &quot;Happy&quot;.include$U(&quot;e&quot;)     //=&gt; false
  *
+ * @param        {String} pattern String to look for.
+ * @return       {Boolean} True if pattern found.
  **/
-String.prototype.include$U = function(){
-   return (this.lastIndexOf(arguments[0]) &gt; -1)? true : false
+String.prototype.include$U = function() {
+    return (this.lastIndexOf(arguments[0]) &gt; -1) ? true : false
 }
 
-<span id='String-method-include_some_of'>/**
+<span id='Kernel-CoreExt-String-method-include_some_of'>/**
 </span> * @method       include_some_of
  *
  * Returns true if str contains the any of the given string or character.
  *
- * @param        {String}
- * @return       {True o false}
+ * @param        {String}   pattern_list list of terms to look for.
+ * @return       {Boolean}  True if found some of them.
  *
- * ###Comments:   Responds if the atribute given is contained in the variable
+ * ### Comments:   Responds if the atribute given is contained in the variable
  *
- * ###Example1:
+ * ### Example1:
  * &quot;pacoelmejor&quot;.include_some_of$U(&quot;oe&quot;, &quot;g&quot;)
  * //=&gt; true
  *
- * ###Example2:
+ * ### Example2:
  * &quot;pacoelmejor&quot;.include_some_of$U(&quot;h&quot;, &quot;oe&quot;)
  * //=&gt; true
  *
- * ###Example2:
+ * ### Example2:
  * &quot;pacoelmejor&quot;.include_some_of$U(&quot;h&quot;, &quot;g&quot;)
  * //=&gt; false
  *
  **/
 // Can receive comma-separated strings or an array
-String.prototype.include_some_of$U = function(
-  ){
-   var included = false
-   for (var i=0; i&lt;arguments.length; i++){
-     if (typeof(arguments[i]) == &quot;string&quot;)
-        included = included || this.include$U(arguments[i])
-     if (arguments[i] instanceof Array)
-        included = included || String.prototype.include_some_of$U.apply(this, arguments[i])
-   }
-   return included
+String.prototype.include_some_of$U = function() {
+    var included = false
+    for (var i = 0; i &lt; arguments.length; i++) {
+        if (typeof(arguments[i]) == &quot;string&quot;)
+            included = included || this.include$U(arguments[i])
+        if (arguments[i] instanceof Array)
+            included = included || String.prototype.include_some_of$U.apply(this, arguments[i])
+    }
+    return included
 }
 
-<span id='String-method-rindex'>/**
+<span id='Kernel-CoreExt-String-method-rindex'>/**
 </span> * @method       rindex
  *
  * Returns the index of the string passed as parameter
  *
- * @param        {String}
- * @return       {Integer}     Returns index.
+ * @param        {String}     search Searched string.
+ * @return       {Number}     Returned index.
  *
- * ###Comments:
  *
- * ###Example1:
+ * ### Example1:
  *
  * &quot;pacoelmejor&quot;.rindex(&quot;e&quot;)
  * //=&gt; 7
  *
- * ###Example2:
+ * ### Example2:
  *
  * &quot;pacoelmejor&quot;.rindex(&quot;el&quot;)
  * //=&gt; 4
  */
-String.prototype.rindex = function(){
-   if (arguments.length == 0)
-      return null
-   return (this.lastIndexOf(arguments[0]) &gt; 0)? this.lastIndexOf(arguments[0]) : false
+String.prototype.rindex = function(search) {
+    if (arguments.length == 0)
+        return null
+    return (this.lastIndexOf(search) &gt; 0) ? this.lastIndexOf(search) : false
 }
 
-<span id='String-method-center'>/**
+<span id='Kernel-CoreExt-String-method-center'>/**
 </span> * @method       center
  * Returns a center word in the string
  *
- * @param        {String}
+ * @chainable
+ * @param        {Number}     length  Size of the resulting line.
+ * @param        {String}     padding String to pad with.
  * @return       {String}     Return the a string with a word center.
  *
- * ###Comments: If integer is greater than the length of str,
+ * ### Comments: If integer is greater than the length of str,
  * returns a new String of length integer with str centered and padded with padstr; otherwise, returns str.
  *
- * ###Example
+ * ### Example
  *
  *    &quot;hello&quot;.center(4)            //=&gt; &quot;hello&quot;
  *    &quot;hello&quot;.center(20)           //=&gt; &quot;       hello        &quot;
- *    &quot;hello&quot;.center(20, '123')    //=&gt; &quot;1231231hello12312312&quot;
+ *    &quot;hello&quot;.center(20, &#39;123&#39;)    //=&gt; &quot;1231231hello12312312&quot;
  */
-String.prototype.center = function(){
- if (arguments.length == 0 || arguments.length &gt; 2)
-     throw(&quot;wrong number arguments&quot;)
-  if (this.length &gt;= arguments[0])
-     return this
-  var str = &quot;&quot;
-  var i = 0
-  var j = 0
-  while(i&lt;=(arguments[0] - this.length)){
-      if (i == (arguments[0]-this.length) / 2){
-         j = 0
-         str += this
-         }
-      else if (arguments.length &gt; 1){
-         str += arguments[1].length == 1? arguments[1] : arguments[1][j]
-         j = (j+1)%arguments[1].length
-         }
-           else
-              str += &quot; &quot;
-      i++
-  }
-  return str
+String.prototype.center = function(length, padding) {
+    if (arguments.length == 0 || arguments.length &gt; 2)
+        throw (&quot;wrong number arguments&quot;)
+    if (this.length &gt;= length)
+        return this
+    var str = &quot;&quot;
+    var i = 0
+    var j = 0
+    while (i &lt;= (length - this.length)) {
+        if (i == (length - this.length) / 2) {
+            j = 0
+            str += this
+        } else if (arguments.length &gt; 1) {
+            str += padding.length == 1 ? padding : padding[j]
+            j = (j + 1) % padding.length
+        } else
+            str += &quot; &quot;
+        i++
+    }
+    return str
 }
 
-<span id='String-method-chomp'>/**
+<span id='Kernel-CoreExt-String-method-chomp'>/**
 </span> * @method       chomp
- *
  * Returns a string without \n or \r or \r\n of the end.
+ *
  *
  * @param        {String} This
  * @return       {String}
  *
- * ###Comments: Returns a new String with the given record separator removed from the end of str (if present).
+ * ### Comments: Returns a new String with the given record separator removed from the end of str (if present).
  * If $/ has not been changed from the default Ruby record separator,
  * then chomp also removes carriage return characters (that is it will remove \n, \r, and \r\n).
  *
- * ###Example
+ * ### Example
  *
  *     &quot;hello&quot;.chomp()            //=&gt; &quot;hello&quot;
  *     &quot;hello\n&quot;.chomp()          //=&gt; &quot;hello&quot;
@@ -605,31 +585,30 @@ String.prototype.center = function(){
  *     &quot;hello&quot;.chomp(&quot;llo&quot;)       //=&gt; &quot;he&quot;
  *
  */
-String.prototype.chomp = function(){
+String.prototype.chomp = function() {
     if (arguments.length == 1)
-       return this.replace(arguments[0], &quot;&quot;)
+        return this.replace(arguments[0], &quot;&quot;)
     if (this.search(/\r\n/i) == this.length - 2)
-       return this.replace(&quot;\r\n&quot;, &quot;&quot;)
+        return this.replace(&quot;\r\n&quot;, &quot;&quot;)
     if (this.search(/\r/i) == this.length - 1)
-       return this.replace(&quot;\r&quot;, &quot;&quot;)
+        return this.replace(&quot;\r&quot;, &quot;&quot;)
     if (this.search(/\n/i) == this.length - 1)
-       return this.replace(&quot;\n&quot;, &quot;&quot;)
+        return this.replace(&quot;\n&quot;, &quot;&quot;)
     return this
 }
 
-<span id='String-method-chop'>/**
+<span id='Kernel-CoreExt-String-method-chop'>/**
 </span> * @method       chop
  *
  * Returns a string without \n or \r or \r\n or char of the end the String.
  *
- * @param        {String}
  * @return       {String}
  *
  * Comments: Returns a new String with the last character removed. If the string ends with \r\n, both characters are removed.
  * Applying chop to an empty string returns an empty string.
- * String#chomp is often a safer alternative, as it leaves the string unchanged if it doesn‘t end in a record separator.
+ * Kernel.CoreExt.String#chomp is often a safer alternative, as it leaves the string unchanged if it doesn‘t end in a record separator.
  *
- * ###Example
+ * ### Example
  *    &quot;string\r\n&quot;.chop()   //=&gt; &quot;string&quot;
  *    &quot;string\n\r&quot;.chop()   //=&gt; &quot;string\n&quot;
  *    &quot;string\n&quot;.chop()     //=&gt; &quot;string&quot;
@@ -637,66 +616,61 @@ String.prototype.chomp = function(){
  *    &quot;x&quot;.chop.chop()       //=&gt; &quot;&quot;
  *
  **/
-String.prototype.chop = function(){
-  if (arguments.length &gt; 0)
-//     throw(&quot;wrong number of arguments&quot;)
-    return null
-  var str = this.chomp()
-  if (str.length == this.length)
-    return str.slice(0,this.length-1)
-  return str
+String.prototype.chop = function() {
+    if (arguments.length &gt; 0)
+    //     throw(&quot;wrong number of arguments&quot;)
+        return null
+    var str = this.chomp()
+    if (str.length == this.length)
+        return str.slice(0, this.length - 1)
+    return str
 }
 
-<span id='String-method-hex'>/**
+<span id='Kernel-CoreExt-String-method-hex'>/**
 </span> * @method       hex
  *
  * Returns a number hexadecimal convert to decimal.
  *
- * @param        {Number}
  * @return       {Number}
  *
  * Comments: Treats leading characters from str as a string of hexadecimal digits (with an optional sign and an optional 0x)
  * and returns the corresponding number. Zero is returned on error.
  *
- * ###Example
+ * ### Example
  *    &quot;0x0a&quot;.hex()     //=&gt; 10
  *    &quot;-1234&quot;.hex()    //=&gt; -4660
  *    &quot;0&quot;.hex()        //=&gt; 0
  *    &quot;wombat&quot;.hex()   //=&gt; 0
  *
  **/
-String.prototype.hex = function(){
-   if (this.search(&quot;0x&quot;) == 0)
-     return parseInt(this)
-   return isNaN(parseInt(this,16))? 0 : parseInt(this,16)
+String.prototype.hex = function() {
+    if (this.search(&quot;0x&quot;) == 0)
+        return parseInt(this)
+    return isNaN(parseInt(this, 16)) ? 0 : parseInt(this, 16)
 }
 
-<span id='String-method-chr'>/**
+<span id='Kernel-CoreExt-String-method-chr'>/**
 </span> * @method       chr
  *
  * Returns first char of the string.
  *
- * @param        {Char}
- * @return       {Char}
+ * @return       {String} One char string
  *
  * Comments: Returns a one-character string at the beginning of the string.
  *
- * #Example
+ * ### Example
  *      a = &quot;abcde&quot;
  *      a.chr()
  *      //=&gt; &quot;a&quot;
  *
  **/
-String.prototype.chr = function(){
-// No se puede coger el numero que se
-// mete en this y sacar un string con la conversion en hexadecimal
-// Problema: this no puede ser un valor decimal en esta clase, ya que
-// solo deja meter strings
-  if (this.length &gt; 1)
-     return this[0]
-  return this
+String.prototype.chr = function() {
+    if (this.length &gt; 1)
+        return this[0]
+    return this
 }
-<span id='String-method-rjust'>/**
+
+<span id='Kernel-CoreExt-String-method-rjust'>/**
 </span> * @method       rjust
  *
  * If integer is greater than the length of str, returns a new String of length integer
@@ -709,33 +683,31 @@ String.prototype.chr = function(){
  *
  *    &quot;hello&quot;.rjust(4)            //=&gt; &quot;hello&quot;
  *    &quot;hello&quot;.rjust(20)           //=&gt; &quot;               hello&quot;
- *    &quot;hello&quot;.rjust(20, '1234')   //=&gt; &quot;123412341234123hello&quot;
+ *    &quot;hello&quot;.rjust(20, &#39;1234&#39;)   //=&gt; &quot;123412341234123hello&quot;
  *
  **/
-String.prototype.rjust = function(){
-alert(&quot;okk&quot;);
-  if (this.length &gt;= arguments[0])
-     return this
-  var str = &quot;&quot;
-  var i = 0
-  while(i&lt;(arguments[0] - this.length)){
-       if (arguments.length &gt; 1){
-         str += arguments[1].length == 1? arguments[1] : arguments[1][i%arguments[1].length]
-         }
-       else
-         str += &quot; &quot;
-      i++
-  }
-  return str+this
+String.prototype.rjust = function() {
+    if (this.length &gt;= arguments[0])
+        return this
+    var str = &quot;&quot;
+    var i = 0
+    while (i &lt; (arguments[0] - this.length)) {
+        if (arguments.length &gt; 1) {
+            str += arguments[1].length == 1 ? arguments[1] : arguments[1][i % arguments[1].length]
+        } else
+            str += &quot; &quot;
+        i++
+    }
+    return str + this
 }
 
-<span id='String-method-succ'>/**
+<span id='Kernel-CoreExt-String-method-succ'>/**
 </span> * @method       succ
  *
  * Returns the successor to str. The successor is calculated by incrementing characters starting from the rightmost alphanumeric
  * or the rightmost character if there are no alphanumerics in the string. Incrementing a digit always results in another digit,
  * and incrementing a letter results in another letter of the same case. Incrementing nonalphanumerics uses the underlying character
- * set's collating sequence.
+ * set&#39;s collating sequence.
  *
  * @param        {String} Str
  * @return       {String} Str
@@ -745,35 +717,34 @@ alert(&quot;okk&quot;);
  *
  *  &quot;abcd&quot;.succ()        //=&gt; &quot;abce&quot;
  *  &quot;THX1138&quot;.succ()     //=&gt; &quot;THX1139&quot;
- *  &quot;&lt;&lt;koala&gt;&gt;&quot;.succ()   //=&gt; &quot;&lt;&lt;koalb&gt;&gt;&quot;
  *  &quot;1999zzz&quot;.succ()     //=&gt; &quot;2000aaa&quot;
  *  &quot;ZZZ9999&quot;.succ()     //=&gt; &quot;AAAA0000&quot;
  *  &quot;***&quot;.succ()         //=&gt; &quot;**+&quot;
  *
  **/
-String.prototype.succ = function(){
-  var str = &quot;&quot;
-  var i
-  var vuelta = true
-  for(i=this.length-1;i&gt;=0 &amp;&amp; vuelta;i--){
-    if (this[i] == '&gt;' || this[i] == '&lt;')
-       str = this[i] + str
-    else if(this[i]=='z' || this[i]=='Z')
-            str = (this[i]=='z'? 'a':'A') + str
-         else if(this[i] == '9')
-                 str = '0' + str
-              else
-                 str = String.fromCharCode(this[i].charCodeAt()+1) + str
-  vuelta =this[i] == 'z' || this[i] == 'Z' || this[i]=='9' || this[i]=='&lt;' || this[i]=='&gt;'
-}
-  if (this[0] == '&lt;' &amp;&amp; i &lt; 0 &amp;&amp; (this[2] == 'z' || this[2] == 'Z'))
-     return &quot;&lt;&lt;&quot; + str[2] + str.substr(2,str.length-2)
-  else if (this[0] == '&lt;' &amp;&amp; i &lt; 0 &amp;&amp; this[2] == '9')
-     return &quot;&lt;&lt;&quot; + str[2].succ() + str.substr(2,str.length-2)
-  return i &lt; 0 &amp;&amp; (this[0]=='z' || this[0]=='Z')? str[0] + str : i &lt; 0 &amp;&amp; this[0] == '9'? str[0].succ() + str : this.substr(0,i+1)+str
+String.prototype.succ = function() {
+    var str = &quot;&quot;
+    var i
+    var vuelta = true
+    for (i = this.length - 1; i &gt;= 0 &amp;&amp; vuelta; i--) {
+        if (this[i] == &#39;&gt;&#39; || this[i] == &#39;&lt;&#39;)
+            str = this[i] + str
+        else if (this[i] == &#39;z&#39; || this[i] == &#39;Z&#39;)
+            str = (this[i] == &#39;z&#39; ? &#39;a&#39; : &#39;A&#39;) + str
+        else if (this[i] == &#39;9&#39;)
+            str = &#39;0&#39; + str
+        else
+            str = String.fromCharCode(this[i].charCodeAt() + 1) + str
+        vuelta = this[i] == &#39;z&#39; || this[i] == &#39;Z&#39; || this[i] == &#39;9&#39; || this[i] == &#39;&lt;&#39; || this[i] == &#39;&gt;&#39;
+    }
+    if (this[0] == &#39;&lt;&#39; &amp;&amp; i &lt; 0 &amp;&amp; (this[2] == &#39;z&#39; || this[2] == &#39;Z&#39;))
+        return &quot;&lt;&lt;&quot; + str[2] + str.substr(2, str.length - 2)
+    else if (this[0] == &#39;&lt;&#39; &amp;&amp; i &lt; 0 &amp;&amp; this[2] == &#39;9&#39;)
+        return &quot;&lt;&lt;&quot; + str[2].succ() + str.substr(2, str.length - 2)
+    return i &lt; 0 &amp;&amp; (this[0] == &#39;z&#39; || this[0] == &#39;Z&#39;) ? str[0] + str : i &lt; 0 &amp;&amp; this[0] == &#39;9&#39; ? str[0].succ() + str : this.substr(0, i + 1) + str
 }
 
-<span id='String-method-next'>/**
+<span id='Kernel-CoreExt-String-method-next'>/**
 </span> * @method       next
  *
  *  Alias of the function succ.
@@ -782,12 +753,12 @@ String.prototype.succ = function(){
  * @return       {String} Str
  *
  **/
-String.prototype.next = function(){
-   return this.succ.apply(this,arguments)
+String.prototype.next = function() {
+    return this.succ.apply(this, arguments)
 }
 
-<span id='String-property-'>/**
-</span> * @ method   to_i
+<span id='Kernel-CoreExt-String-method-to_i'>/**
+</span> * @method   to_i
  *
  * Returns the result of interpreting leading characters in str as an integer base base (between 2 and 36).
  * Extraneous characters past the end of a valid number are ignored.
@@ -797,7 +768,7 @@ String.prototype.next = function(){
  * @ param    {int} -&gt; is a base (2 - 36), or 0 who is the same that 10
  * @ return   {Integret} Return a int if the string and paremeters are correct. Return 0 if string or parameter are incorrect
  *
- * ###Example
+ * ### Example
  *
  * &quot;12345&quot;.to_i()             //=&gt; 12345
  * &quot;99 red balloons&quot;.to_i()   //=&gt; 99
@@ -811,100 +782,89 @@ String.prototype.next = function(){
  *
  **/
 String.prototype.to_i = function() {
-var base = 10 //Base por defecto
-var result = 0 //Resultado por defecto
+    var base = 10 //Base por defecto
+    var result = 0 //Resultado por defecto
 
-      //Exception
-if(arguments.length &gt; 1)
-   //throw (&quot;wrong number of arguments. to_i( [base: 2 ... 36]) &quot;)
-   return null
+    //Exception
+    if (arguments.length &gt; 1)
+    //throw (&quot;wrong number of arguments. to_i( [base: 2 ... 36]) &quot;)
+        return null
 
-if(arguments.length != 0)
-    if(isNaN(arguments[0]) || (arguments[0] &lt; 2) || (arguments[0] &gt; 36))
-       //throw (&quot;Invalid argument for base (2 - 36)&quot;)
-       return null
-    else base = arguments[0]
+    if (arguments.length != 0)
+        if (isNaN(arguments[0]) || (arguments[0] &lt; 2) || (arguments[0] &gt; 36))
+        //throw (&quot;Invalid argument for base (2 - 36)&quot;)
+            return null
+        else base = arguments[0]
 
-return isNaN( parseInt(this,base) )? 0 : parseInt(this,base)
+    return isNaN(parseInt(this, base)) ? 0 : parseInt(this, base)
 }
 
-<span id='String-property-'>/**
-</span> * Returns the result of interpreting leading characters in str as a floating point number
- *
- * @member String  String.prototype.prueba = function(){
- * return this.replace(arguments[0], arguments[1])
- * }
- * var i=&quot;hello&quot;
- * i.prueba(/[aeio]/,&quot;+&quot;)
-*/
-
-<span id='String-method-to_f'>/**
+<span id='Kernel-CoreExt-String-method-to_f'>/**
 </span> * @method   to_f
  *
  * Returns the result of interpreting leading characters in str as a floating point number
  *
- * @param    {void}     //No parameters
- * @return   {Float}    //Returns float numbers if string is a number. Returns 0.0 if a string is not a number
+ * @return   {Number}    Returns float numbers if string is a number. Returns 0.0 if a string is not a number
  *
- * ###Example
+ * ### Example
  *      &quot;123.45e1&quot;.to_f()        //=&gt; 1234.5
  *      &quot;45.67 degrees&quot;.to_f()   //=&gt; 45.67
  *      &quot;thx1138&quot;.to_f()         //=&gt; 0.0
  *
  **/
 String.prototype.to_f = function() {
-  //Exception
-  if(arguments.length &gt; 0)
-    //throw (&quot;This function doesn't need arguments&quot;)
-    return null
+    //Exception
+    if (arguments.length &gt; 0)
+    //throw (&quot;This function doesn&#39;t need arguments&quot;)
+        return null
 
-  return isNaN(parseFloat(this))? 0.0 : parseFloat(this) ;
+    return isNaN(parseFloat(this)) ? 0.0 : parseFloat(this);
 }
 
-<span id='String-method-strip'>/**
+<span id='Kernel-CoreExt-String-method-strip'>/**
 </span> * @method   strip
  *
  * Returns a copy of str with leading and trailing whitespace removed.
  *
- * @param    {void}
  * @return  {String} // Return a copy of str with leading and trailing whitespace removed
  *
- * ###Example
+ * ### Example
  *      &quot;    hello    &quot;.strip()    //=&gt; &quot;hello&quot;
  *      &quot;\t goodbye\r\n&quot;.strip()   //=&gt; &quot;goodbye&quot;
  *
  **/
 String.prototype.strip = function() {
-  return this.lstrip().rstrip()
+    return this.lstrip().rstrip()
 }
 
-<span id='String-method-setbyte'>/**
+<span id='Kernel-CoreExt-String-method-setbyte'>/**
 </span> * @method   setbyte
  *
  * Modifies the position of the string given as first parameter and changes it for the ASCII code passed as second parameter
  *
- * @param    {Integer, Integer}
+ * @param    {Number} position Position to be substituted in the Array.
+ * @param    {Number} ascii    Ascii code to replace with.
  * @return  {String} Returns modified string
  *
- * ###Example
+ * ### Example
  *    &quot;pepe&quot;.setbyte(0, 65)
  *    // =&gt; &quot;Aepe&quot;
  *
  */
-String.prototype.setbyte = function(){
-     var that = this.split(&quot;&quot;)
-     if(arguments[0] &lt; that.length)
-       that[arguments[0]] = String.fromCharCode(arguments[1])
-     else
-	//throw(&quot;Wrong index&quot;)
-       return null
-     str = &quot;&quot;
-     for(var i = 0; i &lt; that.length; i++)
-      str += that[i]
- return str
+String.prototype.setbyte = function(position, ascii) {
+    var that = this.split(&quot;&quot;)
+    if (arguments[0] &lt; that.length)
+        that[arguments[0]] = String.fromCharCode(arguments[1])
+    else
+    //throw(&quot;Wrong index&quot;)
+        return null
+    str = &quot;&quot;
+    for (var i = 0; i &lt; that.length; i++)
+        str += that[i]
+    return str
 }
 
-<span id='String-method-partition'>/**
+<span id='Kernel-CoreExt-String-method-partition'>/**
 </span> * @method       partition
  *
  * Searches sep or pattern (regexp) in the string and returns the part before it, the match, and the part after it.
@@ -912,95 +872,95 @@ String.prototype.setbyte = function(){
  *
  * @return       {Array} ary
  *
- * ###Example
+ * ### Example
  *
  *      &quot;hello&quot;.partition(&quot;l&quot;)         //=&gt; [&quot;he&quot;, &quot;l&quot;, &quot;lo&quot;]
  *      &quot;hello&quot;.partition(&quot;x&quot;)         //=&gt; [&quot;hello&quot;, &quot;&quot;, &quot;&quot;]
  *      &quot;hello&quot;.partition(/.l/)        //=&gt; [&quot;h&quot;, &quot;el&quot;, &quot;lo&quot;]
  *
  **/
-String.prototype.partition = function(){
-     var ary = [3]
-     var str = arguments[0].toString()
-     var pos = this.search(arguments[0])
-     if (pos &lt; 0)
-         ary = [this.substr(0,this.length), &quot;&quot;, &quot;&quot;]
-     else if (str[0] == '/' &amp;&amp; str[str.length-1] == '/')
-              ary = [this.substr(0, pos), this.substr(pos,str.length-2),this.substr(pos+str.length - 2,this.length-pos)]
-          else
-              ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
-     return ary
+String.prototype.partition = function() {
+    var ary = [3]
+    var str = arguments[0].toString()
+    var pos = this.search(arguments[0])
+    if (pos &lt; 0)
+        ary = [this.substr(0, this.length), &quot;&quot;, &quot;&quot;]
+    else if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39;)
+        ary = [this.substr(0, pos), this.substr(pos, str.length - 2), this.substr(pos + str.length - 2, this.length - pos)]
+    else
+        ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
+    return ary
 }
 
-<span id='String-method-rstrip'>/**
+<span id='Kernel-CoreExt-String-method-rstrip'>/**
 </span> * @method   rstrip
  *
  * Returns a copy of str with trailing whitespace removed.
  *
- * @param   {void}
  * @return  {String} Return a copy of str with trailing whitespace removed
  *
- * ###Example
+ * ### Example
  *     &quot;Madrid     &quot;.rstrip()                 //=&gt; &quot;Madrid&quot;
  *     &quot;     Madrid     &quot;.rstrip()            //=&gt; &quot;     Madrid&quot;
  *     &quot;     Madrid Barcelona    &quot;.rstrip()   //=&gt; &quot;     Madrid Barcelona&quot;
  **/
-String.prototype.rstrip = function(){
-  return this.replace(/\s+$/g,'')
+String.prototype.rstrip = function() {
+    return this.replace(/\s+$/g, &#39;&#39;)
 }
 
-<span id='String-method-upto'>/**
+<span id='Kernel-CoreExt-String-method-upto'>/**
 </span> * @method   upto
  * Iterates through successive values, starting at str and ending at other_str inclusive, passing each value in turn to the block.
- * The String#succ method is used to generate each value.
+ * The Kernel.CoreExt.String#succ method is used to generate each value.
  *
- * @param    {String, function}  If optional second argument exclusive is omitted or is false, the last value will be included;
+ * @param    {String}    end
+ * @param    {Function}  [block] If optional second argument exclusive is omitted or is false, the last value will be included;
  *   otherwise it will be excluded. If no block is given, an enumerator is returned instead.
  * @return    {String} return string with succ of this to arguments[0], according to parameter function
  *
- * ###Example
+ * ### Example
  *
- *         &quot;a8&quot;.upto(&quot;b6&quot;, function(obj){return obj + ' '})
+ *         &quot;a8&quot;.upto(&quot;b6&quot;, function(obj){return obj + &#39; &#39;})
  *
  *          //=&gt; a8 a9 b0 b1 b2 b3 b4 b5 b6
  *
  *
  */
-String.prototype.upto = function(){
-   var num = this
-   var str = &quot;&quot;
-   while( num != arguments[0] &amp;&amp; num.length &lt;= arguments[0].length &amp;&amp; num &lt; arguments[0] ){
-     str += String.prototype.upto.yield(num)
-     num = num.succ()
-   }
-   if( num.length &gt; arguments[0].length )
-     return str
-   return str + String.prototype.upto.yield(num)
+String.prototype.upto = function(end, block) {
+    var num = this
+    var str = &quot;&quot;
+    while (num != arguments[0] &amp;&amp; num.length &lt;= arguments[0].length &amp;&amp; num &lt; arguments[0]) {
+        str += String.prototype.upto.yield(num)
+        num = num.succ()
+    }
+    if (num.length &gt; arguments[0].length)
+        return str
+    return str + String.prototype.upto.yield(num)
 }
 
-<span id='String-method-each_char'>/**
+<span id='Kernel-CoreExt-String-method-each_char'>/**
 </span> * @method   each_char
  *
  * Passes each character in str to the given block, or returns an enumerator if no block is given.
  *
- * @param    {function}
+ * @param    {Function} block Closure to be called with each character.
  * @return   {String} return a string according to function
  *
- * ###Example
+ * ### Example
  *
- *      &quot;hello&quot;.each_char(function(obj){return obj + ' '})
+ *      &quot;hello&quot;.each_char(function(obj){return obj + &#39; &#39;})
  *      //=&gt; &quot;h e l l o &quot;
  *
- *      &quot;hello&quot;.each_char(function(obj){return obj + '/'})
+ *      &quot;hello&quot;.each_char(function(obj){return obj + &#39;/&#39;})
  *      //=&gt; &quot;h/e/l/l/o/&quot;
  **/
-String.prototype.each_char = function(){
-   var str = &quot;&quot;
-   for (var i = 0; i&lt;this.length;i++)
-      str += String.prototype.each_char.yield(this[i])
-   return str
+String.prototype.each_char = function() {
+    var str = &quot;&quot;
+    for (var i = 0; i &lt; this.length; i++)
+        str += String.prototype.each_char.yield(this[i])
+    return str
 }
-<span id='String-method-chars'>/**
+<span id='Kernel-CoreExt-String-method-chars'>/**
 </span> * @method       chars
  *
  * Alias of the function each_char.
@@ -1008,33 +968,32 @@ String.prototype.each_char = function(){
  * @return      {String} str
  *
  **/
-String.prototype.chars = function(){
-   return this.each_char.apply(this, arguments)
+String.prototype.chars = function() {
+    return this.each_char.apply(this, arguments)
 }
 
-<span id='String-method-sum'>/**
+<span id='Kernel-CoreExt-String-method-sum'>/**
 </span> * @method   sum
  *
  * Sum of the ASCII codes of all characters in the string.
  *
- * @param    {void}     //No parameters
- * @return   {Integer} return the sum
+ * @return   {Number} return the sum
  *
- * ###Example
+ * ### Example
  *
  *     &quot;A&quot;.sum()     //=&gt; 65
  *     &quot;AA&quot;.sum()    //=&gt; 130
  *     &quot;C3P0&quot;.sum()  //=&gt; 246
  *
  **/
-String.prototype.sum = function(){
-  var suma = 0
-  for (var i = 0; i&lt;this.length;i++)
-     suma += this.charCodeAt(i)
-  return suma
+String.prototype.sum = function() {
+    var suma = 0
+    for (var i = 0; i &lt; this.length; i++)
+        suma += this.charCodeAt(i)
+    return suma
 }
 
-<span id='String-method-squeeze'>/**
+<span id='Kernel-CoreExt-String-method-squeeze'>/**
 </span> * @method   squeeze
  *
  * Returns a string where runs of the same character that occur in this set are replaced by a single character.
@@ -1049,37 +1008,37 @@ String.prototype.sum = function(){
  **/
 //Falta que coja el argumento (&quot;x-y&quot;)
 /*
-String.prototype.squeeze = function(){
+   String.prototype.squeeze = function(){
    var strng = this
-      if (arguments.length == 0){
-	    for(var i=0; i&lt;strng.length - 1; i++)
-	      while (strng[i] == strng[i+1])
-	        strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
-		  return strng
-      }
+   if (arguments.length == 0){
+   for(var i=0; i&lt;strng.length - 1; i++)
+   while (strng[i] == strng[i+1])
+   strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
+   return strng
+   }
 
-      if(arguments.length &gt; 0){
-        for(j = 0; j &lt; arguments.length; j++){
-          var dwords = &quot;&quot;
-          for(var k = 0; k &lt; arguments[j].length; k++)
-            if(arguments[j][k] == &quot;-&quot;)
-              if(arguments[j][k-1] &lt;
+   if(arguments.length &gt; 0){
+   for(j = 0; j &lt; arguments.length; j++){
+   var dwords = &quot;&quot;
+   for(var k = 0; k &lt; arguments[j].length; k++)
+   if(arguments[j][k] == &quot;-&quot;)
+   if(arguments[j][k-1] &lt;
 
 
 
-	  for (var arg = 0; arg&lt;arguments[j].length ; arg++)
-	    for(var i=0; i&lt;strng.length - 1; i++)
-	      while (strng[i] == strng[i+1] &amp;&amp; strng[i] == arguments[j][arg])
-	        strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
-        }
-      }
+   for (var arg = 0; arg&lt;arguments[j].length ; arg++)
+   for(var i=0; i&lt;strng.length - 1; i++)
+   while (strng[i] == strng[i+1] &amp;&amp; strng[i] == arguments[j][arg])
+   strng = (strng.slice(0, i+1)).concat(strng.slice(i+2))
+   }
+   }
 
    return strng
-}
-*/
+   }
+   */
 
-<span id='String-method-String'>/**
-</span> * @method    String#intersection
+<span id='Kernel-CoreExt-String-method-intersection'>/**
+</span> * @method    intersection
  *
  * Returns a string containing common letters in the parameter strings
  *
@@ -1087,148 +1046,149 @@ String.prototype.squeeze = function(){
  * @return    {String}
  *
  * Comments:   When more thas one params are given, tt match the first  parameter given, then  these letters are changed
- * by the given characterhey're firstly intersected. Otherways the first param is returned.
+ * by the given characterhey&#39;re firstly intersected. Otherways the first param is returned.
  *
- * ###Example
+ * ### Example
  *     &quot;Peter&quot;.intersection(&quot;P&quot;)   //=&gt; &quot;P&quot;
  *     &quot;Peter&quot;.intersection(&quot;e&quot;)   //=&gt; &quot;ee&quot;
  *     &quot;Peter&quot;.intersection(&quot;Pe&quot;)  //=&gt; &quot;Pee&quot;
  *
  **/
-String.prototype.intersection = function(){
-      var str = this
-      for (var i=0; i&lt;arguments.length; i++){
-	 var regex = &quot;[&quot; + arguments[i] + &quot;]&quot;
-	 str = str.match( new RegExp(regex , &quot;g&quot; )).join(&quot;&quot;)
-      }
-      return str
+String.prototype.intersection = function() {
+    var str = this
+    for (var i = 0; i &lt; arguments.length; i++) {
+        var regex = &quot;[&quot; + arguments[i] + &quot;]&quot;
+        str = str.match(new RegExp(regex, &quot;g&quot;)).join(&quot;&quot;)
+    }
+    return str
 }
 
-<span id='String-method-sub'>/**
+<span id='Kernel-CoreExt-String-method-sub'>/**
 </span> * @method	sub
  *
  * Returns a copy of string with the first occurrence of pattern substituted for the second argument.
  *
- * @param 	{RegEx,string}
+ * @param 	{RegExp} pattern Pattern to find.
+ * @param       {String} replacement String to set.
  * @return      {String}
  * Comments:    Find the letters that match the first parameter given, y these are changed by the given parameter.
  *
- * ###Example
+ * ### Example
  *     &quot;Peter&quot;.sub(&quot;t&quot;,&quot;e&quot;);         //=&gt; &quot;Peeer&quot;
  *     &quot;Peter&quot;.sub(&quot;r&quot;,&quot;eeeeeee&quot;);   //=&gt; &quot;Peteeeeeeee&quot;
  *
  **/
-String.prototype.sub= function(){
-   return this.replace(arguments[0], arguments[1])
+String.prototype.sub = function(pattern, replacement) {
+    return this.replace(pattern, replacement)
 }
 
-<span id='String-method-bytes'>/**
+<span id='Kernel-CoreExt-String-method-bytes'>/**
 </span> * @method  bytes
  *
  * Passes each byte in str to the given block, or returns an enumerator if no block is given.
  *
- * @param   {String}
- * @return  {number} Return an enumerator black or //nose continuar en ingles
+ * @return  {Number} Return an enumerator black or //nose continuar en ingles
  *
  **/
-String.prototype.bytes = function(){
-  for(var i = 0; i &lt; this.length; i++)
-    return this.charCodeAt(i)
+String.prototype.bytes = function() {
+    for (var i = 0; i &lt; this.length; i++)
+        return this.charCodeAt(i)
 }
 
-<span id='String-method-ascii_onlyS-U'>/**
+<span id='Kernel-CoreExt-String-method-ascii_onlyS-U'>/**
 </span> * @method  ascii_only$U
  *
  * Returns true for a string which has only ASCII characters.
  *
- * @param   {this}
- * @return  {this}true or false
+ * @return  {Boolean} true if the string is composed only by ascii chars.
  *
- * ###Example
+ * ### Example
  *     &quot;Soccer&quot;.ascii_only$U()   //=&gt; true
  *     &quot; &quot;.ascii_only$U()        //=&gt; false
  **/
-String.prototype.ascii_only$U = function(){
-     return isNaN(this)
+String.prototype.ascii_only$U = function() {
+    return isNaN(this)
 }
 
-<span id='String-method-each_line'>/**
+<span id='Kernel-CoreExt-String-method-each_line'>/**
 </span> * @method   each_line
+ * @chainable
  *
  * Splits str using the supplied parameter as the record separator.
  * Passing each substring in turn to the supplied block.
  * If a zero-length record separator is supplied, the string is split
  * into paragraphs delimited by multiple successive newlines.
  *
- * @param    {[ string | number ],function { } }
- * @return   {this} str split by separator
+ * @param    { string | number } split Record Separator.
+ * @param    { function()  } block
+ * @return   {Object} this
  *
- * ###Example
+ * ### Example
  *
  * &quot;Hello\nworld&quot;.each_line(function(obj){return &quot;&quot; + obj + &quot;&quot;})            //=&gt; &quot;Hello\n&quot;,&quot;world&quot;
  * &quot;Hello\n world&quot;.each_line(&quot;l&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;}))      //=&gt; &quot;Hel&quot;, &quot;l&quot;, &quot;o \\n worl&quot;, &quot;d&quot;
  * &quot;Hello \n\n\n world&quot;.each_line(&quot;&quot;,function(obj){return &quot;&quot; + obj + &quot;&quot;}))  //=&gt; &quot;Hello \\n\\n\\n&quot;,&quot; world&quot;
  **/
-String.prototype.each_line = function(){
-var ary = this
-var arycpy = []  //ary with string result
-var posEnd = 0		//position to split the origin string
-var ind = 0			//index for ary
-var regExp = /\n/g
-var argZero = false	//Indicates if the arguments zero is a &quot;&quot;
+String.prototype.each_line = function(split) {
+    var ary = this
+    var arycpy = [] //ary with string result
+    var posEnd = 0 //position to split the origin string
+    var ind = 0 //index for ary
+    var regExp = /\n/g
+    var argZero = false //Indicates if the arguments zero is a &quot;&quot;
 
-if(arguments.length == 0 || arguments.length &gt; 2)
-   return null
+    if (arguments.length == 0 || arguments.length &gt; 2)
+        return null
 
-if( typeof(arguments[0]) !== &quot;function&quot; ){
-   if(arguments[0] != &quot;&quot;)
-      regExp = RegExp(arguments[0])
-   else {
-      regExp = /\n{2,}/g
-      argZero = true
-	}
-}
-posEnd = ary.search(regExp) + 1
-while( (posEnd &lt; ary.length) &amp;&amp; (posEnd &gt;0) ){
-   if(argZero){
-      var trash = ary.substring(posEnd)
-      posEnd += trash.search(/./g)
-   }
-   arycpy[ind] = ary.substring(0, posEnd)
-   ary = ary.substring(posEnd)
-   arycpy[ind] = ary.each_line.yield(arycpy[ind])
-   ind++
-   posEnd = ary.search(regExp) + 1
-}
-ary = ary.substring(posEnd)
-ary.each_line.yield(ary)
-return this
+    if (typeof(arguments[0]) !== &quot;function&quot;) {
+        if (arguments[0] != &quot;&quot;)
+            regExp = RegExp(arguments[0])
+        else {
+            regExp = /\n{2,}/g
+            argZero = true
+        }
+    }
+    posEnd = ary.search(regExp) + 1
+    while ((posEnd &lt; ary.length) &amp;&amp; (posEnd &gt; 0)) {
+        if (argZero) {
+            var trash = ary.substring(posEnd)
+            posEnd += trash.search(/./g)
+        }
+        arycpy[ind] = ary.substring(0, posEnd)
+        ary = ary.substring(posEnd)
+        arycpy[ind] = ary.each_line.yield(arycpy[ind])
+        ind++
+        posEnd = ary.search(regExp) + 1
+    }
+    ary = ary.substring(posEnd)
+    ary.each_line.yield(ary)
+    return this
 }
 
-<span id='String-method-each_codepoint'>/**
+<span id='Kernel-CoreExt-String-method-each_codepoint'>/**
 </span> * @method   each_codepoint
  *
  * Passes the Integer ordinal of each character in str, also known as a codepoint when applied to Unicode strings to the given block.
  * If no block is given, an enumerator is returned instead.
  *
- * @param    {function}
+ * @param    {Function} block
  * @return   {string}    Returns a string according function.
  *
- * ###Example
+ * ### Example
  *
- *      &quot;hello\u0639&quot;.each_codepoint(function(obj){return obj + ' '})
+ *      &quot;hello\u0639&quot;.each_codepoint(function(obj){return obj + &#39; &#39;})
  *
  *      //=&gt; &quot;104 101 108 108 111 1593 &quot;
  *
  **/
-String.prototype.each_codepoint = function(){
-  var str = &quot;&quot;
-  for (var i=0;i&lt;this.length;i++)
-      str += String.prototype.each_codepoint.yield(this[i].charCodeAt(0))
-  return str
+String.prototype.each_codepoint = function() {
+    var str = &quot;&quot;
+    for (var i = 0; i &lt; this.length; i++)
+        str += String.prototype.each_codepoint.yield(this[i].charCodeAt(0))
+    return str
 }
 
-<span id='String-method-codepoint'>/**
+<span id='Kernel-CoreExt-String-method-codepoint'>/**
 </span> * @method      codepoint
  *
  * Alias of the function each_codepoint.
@@ -1237,11 +1197,11 @@ String.prototype.each_codepoint = function(){
  * @return      {String} str of digits ASCII
  *
  **/
-String.prototype.codepoint = function(){
-  return this.each_codepoint.apply(this,arguments)
+String.prototype.codepoint = function() {
+    return this.each_codepoint.apply(this, arguments)
 }
 
-<span id='String-method-rpartition'>/**
+<span id='Kernel-CoreExt-String-method-rpartition'>/**
 </span> * @method     rpartition
  *
  * Searches sep or pattern (regexp) in the string from the end of the string, and returns the part before it, the match, and the part after it. If it is not found, returns two empty strings and str.
@@ -1249,32 +1209,31 @@ String.prototype.codepoint = function(){
  * @param      {string} String
  * @return     {Array} ary
  *
- * ###Example
+ * ### Example
  *
  *      &quot;hello&quot;.rpartition(&quot;l&quot;)         //=&gt; [&quot;hel&quot;, &quot;l&quot;, &quot;o&quot;]
  *      &quot;hello&quot;.rpartition(&quot;x&quot;)         //=&gt; [&quot;&quot;, &quot;&quot;, &quot;hello&quot;]
  *      &quot;hello&quot;.rpartition(/.l/)        //=&gt; [&quot;he&quot;, &quot;ll&quot;, &quot;o&quot;]
  *
  **/
-String.prototype.rpartition = function(){
-     var ary = [3]
-     var str = arguments[0].toString()
-     if (this.search(arguments[0]) == -1){
-        ary = [&quot;&quot;,&quot;&quot;,this.substr(0,this.length)]
+String.prototype.rpartition = function() {
+    var ary = [3]
+    var str = arguments[0].toString()
+    if (this.search(arguments[0]) == -1) {
+        ary = [&quot;&quot;, &quot;&quot;, this.substr(0, this.length)]
         return ary
-}
-     else{
-     auxstr = str.substr(2,str.length-3)
-     var pos = str[0] == '/' &amp;&amp; str[str.length-1] == '/'? this.lastIndexOf(auxstr):this.lastIndexOf(str)
-     if (str[0] == '/' &amp;&amp; str[str.length-1] == '/')
-              ary = [this.substr(0, pos-1), this.substr(pos-1,auxstr.length+1),this.substr(pos+auxstr.length ,this.length-pos)]
-          else
-              ary = [this.substr(0, pos), this.substr(pos,str.length),this.substr(pos+str.length,this.length-pos)]
-     }
-     return ary
+    } else {
+        auxstr = str.substr(2, str.length - 3)
+        var pos = str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39; ? this.lastIndexOf(auxstr) : this.lastIndexOf(str)
+        if (str[0] == &#39;/&#39; &amp;&amp; str[str.length - 1] == &#39;/&#39;)
+            ary = [this.substr(0, pos - 1), this.substr(pos - 1, auxstr.length + 1), this.substr(pos + auxstr.length, this.length - pos)]
+        else
+            ary = [this.substr(0, pos), this.substr(pos, str.length), this.substr(pos + str.length, this.length - pos)]
+    }
+    return ary
 }
 
-<span id='String-method-scan'>/**
+<span id='Kernel-CoreExt-String-method-scan'>/**
 </span> * @method scan
  *
  * Searches for a match between a regular expression and a string, and returns the matches.
@@ -1285,30 +1244,30 @@ String.prototype.rpartition = function(){
  * @return {string} String Returns an array of matches, or null if no match is found.
  *
  **/
-String.prototype.scan = function(){
-   var ary = this.match(arguments[0])
-   if (ary.length &gt; 1 &amp;&amp; arguments.length &lt;2)
-      ary.shift()
-   if ( arguments.length &gt; 1 &amp;&amp; typeof(arguments[1]) === &quot;function&quot; ){
-     ary = this
+String.prototype.scan = function() {
+    var ary = this.match(arguments[0])
+    if (ary.length &gt; 1 &amp;&amp; arguments.length &lt; 2)
+        ary.shift()
+    if (arguments.length &gt; 1 &amp;&amp; typeof(arguments[1]) === &quot;function&quot;) {
+        ary = this
 
-     while( ary.length &gt; 0 &amp;&amp; ary.search(arguments[0]) != -1){
-       var finds = []
-       var find = ary.match(arguments[0])
-       ary = ary.replace(arguments[0], &quot;&quot;)
-       for (var i=1; i&lt;9; i++)
-         if (RegExp[&quot;$&quot; + i] != &quot;&quot;)
-           finds.push(RegExp[&quot;$&quot; + i])
-       if (finds.length == 0)
-         finds = find
-       arguments[1].apply(arguments[1], finds)
-     }
-     return this
-   }
-   return ary
+        while (ary.length &gt; 0 &amp;&amp; ary.search(arguments[0]) != -1) {
+            var finds = []
+            var find = ary.match(arguments[0])
+            ary = ary.replace(arguments[0], &quot;&quot;)
+            for (var i = 1; i &lt; 9; i++)
+                if (RegExp[&quot;$&quot; + i] != &quot;&quot;)
+                    finds.push(RegExp[&quot;$&quot; + i])
+            if (finds.length == 0)
+                finds = find
+            arguments[1].apply(arguments[1], finds)
+        }
+        return this
+    }
+    return ary
 }
 
-<span id='String-method-erase'>/**
+<span id='Kernel-CoreExt-String-method-erase'>/**
 </span> * @method      erase
  *
  *  Returns a new string with erased letters.
@@ -1316,23 +1275,23 @@ String.prototype.scan = function(){
  * @param       {string} String
  * @return      {String}
  *
- * ###Comments:    Erases the arguments matched in a string.
+ * ### Comments:    Erases the arguments matched in a string.
  *
- * ###Example
+ * ### Example
  *     &quot;Hello&quot;.erase(&quot;H&quot;)    //=&gt; &quot;ello&quot;
  *     &quot;Hello&quot;.erase(&quot;Ho&quot;)   //=&gt; &quot;ell&quot;
  *
  **/
-String.prototype.erase = function(){
-   var erase = this
-   for(var i = 0; i &lt; arguments.length; i++)
-      erase = this.intersection(erase, arguments[i])
-   var regex = &quot;[^&quot; + erase + &quot;]&quot;
-   erase = this.match(new RegExp(regex, &quot;g&quot;)).join(&quot;&quot;)
-   return erase
+String.prototype.erase = function() {
+    var erase = this
+    for (var i = 0; i &lt; arguments.length; i++)
+        erase = this.intersection(erase, arguments[i])
+    var regex = &quot;[^&quot; + erase + &quot;]&quot;
+    erase = this.match(new RegExp(regex, &quot;g&quot;)).join(&quot;&quot;)
+    return erase
 }
 
-<span id='String-method-end_WithS-U'>/**
+<span id='Kernel-CoreExt-String-method-end_WithS-U'>/**
 </span> * @method      end_With$U
  *
  * Returns true or false by comparing  object and the argument from the end.
@@ -1340,235 +1299,223 @@ String.prototype.erase = function(){
  * @param       {string} String
  * @return      {boolean}
  *
- * ###Comments:    Compares the object with argument.
+ * ### Comments:    Compares the object with argument.
  *
- * ###Example
+ * ### Example
  *     &quot;Hello&quot;.end_With$U(&quot;Hello&quot;)    //=&gt; true
  *     &quot;Hello&quot;.end_With$U(&quot;Hel&quot;)      //=&gt; false
  *
  **/
 
-String.prototype.end_With$U = function(str){
-    return (this.match(str+&quot;$&quot;)==str)}
+String.prototype.end_With$U = function(str) {
+    return (this.match(str + &quot;$&quot;) == str)
+}
 
-<span id='String-method-eqlS-U'>/**
+<span id='Kernel-CoreExt-String-method-eqlS-U'>/**
 </span> * @method      eql$U
  *
  * Returns true or false by comparing  object and the argument.
  *
- * @param       {string}
- * @return      {boolean}
+ * @param       {String}   string String to compare.
+ * @return      {Boolean}
  *
- * ###Comments:    Compares the object with argument.
+ * ### Comments:    Compares the object with argument.
  *
- * ###Example
+ * ### Example
  *     &quot;Car&quot;.eql$U(&quot;Car&quot;)     //=&gt; true
  *     &quot;Car&quot;.eql$U(&quot;Plane&quot;)   //=&gt; false
  *
  **/
 
-String.prototype.eql$U = function() {
-    return this == arguments[0]}
+String.prototype.eql$U = function(string) {
+    return this == string
+}
 
-<span id='String-method-getbyte'>/**
+<span id='Kernel-CoreExt-String-method-getbyte'>/**
 </span> * @method      getbyte
  *
  * Returns the indexth byte as an integer.
  *
- * @param       {string}
- * @return      {number}  a interger.
+ * @param       {Number}  index Specified index in the string.
+ * @return      {Number}  a interger.
  *
- * ###Comments:    Using charCodeAt from a javaScript function.
+ * ### Comments:    Using charCodeAt from a javaScript function.
  *
- * ###Example
+ * ### Example
  *     &quot;A&quot;.getbyte()    //=&gt; 65
  *
  **/
-String.prototype.getbyte = function(){
-    return this.charCodeAt(arguments[0])
+String.prototype.getbyte = function(index) {
+    return this.charCodeAt(index)
 }
 
-<span id='String-property-'>/**
-</span> *
+<span id='Kernel-CoreExt-String-method-to_str'>/**
+</span> * @method to_str
+ * Alias of #toString.
+ *
  */
-String.prototype.to_str = function(){
+String.prototype.to_str = function() {
     return this.toString()
 }
 
-<span id='String-method-to_r'>/**
-</span> * @method     to_r
+<span id='Kernel-CoreExt-String-method-to_r'>/**
+</span> * @method to_r
  *
  * Returns a rational which denotes the string form. The parser ignores leading whitespaces and trailing garbage.
  * Any digit sequences can be separated by an underscore. Returns zero for null or garbage string.
  *
- * @param      {string}
  * @return     {string}  Return a rational
  *			             If the arguments is invalid return &quot;0/1&quot;
  *                       Returns a copy of str with uppercase alphabetic characters
  *                       converted to lowercase and lowercase characters converted to uppercase.
  *
- * ###Example
+ * ### Example
  *
- * '  2  '.to_r()       //=&gt; (2/1)
- * '300/2'.to_r()       //=&gt; (150/1)
- * '-9.2'.to_r()        //=&gt; (-46/5)
- * '-9.2e2'.to_r()      //=&gt; (-920/1)
- * '1_234_567'.to_r()   //=&gt; (1234567/1)
- * '21 june 09'.to_r()  //=&gt; (21/1)
- * '21/06/09'.to_r()    //=&gt; (7/2)
- * 'bwv 1079'.to_r()    //=&gt; (0/1)
+ * &#39;  2  &#39;.to_r()       //=&gt; (2/1)
+ * &#39;300/2&#39;.to_r()       //=&gt; (150/1)
+ * &#39;-9.2&#39;.to_r()        //=&gt; (-46/5)
+ * &#39;-9.2e2&#39;.to_r()      //=&gt; (-920/1)
+ * &#39;1_234_567&#39;.to_r()   //=&gt; (1234567/1)
+ * &#39;21 june 09&#39;.to_r()  //=&gt; (21/1)
+ * &#39;21/06/09&#39;.to_r()    //=&gt; (7/2)
+ * &#39;bwv 1079&#39;.to_r()    //=&gt; (0/1)
  **/
-String.prototype.to_r = function(){
-var str1 	//String auxiliar
-var str2 	//String auxiliar
-var op1 = &quot;0/1&quot; //operando one rational number
-var op2 = 1	//operando two rational number
-var pos
-var mcd
-var dec
+String.prototype.to_r = function() {
+    var str1 //String auxiliar
+    var str2 //String auxiliar
+    var op1 = &quot;0/1&quot; //operando one rational number
+    var op2 = 1 //operando two rational number
+    var pos
+    var mcd
+    var dec
 
-str1 = this.strip() //Returns a copy of str with leading and trailing whitespace removed
-if( str1.search(/^[\d\+.-]/g) == -1 ) //Comprueba si el primer caracter es una letra o un caracter no valido)
-   return op1
-str2 = str1 = str1.replace(/[_]/g,&quot;&quot;)  //Replace underscore
-pos = str1.search(/\//g) //Find the &quot;/&quot; character
-if( pos &gt; 0) {
-   str1 = str1.substring(0,pos)
-   str2 = str2.substring(pos+1)
+    str1 = this.strip() //Returns a copy of str with leading and trailing whitespace removed
+    if (str1.search(/^[\d\+.-]/g) == -1) //Comprueba si el primer caracter es una letra o un caracter no valido)
+        return op1
+    str2 = str1 = str1.replace(/[_]/g, &quot;&quot;) //Replace underscore
+    pos = str1.search(/\//g) //Find the &quot;/&quot; character
+    if (pos &gt; 0) {
+        str1 = str1.substring(0, pos)
+        str2 = str2.substring(pos + 1)
+    } else
+        str2 = null
+
+    if (isNaN((op1 = parseFloat(str1)))) //Checks the string is a number
+        return op1
+        //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
+    if (isNaN(str1) || isNaN(op2 = parseInt(str2)))
+        op2 = 1
+
+    //Dejo el primer numero sin decimales pasando los decimales que tuviese a la izquierdaReturns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region.
+    dec = decimal(op1)
+    op1 = op1 * Math.pow(10, dec)
+    if (op2 == 1) //Si solo tenemos el operando 1
+        op2 = Math.pow(10, dec)
+    else
+        op2 = op2 * Math.pow(10, dec)
+        //Calculo el maximo comun divisor de los 2 operandos
+    mcd = intMcd(op1, op2)
+    if (mcd == null)
+        mcd = 1
+    return op1 / mcd + &quot;/&quot; + op2 / mcd
 }
-else
-   str2 = null
-
-if( isNaN( (op1 = parseFloat(str1)) ) )//Checks the string is a number
-   return op1
-   //Comprueba si la primera cadena tiene caracteres no validos y la segunda cadena se puede pasar a numero
-if( isNaN(str1) || isNaN( op2 = parseInt(str2) ) )
-   op2 = 1
-
-   //Dejo el primer numero sin decimales pasando los decimales que tuviese a la izquierdaReturns a copy of str with uppercase alphabetic characters converted to lowercase and lowercase characters converted to uppercase. Note: case conversion is effective only in ASCII region.
-dec = decimal(op1)
-op1 = op1 * Math.pow(10,dec)
-if( op2 == 1)//Si solo tenemos el operando 1
-   op2 = Math.pow(10,dec)
-else
-   op2 = op2 * Math.pow(10,dec)
-//Calculo el maximo comun divisor de los 2 operandos
-mcd = intMcd(op1,op2)
-if (mcd == null)
-   mcd = 1
-return op1/mcd + &quot;/&quot; + op2/mcd
-}
 
 
-<span id='String-property-'>/***************************************************************/
-</span>/* La parte de arriba es para los metodos (prototype) **********
-/* La parte de abajo esta reservada para añadir funciones ******/
 
-
-<span id='String-method-'>/**
-</span> * @member *****
+<span id='Kernel-CoreExt-String-method-decimals'>/**
+</span> * @method decimals
+ * Number of decimal positions in a number
  *
- * @methof  decimal
- *
- * Esta funcion devuelve la cantidad de decimales que tiene un numero
- *
- * @param  {number | string }
- * @return {integer}  Number of decimal. If the arguments is invalid return 0
+ * @param  {number | string } Operand
+ * @return {Number}  Number of decimal. If the arguments is invalid return 0
  *
  **/
+//todo: Move to Math
+function decimals() {
+    if (isNaN(arguments[0]))
+        return -1
 
-function decimal() {
-if(isNaN(arguments[0]))
-   return -1
+    var num = new Number(arguments[0])
+    if (num &lt; Number.MIN_VALUE || num &gt; Number.MAX_VALUE)
+        return 0
 
-var num = new Number(arguments[0])
-if( num &lt; Number.MIN_VALUE || num &gt; Number.MAX_VALUE)
-   return 0
-
-var ary = num.toString(10)
-var trash = ary
-var decUno = 0
-var decDos = 0
-if ( ary.search(&quot;e&quot;) &gt; 0)    {
-   decUno = ary.substring(ary.search(&quot;e&quot;)+1)
-   trash = ary.substring(0, ary.search(&quot;e&quot;))
+    var ary = num.toString(10)
+    var trash = ary
+    var decUno = 0
+    var decDos = 0
+    if (ary.search(&quot;e&quot;) &gt; 0) {
+        decUno = ary.substring(ary.search(&quot;e&quot;) + 1)
+        trash = ary.substring(0, ary.search(&quot;e&quot;))
+    }
+    if (ary.search(&quot;[.]&quot;) &gt; 0) {
+        decDos = trash.substring(trash.search(&quot;[.]&quot;) + 1)
+        decDos = decDos.length
+    }
+    return parseInt(decUno) &gt;= decDos ? 0 : (decUno - decDos) * -1
 }
-if ( ary.search(&quot;[.]&quot;) &gt; 0){
-   decDos = trash.substring(trash.search(&quot;[.]&quot;)+1)
-   decDos = decDos.length
-}
-return parseInt(decUno)&gt;=decDos? 0 : (decUno - decDos) * -1
-}
 
-<span id='String-method-intMdc'>/** Esta funcion nos devuelve el Maximo Comun Divisor de 2 numeros
-</span> *
- * @member ******
+<span id='Kernel-CoreExt-String-method-intMdc'>/** @method   intMdc
+</span> * Greatest Common Divisor
+ * If the arguments are invalid, it returns  null.
  *
- * @method   intMdc
- *
- * @param    {interger, integer}
- * @return   {integer} Return the maximo comun divisor of 2 integers
- *                      If the arguments are invalids, return  null
+ * @param    {Number} operand1
+ * @param    {Number} operand2
+ * @return   {Number} Returns GCD
  *
  **/
-
 function intMcd() {
 
-if(arguments.length != 2 || isNaN(arguments[0]) || isNaN(arguments[1]) )
-   return null
+    if (arguments.length != 2 || isNaN(arguments[0]) || isNaN(arguments[1]))
+        return null
 
-var op1 = parseInt(arguments[0])
-var op2 = parseInt(arguments[1])
+    var op1 = parseInt(arguments[0])
+    var op2 = parseInt(arguments[1])
 
-if(arguments[0] == 0 || arguments[1] == 0)
-   return null
-if (arguments[0] &lt; 0)
-   op1 *= -1
-if (arguments[1] &lt; 0)
-   op2 *= -1
+    if (arguments[0] == 0 || arguments[1] == 0)
+        return null
+    if (arguments[0] &lt; 0)
+        op1 *= -1
+    if (arguments[1] &lt; 0)
+        op2 *= -1
 
-while ( op1 != op2 || op1 &lt; 0 || op2&lt; 0 ){
-   if(op1 &gt; op2)
-      op1 = op1-op2
-   else
-      op2 = op2-op1
+    while (op1 != op2 || op1 &lt; 0 || op2 &lt; 0) {
+        if (op1 &gt; op2)
+            op1 = op1 - op2
+        else
+            op2 = op2 - op1
+    }
+    if (op1 == op2)
+        return op1
+    return null
 }
-if( op1 == op2)
-   return op1
-return null
-}
 
 
-<span id='String-method-bytesize'>/**
-</span> * @member      String
- * @method      bytesize
+<span id='Kernel-CoreExt-String-method-bytesize'>/**
+</span> * @method      bytesize
  *
  * Returns the length of string in bytes.
  *
  * @param       {Arguments} This
  * @return      {number} the length of string in bytes.
  *
- * ###Example
- *     'abcde'.bytesize()   //=&gt; 5
+ * ### Example
+ *     &#39;abcde&#39;.bytesize()   //=&gt; 5
  *
  **/
 
-String.prototype.bytesize = function(){
+String.prototype.bytesize = function() {
     return this.length
 }
 
-<span id='String-static-method-is_stringS-U'>/**
+<span id='Kernel-CoreExt-String-static-method-is_stringS-U'>/**
 </span> * @method is_string$U
  * @static
  *
  * @param  {string | String} name
  * @return {boolean}      true if name is any kind of string
  */
-String.is_string$U = function(name){
-  return typeof(name) === &quot;string&quot; || name instanceof String
-}
-
-
-</pre>
+String.is_string$U = function(name) {
+    return typeof(name) === &quot;string&quot; || name instanceof String
+}</pre>
 </body>
 </html>

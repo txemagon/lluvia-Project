@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>lluvia/loader</title>
+        <script src="../../dist/lluvia.js" language="JavaScript"> </script>
+        <script src="javascript/dependencies.js" language="JavaScript"> </script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body onload="bring_lluvia()">       
+        <span id="title">lluvia</span><span id="subtitle">Project</span><span id="subsubtitle">/loader</span><br><br>
+               
+        <div id="test1" class="ll:Device" data-type="TestDevice" data-self_events="event1, event2, event3" data-add_port="event1:test2">
+        </div>
+
+        <div id="test2" class="ll:Device" data-type="TestDevice" data-self_events="event1" data-add_port="attend_event2">
+        </div>
+
+        <div id="test3" class="lluvia:Gate" data-type="TestGate">test_gate
+        </div>
+    </body>
+</html>

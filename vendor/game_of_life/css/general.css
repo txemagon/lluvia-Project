@@ -1,0 +1,31 @@
+body{
+    font-family: sans, Arial, helvetica;
+}
+
+#title{
+    text-align:center;
+    margin: 100px 0 0 0;
+}
+
+
+#screener{
+    display: block;
+    margin: -175px auto; 
+}
+
+
+#button_start{
+    display: block;
+    margin: -100px auto;
+}
+
+#options{
+    visibility: hidden;
+    text-align:center;
+    margin: 250px 0 0 0;
+}
+
+#logo{
+    width: 75px;
+    position:fixed; bottom:0px; right:0px;
+}

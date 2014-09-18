@@ -1,0 +1,10 @@
+{
+    "development": {
+        "protocol": "file",
+        "server_name": "localhost"
+    },
+    "production": {
+        "protocol": "http://",
+        "server_name": "novaws.es"
+    }
+}

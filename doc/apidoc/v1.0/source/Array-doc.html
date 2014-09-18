@@ -15,14 +15,15 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Array'>/**
-</span> * @class Array
+  <pre class="prettyprint lang-js"><span id='Kernel-JSNative-Array'>/**
+</span> * @class Kernel.JSNative.Array
+ * @mixins Kernel.CoreExt.Array
  *
  * In JavaScript, the `Array` property of the global object is a constructor for
  * array instances.
  *
- * An array is a JavaScript object. Note that you shouldn't use it as an
- * associative array, use {@link Object} instead.
+ * An array is a JavaScript object. Note that you shouldn&#39;t use it as an
+ * associative array, use {@link Kernel.JSNative.Object} instead.
  *
  * # Creating an Array
  *
@@ -39,23 +40,23 @@
  * # Creating a Two-dimensional Array
  *
  * The following creates chess board as a two dimensional array of strings. The first move is made by
- * copying the 'P' in 6,4 to 4,4. The position 4,4 is left blank.
+ * copying the &#39;P&#39; in 6,4 to 4,4. The position 4,4 is left blank.
  *
  *     var board =
- *     [ ['R','N','B','Q','K','B','N','R'],
- *     ['P','P','P','P','P','P','P','P'],
- *     [' ',' ',' ',' ',' ',' ',' ',' '],
- *     [' ',' ',' ',' ',' ',' ',' ',' '],
- *     [' ',' ',' ',' ',' ',' ',' ',' '],
- *     [' ',' ',' ',' ',' ',' ',' ',' '],
- *     ['p','p','p','p','p','p','p','p'],
- *     ['r','n','b','q','k','b','n','r']];
- *     print(board.join('\n') + '\n\n');
+ *     [ [&#39;R&#39;,&#39;N&#39;,&#39;B&#39;,&#39;Q&#39;,&#39;K&#39;,&#39;B&#39;,&#39;N&#39;,&#39;R&#39;],
+ *     [&#39;P&#39;,&#39;P&#39;,&#39;P&#39;,&#39;P&#39;,&#39;P&#39;,&#39;P&#39;,&#39;P&#39;,&#39;P&#39;],
+ *     [&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;],
+ *     [&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;],
+ *     [&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;],
+ *     [&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;,&#39; &#39;],
+ *     [&#39;p&#39;,&#39;p&#39;,&#39;p&#39;,&#39;p&#39;,&#39;p&#39;,&#39;p&#39;,&#39;p&#39;,&#39;p&#39;],
+ *     [&#39;r&#39;,&#39;n&#39;,&#39;b&#39;,&#39;q&#39;,&#39;k&#39;,&#39;b&#39;,&#39;n&#39;,&#39;r&#39;]];
+ *     print(board.join(&#39;\n&#39;) + &#39;\n\n&#39;);
  *
- *     // Move King's Pawn forward 2
+ *     // Move King&#39;s Pawn forward 2
  *     board[4][4] = board[6][4];
- *     board[6][4] = ' ';
- *     print(board.join('\n'));
+ *     board[6][4] = &#39; &#39;;
+ *     print(board.join(&#39;\n&#39;));
  *
  * Here is the output:
  *
@@ -101,13 +102,13 @@
  *
  * # Relationship between length and numerical properties
  *
- * An array's length property and numerical properties are connected. Here is some
+ * An array&#39;s length property and numerical properties are connected. Here is some
  * code explaining how this relationship works.
  *
  *     var a = [];
  *
- *     a[0] = 'a';
- *     console.log(a[0]); // 'a'
+ *     a[0] = &#39;a&#39;;
+ *     console.log(a[0]); // &#39;a&#39;
  *     console.log(a.length); // 1
  *
  *     a[1] = 32;
@@ -130,8 +131,8 @@
  * explain these properties and elements, look at the following example and then refer
  * to the table below:
  *
- *     // Match one d followed by one or more b's followed by one d
- *     // Remember matched b's and the following d
+ *     // Match one d followed by one or more b&#39;s followed by one d
+ *     // Remember matched b&#39;s and the following d
  *     // Ignore case
  *
  *     var myRe = /d(b+)(d)/i;
@@ -156,7 +157,7 @@
  *
  */
 
-<span id='Array-method-constructor'>/**
+<span id='Kernel-JSNative-Array-method-constructor'>/**
 </span> * @method constructor
  * Creates new Array object.
  *
@@ -166,7 +167,7 @@
 
 // Properties
 
-<span id='Array-property-length'>/**
+<span id='Kernel-JSNative-Array-property-length'>/**
 </span> * @property {Number} length
  * Reflects the number of elements in an array.
  *
@@ -196,7 +197,7 @@
 
 // Mutator methods. These methods modify the array:
 
-<span id='Array-method-pop'>/**
+<span id='Kernel-JSNative-Array-method-pop'>/**
 </span> * @method pop
  * Removes the last element from an array and returns its value to the caller.
  *
@@ -206,12 +207,12 @@
  *
  *     var myFish = [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;surgeon&quot;];
  *     var popped = myFish.pop();
- *     alert(popped); // Alerts 'surgeon'
+ *     alert(popped); // Alerts &#39;surgeon&#39;
  *
  * @return {Object} The last element in the array
  */
 
-<span id='Array-method-push'>/**
+<span id='Kernel-JSNative-Array-method-push'>/**
 </span> * @method push
  * Adds one or more elements to the end of an array and returns the new length of the array.
  *
@@ -237,7 +238,7 @@
  * @return {Number} The new length property of the object upon which the method was called.
  */
 
-<span id='Array-method-reverse'>/**
+<span id='Kernel-JSNative-Array-method-reverse'>/**
 </span> * @method reverse
  * Reverses the order of the elements of an array -- the first becomes the last, and the
  * last becomes the first.
@@ -259,7 +260,7 @@
  * @return {Array} A reference to the array
  */
 
-<span id='Array-method-shift'>/**
+<span id='Kernel-JSNative-Array-method-shift'>/**
 </span> * @method shift
  * Removes the first element from an array and returns that element.
  *
@@ -289,7 +290,7 @@
  * @return {Object} The first element of the array prior to shifting.
  */
 
-<span id='Array-method-sort'>/**
+<span id='Kernel-JSNative-Array-method-sort'>/**
 </span> * @method sort
  * Sorts the elements of an array.
  *
@@ -340,11 +341,11 @@
  * @return {Array} A reference to the array
  */
 
-<span id='Array-method-splice'>/**
+<span id='Kernel-JSNative-Array-method-splice'>/**
 </span> * @method splice
  * Adds and/or removes elements from an array.
  *
- * If you specify a different number of elements to insert than the number you're removing, the array
+ * If you specify a different number of elements to insert than the number you&#39;re removing, the array
  * will have a different length at the end of the call.
  *
  *     // assumes a print function is defined
@@ -384,13 +385,13 @@
  * @param {Number} howMany An integer indicating the number of old array elements to remove. If
  * `howMany` is 0, no elements are removed. In this case, you should specify at least one new element.
  * If no `howMany` parameter is specified all elements after index are removed.
- * @param {Object...} elements The elements to add to the array. If you don't specify any
+ * @param {Object...} elements The elements to add to the array. If you don&#39;t specify any
  * elements, `splice` simply removes elements from the array.
  * @return {Array} An array containing the removed elements. If only one element is removed, an array
  * of one element is returned..
  */
 
-<span id='Array-method-unshift'>/**
+<span id='Kernel-JSNative-Array-method-unshift'>/**
 </span> * @method unshift
  * Adds one or more elements to the front of an array and returns the new length of the array.
  *
@@ -416,12 +417,12 @@
  *     New length: 4
  *
  * @param {Object...} elements The elements to add to the front of the array.
- * @return {Number} The array's new length.
+ * @return {Number} The array&#39;s new length.
  */
 
 // Accessor methods. These methods do not modify the array and return some representation of the array.
 
-<span id='Array-method-concat'>/**
+<span id='Kernel-JSNative-Array-method-concat'>/**
 </span> * @method concat
  * Returns a new array comprised of this array joined with other array(s) and/or value(s).
  *
@@ -435,7 +436,7 @@
  * Object references (and not the actual object): `concat` copies object references into the new
  * array. Both the original and new array refer to the same object. That is, if a referenced object is
  * modified, the changes are visible to both the new and original arrays.
- * Strings and numbers (not {@link String} and {@link Number} objects): `concat` copies the values of
+ * Strings and numbers (not {@link Kernel.JSNative.String} and {@link Kernel.JSNative.Number} objects): `concat` copies the values of
  * strings and numbers into the new array.
  *
  * Any operation on the new array will have no effect on the original arrays, and vice versa.
@@ -465,7 +466,7 @@
  *
  * The following code concatenates three values to an array:
  *
- *     var alpha = ['a', 'b', 'c'];
+ *     var alpha = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
  *
  *     // creates array [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, 1, 2, 3], leaving alpha unchanged
  *     var alphaNumeric = alpha.concat(1, [2, 3]);
@@ -474,7 +475,7 @@
  * @return {Array} New array.
  */
 
-<span id='Array-method-join'>/**
+<span id='Kernel-JSNative-Array-method-join'>/**
 </span> * @method join
  * Joins all elements of an array into a string.
  *
@@ -493,7 +494,7 @@
  * @return {String} A string of the array elements.
  */
 
-<span id='Array-method-slice'>/**
+<span id='Kernel-JSNative-Array-method-slice'>/**
 </span> * @method slice
  * Extracts a section of an array and returns a new array.
  *
@@ -503,7 +504,7 @@
  * *   For object references (and not the actual object), `slice` copies object references into the
  * new array. Both the original and new array refer to the same object. If a referenced object
  * changes, the changes are visible to both the new and original arrays.
- * *   For strings and numbers (not {@link String} and {@link Number} objects), `slice` copies strings
+ * *   For strings and numbers (not {@link Kernel.JSNative.String} and {@link Kernel.JSNative.Number} objects), `slice` copies strings
  * and numbers into the new array. Changes to the string or number in one array does not affect the
  * other array.
  *
@@ -558,12 +559,12 @@
  * @return {Array} Array from the new start position up to (but not including) the specified end position.
  */
 
-<span id='Array-method-toString'>/**
+<span id='Kernel-JSNative-Array-method-toString'>/**
 </span> * @method toString
  * Returns a string representing the array and its elements. Overrides the `Object.prototype.toString`
  * method.
  *
- * The {@link Array} object overrides the `toString` method of {@link Object}. For Array objects, the
+ * The {@link Kernel.JSNative.Array} object overrides the `toString` method of {@link Kernel.JSNative.Object}. For Array objects, the
  * `toString` method joins the array and returns one string containing each array element separated by
  * commas. For example, the following code creates an array and uses `toString` to convert the array
  * to a string.
@@ -579,7 +580,7 @@
 
 // ECMAScript 5 methods
 
-<span id='Array-static-method-isArray'>/**
+<span id='Kernel-JSNative-Array-static-method-isArray'>/**
 </span> * @method isArray
  * @static
  * Returns true if an object is an array, false if it is not.
@@ -607,7 +608,7 @@
  * @return {Boolean} True when Array.
  */
 
-<span id='Array-method-indexOf'>/**
+<span id='Kernel-JSNative-Array-method-indexOf'>/**
 </span> * @method indexOf
  * Returns the first index at which a given element can be found in the array, or -1 if it is not present.
  *
@@ -631,7 +632,7 @@
  * @return {Number} The index of element found or -1.
  */
 
-<span id='Array-method-lastIndexOf'>/**
+<span id='Kernel-JSNative-Array-method-lastIndexOf'>/**
 </span> * @method lastIndexOf
  * Returns the last index at which a given element can be found in the array, or -1 if it is not present.
  * The array is searched backwards, starting at `fromIndex`.
@@ -656,7 +657,7 @@
  * **NOTE:** This method is part of the ECMAScript 5 standard.
  *
  * @param {Mixed} searchElement Element to locate in the array.
- * @param {Number} [fromIndex] The index at which to start searching backwards. Defaults to the array's
+ * @param {Number} [fromIndex] The index at which to start searching backwards. Defaults to the array&#39;s
  * length, i.e. the whole array will be searched. If the index is greater than or equal to the length of
  * the array, the whole array will be searched. If negative, it is taken as the offset from the end of the
  * array. Note that even when the index is negative, the array is still searched from back to front. If
@@ -664,7 +665,7 @@
  * @return {Number} The index of element found or -1.
  */
 
-<span id='Array-method-forEach'>/**
+<span id='Kernel-JSNative-Array-method-forEach'>/**
 </span> * @method forEach
  * Executes a provided function once per array element.
  *
@@ -702,7 +703,7 @@
  * @param {Object} [thisArg] Object to use as `this` when executing `callback`.
  */
 
-<span id='Array-method-every'>/**
+<span id='Kernel-JSNative-Array-method-every'>/**
 </span> * @method every
  * Tests whether all elements in the array pass the test implemented
  * by the provided function.
@@ -757,7 +758,7 @@
  * @return {Boolean} True when all elements pass the test.
  */
 
-<span id='Array-method-some'>/**
+<span id='Kernel-JSNative-Array-method-some'>/**
 </span> * @method some
  * Tests whether some element in the array passes the test implemented
  * by the provided function.
@@ -782,7 +783,7 @@
  * after the call to some begins will not be visited by `callback`. If
  * an existing, unvisited element of the array is changed by `callback`,
  * its value passed to the visiting callback will be the value at the
- * time that `some` visits that element's index; elements that are
+ * time that `some` visits that element&#39;s index; elements that are
  * deleted are not visited.
  *
  * The following example tests whether some element in the array is
@@ -807,7 +808,7 @@
  * @return {Boolean} True when at least one element passes the test.
  */
 
-<span id='Array-method-filter'>/**
+<span id='Kernel-JSNative-Array-method-filter'>/**
 </span> * @method filter
  * Creates a new array with all elements that pass the test
  * implemented by the provided function.
@@ -854,7 +855,7 @@
  * @return {Array} Array of elements that passed the test.
  */
 
-<span id='Array-method-map'>/**
+<span id='Kernel-JSNative-Array-method-map'>/**
 </span> * @method map
  * Creates a new array with the results of calling a provided function
  * on every element in this array.
@@ -883,9 +884,9 @@
  * an array of their singular forms.
  *
  *     function fuzzyPlural(single) {
- *       var result = single.replace(/o/g, 'e');
- *       if( single === 'kangaroo'){
- *         result += 'se';
+ *       var result = single.replace(/o/g, &#39;e&#39;);
+ *       if( single === &#39;kangaroo&#39;){
+ *         result += &#39;se&#39;;
  *       }
  *       return result;
  *     }
@@ -915,7 +916,7 @@
  * @return {Array} Array of the return values of `callback` function.
  */
 
-<span id='Array-method-reduce'>/**
+<span id='Kernel-JSNative-Array-method-reduce'>/**
 </span> * @method reduce
  * Applies a function against an accumulator and each value of the
  * array (from left-to-right) as to reduce it to a single value.
@@ -994,7 +995,7 @@
  * @return {Mixed} The value returned by final invocation of the `callback`.
  */
 
-<span id='Array-method-reduceRight'>/**
+<span id='Kernel-JSNative-Array-method-reduceRight'>/**
 </span> * @method reduceRight
  * Applies a function simultaneously against two values of the array
  * (from right-to-left) as to reduce it to a single value.
@@ -1068,7 +1069,6 @@
  * @param {Mixed} [initialValue] Object to use as the first argument to the first call
  * of the `callback`.
  * @return {Mixed} The value returned by final invocation of the `callback`.
- */
-</pre>
+ */</pre>
 </body>
 </html>

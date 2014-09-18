@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Devices</title>
+        <script type="text/javascript" src="javascript/dependencies.js" ></script>
+        <script src="../../dist/lluvia.js" language="JavaScript"> </script>
+        <link type="text/css" rel="stylesheet" href="css/general.css" ></link>
+    </head>
+    <body onload="bring_lluvia()">
+        <h1>Devices</h1>
+        <div id="page">
+            <div id="count_down" class="ll-CountDown Clock" data-params="'count_down', 60000"></div>
+            <div id="keypad" class="ll-Keypad" data-params="'keypad'" data-run$add_port="'press_pause', ll_count_down"></div>
+            <div id="button_pause" class="ll-ButtonGate" data-params="'button_pause', ll_keypad">Pause</div>
+        <!--
+            <img id="watch" src="images/background_watch.svg" class="Watch">
+            <img id="hands" src="images/hands.svg" class="ll-Gate Watch" data-params="'count_down', 120000" data-run$new_Effect="new RotateEffect('hands', 360, [6.1])">
+        -->
+        </div>
+    </body>
+</html>
