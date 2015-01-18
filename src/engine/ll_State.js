@@ -204,23 +204,30 @@ function State(label) {
  * @method  _run
  * Controller that invokes the drivers. This method is non writable, non enumerable
  * and non configurable.
+ * The last argument of the driver is a reference to a particular level (scope)
+ * of execution. The _this_ pointer
+ * for a single state. The owner of the state when attribute _owner_ is defined.
+ * The _this_ keyword always refers to that particular reference inside a driver.
+ *
+ * ### Example
  */
 State.prototype._run = function() {
     var response = []
+    var reference = this.owner || this
     var args = Array.prototype.slice.call(arguments, 0)
-    args.push(this)
+    args.push(reference)
 
     for (var i = this.before_hooks.length - 1; i >= 0; i--)
-        this.before_hooks[i].apply(this, args)
+        this.before_hooks[i].apply(reference, args)
 
-    response[0] = this.run.apply(this, arguments)
+    response[0] = this.run.apply(reference, arguments)
     if (this.run[this.regime.name])
-        response[1] = this.run[this.regime.name].apply(this, arguments)
+        response[1] = this.run[this.regime.name].apply(reference, arguments)
 
     args.push(response)
     if (this.after_hooks.length)
         for (var i = this.after_hooks.length - 1; i >= 0; i--)
-            this.after_hooks[i].apply(this, args)
+            this.after_hooks[i].apply(reference, args)
 
     return response
 }

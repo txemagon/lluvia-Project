@@ -99,7 +99,7 @@ Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "
  *
  */
 
-function Device(view, state, parent) {
+function Device(view, state, parent, plain) {
     /* Class accesors*/
     var that = this
     this._class = that
@@ -110,14 +110,14 @@ function Device(view, state, parent) {
         state = state || new EnumerationOf(State, Device.STATE)
         that.solicitors = {
             running: function() {
-                this.owner.gate_runner(that.now)
-                this.owner.child_runner(that.now);
-            },
+                this.gate_runner(that.now)
+                this.child_runner(that.now);
+            }
             suspending: function() {
-                this.owner.child_runner(that.now);
+                this.child_runner(that.now);
             },
             killing: function() {
-                this.owner.gate_runner(that.now)
+                this.gate_runner(that.now)
             }
         }
 

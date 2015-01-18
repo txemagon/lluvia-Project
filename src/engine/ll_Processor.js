@@ -97,9 +97,7 @@ Processor.prototype.run = function(date) {
     try {
         this.step(this.now)
     } catch (e) {
-
     }
-
     setTimeout(this.run.bind(this), 20);
 }
 

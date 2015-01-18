@@ -3115,17 +3115,18 @@ function State(label) {
 }
 State.prototype._run = function() {
     var response = []
+    var reference = this.owner || this
     var args = Array.prototype.slice.call(arguments, 0)
-    args.push(this)
+    args.push(reference)
     for (var i = this.before_hooks.length - 1; i >= 0; i--)
-        this.before_hooks[i].apply(this, args)
-    response[0] = this.run.apply(this, arguments)
+        this.before_hooks[i].apply(reference, args)
+    response[0] = this.run.apply(reference, arguments)
     if (this.run[this.regime.name])
-        response[1] = this.run[this.regime.name].apply(this, arguments)
+        response[1] = this.run[this.regime.name].apply(reference, arguments)
     args.push(response)
     if (this.after_hooks.length)
         for (var i = this.after_hooks.length - 1; i >= 0; i--)
-            this.after_hooks[i].apply(this, args)
+            this.after_hooks[i].apply(reference, args)
     return response
 }
 Object.defineProperty(State.prototype, "_run", {
@@ -3266,21 +3267,22 @@ Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
 Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
-function Device(view, state, parent) {
+function Device(view, state, parent, plain) {
     var that = this
     this._class = that
     function initialize() { 
         state = state || new EnumerationOf(State, Device.STATE)
         that.solicitors = {
             running: function() {
-                this.owner.gate_runner(that.now)
-                this.owner.child_runner(that.now);
+                this.gate_runner(that.now)
+                this.child_runner(that.now);
             },
+            "running.steady": function() { alert("Hey") },
             suspending: function() {
-                this.owner.child_runner(that.now);
+                this.child_runner(that.now);
             },
             killing: function() {
-                this.owner.gate_runner(that.now)
+                this.gate_runner(that.now)
             }
         }
         if (view)
