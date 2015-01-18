@@ -1,10 +1,11 @@
 function main(){
-  var w = new World()
+
+  var w =new World()
   var boid_list = new WorldInterface("boid_list_content")
-  w.addPort("new_boid", boid_list)
+  w.add_port("new_boid", boid_list)
 
   var boid_editor = new BoidEditor("boid_properties")
-  boid_list.addPort("focus_boid", boid_editor)
+  boid_list.add_port("focus_boid", boid_editor)
 
   /* Example 1 of Boid creation */
   var fixed_target = w.new_boid( { name: "fixed", colour: "green",
@@ -16,11 +17,11 @@ function main(){
   })
 
 
-
+/*
   w.new_boid( {name: "seeker", colour: "yellow"}, function(config) {
     /* Here you can interact with the outer scope */
     /* You can also access the already created brain */
-    config.geo_data = {
+/*    config.geo_data = {
       position: new Vector(100, 100),
       velocity: new Vector(10, 10),
       acceleration: new Vector(0, 0)
@@ -31,7 +32,7 @@ function main(){
 
 
   /* Example: wander behavior */
-  var wanderer = []
+/*  var wanderer = []
   for(var i = 0; i<10; i++)
   wanderer.push( w.new_boid( function (config) {
     config.color = "purple"
@@ -40,10 +41,10 @@ function main(){
   }))
 
   /* Example: seek behavior */
-  var seeker = []
+/*  var seeker = []
   var t = w.new_boid( function(config) {
     /* Here you can interact with the outer scope */
-    config.colour   = "red"
+/*    config.colour   = "red"
     config.geo_data = {
       position: new Vector(200, 200),
       velocity: new Vector(0, 0),
@@ -64,7 +65,7 @@ function main(){
 
 
   /*  Example: flee behavior */
-  var fleer = []
+/*  var fleer = []
   for (var i=0; i<8; i++) {
     var f
     fleer.push( f = w.new_boid( function(config) {
@@ -75,7 +76,7 @@ function main(){
   }
 
   /*  Example: pursue behaviour*/
-  var b2 = w.new_boid( function (config) {
+/*  var b2 = w.new_boid( function (config) {
     config.colour  = "lime"
     config.vel_max = 80
     config.force_limits.thrust   = 40
@@ -85,7 +86,7 @@ function main(){
   })
 
   /*  Example: foresee < seek == pursue behaviour*/
-  var b3 = w.new_boid( function (config) {
+/*  var b3 = w.new_boid( function (config) {
     config.colour  = "fuchsia"
     config.vel_max = 80
     config.force_limits.thrust   = 40
@@ -95,7 +96,7 @@ function main(){
   })
 
   /*  Example: foresee < seek > arrival */
-  var b4 = w.new_boid( function (config) {
+/*  var b4 = w.new_boid( function (config) {
     config.colour  = "maroon"
     config.vel_max = 180
     config.force_limits.thrust   = 40
@@ -104,6 +105,6 @@ function main(){
     config.brain.activate("foresee<seek>arrival", first)
   })
 
-
+*/
   w.start()
 }

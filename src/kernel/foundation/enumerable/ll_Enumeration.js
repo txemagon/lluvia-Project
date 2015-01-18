@@ -67,10 +67,11 @@ function Enumeration(constants) {
         args = constants.ia // Copy constructor trick.
     Object.defineProperty(this, "ia", {
         value: new(ApplyProxyConstructor(InterleavedArray, args)),
-        enumerable: false
+        enumerable: false,
+        writable: true
     })
 
-    this.transpose()
+    Enumeration.prototype.transpose.call(this)
 }
 
 /**

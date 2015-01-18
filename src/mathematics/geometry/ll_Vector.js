@@ -93,10 +93,10 @@ function Vector() {
     }
 
     //calculates the vector module
-    this._module = this.module()
+    this._module = Vector.prototype.module.call(this)
 
     //calculates the unit vector
-    this.uVector = this.scale(1 / this._module)
+    this.uVector = Vector.prototype.scale.call(this, 1 / this._module)
 }
 
 /**
@@ -281,7 +281,7 @@ Vector.prototype.cloneCoords = function(vectCpy) {
  */
 Vector.prototype.add = function(vectAdd) {
     /**
-     
+
      */
     var vectRes = [];
 

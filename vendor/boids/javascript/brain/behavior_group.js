@@ -18,7 +18,7 @@ function BehaviorGroup(type){
          }
 }
 
-BehaviorGroup.valid_types = Enumeration("set", "list")
+BehaviorGroup.valid_types = new Enumeration("set", "list")
 
 
 /**

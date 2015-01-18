@@ -209,8 +209,8 @@ World.prototype.has_born = function (){
     arguments[i].my_world = this
     this.register(arguments[i])
     //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
-    this.fireEvent(this.newMessage("sync", "new_boid", arguments[i]))
-   }
+    this.fire_event(this.new_message("sync", "new_boid", arguments[i]))
+  }
 }
 
 /**
