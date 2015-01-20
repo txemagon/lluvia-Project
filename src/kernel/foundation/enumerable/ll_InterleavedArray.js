@@ -6,7 +6,7 @@
  *
  * ### Example
  *
- *     new Interleaved Array([2, 1, [2, [3, [5,7], 5]], 7, 10, [4, [5,7]], 5])
+ *     new Interleaved Array(2, 1, [2, [3, [5,7], 5]], 7, 10, [4, [5,7]], 5)
  *     //=> {
  *     //=>   0: 2
  *     //=>   1: 1
@@ -158,7 +158,7 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
  * @return {InterleavedArray}          this
  */
 InterleavedArray.prototype.infiltrate = function(position, element) {
-
+    position = position.toString()
     var ia = new(ApplyProxyConstructor(InterleavedArray, element)) // element as InterleavedArray
     var subarray = this.go(position)
     var l = subarray.length
@@ -167,6 +167,10 @@ InterleavedArray.prototype.infiltrate = function(position, element) {
         subarray.subarray[l + i] = ia.subarray[i]
 
     Array.prototype.push.apply(subarray, ia)
+
+    for (var i = 0; i < this.subarray.length; i++)
+        if (this.subarray[i] instanceof Array)
+            this.enumerate(i, this.subarray[i])
 
     return this
 }
@@ -287,6 +291,7 @@ InterleavedArray.prototype.keys = function() {
     var array = Object.keys(this)
     var aux;
     for (var i = 0; i < array.length; i++)
+        //todo: this is sorted in alphabtecal way. So it's wrong.
         for (var j = i + 1; j < array.length; j++)
             if (array[i] > array[j]) {
                 aux = array[i]

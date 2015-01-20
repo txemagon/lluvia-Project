@@ -84,10 +84,11 @@ function Enumeration(constants) {
         args = constants.ia // Copy constructor trick.
     Object.defineProperty(this, &quot;ia&quot;, {
         value: new(ApplyProxyConstructor(InterleavedArray, args)),
-        enumerable: false
+        enumerable: false,
+        writable: true
     })
 
-    this.transpose()
+    Enumeration.prototype.transpose.call(this)
 }
 
 <span id='Kernel-Foundation-Enumerable-Enumeration-method-transpose'>/**
@@ -143,6 +144,16 @@ Enumeration.prototype.transpose = function(Type) {
     }
 }
 
+Enumeration.prototype.full_name = function(key){
+    var name = &quot;&quot;
+
+    var indices = key.split('.')
+    for (var i=0; i&lt;indices.length; i++)
+        name += this.ia[indices.slice(0, i+1).join('.')] + &quot;.&quot;
+
+    return name.substr(0, name.length-1)
+}
+
 <span id='Kernel-Foundation-Enumerable-Enumeration-method-each'>/**
 </span> * @method  each
  * Iterates over key-value pairs inside the enumeration.
@@ -171,14 +182,14 @@ Enumeration.prototype.transpose = function(Type) {
  *
  * key-value pairs will be:
  *
- * | key      | value  |
- * |----------|-------:|
- * | spades   | 0      |
- * | hearts   | 1      |
- * | red      | 1.1    |
- * | black    | 1.2    |
- * | diamonds | 2      |
- * | clovers  | 3      |
+ * | key          | value  |
+ * |--------------|-------:|
+ * | spades       | 0      |
+ * | hearts       | 1      |
+ * | hearts.red   | 1.1    |
+ * | hearts.black | 1.2    |
+ * | diamonds     | 2      |
+ * | clovers      | 3      |
  *
  */
 Enumeration.prototype.each = function() {
@@ -188,9 +199,127 @@ Enumeration.prototype.each = function() {
         // Get the VersionNumber 1.2.3 for the value.
         var key = string_key.split(&quot;.&quot;)
         var value = that
-        for (var i = 0; i &lt; key.length; value = value[that.ia[key.slice(0, i + 1).join(&#39;.&#39;)]], i++);
-        Enumeration.prototype.each.yield(that.ia[string_key], value)
+        for (var i = 0; i &lt; key.length;
+            value = value[that.ia[key.slice(0, i + 1).join('.')]],
+            i++);
+        Enumeration.prototype.each.yield(that.full_name(string_key), value)
     })
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-get'>/**
+</span> * @method get
+ * Returns a the value of a constant given the constant name.
+ * When the value is passed it is returned previously checking
+ * is actually present in the set.
+ * null is returned when key isn't found.
+ *
+ *
+ * ### Example
+ *
+ * Given:
+ *
+ *      var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ * will result in
+ *
+ *        {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1,
+ *                   &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ * executing
+ *
+ *      a.get(&quot;hearts.red&quot;)
+ *      // =&gt; '1.1'
+ *      a.get(&quot;1.1&quot;)
+ *      // =&gt; '1.1'
+ *      a.get('5.7')
+ *      // =&gt; null
+ *      a.get(&quot;bat.man&quot;)
+ *      // =&gt; null
+ *
+ * ## Notice
+ *
+ *  Despite the return value appears as a string in the example above,
+ *  actually is a VersionNumber (or derivated). This seems interesting
+ *  since this kind of numbers can hold the ability to perform actions,
+ *  as we can see in the {@link Engine.State State} class.
+ *
+ * @param  {String} label Constant name to look for.
+ * @return {VersionNumber}       Value of the constant.
+ */
+Enumeration.prototype.get = function(label) {
+    if ( /\d+(?:\.\d+)*/.test(label) )
+        if (this.ia.keys().include$U(label))
+            return this.get(this.full_name(label))
+        else
+            return null
+
+    var position = null
+    this.each(function (key, value) {
+        if (key == label)
+            position = value
+    })
+    return position
+}
+
+<span id='Kernel-Foundation-Enumerable-Enumeration-method-add'>/**
+</span> * @method add
+ * Enlarges the enumeration set by adding new constants at a given position.
+ *
+ * ### Example
+ *
+ * Given:
+ *
+ *      var a = new Enumeration(&quot;spades&quot;, &quot;hearts&quot;, [ &quot;red&quot;, &quot;black&quot;], &quot;diamonds&quot;, &quot;clovers&quot;)
+ *
+ * will result in
+ *
+ *        {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: 1,
+ *                   &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ * and,
+ *      a.add([&quot;white&quot;, &quot;yellow&quot;], &quot;hearts.red&quot;)
+ * or,
+ *      a.add([&quot;white&quot;, &quot;yellow&quot;], &quot;1.1&quot;)
+ *
+ * will en up in,
+ *
+ *     {
+ *       &quot;spades&quot;: 0,
+ *       &quot;hearts&quot;: { 1,
+ *                   &quot;red&quot;: { 1,
+ *                            &quot;white&quot;: 1,
+ *                            &quot;yellow&quot;: 2
+ *                          },
+ *                   &quot;black&quot;: 2
+ *                  },
+ *        &quot;diamonds&quot;: 2,
+ *        &quot;clovers&quot;: 3
+ *        }
+ *
+ * @param {Array | String} constants List of new constant values.
+ * @param {String} [place]    Name or value of the position to insert the constants.
+ *                         in cannot be empty when the last high level position
+ *                         , clovers in the example above, is undefined.
+ */
+Enumeration.prototype.add = function(constants, place){
+    place = place || this.ia.length
+    place = this.get(place)
+    this.ia.infiltrate(place, constants)
+    return Enumeration.prototype.transpose.call(this)
 }
 
 Object.defineProperties(Enumeration.prototype, {
@@ -203,8 +332,24 @@ Object.defineProperties(Enumeration.prototype, {
         enumerable: false,
         configurable: false,
         writable: false
+    },
+    full_name: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    get: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    add: {
+        enumerable: false,
+        configurable: false,
+        writable: false
     }
 })
+
 
 //todo: Needed include$U. Depends on making module Enumerable and mixing.</pre>
 </body>

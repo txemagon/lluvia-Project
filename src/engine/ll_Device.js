@@ -80,13 +80,25 @@ Device.prototype = new Processor
 Device.extend(ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
-
 /**
  * Device default states
  * @property {Object} Device.STATE Enumeration constant.
  */
 
 Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
+
+Device.default_solicitors = {
+            running: function() {
+                this.gate_runner(that.now)
+                this.child_runner(that.now);
+            },
+            suspending: function() {
+                this.child_runner(that.now);
+            },
+            killing: function() {
+                this.gate_runner(that.now)
+            }
+        }
 
 /**
  * @method constructor
@@ -99,27 +111,18 @@ Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "
  *
  */
 
-function Device(view, state, parent, plain) {
+function Device(view, state, solicitors, parent) {
     /* Class accesors*/
     var that = this
     this._class = that
 
     /* construction */
-    function initialize() { // Use that. This would refer to the function object.
+    function initialize() { // Use that. 'this' would refer to the function object.
 
         state = state || new EnumerationOf(State, Device.STATE)
-        that.solicitors = {
-            running: function() {
-                this.gate_runner(that.now)
-                this.child_runner(that.now);
-            }
-            suspending: function() {
-                this.child_runner(that.now);
-            },
-            killing: function() {
-                this.gate_runner(that.now)
-            }
-        }
+
+        that.solicitors = Device.default_solicitors
+        that.solicitors.merge
 
         /* Instance vars */
         if (view)

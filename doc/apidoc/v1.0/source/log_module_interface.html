@@ -46,15 +46,15 @@ function ll_file_included(file_source, module_source, last_file, last_module){
 }
 
 function highlight(language){
-    dp.SyntaxHighlighter.ClipboardSwf = &#39;vendor/SyntaxHighlighter/Scripts/clipboard.swf&#39;
-    code = document.getElementsByTagName(&#39;pre&#39;)
+    dp.SyntaxHighlighter.ClipboardSwf = 'vendor/SyntaxHighlighter/Scripts/clipboard.swf'
+    code = document.getElementsByTagName('pre')
     for (var i = 0; i &lt; code.length; i++) 
         if (code[i].className == language) 
-            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute(&#39;name&#39;))
+            dp.SyntaxHighlighter.HighlightAll(code[i].getAttribute('name'))
 }
 
 function ll_start(){
-    highlight(&#39;javascript&#39;)
+    highlight('javascript')
 }
 
 function sanitize(code){

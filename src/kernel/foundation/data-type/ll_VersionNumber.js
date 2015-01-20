@@ -84,6 +84,10 @@ function VersionNumber(initial_string, sep) {
  * @return {String} Printable version of VersionNumber objects.
  */
 VersionNumber.prototype.toString = function() {
+    // VN's are considered as constants, so we cache the value.
+    if (this.inner_data)
+        return this.inner_data
+
     var obj = this
     var text = ""
     var key = null
@@ -93,7 +97,13 @@ VersionNumber.prototype.toString = function() {
         obj = obj[key]
     }
 
-    return text.replace(/.$/, "")
+    Object.defineProperty(this, 'inner_data', {
+        value: text.replace(/.$/, ""),
+        writable: false,
+        enumerable: false
+    })
+
+    return this.inner_data
 }
 
 

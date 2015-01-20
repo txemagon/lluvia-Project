@@ -74,7 +74,7 @@
  *     var a = new Automata(["killing", ["running", ["*phase1", "phase2"], "supended" ]])
  *
  * @param  {Object | Array}   states Possibles states of an automata (Enumeration).
- *                                   Array is an extesnsion for Hierarchical State Machines.
+ *                                   Array is an extension for Hierarchical State Machines.
  *                                   Avoid calling run to a state.
  * @param  {Array}    solicitor		 State Manager functions. An array with three functions (up, steady, down).
  * @return {Automata}				 New created state machine automata..
@@ -113,6 +113,10 @@ function Automata(states, solicitor) {
 
         that.state.each(function(k, v) {
             v.owner = that
+            Object.defineProperty(v, 'owner', {
+                enumerable: false,
+                writable: false
+            })
         })
 
         // Always none equals to -1

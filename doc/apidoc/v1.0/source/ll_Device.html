@@ -22,7 +22,7 @@
  *
  * Provides an asynchronous mechanism for communicating with another devices.
  * In practical terms, it uses a message queue and fires events.
- * I doesn&#39;t have a window on his own but handles Gates to communicate
+ * I doesn't have a window on his own but handles Gates to communicate
  * with HTML DOM.
  *
  * ###Example of use:
@@ -37,7 +37,7 @@
  *     	if (arguments.length)
  *     		Gate.call(this, el)
  *     }
- *     // No &#39;device&#39; references are provided in the constructor
+ *     // No 'device' references are provided in the constructor
  *
  *
  *     ButtonGate.prototype.do_onclick = function(event, element){
@@ -97,13 +97,25 @@ Device.prototype = new Processor
 Device.extend(ThreadAutomata) // ThreadAutomata is the last class in the inheritance chain in order to keep its run method unredefinided
 Device.prototype.constructor = Device
 
-
 <span id='state-property-Device'>/**
 </span> * Device default states
  * @property {Object} Device.STATE Enumeration constant.
  */
 
 Device.STATE = new EnumerationOf(State, [&quot;suspended&quot;, &quot;running&quot;, &quot;suspending&quot;, &quot;killing&quot;, &quot;killed&quot;])
+
+Device.default_solicitors = {
+            running: function() {
+                this.gate_runner(that.now)
+                this.child_runner(that.now);
+            },
+            suspending: function() {
+                this.child_runner(that.now);
+            },
+            killing: function() {
+                this.gate_runner(that.now)
+            }
+        }
 
 <span id='state-method-constructor'>/**
 </span> * @method constructor
@@ -116,27 +128,18 @@ Device.STATE = new EnumerationOf(State, [&quot;suspended&quot;, &quot;running&qu
  *
  */
 
-function Device(view, state, parent) {
+function Device(view, state, solicitors, parent) {
     /* Class accesors*/
     var that = this
     this._class = that
 
     /* construction */
-    function initialize() { // Use that. This would refer to the function object.
+    function initialize() { // Use that. 'this' would refer to the function object.
 
         state = state || new EnumerationOf(State, Device.STATE)
-        that.solicitors = {
-            running: function() {
-                this.owner.gate_runner(that.now)
-                this.owner.child_runner(that.now);
-            },
-            suspending: function() {
-                this.owner.child_runner(that.now);
-            },
-            killing: function() {
-                this.owner.gate_runner(that.now)
-            }
-        }
+
+        that.solicitors = Device.default_solicitors
+        that.solicitors.merge
 
         /* Instance vars */
         if (view)
@@ -235,7 +238,7 @@ Device.prototype.new_gate = function(el, ClassCons, config) {
  *  Make the previous definition in a derived class.
  */
 Device.prototype.attend = function(date, mssg) {
-    this[&quot;attend_&quot; + mssg.name](date, mssg) // If attend_ method doesn&#39;t exist then we shall provide a generic dispatcher.
+    this[&quot;attend_&quot; + mssg.name](date, mssg) // If attend_ method doesn't exist then we shall provide a generic dispatcher.
 }
 
 Device.prototype._y = function(htmlElement, stopAt) {
@@ -353,7 +356,7 @@ Device.prototype.method_missing = function(method, obj, params) {
         return method.underscore.apply(this, params)
     obj = obj || &quot;&quot;
     params = params || []
-    throw (new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + this.constructor.name + &quot;. Params: &quot; + params.join(&#39;, &#39;)))
+    throw (new MethodMissingError(method + &quot; missing in &quot; + obj + &quot;::&quot; + this.constructor.name + &quot;. Params: &quot; + params.join(', ')))
 }</pre>
 </body>
 </html>
