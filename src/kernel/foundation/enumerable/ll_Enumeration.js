@@ -302,6 +302,8 @@ Enumeration.prototype.get = function(label) {
 Enumeration.prototype.add = function(constants, place){
     place = place || this.ia.length
     place = this.get(place)
+    if (Object.prototype.toString.call(constants) === '[object String]' )
+        constants = [constants]
     this.ia.infiltrate(place, constants)
     Enumeration.prototype.transpose.call(this)
 }

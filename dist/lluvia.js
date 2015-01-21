@@ -2340,7 +2340,7 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    var args = arguments     if (constants instanceof Enumeration)        args = constants.ia     Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, args)),        enumerable: false,        writable: true    })    Enumeration.prototype.transpose.call(this)}Enumeration.prototype.transpose = function(Type) {    Type = Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value,            writable: true        })    }}Enumeration.prototype.full_name = function(key){    var name = ""    var indices = key.split('.')    for (var i=0; i<indices.length; i++)        name += this.ia[indices.slice(0, i+1).join('.')] + "."    return name.substr(0, name.length-1)}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(string_key) {        var key = string_key.split(".")        var value = that        for (var i = 0; i < key.length;            value = value[that.ia[key.slice(0, i + 1).join('.')]],            i++);        Enumeration.prototype.each.yield(that.full_name(string_key), value)    })}Enumeration.prototype.get = function(label) {    if ( /\d+(?:\.\d+)*/.test(label) )        if (this.ia.keys().include$U(label))            return this.get(this.full_name(label))        else            return null    var position = null    this.each(function (key, value) {        if (key == label)            position = value    })    return position}Enumeration.prototype.add = function(constants, place){    place = place || this.ia.length    place = this.get(place)    this.ia.infiltrate(place, constants)    Enumeration.prototype.transpose.call(this)}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    },    full_name: {        enumerable: false,        configurable: false,        writable: false    },    get: {        enumerable: false,        configurable: false,        writable: false    },    add: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
+function Enumeration(constants) {    var args = arguments     if (constants instanceof Enumeration)        args = constants.ia     Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, args)),        enumerable: false,        writable: true    })    Enumeration.prototype.transpose.call(this)}Enumeration.prototype.transpose = function(Type) {    Type = Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value,            writable: true        })    }}Enumeration.prototype.full_name = function(key){    var name = ""    var indices = key.split('.')    for (var i=0; i<indices.length; i++)        name += this.ia[indices.slice(0, i+1).join('.')] + "."    return name.substr(0, name.length-1)}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(string_key) {        var key = string_key.split(".")        var value = that        for (var i = 0; i < key.length;            value = value[that.ia[key.slice(0, i + 1).join('.')]],            i++);        Enumeration.prototype.each.yield(that.full_name(string_key), value)    })}Enumeration.prototype.get = function(label) {    if ( /\d+(?:\.\d+)*/.test(label) )        if (this.ia.keys().include$U(label))            return this.get(this.full_name(label))        else            return null    var position = null    this.each(function (key, value) {        if (key == label)            position = value    })    return position}Enumeration.prototype.add = function(constants, place){    place = place || this.ia.length    place = this.get(place)    if (Object.prototype.toString.call(constants) === '[object String]' )        constants = [constants]    this.ia.infiltrate(place, constants)    Enumeration.prototype.transpose.call(this)}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    },    full_name: {        enumerable: false,        configurable: false,        writable: false    },    get: {        enumerable: false,        configurable: false,        writable: false    },    add: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
 Enumeration.prototype.constructor = EnumerationOf
 EnumerationOf.prototype.super = Enumeration
 function EnumerationOf(type) {
@@ -2393,8 +2393,25 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
 }
 InterleavedArray.prototype.infiltrate = function(position, element) {
     position = position.toString()
+     if (Object.prototype.toString.call(element) === '[object String]' )
+        element = [element]
     var ia = new(ApplyProxyConstructor(InterleavedArray, element)) 
     var subarray = this.go(position)
+    if (!subarray){
+        if (this[position]){
+            var up   = this.hover(position)
+            var dot  = position.lastIndexOf('.') + 1
+            position = parseInt(position.substring(dot)) - (dot? 1 : 0)
+            subarray = up[position] = new InterleavedArray()
+            Object.defineProperty(
+                up[position],
+                "subarray", {
+                value: [],
+                writable: true,
+                enumerable: false
+            })
+        }
+    }
     var l = subarray.length
     for (var i = 0; i < ia.subarray.length; i++)
         subarray.subarray[l + i] = ia.subarray[i]
@@ -2412,6 +2429,18 @@ InterleavedArray.prototype.go = function(index) {
     for (var i = 0; i < indices.length; i++)
         subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
     return subarray
+}
+InterleavedArray.prototype.hover = function(index) {
+    var subarray = this
+    var last
+    if (typeof(index) === "undefined")
+        return subarray
+    var indices = index.toString().split(".")
+    for (var i = 0; i < indices.length; i++){
+        last = subarray
+        subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
+    }
+    return last.subarray
 }
 InterleavedArray.prototype.to_a = function(index) {
     var array = []

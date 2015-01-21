@@ -51,6 +51,108 @@
  *
  * See that when no substates are given you can directly define a function driver.
  * Notice too, that defining a regime driver is made by typing between quotes
+ *
+ * ## Inner Structure
+ *
+ *     var solicitors = {
+ *             walking: function() {
+ *                 return "I'm walking with my shoes."
+ *             },
+ *             "walking.down": function() {
+ *                 alert("Im taking my shoes off.")
+ *
+ *             },
+ *             "walking.up": function() {
+ *                 alert("Im putting my shoes on.")
+ *             },
+ *             running: [
+ *
+ *                 function() {
+ *                     return "I'm running"
+ *                 }, {
+ *                     slow: function() {
+ *                         return "I'm running slow"
+ *                     },
+ *                     "slow.up": function() {
+ *                         alert("I got my slow sneakers")
+ *                     },
+ *                     "slow.steady": function() {
+ *                         return "But steadily"
+ *                     },
+ *                     fast: function() {
+ *                         return "I'm running fast"
+ *                     }
+ *                 }
+ *             ],
+ *             "running.up": function() {
+ *                 alert("Im putting my sneakers on.")
+ *             },
+ *             "running.down": function() {
+ *                 alert("Im taking my sneakers off.")
+ *
+ *             }
+ *     }
+ *
+ *     var a = new Automata(["*walking", "running", ["slow", "fast"]], solicitors)
+ *     a.state.toSource()
+ *
+ *     //=> ( { walking: {
+ *     //=>                0:   (function () {
+ *     //=>                         return State.prototype._run.apply(that, arguments)
+ *     //=>                     }),
+ *     //=>                run: (function () {
+ *     //=>                        return "I'm walking with my shoes."
+ *     //=>                     })
+ *     //=>              },
+ *     //=>     running: {
+ *     //=>                1:    (function () {
+ *     //=>                          return State.prototype._run.apply(that, arguments)
+ *     //=>                       }),
+ *     //=>                run:  (function () {
+ *     //=>                          return "I'm running"
+ *     //=>                        }),
+ *     //=>                slow: {
+ *     //=>                        1:   {1:{}},
+ *     //=>                        run: (function () {
+ *     //=>                                  return "I'm running slow"
+ *     //=>                              }),
+ *     //=>                        '1.1':(function () {
+ *     //=>                                  return State.prototype._run.apply(that, arguments)
+ *     //=>                               })
+ *     //=>                      },
+ *     //=>                fast: {
+ *     //=>                        1: {2:{}},
+ *     //=>                        run: (function () {
+ *     //=>                                  return "I'm running fast"
+ *     //=>                              }),
+ *     //=>                        '1.2': (function () {
+ *     //=>                                     return State.prototype._run.apply(that, arguments)
+ *     //=>                                })
+ *     //=>                       }
+ *     //=>              },
+ *     //=>     none: {
+ *     //=>             '-1': (function () {
+ *     //=>                         return State.prototype._run.apply(that, arguments)
+ *     //=>                   }),
+ *     //=>             run: (function () {})
+ *     //=>           }
+ *     //=> })
+ *
+ * As we can see, every state is made of a
+ * {@link Kernel.Foundation.DataType.VersionNumber VersionNumber}, which is the
+ * VersionNumber itself ( for fast will be: {1: {2:{}}} ) plus to additional
+ * attributes: 'run' and the result of VersionNumber#toString
+ * ('1.2' in the example). When this attribute, containing a function, is
+ * triggered a generic \_run function is called. Then user defined run function,
+ * usually called the driver of the state is executed.
+ *
+ * Some additional functions can be defined as attributes of run: up, steady
+ * and down, to be more precise. Those functions can be used to
+ * facilitate a smooth transition between states.
+ *
+ * The automata is driven by an object (StateGear) that takes into account
+ * when a transition is running on the Automata.
+ *
  */
 
 /**

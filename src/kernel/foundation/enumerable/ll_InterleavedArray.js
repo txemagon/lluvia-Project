@@ -159,8 +159,26 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
  */
 InterleavedArray.prototype.infiltrate = function(position, element) {
     position = position.toString()
+     if (Object.prototype.toString.call(element) === '[object String]' )
+        element = [element]
     var ia = new(ApplyProxyConstructor(InterleavedArray, element)) // element as InterleavedArray
     var subarray = this.go(position)
+    if (!subarray){
+        if (this[position]){
+            var up   = this.hover(position)
+            var dot  = position.lastIndexOf('.') + 1
+            position = parseInt(position.substring(dot)) - (dot? 1 : 0)
+            subarray = up[position] = new InterleavedArray()
+            Object.defineProperty(
+                up[position],
+                "subarray", {
+                value: [],
+                writable: true,
+                enumerable: false
+            })
+        }
+    }
+
     var l = subarray.length
 
     for (var i = 0; i < ia.subarray.length; i++)
@@ -223,6 +241,29 @@ InterleavedArray.prototype.go = function(index) {
     return subarray
 }
 
+/**
+ * @method hover
+ * Same as #go but returns one step before.
+ *
+ * @param  {String} index index where the subarray is contained
+ * @return {Array | InterleavedArray}
+ */
+InterleavedArray.prototype.hover = function(index) {
+    var subarray = this
+    var last
+
+    if (typeof(index) === "undefined")
+        return subarray
+
+    var indices = index.toString().split(".")
+
+    for (var i = 0; i < indices.length; i++){
+        last = subarray
+        subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
+    }
+
+    return last.subarray
+}
 
 /**
  * @method to_a
