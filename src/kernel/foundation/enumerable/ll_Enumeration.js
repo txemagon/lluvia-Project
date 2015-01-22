@@ -106,7 +106,7 @@ function Enumeration(constants) {
  * @param  {Class} [Type=VersionNumber] Class for assigning values
  */
 Enumeration.prototype.transpose = function(Type) {
-    Type = Type || VersionNumber
+    Type = Type || this.Type || VersionNumber
 
     var keys = this.ia.keys()
     for (var k = 0; k < keys.length; k++) {
@@ -238,6 +238,7 @@ Enumeration.prototype.each = function() {
  * @return {VersionNumber}       Value of the constant.
  */
 Enumeration.prototype.get = function(label) {
+    label = new String(label)
     if ( /\d+(?:\.\d+)*/.test(label) )
         if (this.ia.keys().include$U(label))
             return this.get(this.full_name(label))
@@ -299,10 +300,14 @@ Enumeration.prototype.get = function(label) {
  *                         in cannot be empty when the last high level position
  *                         , clovers in the example above, is undefined.
  */
+//todo: Today is not possible to extend the first level.
 Enumeration.prototype.add = function(constants, place){
-    place = place || this.ia.length
+
+    if (typeof (place) === "undefined" || place == null)
+        place = this.ia.length - 1
+
     place = this.get(place)
-    if (Object.prototype.toString.call(constants) === '[object String]' )
+    if (!(constants instanceof Array) )
         constants = [constants]
     this.ia.infiltrate(place, constants)
     Enumeration.prototype.transpose.call(this)

@@ -158,8 +158,8 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
  * @return {InterleavedArray}          this
  */
 InterleavedArray.prototype.infiltrate = function(position, element) {
-    position = position.toString()
-     if (Object.prototype.toString.call(element) === '[object String]' )
+    position = new String(position)
+     if (!(element instanceof Array))
         element = [element]
     var ia = new(ApplyProxyConstructor(InterleavedArray, element)) // element as InterleavedArray
     var subarray = this.go(position)
@@ -233,7 +233,7 @@ InterleavedArray.prototype.go = function(index) {
     if (typeof(index) === "undefined")
         return subarray
 
-    var indices = index.toString().split(".")
+    var indices = (new String(index)).split(".")
 
     for (var i = 0; i < indices.length; i++)
         subarray = subarray.subarray[indices[i] - (i ? 1 : 0)]
@@ -255,7 +255,7 @@ InterleavedArray.prototype.hover = function(index) {
     if (typeof(index) === "undefined")
         return subarray
 
-    var indices = index.toString().split(".")
+    var indices = (new String(index)).split(".")
 
     for (var i = 0; i < indices.length; i++){
         last = subarray
@@ -403,6 +403,6 @@ InterleavedArray.stop_enum = function(method) {
             enumerable: false
         })
 }
-InterleavedArray.stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys"])
+InterleavedArray.stop_enum(["go", "inspect", "enumerate", "size", "constructor", "to_a", "infiltrate", "keys", "hover"])
 
 // todo: Override the other Array methods in InterleavedArray

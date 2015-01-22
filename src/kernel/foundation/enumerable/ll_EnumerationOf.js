@@ -45,6 +45,10 @@ EnumerationOf.prototype.super = Enumeration
  * @param {Object...} [rest] Arguments to be passed to Enumeration constructor.
  */
 function EnumerationOf(type) {
+	Object.defineProperty(this, "Type", {
+		value: type,
+		enumerable: false
+	})
     var args = Array.prototype.slice.call(arguments, 1)
     if (args[0] instanceof Enumeration)
         args[0] = [args[0]] // For copy constructor purposes.

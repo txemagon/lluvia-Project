@@ -123,7 +123,7 @@ function Enumeration(constants) {
  * @param  {Class} [Type=VersionNumber] Class for assigning values
  */
 Enumeration.prototype.transpose = function(Type) {
-    Type = Type || VersionNumber
+    Type = Type || this.Type || VersionNumber
 
     var keys = this.ia.keys()
     for (var k = 0; k &lt; keys.length; k++) {
@@ -139,7 +139,8 @@ Enumeration.prototype.transpose = function(Type) {
         }
         deep[ia_value] = new Type(keys[k])
         Object.defineProperty(deep[ia_value], &quot;name&quot;, {
-            value: ia_value
+            value: ia_value,
+            writable: true
         })
     }
 }
@@ -254,6 +255,7 @@ Enumeration.prototype.each = function() {
  * @return {VersionNumber}       Value of the constant.
  */
 Enumeration.prototype.get = function(label) {
+    label = new String(label)
     if ( /\d+(?:\.\d+)*/.test(label) )
         if (this.ia.keys().include$U(label))
             return this.get(this.full_name(label))
@@ -295,7 +297,7 @@ Enumeration.prototype.get = function(label) {
  * or,
  *      a.add([&quot;white&quot;, &quot;yellow&quot;], &quot;1.1&quot;)
  *
- * will en up in,
+ * will end up in,
  *
  *     {
  *       &quot;spades&quot;: 0,
@@ -315,11 +317,17 @@ Enumeration.prototype.get = function(label) {
  *                         in cannot be empty when the last high level position
  *                         , clovers in the example above, is undefined.
  */
+//todo: Today is not possible to extend the first level.
 Enumeration.prototype.add = function(constants, place){
-    place = place || this.ia.length
+
+    if (typeof (place) === &quot;undefined&quot; || place == null)
+        place = this.ia.length - 1
+
     place = this.get(place)
+    if (!(constants instanceof Array) )
+        constants = [constants]
     this.ia.infiltrate(place, constants)
-    return Enumeration.prototype.transpose.call(this)
+    Enumeration.prototype.transpose.call(this)
 }
 
 Object.defineProperties(Enumeration.prototype, {
