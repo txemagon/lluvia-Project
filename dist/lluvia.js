@@ -2395,8 +2395,9 @@ InterleavedArray.prototype.enumerate = function(base_index, subarray) {
             this.enumerate(index, subarray.subarray[i])
     }
 }
-InterleavedArray.prototype.infiltrate = function(position, element) {
-    position = new String(position)
+InterleavedArray.prototype.infiltrate = function(element, position) {
+    if (typeof (position) !== "undefined" && position != null)
+       position = new String(position)
      if (!(element instanceof Array))
         element = [element]
     var ia = new(ApplyProxyConstructor(InterleavedArray, element)) 
