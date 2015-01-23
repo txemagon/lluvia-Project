@@ -50,7 +50,112 @@
  *     	}
  *     }
  *
+ *  ## Derived objects: lifecycle.
  *
+ * Devices are not a target themselves. Despite not pure virtual classes, they mainly
+ * provide support for derived classes.
+ *   
+ *     Controller.prototype = new Device
+ *     Controller.prototype.constructor = Controller
+ *     function Controller(){
+ *       Device.apply(this, arguments)
+ *     }
+ *
+ * A block is provided for configuration purposes.
+ *     
+ *     var a = new Controller(function(state, value){
+ *       alert(state.inspect())
+ *       alert(value.inspect())
+ *     })
+ *
+ * The first alert will bring up something like this:
+ *
+ *     {
+ *        suspended:  ({0:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        running:    ({1:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        suspending:     ({2:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        killing:    ({3:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        killed:     ({4:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        super:  function Enumeration(constants) {
+ *        var args = arguments 
+ *        if (constants instanceof Enumeration)
+ *            args = constants.ia 
+ *        Object.defineProperty(this, "ia", {
+ *            value: new(ApplyProxyConstructor(InterleavedArray, args)),
+ *            enumerable: false,
+ *            writable: true
+ *        })
+ *        Enumeration.prototype.transpose.call(this)
+ *    } 
+ *     }
+ *
+ * and the second alert: alert(value.inspect())
+ *
+ *     {
+ *        running:    function () {
+ *                    this.gate_runner(that.now)
+ *                    this.child_runner(that.now);
+ *                } 
+ *        suspending:     function () {
+ *                    this.child_runner(that.now);
+ *                } 
+ *        killing:    function () {
+ *                    this.gate_runner(that.now)
+ *                } 
+ *     }
+ *
+ * After the construtor finishes and the #zip operation is performed
+ * 
+ *     alert(a.state.inspect())
+ *
+ *     {
+ *        suspended:  ({0:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        running:    ({1:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {
+ *                    this.gate_runner(that.now)
+ *                    this.child_runner(that.now);
+ *                })}) 
+ *        suspending:     ({2:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {
+ *                    this.child_runner(that.now);
+ *                })}) 
+ *        killing:    ({3:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {
+ *                    this.gate_runner(that.now)
+ *                })}) 
+ *        killed:     ({4:(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        none:   ({'-1':(function () {
+ *            return State.prototype._run.apply(that, arguments)
+ *        }), run:(function () {})}) 
+ *        super:  function Enumeration(constants) {
+ *        var args = arguments 
+ *        if (constants instanceof Enumeration)
+ *            args = constants.ia 
+ *        Object.defineProperty(this, "ia", {
+ *            value: new(ApplyProxyConstructor(InterleavedArray, args)),
+ *            enumerable: false,
+ *            writable: true
+ *        })
+ *        Enumeration.prototype.transpose.call(this)
+ *    } 
+ *     }
  *
  * We have to be very carefull with non idempotent methods (specially function references),
  * because they are called twice during inheritance processes. Once in xxx.prototype = new yy
@@ -120,7 +225,7 @@ function Device(view, state, solicitors, parent, block) {
     /* Look for new drivers */
     function engage_drivers(){
         state.each(function(key, value){
-            alert(key)
+            ;
         })
     }
 
@@ -142,7 +247,6 @@ function Device(view, state, solicitors, parent, block) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-
 
         engage_drivers()
         Device.yield(state, that.solicitors)

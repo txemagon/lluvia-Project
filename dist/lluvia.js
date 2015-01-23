@@ -3327,17 +3327,17 @@ Device.default_solicitors = {
                 this.gate_runner(that.now)
             }
         }
-function Device(view, state, solicitors, parent) {
+function Device(view, state, solicitors, parent, block) {
     var that = this
     this._class = that
     function engage_drivers(){
         state.each(function(key, value){
-            alert(key)
+            ;
         })
     }
     function initialize() { 
         state = state  || new EnumerationOf(State, Device.STATE)
-        that.solicitors = Device.default_solicitors
+        that.solicitors = solicitors || Device.default_solicitors
         if (view)
             that.view = (typeof(view) === "string" ? document.getElementById(view) : view)
         that.event_dispatcher = new EventDispatcher();
@@ -3348,6 +3348,7 @@ function Device(view, state, solicitors, parent) {
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
         engage_drivers()
+        Device.yield(state, that.solicitors)
         ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
