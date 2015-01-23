@@ -3330,6 +3330,11 @@ Device.default_solicitors = {
 function Device(view, state, solicitors, parent) {
     var that = this
     this._class = that
+    function engage_drivers(){
+        state.each(function(key, value){
+            alert(key)
+        })
+    }
     function initialize() { 
         state = state  || new EnumerationOf(State, Device.STATE)
         that.solicitors = Device.default_solicitors
@@ -3342,6 +3347,7 @@ function Device(view, state, solicitors, parent) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
+        engage_drivers()
         ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }

@@ -105,22 +105,30 @@ Device.default_solicitors = {
  * Creates a Device.
  *
  * @param {String | HTMLElement} [view] (optional) A possible view associated with the Device.
- * @param {Object} [state] (optional) Default Device states -as ll_Enumeration- are: suspended, running, suspending, killing and killed.
+ * @param {Array | InterleavedArray} [state] (optional) Default Device states -as ll_Enumeration- are: suspended, running, suspending, killing and killed.
  * @param {Object} [current_state={ previous: state.suspended, current: state.suspended, requested: state.running }] Sets the initial conditions for the device to start.
- * @param {Object} [parent=Processor] Parent Device or processor this Device belongs to.
+ * @param {Processor} [parent=Processor] Parent Device or processor this Device belongs to.
+ * @param {function} [block] Porvided to configure states and solicitors.
  *
  */
 
-function Device(view, state, solicitors, parent) {
+function Device(view, state, solicitors, parent, block) {
     /* Class accesors*/
     var that = this
     this._class = that
+
+    /* Look for new drivers */
+    function engage_drivers(){
+        state.each(function(key, value){
+            alert(key)
+        })
+    }
 
     /* construction */
     function initialize() { // Use that. 'this' would refer to the function object.
 
         state = state  || new EnumerationOf(State, Device.STATE)
-        that.solicitors = Device.default_solicitors
+        that.solicitors = solicitors || Device.default_solicitors
 
         /* Instance vars */
         if (view)
@@ -134,7 +142,11 @@ function Device(view, state, solicitors, parent) {
         that.register(that.event_dispatcher, that.event_dispatcher.shift)
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
-        //todo: Look for world.prototype.running_slow_steady and friends
+
+
+        engage_drivers()
+        Device.yield(state, that.solicitors)
+
         ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }
