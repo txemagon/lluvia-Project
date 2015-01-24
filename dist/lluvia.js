@@ -184,24 +184,30 @@ function Point(coordX, coordY){
 		return this;
 	}
 	this.x = coordX;
-	this.y = coordY;}
+	this.y = coordY;
+}
 Point.prototype.multiply = function (amount){
 	this.x *= amount;
-	this.y *= amount;}
+	this.y *= amount;
+}
 Point.prototype.divide = function (amount){
 	this.x /= amount;
-	this.y /= amount;}
+	this.y /= amount;
+}
 rectangle.prototype.constructor = rectangle;
 function rectangle(coord,dimen){
 	this.x0 = coord.x;
 	this.y0 = coord.y;
 	this.x1 = this.x0 + dimen.x;
-	this.y1 = this.y0 + dimen.y;}
+	this.y1 = this.y0 + dimen.y;
+}
 rectangle.prototype.getRectDimen = function(){
 			return new Point(this.x1 - this.x0, this.y1 - this.y0);
 } 
 rectangle.prototype.getRectCoord = function(){
-	return new Point(this.x0, this.y0);}rectangle.prototype.displace = function (despl){
+	return new Point(this.x0, this.y0);
+}
+rectangle.prototype.displace = function (despl){
 	this.x0 += despl.x;
 	this.y0 += despl.y;
 	this.x1 += despl.x;
@@ -209,9 +215,139 @@ rectangle.prototype.getRectCoord = function(){
 }
 rectangle.prototype.elarge = function (despl){
 	this.x1 += despl.x;
-	this.y1 += despl.y;}
-Continue.prototype.constructor = Continue;function Continue(magnitude){	this.magnitude0 = new magnitude.constructor(magnitude);	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.set = function (magnitude){	this.magnitude0 = this.magnitude;	this.magnitude  = new magnitude.constructor(magnitude);}Continue.prototype.clone = function(){	var copy = new Continue(this.magnitude);	copy.magnitude0 = this.magnitude0;	return copy;	}Continue.prototype.derive = function(regard){	var derived = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in derived)		try{			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);		} catch (error) {			alert("The derivative is infinite: " + error.toString());			}	return derived;}Continue.prototype.differential = function (regard){	var differential = this.clone().magnitude;	var prp = new Array();	for (var j in regard.magnitude)		prp.push(j);	for (var i in differential)			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);	return differential;}Continue.prototype.integrate = function(amount){	var newValue = this.clone().magnitude;	for( var i in newValue)		newValue[i] += amount[i];		this.magnitude = newValue;}Time.prototype.constructor = Time;function Time(t){	if ((arguments.length == 1) && (arguments[0] instanceof Time)){		this.date = arguments[0].date;		return this;	}	this.date = t;}Mobile.prototype.constructor = Mobile;function Mobile(position, velocity, acceleration, time){	this.position     = new Continue(position);	this.velocity     = new Continue(velocity);	this.acceletation = new Continue(acceleration);	this.moment       = new Continue(time);}Mobile.prototype.update = function(moment){	var i = this.moment.clone();	delete i;	this.moment.set(moment);	this.velocity.moment(this.acceleration.differential(this.moment));	this.position.moment(this.velocity.differential(this.moment));}SystemDamped.prototype.constructor = SystemDamped;function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){	this.rigideity = rigidity;	this.damping   = damping;	this.mass      = mass;	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));}SystemDamped.prototype.update = function(moment){	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));	this.position.update(moment);}
-$KC_dl = {    USER: 0,    PROGRAMMER: 25,    TESTING: 50,    DEVELOPER: 100,    INNERWORKING: 200}try {	$K_debug_level}catch (e) {	$K_debug_level = $KC_dl.USER}$K_logger = console$global_space = (function(){return this;}).call(null)$global_space["$constants"] = []function O(variable){  var t = typeof(variable)  if (t === "boolean" || t === "number" || t === "string"){    t = t.charAt(0).toUpperCase() + t.slice(1)    if (t !== "String")      return eval("new " + t + "(" + variable + ")")    else      return eval("new " + t + "('" + variable + "')")  }  return variable}function requires(list_of_objects){    for (var i=0; i<arguments.length; i++)    if (arguments[i] instanceof Array)	requires.apply(null, arguments[i])    else	var count = 0    while(1){	if (count > 2)	    break	try{	    eval(arguments[i])	}catch(e){	    alert("Wait until " + arguments[i] + " is fully parsed.")	} finally {	    count ++	}    }}function method_missing(error, method, params){    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)throw error}MethodMissingError.prototype = new Error
+	this.y1 += despl.y;
+}
+Continue.prototype.constructor = Continue;
+function Continue(magnitude){
+	this.magnitude0 = new magnitude.constructor(magnitude);
+	this.magnitude  = new magnitude.constructor(magnitude);
+}
+Continue.prototype.set = function (magnitude){
+	this.magnitude0 = this.magnitude;
+	this.magnitude  = new magnitude.constructor(magnitude);
+}
+Continue.prototype.clone = function(){
+	var copy = new Continue(this.magnitude);
+	copy.magnitude0 = this.magnitude0;
+	return copy;	
+}
+Continue.prototype.derive = function(regard){
+	var derived = this.clone().magnitude;
+	var prp = new Array();
+	for (var j in regard.magnitude)
+		prp.push(j);
+	for (var i in derived)
+		try{
+			derived[i] = (this.magnitude[i] - this.magnitude0[i]) / (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);
+		} catch (error) {
+			alert("The derivative is infinite: " + error.toString());	
+		}
+	return derived;
+}
+Continue.prototype.differential = function (regard){
+	var differential = this.clone().magnitude;
+	var prp = new Array();
+	for (var j in regard.magnitude)
+		prp.push(j);
+	for (var i in differential)
+			differential[i] = this.magnitude[i] * (regard.magnitude[prp[0]] - regard.magnitude0[prp[0]]);
+	return differential;
+}
+Continue.prototype.integrate = function(amount){
+	var newValue = this.clone().magnitude;
+	for( var i in newValue)
+		newValue[i] += amount[i];	
+	this.magnitude = newValue;
+}
+Time.prototype.constructor = Time;
+function Time(t){
+	if ((arguments.length == 1) && (arguments[0] instanceof Time)){
+		this.date = arguments[0].date;
+		return this;
+	}
+	this.date = t;
+}
+Mobile.prototype.constructor = Mobile;
+function Mobile(position, velocity, acceleration, time){
+	this.position     = new Continue(position);
+	this.velocity     = new Continue(velocity);
+	this.acceletation = new Continue(acceleration);
+	this.moment       = new Continue(time);
+}
+Mobile.prototype.update = function(moment){
+	var i = this.moment.clone();
+	delete i;
+	this.moment.set(moment);
+	this.velocity.moment(this.acceleration.differential(this.moment));
+	this.position.moment(this.velocity.differential(this.moment));
+}
+SystemDamped.prototype.constructor = SystemDamped;
+function SystemDamped(rigidity, damping, mass, initialPosition, anchorage){
+	this.rigideity = rigidity;
+	this.damping   = damping;
+	this.mass      = mass;
+	this.position  = new Mobile(initialPosition, new Point(0,0), new Point(0,0), new Point(0,0));
+	this.anchorage = new Mobile(anchorage, new Point(0,0), new Point(0,0), new Point(0,0));
+}
+SystemDamped.prototype.update = function(moment){
+	var Frx = - this.rigidity * (this.position.positcion.magnitude.x - this.anchorage.position.magnitude.x);
+	var Fry = - this.rigidity * (this.position.position.magnitude.y - this.anchorage.position.magnitude.y);
+	var Fvx = - this.damping / this.mass * this.position.velocity.magnitude.x;
+	var Fvy = - this.damping / this.mass * this.position.velocity.magnitude.y;
+	this.position.acceleration.set(new Point((Frx+ Fvx) / this.mass, (Fry + Fvy)/this.mass));
+	this.position.update(moment);
+}
+$KC_dl = {
+    USER: 0,
+    PROGRAMMER: 25,
+    TESTING: 50,
+    DEVELOPER: 100,
+    INNERWORKING: 200
+}
+try {
+	$K_debug_level
+}
+catch (e) {
+	$K_debug_level = $KC_dl.USER
+}
+$K_logger = console
+$global_space = (function(){return this;}).call(null)
+$global_space["$constants"] = []
+function O(variable){
+  var t = typeof(variable)
+  if (t === "boolean" || t === "number" || t === "string"){
+    t = t.charAt(0).toUpperCase() + t.slice(1)
+    if (t !== "String")
+      return eval("new " + t + "(" + variable + ")")
+    else
+      return eval("new " + t + "('" + variable + "')")
+  }
+  return variable
+}
+function requires(list_of_objects){
+    for (var i=0; i<arguments.length; i++)
+    if (arguments[i] instanceof Array)
+	requires.apply(null, arguments[i])
+    else
+	var count = 0
+    while(1){
+	if (count > 2)
+	    break
+	try{
+	    eval(arguments[i])
+	}catch(e){
+	    alert("Wait until " + arguments[i] + " is fully parsed.")
+	} finally {
+	    count ++
+	}
+    }
+}
+function method_missing(error, method, params){
+    if (/Class_[a-zA-Z_$][a-zA-Z_$0-9]*/.test(method))
+return _ClassFactory(/Class_([a-zA-Z_$][a-zA-Z_$0-9]*)/.exec(method)[1], params)
+throw error
+}
+MethodMissingError.prototype = new Error
 MethodMissingError.prototype.constructor = MethodMissingError
 function MethodMissingError(){
   Error.apply(this, arguments)
@@ -2340,7 +2476,102 @@ Constant.prototype.toString = function() {
 Constant.prototype.equals = function(obj) {
     return this[this.name] == obj
 }
-function Enumeration(constants) {    var args = arguments     if (constants instanceof Enumeration)        args = constants.ia     Object.defineProperty(this, "ia", {        value: new(ApplyProxyConstructor(InterleavedArray, args)),        enumerable: false,        writable: true    })    Enumeration.prototype.transpose.call(this)}Enumeration.prototype.transpose = function(Type) {    Type = Type || this.Type || VersionNumber    var keys = this.ia.keys()    for (var k = 0; k < keys.length; k++) {        var ia_value = this.ia[keys[k]]        var deep = this        var key_chain = keys[k].split(".")        for (var i = 0; i < key_chain.length - 1; i++) {            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]            if (parent in deep)                deep = deep[parent]        }        deep[ia_value] = new Type(keys[k])        Object.defineProperty(deep[ia_value], "name", {            value: ia_value,            writable: true        })    }}Enumeration.prototype.full_name = function(key){    var name = ""    var indices = key.split('.')    for (var i=0; i<indices.length; i++)        name += this.ia[indices.slice(0, i+1).join('.')] + "."    return name.substr(0, name.length-1)}Enumeration.prototype.each = function() {    var that = this    this.ia.keys().each(function(string_key) {        var key = string_key.split(".")        var value = that        for (var i = 0; i < key.length;            value = value[that.ia[key.slice(0, i + 1).join('.')]],            i++);        Enumeration.prototype.each.yield(that.full_name(string_key), value)    })}Enumeration.prototype.get = function(label) {    label = new String(label)    if ( /\d+(?:\.\d+)*/.test(label) )        if (this.ia.keys().include$U(label))            return this.get(this.full_name(label))        else            return null    var position = null    this.each(function (key, value) {        if (key == label)            position = value    })    return position}Enumeration.prototype.add = function(constants, place){    if (typeof (place) === "undefined" || place == null)        place = this.ia.length - 1    place = this.get(place)    if (!(constants instanceof Array) )        constants = [constants]    this.ia.infiltrate(place, constants)    Enumeration.prototype.transpose.call(this)}Object.defineProperties(Enumeration.prototype, {    transpose: {        enumerable: false,        configurable: false,        writable: false    },    each: {        enumerable: false,        configurable: false,        writable: false    },    full_name: {        enumerable: false,        configurable: false,        writable: false    },    get: {        enumerable: false,        configurable: false,        writable: false    },    add: {        enumerable: false,        configurable: false,        writable: false    }})EnumerationOf.prototype = new Enumeration
+function Enumeration(constants) {
+    var args = arguments 
+    if (constants instanceof Enumeration)
+        args = constants.ia 
+    Object.defineProperty(this, "ia", {
+        value: new(ApplyProxyConstructor(InterleavedArray, args)),
+        enumerable: false,
+        writable: true
+    })
+    Enumeration.prototype.transpose.call(this)
+}
+Enumeration.prototype.transpose = function(Type) {
+    Type = Type || this.Type || VersionNumber
+    var keys = this.ia.keys()
+    for (var k = 0; k < keys.length; k++) {
+        var ia_value = this.ia[keys[k]]
+        var deep = this
+        var key_chain = keys[k].split(".")
+        for (var i = 0; i < key_chain.length - 1; i++) {
+            var parent = this.ia[key_chain.slice(0, i + 1).join(".")]
+            if (parent in deep)
+                deep = deep[parent]
+        }
+        deep[ia_value] = new Type(keys[k])
+        Object.defineProperty(deep[ia_value], "name", {
+            value: ia_value,
+            writable: true
+        })
+    }
+}
+Enumeration.prototype.full_name = function(key){
+    var name = ""
+    var indices = key.split('.')
+    for (var i=0; i<indices.length; i++)
+        name += this.ia[indices.slice(0, i+1).join('.')] + "."
+    return name.substr(0, name.length-1)
+}
+Enumeration.prototype.each = function() {
+    var that = this
+    this.ia.keys().each(function(string_key) {
+        var key = string_key.split(".")
+        var value = that
+        for (var i = 0; i < key.length;
+            value = value[that.ia[key.slice(0, i + 1).join('.')]],
+            i++);
+        Enumeration.prototype.each.yield(that.full_name(string_key), value)
+    })
+}
+Enumeration.prototype.get = function(label) {
+    label = new String(label)
+    if ( /\d+(?:\.\d+)*/.test(label) )
+        if (this.ia.keys().include$U(label))
+            return this.get(this.full_name(label))
+        else
+            return null
+    var position = null
+    this.each(function (key, value) {
+        if (key == label)
+            position = value
+    })
+    return position
+}
+Enumeration.prototype.add = function(constants, place){
+    if (place)
+        place = this.get(place)
+    this.ia.infiltrate(constants, place)
+    Enumeration.prototype.transpose.call(this)
+}
+Object.defineProperties(Enumeration.prototype, {
+    transpose: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    each: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    full_name: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    get: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    },
+    add: {
+        enumerable: false,
+        configurable: false,
+        writable: false
+    }
+})
+EnumerationOf.prototype = new Enumeration
 Enumeration.prototype.constructor = EnumerationOf
 EnumerationOf.prototype.super = Enumeration
 function EnumerationOf(type) {
@@ -3350,6 +3581,7 @@ function Device(view, state, solicitors, parent, block) {
             that.event_dispatcher.joinPorts(that.self_events)
         engage_drivers()
         Device.yield(state, that.solicitors)
+
         ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
         that.switch("running")
     }

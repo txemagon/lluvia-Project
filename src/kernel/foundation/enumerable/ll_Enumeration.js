@@ -302,14 +302,9 @@ Enumeration.prototype.get = function(label) {
  */
 //todo: Today is not possible to extend the first level.
 Enumeration.prototype.add = function(constants, place){
-
-    if (typeof (place) === "undefined" || place == null)
-        place = this.ia.length - 1
-
-    place = this.get(place)
-    if (!(constants instanceof Array) )
-        constants = [constants]
-    this.ia.infiltrate(place, constants)
+    if (place)
+        place = this.get(place)
+    this.ia.infiltrate(constants, place)
     Enumeration.prototype.transpose.call(this)
 }
 
