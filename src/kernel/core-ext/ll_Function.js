@@ -296,3 +296,8 @@ Function.prototype.reflect = function() {
         }
     return return_value
 }
+
+Object.defineProperty(Function, "super", {
+  writable: true,
+  enumerable: false
+})

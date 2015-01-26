@@ -225,7 +225,7 @@ function Device(view, state, solicitors, parent, block) {
     /* Look for new drivers */
     function engage_drivers(){
         state.each(function(key, value){
-            ;
+            if (that[key])
         })
     }
 

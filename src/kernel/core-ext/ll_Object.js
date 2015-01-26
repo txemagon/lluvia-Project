@@ -740,3 +740,10 @@ Object.prototype.stop_enumerating(["to_a", "alias", "inspect", "own_keys",
 ])
 
 Object.stop_enumerating("reflect")
+
+
+
+Object.defineProperty(Object, "constructor", {
+  writable: true,
+  enumerable: false
+})
