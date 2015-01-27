@@ -224,8 +224,12 @@ function Device(view, state, solicitors, parent, block) {
 
     /* Look for new drivers */
     function engage_drivers(){
+        var attr = that.keys()
         state.each(function(key, value){
-            if (that[key])
+            var reg = new RegExp("^" + key + "_")
+            for (var i=0; i<attr.length; i++)
+                if (reg.test(attr[i]))
+                    
         })
     }
 

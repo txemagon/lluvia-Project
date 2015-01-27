@@ -747,3 +747,9 @@ Object.defineProperty(Object, "constructor", {
   writable: true,
   enumerable: false
 })
+
+
+Object.defineProperty(Object, "super", {
+  writable: true,
+  enumerable: false
+})
