@@ -120,7 +120,7 @@ Enumeration.prototype.transpose = function(Type) {
             if (parent in deep)
                 deep = deep[parent]
         }
-        deep[ia_value] = new Type(keys[k])
+        deep[ia_value] = deep[ia_value] || new Type(keys[k])
         Object.defineProperty(deep[ia_value], "name", {
             value: ia_value,
             writable: true
@@ -254,6 +254,40 @@ Enumeration.prototype.get = function(label) {
 }
 
 /**
+ * @method get$B
+ * Same as #get but creating empty states when missing intermediate ones.
+ * Take option -p in mkdir as an example
+ *
+ * Given state running
+ *    running
+ * when getting$B running.fast.by_bike
+ *     running.fast
+ * and
+ *     running.fast.by_bike
+ * will be created.
+ *
+ * @param  {[type]} label [description]
+ * @return {[type]}       [description]
+ */
+Enumeration.prototype.get$B = function(label) {
+    label = new String(label)
+    if ( /\d+(?:\.\d+)*/.test(label) )
+        if (this.ia.keys().include$U(label))
+            return this.get(this.full_name(label))
+        else{
+            alert("label: " + label)
+            return null
+        }
+
+    var position = null
+    this.each(function (key, value) {
+        if (key == label)
+            position = value
+    })
+    return position
+}
+
+/**
  * @method add
  * Enlarges the enumeration set by adding new constants at a given position.
  *
@@ -300,12 +334,28 @@ Enumeration.prototype.get = function(label) {
  *                         in cannot be empty when the last high level position
  *                         , clovers in the example above, is undefined.
  */
-//todo: Today is not possible to extend the first level.
 Enumeration.prototype.add = function(constants, place){
     if (place)
         place = this.get(place)
     this.ia.infiltrate(constants, place)
     Enumeration.prototype.transpose.call(this)
+}
+
+/**
+ * @method  add$B
+ * Same as #add, but creating intermediate states when needed. See #get$B for
+ * further reference.
+ *
+ * @param  {[type]} constants [description]
+ * @param  {[type]} place     [description]
+ * @return {[type]}           [description]
+ */
+Enumeration.prototype.add$B = function(constants, place){
+    if (place)
+        place = this.get$B(place)
+    this.ia.infiltrate(constants, place)
+    Enumeration.prototype.transpose.call(this)
+    return place || this
 }
 
 Object.defineProperties(Enumeration.prototype, {

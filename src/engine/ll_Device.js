@@ -54,7 +54,7 @@
  *
  * Devices are not a target themselves. Despite not pure virtual classes, they mainly
  * provide support for derived classes.
- *   
+ *
  *     Controller.prototype = new Device
  *     Controller.prototype.constructor = Controller
  *     function Controller(){
@@ -62,7 +62,7 @@
  *     }
  *
  * A block is provided for configuration purposes.
- *     
+ *
  *     var a = new Controller(function(state, value){
  *       alert(state.inspect())
  *       alert(value.inspect())
@@ -73,30 +73,30 @@
  *     {
  *        suspended:  ({0:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        running:    ({1:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        suspending:     ({2:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        killing:    ({3:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        killed:     ({4:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        super:  function Enumeration(constants) {
- *        var args = arguments 
+ *        var args = arguments
  *        if (constants instanceof Enumeration)
- *            args = constants.ia 
+ *            args = constants.ia
  *        Object.defineProperty(this, "ia", {
  *            value: new(ApplyProxyConstructor(InterleavedArray, args)),
  *            enumerable: false,
  *            writable: true
  *        })
  *        Enumeration.prototype.transpose.call(this)
- *    } 
+ *    }
  *     }
  *
  * and the second alert: alert(value.inspect())
@@ -105,56 +105,56 @@
  *        running:    function () {
  *                    this.gate_runner(that.now)
  *                    this.child_runner(that.now);
- *                } 
+ *                }
  *        suspending:     function () {
  *                    this.child_runner(that.now);
- *                } 
+ *                }
  *        killing:    function () {
  *                    this.gate_runner(that.now)
- *                } 
+ *                }
  *     }
  *
  * After the construtor finishes and the #zip operation is performed
- * 
+ *
  *     alert(a.state.inspect())
  *
  *     {
  *        suspended:  ({0:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        running:    ({1:(function () {
  *            return State.prototype._run.apply(that, arguments)
  *        }), run:(function () {
  *                    this.gate_runner(that.now)
  *                    this.child_runner(that.now);
- *                })}) 
+ *                })})
  *        suspending:     ({2:(function () {
  *            return State.prototype._run.apply(that, arguments)
  *        }), run:(function () {
  *                    this.child_runner(that.now);
- *                })}) 
+ *                })})
  *        killing:    ({3:(function () {
  *            return State.prototype._run.apply(that, arguments)
  *        }), run:(function () {
  *                    this.gate_runner(that.now)
- *                })}) 
+ *                })})
  *        killed:     ({4:(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        none:   ({'-1':(function () {
  *            return State.prototype._run.apply(that, arguments)
- *        }), run:(function () {})}) 
+ *        }), run:(function () {})})
  *        super:  function Enumeration(constants) {
- *        var args = arguments 
+ *        var args = arguments
  *        if (constants instanceof Enumeration)
- *            args = constants.ia 
+ *            args = constants.ia
  *        Object.defineProperty(this, "ia", {
  *            value: new(ApplyProxyConstructor(InterleavedArray, args)),
  *            enumerable: false,
  *            writable: true
  *        })
  *        Enumeration.prototype.transpose.call(this)
- *    } 
+ *    }
  *     }
  *
  * We have to be very carefull with non idempotent methods (specially function references),
@@ -224,12 +224,14 @@ function Device(view, state, solicitors, parent, block) {
 
     /* Look for new drivers */
     function engage_drivers(){
+        var usher = new Device.StateUsher(that)
         var attr = that.keys()
         state.each(function(key, value){
             var reg = new RegExp("^" + key + "_")
             for (var i=0; i<attr.length; i++)
                 if (reg.test(attr[i]))
-                    
+                    usher.add(attr[i], key, value)
+
         })
     }
 
@@ -252,10 +254,10 @@ function Device(view, state, solicitors, parent, block) {
         if (that.self_events)
             that.event_dispatcher.joinPorts(that.self_events)
 
-        engage_drivers()
-        Device.yield(state, that.solicitors)
-
         ThreadAutomata.call(that, state, that.solicitors, parent || $Processor);
+
+        engage_drivers()
+        Device.yield(that.state)
         that.switch("running")
     }
 

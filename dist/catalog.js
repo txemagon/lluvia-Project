@@ -170,6 +170,7 @@ var $K_script_response =
 				{"name": "ll_StateGear.js", "description": ""},
 				{"name": "ll_ThreadAutomata.js", "description": "Diferential automata."},
 				{"name": "ll_Device.js", "description": "App thread with queue mechanism"},
+				{"name": "ll_Device_StateUsher.js", "description": "Device's States extender"},
 				{"name": "ll_EventDispatcher.js", "description": "Event dispatcher."},
 				{"name": "ll_Gate.js", "description": "HTML mapping in lluvia."},
 				{"name": "ll_Lookup.js", "description": ""},
