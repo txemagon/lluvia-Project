@@ -128,6 +128,19 @@ Enumeration.prototype.transpose = function(Type) {
     }
 }
 
+/**
+ * @method full_name
+ * Returns the full name of a constant.
+ *
+ * ###Example
+ *
+ *     var a = new Enumeration("red", ["hearts", "diamonds"])
+ *     a.full_name("0.2")
+ *     //=> "red.diamonds"
+ *
+ * @param  {String} key key to search
+ * @return {String}     Name of the value sarched.
+ */
 Enumeration.prototype.full_name = function(key){
     var name = ""
 
@@ -270,20 +283,21 @@ Enumeration.prototype.get = function(label) {
  * @return {[type]}       [description]
  */
 Enumeration.prototype.get$B = function(label) {
-    label = new String(label)
-    if ( /\d+(?:\.\d+)*/.test(label) )
-        if (this.ia.keys().include$U(label))
-            return this.get(this.full_name(label))
-        else{
-            alert("label: " + label)
-            return null
+        var position = null
+        label = label.split(".")
+        var reached = []
+        while(label.length){
+            var new_key = label.shift()
+            reached.push(new_key)
+            if ( !(position = this.get(reached.join(".")))){
+                reached.pop()
+                var host = this.get(reached.join("."))
+                this.ia.infiltrate(new_key, host)
+                this.transpose()
+                label.unshift(new_key)
+            }
         }
 
-    var position = null
-    this.each(function (key, value) {
-        if (key == label)
-            position = value
-    })
     return position
 }
 
@@ -333,12 +347,16 @@ Enumeration.prototype.get$B = function(label) {
  * @param {String} [place]    Name or value of the position to insert the constants.
  *                         in cannot be empty when the last high level position
  *                         , clovers in the example above, is undefined.
+ * @return {VersionNumber}    Returns the place where the constants were added.
  */
 Enumeration.prototype.add = function(constants, place){
+    if (!constants || constants == "")
+        return this
     if (place)
         place = this.get(place)
     this.ia.infiltrate(constants, place)
     Enumeration.prototype.transpose.call(this)
+    return place || this
 }
 
 /**
@@ -351,6 +369,8 @@ Enumeration.prototype.add = function(constants, place){
  * @return {[type]}           [description]
  */
 Enumeration.prototype.add$B = function(constants, place){
+    if (!constants || constants == "")
+        return this
     if (place)
         place = this.get$B(place)
     this.ia.infiltrate(constants, place)

@@ -9,31 +9,34 @@ Device.StateUsher = function (I){
 }
 
 Device.StateUsher.prototype.add = function(driver_name, key, value){
+	// running_steady | running_fast | running_fast_steady
 	var substate = driver_name.split("_").slice(1)
+    // [steady] | [fast] | [fast, steady]
 	var regime = null
-	if (/up|steady|down$/.test(driver_name))
+	// [] | [fast] | [fast]
+	if (/_up$|_steady$|_down$/.test(driver_name))
 		regime = substate.pop()
-	var name = ""
-	if (substate.length)
-		name += substate[0]
-	else{
-		name = key
-		key = null
-	}
-	if (regime)
-		name += "." + regime
-alert(this.state.inspect())
-try{
-	alert("key: " + key + "\nname: " + name )
-    this.state.add$B(name, key)
-	this.state[key][name].run = this.i[driver_name]
-	} catch(err){
 
-		alert("err: " + err +
-			  "\nname: " + name +
-			  "\nkey: " + key +
-			  "\n\n\nState:\n" + this.state.inspect())
+    var name_to_add = substate.pop()
+    var host = key
+    if (substate.length)
+        host += "." + substate.join(".")
+
+    this.state.add$B( name_to_add, host)
+    var level = this.state.get(host)
+    if (regime){
+    	if (name_to_add && name_to_add != "")
+    		level = level[name_to_add]
+    	if (!level.run)
+    		level.run = function(){;}
+	   level.run[regime] = this.i[driver_name]
+    } else {
+        if (!level[name_to_add]){
+        	level[name_to_add] = new State(name)
+        	level[name_to_add].owner = this.i
+        }
+
+		level[name_to_add].run = this.i[driver_name]
 	}
 
-	alert(this.state.inspect())
 }
