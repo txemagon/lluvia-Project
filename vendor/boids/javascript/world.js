@@ -293,7 +293,6 @@ World.prototype.draw = function(){
   var that = this
   var ctx = this.screen[0].context
   ctx.clearRect(0,0,400,400)
-  alert("Hey")
   this.get_boids().each( function(el) {
     el.draw(ctx)
   })

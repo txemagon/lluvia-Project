@@ -194,14 +194,14 @@ Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "
 
 Device.default_solicitors = {
             running: function() {
-                this.gate_runner(that.now)
-                this.child_runner(that.now);
+                this.gate_runner(this.now)
+                this.child_runner(this.now);
             },
             suspending: function() {
-                this.child_runner(that.now);
+                this.child_runner(this.now);
             },
             killing: function() {
-                this.gate_runner(that.now)
+                this.gate_runner(this.now)
             }
         }
 

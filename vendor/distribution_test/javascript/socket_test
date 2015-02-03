@@ -23,7 +23,6 @@ PM.prototype.get_pending = function() {
 }
 
 PM.prototype.incoming_file = function(data) {
-    alert("Hey")
     eval.call(null, data)
     this.pending--
 }
