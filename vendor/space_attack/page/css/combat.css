@@ -1,0 +1,28 @@
+body {
+	width: 1000px;
+	margin: 0 auto 0 auto;
+	background-color: #1A1919;
+	font-family: arial;
+}
+
+h1 {
+	color: white;
+	text-align: center;	
+	font-size: 80px;
+}
+
+h2 {
+	color: white;
+	text-align: center;
+	font-size: 20px;
+}
+
+canvas {
+	position: absolute;
+	background-color: #000000;
+	border: 1px solid #d3d3d3;
+}
+
+img {
+	visibility: hidden;
+}
