@@ -8,7 +8,7 @@ var pos_y   = null
 var pos_x   = null
 var is_alive = null
 	
-var $MAX = 20000 //Canidad maxima de particulas
+var $MAX = 1000 //Canidad maxima de particulas
 var vector_length = null //Longitud del vector
 var actual_particles = null
 
@@ -149,6 +149,11 @@ function loop(){
 	paint()
 	//alert(Date.now() - now)
 	loop_timer = requestAnimationFrame(loop)
+}
+
+function restart(){
+	now = Date.now()
+	loop()
 }
 
 function stop(){

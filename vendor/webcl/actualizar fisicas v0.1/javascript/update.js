@@ -1,15 +1,58 @@
 
 
-function load_kernel(id){
-    var kernel_element = document.getElementById(id);
-    var kernel_source = kernel_element.text;
-    if (kernel_element.src != "") {
-	   var mHttpReq = new XMLHttpRequest();
-	   mHttpReq.open("GET", kernel_element.src, false);
-	   mHttpReq.send(null);
-	   kernel_source = mHttpReq.responseText;
-    } 
-    return kernel_source;
+function load_kernel(n){
+	var source = null
+	switch(n){
+	   case 1:
+	     source = "kernel void ckVectorAdd(\
+			         global float* pos_y,\
+			         global float* pos_x,\
+			         global float* speed_y,\
+			         global float* speed_x,\
+			         global float* aceleration_y,\
+			         global float* aceleration_x,\
+			         float deltatime,\
+			         uint uiVectorWidth) {\
+			                uint x = get_global_id(0);\
+			                if (x >= uiVectorWidth)\
+			            	    return;\
+			                    speed_y[x] += aceleration_y[x];\
+			                    speed_x[x] += aceleration_x[x];\
+			                    if(pos_y[x]+speed_y[x] > 800 || pos_y[x]+speed_y[x] < 0){\
+			                      speed_y[x] *= -1;\
+			                      aceleration_y[x]*=-1;\
+			                    }\
+			    				pos_y[x]   += speed_y[x] * deltatime;\
+			                    if(pos_x[x]+speed_x[x] > 800 ||pos_x[x]+speed_x[x] < 0){\
+			                      speed_x[x] *= -1;\
+			                      aceleration_x[x]*=-1;\
+			                    }\
+			    				pos_x[x]   += speed_x[x]  * deltatime;\
+                     }"
+          break;
+          case 2:
+             source = "kernel void clDesaturate(\
+             	          global const uchar4* src,\
+                          global uchar4* dst,\
+                          global int* pos_y,\
+                          global int* pos_x,\
+                          uint width, \
+                          uint height){\
+				            int x = get_global_id(0);\
+				            int y = get_global_id(1);\
+				            if (x >= width || y >= height) return;\
+				            int i = y * width + x;\
+				            for(int a = 0; a < 4; a++)\
+				                if(x == pos_x[a] && y == pos_y[a]){\
+				                   dst[i] = (uchar4)(0, 0, 0, 255);\
+				                   break;\
+				                }\
+				                else\
+				                   dst[i] = (uchar4)(0, 0, 0, 0);\
+                      }"
+          break;
+      }
+    return source;
 }
 
 
@@ -41,7 +84,7 @@ function init_gpu(){
 		ctx = webcl.createContext ();
 
 		// Create and build program for the first device
-		kernel_src = load_kernel("clProgramVectorAdd");
+		kernel_src = load_kernel(1);
 		program = ctx.createProgram(kernel_src);
 		device = ctx.getInfo(WebCL.CONTEXT_DEVICES)[0];
 
