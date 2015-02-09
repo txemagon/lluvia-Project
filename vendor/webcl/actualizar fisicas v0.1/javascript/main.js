@@ -1,75 +1,125 @@
-    var speed_y = null
-	var speed_x = null
-	var aceleration_y = null
-	var aceleration_x = null
-	var pos_y   = null
-	var pos_x   = null
-	var $MAX = 20000
-	var vectorLength = null
+   
+//Variables globales donde se guardan los datos de las particulas
+var speed_y = null
+var speed_x = null
+var aceleration_y = null
+var aceleration_x = null
+var pos_y   = null
+var pos_x   = null
+var is_alive = null
+	
+var $MAX = 20000 //Canidad maxima de particulas
+var vector_length = null //Longitud del vector
+var actual_particles = null
 
-	//Timers
-	var $FPS = 10
-	var $dt = 1 / $FPS
-	var frame_start = null
+//Timers
+var $FPS = 10 //Cantidad de fraps por segundo
+var $dt = 1 / $FPS //Delta time
 
-	var canvas = null
-	var context = null
-	var loop_timer = null
-    var now = null
-    var before = null
-	var $SECONDS = 600000
-	var steps = 0
+//Canvas configurations
+var canvas = null
+var context = null
 
-    var state = 1
+var loop_timer = null //Timer para parar o reanudar la ejecucion
+
+//Variables para calcular el tiempo que pasa
+var now = null
+var before = null
+var delta = null
+
+//Estado para ejecutar el programa con for o webcl
+var state = 1
+//var state_1 = ["webcl", "javascript"]
+//var state_2 = ["normal", "time_speed"]
+
+//Imagenes para pintar los pixeles
+var img = []
+img[0] = new Image()
+img[0].src = "images/pixel.png"
+img[1] = new Image()
+img[1].src = "images/pixel2.png"
+img[2] = new Image()
+img[2].src = "images/pixel3.png"
+img[3] = new Image()
+img[3].src = "images/pixel4.png"
+
 function main(){
 	start()
 	loop()
 }
 
+/*Inicializa las variables y el kernel*/
 function start(){
 	now = Date.now()
-	//now = frame_start = (frame_start.getTime() / $SECONDS)
 
-     canvas = document.getElementById("canvas");
-     context = canvas.getContext("2d")
+     setup_canvas()
  
-	 vectorLength = $MAX
-     speed_y   = new Float32Array(vectorLength);
-	 speed_x   = new Float32Array(vectorLength);
-	 aceleration_y   = new Float32Array(vectorLength);
-	 aceleration_x   = new Float32Array(vectorLength);
-	 pos_y   = new Float32Array(vectorLength);
-	 pos_x   = new Float32Array(vectorLength);
+	 vector_length   = $MAX
+     speed_y         = new Float32Array(vector_length)
+	 speed_x         = new Float32Array(vector_length)
+	 aceleration_y   = new Float32Array(vector_length)
+	 aceleration_x   = new Float32Array(vector_length)
+	 pos_y           = new Float32Array(vector_length)
+	 pos_x           = new Float32Array(vector_length)
+	 is_alive        = []
+	 delta = new Float32Array([0.1])
 
-	for(var i=0; i<vectorLength; i++){
-		var x = Math.floor(Math.random() * 50)
-		var y = Math.floor(Math.random() * 50)
-	    speed_x[i] = x % 2 ? x : x*-1
-		speed_y[i] = y % 2 ? y : y*-1
-		pos_x[i] = 250//Math.floor(Math.random() * 500);
-		pos_y[i] = 250//Math.floor(Math.random() * 500);
-		aceleration_x[i] = 0//Math.floor(Math.random() * 10)
-		aceleration_y[i] = 0//Math.floor(Math.random() * 10)
+	 actual_particles = 0
+
+
+    init_gpu()
+	update()
+	for(var i=0; i<vector_length; i++){
+		var x = 0//Math.floor(Math.random() * 50)+1
+		var y = 0//Math.floor(Math.random() * 50)+1
+	    speed_x[i] = 0//x % 2 ? x : x*-1
+		speed_y[i] = 0//y % 2 ? y : y*-1
+		pos_x[i] = 0//Math.floor(Math.random() * canvas.width)
+		pos_y[i] = 0//Math.floor(Math.random() * canvas.height)
+
+		x = Math.floor(Math.random() * 10)
+		y = Math.floor(Math.random() * 10)
+		aceleration_x[i] = 0 //x % 2 ? x : x*-1
+		aceleration_y[i] = 0 //y % 2 ? y : y*-1
+		is_alive[i] = false
+		new_particle()
 	}
-
-	init_gpu()
-	update(0.1)
-	//update()
+	set()
+	//update_dt()
 }
 
-var acumulator = 0
+function new_particle(){
+	if(actual_particles >= $MAX)
+		return
+	var x = Math.floor(Math.random() * 50)+1
+	var y = Math.floor(Math.random() * 50)+1
+	speed_x[actual_particles] = x % 2 ? x : x*-1
+    speed_y[actual_particles] = y % 2 ? y : y*-1
+	pos_x[actual_particles] = Math.floor(Math.random() * canvas.width)
+	pos_y[actual_particles] = Math.floor(Math.random() * canvas.height)
+
+	x = Math.floor(Math.random() * 10)
+	y = Math.floor(Math.random() * 10)	
+	aceleration_x[actual_particles] = 0 //x % 2 ? x : x*-1
+	aceleration_y[actual_particles] = 0 //y % 2 ? y : y*-1
+	is_alive[actual_particles] = true
+
+	actual_particles ++
+
+	//set()
+}
 
 function update_for(deltatime){
-	for(var x = 0; x < vectorLength; x++){
+	for(var x = 0; x < vector_length; x++){
 		speed_y[x] += aceleration_y[x];
         speed_x[x] += aceleration_x[x];
-        if(pos_y[x]+speed_y[x] > 500 || pos_y[x]+speed_y[x] < 0){
+        if(pos_y[x]+speed_y[x] > canvas.width || pos_y[x]+speed_y[x] < 0){
            speed_y[x] *= -1;
            aceleration_y[x] *= -1;
         }
   		pos_y[x]   += speed_y[x] * deltatime;
 
-        if(pos_x[x]+speed_x[x] > 500 ||pos_x[x]+speed_x[x] < 0){
+        if(pos_x[x]+speed_x[x] > canvas.height ||pos_x[x]+speed_x[x] < 0){
            speed_x[x] *= -1;
            aceleration_x[x] *= -1;
         }
@@ -84,43 +134,79 @@ function change(){
 function loop(){
 	before = now
 	now = Date.now()
-	delta = now - before
+	delta[0] = now - before
+	delta[0] /= 1000
 	
     if(state == 1){
+       update_dt()
        run()
 	   get()
     }
     else
-	   update_for(delta/1000)
+	   update_for(delta[0])
+	
+	//draw()
+	paint()
 	//alert(Date.now() - now)
-
-	steps++
-	//if(steps > 10){
-	   paint()
-	  // steps = 0
-    //}
 	loop_timer = requestAnimationFrame(loop)
-	//setTimeout(loop, 1)
 }
 
 function stop(){
-	//clearTimeout(loop);
 	window.cancelAnimationFrame(loop_timer)
 }
 
-var img = new Image()
-img.src = "images/pixel.png"
-function paint(){
-	//context.fillStyle = "#FFF";
-	//temp ++
-    //context.fillRect(0,0,500,500);
-    canvas.width = canvas.width
-    //context.beginPath();
-	for(var i=0; i<vectorLength; i++){
-	   context.drawImage(img,pos_x[i],pos_y[i])
-	   //context.fillRect(pos_x[i], pos_y[i], 1, 1);
-       //context.arc(pos_y[i],pos_x[i],1,0,2*Math.PI);
+function setup_canvas() {
+  try {
+    canvas = document.getElementById("canvas")
+    context = canvas.getContext("2d")
+    var our_canvas = document.createElement('canvas')
+    our_canvas.width = canvas.width
+    our_canvas.height = canvas.height
+    context.drawImage (our_canvas, 0, 0)
+  } catch(e) {
+    document.getElementById("output").innerHTML += 
+      "<h3>ERROR:</h3><pre style=\"color:red;\">" + e.message + "</pre>";
+    throw e;
+  }
+}
+
+function pre_paint(min, max){
+	var canv = document.createElement('canvas')
+	canv.width = canvas.width
+	canv.height = canvas.height
+	var context2 = canv.getContext('2d')
+	for(var i=min; i<max; i++){
+       if(is_alive[i]){
+   	      //Usar enteros a la hora de pintar en lugar de flotantes
+          context2.drawImage(img[0],Math.round(pos_x[i]),Math.round(pos_y[i]), 1, 1)
+        }
     }
-    //context.stroke();
+    return canv
+}
+
+function paint(){
+
+     var canvases = []
+     var n = 10000
+    //Limpiar el canvas de forma más eficiente
+    canvas.width = canvas.width
+	//for(var x=0; x<vector_length/n; x++)
+	  // canvases.push(pre_paint(x*n, (x*n)+n))
+
+	//context.drawImage(img[0], 0,0,1,1)
+
+	//var imgData = context.getImageData(0, 0, 1, 1);
+
+	//for(var i=0; i<vector_length; i++)
+	//	context.putImageData(imgData,Math.round(pos_x[i]),Math.round(pos_y[i]))
+    //for(var i=0; i<canvases.length;i++)
+      // context.drawImage(canvases[i], 0, 0)
+
+    for(var i=0; i<vector_length; i++){
+       if(is_alive[i]){
+   	      //Usar enteros a la hora de pintar en lugar de flotantes
+          context.drawImage(img[0],Math.round(pos_x[i]),Math.round(pos_y[i]), 1, 1)
+        }
+    }
 
 }

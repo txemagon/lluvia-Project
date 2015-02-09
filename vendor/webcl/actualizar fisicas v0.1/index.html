@@ -22,33 +22,64 @@
                   //for(uint x = 0; x < uiVectorWidth; x++){
                     speed_y[x] += aceleration_y[x];
                     speed_x[x] += aceleration_x[x];
-                    if(pos_y[x]+speed_y[x] > 500 || pos_y[x]+speed_y[x] < 0){
+                    if(pos_y[x]+speed_y[x] > 800 || pos_y[x]+speed_y[x] < 0){
                       speed_y[x] *= -1;
-                      aceleration_y[x] *= -1;
+                      aceleration_y[x]*=-1;
                     }
+                    
     				        pos_y[x]   += speed_y[x] * deltatime;
 
-                    if(pos_x[x]+speed_x[x] > 500 ||pos_x[x]+speed_x[x] < 0){
+                    if(pos_x[x]+speed_x[x] > 800 ||pos_x[x]+speed_x[x] < 0){
                       speed_x[x] *= -1;
-                      aceleration_x[x] *= -1;
+                      aceleration_x[x]*=-1;
                     }
+                    
     				        pos_x[x]   += speed_x[x]  * deltatime;
                 //}
                   
                 
 
             }
-        </script> 
+        </script>
+        <script id="clProgramDesaturate" type="text/x-opencl">
+          kernel void clDesaturate(global const uchar4* src,
+                                   global uchar4* dst,
+                                   global int* pos_y,
+                                   global int* pos_x,
+                                   uint width, 
+                                   uint height)
+          {
+            int x = get_global_id(0);
+            int y = get_global_id(1);
+            if (x >= width || y >= height) return;
+
+            int i = y * width + x;
+
+            //uchar4 color = src[i];
+            //uchar lum = (uchar)(0.0f * color.x + 0.09f * color.y + 0.09f * color.z);
+            for(int a = 0; a < 4; a++)
+                if(x == pos_x[a] && y == pos_y[a]){
+                   dst[i] = (uchar4)(0, 0, 0, 255);
+                   break;
+                }
+                else
+                   dst[i] = (uchar4)(0, 0, 0, 0);
+          }
+      </script>
 	<script src="javascript/main.js"></script>
+  <script src="javascript/canvas.js"></script>
     <script src="javascript/update.js"></script>
 
     </head>
     <body>
-       <button onclick="main();">Update physics</button>
-       <button onclick="loop();">Restart</button>
-       <button onclick="stop();">stop</button>
-       <button onclick="change();">change</button>
-       <canvas id="canvas" width="500" height="500" style="border:solid 1px;"></canvas>
-       <div id ="output"></div>
+      <canvas id="canvas" width="800" height="800" style="border:solid 1px;"></canvas>
+      <div style="display:inblock">
+         <button onclick="main();">Update physics</button>
+         <button onclick="loop();">Restart</button>
+         <button onclick="stop();">stop</button>
+         <button onclick="change();">change</button>
+         <button onclick="new_particle();">new</button>
+      </div>
+      <div id ="output"></div>
     </body>
 </html>
