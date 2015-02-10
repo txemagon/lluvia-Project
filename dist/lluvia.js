@@ -4428,7 +4428,8 @@ function Vector() {
         })
     }
     for (var i = 0; i < arguments.length; i++)
-        this.Coord.push(arguments[i])
+        if (Object.prototype.toString.call(arguments[i]) !== "[object String]")
+            this.Coord.push(arguments[i])
     for (var i = 0; i < arguments.length; i++)
         argument[i] = arguments[i]
     for (var i = 0; i < argument.length; i++)
