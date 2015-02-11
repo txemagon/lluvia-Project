@@ -7,14 +7,20 @@ var aceleration_x = null
 var pos_y   = null
 var pos_x   = null
 var is_alive = null
-	
-var $MAX = 1000 //Canidad maxima de particulas
+var update = null 
+
+var $MAX = 10000 //Canidad maxima de particulas
 var vector_length = null //Longitud del vector
 var actual_particles = null
 
 //Timers
-var $FPS = 10 //Cantidad de fraps por segundo
+var $FPS = 60 //Cantidad de fraps por segundo
 var $dt = 1 / $FPS //Delta time
+
+var arguments_kernel = null
+
+var arguments_buffers = null
+
 
 //Canvas configurations
 var canvas = null
@@ -67,8 +73,14 @@ function start(){
 	 actual_particles = 0
 
 
-    init_gpu()
-	update()
+    update = new Webcl("ckVectorAdd", vector_length, 0, 1, 6, [1], [Math.ceil (vector_length)])
+    update.init_gpu()
+    arguments_kernel = [update.read_write_buffers[0], update.read_write_buffers[1], update.read_write_buffers[2], update.read_write_buffers[3], update.read_write_buffers[4],
+		update.read_write_buffers[5], new Float32Array([$dt]), new Uint32Array([vector_length])]
+
+    arguments_buffers = [update.read_write_buffers[0], update.read_write_buffers[1], update.read_write_buffers[2], update.read_write_buffers[3], update.read_write_buffers[4],
+		update.read_write_buffers[5]]
+	
 	for(var i=0; i<vector_length; i++){
 		var x = 0//Math.floor(Math.random() * 50)+1
 		var y = 0//Math.floor(Math.random() * 50)+1
@@ -84,8 +96,8 @@ function start(){
 		is_alive[i] = false
 		new_particle()
 	}
-	set()
-	//update_dt()
+	update.set_kernel_arguments(arguments_kernel)
+	update.set_buffers(arguments_buffers, [pos_y, pos_x, speed_y, speed_x, aceleration_y, aceleration_x])
 }
 
 function new_particle(){
@@ -131,16 +143,23 @@ function change(){
 	state = state != 1 ? 1 : 0
 }
 
+
+var step = 0
 function loop(){
 	before = now
 	now = Date.now()
 	delta[0] = now - before
 	delta[0] /= 1000
 	
+
+	if(delta[0] > 0.2)
+		delta[0] = $dt
     if(state == 1){
-       update_dt()
-       run()
-	   get()
+      for(;delta[0] >= $dt; delta[0] -= $dt){
+          update.run()
+       }
+       update.get_buffers(arguments_buffers, [pos_y, pos_x, speed_y, speed_x, aceleration_y, aceleration_x]) 
+	  
     }
     else
 	   update_for(delta[0])
