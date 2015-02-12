@@ -20,9 +20,6 @@ h2 {
 canvas {
 	position: absolute;
 	background-color: #000000;
-	border: 1px solid #d3d3d3;
+	border: 1px solid black;
 }
 
-img {
-	visibility: hidden;
-}

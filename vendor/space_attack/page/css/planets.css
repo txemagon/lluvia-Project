@@ -1,6 +1,6 @@
 body {
 	width: 1000px;
-	height: 3000px;
+	height: 900px;
 	margin: 0 auto 0 auto;
 	background-color: #1A1919;
 	font-family: arial;
@@ -22,7 +22,7 @@ canvas {
 	position: absolute;
 	background-color: #000000;
 	z-index: -1;
-	border: 1px solid #d3d3d3;
+	border: 1px solid black;
 }
 
 #ventana {
@@ -169,7 +169,7 @@ canvas {
 	height: 120px;
 	left: 150px;
 	right: 200px;
-	bottom: 100px;
+	bottom: 60px;
 }
 
 #planet15 {
@@ -203,6 +203,14 @@ canvas {
 	height: 120px;
 	left: 200px;
 	bottom: -200px;
+}
+
+#planet19 {
+	position: relative;
+	width: 120px;
+	height: 120px;
+	left: -460px;
+	bottom: 160px;
 }
 
 button {

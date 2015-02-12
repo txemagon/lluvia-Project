@@ -1,0 +1,35 @@
+digraph Boid{
+	rankdir=RL;
+
+	node[ shape="Mrecord"];
+
+	Boid [ label="Boid | last_heading: Vector \n \
+  	                     my_world: void* \n \
+ 	                     last_time: Date \n \
+ 	                     current_time: Date \n \
+	                     colour: String \n \
+	                     mass: Number \n \
+	                     vision: Number \n \
+	                     vel_max: Number \n \
+	                     geo_data: GeoData \n \
+	                     brain: Brain \n \
+	                     force_limits: ForceLimit |
+	                     start(Date) \n \
+	                     run() \n \
+	                     heading(): Vector \n \
+	                     set_target(Boid): Boid \n \
+	                     " ];
+
+	GeoData [ label="GeoData | position: Vector \n \
+	                           velocity: Vector \n \
+	                           acceleration: Vector \n " ];
+
+    ForceLimit [ label="ForceLimit | thrust: Number\n \
+                                     steering: Number\n \
+                                     braking: Number\n "];	                           
+
+
+    GeoData       -> Boid [ arrowhead="odiamond" ];	       
+    Brain         -> Boid [ arrowhead="odiamond" ];
+    ForceLimit    -> Boid [ arrowhead="odiamond" ];
+}

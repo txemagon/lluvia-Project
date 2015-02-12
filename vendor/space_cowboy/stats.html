@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Space Attack</title>
+        <script type="text/javascript" src="../../dist/lluvia.js" ></script>
+        <script type="text/javascript" src="javascript/dependencies.js" ></script>
+        <link rel="stylesheet" type="text/css" href="css/stats.css">
+        <link rel="stylesheet" type="text/css" href="css/general.css">
+        <script src="javascript/stats.js" type="text/javascript"></script>
+    </head>
+
+
+    <body onload="bring_lluvia();">
+
+    <div id="skill">
+
+        <div id="title">
+            <h1>Space Attack</h1>
+            <br>
+            <h2>Elige las estadísticas para tu personaje.</h2>
+            <h3>Tienes <p id="points">5</p> puntos de habilidad</h3>
+            <br>
+        </div> <!--Se cierra el div title-->
+
+        <div id="Fila">
+
+            <span id="frase">
+                <p>Daño</p>
+            </span>
+
+            <span id="imagen">
+                <img id="imagen_daño" src= "images/bar/empty_bar.png">
+            </span>
+
+            <span id="buttons_skills_damage">
+                <span id="button_plus_damage" class="Button">
+                    <img src="images/bar/plus.png">
+                </span>
+
+                <span id="button_minus_damage" class="Button">
+                    <img src="images/bar/minus.png"/>
+                </span>
+            </span>
+
+        </div> <!--Fila 1-->
+
+        <br>
+
+        <div class id="Fila">
+
+            <span id="frase">
+                <p>Resistencia</p>
+            </span>
+
+            <span id="imagen">
+                <img id="imagen_resistencia" src= "images/bar/empty_bar.png">
+            </span>
+
+            <span id="buttons_skills_resistance">
+                <span id="button_plus_resistance" class="Button">
+                    <img src="images/bar/plus.png">
+                </span>
+
+                <span id="button_minus_resistance" class="Button">
+                    <img src="images/bar/minus.png">
+                </span>
+            </span>
+
+        </div> <!--Fila 2-->
+
+        <br>
+
+        <div class id="Fila">
+
+            <span id="frase">
+                <p>Velocidad</p>
+            </span>
+
+            <span id="imagen">
+                <img id="imagen_velocidad" src= "images/bar/empty_bar.png" alt="barra_daño">
+            </span>
+
+            <span id="buttons_skills_speed">
+                <span id="button_plus_speed">
+                    <img src="images/bar/plus.png">
+                </span>
+
+                <span id="button_minus_speed">
+                    <img src="images/bar/minus.png">
+                </span>
+            </span>
+
+        </div> <!--Fila 3-->
+
+        <div id="boton">
+            <button type="button" onclick="play()">Empezar a jugar</button>
+        </div>
+
+    </div><!--Cierra el div de page-->
+    </body>
+</html>
