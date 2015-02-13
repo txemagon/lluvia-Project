@@ -4,76 +4,28 @@
 		"selected_items":
 		[
 			[
-				"cle",
-				"clean_text"
+				"Thread",
+				"ThreadAutomata"
 			],
 			[
-				"t",
-				"text"
+				"to",
+				"toSource"
 			],
 			[
-				"ele",
-				"element_creates"
+				"Thre",
+				"ThreadAutomata"
 			],
 			[
-				"anal",
-				"analize_node"
+				"time",
+				"time_passed"
 			],
 			[
-				"cl",
-				"class_css"
-			],
-			[
-				"el",
-				"element"
-			],
-			[
-				"new",
-				"new_methods"
-			],
-			[
-				"type",
-				"typeof"
-			],
-			[
-				"sp",
-				"space_name"
-			],
-			[
-				"lluvia",
-				"lluvia_nodes"
-			],
-			[
-				"node",
-				"node_body"
-			],
-			[
-				"get",
-				"get_lluvia_nodes"
-			],
-			[
-				"run",
-				"run_methods"
-			],
-			[
-				"sea",
-				"search_methods"
-			],
-			[
-				"name",
-				"name_methods"
-			],
-			[
-				"re",
-				"result"
+				"pr",
+				"proto	Prototype"
 			],
 			[
 				"p",
-				"params"
-			],
-			[
-				"ll",
-				"lluvia_nodes"
+				"proto	Prototype"
 			],
 			[
 				"stre",
@@ -135,15 +87,79 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "vendor/demo/index.html",
+			"settings":
+			{
+				"buffer_size": 4405,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vendor/demo/javascript/Home.js",
+			"settings":
+			{
+				"buffer_size": 8353,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vendor/demo/javascript/DHTMLClasses/Godman.js",
+			"settings":
+			{
+				"buffer_size": 10066,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "vendor/demo/javascript/application.js",
+			"settings":
+			{
+				"buffer_size": 1271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/engine/ll_Automata.js",
+			"settings":
+			{
+				"buffer_size": 6561,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vendor/demo/javascript/ControlPanel.js",
+			"settings":
+			{
+				"buffer_size": 8352,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "lluvia",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 390.0,
 		"selected_items":
 		[
 			[
-				"",
+				"ht",
+				"HTMLBeautify"
+			],
+			[
+				"html",
+				"HTMLBeautify"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
 				"Package Control: Install Package"
 			],
 			[
@@ -153,25 +169,17 @@
 			[
 				"install ",
 				"Package Control: Install Package"
-			],
-			[
-				"inst",
-				"Package Control: Install Package"
-			],
-			[
-				"ins",
-				"Package Control: Install Package"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			]
 		],
-		"width": 449.0
+		"width": 575.0
 	},
 	"console":
 	{
-		"height": 139.0
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
 	},
 	"distraction_free":
 	{
@@ -182,74 +190,69 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/home/imasen/work/lluvia-Project"
+	],
 	"file_history":
 	[
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/world.js",
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/dependencies.js",
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/main.js",
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/javascript/section.js",
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/css/general.css",
-		"/home/jose/work/lluvia-Project/vendor/game_of_live/index.html",
-		"/home/jose/work/lluvia-Project/src/kernel/core-ext/ll_String.js",
-		"/home/jose/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/tests/scanner_test.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/tests/index.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Scanner.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/tests/common/test_framework.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/ll_Builder.js",
-		"/home/jose/work/lluvia-Project/examples/devices/index.html",
-		"/home/jose/work/lluvia-Project/src/lib/builder/symbols_table.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
-		"/home/jose/work/lluvia-Project/src/package.json",
-		"/home/jose/work/lluvia-Project/vendor/demo/index.html",
-		"/home/jose/work/lluvia-Project/vendor/demo/javascript/Home.js",
-		"/home/jose/work/lluvia-Project/vendor/demo/javascript/ControlPanel.js",
-		"/home/jose/work/lluvia-Project/vendor/demo/javascript/DHTMLClasses/Godman.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/button_gate.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/main.js",
-		"/home/jose/work/lluvia-Project/examples/devices/css/general.css",
-		"/home/jose/work/lluvia-Project/examples/effects/javascript/main.js",
-		"/home/jose/work/lluvia-Project/src/lib/builder/scheme",
-		"/home/jose/work/lluvia-Project/src/lib/builder/package.json",
-		"/home/jose/work/lluvia-Project/src/engine/ll_Processor.js",
-		"/home/jose/work/lluvia-Project/dist/lluvia.js",
-		"/home/jose/work/lluvia-Project/util/compress-core/pack.js",
-		"/home/jose/work/lluvia-Project/src/test.js",
-		"/home/jose/work/lluvia-Project/util/compress-core/lib/package.js",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/class/keypad.js",
-		"/home/jose/work/lluvia-Project/src/engine/ll_Device.js",
-		"/home/jose/work/lluvia-Project/src/engine/ll_EventDispatcher.js",
-		"/home/jose/work/lluvia-Project/vendor/simple_app/index.html",
-		"/home/jose/work/lluvia-Project/src/lib/builder/table_symbols.js",
-		"/home/jose/.config/sublime-text-2/Packages/User/JavascriptBeautify.sublime-settings",
-		"/home/jose/.config/sublime-text-2/Packages/Javascript Beautify/JavascriptBeautify.sublime-settings",
-		"/home/jose/work/lluvia-Project/src/lib/builder/TableSymbols.js",
-		"/home/jose/work/lluvia-Project/src/engine/ll_State.js",
-		"/home/jose/work/lluvia-Project/util/install-sublime-packages",
-		"/home/jose/work/lluvia-Project/examples/devices/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/vendor/demo/javascript/DHTMLClasses/Godman.js",
+		"/home/imasen/work/lluvia-Project/examples/automatas/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Device.js",
+		"/home/imasen/work/lluvia-Project/vendor/demo/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/examples/effects/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Gate.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Automata.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_ThreadAutomata.js",
+		"/home/imasen/work/lluvia-Project/src/engine/effects/ll_MoveEffect.js",
+		"/home/imasen/work/lluvia-Project/examples/effects/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/examples/effects/index.html",
+		"/home/imasen/work/lluvia-Project/src/engine/package.json",
+		"/home/imasen/work/lluvia-Project/src/kernel/core-ext/ll_Function.js",
+		"/home/imasen/work/lluvia-Project/src/engine/effects/package.json",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Thread.js",
+		"/home/imasen/work/lluvia-Project/examples/effects/stylesheet.css",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Processor.js",
+		"/home/imasen/work/lluvia-Project/examples/effects/javascript/effectHandler.js",
+		"/home/imasen/work/lluvia-Project/examples/devices/javascript/class/count_down.js",
+		"/home/imasen/work/lluvia-Project/examples/devices/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/examples/devices/css/general.css",
+		"/home/imasen/work/lluvia-Project/examples/devices/index.html",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_EnumerationOf.js",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_Enumeration.js",
+		"/home/imasen/work/lluvia-Project/vendor/boids/javascript/main.js",
+		"/home/imasen/work/lluvia-Project/src/lib/builder/ll_Builder.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_State.js",
+		"/home/imasen/work/lluvia-Project/vendor/boids/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_InterleavedArray.js",
+		"/home/imasen/work/lluvia-Project/vendor/demo/javascript/DHTMLClasses/Edificios.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_EventDispatcher.js",
+		"/home/imasen/work/lluvia-Project/src/engine/ll_Lookup.js",
+		"/home/imasen/.config/sublime-text-3/Packages/Javascript Beautify/JavascriptBeautify.sublime-settings",
+		"/home/imasen/.config/sublime-text-3/Packages/User/JavascriptBeautify.sublime-settings",
+		"/home/imasen/.config/sublime-text-3/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/home/imasen/.config/sublime-text-3/Packages/SublimeOnSaveBuild/SublimeOnSaveBuild.sublime-settings",
+		"/home/imasen/.config/sublime-text-3/Packages/SublimeOnSaveBuild/README.md",
+		"/home/imasen/.config/sublime-text-3/Packages/DocBlockr/Base File.sublime-settings",
+		"/home/imasen/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/imasen/work/lluvia-Project/examples/devices/javascript/dependencies.js",
+		"/home/imasen/work/lluvia-Project/src/utils/ll_Inheritance.js",
+		"/home/imasen/work/lluvia-Project/util/install-sublime-packages",
+		"/home/imasen/work/lluvia-Project/lluvia.sublime-project",
 		"/home/imasen/work/lluvia-Project/util/sublime-text-3/pack-lluvia.sublime-build",
 		"/home/imasen/work/lluvia-Project/examples/chat/index.html",
 		"/home/imasen/work/lluvia-Project/examples/automatas/index.html",
 		"/home/imasen/work/lluvia-Project/examples/chat/javascript/dependencies.js",
-		"/home/imasen/work/lluvia-Project/vendor/boids/javascript/dependencies.js",
-		"/home/imasen/work/lluvia-Project/src/engine/ll_Automata.js",
-		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_InterleavedArray.js",
-		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_Enumeration.js",
-		"/home/imasen/work/lluvia-Project/examples/automatas/javascript/main.js",
 		"/home/imasen/work/lluvia-Project/src/engine/ll_StateGear.js",
 		"/home/imasen/work/lluvia-Project/doc/lluviadoc.json",
 		"/home/imasen/work/lluvia-Project/vendor/automatas/javascript/main.js",
-		"/home/imasen/work/lluvia-Project/src/engine/ll_State.js",
 		"/home/imasen/work/lluvia-Project/src/components/Effect.js",
-		"/home/imasen/work/lluvia-Project/src/engine/ll_Gate.js",
 		"/home/imasen/work/lluvia-Project/vendor/simple_app/css/general.css",
 		"/home/imasen/work/lluvia-Project/vendor/simple_app/index.html",
 		"/home/imasen/work/lluvia-Project/src/kernel/foundation/data-type/ll_VersionNumber.js",
 		"/home/imasen/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/package.json",
-		"/home/imasen/work/lluvia-Project/src/kernel/foundation/enumerable/ll_EnumerationOf.js",
-		"/home/imasen/work/lluvia-Project/src/engine/package.js",
-		"/home/imasen/work/lluvia-Project/src/engine/package.json"
+		"/home/imasen/work/lluvia-Project/src/engine/package.js"
 	],
 	"find":
 	{
@@ -257,9 +260,11 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 105.0,
 		"where_history":
 		[
+			"/home/imasen/work/lluvia-Project/src",
+			"src",
 			""
 		]
 	},
@@ -268,25 +273,27 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			")\n",
-			"newGate",
-			"name",
-			"i",
-			")\n",
-			"500",
-			"watch",
-			"TableSymbols",
-			"consol",
-			"(){",
-			"add",
-			"alert",
-			"that",
+			"down",
+			"this.",
+			"currentState",
+			"getStates()",
+			"getStates",
+			"getStates()",
+			"getStates",
+			"newMessage",
+			"ssend_message",
+			"sendMessage",
+			".new_wate",
+			".newGate",
 			"this",
-			"name_methods",
-			"i",
-			"main",
-			"nodes[i]",
-			"//extend",
+			"that.",
+			"this.",
+			"alert",
+			"(\\w.+):",
+			"(\\w.*):",
+			"alert",
+			"this",
+			"Device.",
 			"extend",
 			"currentState",
 			"sendMessage",
@@ -313,9 +320,20 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"current",
+			"state",
+			"new_message",
+			"send_message",
+			".new_gate",
+			".new_wate",
+			"this.",
+			"that.",
+			"\"$1\":",
+			"$1\":",
+			"\"$1\":",
 			"current_state",
 			"send_message",
 			"new_message",
@@ -331,14 +349,191 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "vendor/demo/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4405,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4388,
+								4388
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "vendor/demo/javascript/Home.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8353,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3534,
+								3534
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2795.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "vendor/demo/javascript/DHTMLClasses/Godman.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10066,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "vendor/demo/javascript/application.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1271,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/engine/ll_Automata.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6561,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "vendor/demo/javascript/ControlPanel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8352,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -375,12 +570,13 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 122.0
+		"height": 160.0
 	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"project": "lluvia.sublime-project",
 	"replace":
 	{
 		"height": 72.0
@@ -402,10 +598,25 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 294.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

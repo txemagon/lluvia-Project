@@ -14,41 +14,32 @@
  * @constructor World
  * @param  {screen} World screen
  * @return {World}
-*/
+ */
 
 //Steps to build a new world from class device
 World.prototype = new Device
 World.prototype.constructor = World
 World.prototype.super = Device
 
-function World(screen, width, height){
+function World(screen, width, height) {
 
-  /*function World sets the default parameter for the world unless given*/
+    /*function World sets the default parameter for the world unless given*/
 
-  var that = this
-  this.self_events = ["focus_boid", "new_boid"]
+    var that = this
+    this.self_events = ["focus_boid", "new_boid"]
 
-  this.screen = []
-  this.width   = width  || 100 //meters
-  this.height  = height || 100
-  this.start_time = null
-  this.acceleration_max = 30
-  this.velocity_max = 200
-  this.boids = 0
+    this.screen = []
+    this.width = width || 100 //meters
+    this.height = height || 100
+    this.start_time = null
+    this.acceleration_max = 30
+    this.velocity_max = 200
+    this.boids = 0
 
-  /* We have a HTMLElement, a string holding the id, or the page has a canvas */
+    if (arguments.length)
+        this.screen.push(GraphicDevice.get_best_device_for(screen))
 
-  if (typeof(screen) === "string")
-    screen = document.getElementById(screen)
-  if (!screen)
-    screen = document.querySelector('canvas')
-  if ( !(screen instanceof HTMLElement))
-      return
-  var context  = screen.getContext('2d');
-  if ( screen && context)
-    this.screen.push( { screen: screen, context: context } )
-
-  Device.call(that, null, null)
+    Device.call(that, null, null)
 }
 
 /**
@@ -65,7 +56,7 @@ function World(screen, width, height){
  *      green_world.set_dashboard('');
  *
  */
-World.prototype.set_dashboard = function(name){
+World.prototype.set_dashboard = function(name) {
     this.dashboard = new WorldInterface(name, this)
 }
 
@@ -83,10 +74,10 @@ World.prototype.set_dashboard = function(name){
  *
  *
  */
-World.prototype.width = function(){
-  if (arguments.length == 0)
-    return this.width
-  this.width = arguments[0]
+World.prototype.width = function() {
+    if (arguments.length == 0)
+        return this.width
+    this.width = arguments[0]
 }
 
 /**
@@ -103,88 +94,12 @@ World.prototype.width = function(){
  *
  *
  */
-World.prototype.height = function(){
-  if (arguments.length == 0)
-    return this.height
-  this.height = arguments[0]
+World.prototype.height = function() {
+    if (arguments.length == 0)
+        return this.height
+    this.height = arguments[0]
 }
 
-/**
- * @method screen_width
- *
- * Sets the width of the canvas
- *
- * @param  {(String | String[])...} screen Name of the canvas.
- *
- *
- * ###Example
- *      // Set screen_width
- *
- *
- *
- */
-World.prototype.screen_width = function(screen){
-  var i
-  this.assert_screen()
-  if ( typeof(screen) === "undefined")
-   return  this.screen[0].screen.width
-  if (typeof(screen) === "string" )
-    screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++)
-    if (this.screen[i].screen == screen)
-      break;
-  if (i < this.screen.length)
-    return this.screen[i].screen.width
-  throw "Screen not found"
-}
-
-/**
- * @method assert_screen
- *
- * Checks if there are any screens
- *
- * @param  {}
- *
- *
- * ###Example
- *      // Check for screen
- *
- *
- *
- */
-World.prototype.assert_screen = function(){
-  if ( !this.screen.length )
-    throw "No screens yet"
-}
-
-/**
- * @method screen_height
- *
- * Sets the height of the canvas.
- *
- * @param  {(String | String[])...} screen Name of the screen.
- *
- *
- * ###Example
- *      // Set dashboard for a world
- *
- *
- *
- */
-World.prototype.screen_height = function(screen){
-  var i
-  this.assert_screen()
-  if ( typeof(screen) === "undefined")
-   return  this.screen[0].screen.height
-  if (typeof(screen) === "string" )
-    screen = document.getElementById(screen)
-  for(i=0; i<this.screen.length; i++)
-    if (this.screen[i].screen == screen)
-      break;
-  if (i < this.screen.length)
-    return this.screen[i].screen.height
-  throw "Screen not found"
-}
 
 /**
  * @method has_born
@@ -204,13 +119,13 @@ World.prototype.screen_height = function(screen){
  *
  *
  */
-World.prototype.has_born = function (){
-  for (var i=0; i<arguments.length; i++){
-    arguments[i].my_world = this
-    this.register(arguments[i])
-    //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
-    this.fire_event(this.new_message("sync", "new_boid", arguments[i]))
-  }
+World.prototype.has_born = function() {
+    for (var i = 0; i < arguments.length; i++) {
+        arguments[i].my_world = this
+        this.register(arguments[i])
+        //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
+        this.fire_event(this.new_message("sync", "new_boid", arguments[i]))
+    }
 }
 
 /**
@@ -227,8 +142,8 @@ World.prototype.has_born = function (){
  *
  *
  */
-World.prototype.get_boids = function(){
-  return this.get(Boid)
+World.prototype.get_boids = function() {
+    return this.get(Boid)
 }
 
 /**
@@ -245,12 +160,12 @@ World.prototype.get_boids = function(){
  *
  *
  */
-World.prototype.each_boid = function(){
-  var that = this
+World.prototype.each_boid = function() {
+    var that = this
 
-  this.get_boids().each(function(el){
-      World.prototype.each_boid.yield(el)
-      })
+    this.get_boids().each(function(el) {
+        World.prototype.each_boid.yield(el)
+    })
 }
 
 /**
@@ -267,12 +182,12 @@ World.prototype.each_boid = function(){
  *
  *
  */
-World.prototype.start = function(){
-  var that = this
-  this.start_time = new Date()
-  this.get_boids().each( function(el) {
-    el.start(that.start_time)
-  })
+World.prototype.start = function() {
+    var that = this
+    this.start_time = new Date()
+    this.get_boids().each(function(el) {
+        el.start(that.start_time)
+    })
 }
 
 /**
@@ -289,13 +204,13 @@ World.prototype.start = function(){
  *
  *
  */
-World.prototype.draw = function(){
-  var that = this
-  var ctx = this.screen[0].context
-  ctx.clearRect(0,0,400,400)
-  this.get_boids().each( function(el) {
-    el.draw(ctx)
-  })
+World.prototype.draw = function() {
+    var that = this
+    var ctx = this.screen[0].context
+    ctx.clearRect(0, 0, 400, 400)
+    this.get_boids().each(function(el) {
+        el.draw(ctx)
+    })
 }
 
 /**
@@ -312,12 +227,12 @@ World.prototype.draw = function(){
  *
  *
  */
-World.prototype.step = function(current_time){
-  var that = this
-  current_time = current_time || this.now || new Date()
-  this.each_boid(function(boid){
-    boid.update_physics(current_time)
-  })
+World.prototype.step = function(current_time) {
+    var that = this
+    current_time = current_time || this.now || new Date()
+    this.each_boid(function(boid) {
+        boid.update_physics(current_time)
+    })
 }
 
 /**
@@ -334,13 +249,13 @@ World.prototype.step = function(current_time){
  *
  *
  */
-World.prototype.is_one_second_from_begining = function(){
-  this.start()
-  var current_time = new Date( this.start_time.toString() )
-  current_time.setSeconds( this.start_time.getSeconds() + 1 )
-  current_time.setMilliseconds( this.start_time.getMilliseconds())
+World.prototype.is_one_second_from_begining = function() {
+    this.start()
+    var current_time = new Date(this.start_time.toString())
+    current_time.setSeconds(this.start_time.getSeconds() + 1)
+    current_time.setMilliseconds(this.start_time.getMilliseconds())
 
-  this.step(current_time)
+    this.step(current_time)
 }
 
 /**
@@ -357,19 +272,19 @@ World.prototype.is_one_second_from_begining = function(){
  *
  *
  */
-World.prototype.show_boids = function(){
+World.prototype.show_boids = function() {
 
-  var logger = document.getElementById("logger")
-  logger.innerHTML = ""
-  var boids = 0
-  this.each_boid(function(boid){
-    boids++
-    logger.innerHTML += "<h3>Boid " + boids + "</h3>"
-    logger.innerHTML += "Pos: " + boid.position() + "<br/>"
-    logger.innerHTML += "Vel: " + boid.velocity() + "<br/>"
-    logger.innerHTML += "Acc: " + boid.acceleration() + "<br/>"
-    logger.innerHTML += "<br/>"
-  })
+    var logger = document.getElementById("logger")
+    logger.innerHTML = ""
+    var boids = 0
+    this.each_boid(function(boid) {
+        boids++
+        logger.innerHTML += "<h3>Boid " + boids + "</h3>"
+        logger.innerHTML += "Pos: " + boid.position() + "<br/>"
+        logger.innerHTML += "Vel: " + boid.velocity() + "<br/>"
+        logger.innerHTML += "Acc: " + boid.acceleration() + "<br/>"
+        logger.innerHTML += "<br/>"
+    })
 }
 
 /**
@@ -386,13 +301,13 @@ World.prototype.show_boids = function(){
  *
  *
  */
-World.prototype.running_steady = function(processors_time){
-  //this.show_boids()
-  var that = this
-  this.now = processors_time || new Date()
-  /* Boid#run is called from the child runner */
-  //this.eventDispatcher.shift()
-  this.draw()
+World.prototype.running_steady = function(processors_time) {
+    //this.show_boids()
+    var that = this
+    this.now = processors_time || new Date()
+    /* Boid#run is called from the child runner */
+    //this.eventDispatcher.shift()
+    this.draw()
 }
 
 /**
@@ -410,19 +325,19 @@ World.prototype.running_steady = function(processors_time){
  * todo: Add a type of boid to see. I want to see sheeps
  *
  */
-World.prototype.visible_for = function(position, heading, vision){
- var that = this
- vision = vision.radius * vision.radius
- var visible = []
- this.each_boid(function (boid){
-  var x1 = position.get_coord(0)
-  var y1 = position.get_coord(1)
-  var dx = boid.geo_data.position.get_coord(0) - x1
-  var dy = boid.geo_data.position.get_coord(1) - y1
-  if (dx * dx + dy * dy < vision )
-   visible.push(boid)
- })
- return visible
+World.prototype.visible_for = function(position, heading, vision) {
+    var that = this
+    vision = vision.radius * vision.radius
+    var visible = []
+    this.each_boid(function(boid) {
+        var x1 = position.get_coord(0)
+        var y1 = position.get_coord(1)
+        var dx = boid.geo_data.position.get_coord(0) - x1
+        var dy = boid.geo_data.position.get_coord(1) - y1
+        if (dx * dx + dy * dy < vision)
+            visible.push(boid)
+    })
+    return visible
 }
 
 /**
@@ -440,14 +355,14 @@ World.prototype.visible_for = function(position, heading, vision){
  *
  *
  */
-World.prototype.new_boid = function(config, block){
+World.prototype.new_boid = function(config, block) {
 
- var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
+    var b = typeof(block) === "undefined" ? new Boid(config) : new Boid(config, block)
 
- this.boids++
-  b.id = this.boids
- this.has_born(b)
- return b
+    this.boids++
+    b.id = this.boids
+    this.has_born(b)
+    return b
 }
 
 /**
@@ -464,9 +379,9 @@ World.prototype.new_boid = function(config, block){
  *
  *
  */
-World.prototype.start_and_run = function(){
- this.start()
- this.run()
+World.prototype.start_and_run = function() {
+    this.start()
+    this.run()
 }
 
 /**
@@ -484,8 +399,8 @@ World.prototype.start_and_run = function(){
  *
  *
  */
-World.prototype.attend_focus_boid = function(date, mssg){
- mssg.current++;
+World.prototype.attend_focus_boid = function(date, mssg) {
+    mssg.current++;
 }
 
 /**
@@ -496,27 +411,27 @@ World.prototype.attend_focus_boid = function(date, mssg){
  * @param {Object} config Configuration object to provide to the boid constructor.
  *
  */
-World.prototype.new_boid_of = function(class_name, config){
- var b = new class_name(config)
- if (this[class_name])
-  this[class_name]++
-  else
- this[class_name] = 1
- this.boids.total++
-  this.has_born(b)
- return b
+World.prototype.new_boid_of = function(class_name, config) {
+    var b = new class_name(config)
+    if (this[class_name])
+        this[class_name]++
+        else
+            this[class_name] = 1
+    this.boids.total++
+    this.has_born(b)
+    return b
 }
 
 /**
  * @method method_missing
  * Provides dynamic method new_bois_as_<ClassName>
  */
-World.prototype.method_missing= function(method, obj, params){
+World.prototype.method_missing = function(method, obj, params) {
 
- if ( /new_boid_as_/.test(method) ){
-  var subtype = method.match(/new_boid_as_(\w*)/ )[1].capitalize()
-  return this.new_boid_of(eval("" + subtype), params[0])
-  //todo: This is dependant of bad ll_Exception params analysis
- }
- return this.super.method_missing.apply(this, arguments)
+    if (/new_boid_as_/.test(method)) {
+        var subtype = method.match(/new_boid_as_(\w*)/)[1].capitalize()
+        return this.new_boid_of(eval("" + subtype), params[0])
+            //todo: This is dependant of bad ll_Exception params analysis
+    }
+    return this.super.method_missing.apply(this, arguments)
 }

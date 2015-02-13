@@ -4027,6 +4027,88 @@ Builder.prototype.build = function() {
         }
     }
 }
+CanvasDevice.prototype = new GraphicDevice
+CanvasDevice.prototype.constructor = CanvasDevice
+function CanvasDevice(screen) {
+    GraphicDevice.apply(this, arguments)
+    this.context = this.screen.getContext("2d")
+    if (!this.context)
+        throw "Unable to initialize context for 2d screen."
+}
+function GraphicDevice(screen) {
+    if (typeof(screen) === "string")
+        screen = document.getElementById(screen)
+    if (!screen)
+        screen = document.querySelector('canvas')
+    if (!(screen instanceof HTMLElement))
+        return
+    this.screen = screen
+    this.context = null
+    GraphicDevice.screen = GraphicDevice.screen || []
+    GraphicDevice.screen.push(this)
+}
+GraphicDevice.get_best_device_for = function(screen) {
+    if (WebGl.available$U())
+        return new WebGl(screen)
+    return new CanvasDevice(screen)
+}
+WebGl.prototype = new GraphicDevice
+WebGl.prototype.constructor = WebGl
+function WebGl(screen, camera) {
+    var that = this
+    function initialize() {
+        GraphicDevice.call(that, screen)
+        that.context = new THREE.WebGLRenderer({
+            canvas: that.screen
+        })
+        that.context.setClearColor(0xFFFFFF, 1)
+        that.scene = new THREE.Scene()
+        that.cameras = []
+        var aspect = that.screen.width / that.screen.height
+        var view_angle = 45
+        var near = 0.1
+        var far = 10000
+        that.cameras.push(that.camera = new THREE.PerspectiveCamera(
+            view_angle,
+            aspect,
+            near,
+            far))
+        that.scene.add(camera)
+        that.camera.position.z = 300
+        that.context.setSize(that.screen.width, that.screen.height)
+        var sphere = new THREE.Mesh(
+            new THREE.SphereGeometry(10  , 16  , 16  ),
+            new THREE.MeshLambertMaterial({
+                color: 0xFFFF00
+            })
+        )
+        that.scene.add(sphere);
+        var ambientLight = new THREE.AmbientLight(0x444444);
+        that.scene.add(ambientLight);
+        var directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+        directionalLight.position.set(0, 0, 1).normalize()
+        that.scene.add(directionalLight);
+        that.context.render(that.scene, that.camera);
+    }
+    if (arguments.length)
+        initialize()
+}
+WebGl.available$U = function() {
+    var webgl = false
+    var canvas = document.createElement('canvas')
+    try {
+        webgl = !!window.WebGLRenderingContext &&
+            !!canvas.getContext('webgl')
+    } catch (e) {
+        try {
+            webgl = !!window.WebGLRenderingContext &&
+                !!canvas.getContext('experimental-webgl')
+        } catch (e) {
+            webgl = false
+        }
+    }
+    return webgl
+}
 Angle.prototype.constructor = Angle
 Angle.mode = "rad"  
 Angle.valid_modes = ["rad", "deg"]
@@ -5125,7 +5207,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

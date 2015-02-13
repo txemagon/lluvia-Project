@@ -1,0 +1,15 @@
+{
+    "package": "graphics",
+    "description": "Canvas and WebGL support",
+    "files": [{
+        "name": "ll_canvas_device.js",
+        "description": "Generic Visualization Device"
+    }, {
+        "name": "ll_graphic_device.js",
+        "description": "Basic screen device"
+    }, {
+        "name": "ll_webgl.js",
+        "description": "WebGl support"
+    }],
+    "provides": []
+}
