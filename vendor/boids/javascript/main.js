@@ -10,7 +10,7 @@ function main() {
     //  boid_list.add_port("focus_boid", boid_editor)
 
     /* Example 1 of Boid creation */
-    var fixed_target = w.new_boid({
+/*    var fixed_target = w.new_boid({
         name: "fixed",
         colour: "green",
         geo_data: {
@@ -28,7 +28,7 @@ function main() {
     }, function(config) {
         /* Here you can interact with the outer scope */
         /* You can also access the already created brain */
-        config.geo_data = {
+ /*       config.geo_data = {
             position: new Vector(100, 100),
             velocity: new Vector(0, 0),
             acceleration: new Vector(0, 0)
@@ -48,10 +48,10 @@ function main() {
         }))
 
     /* Example: seek behavior */
-/*    var seeker = []
+    /* var seeker = []
     var t = w.new_boid(function(config) {
         /* Here you can interact with the outer scope */
-/*        config.colour = "red"
+    /*    config.colour = "red"
         config.geo_data = {
             position: new Vector(200, 200),
             velocity: new Vector(1, 1),
@@ -63,7 +63,7 @@ function main() {
     var first = t
     seeker.push(t)
 
-    for (var i = 0; i < 50; i++)
+    for (var i = 0; i < 5; i++)
         seeker.push(t = w.new_boid(function(config) {
             config.brain.activate('seek', t)
         }))
@@ -113,5 +113,22 @@ function main() {
     })
 
 */
+
+    /* Example: Class as target */
+    var yeoman = []
+    for (var i=0; i<5; i++)
+    yeoman.push( w.new_boid(function(config){
+        config.colour = "brown"
+        config.brain.activate("wander")
+        // config.brain.activate("flee", WanderBehavior)
+    }))
+
+    var sheeps = []
+    for (var i=0; i<40; i++)
+        sheeps.push(w.new_boid(function(config){
+            config.colour = "lemonchiffon"
+            config.brain.activate("flee", WanderBehavior)
+            config.geo_data.velocity = new Vector(1, 1)
+        }))
     w.start()
 }

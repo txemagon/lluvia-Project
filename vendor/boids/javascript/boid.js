@@ -41,7 +41,7 @@ function Boid(config_object, block){
 
             var default_config = {
                 geo_data: {
-                    position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+                    position: new Vector(Math.floor(Math.random()*1000), Math.floor(Math.random()*400)),
                     velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
                     acceleration: new Vector(0,0)
                 },
@@ -143,7 +143,7 @@ Boid.prototype.update_physics = function(current_time){
     this.last_time = this.current_time
     this.current_time = current_time
     this.geo_data.acceleration = this.requested_acceleration()
-    this.geo_data.velocity = integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )
+    this.geo_data.velocity = (integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )).subs(this.geo_data.velocity.scale(0.1))
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
 

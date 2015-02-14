@@ -1586,7 +1586,7 @@ Array.prototype.eql$U = function(model) {
         });
 }
 Array.prototype.inject = function(init_value, block) {
-    var callback = Array.prototype.inject.get_block()
+    var callback = Array.prototype.inject.get_block() 
     for (var i = 0; i < this.length; i++)
         init_value = callback(this[i], init_value)
     return init_value
@@ -3065,9 +3065,13 @@ $Logger.prototype.log = function(message, severity){
 }
 Processor.prototype.constructor = Processor;
 function Processor() {
-    this.now = new Date();
-    this.events = new Event();
-    this.threads = new Array();
+    this.now = new Date()
+    this.events = new Event()
+    this.threads = []
+    Object.defineProperty(this, "run_bound", {
+        value: Processor.prototype.run.bind(this),
+        enumerable: false
+    })
 }
 Processor.prototype.register = function(cObject, solicitorF) {
     var obj = null
@@ -3104,11 +3108,8 @@ Processor.prototype.step = function(date) {
 }
 Processor.prototype.run = function(date) {
     this.now = new Date();
-    try {
-        this.step(this.now)
-    } catch (e) {
-    }
-    setTimeout(this.run.bind(this), 20);
+    this.step(this.now)
+    setTimeout(this.run_bound, 20)
 }
 Processor.prototype.start = function() {
     this.run()
@@ -5215,7 +5216,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
