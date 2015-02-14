@@ -24,6 +24,12 @@ Function.prototype.yield = function() {
             return this.arguments[i].apply(this, arguments)
 }
 
+Function.prototype.get_block = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
+        if (typeof(this.arguments[i]) === "function")
+            return this.arguments[i]
+}
+
 Function.prototype.block_given$U = function() {
     var given = false
     for (var i = this.arguments.length - 1; !given && i >= 0; i--)
@@ -291,8 +297,8 @@ Function.prototype.reflect = function() {
                 result = duplicate(arguments[i][j])
                 return_value[result[0]] = result[1]
             } else {
-            result = duplicate(arguments[i])
-            return_value[result[0]] = result[1]
-        }
+                result = duplicate(arguments[i])
+                return_value[result[0]] = result[1]
+            }
     return return_value
 }

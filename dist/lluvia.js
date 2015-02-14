@@ -561,6 +561,11 @@ Function.prototype.yield = function() {
         if (typeof(this.arguments[i]) === "function")
             return this.arguments[i].apply(this, arguments)
 }
+Function.prototype.get_block = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
+        if (typeof(this.arguments[i]) === "function")
+            return this.arguments[i]
+}
 Function.prototype.block_given$U = function() {
     var given = false
     for (var i = this.arguments.length - 1; !given && i >= 0; i--)
@@ -615,9 +620,9 @@ Function.prototype.reflect = function() {
                 result = duplicate(arguments[i][j])
                 return_value[result[0]] = result[1]
             } else {
-            result = duplicate(arguments[i])
-            return_value[result[0]] = result[1]
-        }
+                result = duplicate(arguments[i])
+                return_value[result[0]] = result[1]
+            }
     return return_value
 }
 String.prototype.capitalize = function() {
@@ -1164,8 +1169,9 @@ Array.reflect = function() {
     return return_value
 }
 Array.prototype.each = function() {
+    var callback = Array.prototype.each.get_block()
     for (var i = 0; i < this.length; i++)
-        Array.prototype.each.yield(this[i])
+        callback(this[i])
     return this
 }
 Array.prototype.each_index = function() {
@@ -1580,8 +1586,9 @@ Array.prototype.eql$U = function(model) {
         });
 }
 Array.prototype.inject = function(init_value, block) {
+    var callback = Array.prototype.inject.get_block()
     for (var i = 0; i < this.length; i++)
-        init_value = Array.prototype.inject.yield(this[i], init_value)
+        init_value = callback(this[i], init_value)
     return init_value
 }
 Array.prototype.inject_with_index = function(init_value) {
@@ -4094,6 +4101,7 @@ function WebGl(screen, camera) {
         initialize()
 }
 WebGl.available$U = function() {
+    return false
     var webgl = false
     var canvas = document.createElement('canvas')
     try {

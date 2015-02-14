@@ -54,6 +54,7 @@ function WebGl(screen, camera) {
 }
 
 WebGl.available$U = function() {
+    return false
     var webgl = false
     var canvas = document.createElement('canvas')
     try {

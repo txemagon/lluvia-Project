@@ -86,8 +86,9 @@ Array.reflect = function() {
  * @return {Array} Returns self
  */
 Array.prototype.each = function() {
+    var callback = Array.prototype.each.get_block()
     for (var i = 0; i < this.length; i++)
-        Array.prototype.each.yield(this[i])
+        callback(this[i])
 
     return this
 }
@@ -1444,8 +1445,9 @@ Array.prototype.eql$U = function(model) {
  * @return {Number/Object} Last value of block.return
  */
 Array.prototype.inject = function(init_value, block) {
+    var callback = Array.prototype.inject.get_block() //hovering yield
     for (var i = 0; i < this.length; i++)
-        init_value = Array.prototype.inject.yield(this[i], init_value)
+        init_value = callback(this[i], init_value)
     return init_value
 }
 

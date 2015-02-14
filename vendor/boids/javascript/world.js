@@ -35,6 +35,7 @@ function World(screen, width, height) {
     this.acceleration_max = 30
     this.velocity_max = 200
     this.boids = 0
+    this.draw_bound = World.prototype.draw.bind(this)
 
     if (arguments.length)
         this.screen.push(GraphicDevice.get_best_device_for(screen))
@@ -188,6 +189,7 @@ World.prototype.start = function() {
     this.get_boids().each(function(el) {
         el.start(that.start_time)
     })
+    this.draw()
 }
 
 /**
@@ -211,6 +213,7 @@ World.prototype.draw = function() {
     this.get_boids().each(function(el) {
         el.draw(ctx)
     })
+    requestAnimationFrame(this.draw_bound)
 }
 
 /**
@@ -301,14 +304,14 @@ World.prototype.show_boids = function() {
  *
  *
  */
-World.prototype.running_steady = function(processors_time) {
-    //this.show_boids()
-    var that = this
-    this.now = processors_time || new Date()
-    /* Boid#run is called from the child runner */
-    //this.eventDispatcher.shift()
-    this.draw()
-}
+//World.prototype.running_steady = function(processors_time) {
+//this.show_boids()
+//var that = this
+//this.now = processors_time || new Date()
+/* Boid#run is called from the child runner */
+//this.eventDispatcher.shift()
+//this.draw()
+//}
 
 /**
  * @method visible_for
