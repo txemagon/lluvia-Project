@@ -191,7 +191,9 @@ Boid.prototype.heading = function(){
  */
 Boid.prototype.locale = function(){  // The local coordinate system expressed in the global cs.
     var u = this.heading()
-    if (isNaN(u.get_coord(0)) || isNaN(u.get_coord(1)))
+    var x = u.get_coord(0)
+    var y = u.get_coord(1)
+    if (!x || !y || isNaN(x) || isNaN(y))
         u = new Vector(1,0)
     var v = new Vector(-u.Coord[1], u.Coord[0])
     return [u,v]
@@ -206,7 +208,9 @@ Boid.prototype.locale = function(){  // The local coordinate system expressed in
  */
 Boid.prototype.globale = function(){
     var aux = this.heading()
-    if (isNaN(aux.get_coord(0)) || isNaN(aux.get_coord(1)))
+    var x = aux.get_coord(0)
+    var y = aux.get_coord(1)
+    if (!x || !y || isNaN(x) || isNaN(y))
         aux = new Vector(1,0)
     var u = new Vector(aux.Coord[0], -aux.Coord[1])
     var v = new Vector(-u.Coord[1], u.Coord[0])
@@ -260,7 +264,8 @@ Boid.prototype.visible_objects = function(){
  * @return {Vector}
  */
 Boid.prototype.requested_acceleration = function(){
-    return this.clip(this.brain.desired_acceleration())
+    var result = this.brain.desired_acceleration()
+    return this.clip(result)
 }
 
 /**

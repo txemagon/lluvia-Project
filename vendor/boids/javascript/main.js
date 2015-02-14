@@ -30,7 +30,7 @@ function main() {
         /* You can also access the already created brain */
         config.geo_data = {
             position: new Vector(100, 100),
-            velocity: new Vector(10, 10),
+            velocity: new Vector(0, 0),
             acceleration: new Vector(0, 0)
         }
         config.brain.activate("seek>arrival", fixed_target)
@@ -48,10 +48,10 @@ function main() {
         }))
 
     /* Example: seek behavior */
-    var seeker = []
+/*    var seeker = []
     var t = w.new_boid(function(config) {
         /* Here you can interact with the outer scope */
-        config.colour = "red"
+/*        config.colour = "red"
         config.geo_data = {
             position: new Vector(200, 200),
             velocity: new Vector(1, 1),
