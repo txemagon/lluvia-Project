@@ -13,17 +13,16 @@ function Skill(view){
     /* Damage buttons
      *
      */
-    this.new_gate("button_plus", Gate, {
+    this.new_gate("button_plus_damage", Gate, {
 	    do_onclick: function(event, element){
-		    this.transfer_to("damage")
-		    alert("we")
+		      this.device.transfer_to("damage")
 	        }
 	    }
     )
 
     this.new_gate("button_minus_damage", Gate, {
 	    do_onclick: function(event, element){
-		    this.decrement_to("damage")
+		    this.device.decrement_to("damage")
 	        }
 	    }
     )
@@ -33,14 +32,14 @@ function Skill(view){
      */
     this.new_gate("button_plus_resistance", Gate, {
 	    do_onclick: function(event, element){
-		    this.transfer_to("resistance")
+		    this.device.transfer_to("resistance")
 	        }
 	    }
     )
 
     this.new_gate("button_minus_resistance", Gate, {
 	    do_onclick: function(event, element){
-		    this.decrement_to("resistance")
+		    this.device.decrement_to("resistance")
 	        }
 	    }
     )
@@ -50,18 +49,27 @@ function Skill(view){
      */
     this.new_gate("button_plus_speed", Gate, {
 	    do_onclick: function(event, element){
-		    this.transfer_to("speed")
+		    this.device.transfer_to("speed")
 	        }
 	    }
     )
 
     this.new_gate("button_minus_speed", Gate, {
 	    do_onclick: function(event, element){
-		    this.decrement_to("speed")
+		    this.device.decrement_to("speed")
 	        }
 	    }
     )
 }
+
+Skill.prototype.decrement_to = function(target){
+	if (this.skill_points <= 5){
+		this.skill_points++
+		this[target]--
+		this.render(target)
+	}
+ }
+
 
 Skill.prototype.transfer_to = function(target){
     if (this.skill_points > 0){
@@ -71,10 +79,9 @@ Skill.prototype.transfer_to = function(target){
 	}
 }
 
-Skill.prototype.decrement_to = function(target){
-	if (this.skill_points <= 5){
-		this.skill_points++
-		this.[target]--
-		this.render(target)
-	}
+Skill.prototype.render = function(target){
+	var points_left = document.getElementById("points")
+	points.innerHTML = this.skill_points
+	var bar = document.getElementById("image_" + target)
+	bar.src = "images/bar/bar_" + this[target] + ".png"
 }

@@ -561,6 +561,11 @@ Function.prototype.yield = function() {
         if (typeof(this.arguments[i]) === "function")
             return this.arguments[i].apply(this, arguments)
 }
+Function.prototype.get_block = function() {
+    for (var i = this.arguments.length - 1; i >= 0; i--)
+        if (typeof(this.arguments[i]) === "function")
+            return this.arguments[i]
+}
 Function.prototype.block_given$U = function() {
     var given = false
     for (var i = this.arguments.length - 1; !given && i >= 0; i--)
@@ -615,9 +620,9 @@ Function.prototype.reflect = function() {
                 result = duplicate(arguments[i][j])
                 return_value[result[0]] = result[1]
             } else {
-            result = duplicate(arguments[i])
-            return_value[result[0]] = result[1]
-        }
+                result = duplicate(arguments[i])
+                return_value[result[0]] = result[1]
+            }
     return return_value
 }
 String.prototype.capitalize = function() {
@@ -1164,8 +1169,9 @@ Array.reflect = function() {
     return return_value
 }
 Array.prototype.each = function() {
+    var callback = Array.prototype.each.get_block()
     for (var i = 0; i < this.length; i++)
-        Array.prototype.each.yield(this[i])
+        callback(this[i])
     return this
 }
 Array.prototype.each_index = function() {
@@ -1580,8 +1586,9 @@ Array.prototype.eql$U = function(model) {
         });
 }
 Array.prototype.inject = function(init_value, block) {
+    var callback = Array.prototype.inject.get_block() 
     for (var i = 0; i < this.length; i++)
-        init_value = Array.prototype.inject.yield(this[i], init_value)
+        init_value = callback(this[i], init_value)
     return init_value
 }
 Array.prototype.inject_with_index = function(init_value) {
@@ -3058,9 +3065,13 @@ $Logger.prototype.log = function(message, severity){
 }
 Processor.prototype.constructor = Processor;
 function Processor() {
-    this.now = new Date();
-    this.events = new Event();
-    this.threads = new Array();
+    this.now = new Date()
+    this.events = new Event()
+    this.threads = []
+    Object.defineProperty(this, "run_bound", {
+        value: Processor.prototype.run.bind(this),
+        enumerable: false
+    })
 }
 Processor.prototype.register = function(cObject, solicitorF) {
     var obj = null
@@ -3097,11 +3108,8 @@ Processor.prototype.step = function(date) {
 }
 Processor.prototype.run = function(date) {
     this.now = new Date();
-    try {
-        this.step(this.now)
-    } catch (e) {
-    }
-    setTimeout(this.run.bind(this), 20);
+    this.step(this.now)
+    setTimeout(this.run_bound, 20)
 }
 Processor.prototype.start = function() {
     this.run()
@@ -4027,6 +4035,89 @@ Builder.prototype.build = function() {
         }
     }
 }
+CanvasDevice.prototype = new GraphicDevice
+CanvasDevice.prototype.constructor = CanvasDevice
+function CanvasDevice(screen) {
+    GraphicDevice.apply(this, arguments)
+    this.context = this.screen.getContext("2d")
+    if (!this.context)
+        throw "Unable to initialize context for 2d screen."
+}
+function GraphicDevice(screen) {
+    if (typeof(screen) === "string")
+        screen = document.getElementById(screen)
+    if (!screen)
+        screen = document.querySelector('canvas')
+    if (!(screen instanceof HTMLElement))
+        return
+    this.screen = screen
+    this.context = null
+    GraphicDevice.screen = GraphicDevice.screen || []
+    GraphicDevice.screen.push(this)
+}
+GraphicDevice.get_best_device_for = function(screen) {
+    if (WebGl.available$U())
+        return new WebGl(screen)
+    return new CanvasDevice(screen)
+}
+WebGl.prototype = new GraphicDevice
+WebGl.prototype.constructor = WebGl
+function WebGl(screen, camera) {
+    var that = this
+    function initialize() {
+        GraphicDevice.call(that, screen)
+        that.context = new THREE.WebGLRenderer({
+            canvas: that.screen
+        })
+        that.context.setClearColor(0xFFFFFF, 1)
+        that.scene = new THREE.Scene()
+        that.cameras = []
+        var aspect = that.screen.width / that.screen.height
+        var view_angle = 45
+        var near = 0.1
+        var far = 10000
+        that.cameras.push(that.camera = new THREE.PerspectiveCamera(
+            view_angle,
+            aspect,
+            near,
+            far))
+        that.scene.add(camera)
+        that.camera.position.z = 300
+        that.context.setSize(that.screen.width, that.screen.height)
+        var sphere = new THREE.Mesh(
+            new THREE.SphereGeometry(10  , 16  , 16  ),
+            new THREE.MeshLambertMaterial({
+                color: 0xFFFF00
+            })
+        )
+        that.scene.add(sphere);
+        var ambientLight = new THREE.AmbientLight(0x444444);
+        that.scene.add(ambientLight);
+        var directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+        directionalLight.position.set(0, 0, 1).normalize()
+        that.scene.add(directionalLight);
+        that.context.render(that.scene, that.camera);
+    }
+    if (arguments.length)
+        initialize()
+}
+WebGl.available$U = function() {
+    return false
+    var webgl = false
+    var canvas = document.createElement('canvas')
+    try {
+        webgl = !!window.WebGLRenderingContext &&
+            !!canvas.getContext('webgl')
+    } catch (e) {
+        try {
+            webgl = !!window.WebGLRenderingContext &&
+                !!canvas.getContext('experimental-webgl')
+        } catch (e) {
+            webgl = false
+        }
+    }
+    return webgl
+}
 Angle.prototype.constructor = Angle
 Angle.mode = "rad"  
 Angle.valid_modes = ["rad", "deg"]
@@ -4428,7 +4519,8 @@ function Vector() {
         })
     }
     for (var i = 0; i < arguments.length; i++)
-        this.Coord.push(arguments[i])
+        if (Object.prototype.toString.call(arguments[i]) !== "[object String]")
+            this.Coord.push(arguments[i])
     for (var i = 0; i < arguments.length; i++)
         argument[i] = arguments[i]
     for (var i = 0; i < argument.length; i++)

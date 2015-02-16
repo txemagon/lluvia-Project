@@ -1,5 +1,7 @@
 var w = null
+var skill = null
+
 function main(){
 
-    var skill = new Skill("skill")
+    skill = new Skill("skill")
 }

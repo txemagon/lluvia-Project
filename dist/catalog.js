@@ -192,8 +192,7 @@ var $K_script_response =
 		   {
 			"_path": "/src/lib/",
 			"files": [],
-			"provides": [],
-			"requires": [
+			"provides": [
 				   {
 					"_path": "/src/lib/builder/",
 					"files": [
@@ -205,10 +204,24 @@ var $K_script_response =
 					"package": "builder",
 					"description": ".",
 				 }
+,
+				   {
+					"_path": "/src/lib/graphics/",
+					"files": [
+						{"name": "ll_canvas_device.js", "description": "Generic Visualization Device"},
+						{"name": "ll_graphic_device.js", "description": "Basic screen device"},
+						{"name": "ll_webgl.js", "description": "WebGl support"}],
+					"provides": [],
+					"requires": [],
+					"offers": [],
+					"package": "graphics",
+					"description": "Canvas and WebGL support",
+				 }
 ],
+			"requires": [],
 			"offers": [],
 			"package": "lib",
-			"description": ".",
+			"description": "External libraries",
 		 }
 ,
 		   {

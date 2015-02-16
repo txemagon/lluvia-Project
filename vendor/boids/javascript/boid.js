@@ -41,7 +41,7 @@ function Boid(config_object, block){
 
             var default_config = {
                 geo_data: {
-                    position: new Vector(Math.floor(Math.random()*400), Math.floor(Math.random()*400)),
+                    position: new Vector(Math.floor(Math.random()*1000), Math.floor(Math.random()*400)),
                     velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
                     acceleration: new Vector(0,0)
                 },
@@ -143,7 +143,7 @@ Boid.prototype.update_physics = function(current_time){
     this.last_time = this.current_time
     this.current_time = current_time
     this.geo_data.acceleration = this.requested_acceleration()
-    this.geo_data.velocity = integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )
+    this.geo_data.velocity = (integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )).subs(this.geo_data.velocity.scale(0.1))
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
 
@@ -191,7 +191,9 @@ Boid.prototype.heading = function(){
  */
 Boid.prototype.locale = function(){  // The local coordinate system expressed in the global cs.
     var u = this.heading()
-    if (isNaN(u.get_coord(0)) || isNaN(u.get_coord(1)))
+    var x = u.get_coord(0)
+    var y = u.get_coord(1)
+    if (!x || !y || isNaN(x) || isNaN(y))
         u = new Vector(1,0)
     var v = new Vector(-u.Coord[1], u.Coord[0])
     return [u,v]
@@ -206,7 +208,9 @@ Boid.prototype.locale = function(){  // The local coordinate system expressed in
  */
 Boid.prototype.globale = function(){
     var aux = this.heading()
-    if (isNaN(aux.get_coord(0)) || isNaN(aux.get_coord(1)))
+    var x = aux.get_coord(0)
+    var y = aux.get_coord(1)
+    if (!x || !y || isNaN(x) || isNaN(y))
         aux = new Vector(1,0)
     var u = new Vector(aux.Coord[0], -aux.Coord[1])
     var v = new Vector(-u.Coord[1], u.Coord[0])
@@ -260,7 +264,8 @@ Boid.prototype.visible_objects = function(){
  * @return {Vector}
  */
 Boid.prototype.requested_acceleration = function(){
-    return this.clip(this.brain.desired_acceleration())
+    var result = this.brain.desired_acceleration()
+    return this.clip(result)
 }
 
 /**

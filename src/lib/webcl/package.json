@@ -1,0 +1,9 @@
+{
+    "package": "webcl",
+    "description": "WebCL support",
+    "files": [{
+        "name": "ll_webcl.js",
+        "description": "Automatic kernel loading"
+    }],
+    "provides": []
+}

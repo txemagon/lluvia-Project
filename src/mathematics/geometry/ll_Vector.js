@@ -33,7 +33,8 @@ function Vector() {
     }
 
     for (var i = 0; i < arguments.length; i++)
-        this.Coord.push(arguments[i])
+        if (Object.prototype.toString.call(arguments[i]) !== "[object String]")
+            this.Coord.push(arguments[i])
 
     // arguments is not array, just array-like
     for (var i = 0; i < arguments.length; i++)

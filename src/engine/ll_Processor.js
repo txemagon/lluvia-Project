@@ -14,9 +14,13 @@ Processor.prototype.constructor = Processor;
 function Processor() {
 
     // Variables member
-    this.now = new Date();
-    this.events = new Event();
-    this.threads = new Array();
+    this.now = new Date()
+    this.events = new Event()
+    this.threads = []
+    Object.defineProperty(this, "run_bound", {
+        value: Processor.prototype.run.bind(this),
+        enumerable: false
+    })
 }
 
 
@@ -94,11 +98,9 @@ Processor.prototype.step = function(date) {
  */
 Processor.prototype.run = function(date) {
     this.now = new Date();
-    try {
-        this.step(this.now)
-    } catch (e) {
-    }
-    setTimeout(this.run.bind(this), 20);
+    this.step(this.now)
+
+    setTimeout(this.run_bound, 20)
 }
 
 /**
