@@ -10,7 +10,7 @@ function WebGl(screen, camera) {
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
         })
-        that.context.setClearColor(0xFFFFFF, 1)
+        that.context.setClearColor(0x000000, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
 
@@ -24,7 +24,11 @@ function WebGl(screen, camera) {
             near,
             far))
         that.scene.add(camera)
-        that.camera.position.z = 300
+        that.camera.position.z = 500
+        
+        that.controls = new THREE.OrbitControls( that.cameras[0] );
+        that.controls.addEventListener( 'change', that.render );
+        that.cameras[0].lookAt({x:500, y:200, z:0});
         that.context.setSize(that.screen.width, that.screen.height)
 
 
@@ -53,8 +57,12 @@ function WebGl(screen, camera) {
         initialize()
 }
 
+WebGl.prototype.render = function(n){
+    this.context.render(this.scene, this.camera);
+}
+
 WebGl.available$U = function() {
-    return false
+    
     var webgl = false
     var canvas = document.createElement('canvas')
     try {

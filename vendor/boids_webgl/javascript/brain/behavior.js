@@ -5,14 +5,12 @@
  *
  * @constructor
  *
- * @params {Object} brain
- * @params {Object} body
- * @params {ObjectObject} before_modifier
- * @params {Object} after_modifier
- *
+ * @param {[type]} brain           [description]
+ * @param {[type]} body            [description]
+ * @param {[type]} before_modifier [description]
+ * @param {[type]} after_modifier  [description]
+ * @param {[type]} target          [description]
  */
-
-
 function Behavior( brain, body, before_modifier, after_modifier,target ){
     var that = this
     this.before =  []
@@ -149,7 +147,11 @@ Behavior.new = function(brain, full_name, target) {
  *     // => SeekBehavior
  */
 Behavior.type_of = function(b_name){
-    return eval(b_name.class_name() + "Behavior")
+    try{
+       return eval(b_name.class_name() + "Behavior")
+    } catch(e){
+       return Behavior
+    }
 }
 
 

@@ -4069,7 +4069,7 @@ function WebGl(screen, camera) {
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
         })
-        that.context.setClearColor(0xFFFFFF, 1)
+        that.context.setClearColor(0x000000, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
         var aspect = that.screen.width / that.screen.height
@@ -4082,7 +4082,10 @@ function WebGl(screen, camera) {
             near,
             far))
         that.scene.add(camera)
-        that.camera.position.z = 300
+        that.camera.position.z = 500
+        that.controls = new THREE.OrbitControls( that.cameras[0] );
+        that.controls.addEventListener( 'change', that.render );
+        that.cameras[0].lookAt({x:500, y:200, z:0});
         that.context.setSize(that.screen.width, that.screen.height)
         var sphere = new THREE.Mesh(
             new THREE.SphereGeometry(10  , 16  , 16  ),
@@ -4101,8 +4104,10 @@ function WebGl(screen, camera) {
     if (arguments.length)
         initialize()
 }
+WebGl.prototype.render = function(n){
+    this.context.render(this.scene, this.camera);
+}
 WebGl.available$U = function() {
-    return false
     var webgl = false
     var canvas = document.createElement('canvas')
     try {
@@ -5216,7 +5221,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

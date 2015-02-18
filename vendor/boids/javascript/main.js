@@ -2,7 +2,7 @@ var w = null
 
 function main() {
 
-    w = new World()
+    w = new World(null)
     //  var boid_list = new WorldInterface("boid_list_content")
     //  w.add_port("new_boid", boid_list)
 
