@@ -38,9 +38,54 @@ function World(screen, width, height) {
     this.draw_bound = World.prototype.draw.bind(this)
 
     if (arguments.length)
-        this.screen.push(GraphicDevice.get_best_device_for(screen))
+        this.new_screen(screen)
+    
 
     Device.call(that, null, null)
+}
+
+/**
+ * @method new_screen
+ * Adds a new GraphicDevice to the list of screens.
+ *
+ * ### Example
+ *
+ *     w.new_screen('screener2', CanvasDevice)
+ *
+ * where screener2 is the id of an HTML canvas element. See (@link lib.GraphicDevice GraphicDevice) for further information.
+ * 
+ * @param  {String | HtmlElement} [id]
+ * @param  {Function} [Type=GraphicDevice] If no Type given then GraphicDevice.get_best_device_for is used.
+ */
+World.prototype.new_screen = function(id, Type){
+    var gd
+    if (Type)
+        gd = new Type(id)
+    else
+        gd = GraphicDevice.get_best_device_for(id)
+    this.screen.push(gd)
+}
+
+
+/**
+ * @method new_canvas_screen
+ * Adds a new CanvasDevice to the list of screens.
+ * 
+ * @param  {String | HtmlElement} [id]
+ */
+World.prototype.new_canvas_screen = function(id){
+    this.new_screen(id, CanvasDevice)
+}
+
+
+/**
+ * @method new_webgl_screen
+ * Adds a new WebGlDevice to the list of screens.
+ * 
+ * @param  {String | HtmlElement} [id]
+ */
+World.prototype.new_webgl_screen = function(id){
+    this.new_screen(id, WebGlDevice)
 }
 
 /**
@@ -208,11 +253,24 @@ World.prototype.start = function() {
  */
 World.prototype.draw = function() {
     var that = this
-    var ctx = this.screen[0].context
-    ctx.clearRect(0, 0, 1000, 400)
-    this.get_boids().each(function(el) {
-        el.draw(ctx)
-    })
+    for(var i = 0; i < this.screen.length; i++){
+        var ctx = this.screen[i].context
+
+        if(ctx.constructor != THREE.WebGLRenderer){
+           ctx.clearRect(0, 0, 1000, 400)
+           this.get_boids().each(function(el) {
+            el.draw(ctx)
+           })
+        }
+       else{
+            this.get_boids().each(function(el) {
+               el.draw(ctx, that.screen[i].scene)
+            })
+            this.screen[i].render()
+       }
+    }
+
+    
     requestAnimationFrame(this.draw_bound)
 }
 
