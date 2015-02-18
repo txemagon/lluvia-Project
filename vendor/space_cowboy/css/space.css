@@ -1,23 +1,19 @@
 /*Planetas*/
-
 canvas {
 	position: relative;
 	background-color: #000000;
 	z-index: -1;
 	border: 1px solid black;
+	left: 0px;
+	top: -600px;
 }
 
 #map {
-	position: absolute;
-	z-index: 1;
-	top: 0px;
-	left: 500px;
-	width: 1000px;
+	position: relative;
 	margin: 0 auto 0 auto;
 	font-family: arial;
 	color: white;
 	text-align: center;
-	visibility: hidden;
 }
 
 #title_planets {
@@ -26,7 +22,7 @@ canvas {
 
 #ventana {
 	overflow: hidden;
-	position: absolute;
+	position: relative;
 	width: 1000px;
 	height: 600px;
 }
@@ -45,7 +41,7 @@ canvas {
 	width: 125px;
 	height: 110px;
 	left: 15px;
-	top: -160px;
+	top: -750px;
 }
 
 #planet0 {
@@ -220,24 +216,24 @@ canvas {
 
 #boton_arriba {
 	position: relative;
-	bottom: 720px;
-	left: 500px;
+	top: -1400px;
+	left: 220px;
 }
 
 #boton_derecha {
 	position: relative;
-	bottom: 500px;
-	left: 965px;
+	top: -1100px;
+	left: 800px;
 }
 
 #boton_abajo {
 	position: relative;
-	bottom: 200px;
-	left: 500px;
+	top: -820px;
+	left: 220px;
 }
 
 #boton_izquierda {
 	position: relative;
-	bottom: 530px;
-	left: 0px;
+	top: -1200px;
+	left: -400px;
 }

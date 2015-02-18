@@ -6,9 +6,9 @@ function main() {
     skill_menu = new PointDealer(
         "skill", {
             points: 5,
-            speed: 1,
-            damage: 3,
-            resistance: 2
+            Damage: 0,
+            Resistance: 0,
+            Speed: 0
         })
     game = new Game()
     skill_menu.add_port("chosen_finished", game)

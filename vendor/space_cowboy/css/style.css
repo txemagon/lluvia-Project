@@ -14,7 +14,11 @@ h1 {
 h2 {
 	color: white;
 	text-align: center;
-	font-size: 20px;
+	font-size: 30px;
+}
+
+h3, p {
+	display: inline-block;
 }
 
 button {

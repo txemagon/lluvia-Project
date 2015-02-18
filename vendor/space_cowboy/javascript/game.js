@@ -10,3 +10,4 @@ Game.prototype.attend_chosen_finished = function(date, mssg) {
     alert(mssg.event.chosen_finished.data.toSource())
     mssg.current++
 }
+
