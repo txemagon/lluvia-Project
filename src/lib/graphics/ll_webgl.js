@@ -1,7 +1,7 @@
 WebGl.prototype = new GraphicDevice
 WebGl.prototype.constructor = WebGl
 
-function WebGl(screen, camera) {
+function WebGl(screen, drawable_obj, incarnation, camera) {
     var that = this
 
     function initialize() {
@@ -13,6 +13,21 @@ function WebGl(screen, camera) {
         that.context.setClearColor(0x000000, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
+
+        that.drawable = []
+        //that.merge_drawable_obj(drawable_obj)
+        // that.incarnation = incarnation || new Incarnation(function(scene, boid){
+        //     var sphere = new THREE.Mesh(
+        //        new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
+        //        new THREE.MeshLambertMaterial({
+        //           color: 0xFFFF00
+        //        })
+        //     )
+        //     sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+        //     scene.add(sphere)
+        //     WebGl.merge_3d_object(obj, that.drawable, sphere)
+            
+        // })
 
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
@@ -61,6 +76,11 @@ WebGl.prototype.render = function(n){
     this.context.render(this.scene, this.camera);
 }
 
+WebGl.prototype.merge_drawable_obj = function(drawable_obj){
+    for(var i = 0; i<drawable_obj.length; i++)
+      this.drawable[i] = {obj: drawable_obj, three_obj:""}
+}
+
 WebGl.available$U = function() {
     
     var webgl = false
@@ -77,4 +97,12 @@ WebGl.available$U = function() {
         }
     }
     return webgl
+}
+
+WebGl.merge_3d_object = function(obj, drawable, three_obj){
+  for(var i in drawable)
+     if(obj == drawable[i].obj){
+        drawable[i].three_obj = three_obj
+        break;
+    }
 }

@@ -4062,7 +4062,7 @@ GraphicDevice.get_best_device_for = function(screen) {
 }
 WebGl.prototype = new GraphicDevice
 WebGl.prototype.constructor = WebGl
-function WebGl(screen, camera) {
+function WebGl(screen, drawable_obj, incarnation, camera) {
     var that = this
     function initialize() {
         GraphicDevice.call(that, screen)
@@ -4072,6 +4072,7 @@ function WebGl(screen, camera) {
         that.context.setClearColor(0x000000, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
+        that.drawable = []
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -4107,6 +4108,10 @@ function WebGl(screen, camera) {
 WebGl.prototype.render = function(n){
     this.context.render(this.scene, this.camera);
 }
+WebGl.prototype.merge_drawable_obj = function(drawable_obj){
+    for(var i = 0; i<drawable_obj.length; i++)
+      this.drawable[i] = {obj: drawable_obj, three_obj:""}
+}
 WebGl.available$U = function() {
     var webgl = false
     var canvas = document.createElement('canvas')
@@ -4122,6 +4127,13 @@ WebGl.available$U = function() {
         }
     }
     return webgl
+}
+WebGl.merge_3d_object = function(obj, drawable, three_obj){
+  for(var i in drawable)
+     if(obj == drawable[i].obj){
+        drawable[i].three_obj = three_obj
+        break;
+    }
 }
 Angle.prototype.constructor = Angle
 Angle.mode = "rad"  
