@@ -56,13 +56,14 @@ function World(screen, width, height) {
  * 
  * @param  {String | HtmlElement} [id]
  * @param  {Function} [Type=GraphicDevice] If no Type given then GraphicDevice.get_best_device_for is used.
+ * @param  {Array} [incarnation] Contains two incarnations, one for create 3D objects, other to update the 3D objects.
  */
-World.prototype.new_screen = function(id, Type, incarnation, drawable){
+World.prototype.new_screen = function(id, Type, incarnation){
     var gd
     if (Type == CanvasDevice || Type == WebGl)
-        gd = new Type(id, incarnation, drawable)
+        gd = new Type(id, this.get_boids(), incarnation)
     else
-        gd = GraphicDevice.get_best_device_for(id, incarnation, drawable)
+        gd = GraphicDevice.get_best_device_for(id, this.get_boids(), incarnation)
     this.screen.push(gd)
 }
 
@@ -73,8 +74,8 @@ World.prototype.new_screen = function(id, Type, incarnation, drawable){
  * 
  * @param  {String | HtmlElement} [id]
  */
-World.prototype.new_canvas_screen = function(id, incarnation, drawable){
-    this.new_screen(id, CanvasDevice, incarnation, drawable)
+World.prototype.new_canvas_screen = function(id, incarnation){
+    this.new_screen(id, CanvasDevice, incarnation)
 }
 
 
@@ -84,8 +85,8 @@ World.prototype.new_canvas_screen = function(id, incarnation, drawable){
  * 
  * @param  {String | HtmlElement} [id]
  */
-World.prototype.new_webgl_screen = function(id, incarnation, drawable){
-    this.new_screen(id, WebGlDevice, incarnation, drawable)
+World.prototype.new_webgl_screen = function(id, incarnation){
+    this.new_screen(id, WebGl, incarnation)
 }
 
 /**

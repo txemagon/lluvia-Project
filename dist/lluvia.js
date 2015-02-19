@@ -3491,7 +3491,6 @@ Device.StateUsher.prototype.add = function(driver_name, key, value){
         }
 		level[name_to_add].run = this.i[driver_name]
 	}
-    this.i[driver_name].owner = this.i
 }
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher
@@ -4056,9 +4055,9 @@ function GraphicDevice(screen) {
     GraphicDevice.screen = GraphicDevice.screen || []
     GraphicDevice.screen.push(this)
 }
-GraphicDevice.get_best_device_for = function(screen) {
+GraphicDevice.get_best_device_for = function(screen, drawable_obj) {
     if (WebGl.available$U())
-        return new WebGl(screen)
+        return new WebGl(screen, drawable_obj)
     return new CanvasDevice(screen)
 }
 WebGl.prototype = new GraphicDevice
@@ -4074,6 +4073,20 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.scene = new THREE.Scene()
         that.cameras = []
         that.drawable = []
+        that.merge_drawable_obj(drawable_obj)
+        that.incarnation = incarnation || new Incarnation(function(scene, boid, drawable){
+            var sphere = new THREE.Mesh(
+               new THREE.SphereGeometry(10  , 16  , 16  ),
+               new THREE.MeshLambertMaterial({
+                  color: 0xFFFF00
+               })
+            )
+            sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+            scene.add(sphere)
+            WebGl.merge_3d_object(obj, drawable, sphere)
+        })
+        for(var i = 0; i<that.drawable.length; i++)
+            incarnation.default(that.scene, that.drawable[i], that.drawable)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -4109,7 +4122,8 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
 WebGl.prototype.render = function(n){
     this.context.render(this.scene, this.camera);
 }
-WebGl.prototype.merge_drawable_obj = function(drawable_obj){
+WebGl.prototype.merge_drawable_obj = function(drawable){
+    var drawable_obj = drawable || []
     for(var i = 0; i<drawable_obj.length; i++)
       this.drawable[i] = {obj: drawable_obj, three_obj:""}
 }
@@ -5234,7 +5248,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/pc01/Escritorio/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

@@ -15,20 +15,21 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.cameras = []
 
         that.drawable = []
-        //that.merge_drawable_obj(drawable_obj)
-        // that.incarnation = incarnation || new Incarnation(function(scene, boid){
-        //     var sphere = new THREE.Mesh(
-        //        new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
-        //        new THREE.MeshLambertMaterial({
-        //           color: 0xFFFF00
-        //        })
-        //     )
-        //     sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
-        //     scene.add(sphere)
-        //     WebGl.merge_3d_object(obj, that.drawable, sphere)
+        that.merge_drawable_obj(drawable_obj)
+        that.incarnation = incarnation || new Incarnation(function(scene, boid, drawable){
+            var sphere = new THREE.Mesh(
+               new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
+               new THREE.MeshLambertMaterial({
+                  color: 0xFFFF00
+               })
+            )
+            sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+            scene.add(sphere)
+            WebGl.merge_3d_object(obj, drawable, sphere)
             
-        // })
-
+        })
+        for(var i = 0; i<that.drawable.length; i++)
+            incarnation.default(that.scene, that.drawable[i], that.drawable)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -76,7 +77,8 @@ WebGl.prototype.render = function(n){
     this.context.render(this.scene, this.camera);
 }
 
-WebGl.prototype.merge_drawable_obj = function(drawable_obj){
+WebGl.prototype.merge_drawable_obj = function(drawable){
+    var drawable_obj = drawable || []
     for(var i = 0; i<drawable_obj.length; i++)
       this.drawable[i] = {obj: drawable_obj, three_obj:""}
 }
