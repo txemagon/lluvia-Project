@@ -12,6 +12,11 @@ Game.prototype.attend_chosen_finished = function(date, mssg) {
     mssg.current++
 }
 
+Game.prototype.attend_go_to_planet = function(date, mssg) {
+	alert(mssg.event.go_to_planet.data.toSource())
+	mssg.current++
+}
+
 
 Game.prototype.running_choosing = function(){
     // Despite this seems to be inside Device 
