@@ -50,6 +50,7 @@ Incarnation.prototype.delete_list_element = function(name){
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
+var end_object  = {Object:"", Number:"", String:"", Array:""}
 Incarnation.prototype.search_list_element = function(obj){
 	if(typeof(obj) == "string"){
 		if(obj in this.list)
@@ -58,16 +59,22 @@ Incarnation.prototype.search_list_element = function(obj){
 			return "default"
 	}
 	var constructor = obj.__proto__
+
 	
-    if(constructor.constructor.name in this.list && (constructor.constructor.name == "Object" || constructor.constructor.name == "Number" ))
+    if(constructor.constructor.name in this.list)
 		return constructor.constructor.name
 
-	if( !(constructor.constructor.name in this.list) && !(constructor.constructor.name == "Object" || constructor.constructor.name == "Number" ))
+	if( !(constructor.constructor.name in this.list) && !(constructor.constructor.name in end_object))
 		  return this.search_list_element(constructor)
     else
     	return "default"
 }
 
+/**
+ * [get_list_element description]
+ * @param  {[type]} obj [description]
+ * @return {[type]}     [description]
+ */
 Incarnation.prototype.get_list_element = function(obj){
 	return this.list[this.search_list_element(obj)]
 }
