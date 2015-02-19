@@ -17,6 +17,8 @@ function Space(){
    	planets_map.style.top = "-200px"
    	planets_map.style.left = "-500px"  
 
+   	this.view = document.getElementById("map")
+
    	Device.call(this, null)
 /*
    	var solicitors = {
@@ -26,11 +28,8 @@ function Space(){
    		planet: [ 
    			function() {
    				return "You are on a planet"
-   			}, {
-   				go : function() {
-   					return "You come in a planet"
-   				},
-   				combat : function() {
+   			},   				
+   			combat : function() {
    					return "Ready to fight"
    				}
    			}

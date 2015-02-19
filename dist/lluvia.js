@@ -3491,6 +3491,7 @@ Device.StateUsher.prototype.add = function(driver_name, key, value){
         }
 		level[name_to_add].run = this.i[driver_name]
 	}
+    this.i[driver_name].owner = this.i
 }
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher
@@ -5221,7 +5222,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/pc01/Escritorio/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
