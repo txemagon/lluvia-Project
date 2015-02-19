@@ -3463,34 +3463,38 @@ Device.prototype.method_missing = function(method, obj, params) {
     params = params || []
     throw (new MethodMissingError(method + " missing in " + obj + "::" + this.constructor.name + ". Params: " + params.join(', ')))
 }
-Device.StateUsher = function (I){
-   this.i = I
-   this.state = I.state
+Device.StateUsher = function(I) {
+    this.i = I
+    this.state = I.state
 }
-Device.StateUsher.prototype.add = function(driver_name, key, value){
-	var substate = driver_name.split("_").slice(1)
-	var regime = null
-	if (/_up$|_steady$|_down$/.test(driver_name))
-		regime = substate.pop()
+Device.StateUsher.prototype.add = function(driver_name, key, value) {
+    var substate = driver_name.split("_").slice(1)
+    var regime = null
+    if (/_up$|_steady$|_down$/.test(driver_name))
+        regime = substate.pop()
     var name_to_add = substate.pop()
     var host = key
     if (substate.length)
         host += "." + substate.join(".")
-    this.state.add$B( name_to_add, host)
+    this.state.add$B(name_to_add, host)
     var level = this.state.get(host)
-    if (regime){
-    	if (name_to_add && name_to_add != "")
-    		level = level[name_to_add]
-    	if (!level.run)
-    		level.run = function(){;}
-	   level.run[regime] = this.i[driver_name]
-    } else {
-        if (!level[name_to_add]){
-        	level[name_to_add] = new State(name)
-        	level[name_to_add].owner = this.i
+    if (regime) {
+        if (name_to_add && name_to_add != "") {
+            if (!level[name_to_add])
+                level[name_to_add] = new State(name_to_add)
         }
-		level[name_to_add].run = this.i[driver_name]
-	}
+        if (!level[name_to_add].run)
+            level[name_to_add].run = function() {;
+            }
+        level[name_to_add].run[regime] = this.i[driver_name]
+    } else {
+        if (!level[name_to_add]) {
+            level[name_to_add] = new State(name_to_add)
+            level[name_to_add].owner = this.i
+        }
+        level[name_to_add].run = this.i[driver_name]
+    }
+    level[name_to_add].owner = this.i
 }
 EventDispatcher.prototype = new ThreadAutomata
 EventDispatcher.prototype.constructor = EventDispatcher
@@ -5248,7 +5252,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
