@@ -116,3 +116,7 @@ PointDealer.prototype.appear = function() {
 PointDealer.prototype.hide = function() {
     this.view.style.display = "none"
 }
+
+PointDealer.prototype.attend_show_skills = function(date, mssg){
+    this.appear()
+}

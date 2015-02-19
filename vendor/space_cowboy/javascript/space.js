@@ -17,34 +17,16 @@ function Space(){
    	planets_map.style.top = "-200px"
    	planets_map.style.left = "-500px"  
 
-   	Device.call(this, null)
-/*
-   	var solicitors = {
-   		space: function() {
-   			return "You are flying in space"
-   		},
-   		planet: [ 
-   			function() {
-   				return "You are on a planet"
-   			}, {
-   				go : function() {
-   					return "You come in a planet"
-   				},
-   				combat : function() {
-   					return "Ready to fight"
-   				}
-   			}
-   		]
-   	}
-   	var player = new Automata(["*space", "planet"])
-*/
+   	this.view = document.getElementById("map")
 
+   	Device.call(this, null)
 }
 
 //Funcion que se ejecutara al pinchar en cada planeta
 function goToPlanet() {
     this.new_gate("planet0", Gate, {
    		do_onclick: function(event, element) {
+   			this.device.fire_event(this.device.new_message("sync", "go_to_planet", null))
    			this.device.hide()
    		}
    	})

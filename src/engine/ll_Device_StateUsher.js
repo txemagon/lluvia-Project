@@ -38,5 +38,6 @@ Device.StateUsher.prototype.add = function(driver_name, key, value){
 
 		level[name_to_add].run = this.i[driver_name]
 	}
+    
 
 }
