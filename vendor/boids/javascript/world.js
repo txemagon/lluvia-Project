@@ -269,7 +269,6 @@ World.prototype.draw = function() {
             this.screen[i].render()
        }
     }
-
     
     requestAnimationFrame(this.draw_bound)
 }
