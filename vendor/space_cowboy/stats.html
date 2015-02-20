@@ -6,10 +6,11 @@
     <script type="text/javascript" src="../../dist/lluvia.js" ></script>
     <script type="text/javascript" src="javascript/dependencies.js" ></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/stats.css">
-    <link rel="stylesheet" type="text/css" href="css/general.css">
-    <link rel="stylesheet" type="text/css" href="css/space.css">
     <link rel="stylesheet" type="text/css" href="css/application.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/stats.css">
+    <link rel="stylesheet" type="text/css" href="css/space.css">
+
 </head>
 <body onload="bring_lluvia();">
     <div id="game">
@@ -84,9 +85,11 @@
         <!-- Combate -->
         <div id="combat">
             <h1>Space Attack</h1>
-            <br>
-            <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
-            <br>
+            <div id="title_combat">
+                <br>
+                <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
+                <br>
+            </div>
             <!-- <img id="ship" src="images/ships/player.png"> -->
             <canvas id="canvas" width="1000" height="600"></canvas>
             <br>

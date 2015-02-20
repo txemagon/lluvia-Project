@@ -1,16 +1,11 @@
 /*Planetas*/
 
-
 #map {
 	position: relative;
 	margin: 0 auto 0 auto;
 	font-family: arial;
 	color: white;
 	text-align: center;
-}
-
-#title_planets {
-	text-align: center;	
 }
 
 #ventana {
@@ -147,7 +142,7 @@
 	position: relative;
 	width: 170px;
 	height: 120px;
-	left: 150px;
+	left: -300px;
 	bottom: 100px;
 }
 

@@ -9,10 +9,6 @@
 	text-align: center;
 }
 
-#title_stats {
-	text-align: center;	
-}
-
 .Fila {
 	width: 1000px;
 	height: 140px;
@@ -30,7 +26,6 @@
 	margin-left: 30px;
 	margin-right: 30px;
 }
-
 
 #button_play {
 	width: 200px;

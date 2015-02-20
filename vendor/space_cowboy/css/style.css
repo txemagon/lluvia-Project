@@ -6,6 +6,7 @@ body {
 }
 
 h1 {
+	position: relative;
 	color: white;
 	text-align: center;
 	font-size: 80px;
@@ -19,6 +20,7 @@ h2 {
 
 h3, p {
 	display: inline-block;
+	text-align: center;
 }
 
 button {
