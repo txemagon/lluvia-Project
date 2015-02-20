@@ -2285,6 +2285,10 @@ Hash.prototype.values = function() {
 }
 Hash.prototype.stop_enumerating("values")
 Hash.prototype.self_values = function() {
+    for (var i in this)
+        Object.defineProperty(this, i, {
+            enumerable: false
+        })
     var that = this
     return this.self_keys().collect(function(i) {
         return that[i]
@@ -4078,19 +4082,25 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.cameras = []
         that.drawable = []
         that.merge_drawable_obj(drawable_obj)
-        that.incarnation = incarnation || new Incarnation(function(scene, boid, drawable){
+        that.incarnation = []
+        that.incarnation[0] = incarnation || new Incarnation(function(scene, boid, drawable){
+            var incarnation = new Incarnation(function(){return 0xFFFF00})
+            incarnation.add_new_list_element("red", function(){return 0x00FF00})
+            incarnation.add_new_list_element("blue", function(){return 0x00FFFF})
             var sphere = new THREE.Mesh(
                new THREE.SphereGeometry(10  , 16  , 16  ),
                new THREE.MeshLambertMaterial({
-                  color: 0xFFFF00
+                  color: incarnation.list[incarnation.search_list_element(boid.colour)]()
                })
             )
             sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
             scene.add(sphere)
-            WebGl.merge_3d_object(obj, drawable, sphere)
+            WebGl.merge_3d_object(boid, drawable, sphere)
         })
-        for(var i = 0; i<that.drawable.length; i++)
-            incarnation.default(that.scene, that.drawable[i], that.drawable)
+        that.create_3d_object()
+        that.incarnation[1] = incarnation || new Incarnation(function(boid, three_obj){
+               three_obj.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+            })
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -4120,16 +4130,32 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.scene.add(directionalLight);
         that.context.render(that.scene, that.camera);
     }
-    if (arguments.length)
+    if (arguments.length) 
         initialize()
 }
 WebGl.prototype.render = function(n){
+    this.update()
     this.context.render(this.scene, this.camera);
+}
+WebGl.prototype.create_3d_object = function(){
+    for(var i = 0; i<this.drawable.length; i++)
+        this.incarnation[0].list.default(this.scene, this.drawable[i].obj, this.drawable)
+}
+WebGl.prototype.update = function(){
+    for(var i = 0; i<this.drawable.length; i++)
+        this.incarnation[1].list.default(this.drawable[i].obj, this.drawable[i].three_obj)
 }
 WebGl.prototype.merge_drawable_obj = function(drawable){
     var drawable_obj = drawable || []
     for(var i = 0; i<drawable_obj.length; i++)
-      this.drawable[i] = {obj: drawable_obj, three_obj:""}
+      this.drawable[i] = {obj: drawable_obj[i], three_obj:""}
+}
+WebGl.merge_3d_object = function(obj, drawable, three_obj){
+  for(var i in drawable)
+     if(obj == drawable[i].obj){
+        drawable[i].three_obj = three_obj
+        break;
+    }
 }
 WebGl.available$U = function() {
     var webgl = false
@@ -4146,13 +4172,6 @@ WebGl.available$U = function() {
         }
     }
     return webgl
-}
-WebGl.merge_3d_object = function(obj, drawable, three_obj){
-  for(var i in drawable)
-     if(obj == drawable[i].obj){
-        drawable[i].three_obj = three_obj
-        break;
-    }
 }
 Angle.prototype.constructor = Angle
 Angle.mode = "rad"  

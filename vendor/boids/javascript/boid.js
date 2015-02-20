@@ -72,19 +72,6 @@ function Boid(config_object, block){
             initialize()
 }
 
-Boid.prototype.create_3d_objects = function(scene, cameras){
-    var sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
-            new THREE.MeshLambertMaterial({
-                color: 0xFFFF00
-            })
-        )
-
-        scene.add(sphere);
-        world_objects.push(sphere)
-        this.three_d_objects.push(scene.children[(scene.children.length-1)].children.id)
-}
-
 /**
  * @method  position
  *

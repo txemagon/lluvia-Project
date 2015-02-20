@@ -39,6 +39,10 @@ Hash.prototype.stop_enumerating("values")
  * @return {Array} List of non inherited values.
  */
 Hash.prototype.self_values = function() {
+    for (var i in this)
+        Object.defineProperty(this, i, {
+            enumerable: false
+        })
     var that = this
     return this.self_keys().collect(function(i) {
         return that[i]

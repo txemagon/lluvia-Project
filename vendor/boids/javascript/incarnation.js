@@ -5,7 +5,7 @@
  * @param {[type]} configuration  [description]
  */
 function Incarnation(default_action){
-	this.list = {}
+	this.list = {}  
 	this.list["default"] = default_action
 }
 
@@ -15,10 +15,9 @@ function Incarnation(default_action){
  * @param {[type]} action [description]
  */
 Incarnation.prototype.add_new_list_element = function(name, action){
-	if(name in this.list){
+	if(name in this.list)
 		throw("This list object already exists")
-		return;
-	}
+		
 	this.list[name] = action
 }
 
@@ -33,9 +32,12 @@ Incarnation.prototype.edit_list_element = function(name, action){
 		throw("This list object does not exist")
 	this.list[name] = action
 }
+//Hash.prototype.stop_enumerating("values")
 
 /**
- * [delete_list_element description]
+ * @method delete_list_element description
+ * Desctiption
+ * 
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
@@ -50,7 +52,7 @@ Incarnation.prototype.delete_list_element = function(name){
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
-var end_object  = {Object:"", Number:"", String:"", Array:""}
+Incarnation.end_object  = {Object:"", Number:"", String:"", Array:""}
 Incarnation.prototype.search_list_element = function(obj){
 	if(typeof(obj) == "string"){
 		if(obj in this.list)
@@ -64,7 +66,7 @@ Incarnation.prototype.search_list_element = function(obj){
     if(constructor.constructor.name in this.list)
 		return constructor.constructor.name
 
-	if( !(constructor.constructor.name in this.list) && !(constructor.constructor.name in end_object))
+	if( !(constructor.constructor.name in this.list) && !(constructor.constructor.name in Incarnation.end_object))
 		  return this.search_list_element(constructor)
     else
     	return "default"

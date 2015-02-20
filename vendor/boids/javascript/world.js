@@ -235,6 +235,10 @@ World.prototype.start = function() {
     this.get_boids().each(function(el) {
         el.start(that.start_time)
     })
+
+    this.screen[0].merge_drawable_obj(this.get_boids())
+    this.screen[0].create_3d_object()
+
     this.draw()
 }
 

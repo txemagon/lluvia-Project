@@ -11,32 +11,32 @@ function main() {
     //  boid_list.add_port("focus_boid", boid_editor)
 
     /* Example 1 of Boid creation */
-    var fixed_target = w.new_boid({
-        name: "fixed",
-        colour: "green",
-        geo_data: {
-            position: new Vector(220, 230),
-            velocity: new Vector(0, 0),
-            acceleration: new Vector(0, 0)
-        }
-    })
+    // var fixed_target = w.new_boid({
+    //     name: "fixed",
+    //     colour: "green",
+    //     geo_data: {
+    //         position: new Vector(220, 230),
+    //         velocity: new Vector(0, 0),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    // })
 
 
 
-    w.new_boid({
-        name: "seeker",
-        colour: "yellow"
-    }, function(config) {
-        /* Here you can interact with the outer scope */
-        /* You can also access the already created brain */
-        config.geo_data = {
-            position: new Vector(100, 100),
-            velocity: new Vector(10, 10),
-            acceleration: new Vector(0, 0)
-        }
-        config.brain.activate("seek>arrival", fixed_target)
-        return config
-    })
+    // w.new_boid({
+    //     name: "seeker",
+    //     colour: "yellow"
+    // }, function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     /* You can also access the already created brain */
+    //     config.geo_data = {
+    //         position: new Vector(100, 100),
+    //         velocity: new Vector(10, 10),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    //     config.brain.activate("seek>arrival", fixed_target)
+    //     return config
+    // })
 
 
     /* Example: wander behavior */

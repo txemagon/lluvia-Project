@@ -16,19 +16,19 @@ Boid.prototype.draw = function(ctx, scene, cameras){
 }
 
 Boid.prototype.draw_webgl = function(scene, cameras) {
-    if(this.three_d_objects.length < 1){
-        var sphere = new THREE.Mesh(
-                new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
-                new THREE.MeshLambertMaterial({
-                    color: 0xFF0000
-                })
-            )
-        sphere.position.set(this.geo_data.position.get_coord(0), this.geo_data.position.get_coord(1), -7)
-        scene.add(sphere);
-        this.three_d_objects.push(scene.children[(scene.children.length-1)])
-    }
-    else
-        this.three_d_objects[0].position.set(this.geo_data.position.get_coord(0), this.geo_data.position.get_coord(1), -7)
+    // if(this.three_d_objects.length < 1){
+    //     var sphere = new THREE.Mesh(
+    //             new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
+    //             new THREE.MeshLambertMaterial({
+    //                 color: 0xFF0000
+    //             })
+    //         )
+    //     sphere.position.set(this.geo_data.position.get_coord(0), this.geo_data.position.get_coord(1), -7)
+    //     scene.add(sphere);
+    //     this.three_d_objects.push(scene.children[(scene.children.length-1)])
+    // }
+    // else
+    //     this.three_d_objects[0].position.set(this.geo_data.position.get_coord(0), this.geo_data.position.get_coord(1), -7)
 
 };
 
