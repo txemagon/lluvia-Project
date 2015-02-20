@@ -110,13 +110,13 @@ PointDealer.prototype.render = function(target) {
 }
 
 PointDealer.prototype.appear = function() {
-    this.view.style.display = "visible"
+    this.view.style.visibility = "visible"
 }
 
 PointDealer.prototype.hide = function() {
-    this.view.style.display = "none"
+    this.view.style.visibility = "hidden"
 }
 
-PointDealer.prototype.attend_show_skills = function(date, mssg){
+PointDealer.prototype.attend_show_skills = function(date, mssg) {
     this.appear()
 }

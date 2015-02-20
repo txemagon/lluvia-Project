@@ -14,8 +14,8 @@ function GraphicDevice(screen) {
     GraphicDevice.screen.push(this)
 }
 
-GraphicDevice.get_best_device_for = function(screen) {
+GraphicDevice.get_best_device_for = function(screen, drawable_obj) {
     if (WebGl.available$U())
-        return new WebGl(screen)
+        return new WebGl(screen, drawable_obj)
     return new CanvasDevice(screen)
 }
