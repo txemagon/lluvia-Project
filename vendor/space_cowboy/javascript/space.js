@@ -20,9 +20,7 @@ function Space(){
    			this.device.hide()
    		}
    	})
-
 }
-
 
 Space.prototype.appear = function() {
 	this.view.style.display = "visible"
@@ -30,6 +28,10 @@ Space.prototype.appear = function() {
 
 Space.prototype.hide = function() {
 	this.view.style.display = "none"
+}
+
+Space.prototype.attend_show_space = function(date, mssg) {
+	this.appear()
 }
 
 //Funciones de movimiento del mapa

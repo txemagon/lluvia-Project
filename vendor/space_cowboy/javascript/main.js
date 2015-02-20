@@ -19,5 +19,4 @@ function main() {
     planet.add_port("go_to_planet", game)
 
     game.switch("running.choosing")
-
 }

@@ -81,6 +81,7 @@ function PointDealer(view_name, interface) {
         do_onclick: function(event, element) {
             this.device.fire_event(this.device.new_message("sync", "chosen_finished", interface))
             this.device.hide()
+            game.switch("running.choosing")
         }
     })
 
@@ -119,4 +120,8 @@ PointDealer.prototype.hide = function() {
 
 PointDealer.prototype.attend_show_skills = function(date, mssg) {
     this.appear()
+}
+
+PointDealer.prototype.attend_hide_skills = function(date, mssg) {
+    this.hide()
 }
