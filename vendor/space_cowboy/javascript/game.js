@@ -22,6 +22,6 @@ Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
 }
 
-Game.prototype.running_choosing_down = function() {
-	this.fire_event(this.new_message("sync", "hide_skills", "show_space"))
+Game.prototype.running_choosing_planet = function() {
+	this.fire_event(this.new_message("sync", "show_space"))
 }

@@ -14,9 +14,14 @@ function main() {
     game = new Game()
     planet = new Space()
 
-    game.add_port("show_skills", skill_menu)
+    //Methods
     skill_menu.add_port("chosen_finished", game)
     planet.add_port("go_to_planet", game)
 
-    game.switch("running.choosing")
+    //States
+    game.add_port("show_skills", skill_menu)
+    game.add_port("show_space", game)
+
+    game.switch("running.choosing", "running.choosing.planet")
+
 }

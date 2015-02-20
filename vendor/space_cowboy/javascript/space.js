@@ -23,11 +23,11 @@ function Space(){
 }
 
 Space.prototype.appear = function() {
-	this.view.style.display = "visible"
+	this.view.style.visibility = "visible"
 }
 
 Space.prototype.hide = function() {
-	this.view.style.display = "none"
+	this.view.style.visibility = "hidden"
 }
 
 Space.prototype.attend_show_space = function(date, mssg) {
