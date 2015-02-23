@@ -4077,30 +4077,36 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
         })
-        that.context.setClearColor(0x000000, 1)
+        that.context.setClearColor(0xFFFFFF, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
         that.drawable = []
         that.merge_drawable_obj(drawable_obj)
-        that.incarnation = []
-        that.incarnation[0] = incarnation || new Incarnation(function(scene, boid, drawable){
-            var incarnation = new Incarnation(function(){return 0xFFFF00})
-            incarnation.add_new_list_element("red", function(){return 0x00FF00})
-            incarnation.add_new_list_element("blue", function(){return 0x00FFFF})
+        that.incarnation
+        that.incarnation = incarnation || new Incarnation(function(scene, boid, drawable){
             var sphere = new THREE.Mesh(
                new THREE.SphereGeometry(10  , 16  , 16  ),
                new THREE.MeshLambertMaterial({
-                  color: incarnation.list[incarnation.search_list_element(boid.colour)]()
+                  color: boid.colour
                })
             )
             sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+            sphere.update = function(boid){
+                this.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+            }
             scene.add(sphere)
             WebGl.merge_3d_object(boid, drawable, sphere)
+            var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshNormalMaterial());
+            cylinder.overdraw = true;
+            cylinder.rotation.z = 90* Math.PI / 180;
+            cylinder.update = function(boid){
+               this.position.set(boid.geo_data.position.get_coord(0)+10, boid.geo_data.position.get_coord(1), -7)
+               this.rotation.x = boid.heading().Coord[0]
+               this.rotation.y = boid.heading().Coord[1]
+            }
+            scene.add(cylinder);
+            WebGl.merge_3d_object(boid, drawable, cylinder)
         })
-        that.create_3d_object()
-        that.incarnation[1] = incarnation || new Incarnation(function(boid, three_obj){
-               three_obj.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
-            })
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -4133,27 +4139,29 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     if (arguments.length) 
         initialize()
 }
+WebGl.prototype.add_drawable_obj = function(drawable_obj){
+    this.drawable.push({obj: drawable_obj, three_obj:[]})
+    this.create_3d_object(this.drawable[this.drawable.length-1].obj)
+}
 WebGl.prototype.render = function(n){
     this.update()
     this.context.render(this.scene, this.camera);
 }
-WebGl.prototype.create_3d_object = function(){
-    for(var i = 0; i<this.drawable.length; i++)
-        this.incarnation[0].list.default(this.scene, this.drawable[i].obj, this.drawable)
+WebGl.prototype.create_3d_object = function(drawable_obj){
+    this.incarnation.list[this.incarnation.search_list_element(drawable_obj)](this.scene, drawable_obj, this.drawable)
 }
 WebGl.prototype.update = function(){
-    for(var i = 0; i<this.drawable.length; i++)
-        this.incarnation[1].list.default(this.drawable[i].obj, this.drawable[i].three_obj)
+    for(var i = 0; i < this.drawable.length; i++)
+        for(var j = 0; j < this.drawable[i].three_obj.length; j++)
+           this.drawable[i].three_obj[j].update(this.drawable[i].obj)
 }
 WebGl.prototype.merge_drawable_obj = function(drawable){
     var drawable_obj = drawable || []
-    for(var i = 0; i<drawable_obj.length; i++)
-      this.drawable[i] = {obj: drawable_obj[i], three_obj:""}
 }
 WebGl.merge_3d_object = function(obj, drawable, three_obj){
   for(var i in drawable)
      if(obj == drawable[i].obj){
-        drawable[i].three_obj = three_obj
+        drawable[i].three_obj.push(three_obj)
         break;
     }
 }
@@ -5271,7 +5279,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

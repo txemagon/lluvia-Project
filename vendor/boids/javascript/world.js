@@ -60,10 +60,11 @@ function World(screen, width, height) {
  */
 World.prototype.new_screen = function(id, Type, incarnation){
     var gd
+    var boids = this.get_boids()
     if (Type == CanvasDevice || Type == WebGl)
-        gd = new Type(id, this.get_boids(), incarnation)
+        gd = new Type(id, boids, incarnation)
     else
-        gd = GraphicDevice.get_best_device_for(id, this.get_boids(), incarnation)
+        gd = GraphicDevice.get_best_device_for(id, boids, incarnation)
     this.screen.push(gd)
 }
 
@@ -236,8 +237,8 @@ World.prototype.start = function() {
         el.start(that.start_time)
     })
 
-    this.screen[0].merge_drawable_obj(this.get_boids())
-    this.screen[0].create_3d_object()
+    //this.screen[0].merge_drawable_obj(this.get_boids())
+    //this.screen[0].create_3d_object()
 
     this.draw()
 }
@@ -268,9 +269,9 @@ World.prototype.draw = function() {
            })
         }
        else{
-            this.get_boids().each(function(el) {
-               el.draw(ctx, that.screen[i].scene)
-            })
+           // this.get_boids().each(function(el) {
+             //  el.draw(ctx, that.screen[i].scene)
+            //})
             this.screen[i].render()
        }
     }
@@ -427,6 +428,7 @@ World.prototype.new_boid = function(config, block) {
     this.boids++
     b.id = this.boids
     this.has_born(b)
+    this.screen[0].add_drawable_obj(b)
     return b
 }
 
@@ -484,6 +486,7 @@ World.prototype.new_boid_of = function(class_name, config) {
             this[class_name] = 1
     this.boids.total++
     this.has_born(b)
+    this.screen[0].add_drawable_obj(b)
     return b
 }
 

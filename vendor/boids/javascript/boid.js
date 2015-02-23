@@ -37,7 +37,6 @@ function Boid(config_object, block){
             that.last_heading = new Vector(0, 1)
             that.my_world = null
             that.last_time = that.current_time = null
-            that.three_d_objects = []
             /* Overridable configuration */
 
             var default_config = {
@@ -46,6 +45,7 @@ function Boid(config_object, block){
                     velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
                     acceleration: new Vector(0,0)
                 },
+                //gt: {colour: "blue"},
                 colour: "blue",
 
                 brain: new Brain(that),
