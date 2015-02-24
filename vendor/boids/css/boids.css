@@ -5,6 +5,10 @@ body{
 #canvas{
   float: left;
 }
+canvas {
+  border-style: solid;
+  border-width: 5px;
+}
 
 #screen{
   width: 400px;
@@ -26,3 +30,5 @@ body{
 .Panel div{
   cursor: pointer;
 }
+
+

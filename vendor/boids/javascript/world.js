@@ -263,10 +263,11 @@ World.prototype.draw = function() {
         var ctx = this.screen[i].context
 
         if(ctx.constructor != THREE.WebGLRenderer){
-           ctx.clearRect(0, 0, 1000, 400)
-           this.get_boids().each(function(el) {
-            el.draw(ctx)
-           })
+           this.screen[i].draw()
+           // ctx.clearRect(0, 0, 1000, 400)
+           // this.get_boids().each(function(el) {
+           //  el.draw(ctx)
+           // })
         }
        else{
            // this.get_boids().each(function(el) {

@@ -27,3 +27,84 @@ cartoon.Boid.mesh.speed = function(){
 }
 
 var cartoon_canvas = new Incarnation("CanvasDevice", "Boid", "Object")
+
+cartoon_canvas.Boid.draw = function(boid, context){
+    var p = boid.geo_data.position;
+    var v = boid.geo_data.velocity;
+    var a = boid.geo_data.acceleration;
+
+    context.fillStyle = boid.colour
+    context.strokeStyle = "black"
+    context.beginPath();
+    context.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);
+    context.closePath();
+    context.fill();
+
+    context.beginPath();
+    context.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
+    context.closePath();
+    context.stroke()
+
+    /* Speed */
+    context.strokeStyle = "black"
+    context.beginPath();
+    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
+    context.closePath();
+    context.stroke()
+
+    /* Acceleration */
+    context.strokeStyle = "red"
+    context.beginPath();
+    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
+    context.closePath();
+    context.stroke()
+
+    //if (this.focused){
+      //  ctx.strokeStyle = "red"
+       // ctx.beginPath();
+       // ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true);
+       // ctx.closePath();
+       // ctx.stroke()
+   // }
+}
+
+var cartoon2_canvas = new Incarnation("CanvasDevice", "Boid", "Object")
+
+cartoon2_canvas.Boid.draw = function(boid, context){
+    var p = boid.geo_data.position;
+    var v = boid.geo_data.velocity;
+    var a = boid.geo_data.acceleration;
+
+
+    context.beginPath()
+    context.lineWidth="6"
+    context.strokeStyle=boid.colour
+    context.rect(p.get_coord(0), p.get_coord(1), 20, 20)
+    context.stroke()
+
+    /* Speed */
+    context.strokeStyle = "black"
+    context.beginPath();
+    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
+    context.closePath();
+    context.stroke()
+
+    /* Acceleration */
+    context.strokeStyle = "red"
+    context.beginPath();
+    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
+    context.closePath();
+    context.stroke()
+
+    //if (this.focused){
+      //  ctx.strokeStyle = "red"
+       // ctx.beginPath();
+       // ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true);
+       // ctx.closePath();
+       // ctx.stroke()
+   // }
+}
