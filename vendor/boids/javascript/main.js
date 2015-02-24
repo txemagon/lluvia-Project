@@ -3,7 +3,8 @@ var w = null
 function main() {
 
     w = new World(null)
-    w.new_screen('screener2', CanvasDevice)
+    w.new_screen('screener2', CanvasDevice, cartoon_canvas)
+    w.new_screen('screener3', CanvasDevice, cartoon2_canvas)
     //  var boid_list = new WorldInterface("boid_list_content")
     //  w.add_port("new_boid", boid_list)
 

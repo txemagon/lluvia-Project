@@ -5,7 +5,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     var that = this
 
     function initialize() {
-        GraphicDevice.call(that, screen, incarnation)
+        GraphicDevice.call(that, screen, drawable_obj, incarnation)
 
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
@@ -14,8 +14,8 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.scene = new THREE.Scene()
         that.cameras = []
 
-        that.drawable = []
-        that.merge_drawable_obj(drawable_obj)       
+        //that.drawable = []
+        that.merge_drawable_obj(drawable_obj)
 
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
@@ -76,9 +76,9 @@ WebGl.prototype.render = function(n){
 
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
-    //for each (var i in cartoon[cartoon.search_element(drawable_obj)].mesh) 
-    for (var i in cartoon[cartoon.search_element(drawable_obj)].mesh){
-        obj = cartoon[cartoon.search_element(drawable_obj)].mesh[i](drawable_obj)
+    //for each (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh) 
+    for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
+        obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
         WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
     }
