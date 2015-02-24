@@ -1,6 +1,8 @@
-function GraphicDevice(screen) {
+function GraphicDevice(screen, incarnation) {
     /* We have a HTMLElement, a string holding the id, or the page has a canvas */
-
+    //if(incarnation)
+       if(this.constructor.name != incarnation.graphic_type)
+          throw "Invalid screen type"
     if (typeof(screen) === "string")
         screen = document.getElementById(screen)
     if (!screen)
@@ -14,8 +16,8 @@ function GraphicDevice(screen) {
     GraphicDevice.screen.push(this)
 }
 
-GraphicDevice.get_best_device_for = function(screen, drawable_obj) {
+GraphicDevice.get_best_device_for = function(screen, drawable_obj, incarnation) {
     if (WebGl.available$U())
-        return new WebGl(screen, drawable_obj)
-    return new CanvasDevice(screen)
-}
+        return new WebGl(screen, drawable_obj, incarnation)
+    return new CanvasDevice(screen, incarnation)
+} 

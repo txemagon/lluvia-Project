@@ -5,7 +5,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     var that = this
 
     function initialize() {
-        GraphicDevice.call(that, screen)
+        GraphicDevice.call(that, screen, incarnation)
 
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
@@ -15,37 +15,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.cameras = []
 
         that.drawable = []
-        that.merge_drawable_obj(drawable_obj)
-
-        that.incarnation
-        that.incarnation = incarnation || new Incarnation(function(scene, boid, drawable){
-            var sphere = new THREE.Mesh(
-               new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
-               new THREE.MeshLambertMaterial({
-                  color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
-               })
-            )
-            sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
-            sphere.update = function(boid){
-                this.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
-            }
-            scene.add(sphere)
-            WebGl.merge_3d_object(boid, drawable, sphere)
-
-            var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshNormalMaterial());
-            cylinder.overdraw = true;
-            cylinder.rotation.z = 90* Math.PI / 180;
-            cylinder.update = function(boid){
-               this.position.set(boid.geo_data.position.get_coord(0)+10, boid.geo_data.position.get_coord(1), -7)
-               this.rotation.x = boid.heading().Coord[0]
-               this.rotation.y = boid.heading().Coord[1]
-            }
-            scene.add(cylinder);
-            WebGl.merge_3d_object(boid, drawable, cylinder)
-            
-        })
-
-        //that.create_3d_object()
+        that.merge_drawable_obj(drawable_obj)       
 
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
@@ -105,7 +75,14 @@ WebGl.prototype.render = function(n){
 
 
 WebGl.prototype.create_3d_object = function(drawable_obj){
-    this.incarnation.list[this.incarnation.search_list_element(drawable_obj)](this.scene, drawable_obj, this.drawable)
+    var obj = null
+    //for each (var i in cartoon[cartoon.search_element(drawable_obj)].mesh) 
+    for (var i in cartoon[cartoon.search_element(drawable_obj)].mesh){
+        obj = cartoon[cartoon.search_element(drawable_obj)].mesh[i](drawable_obj)
+        this.scene.add(obj)
+        WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
+    }
+    //this.incarnation.list[this.incarnation.search_list_element(drawable_obj)](this.scene, drawable_obj, this.drawable)
 }
 
 

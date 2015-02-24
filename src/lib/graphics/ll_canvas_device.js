@@ -1,7 +1,7 @@
 CanvasDevice.prototype = new GraphicDevice
 CanvasDevice.prototype.constructor = CanvasDevice
 
-function CanvasDevice(screen) {
+function CanvasDevice(screen, incarnation) {
     GraphicDevice.apply(this, arguments)
     this.context = this.screen.getContext("2d")
     if (!this.context)

@@ -64,7 +64,7 @@ World.prototype.new_screen = function(id, Type, incarnation){
     if (Type == CanvasDevice || Type == WebGl)
         gd = new Type(id, boids, incarnation)
     else
-        gd = GraphicDevice.get_best_device_for(id, boids, incarnation)
+        gd = GraphicDevice.get_best_device_for(id, boids, cartoon)
     this.screen.push(gd)
 }
 
