@@ -428,7 +428,8 @@ World.prototype.new_boid = function(config, block) {
     this.boids++
     b.id = this.boids
     this.has_born(b)
-    this.screen[0].add_drawable_obj(b)
+    for(var i = 0; i<this.screen.length; i++)
+       this.screen[i].add_drawable_obj(b)
     return b
 }
 
@@ -486,7 +487,8 @@ World.prototype.new_boid_of = function(class_name, config) {
             this[class_name] = 1
     this.boids.total++
     this.has_born(b)
-    this.screen[0].add_drawable_obj(b)
+    for(var i = 0; i<this.screen.length; i++)
+       this.screen[i].add_drawable_obj(b)
     return b
 }
 

@@ -25,3 +25,5 @@ cartoon.Boid.mesh.speed = function(){
     }
     return cylinder
 }
+
+var cartoon_canvas = new Incarnation("CanvasDevice", "Boid", "Object")

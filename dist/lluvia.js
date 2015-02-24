@@ -4045,21 +4045,34 @@ Builder.prototype.build = function() {
 }
 CanvasDevice.prototype = new GraphicDevice
 CanvasDevice.prototype.constructor = CanvasDevice
-function CanvasDevice(screen, incarnation) {
-    GraphicDevice.apply(this, arguments)
+function CanvasDevice(screen, drawable_obj, incarnation) {
+    GraphicDevice.call(this, screen, drawable_obj, incarnation)
     this.context = this.screen.getContext("2d")
     if (!this.context)
         throw "Unable to initialize context for 2d screen."
 }
-function GraphicDevice(screen, incarnation) {
-       if(this.constructor.name != incarnation.graphic_type)
-          throw "Invalid screen type"
+CanvasDevice.prototype.draw = function(){
+	for(var i = 0; i < this.drawable.length; i++)
+		this.incarnation[this.incarnation.search_element(drawable[i])].draw(drawable[i])
+}
+CanvasDevice.prototype.add_drawable_obj = function(drawable_obj){
+    this.drawable.push(drawable_obj)
+}
+function GraphicDevice(screen, drawable_obj, incarnation) {
     if (typeof(screen) === "string")
         screen = document.getElementById(screen)
     if (!screen)
         screen = document.querySelector('canvas')
     if (!(screen instanceof HTMLElement))
         return
+    if(incarnation)
+       if(this.constructor.name != incarnation.graphic_type)
+          throw "Invalid screen type"
+       else
+          this.incarnation = incarnation
+    else
+        this.incarnation = null
+    this.drawable = drawable_obj
     this.screen = screen
     this.context = null
     GraphicDevice.screen = GraphicDevice.screen || []
@@ -4068,22 +4081,21 @@ function GraphicDevice(screen, incarnation) {
 GraphicDevice.get_best_device_for = function(screen, drawable_obj, incarnation) {
     if (WebGl.available$U())
         return new WebGl(screen, drawable_obj, incarnation)
-    return new CanvasDevice(screen, incarnation)
-} 
+    return new CanvasDevice(screen, drawable_obj, incarnation)
+}
 WebGl.prototype = new GraphicDevice
 WebGl.prototype.constructor = WebGl
 function WebGl(screen, drawable_obj, incarnation, camera) {
     var that = this
     function initialize() {
-        GraphicDevice.call(that, screen, incarnation)
+        GraphicDevice.call(that, screen, drawable_obj, incarnation)
         that.context = new THREE.WebGLRenderer({
             canvas: that.screen
         })
         that.context.setClearColor(0xFFFFFF, 1)
         that.scene = new THREE.Scene()
         that.cameras = []
-        that.drawable = []
-        that.merge_drawable_obj(drawable_obj)       
+        that.merge_drawable_obj(drawable_obj)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
@@ -4127,8 +4139,8 @@ WebGl.prototype.render = function(n){
 }
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
-    for (var i in cartoon[cartoon.search_element(drawable_obj)].mesh){
-        obj = cartoon[cartoon.search_element(drawable_obj)].mesh[i](drawable_obj)
+    for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
+        obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
         WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
     }
@@ -5262,7 +5274,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)
