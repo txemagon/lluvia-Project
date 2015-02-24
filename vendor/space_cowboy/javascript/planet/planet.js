@@ -41,13 +41,10 @@ function Planet(view) {
         initialize
 }
 
-Planet.enemy_images = [ 
-  { life: 3,
-    img: "images/"}
-]
+
 
 Planet.prototype.initialize = function(planet_number){
-    this.enemy = new Enemy(Planet.enemy_images)
+    this.enemy = new Enemy(planet_number)
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {

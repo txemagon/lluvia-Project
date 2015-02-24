@@ -1,7 +1,5 @@
 
 
 function main() {
-    game = new Game()
-
-    
+    game = new Game()    
 }
