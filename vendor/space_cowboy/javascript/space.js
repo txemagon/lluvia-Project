@@ -4,14 +4,14 @@ Space.prototype.super = Device
 
 var planets_map = null
 
-function Space(){
+function Space(view){
    	planets_map = document.getElementById("planetas")
    	planets_map.style.top = "-200px"
    	planets_map.style.left = "-500px"  
 
    	this.self_events = ["go_to_planet"]
 
-   	Device.call(this, "map")
+   	Device.call(this, view)
 
     for (var i=0; i<19; i++)
     this.new_gate("planet" + i, Gate, {

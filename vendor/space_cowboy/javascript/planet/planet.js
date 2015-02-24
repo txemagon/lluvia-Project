@@ -9,40 +9,50 @@ var KEY_LEFT=37;
 var KEY_RIGHT=39;
 
 //Variables del juego
-var canvas = null
+/*var canvas = null
 var ctx = null
 var shots = []
 var gameover = false
 var pressing = []
 
-/*
+
 var player = new Image()
-player.src = ../images/ships/player.png
+player.src = "../images/ships/player.png"
 ctx.clearRect(0, 0, 1000, 600)
 ctx.save()
 ctx.drawImage(player, 100, 100, 50, 50)
 ctx.restore()
-*/
 
 
+/*
 var player = document.getElementById("ship_player")
 var enemy = document.getElementById("ship_enemy")
- 
+ */
 
-function Planet() {
-    Device.call(this, "planet")
+function Planet(view) {
+    var that = this
+
+    function initialize(){
+        Device.call(that, view)
+        that.ctx = that.view.getContext("2D")
+    }
+
+    if (arguments.length)
+        initialize
+}
+
+Planet.enemy_images = [ 
+  { life: 3,
+    img: "images/"}
+]
+
+Planet.prototype.initialize = function(planet_number){
+    this.enemy = new Enemy(Planet.enemy_images)
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
     this.appear()
-}
-
-Device.prototype.appear = function() {
-    this.view.style.display = "block"
-}
-
-Device.prototype.hide = function() {
-    this.view.style.display = "none"
+    this.initialize(mssg.event.show_planet.data)
 }
 
 function init(){
