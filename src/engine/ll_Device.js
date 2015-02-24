@@ -441,6 +441,14 @@ Device.prototype.send_message = function(type, name, data, receiptant) {
 
 }
 
+Device.prototype.appear = function() {
+    this.view.style.display = "block"
+}
+
+Device.prototype.hide = function() {
+    this.view.style.display = "none"
+}
+
 /**
  * @method method_missing
  *

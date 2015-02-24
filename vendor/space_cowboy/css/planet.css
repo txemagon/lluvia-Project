@@ -1,0 +1,25 @@
+#canvas_planet {
+	position: relative;
+	background-color: #000000;
+	border: 1px solid black;
+	left: 0px;
+	top: 0px;
+}
+
+#ship_player {
+	position: relative;
+	left: 450px;
+	top: 600px;
+	width: 100px;
+	height: 100px;
+	z-index: 1;
+}
+
+#ship_enemy {
+	position: relative;
+	left: 320px;
+	top: 110px;
+	width: 100px;
+	height: 100px;
+	z-index: 1;
+}

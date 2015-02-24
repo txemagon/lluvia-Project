@@ -3460,6 +3460,12 @@ Device.prototype.new_message = function(type, name, data) {
 Device.prototype.send_message = function(type, name, data, receiptant) {
     receiptant.event_dispatcher.enqueue(this.new_message(type, name, data))
 }
+Device.prototype.appear = function() {
+    this.view.style.display = "block"
+}
+Device.prototype.hide = function() {
+    this.view.style.display = "none"
+}
 Device.prototype.method_missing = function(method, obj, params) {
     if (this.respond_to$U(method.underscore()))
         return method.underscore.apply(this, params)
@@ -5262,7 +5268,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/pc02/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/txema/Escritorio/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

@@ -9,25 +9,17 @@ function Space(){
    	planets_map.style.top = "-200px"
    	planets_map.style.left = "-500px"  
 
-   	this.view = document.getElementById("map")
    	this.self_events = ["go_to_planet"]
 
-   	Device.call(this, null)
+   	Device.call(this, "map")
 
-    this.new_gate("planet0", Gate, {
-   		do_onclick: function(event, element) {
-   			this.device.fire_event(this.device.new_message("sync", "go_to_planet"))
+    for (var i=0; i<19; i++)
+    this.new_gate("planet" + i, Gate, {
+   		do_onclick: function(i){ return function(event, element) {
+   			this.device.fire_event(this.device.new_message("sync", "go_to_planet", i))
    			this.device.hide()
-   		}
+   		}}(i)
    	})
-}
-
-Space.prototype.appear = function() {
-	this.view.style.visibility = "visible"
-}
-
-Space.prototype.hide = function() {
-	this.view.style.visibility = "hidden"
 }
 
 Space.prototype.attend_show_space = function(date, mssg) {

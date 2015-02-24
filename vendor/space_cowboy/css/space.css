@@ -1,5 +1,14 @@
 /*Planetas*/
 
+#canvas_space {
+	position: relative;
+	background-color: #000000;
+	z-index: -1;
+	border: 1px solid black;
+	left: 0px;
+	top: -600px;
+}
+
 #map {
 	position: relative;
 	margin: 0 auto 0 auto;
@@ -24,10 +33,10 @@
 	margin: auto;
 }
 
-#ship {
+#ship_space {
 	position: relative;
-	width: 125px;
-	height: 110px;
+	width: 100px;
+	height: 100px;
 	left: 15px;
 	top: -750px;
 }

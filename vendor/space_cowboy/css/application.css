@@ -1,5 +1,5 @@
 .Device{
-	visibility: hidden;
+	display: none;
 }
 
 #combat {

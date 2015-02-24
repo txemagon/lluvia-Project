@@ -84,8 +84,8 @@ var $K_app_dependencies = {
         "name": "space.js",
         "description": "Space map init the game."
         }, {
-        "name": "combat.js",
-        "description": "Space map init the game."
+        "name": "planet.js",
+        "description": "Planet you visit"
     }, {
         "name": "main.js",
         "description": "main function."

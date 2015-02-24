@@ -80,7 +80,10 @@ function PointDealer(view_name, interface) {
     this.new_gate("button_play", Gate, {
         do_onclick: function(event, element) {
             this.device.fire_event(this.device.new_message("sync", "chosen_finished", interface))
-            this.device.hide()
+           /* if (this.device.interface.points != 0)
+                alert("Tienes que gastar todos los skill points")
+            else*/
+                this.device.hide()
         }
     })
 
@@ -110,24 +113,14 @@ PointDealer.prototype.render = function(target) {
     bar.src = "images/bar/bar_" + this.interface[target] + ".png "
 }
 
-PointDealer.prototype.appear = function() {
-    this.view.style.visibility = "visible"
-}
-
-PointDealer.prototype.hide = function() {
-    this.view.style.visibility = "hidden"
-}
-
-/*
-PointDealer.prototype.appear = function() {
-    this.view.style.display = "visible"
-}
-
-PointDealer.prototype.hide = function() {
-    this.view.style.display = "none"
-}
-*/
-
 PointDealer.prototype.attend_show_skills = function(date, mssg) {
     this.appear()
+}
+
+Device.prototype.appear = function() {
+    this.view.style.display = "block"
+}
+
+Device.prototype.hide = function() {
+    this.view.style.display = "none"
 }

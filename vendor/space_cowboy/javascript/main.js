@@ -1,6 +1,5 @@
 var game = null
 var skill_menu
-var planet
 
 function main() {
 
@@ -12,16 +11,17 @@ function main() {
             speed: 0
         })
     game = new Game()
-    planet = new Space()
+    space = new Space()
+    planet = new Planet()
 
     //Methods
     skill_menu.add_port("chosen_finished", game)
-    planet.add_port("go_to_planet", game)
+    space.add_port("go_to_planet", game)
+    game.add_port("show_space", space)
+    game.add_port("show_planet", planet)
 
     //States
     game.add_port("show_skills", skill_menu)
-    game.add_port("show_space", game)
 
-    game.switch("running.choosing", "running.choosing.planet")
-
+    game.switch("running.choosing")
 }
