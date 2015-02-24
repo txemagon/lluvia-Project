@@ -29,11 +29,4 @@ button {
 	margin-left: 230px;
 }
 
-canvas {
-	position: relative;
-	background-color: #000000;
-	z-index: -1;
-	border: 1px solid black;
-	left: 0px;
-	top: -600px;
-}
+

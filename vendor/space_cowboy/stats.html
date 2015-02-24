@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/general.css">
     <link rel="stylesheet" type="text/css" href="css/stats.css">
     <link rel="stylesheet" type="text/css" href="css/space.css">
-
+    <link rel="stylesheet" type="text/css" href="css/planet.css">
 </head>
 <body onload="bring_lluvia();">
     <div id="game">
@@ -69,9 +69,9 @@
                     <input type="image" id="planet19" src="images/planets/final_planet.png">
                 </div> <!-- Se cierra planetas -->
             </div> <!-- Se cierra ventana -->
-            <canvas id="canvas" width="1000" height="600" ></canvas>
+            <canvas id="canvas_space" width="1000" height="600" ></canvas>
             <div id="nave">
-                <img id="ship" src="images/ships/player.png">
+                <img id="ship_space" src="images/ships/player.png">
             </div>
             <div id="botones">
                 <button type="button" id="boton_arriba" onclick="up()">^</button>
@@ -83,19 +83,20 @@
         <!-- Fin de mapa -->
 
         <!-- Combate -->
-        <div id="combat">
+        <div id="planet" class="Device">
             <h1>Space Attack</h1>
             <div id="title_combat">
                 <br>
                 <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
                 <br>
             </div>
-            <!-- <img id="ship" src="images/ships/player.png"> -->
-            <canvas id="canvas" width="1000" height="600"></canvas>
-            <br>
+            <img id="ship_player" src="images/ships/player.png">
+            <img id="ship_enemy" src="images/ships/ship_enemy1.png">
+            <canvas id="canvas_planet" width="1000" height="600" ></canvas>
         </div>
         <!-- Fin de combate-->
 
     </div>
 </body>
 </html>
+
