@@ -2,7 +2,11 @@ var w = null
 
 function main() {
 
+<<<<<<< HEAD
     w = new World('screener')
+=======
+    w = new World('screener', CanvasDevice, cartoon_canvas)
+>>>>>>> fb3b1cf3eeff6b9da876d93eb5145452b94fbb62
     w.new_screen('screener2', CanvasDevice, cartoon_canvas)
     w.new_screen('screener3', CanvasDevice, cartoon2_canvas)
     //  var boid_list = new WorldInterface("boid_list_content")

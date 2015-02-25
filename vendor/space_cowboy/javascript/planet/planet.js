@@ -38,10 +38,8 @@ function Planet(view) {
     }
 
     if (arguments.length)
-        initialize
+        initialize()
 }
-
-
 
 Planet.prototype.initialize = function(planet_number){
     this.enemy = new Enemy(planet_number)
@@ -52,33 +50,6 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
     this.initialize(mssg.event.show_planet.data)
 }
 
-function init(){
-    canvas=document.getElementById('canvas_planet');
-    ctx=canvas.getContext('2d');
-    canvas.width=1000;
-    canvas.height=600;
-}
-
-var Player = function Player() {
-    this.x=(x==null)?0:x;
-    this.y=(y==null)?0:y;
-    this.width=(width==null)?0:width;
-    this.height=(height==null)?this.width:height;
-}
-
-var player = new Player(20, 20, 100, 100)
-ctx.drawImage(player)
-
-function move(deltaTime) {
-    if (pressing[KEY_RIGHT])
-        player.x += 10
-    if (pressing[KEY_LEFT])
-        player.x -= 10
-}
-
-function reset() {
-
-}
 
 
 /*

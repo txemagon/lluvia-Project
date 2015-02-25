@@ -21,7 +21,7 @@ World.prototype = new Device
 World.prototype.constructor = World
 World.prototype.super = Device
 
-function World(screen, width, height) {
+function World(screen, type, incarnation, width, height) {
 
     /*function World sets the default parameter for the world unless given*/
 
@@ -37,10 +37,11 @@ function World(screen, width, height) {
     this.boids = 0
     this.draw_bound = World.prototype.draw.bind(this)
 
-    if (arguments.length)
+    if (screen && !type && !incarnation)
         this.new_screen(screen)
+    if(screen && type && incarnation)
+        this.new_screen(screen, type, incarnation)
     
-
     Device.call(that, null, null)
 }
 
