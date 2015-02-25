@@ -1,4 +1,4 @@
-var cartoon = new Incarnation("WebGl", "Boid", "Object")
+var cartoon = new Incarnation("WebGl", "Boid", "Object", "Wall")
 
 cartoon.Boid.mesh.body = function(boid){
     var sphere = new THREE.Mesh(
@@ -7,6 +7,8 @@ cartoon.Boid.mesh.body = function(boid){
           color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
        })
     )
+    sphere.castShadow = true;
+    sphere.receiveShadow = true;
     sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
     sphere.update = function(boid){
         this.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
@@ -15,7 +17,9 @@ cartoon.Boid.mesh.body = function(boid){
 }
 
 cartoon.Boid.mesh.speed = function(){
-	var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshNormalMaterial());
+	var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshLambertMaterial());
+    cylinder.castShadow = false;
+    cylinder.receiveShadow = false;
     cylinder.overdraw = true;
     cylinder.rotation.z = 90* Math.PI / 180;
     cylinder.update = function(boid){
@@ -24,6 +28,30 @@ cartoon.Boid.mesh.speed = function(){
        this.rotation.y = boid.heading().Coord[1]
     }
     return cylinder
+}
+
+cartoon.Wall.mesh.structure = function(wall){
+     var cuboMateriales = [
+         new THREE.MeshLambertMaterial({color: wall.colour}),
+         new THREE.MeshLambertMaterial({color: wall.colour}),
+         new THREE.MeshLambertMaterial({color: wall.colour}),
+         new THREE.MeshLambertMaterial({color: wall.colour}),
+         new THREE.MeshLambertMaterial({color: wall.colour}),
+         new THREE.MeshLambertMaterial({color: wall.colour})
+     ];
+     var cuboMaterial = new THREE.MeshFaceMaterial(cuboMateriales);
+
+    var cuboGeometria = new THREE.CubeGeometry(wall.width, wall.height, 10);
+
+    
+    var cubo = new THREE.Mesh(cuboGeometria, cuboMaterial);
+    cubo.position.set(wall.geo_data.position.get_coord(0)+wall.width/2, 150, -30);
+    cubo.castShadow = false;
+    cubo.receiveShadow = true;
+    cubo.update = function(boid){
+      return
+    }
+    return cubo;
 }
 
 var cartoon_canvas = new Incarnation("CanvasDevice", "Boid", "Object")

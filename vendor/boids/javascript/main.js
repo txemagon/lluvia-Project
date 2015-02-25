@@ -2,9 +2,10 @@ var w = null
 
 function main() {
 
-    w = new World('screener', CanvasDevice, cartoon_canvas)
-    w.new_screen('screener2', CanvasDevice, cartoon_canvas)
-    w.new_screen('screener3', CanvasDevice, cartoon2_canvas)
+    w = new World('screener', WebGl, cartoon)
+    //w = new World('screener', CanvasDevice, cartoon_canvas)
+    //w.new_screen('screener2', CanvasDevice, cartoon_canvas)
+    //w.new_screen('screener3', CanvasDevice, cartoon2_canvas)
     //  var boid_list = new WorldInterface("boid_list_content")
     //  w.add_port("new_boid", boid_list)
 
@@ -113,6 +114,7 @@ function main() {
         config.geo_data.position = new Vector(200, 0)
         config.brain.activate("foresee<seek>arrival", first)
     })
+    var b5 = w.new_boid_of(Wall)
 
     /* Example: Class as target */
     var yeoman = []

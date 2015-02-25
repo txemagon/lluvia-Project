@@ -17,7 +17,7 @@ Incarnation.prototype.search_element = function(obj){
 		return constructor.constructor.name
 
 	if( !(constructor.constructor.name in this) && !(constructor.constructor.name in Incarnation.end_object))
-		  return this.search_list_element(constructor)
+		  return this.search_element(constructor)
     else
     	return "default"
 }

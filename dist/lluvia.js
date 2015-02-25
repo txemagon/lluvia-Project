@@ -4097,16 +4097,19 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     function initialize() {
         GraphicDevice.call(that, screen, drawable_obj, incarnation)
         that.context = new THREE.WebGLRenderer({
-            canvas: that.screen
+            canvas: that.screen,
+            antialias:true
         })
         that.context.setClearColor(0xFFFFFF, 1)
+        that.context.shadowMapEnabled = true;
+        that.context.shadowMapType = THREE.PCFSoftShadowMap
         that.scene = new THREE.Scene()
         that.cameras = []
         that.merge_drawable_obj(drawable_obj)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
-        var far = 10000
+        var far = 1000000
         that.cameras.push(that.camera = new THREE.PerspectiveCamera(
             view_angle,
             aspect,
@@ -4114,22 +4117,29 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
             far))
         that.scene.add(camera)
         that.camera.position.z = 500
-        that.camera.rotation.z = 180 * Math.PI / 180
         that.controls = new THREE.OrbitControls( that.cameras[0] );
         that.controls.addEventListener( 'change', that.render );
         that.cameras[0].lookAt({x:500, y:200, z:0});
         that.context.setSize(that.screen.width, that.screen.height)
         var sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(10  , 16  , 16  ),
+            new THREE.SphereGeometry(5  , 60  , 24  ),
             new THREE.MeshLambertMaterial({
                 color: 0xFFFF00
             })
         )
+        sphere.castShadow = true
         that.scene.add(sphere);
-        var ambientLight = new THREE.AmbientLight(0x444444);
+        var ambientLight = new THREE.AmbientLight(0x000000);
         that.scene.add(ambientLight);
-        var directionalLight = new THREE.DirectionalLight(0xFFFFFF);
-        directionalLight.position.set(0, 0, 1).normalize()
+        var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+        directionalLight.position.set(-500,0,500)
+        directionalLight.castShadow = true
+        directionalLight.shadowDarkness = 10;   
+        directionalLight.shadowCameraRight    =  1000;
+        directionalLight.shadowCameraLeft     = -1000;
+        directionalLight.shadowCameraTop      = 1000; 
+        directionalLight.shadowCameraBottom   = -1000;
+        directionalLight.intensity = 2
         that.scene.add(directionalLight);
         that.context.render(that.scene, that.camera);
     }

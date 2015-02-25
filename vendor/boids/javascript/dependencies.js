@@ -26,6 +26,7 @@ var $K_app_dependencies = {
         {"name": "boid/draw/draw.js",                                      "description": "General Drawing."}, 
         {"name": "world_interface.js",                                     "description": "World Interface."}, 
         {"name": "boid_editor.js",                                         "description": "Boid panel editor."}, 
+        {"name": "boid/wall.js",                                                "description": "wall"}, 
         {"name": "world.js",                                               "description": "The world where all boids live."}, 
         {"name": "main.js",                                                "description": "main function."}]
 }

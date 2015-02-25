@@ -41,7 +41,7 @@ function World(screen, type, incarnation, width, height) {
         this.new_screen(screen)
     if(screen && type && incarnation)
         this.new_screen(screen, type, incarnation)
-    
+
     Device.call(that, null, null)
 }
 
@@ -265,10 +265,10 @@ World.prototype.draw = function() {
 
         if(ctx.constructor != THREE.WebGLRenderer){
            this.screen[i].draw()
-           // ctx.clearRect(0, 0, 1000, 400)
-           // this.get_boids().each(function(el) {
-           //  el.draw(ctx)
-           // })
+            //ctx.clearRect(0, 0, 1000, 400)
+            //this.get_boids().each(function(el) {
+             //el.draw(ctx)
+            //})
         }
        else{
            // this.get_boids().each(function(el) {
