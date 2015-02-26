@@ -4060,7 +4060,8 @@ function CanvasDevice(screen, drawable_obj, incarnation) {
 CanvasDevice.prototype.draw = function(){
 	this.screen.width = this.screen.width
 	for(var i = 0; i < this.drawable.length; i++)
-		this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
+		if("draw" in this.incarnation[this.incarnation.search_element(this.drawable[i])] && typeof(this.incarnation[this.incarnation.search_element(this.drawable[i])].draw) == "function")
+		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
 }
 CanvasDevice.prototype.add_drawable_obj = function(drawable_obj){
     this.drawable.push(drawable_obj)
@@ -4165,6 +4166,7 @@ WebGl.prototype.create_3d_object = function(drawable_obj){
 WebGl.prototype.update = function(){
     for(var i = 0; i < this.drawable.length; i++)
         for(var j = 0; j < this.drawable[i].three_obj.length; j++)
+        if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
            this.drawable[i].three_obj[j].update(this.drawable[i].obj)
 }
 WebGl.prototype.merge_drawable_obj = function(drawable){

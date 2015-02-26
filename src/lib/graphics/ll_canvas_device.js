@@ -13,7 +13,8 @@ function CanvasDevice(screen, drawable_obj, incarnation) {
 CanvasDevice.prototype.draw = function(){
 	this.screen.width = this.screen.width
 	for(var i = 0; i < this.drawable.length; i++)
-		this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
+		if("draw" in this.incarnation[this.incarnation.search_element(this.drawable[i])] && typeof(this.incarnation[this.incarnation.search_element(this.drawable[i])].draw) == "function")
+		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
 }
 
 

@@ -93,19 +93,18 @@ WebGl.prototype.render = function(n){
 
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
-    //for each (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh) 
     for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
         obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
         WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
     }
-    //this.incarnation.list[this.incarnation.search_list_element(drawable_obj)](this.scene, drawable_obj, this.drawable)
 }
 
 
 WebGl.prototype.update = function(){
     for(var i = 0; i < this.drawable.length; i++)
         for(var j = 0; j < this.drawable[i].three_obj.length; j++)
+        if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
            this.drawable[i].three_obj[j].update(this.drawable[i].obj)
 }
 

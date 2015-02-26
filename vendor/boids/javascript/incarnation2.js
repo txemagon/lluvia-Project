@@ -1,3 +1,10 @@
+/**
+ * @class Incarnation
+ * 
+ *
+ * @param  {Function} graphic_type=GraphicDevice If no Type given then GraphicDevice.get_best_device_for is used.
+ * @param  {String}   arguments Is the type of drawable objects, that we want to draw.
+ */
 function Incarnation(graphic_type){
 	this.graphic_type = graphic_type
 	this.add_types(arguments)

@@ -48,9 +48,6 @@ cartoon.Wall.mesh.structure = function(wall){
     cubo.position.set(wall.geo_data.position.get_coord(0)+wall.width/2, 150, -30);
     cubo.castShadow = false;
     cubo.receiveShadow = true;
-    cubo.update = function(boid){
-      return
-    }
     return cubo;
 }
 
