@@ -3481,7 +3481,7 @@ Device.StateUsher.prototype.add = function(driver_name, key, value) {
     var substate = driver_name.split("_").slice(1)
     var regime = null
     if (/_up$|_steady$|_down$/.test(driver_name))
-        regime = substate.pop()
+        regime = substate.pop() 
     var name_to_add = substate.pop()
     var host = key
     if (substate.length)
@@ -3493,9 +3493,11 @@ Device.StateUsher.prototype.add = function(driver_name, key, value) {
             if (!level[name_to_add])
                 level[name_to_add] = new State(name_to_add)
         }
-        if (!level[name_to_add].run)
-            level[name_to_add].run = function() {;
-            }
+        if (!level[name_to_add].run){
+            level[name_to_add].run = (function() {;
+            })
+        };
+        alert("MMMMM")
         level[name_to_add].run[regime] = this.i[driver_name]
     } else {
         if (!level[name_to_add]) {
@@ -5293,7 +5295,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/txema/Escritorio/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

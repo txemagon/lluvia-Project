@@ -15,8 +15,8 @@ Device.StateUsher.prototype.add = function(driver_name, key, value) {
     var regime = null
         // [] | [fast] | [fast]
     if (/_up$|_steady$|_down$/.test(driver_name))
-        regime = substate.pop()
-
+        regime = substate.pop() 
+    
     var name_to_add = substate.pop()
     var host = key
     if (substate.length)
@@ -30,9 +30,10 @@ Device.StateUsher.prototype.add = function(driver_name, key, value) {
                 level[name_to_add] = new State(name_to_add)
 
         }
-        if (!level[name_to_add].run)
-            level[name_to_add].run = function() {;
-            }
+        if (!level[name_to_add].run){
+            level[name_to_add].run = (function() {;
+            })
+        };
         level[name_to_add].run[regime] = this.i[driver_name]
     } else {
         if (!level[name_to_add]) {
@@ -42,5 +43,5 @@ Device.StateUsher.prototype.add = function(driver_name, key, value) {
 
         level[name_to_add].run = this.i[driver_name]
     }
-    level[name_to_add].owner = this.i
+
 }
