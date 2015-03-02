@@ -47,9 +47,9 @@ Game.prototype.running_up = function(date){
 
         this.switch("running.choosing")
 }
-/*
+
 Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
 }
-*/
+
 
