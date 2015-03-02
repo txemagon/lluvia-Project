@@ -21,13 +21,25 @@ Device.StateUsher.prototype.add = function(driver_name, hook_name, state) {
     var substates = driver_name.split("_")
     for (var i=0; i<hook_name.split("_").length)
         substates.shift()
+
+    var regime = false
     while (substates.length){
         var new_level = host.substate.shift() 
-        if (host[new_level])
-            host = host[new_level]
-        else
-            host = host[new_level] = new State() // todo: change
-        
-    }    
 
+        for (var r in State.REGIME)
+            if ( r == new_level )
+                regime = new_level
+        if (!regime){
+            if (!host[new_level]) 
+                this.state.add(new_level, host.toString())
+            
+            host = host[new_level]
+        }
+    }
+
+    host = host.run
+    if (regime)
+        host = host.regime
+
+    host = this.i[driver_name]
 }
