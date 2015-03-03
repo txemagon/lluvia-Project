@@ -378,33 +378,8 @@ Enumeration.prototype.add$B = function(constants, place){
     return place || this
 }
 
-Object.defineProperties(Enumeration.prototype, {
-    transpose: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-    },
-    each: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-    },
-    full_name: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-    },
-    get: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-    },
-    add: {
-        enumerable: false,
-        configurable: false,
-        writable: false
-    }
-})
+Enumeration.prototype.stop_enumerating(["transpose", "each", "full_name", "get", "add", "get$B", "add$B"])
+
 
 
 //todo: Needed include$U. Depends on making module Enumerable and mixing.

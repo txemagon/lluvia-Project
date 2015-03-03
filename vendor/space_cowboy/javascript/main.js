@@ -1,3 +1,4 @@
 function main() {
-    game = new Game()    
+    var game = new Game()  
+    game.switch("running")
 }
