@@ -5,9 +5,10 @@ function main() {
 
 
     w = new World('screener', WebGl, cartoon)
+    w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 0, 0, 200)    
     w.new_screen('screener2', CanvasDevice, cartoon_canvas)
    
-    //w = new World('screener', CanvasDevice, cartoon_canvas)
+    
     //w.new_screen('screener3', CanvasDevice, cartoon2_canvas)
     //  var boid_list = new WorldInterface("boid_list_content")
     //  w.add_port("new_boid", boid_list)
@@ -136,5 +137,11 @@ function main() {
             config.geo_data.velocity = new Vector(1, 1)
         }))
     w.start()
-
+    //w.new_screen('screener2', CanvasDevice, cartoon2_canvas)
 }
+
+var KEY = {C:67}
+addEventListener("keydown", function(e){
+    if(e.keyCode == KEY.C)
+        w.screen[0].change_camera()
+}, false)

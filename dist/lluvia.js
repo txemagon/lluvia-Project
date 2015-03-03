@@ -4059,6 +4059,8 @@ function CanvasDevice(screen, drawable_obj, incarnation) {
 }
 CanvasDevice.prototype.draw = function(){
 	this.screen.width = this.screen.width
+    this.context.translate(0, this.screen.height)
+    this.context.scale(1, -1)
 	for(var i = 0; i < this.drawable.length; i++)
 		if("draw" in this.incarnation[this.incarnation.search_element(this.drawable[i])] && typeof(this.incarnation[this.incarnation.search_element(this.drawable[i])].draw) == "function")
 		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
@@ -4106,18 +4108,13 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.context.shadowMapType = THREE.PCFSoftShadowMap
         that.scene = new THREE.Scene()
         that.cameras = []
+        that.selected_camera = 0
         that.merge_drawable_obj(drawable_obj)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
         var far = 1000000
-        that.cameras.push(that.camera = new THREE.PerspectiveCamera(
-            view_angle,
-            aspect,
-            near,
-            far))
-        that.scene.add(camera)
-        that.camera.position.z = 500
+        that.add_camera(aspect, view_angle, near, far, 0, 0, 500)
         that.controls = new THREE.OrbitControls( that.cameras[0] );
         that.controls.addEventListener( 'change', that.render );
         that.cameras[0].lookAt({x:500, y:200, z:0});
@@ -4147,37 +4144,62 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     if (arguments.length) 
         initialize()
 }
+WebGl.prototype.merge_drawable_obj = function(drawable){
+    this.drawable = []
+    var drawable_obj = drawable.slice() || []
+    for(var i = 0; i<drawable_obj.length; i++)
+      this.add_drawable_obj(drawable_obj[i])
+}
 WebGl.prototype.add_drawable_obj = function(drawable_obj){
     this.drawable.push({obj: drawable_obj, three_obj:[]})
     this.create_3d_object(this.drawable[this.drawable.length-1].obj)
-}
-WebGl.prototype.render = function(n){
-    this.update()
-    this.context.render(this.scene, this.camera);
 }
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
     for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
         obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
-        WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
+        this.add_3d_object(drawable_obj, obj)
     }
+}
+WebGl.prototype.add_3d_object = function(obj, three_obj){
+  for(var i in this.drawable)
+     if(obj == this.drawable[i].obj){
+        this.drawable[i].three_obj.push(three_obj)
+        break;
+    }
+}
+WebGl.prototype.render = function(){
+    this.update()
+    this.context.render(this.scene, this.cameras[this.selected_camera])
 }
 WebGl.prototype.update = function(){
     for(var i = 0; i < this.drawable.length; i++)
         for(var j = 0; j < this.drawable[i].three_obj.length; j++)
-        if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
-           this.drawable[i].three_obj[j].update(this.drawable[i].obj)
+            if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
+               this.drawable[i].three_obj[j].update(this.drawable[i].obj)
 }
-WebGl.prototype.merge_drawable_obj = function(drawable){
-    var drawable_obj = drawable || []
+WebGl.prototype.change_camera = function(){
+    if(this.selected_camera+1 >= this.cameras.length)
+       this.selected_camera = 0
+    else
+       this.selected_camera ++
 }
-WebGl.merge_3d_object = function(obj, drawable, three_obj){
-  for(var i in drawable)
-     if(obj == drawable[i].obj){
-        drawable[i].three_obj.push(three_obj)
-        break;
-    }
+WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z){
+    var camera = null
+    var aspect = aspect
+    var view_angle = angle
+    var near = near
+    var far = far
+    this.cameras.push( camera = new THREE.PerspectiveCamera(
+        view_angle,
+        aspect,
+        near,
+        far))
+    this.scene.add(camera)
+    camera.position.z = z
+    camera.position.x = x
+    camera.position.y = y
 }
 WebGl.available$U = function() {
     var webgl = false

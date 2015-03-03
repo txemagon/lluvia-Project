@@ -66,7 +66,7 @@ World.prototype.new_screen = function(id, Type, incarnation){
         gd = new Type(id, boids, incarnation)
     else
         gd = GraphicDevice.get_best_device_for(id, boids, cartoon)
-    this.screen.push(gd)
+    this.screen.push(gd)	
 }
 
 
