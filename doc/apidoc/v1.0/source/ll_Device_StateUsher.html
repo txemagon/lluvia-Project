@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Enginge-Device-StateUsher'>/**
+</span> *  @class Enginge.Device.StateUsher
+ *
+ * Device internal class providing functionality to augmentate Devices&#39; states.
+ */
+Device.StateUsher = function(I) {
+    this.i = I
+    this.state = I.state
+}
+
+<span id='Enginge-Device-StateUsher-method-add'>/**
+</span> * @method add
+ * Adds a new substate along with its driver function or adds a regime to a substate.
+ *
+ * @param {String} driver_name &quot;running_choosing_level_up&quot; ie.
+ * @param {String} hook_name   &quot;running&quot;
+ * @param {State}  state       &quot;running&quot; state object.
+ */
+Device.StateUsher.prototype.add = function(driver_name, hook_name, state) {
+    var host = state
+    var substates = driver_name.split(&quot;_&quot;)
+    for (var i = 0; i &lt; hook_name.split(&quot;_&quot;).length; i++)
+        substates.shift()
+
+    var regime = false
+    while (substates.length) {
+        var new_level = substates.shift()
+
+        for (var r in State.REGIME)
+            if (r == new_level)
+                regime = new_level
+        if (!regime) {
+            if (!host[new_level])
+                this.state.add(new_level, host.toString())
+
+            host = host[new_level]
+        }
+    }
+
+    host.owner = this.i
+    host = host.run
+    if (regime)
+        host[regime] = this.i[driver_name]
+    else
+        host = this.i[driver_name]
+}</pre>
+</body>
+</html>

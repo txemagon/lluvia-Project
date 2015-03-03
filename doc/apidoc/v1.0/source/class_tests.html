@@ -22,8 +22,8 @@
 
 given(&quot;A class Person inherited from Class&quot;,
       $LLGvn = &quot;\
-      alert('Give me a second to load classes.');\
-      while (typeof Class == 'undefined');\
+      alert(&#39;Give me a second to load classes.&#39;);\
+      while (typeof Class == &#39;undefined&#39;);\
       Person.prototype = new Class;\
       Person.prototype.constructor = Person;\
       function Person(){;}; &quot;)
@@ -31,7 +31,7 @@ given(&quot;A class Person inherited from Class&quot;,
 assert( &quot;Class#create_attr. Test 2. Adding an attribute to an object.&quot;,
         &quot;me.name&quot;, &quot;null&quot;,
         &quot;me = new Person(); \
-         me.create_attr('name');&quot;
+         me.create_attr(&#39;name&#39;);&quot;
       )
 
 assert( &quot;Class#create_attr. Accepts an initial value.&quot;,
@@ -39,7 +39,7 @@ assert( &quot;Class#create_attr. Accepts an initial value.&quot;,
         &quot;me.create_attr( {rank: 22} );&quot;
       )
 
-assert( &quot;Class#create_attr. It doesn't overlap existing attributes.&quot;,
+assert( &quot;Class#create_attr. It doesn&#39;t overlap existing attributes.&quot;,
         &quot;me.rank&quot;, &quot;22&quot;,
         &quot;me.create_attr( { rank: 24 } );&quot;
       )
@@ -52,34 +52,34 @@ assert( &quot;Class#attr_reader. Attribute creation with default value.&quot;,
 
 assert( &quot;Class#attr_reader. Attribute creation in a list.&quot;,
         &quot;me.honey&quot;, &quot;null&quot;,
-        &quot;me.create_attr( ['at', 'honey', 'doubts'] );&quot;
+        &quot;me.create_attr( [&#39;at&#39;, &#39;honey&#39;, &#39;doubts&#39;] );&quot;
       )
 
 assert( &quot;Class#attr_reader. Attribute creation.&quot;,
         &quot;me.get_name()&quot;, &quot;null&quot;,
-        &quot;me = new Person(); me.attr_reader('name');&quot;
+        &quot;me = new Person(); me.attr_reader(&#39;name&#39;);&quot;
       )
 
 assert( &quot;Class#attr_reader. Attribute creation.&quot;,
        &quot;me.getMe()&quot;, &quot;null&quot;,
-        &quot;me = new Person(); me.attr_reader('me');&quot;
+        &quot;me = new Person(); me.attr_reader(&#39;me&#39;);&quot;
       )
 
 assert( &quot;Class#attr_writer. Attribute creation.&quot;,
-       &quot;me.me&quot;, &quot;'john'&quot;,
-        &quot;me = new Person(); me.attr_writer('me'); me.setMe('john');&quot;
+       &quot;me.me&quot;, &quot;&#39;john&#39;&quot;,
+        &quot;me = new Person(); me.attr_writer(&#39;me&#39;); me.setMe(&#39;john&#39;);&quot;
       )
 
 assert( &quot;Class#attr_accessor. Attribute creation.&quot;,
-       &quot;me.get_name()&quot;, &quot;'john'&quot;,
-        &quot;me = new Person(); me.attr_accessor('name'); me.setName('john');&quot;
+       &quot;me.get_name()&quot;, &quot;&#39;john&#39;&quot;,
+        &quot;me = new Person(); me.attr_accessor(&#39;name&#39;); me.setName(&#39;john&#39;);&quot;
       )
 
 assert( &quot;Class#before_filter.&quot;,
         &quot;a&quot;, &quot;4&quot;,
         &quot;a = 2; me = new Person(); \
-         Person.prototype.greet = function(){; this.call_before('greet'); a += 1 }; \
-         me.add_before_filter('greet', function(){ a++ } ); me.greet();&quot;
+         Person.prototype.greet = function(){; this.call_before(&#39;greet&#39;); a += 1 }; \
+         me.add_before_filter(&#39;greet&#39;, function(){ a++ } ); me.greet();&quot;
       )
 
 </pre>
