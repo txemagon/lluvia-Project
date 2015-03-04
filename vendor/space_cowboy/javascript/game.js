@@ -46,6 +46,7 @@ Game.prototype.running_up = function(date) {
     this.add_port("show_skills", this.skill_menu)
 
     this.switch("running.choosing")
+
 }
 
 Game.prototype.running_choosing_up = function() {
