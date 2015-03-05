@@ -3336,34 +3336,36 @@ Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
 Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
-Device.default_solicitors = {
-            running: function() {
-                this.gate_runner(this.now)
-                this.child_runner(this.now);
-            },
-            suspending: function() {
-                this.child_runner(this.now);
-            },
-            killing: function() {
-                this.gate_runner(this.now)
-            }
+Device.default_solicitors = function() {
+    return {
+        running: function() {
+            this.gate_runner(this.now)
+            this.child_runner(this.now);
+        },
+        suspending: function() {
+            this.child_runner(this.now);
+        },
+        killing: function() {
+            this.gate_runner(this.now)
         }
+    }
+}
 function Device(view, state, solicitors, parent, block) {
     var that = this
     this._class = that
-    function engage_drivers(){
+    function engage_drivers() {
         var usher = new Device.StateUsher(that)
         var attr = that.keys()
-        state.each(function(key, value){
+        state.each(function(key, value) {
             var reg = new RegExp("^" + key + "_")
-            for (var i=0; i<attr.length; i++)
+            for (var i = 0; i < attr.length; i++)
                 if (reg.test(attr[i]))
                     usher.add(attr[i], key, value)
         })
     }
     function initialize() { 
-        state = state  || new EnumerationOf(State, Device.STATE)
-        that.solicitors = solicitors || Device.default_solicitors
+        state = state || new EnumerationOf(State, Device.STATE)
+        that.solicitors = solicitors || Device.default_solicitors()
         if (view)
             that.view = (typeof(view) === "string" ? document.getElementById(view) : view)
         that.event_dispatcher = new EventDispatcher();
@@ -3480,20 +3482,21 @@ Device.StateUsher = function(I) {
 Device.StateUsher.prototype.add = function(driver_name, hook_name, state) {
     var host = state
     var substates = driver_name.split("_")
-    for (var i=0; i<hook_name.split("_").length; i++)
+    for (var i = 0; i < hook_name.split("_").length; i++)
         substates.shift()
     var regime = false
-    while (substates.length){
-        var new_level = substates.shift() 
+    while (substates.length) {
+        var new_level = substates.shift()
         for (var r in State.REGIME)
-            if ( r == new_level )
+            if (r == new_level)
                 regime = new_level
-        if (!regime){
-            if (!host[new_level]) 
+        if (!regime) {
+            if (!host[new_level])
                 this.state.add(new_level, host.toString())
             host = host[new_level]
         }
     }
+    host.owner = this.i
     host = host.run
     if (regime)
         host[regime] = this.i[driver_name]
@@ -5309,7 +5312,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

@@ -192,18 +192,21 @@ Device.prototype.constructor = Device
 
 Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
 
-Device.default_solicitors = {
-            running: function() {
-                this.gate_runner(this.now)
-                this.child_runner(this.now);
-            },
-            suspending: function() {
-                this.child_runner(this.now);
-            },
-            killing: function() {
-                this.gate_runner(this.now)
-            }
+Device.default_solicitors = function() {
+    return {
+        running: function() {
+            this.gate_runner(this.now)
+            this.child_runner(this.now);
+        },
+        suspending: function() {
+            this.child_runner(this.now);
+        },
+        killing: function() {
+            this.gate_runner(this.now)
         }
+    }
+}
+
 
 /**
  * @method constructor
@@ -223,12 +226,12 @@ function Device(view, state, solicitors, parent, block) {
     this._class = that
 
     /* Look for new drivers */
-    function engage_drivers(){
+    function engage_drivers() {
         var usher = new Device.StateUsher(that)
         var attr = that.keys()
-        state.each(function(key, value){
+        state.each(function(key, value) {
             var reg = new RegExp("^" + key + "_")
-            for (var i=0; i<attr.length; i++)
+            for (var i = 0; i < attr.length; i++)
                 if (reg.test(attr[i]))
                     usher.add(attr[i], key, value)
 
@@ -238,8 +241,8 @@ function Device(view, state, solicitors, parent, block) {
     /* construction */
     function initialize() { // Use that. 'this' would refer to the function object.
 
-        state = state  || new EnumerationOf(State, Device.STATE)
-        that.solicitors = solicitors || Device.default_solicitors
+        state = state || new EnumerationOf(State, Device.STATE)
+        that.solicitors = solicitors || Device.default_solicitors()
 
         /* Instance vars */
         if (view)

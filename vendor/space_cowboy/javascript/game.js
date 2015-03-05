@@ -2,6 +2,10 @@ Game.prototype = new Device
 Game.prototype.constructor = Game
 Game.prototype.super = Device
 
+/**
+ * @method  Game
+ */
+
 function Game() {
     this.self_events = ["show_skills", "show_space", "show_planet"]
     Device.call(this, "game")
@@ -10,21 +14,20 @@ function Game() {
 
 //Methods
 Game.prototype.attend_chosen_finished = function(date, mssg) {
-	var points = mssg.event.chosen_finished.data
-	this.points = points
+    var points = mssg.event.chosen_finished.data
+    this.points = points
     alert(points.toSource())
     this.fire_event(this.new_message("sync", "show_space"))
     mssg.current++
 }
 
 Game.prototype.attend_go_to_planet = function(date, mssg) {
-    mssg.current++ 
-	var planet_number =  mssg.event.go_to_planet.data
-	this.fire_event(this.new_message("sync", "show_planet", planet_number))
+    mssg.current++
+    var planet_number = mssg.event.go_to_planet.data
+    this.fire_event(this.new_message("sync", "show_planet", planet_number))
 }
 
 //States
-
 Game.prototype.running_up = function(date){
         this.skill_menu = new PointDealer(
             "skill", {
@@ -43,13 +46,11 @@ Game.prototype.running_up = function(date){
         this.add_port("show_planet", this.planet)
 
         //States
-        this.add_port("show_skills", skill_menu)
+        this.add_port("show_skills", this.skill_menu)
 
         this.switch("running.choosing")
-}
+    }
 
 Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
 }
-
-

@@ -73,7 +73,6 @@ function PointDealer(view_name, interface) {
                     }
                 }(category)
             })
-
             this.render(category)
         }
 

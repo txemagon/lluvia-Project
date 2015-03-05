@@ -36,11 +36,11 @@ function RotateEffect(view, config) {
             for (var i = that.coord.length - 1; i &gt;= 0; i--)
                 that.coord[i] += that.velocity[i] * (now - before) / 1000
 
-            that.view.style.transform = 'rotate(' + that.coord[0] + 'deg)'
-            that.view.style.webkitTransform = 'rotate(' + that.coord[0] + 'deg)'
-            that.view.style.mozTransform = 'rotate(' + that.coord[0] + 'deg)'
-            that.view.style.msTransform = 'rotate(' + that.coord[0] + 'deg)'
-            that.view.style.oTransform = 'rotate(' + that.coord[0] + 'deg)'
+            that.view.style.transform = &#39;rotate(&#39; + that.coord[0] + &#39;deg)&#39;
+            that.view.style.webkitTransform = &#39;rotate(&#39; + that.coord[0] + &#39;deg)&#39;
+            that.view.style.mozTransform = &#39;rotate(&#39; + that.coord[0] + &#39;deg)&#39;
+            that.view.style.msTransform = &#39;rotate(&#39; + that.coord[0] + &#39;deg)&#39;
+            that.view.style.oTransform = &#39;rotate(&#39; + that.coord[0] + &#39;deg)&#39;
 
             if (that.angle &amp;&amp; that.coord[0] &gt;= that.angle)
                 that.switch(&quot;stopped&quot;)

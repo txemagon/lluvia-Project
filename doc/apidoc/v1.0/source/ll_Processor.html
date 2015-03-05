@@ -31,9 +31,13 @@ Processor.prototype.constructor = Processor;
 function Processor() {
 
     // Variables member
-    this.now = new Date();
-    this.events = new Event();
-    this.threads = new Array();
+    this.now = new Date()
+    this.events = new Event()
+    this.threads = []
+    Object.defineProperty(this, &quot;run_bound&quot;, {
+        value: Processor.prototype.run.bind(this),
+        enumerable: false
+    })
 }
 
 
@@ -101,21 +105,19 @@ Processor.prototype.step = function(date) {
 <span id='Processor-method-run'>/**
 </span> * @method run
  * Execute all threads. Top processors are called by themselves.
- * Lower tiers can belong (be registered) in another's Processor#thread. Then
+ * Lower tiers can belong (be registered) in another&#39;s Processor#thread. Then
  * a date is passed as a parameter in order to keep lower time lags between
  * Thread#run calls. Thus, all registered threads are informed of the same (date)
  * time.
  *
- * @param {Date} date Parent's processor time.
+ * @param {Date} date Parent&#39;s processor time.
  *
  */
 Processor.prototype.run = function(date) {
     this.now = new Date();
-    try {
-        this.step(this.now)
-    } catch (e) {
-    }
-    setTimeout(this.run.bind(this), 20);
+    this.step(this.now)
+
+    setTimeout(this.run_bound, 20)
 }
 
 <span id='Processor-method-start'>/**
@@ -132,7 +134,7 @@ Processor.prototype.start = function() {
 </span> * @method newThread
  * Executes periodically a function in a new Thread.
  *
- * Not tested. ruby -e &quot;puts 'sorry ' * 20&quot;
+ * Not tested. ruby -e &quot;puts &#39;sorry &#39; * 20&quot;
  *
  * ### Example
  *
