@@ -56,7 +56,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         directionalLight.castShadow = true
         //directionalLight.onlyShadow = true
         //directionalLight.shadowCameraVisible = true
-        directionalLight.shadowDarkness = 10;   
+        directionalLight.shadowDarkness = 1;   
         directionalLight.shadowCameraRight    =  1000;
         directionalLight.shadowCameraLeft     = -1000;
         directionalLight.shadowCameraTop      = 1000; 

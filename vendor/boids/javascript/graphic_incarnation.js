@@ -1,33 +1,33 @@
 var cartoon = new Incarnation("WebGl", "Boid", "Object", "Wall")
 
 cartoon.Boid.mesh.body = function(boid){
-    var sphere = new THREE.Mesh(
-       new THREE.SphereGeometry(10 /*radius*/ , 16 /*segments*/ , 16 /*rings*/ ),
+    var geometry = new THREE.Mesh(
+       new THREE.SphereGeometry(10 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
        new THREE.MeshLambertMaterial({
           color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
        })
     )
-    sphere.castShadow = true;
-    sphere.receiveShadow = true;
-    sphere.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
-    sphere.update = function(boid){
+    geometry.castShadow = true;
+    geometry.receiveShadow = false;
+    geometry.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+    geometry.update = function(boid){
         this.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
     }
-    return sphere
+    return geometry
 }
 
 cartoon.Boid.mesh.speed = function(){
-	var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshLambertMaterial());
-    cylinder.castShadow = false;
-    cylinder.receiveShadow = false;
-    cylinder.overdraw = true;
-    cylinder.rotation.z = 90* Math.PI / 180;
-    cylinder.update = function(boid){
+	var geometry = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshLambertMaterial());
+    geometry.castShadow = false;
+    geometry.receiveShadow = false;
+    geometry.overdraw = true;
+    geometry.rotation.z = 90* Math.PI / 180;
+    geometry.update = function(boid){
        this.position.set(boid.geo_data.position.get_coord(0)+10, boid.geo_data.position.get_coord(1), -7)
        this.rotation.x = boid.heading().Coord[0]
        this.rotation.y = boid.heading().Coord[1]
     }
-    return cylinder
+    return geometry
 }
 
 cartoon.Wall.mesh.structure = function(wall){

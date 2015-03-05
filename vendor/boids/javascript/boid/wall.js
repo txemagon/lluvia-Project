@@ -2,10 +2,10 @@ Wall.prototype = new Boid
 Wall.prototype.constructor = Wall
 
 function Wall(){
-	this.width = 1000
-	this.height = 400
+	this.width = 100000
+	this.height = 400000
 	Boid.call(this, this.configuration())
-	this.colour = "cyan"
+	this.colour = "white"
 }
 
 Wall.prototype.configuration = function(){

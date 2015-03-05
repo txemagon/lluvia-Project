@@ -4126,7 +4126,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
         directionalLight.position.set(-500,0,500)
         directionalLight.castShadow = true
-        directionalLight.shadowDarkness = 10;   
+        directionalLight.shadowDarkness = 1;   
         directionalLight.shadowCameraRight    =  1000;
         directionalLight.shadowCameraLeft     = -1000;
         directionalLight.shadowCameraTop      = 1000; 
