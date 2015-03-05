@@ -1,8 +1,15 @@
 Enemy.prototype = new Boid
 Enemy.prototype.constructor = Enemy
 
+
+Boss.prototype = new Boid
+Boss.prototype.constructor = Boss
+
 function Enemy(){
-	Character.apply(this, arguments)
+	  Character.apply(this, arguments)
+
+    var that = this
+    var args = arguments
 }
 
 Enemy.data = [ 
@@ -36,9 +43,13 @@ Enemy.data = [
   	speed: 2,
     img: "..images/ships/ship_enemy5.png"},
 
-  { life: 25,
+  { life: 35,
   	damage: 3,
   	resistance: 2,
   	speed: 3,
     img: "..images/ships/ship_enemy6.png"}
 ]
+
+function Boss(){
+    Character.apply(this, arguments)
+}

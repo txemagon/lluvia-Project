@@ -28,7 +28,6 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
 }
 
 //States
-
 Game.prototype.running_up = function(date){
         this.skill_menu = new PointDealer(
             "skill", {
