@@ -3336,34 +3336,36 @@ Device.prototype = new Processor
 Device.extend(ThreadAutomata) 
 Device.prototype.constructor = Device
 Device.STATE = new EnumerationOf(State, ["suspended", "running", "suspending", "killing", "killed"])
-Device.default_solicitors = {
-            running: function() {
-                this.gate_runner(this.now)
-                this.child_runner(this.now);
-            },
-            suspending: function() {
-                this.child_runner(this.now);
-            },
-            killing: function() {
-                this.gate_runner(this.now)
-            }
+Device.default_solicitors = function() {
+    return {
+        running: function() {
+            this.gate_runner(this.now)
+            this.child_runner(this.now);
+        },
+        suspending: function() {
+            this.child_runner(this.now);
+        },
+        killing: function() {
+            this.gate_runner(this.now)
         }
+    }
+}
 function Device(view, state, solicitors, parent, block) {
     var that = this
     this._class = that
-    function engage_drivers(){
+    function engage_drivers() {
         var usher = new Device.StateUsher(that)
         var attr = that.keys()
-        state.each(function(key, value){
+        state.each(function(key, value) {
             var reg = new RegExp("^" + key + "_")
-            for (var i=0; i<attr.length; i++)
+            for (var i = 0; i < attr.length; i++)
                 if (reg.test(attr[i]))
                     usher.add(attr[i], key, value)
         })
     }
     function initialize() { 
-        state = state  || new EnumerationOf(State, Device.STATE)
-        that.solicitors = solicitors || Device.default_solicitors
+        state = state || new EnumerationOf(State, Device.STATE)
+        that.solicitors = solicitors || Device.default_solicitors()
         if (view)
             that.view = (typeof(view) === "string" ? document.getElementById(view) : view)
         that.event_dispatcher = new EventDispatcher();
@@ -3480,20 +3482,21 @@ Device.StateUsher = function(I) {
 Device.StateUsher.prototype.add = function(driver_name, hook_name, state) {
     var host = state
     var substates = driver_name.split("_")
-    for (var i=0; i<hook_name.split("_").length; i++)
+    for (var i = 0; i < hook_name.split("_").length; i++)
         substates.shift()
     var regime = false
-    while (substates.length){
-        var new_level = substates.shift() 
+    while (substates.length) {
+        var new_level = substates.shift()
         for (var r in State.REGIME)
-            if ( r == new_level )
+            if (r == new_level)
                 regime = new_level
-        if (!regime){
-            if (!host[new_level]) 
+        if (!regime) {
+            if (!host[new_level])
                 this.state.add(new_level, host.toString())
             host = host[new_level]
         }
     }
+    host.owner = this.i
     host = host.run
     if (regime)
         host[regime] = this.i[driver_name]
@@ -4053,6 +4056,8 @@ function CanvasDevice(screen, drawable_obj, incarnation) {
 }
 CanvasDevice.prototype.draw = function(){
 	this.screen.width = this.screen.width
+    this.context.translate(0, this.screen.height)
+    this.context.scale(1, -1)
 	for(var i = 0; i < this.drawable.length; i++)
 		if("draw" in this.incarnation[this.incarnation.search_element(this.drawable[i])] && typeof(this.incarnation[this.incarnation.search_element(this.drawable[i])].draw) == "function")
 		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
@@ -4100,18 +4105,13 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.context.shadowMapType = THREE.PCFSoftShadowMap
         that.scene = new THREE.Scene()
         that.cameras = []
+        that.selected_camera = 0
         that.merge_drawable_obj(drawable_obj)
         var aspect = that.screen.width / that.screen.height
         var view_angle = 45
         var near = 0.1
         var far = 1000000
-        that.cameras.push(that.camera = new THREE.PerspectiveCamera(
-            view_angle,
-            aspect,
-            near,
-            far))
-        that.scene.add(camera)
-        that.camera.position.z = 500
+        that.add_camera(aspect, view_angle, near, far, 0, 0, 500)
         that.controls = new THREE.OrbitControls( that.cameras[0] );
         that.controls.addEventListener( 'change', that.render );
         that.cameras[0].lookAt({x:500, y:200, z:0});
@@ -4141,37 +4141,62 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
     if (arguments.length) 
         initialize()
 }
+WebGl.prototype.merge_drawable_obj = function(drawable){
+    this.drawable = []
+    var drawable_obj = drawable.slice() || []
+    for(var i = 0; i<drawable_obj.length; i++)
+      this.add_drawable_obj(drawable_obj[i])
+}
 WebGl.prototype.add_drawable_obj = function(drawable_obj){
     this.drawable.push({obj: drawable_obj, three_obj:[]})
     this.create_3d_object(this.drawable[this.drawable.length-1].obj)
-}
-WebGl.prototype.render = function(n){
-    this.update()
-    this.context.render(this.scene, this.camera);
 }
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
     for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
         obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
-        WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
+        this.add_3d_object(drawable_obj, obj)
     }
+}
+WebGl.prototype.add_3d_object = function(obj, three_obj){
+  for(var i in this.drawable)
+     if(obj == this.drawable[i].obj){
+        this.drawable[i].three_obj.push(three_obj)
+        break;
+    }
+}
+WebGl.prototype.render = function(){
+    this.update()
+    this.context.render(this.scene, this.cameras[this.selected_camera])
 }
 WebGl.prototype.update = function(){
     for(var i = 0; i < this.drawable.length; i++)
         for(var j = 0; j < this.drawable[i].three_obj.length; j++)
-        if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
-           this.drawable[i].three_obj[j].update(this.drawable[i].obj)
+            if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
+               this.drawable[i].three_obj[j].update(this.drawable[i].obj)
 }
-WebGl.prototype.merge_drawable_obj = function(drawable){
-    var drawable_obj = drawable || []
+WebGl.prototype.change_camera = function(){
+    if(this.selected_camera+1 >= this.cameras.length)
+       this.selected_camera = 0
+    else
+       this.selected_camera ++
 }
-WebGl.merge_3d_object = function(obj, drawable, three_obj){
-  for(var i in drawable)
-     if(obj == drawable[i].obj){
-        drawable[i].three_obj.push(three_obj)
-        break;
-    }
+WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z){
+    var camera = null
+    var aspect = aspect
+    var view_angle = angle
+    var near = near
+    var far = far
+    this.cameras.push( camera = new THREE.PerspectiveCamera(
+        view_angle,
+        aspect,
+        near,
+        far))
+    this.scene.add(camera)
+    camera.position.z = z
+    camera.position.x = x
+    camera.position.y = y
 }
 WebGl.available$U = function() {
     var webgl = false
@@ -5287,7 +5312,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

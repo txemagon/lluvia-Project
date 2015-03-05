@@ -101,7 +101,7 @@ function VersionNumber(initial_string, sep) {
  * @return {String} Printable version of VersionNumber objects.
  */
 VersionNumber.prototype.toString = function() {
-    // VN's are considered as constants, so we cache the value.
+    // VN&#39;s are considered as constants, so we cache the value.
     if (this.inner_data)
         return this.inner_data
 
@@ -114,7 +114,7 @@ VersionNumber.prototype.toString = function() {
         obj = obj[key]
     }
 
-    Object.defineProperty(this, 'inner_data', {
+    Object.defineProperty(this, &#39;inner_data&#39;, {
         value: text.replace(/.$/, &quot;&quot;),
         writable: false,
         enumerable: false
@@ -322,7 +322,7 @@ VersionNumber.prototype.valueOf = function() {
  *     //=&gt; }
  *
  * The above example can drive you to mistake a[&quot;1.3&quot;] as a is VersionNumber when it
- * actually isn't.
+ * actually isn&#39;t.
  *
  * ## Hack
  *

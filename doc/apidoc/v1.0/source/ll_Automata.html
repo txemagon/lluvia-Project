@@ -29,7 +29,7 @@
  * ## States
  *
  * States refers to each of the states of a Finite Machine Automaton. See {@link Engine.State State}
- * for a very detailed explanation. States are injected with an attribute 'owner' that refers to
+ * for a very detailed explanation. States are injected with an attribute &#39;owner&#39; that refers to
  * the automata.
  *
  * ### Warning
@@ -46,21 +46,21 @@
  *
  *     {
  *            walking: function() {
- *                return &quot;I'm walking&quot;
+ *                return &quot;I&#39;m walking&quot;
  *            },
  *            running: [
  *
  *                function() {
- *                    return &quot;I'm running&quot;
+ *                    return &quot;I&#39;m running&quot;
  *                }, {
  *                    slow: function() {
- *                        return &quot;I'm running slow&quot;
+ *                        return &quot;I&#39;m running slow&quot;
  *                    },
  *                    &quot;slow.steady&quot;: function() {
  *                        return &quot;But steadily&quot;
  *                    },
  *                    fast: function() {
- *                        return &quot;I'm running fast&quot;
+ *                        return &quot;I&#39;m running fast&quot;
  *                    }
  *                }
  *            ]
@@ -73,7 +73,7 @@
  *
  *     var solicitors = {
  *             walking: function() {
- *                 return &quot;I'm walking with my shoes.&quot;
+ *                 return &quot;I&#39;m walking with my shoes.&quot;
  *             },
  *             &quot;walking.down&quot;: function() {
  *                 alert(&quot;Im taking my shoes off.&quot;)
@@ -85,10 +85,10 @@
  *             running: [
  *
  *                 function() {
- *                     return &quot;I'm running&quot;
+ *                     return &quot;I&#39;m running&quot;
  *                 }, {
  *                     slow: function() {
- *                         return &quot;I'm running slow&quot;
+ *                         return &quot;I&#39;m running slow&quot;
  *                     },
  *                     &quot;slow.up&quot;: function() {
  *                         alert(&quot;I got my slow sneakers&quot;)
@@ -97,7 +97,7 @@
  *                         return &quot;But steadily&quot;
  *                     },
  *                     fast: function() {
- *                         return &quot;I'm running fast&quot;
+ *                         return &quot;I&#39;m running fast&quot;
  *                     }
  *                 }
  *             ],
@@ -118,7 +118,7 @@
  *     //=&gt;                         return State.prototype._run.apply(that, arguments)
  *     //=&gt;                     }),
  *     //=&gt;                run: (function () {
- *     //=&gt;                        return &quot;I'm walking with my shoes.&quot;
+ *     //=&gt;                        return &quot;I&#39;m walking with my shoes.&quot;
  *     //=&gt;                     })
  *     //=&gt;              },
  *     //=&gt;     running: {
@@ -126,29 +126,29 @@
  *     //=&gt;                          return State.prototype._run.apply(that, arguments)
  *     //=&gt;                       }),
  *     //=&gt;                run:  (function () {
- *     //=&gt;                          return &quot;I'm running&quot;
+ *     //=&gt;                          return &quot;I&#39;m running&quot;
  *     //=&gt;                        }),
  *     //=&gt;                slow: {
  *     //=&gt;                        1:   {1:{}},
  *     //=&gt;                        run: (function () {
- *     //=&gt;                                  return &quot;I'm running slow&quot;
+ *     //=&gt;                                  return &quot;I&#39;m running slow&quot;
  *     //=&gt;                              }),
- *     //=&gt;                        '1.1':(function () {
+ *     //=&gt;                        &#39;1.1&#39;:(function () {
  *     //=&gt;                                  return State.prototype._run.apply(that, arguments)
  *     //=&gt;                               })
  *     //=&gt;                      },
  *     //=&gt;                fast: {
  *     //=&gt;                        1: {2:{}},
  *     //=&gt;                        run: (function () {
- *     //=&gt;                                  return &quot;I'm running fast&quot;
+ *     //=&gt;                                  return &quot;I&#39;m running fast&quot;
  *     //=&gt;                              }),
- *     //=&gt;                        '1.2': (function () {
+ *     //=&gt;                        &#39;1.2&#39;: (function () {
  *     //=&gt;                                     return State.prototype._run.apply(that, arguments)
  *     //=&gt;                                })
  *     //=&gt;                       }
  *     //=&gt;              },
  *     //=&gt;     none: {
- *     //=&gt;             '-1': (function () {
+ *     //=&gt;             &#39;-1&#39;: (function () {
  *     //=&gt;                         return State.prototype._run.apply(that, arguments)
  *     //=&gt;                   }),
  *     //=&gt;             run: (function () {})
@@ -158,8 +158,8 @@
  * As we can see, every state is made of a
  * {@link Kernel.Foundation.DataType.VersionNumber VersionNumber}, which is the
  * VersionNumber itself ( for fast will be: {1: {2:{}}} ) plus to additional
- * attributes: 'run' and the result of VersionNumber#toString
- * ('1.2' in the example). When this attribute, containing a function, is
+ * attributes: &#39;run&#39; and the result of VersionNumber#toString
+ * (&#39;1.2&#39; in the example). When this attribute, containing a function, is
  * triggered a generic \_run function is called. Then user defined run function,
  * usually called the driver of the state is executed.
  *
@@ -232,7 +232,7 @@ function Automata(states, solicitor) {
 
         that.state.each(function(k, v) {
             v.owner = that
-            Object.defineProperty(v, 'owner', {
+            Object.defineProperty(v, &#39;owner&#39;, {
                 enumerable: false,
                 writable: false
             })

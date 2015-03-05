@@ -11,7 +11,7 @@ Device.StateUsher = function(I) {
 /**
  * @method add
  * Adds a new substate along with its driver function or adds a regime to a substate.
- * 
+ *
  * @param {String} driver_name "running_choosing_level_up" ie.
  * @param {String} hook_name   "running"
  * @param {State}  state       "running" state object.
@@ -19,24 +19,25 @@ Device.StateUsher = function(I) {
 Device.StateUsher.prototype.add = function(driver_name, hook_name, state) {
     var host = state
     var substates = driver_name.split("_")
-    for (var i=0; i<hook_name.split("_").length; i++)
+    for (var i = 0; i < hook_name.split("_").length; i++)
         substates.shift()
 
     var regime = false
-    while (substates.length){
-        var new_level = substates.shift() 
+    while (substates.length) {
+        var new_level = substates.shift()
 
         for (var r in State.REGIME)
-            if ( r == new_level )
+            if (r == new_level)
                 regime = new_level
-        if (!regime){
-            if (!host[new_level]) 
+        if (!regime) {
+            if (!host[new_level])
                 this.state.add(new_level, host.toString())
-            
+
             host = host[new_level]
         }
     }
 
+    host.owner = this.i
     host = host.run
     if (regime)
         host[regime] = this.i[driver_name]

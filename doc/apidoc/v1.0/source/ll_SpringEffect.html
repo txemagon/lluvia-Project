@@ -53,7 +53,6 @@ function SpringEffect(view, final_coord, initial_coord, velocity) {
                 }
             }, {
                 backwards: function(now, before) {
-                    alert(&quot;hey&quot;)
                     for (var i = that.coord.length - 1; i &gt;= 0; i--)
                         that.coord[i] += that.velocity[i] * (now - before) / 1000
                     that.view.style.marginLeft = &quot;-&quot; + that.coord[0] + &quot;px&quot;

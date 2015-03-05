@@ -125,7 +125,7 @@
  *     a.run.steady = function(name) {
  *         if (this.door == &quot;opened&quot;)
  *             return &quot;2 people inside&quot;
- *         return &quot;Can't see anybody. The door is closed.&quot;
+ *         return &quot;Can&#39;t see anybody. The door is closed.&quot;
  *     }
  *     a.regime = State.REGIME.steady
  *
@@ -169,7 +169,7 @@ State.prototype.constructor = State
  *                                Constructor.
  */
 function State(label) {
-    /*  Don't check anything but existance.
+    /*  Don&#39;t check anything but existance.
         Just try to execute for profiling purposes.
     */
     VersionNumber.apply(this, arguments)

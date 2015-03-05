@@ -79,11 +79,11 @@ Class.all = []
  *     function Person() {;}
  *
  *     var me = new Person()
- *     me.create_attr( 'name' )
- *     me.create_attr( 'age', 'height' )
- *     me.create_attr( ['age', 'height'] )
- *     me.create_attr( ['age', 'height'], name, ['money', 'studies'] )
- *     me.create_attr( {name: 'james', age: 22} )
+ *     me.create_attr( &#39;name&#39; )
+ *     me.create_attr( &#39;age&#39;, &#39;height&#39; )
+ *     me.create_attr( [&#39;age&#39;, &#39;height&#39;] )
+ *     me.create_attr( [&#39;age&#39;, &#39;height&#39;], name, [&#39;money&#39;, &#39;studies&#39;] )
+ *     me.create_attr( {name: &#39;james&#39;, age: 22} )
  *
  */
 Class.prototype.create_attr = function(attributes){
@@ -120,7 +120,7 @@ Class.prototype.create_attr = function(attributes){
 </span> * @method attr_reader
  *
  * Decorator function that creates attribute getters along with the attribute itself.
- * It doesn't do anything if attribute exists.
+ * It doesn&#39;t do anything if attribute exists.
  *
  * @param  { String | Array | Object } attr_names Arrays are parsed element by element.
  *         Default values are possible passing an Object as a parameter.
@@ -133,8 +133,8 @@ Class.prototype.create_attr = function(attributes){
  *
  *     function Person() {;}
  *     me = new Person()
- *     me.attr_reader('name')
- *     me.attr_reader('age', 'height')
+ *     me.attr_reader(&#39;name&#39;)
+ *     me.attr_reader(&#39;age&#39;, &#39;height&#39;)
  *
  *  Then camelcased and undescored getters are provided.
  *
@@ -145,7 +145,7 @@ Class.prototype.create_attr = function(attributes){
  * A big todo is to achieve the class inside usage.
  *
  *     function Person() {
- *         this.attr_reader('name')
+ *         this.attr_reader(&#39;name&#39;)
  *     }
  *
  *
@@ -169,7 +169,7 @@ Class.prototype.attr_reader = function (attr_names){
 </span> * @method attr_writer
  *
  * Decorator function that creates attribute setters along with the attribute itself.
- * It doesn't do anything if attribute exists.
+ * It doesn&#39;t do anything if attribute exists.
  *
  * @param  { String | Array | Object } attr_names Arrays are parsed element by element.
  *         Default values are possible passing an Object as a parameter.
@@ -182,13 +182,13 @@ Class.prototype.attr_reader = function (attr_names){
  *
  *     function Person() {;}
  *     me = new Person()
- *     me.attr_writer('name')
- *     me.attr_writer('age', 'height')
+ *     me.attr_writer(&#39;name&#39;)
+ *     me.attr_writer(&#39;age&#39;, &#39;height&#39;)
  *
  *  Then camelcased and undescored getters are provided.
  *
- *     me.set_name('james')
- *     me.setName('jim')
+ *     me.set_name(&#39;james&#39;)
+ *     me.setName(&#39;jim&#39;)
  *
  */
 Class.prototype.attr_writer = function (attr_names){
@@ -221,8 +221,8 @@ Class.prototype.attr_writer = function (attr_names){
  *
  *     function Person() {;}
  *     me = new Person()
- *     me.attr_accessor('name')
- *     me.attr_accessor('age', 'height')
+ *     me.attr_accessor(&#39;name&#39;)
+ *     me.attr_accessor(&#39;age&#39;, &#39;height&#39;)
  *
  */
 Class.prototype.attr_accessor = function(attr_names){
@@ -299,8 +299,8 @@ Class.prototype.get_this   = function() { return this }
  *
  *    Person.prototype.greet = function (name){ return class_name };
  *
- *    me = new Person('Txema');
- *    me.add_before_filter('greet', change, function(){ b = 2 } );
+ *    me = new Person(&#39;Txema&#39;);
+ *    me.add_before_filter(&#39;greet&#39;, change, function(){ b = 2 } );
  *    me.greet();
  *    a //=&gt; true
  *    b //=&gt; 2
@@ -336,8 +336,8 @@ Class.prototype.add_before_filter   = function(observed_function, filters) {
  *
  *    Person.prototype.greet = function (name){ return class_name };
  *
- *    me = new Person('Txema');
- *    me.add_after_filter('greet', change, function(){ b = 2 } );
+ *    me = new Person(&#39;Txema&#39;);
+ *    me.add_after_filter(&#39;greet&#39;, change, function(){ b = 2 } );
  *    me.greet();
  *    a //=&gt; true
  *    b //=&gt; 2
@@ -368,7 +368,7 @@ Class.prototype.call_before = function(fn_name){
    for (var i=0; i&lt;this.before_filters[fn_name].length; i++)
    this.before_filters[fn_name][i]();
 }
-/* todo: define a notation in _ClassFactory to avoid filters' call by default */
+/* todo: define a notation in _ClassFactory to avoid filters&#39; call by default */
 
 <span id='Kernel-Foundation-Architecture-Class-method-call_after'>/**
 </span> * @method call_after
@@ -397,9 +397,9 @@ Class.prototype.call_after = function(fn_name){
  *     Class_MyClass()
  *
  *     // Create class Person
- *     Class_Person(function(name){this.name = 'juan'},
+ *     Class_Person(function(name){this.name = &#39;juan&#39;},
  *                  function initialize(name){ this.name = name },
- *                  function(){this.name = 'luis'});
+ *                  function(){this.name = &#39;luis&#39;});
  *
  *
  * @param  {String} method

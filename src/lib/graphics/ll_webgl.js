@@ -18,6 +18,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         that.scene = new THREE.Scene()
 
         that.cameras = []
+        that.selected_camera = 0
 
         //that.drawable = []
         that.merge_drawable_obj(drawable_obj)
@@ -26,14 +27,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         var view_angle = 45
         var near = 0.1
         var far = 1000000
-        that.cameras.push(that.camera = new THREE.PerspectiveCamera(
-            view_angle,
-            aspect,
-            near,
-            far))
-        that.scene.add(camera)
-        that.camera.position.z = 500
-        //that.camera.rotation.z = 180 * Math.PI / 180
+        that.add_camera(aspect, view_angle, near, far, 0, 0, 500)
         
         that.controls = new THREE.OrbitControls( that.cameras[0] );
         that.controls.addEventListener( 'change', that.render );
@@ -79,55 +73,122 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
 }
 
 
+/**
+ * @method merge_drawable_obj
+ * Merge the objects of the world, that we can draw.
+ * 
+ * @param  {Array}  drawable Drawable objects.
+ */
+WebGl.prototype.merge_drawable_obj = function(drawable){
+    this.drawable = []
+    var drawable_obj = drawable.slice() || []
+    for(var i = 0; i<drawable_obj.length; i++)
+      this.add_drawable_obj(drawable_obj[i])
+}
+
+
+/**
+ * @method add_drawable_obj
+ * Create new object, with two atributes, first is a pointer to a drawable object in the world,
+ * second is an array of pointers to 3d drawable objects in the scene.
+ * And push this object to the drawable array.
+ * 
+ * @param {Object} drawable_obj The new drawabla object.
+ */
 WebGl.prototype.add_drawable_obj = function(drawable_obj){
     this.drawable.push({obj: drawable_obj, three_obj:[]})
     this.create_3d_object(this.drawable[this.drawable.length-1].obj)
 }
 
 
-WebGl.prototype.render = function(n){
-    this.update()
-    this.context.render(this.scene, this.camera);
-}
-
-
+/**
+ * @method create3d_object
+ * Add to three_obj array the 3d objects that is form, using the incarnation.
+ * Add the drawable objets to the scene.
+ * 
+ * @param  {Object} drawable_obj Drawable object
+ */
 WebGl.prototype.create_3d_object = function(drawable_obj){
     var obj = null
     for (var i in this.incarnation[this.incarnation.search_element(drawable_obj)].mesh){
         obj = this.incarnation[this.incarnation.search_element(drawable_obj)].mesh[i](drawable_obj)
         this.scene.add(obj)
-        WebGl.merge_3d_object(drawable_obj, this.drawable, obj)
+        this.add_3d_object(drawable_obj, obj)
     }
 }
 
 
-WebGl.prototype.update = function(){
-    for(var i = 0; i < this.drawable.length; i++)
-        for(var j = 0; j < this.drawable[i].three_obj.length; j++)
-        if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
-           this.drawable[i].three_obj[j].update(this.drawable[i].obj)
-}
-
-
-WebGl.prototype.merge_drawable_obj = function(drawable){
-    var drawable_obj = drawable || []
-    //for(var i = 0; i<drawable_obj.length; i++){
-      //this.drawable[i] = {obj: drawable_obj[i], three_obj:""}
-      //this.create_3d_object(this.drawable[i].obj)
-      //this.add_drawable_obj(drawable_obj[i])
-    //}
-}
-
-
-WebGl.merge_3d_object = function(obj, drawable, three_obj){
-  for(var i in drawable)
-     if(obj == drawable[i].obj){
-        drawable[i].three_obj.push(three_obj)
+/**
+ * @method add_3d_object
+ * Add the drawable object in the scene with drawable.three_obj array. Now our array contains a pointer to the scene object.
+ * 
+ * @param  {Object} obj       Drawable object
+ * @param  {Object} three_obj Object 3d in the scene
+ */
+WebGl.prototype.add_3d_object = function(obj, three_obj){
+  for(var i in this.drawable)
+     if(obj == this.drawable[i].obj){
+        this.drawable[i].three_obj.push(three_obj)
         break;
     }
 }
 
 
+/**
+ * @method render
+ * Render the scene, and update the 3d objects position.
+ * 
+ */
+WebGl.prototype.render = function(){
+    this.update()
+    this.context.render(this.scene, this.cameras[this.selected_camera])
+}
+
+
+/**
+ * @method update
+ * Update the 3d objects.
+ * 
+ */
+WebGl.prototype.update = function(){
+    for(var i = 0; i < this.drawable.length; i++)
+        for(var j = 0; j < this.drawable[i].three_obj.length; j++)
+            if("update" in this.drawable[i].three_obj[j] && typeof(this.drawable[i].three_obj[j].update) == "function")
+               this.drawable[i].three_obj[j].update(this.drawable[i].obj)
+}
+
+
+WebGl.prototype.change_camera = function(){
+    if(this.selected_camera+1 >= this.cameras.length)
+       this.selected_camera = 0
+    else
+       this.selected_camera ++
+}
+
+
+WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z){
+    var camera = null
+    var aspect = aspect
+    var view_angle = angle
+    var near = near
+    var far = far
+    this.cameras.push( camera = new THREE.PerspectiveCamera(
+        view_angle,
+        aspect,
+        near,
+        far))
+    this.scene.add(camera)
+    camera.position.z = z
+    camera.position.x = x
+    camera.position.y = y
+}
+
+/**
+ * @method
+ * Check WebGl is available.
+ * 
+ * @return {Bool}  
+ */
 WebGl.available$U = function() {
     
     var webgl = false
