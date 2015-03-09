@@ -1,3 +1,4 @@
+var game = null
 function main() {
-    var game = new Game()
+   game = new Game()
 }

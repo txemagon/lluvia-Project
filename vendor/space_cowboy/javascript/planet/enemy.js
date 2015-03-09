@@ -1,15 +1,11 @@
 Enemy.prototype = new Boid
 Enemy.prototype.constructor = Enemy
 
-
-Boss.prototype = new Boid
-Boss.prototype.constructor = Boss
-
-function Enemy(){
-	  Character.apply(this, arguments)
-
+function Enemy(config){
+	  //Character.apply(this, arguments)
+    Boid.apply(this, arguments)
     var that = this
-    var args = arguments
+    //alert(planet_number)
 }
 
 Enemy.data = [ 
@@ -50,6 +46,6 @@ Enemy.data = [
     img: "..images/ships/ship_enemy6.png"}
 ]
 
-function Boss(){
-    Character.apply(this, arguments)
+Enemy.prototype.draw = function(ctx){
+  alert("hey")
 }
