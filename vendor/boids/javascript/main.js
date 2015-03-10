@@ -54,6 +54,16 @@ function main() {
     return config
   }))
 */
+
+    var imm = w.new_immobile(function(config) {
+        /* Here you can interact with the outer scope */
+        config.colour = "lime"
+        config.geo_data = {
+            position: new Vector(200, 200)
+        }
+        return config
+    })
+
     /* Example: seek behavior */
     var seeker = []
     var t = w.new_boid(function(config) {
