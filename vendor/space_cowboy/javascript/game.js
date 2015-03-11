@@ -33,8 +33,14 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
     mssg.current++
     var planet_number = mssg.event.go_to_planet.data
     this.fire_event(this.new_message("sync", "show_planet", planet_number))
-    this.planet.initialize(planet_number)
 }
+
+/*
+Game.prototype.attend_next_level = function(date, mssg) {
+    mssg.current++
+    this.fire_event(this.new_message("sync", "show_skills"))
+}
+*/
 
 //States
 Game.prototype.running_up = function(date){

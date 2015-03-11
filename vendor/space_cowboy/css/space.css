@@ -33,11 +33,11 @@
 	margin: auto;
 }
 
-#ship_space {
+#ship {
 	position: relative;
-	width: 100px;
+	width: 90px;
 	height: 100px;
-	left: 15px;
+	left: 25px;
 	top: -750px;
 }
 

@@ -11,7 +11,7 @@ var KEY_RIGHT=39;
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
     var that = this
-    this.self_events = ["new_boid_of"]
+    this.self_events = ["new_boid"]
 
     this.screen = []
     this.screen.push(document.getElementById("canvas_planet"))
@@ -22,22 +22,24 @@ function Planet(view, screen, width, height) {
     this.velocity_max = 200
     this.boids = 0
     this.draw_bound = Planet.prototype.draw.bind(this)
-
     
     Device.call(this, view)
 }
 
 Planet.prototype.initialize = function(planet_number){
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
-    this.player = new Player()
+    //this.player = this.new_boid_of(Player) 
 
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
+    var planet_number = mssg.event.show_planet.data
+    alert(planet_number.toSource())
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
     this.switch("running.fight.playing")
+
 }
 
 //States
@@ -58,6 +60,7 @@ Planet.prototype.running_fight_playing_up = function(date) {
 
 Planet.prototype.running_fight_win = function() {
     alert("You won")
+    //next_level()
 }
 
 Planet.prototype.running_fight_lose = function() {
@@ -94,8 +97,9 @@ Planet.prototype.new_boid = function(config, block){
     return b
 }
 
-Planet.prototype.new_boid_of = function(class_name, config){
-    var b = new class_name(config)
+Planet.prototype.new_boid_of = function(the_class, config){
+    var class_name = the_class.name
+    var b = new the_class(config)
     if (this[class_name])
         this[class_name]++
     else
@@ -117,5 +121,12 @@ function restart() {
     else
         alert("See you space cowboy...")
 }
+
+/*
+function next_level() {
+    this.device.fire_event(this.device.new_message("sync", "next_level"))
+    this.device.hide()
+}
+*/
 
 
