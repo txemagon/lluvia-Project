@@ -25,6 +25,7 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
     mssg.current++
     var planet_number = mssg.event.go_to_planet.data
     this.fire_event(this.new_message("sync", "show_planet", planet_number))
+    this.switch("running.fight")
 }
 
 //States
@@ -53,4 +54,5 @@ Game.prototype.running_up = function(date){
 
 Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
+
 }

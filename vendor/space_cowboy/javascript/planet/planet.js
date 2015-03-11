@@ -38,10 +38,10 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
 Planet.prototype.running_fight_up = function(date) {
     alert("Start the battle ")
 
-    if (enemy.life = 0) 
+    if (enemy.life == 0) 
         this.switch("running_fight_win")
     else {
-        if(player.life = 0)
+        if(player.life == 0)
             this.switch("running_fight_lose")
     }   
 }
