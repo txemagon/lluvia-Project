@@ -15,6 +15,7 @@
 
 //require('Mathematics')
 
+Boid.prototype = new Mobile
 Boid.prototype.constructor = Boid
 
 function Boid(config_object, block){
@@ -22,7 +23,7 @@ function Boid(config_object, block){
     var that = this
     var args = arguments
 
-
+    //Being.call(this, config_object, block)
     if (typeof(block) === "undefined")
         if (typeof(config_object) === "function" ){
             block = config_object
@@ -31,27 +32,27 @@ function Boid(config_object, block){
 
 
         function initialize(){
-
+            Mobile.call(that)	
             var config = new Hash()
 
-            that.last_heading = new Vector(0, 1)
-            that.my_world = null
-            that.last_time = that.current_time = null
+           // that.last_heading = new Vector(0, 1)
+            //that.my_world = null
+            //that.last_time = that.current_time = null
             /* Overridable configuration */
 
             var default_config = {
-                geo_data: {
-                    position: new Vector(Math.floor(Math.random()*1000), Math.floor(Math.random()*400)),
-                    velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
-                    acceleration: new Vector(0,0)
-                },
+               // geo_data: {
+                    //position: new Vector(Math.floor(Math.random()*1000), Math.floor(Math.random()*400)),
+               //     velocity: new Vector(Math.floor(Math.random()*40), Math.floor(Math.random()*40)),
+               //     acceleration: new Vector(0,0)
+               // },
                 //gt: {colour: "blue"},
-                colour: "blue",
+                //colour: "blue",
 
                 brain: new Brain(that),
-                vel_max: 50,
-                mass: 2,
-                vision: {radius: 100, angle: 130 * Math.PI / 180},
+                //vel_max: 50,
+                //mass: 2,
+                //vision: {radius: 100, angle: 130 * Math.PI / 180},
 
                 force_limits: {
                     thrust: 20,
@@ -60,12 +61,13 @@ function Boid(config_object, block){
                 }
             }
 
+            default_config.soft_merge(that)
+            if(default_config.geo_data)
+	       default_config.geo_data.soft_merge(that.geo_data)
             config_object.soft_merge$B(default_config)
             if ( typeof(block) === "function")
                 config = block(config_object) || new Hash()
-            that.merge$B(config.soft_merge$B(config_object))
-            if (that.color)
-                that.colour = that.color
+            that.merge(config.soft_merge$B(config_object))
         }
 
         if (arguments.length)

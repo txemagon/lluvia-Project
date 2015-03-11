@@ -11,39 +11,58 @@ var KEY_RIGHT=39;
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
     var that = this
-    this.self_events = ["new_boid"]
+    this.self_events = ["new_boid_of"]
 
     this.screen = []
+    this.screen.push(document.getElementById("canvas_planet"))
     this.width = width || 100
     this.height = height || 100
     this.start_time = null
     this.aceleration_max = 30
     this.velocity_max = 200
     this.boids = 0
+    this.draw_bound = Planet.prototype.draw.bind(this)
+
     
     Device.call(this, view)
 }
 
 Planet.prototype.initialize = function(planet_number){
-    this.enemy = new Enemy(planet_number)
-    this.Player = new Player()
+    this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
+    this.player = new Player()
+
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
+    mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
+    this.switch("running.fight.playing")
 }
 
 //States
-Planet.prototype.running_fight_up = function(date) {
-    alert("Start the battle ")
+Planet.prototype.running_up = function() {
+    this.draw()
+}
 
+<<<<<<< HEAD
     if (enemy.life == 0) 
         this.switch("running_fight_win")
     else {
         if(player.life == 0)
             this.switch("running_fight_lose")
     }   
+=======
+Planet.prototype.running_fight_playing_up = function(date) {
+    alert("Start the battle ")
+/*
+    if (this.enemy.life == 0) 
+        this.switch("running.fight.win")
+    else 
+        if(this.player.life == 0)
+            this.switch("running.fight.lose")
+*/
+>>>>>>> 7c45c2adcadad0a620154d37c65495919558cc72
 }
 
 Planet.prototype.running_fight_win = function() {
@@ -67,11 +86,12 @@ Planet.prototype.has_born = function (){
 
 Planet.prototype.draw = function(){
     var that = this
-    var ctx = this.screen[0].context
+    var ctx = this.screen[0].getContext("2d")
     ctx.clearRect(0,0,400,400)
     this.get_boids().each( function(el) {
-    el.draw(ctx)
+      el.draw(ctx)
     })
+    requestAnimationFrame(this.draw_bound)
 }
 
 Planet.prototype.new_boid = function(config, block){
@@ -94,15 +114,9 @@ Planet.prototype.new_boid_of = function(class_name, config){
     return b
 }
 
-/*
-function initialize(){
-    //World.call(that, view)
-    that.ctx = that.view.getContext("2D")
-    }
-if (arguments.length)
-    initialize()
-*/
-
+Planet.prototype.get_boids = function(){
+  return this.get(Boid)
+}
 
 //when the player lose, restart the game
 function restart() {

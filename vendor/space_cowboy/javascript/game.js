@@ -9,7 +9,15 @@ Game.prototype.super = Device
 function Game() {
     this.self_events = ["show_skills", "show_space", "show_planet"]
     Device.call(this, "game")
-    this.points
+    this.points = {
+                points: 5,
+                damage: 0,
+                resistance: 0,
+                speed: 0
+            }
+    this.skill_menu = new PointDealer("skill", this.points)
+    this.space = new Space("map")
+    this.planet = new Planet("planet")
 }
 
 //Methods
@@ -25,20 +33,15 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
     mssg.current++
     var planet_number = mssg.event.go_to_planet.data
     this.fire_event(this.new_message("sync", "show_planet", planet_number))
+<<<<<<< HEAD
     this.switch("running.fight")
+=======
+    this.planet.initialize(planet_number)
+>>>>>>> 7c45c2adcadad0a620154d37c65495919558cc72
 }
 
 //States
 Game.prototype.running_up = function(date){
-        this.skill_menu = new PointDealer(
-            "skill", {
-                points: 5,
-                damage: 0,
-                resistance: 0,
-                speed: 0
-            })
-        this.space = new Space("map")
-        this.planet = new Planet("planet")
 
         //Methods
         this.skill_menu.add_port("chosen_finished", this)
