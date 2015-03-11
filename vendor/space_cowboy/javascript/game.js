@@ -33,12 +33,18 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
     mssg.current++
     var planet_number = mssg.event.go_to_planet.data
     this.fire_event(this.new_message("sync", "show_planet", planet_number))
-<<<<<<< HEAD
     this.switch("running.fight")
-=======
+
     this.planet.initialize(planet_number)
->>>>>>> 7c45c2adcadad0a620154d37c65495919558cc72
+
 }
+
+/*
+Game.prototype.attend_next_level = function(date, mssg) {
+    mssg.current++
+    this.fire_event(this.new_message("sync", "show_skills"))
+}
+*/
 
 //States
 Game.prototype.running_up = function(date){

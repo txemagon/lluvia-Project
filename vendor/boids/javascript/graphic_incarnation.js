@@ -1,4 +1,4 @@
-var cartoon = new Incarnation("WebGl", "Boid", "Immobile", "Object", "Wall")
+var cartoon = new Incarnation("WebGl", "Boid", "Immobile", "Mobile", "Object", "Wall")
 
 cartoon.Boid.mesh.body = function(boid){
     var geometry = new THREE.Mesh(
@@ -30,7 +30,7 @@ cartoon.Boid.mesh.speed = function(){
     return geometry
 }
 
-cartoon.Immobile.mesh.body = function(boid){
+cartoon.Mobile.mesh.body = function(boid){
     var geometry = new THREE.Mesh(
        new THREE.SphereGeometry(10 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
        new THREE.MeshLambertMaterial({
@@ -40,10 +40,13 @@ cartoon.Immobile.mesh.body = function(boid){
     geometry.castShadow = true;
     geometry.receiveShadow = false;
     geometry.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+    geometry.update = function(boid){
+        this.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
+    }
     return geometry
 }
 
-cartoon.Wall.mesh.structure = function(wall){
+cartoon.Immobile.mesh.structure = function(wall){
      var cuboMateriales = [
          new THREE.MeshLambertMaterial({color: wall.colour}),
          new THREE.MeshLambertMaterial({color: wall.colour}),
@@ -64,9 +67,9 @@ cartoon.Wall.mesh.structure = function(wall){
     return cubo;
 }
 
-var cartoon_canvas = new Incarnation("CanvasDevice", "Boid", "Object")
+var cartoon_canvas = new Incarnation("CanvasDevice", "Mobile", "Immobile", "Object")
 
-cartoon_canvas.Boid.draw = function(boid, context){
+cartoon_canvas.Mobile.draw = function(boid, context){
     var p = boid.geo_data.position;
     var v = boid.geo_data.velocity;
     var a = boid.geo_data.acceleration;
@@ -106,6 +109,12 @@ cartoon_canvas.Boid.draw = function(boid, context){
        // ctx.closePath();
        // ctx.stroke()
    // }
+}
+
+cartoon_canvas.Immobile.draw = function(immobile, ctx){
+    ctx.fillStyle = immobile.colour
+    ctx.rect(immobile.geo_data.position.get_coord(0), immobile.geo_data.position.get_coord(1), immobile.width, immobile.height)
+    ctx.fill()
 }
 
 var cartoon2_canvas = new Incarnation("CanvasDevice", "Boid", "Object")

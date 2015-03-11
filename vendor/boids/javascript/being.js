@@ -15,6 +15,7 @@ function Being(config_object, block){
           var config = new Hash()
 
           that.my_world = null
+          that.area = {x:0, y:0}
           /* Overridable configuration */
 
           var default_config = {
@@ -46,5 +47,16 @@ function Being(config_object, block){
 }
 
 Being.prototype.run = function(){
-return;
+   this.update_area()
+}
+
+Being.prototype.update_area = function(){
+  var last_area = {x: this.area.x, y:this.area.y}
+  this.area.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
+  this.area.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
+  if(this.area.x != last_area.x || this.area.y != last_area.y){
+    var index = this.my_world.map_area[last_area.y][last_area.x].indexOf(this)
+    this.my_world.map_area[last_area.y][last_area.x].splice(index, index+1)
+    this.my_world.map_area[this.area.y][this.area.x].push(this)
+  }
 }

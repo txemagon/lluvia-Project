@@ -26,16 +26,21 @@ function World(screen, type, incarnation, width, height) {
     /*function World sets the default parameter for the world unless given*/
 
     var that = this
-    this.self_events = ["focus_boid", "new_boid", "new_immobile"]
+    this.self_events = ["focus_boid", "new_boid", "new_immobile", "new_mobile"]
 
     this.screen = []
+    this.map_area = []
     this.width = width || 100 //meters
     this.height = height || 100
+    this.visibility = 100
+    this.inialize_map_area()
+
     this.start_time = null
     this.acceleration_max = 30
     this.velocity_max = 200
     this.boids = 0
     this.immobile = 0
+    this.mobile = 0
     this.draw_bound = World.prototype.draw.bind(this)
 
     if (screen && !type && !incarnation)
@@ -45,6 +50,24 @@ function World(screen, type, incarnation, width, height) {
 
     Device.call(that, null, null)
 }
+
+World.prototype.inialize_map_area = function(){
+    for(var i = 0; i < this.height/this.visibility; i++){
+        this.map_area[i] = []
+        for(var j = 0; j < this.width/this.visibility; j++){
+            this.map_area[i][j] = []
+        }
+    }
+}
+
+// World.prototype.update_cuadrant = function(){
+//     var that = this
+//     this.each_being(function(being){
+//         being.area.x = being.geo_data.position.get_coord(0)/this.visibility
+//         being.area.y = being.geo_data.position.get_coord(1)/this.visibility
+//         that.map_area[being.area.y][being.area.x].push(being)
+//     })
+// }
 
 /**
  * @method new_screen
@@ -199,6 +222,17 @@ World.prototype.new_immobile = function(config, block) {
     return b
 }
 
+World.prototype.new_mobile = function(config, block) {
+
+    var b = typeof(block) === "undefined" ? new Mobile(config) : new Mobile(config, block)
+
+    this.mobile ++
+    b.id = this.mobile
+    this.has_created(b, "new_mobile")
+
+    return b
+}
+
 /**
  * @method get_boids
  *
@@ -215,6 +249,14 @@ World.prototype.new_immobile = function(config, block) {
  */
 World.prototype.get_boids = function() {
     return this.get(Boid)
+}
+
+World.prototype.get_mobiles = function(){
+   return this.get(Mobile)
+}
+
+World.prototype.get_beings = function(){
+   return this.get(Being)
 }
 
 /**
@@ -239,6 +281,22 @@ World.prototype.each_boid = function() {
     })
 }
 
+World.prototype.each_mobile = function() {
+    var that = this
+
+    this.get_mobiles().each(function(el) {
+        World.prototype.each_mobile.yield(el)
+    })
+}
+
+World.prototype.each_being = function() {
+    var that = this
+
+    this.get_beings().each(function(el) {
+        World.prototype.each_being.yield(el)
+    })
+}
+
 /**
  * @method start
  *
@@ -256,7 +314,7 @@ World.prototype.each_boid = function() {
 World.prototype.start = function() {
     var that = this
     this.start_time = new Date()
-    this.get_boids().each(function(el) {
+    this.get_mobiles().each(function(el) {
         el.start(that.start_time)
     })
 
@@ -320,8 +378,8 @@ World.prototype.draw = function() {
 World.prototype.step = function(current_time) {
     var that = this
     current_time = current_time || this.now || new Date()
-    this.each_boid(function(boid) {
-        boid.update_physics(current_time)
+    this.each_mobile(function(mobile) {
+        mobile.update_physics(current_time)
     })
 }
 
@@ -399,7 +457,7 @@ World.prototype.show_boids = function() {
 //this.eventDispatcher.shift()
 //this.draw()
 //}
-
+//
 /**
  * @method visible_for
  *
@@ -415,11 +473,25 @@ World.prototype.show_boids = function() {
  * todo: Add a type of boid to see. I want to see sheeps
  *
  */
-World.prototype.visible_for = function(position, heading, vision) {
+// World.prototype.visible_for = function(position, heading, vision) {
+//     var that = this
+//     vision = vision.radius * vision.radius
+//     var visible = []
+//     this.each_boid(function(boid) {
+//         var x1 = position.get_coord(0)
+//         var y1 = position.get_coord(1)
+//         var dx = boid.geo_data.position.get_coord(0) - x1
+//         var dy = boid.geo_data.position.get_coord(1) - y1
+//         if (dx * dx + dy * dy < vision)
+//             visible.push(boid)
+//     })
+//     return visible
+// }
+World.prototype.visible_for = function(area, position, vision) {
     var that = this
     vision = vision.radius * vision.radius
     var visible = []
-    this.each_boid(function(boid) {
+    this.map_area[area.y][area.x].each(function(boid) {
         var x1 = position.get_coord(0)
         var y1 = position.get_coord(1)
         var dx = boid.geo_data.position.get_coord(0) - x1
@@ -510,6 +582,18 @@ World.prototype.new_boid_of = function(class_name, config) {
             this[class_name] = 1
     this.boids.total++
     this.has_born(b)
+
+    return b
+}
+
+World.prototype.new_immobile_of = function(class_name, config) {
+    var b = new class_name(config)
+    if (this[class_name])
+        this[class_name]++
+        else
+            this[class_name] = 1
+    this.immobile.total++
+    this.has_created(b, "new_immobile")
 
     return b
 }

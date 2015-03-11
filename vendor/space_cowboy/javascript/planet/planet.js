@@ -2,16 +2,10 @@ Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
-//Numero de las teclas
-var KEY_ENTER=13;
-var KEY_SPACE=32;
-var KEY_LEFT=37;
-var KEY_RIGHT=39;
-
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
     var that = this
-    this.self_events = ["new_boid_of"]
+    this.self_events = ["new_boid"]
 
     this.screen = []
     this.screen.push(document.getElementById("canvas_planet"))
@@ -22,18 +16,18 @@ function Planet(view, screen, width, height) {
     this.velocity_max = 200
     this.boids = 0
     this.draw_bound = Planet.prototype.draw.bind(this)
-
     
     Device.call(this, view)
 }
 
 Planet.prototype.initialize = function(planet_number){
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
-    this.player = new Player()
-
+    this.player = this.new_boid_of(Player, Player) 
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
+    var planet_number = mssg.event.show_planet.data
+    alert(planet_number.toSource())
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
@@ -45,14 +39,7 @@ Planet.prototype.running_up = function() {
     this.draw()
 }
 
-<<<<<<< HEAD
-    if (enemy.life == 0) 
-        this.switch("running_fight_win")
-    else {
-        if(player.life == 0)
-            this.switch("running_fight_lose")
-    }   
-=======
+
 Planet.prototype.running_fight_playing_up = function(date) {
     alert("Start the battle ")
 /*
@@ -62,11 +49,11 @@ Planet.prototype.running_fight_playing_up = function(date) {
         if(this.player.life == 0)
             this.switch("running.fight.lose")
 */
->>>>>>> 7c45c2adcadad0a620154d37c65495919558cc72
 }
 
 Planet.prototype.running_fight_win = function() {
     alert("You won")
+    //next_level()
 }
 
 Planet.prototype.running_fight_lose = function() {
@@ -103,8 +90,9 @@ Planet.prototype.new_boid = function(config, block){
     return b
 }
 
-Planet.prototype.new_boid_of = function(class_name, config){
-    var b = new class_name(config)
+Planet.prototype.new_boid_of = function(the_class, config){
+    var class_name = the_class.name
+    var b = new the_class(config)
     if (this[class_name])
         this[class_name]++
     else
@@ -126,5 +114,12 @@ function restart() {
     else
         alert("See you space cowboy...")
 }
+
+/*
+function next_level() {
+    this.device.fire_event(this.device.new_message("sync", "next_level"))
+    this.device.hide()
+}
+*/
 
 
