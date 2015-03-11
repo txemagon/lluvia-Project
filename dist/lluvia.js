@@ -4111,10 +4111,11 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         var view_angle = 45
         var near = 0.1
         var far = 1000000
-        that.add_camera(aspect, view_angle, near, far, 0, 0, 500)
-        that.controls = new THREE.OrbitControls( that.cameras[0] );
-        that.controls.addEventListener( 'change', that.render );
-        that.cameras[0].lookAt({x:500, y:200, z:0});
+        that.add_camera(aspect, view_angle, near, far, 0, 0, 486)
+        that.controls = new THREE.OrbitControls( that.cameras[0] )
+        that.controls.addEventListener( 'change', that.render )
+        that.controls.center.set(500, 200, 0)
+        that.cameras[0].lookAt({x:500, y:200, z:0})
         that.context.setSize(that.screen.width, that.screen.height)
         var sphere = new THREE.Mesh(
             new THREE.SphereGeometry(5  , 60  , 24  ),
@@ -5312,7 +5313,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/imasen/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

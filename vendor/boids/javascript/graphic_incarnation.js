@@ -1,4 +1,4 @@
-var cartoon = new Incarnation("WebGl", "Boid", "Object", "Wall")
+var cartoon = new Incarnation("WebGl", "Boid", "Immobile", "Object", "Wall")
 
 cartoon.Boid.mesh.body = function(boid){
     var geometry = new THREE.Mesh(
@@ -27,6 +27,19 @@ cartoon.Boid.mesh.speed = function(){
        this.rotation.x = boid.heading().Coord[0]
        this.rotation.y = boid.heading().Coord[1]
     }
+    return geometry
+}
+
+cartoon.Immobile.mesh.body = function(boid){
+    var geometry = new THREE.Mesh(
+       new THREE.SphereGeometry(10 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
+       new THREE.MeshLambertMaterial({
+          color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
+       })
+    )
+    geometry.castShadow = true;
+    geometry.receiveShadow = false;
+    geometry.position.set(boid.geo_data.position.get_coord(0), boid.geo_data.position.get_coord(1), -7)
     return geometry
 }
 

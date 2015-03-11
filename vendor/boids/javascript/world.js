@@ -26,7 +26,7 @@ function World(screen, type, incarnation, width, height) {
     /*function World sets the default parameter for the world unless given*/
 
     var that = this
-    this.self_events = ["focus_boid", "new_boid"]
+    this.self_events = ["focus_boid", "new_boid", "new_immobile"]
 
     this.screen = []
     this.width = width || 100 //meters
@@ -35,6 +35,7 @@ function World(screen, type, incarnation, width, height) {
     this.acceleration_max = 30
     this.velocity_max = 200
     this.boids = 0
+    this.immobile = 0
     this.draw_bound = World.prototype.draw.bind(this)
 
     if (screen && !type && !incarnation)
@@ -172,9 +173,30 @@ World.prototype.has_born = function() {
     for (var i = 0; i < arguments.length; i++) {
         arguments[i].my_world = this
         this.register(arguments[i])
+        for(var j = 0; j<this.screen.length; j++)
+           this.screen[j].add_drawable_obj(arguments[i])
         //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
         this.fire_event(this.new_message("sync", "new_boid", arguments[i]))
     }
+}
+
+World.prototype.has_created = function(creation, created_event){
+   creation.my_world = this
+   this.register(creation)
+   for(var j = 0; j<this.screen.length; j++)
+      this.screen[j].add_drawable_obj(creation)
+   this.fire_event(this.new_message("sync", created_event, creation))
+}
+
+World.prototype.new_immobile = function(config, block) {
+
+    var b = typeof(block) === "undefined" ? new Immobile(config) : new Immobile(config, block)
+
+    this.immobile ++
+    b.id = this.immobile
+    this.has_created(b, "new_immobile")
+
+    return b
 }
 
 /**
@@ -430,8 +452,7 @@ World.prototype.new_boid = function(config, block) {
     this.boids++
     b.id = this.boids
     this.has_born(b)
-    for(var i = 0; i<this.screen.length; i++)
-       this.screen[i].add_drawable_obj(b)
+
     return b
 }
 
@@ -489,8 +510,7 @@ World.prototype.new_boid_of = function(class_name, config) {
             this[class_name] = 1
     this.boids.total++
     this.has_born(b)
-    for(var i = 0; i<this.screen.length; i++)
-       this.screen[i].add_drawable_obj(b)
+
     return b
 }
 
