@@ -4,8 +4,8 @@ function main() {
 
 
 
-    w = new World('screener', WebGl, cartoon)
-    w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 0, 0, 200)    
+    w = new World('screener', WebGl, cartoon, 2000, 400)
+    w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
     w.new_screen('screener2', CanvasDevice, cartoon_canvas)
    
     
@@ -57,9 +57,21 @@ function main() {
 
     var imm = w.new_immobile(function(config) {
         /* Here you can interact with the outer scope */
-        config.colour = "lime"
+        config.colour = "lightskyblue"
         config.geo_data = {
-            position: new Vector(200, 200)
+            position: new Vector(-10000, 0)
+        }
+        config.width = 100000
+        config.height = 400000
+        return config
+    })
+    var mov = w.new_mobile(function(config) {
+        /* Here you can interact with the outer scope */
+        config.colour = "magenta"
+        config.geo_data = {
+            position: new Vector(100, 100),
+            velocity: new Vector(100, 1),
+            acceleration: new Vector(0, 0)
         }
         return config
     })
@@ -128,7 +140,6 @@ function main() {
         config.geo_data.position = new Vector(200, 0)
         config.brain.activate("foresee<seek>arrival", first)
     })
-    var b5 = w.new_boid_of(Wall)
 
     /* Example: Class as target */
     var yeoman = []

@@ -74,151 +74,151 @@ function Boid(config_object, block){
             initialize()
 }
 
-/**
- * @method  position
- *
- * Gets or set the position of the void
- *
- * @return {"undefined" | Number[]}
- */
-Boid.prototype.position = function(){
-    if (arguments.length == 0)
-        return this.geo_data.position.get_coord()
-    this.geo_data.position = arguments[0]
-}
-
-/**
- * @method  velocity
- *
- * Gets or set the velocity of the void
- *
- * @return {"undefined" | Number[]}
- */
-Boid.prototype.velocity = function(){
-    if (arguments.length == 0)
-        return this.geo_data.velocity.get_coord()
-    this.geo_data.velocity = arguments[0]
-}
-
-/**
- * @method  accelertation
- *
- * Gets or set the accelertation of the void
- *
- * @return {"undefined" | Number[]}
- */
-Boid.prototype.acceleration = function(){
-    if (arguments.length == 0)
-        return this.geo_data.acceleration.get_coord()
-    this.geo_data.acceleration = arguments[0]
-}
-
-/**
- * @method  start
- *
- * Stamps the initial processing time.
- *
- * @param  {Date} date
- */
-Boid.prototype.start = function(date){
-    this.last_time = this.current_time = date
-}
-
-/**
- * @method delta_t
- *
- * Ellapsed time since *last_time* was updated.
- *
- * @return {Number} Number of seconds ellapsed.
- */
-Boid.prototype.delta_t = function(){
-    return (this.current_time.getTime() - this.last_time.getTime()) / 1000;
-}
-
+///**
+// * @method  position
+// *
+// * Gets or set the position of the void
+// *
+// * @return {"undefined" | Number[]}
+// */
+//Boid.prototype.position = function(){
+//    if (arguments.length == 0)
+//        return this.geo_data.position.get_coord()
+//    this.geo_data.position = arguments[0]
+//}
+//
+///**
+// * @method  velocity
+// *
+// * Gets or set the velocity of the void
+// *
+// * @return {"undefined" | Number[]}
+// */
+//Boid.prototype.velocity = function(){
+//    if (arguments.length == 0)
+//        return this.geo_data.velocity.get_coord()
+//    this.geo_data.velocity = arguments[0]
+//}
+//
+///**
+// * @method  accelertation
+// *
+// * Gets or set the accelertation of the void
+// *
+// * @return {"undefined" | Number[]}
+// */
+//Boid.prototype.acceleration = function(){
+//    if (arguments.length == 0)
+//        return this.geo_data.acceleration.get_coord()
+//    this.geo_data.acceleration = arguments[0]
+//}
+//
+///**
+// * @method  start
+// *
+// * Stamps the initial processing time.
+// *
+// * @param  {Date} date
+// */
+//Boid.prototype.start = function(date){
+//    this.last_time = this.current_time = date
+//}
+//
+///**
+// * @method delta_t
+// *
+// * Ellapsed time since *last_time* was updated.
+// *
+// * @return {Number} Number of seconds ellapsed.
+// */
+//Boid.prototype.delta_t = function(){
+//    return (this.current_time.getTime() - this.last_time.getTime()) / 1000;
+//}
+//
 /**
  * @method update_physics
  *
  * Calculates new position, velocity and acceleration depending on the ellapsed time.
  *
- * @param  {Date} current_time Time for estimating coords.
- */
+ * @param  {Date} current_time Time for estimating coords. */
 Boid.prototype.update_physics = function(current_time){
     this.last_time = this.current_time
     this.current_time = current_time
     this.geo_data.acceleration = this.requested_acceleration()
+    //Mobile.run.call(this)
     this.geo_data.velocity = (integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )).subs(this.geo_data.velocity.scale(0.1))
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
-
-
-/**
- * @method run
- *
- * Updates the time in the boid's variables
- *
- * @param {Date}   current_time Current time of the boid
- *
- */
-Boid.prototype.run = function(current_time){
-    if (!(current_time instanceof Date))
-        return
-    current_time = current_time || new Date()
-    this.update_physics(current_time)
-}
-
-
-/**
- * @method heading
- *
- * Gets the normal vector aligned with the heading.
- *
- * @return {Vector}
- */
-Boid.prototype.heading = function(){
-    var _heading
-    try{
-        _heading = this.geo_data.velocity.unit()
-        this.last_heading = _heading || this.last_heading
-    } catch(err){
-        _heading = this.last_heading
-    }
-    return _heading
-}
-
-/**
- * @method locale
- *
- * The local coordinate system expressed in the global cs.
- *
- * @return {Vector}
- */
-Boid.prototype.locale = function(){  // The local coordinate system expressed in the global cs.
-    var u = this.heading()
-    var x = u.get_coord(0)
-    var y = u.get_coord(1)
-    if (!x || !y || isNaN(x) || isNaN(y))
-        u = new Vector(1,0)
-    var v = new Vector(-u.Coord[1], u.Coord[0])
-    return [u,v]
-}
-
-/**
- * @method globale
- *
- * Expresses global cs (coordinate system) into lcs
- *
- * @return {Vector}
- */
-Boid.prototype.globale = function(){
-    var aux = this.heading()
-    var x = aux.get_coord(0)
-    var y = aux.get_coord(1)
-    if (!x || !y || isNaN(x) || isNaN(y))
-        aux = new Vector(1,0)
-    var u = new Vector(aux.Coord[0], -aux.Coord[1])
-    var v = new Vector(-u.Coord[1], u.Coord[0])
-    return [u,v]
-}
+//
+//
+///**
+// * @method run
+// *
+// * Updates the time in the boid's variables
+// *
+// * @param {Date}   current_time Current time of the boid
+// *
+// */
+//Boid.prototype.run = function(current_time){
+//    if (!(current_time instanceof Date))
+//        return
+//    current_time = current_time || new Date()
+//    this.update_physics(current_time)
+//}
+//
+//
+///**
+// * @method heading
+// *
+// * Gets the normal vector aligned with the heading.
+// *
+// * @return {Vector}
+// */
+//Boid.prototype.heading = function(){
+//    var _heading
+//    try{
+//        _heading = this.geo_data.velocity.unit()
+//        this.last_heading = _heading || this.last_heading
+//    } catch(err){
+//        _heading = this.last_heading
+//    }
+//    return _heading
+//}
+//
+///**
+// * @method locale
+// *
+// * The local coordinate system expressed in the global cs.
+// *
+// * @return {Vector}
+// */
+//Boid.prototype.locale = function(){  // The local coordinate system expressed in the global cs.
+//    var u = this.heading()
+//    var x = u.get_coord(0)
+//    var y = u.get_coord(1)
+//    if (!x || !y || isNaN(x) || isNaN(y))
+//        u = new Vector(1,0)
+//    var v = new Vector(-u.Coord[1], u.Coord[0])
+//    return [u,v]
+//}
+//
+///**
+// * @method globale
+// *
+// * Expresses global cs (coordinate system) into lcs
+// *
+// * @return {Vector}
+// */
+//Boid.prototype.globale = function(){
+//    var aux = this.heading()
+//    var x = aux.get_coord(0)
+//    var y = aux.get_coord(1)
+//    if (!x || !y || isNaN(x) || isNaN(y))
+//        aux = new Vector(1,0)
+//    var u = new Vector(aux.Coord[0], -aux.Coord[1])
+//    var v = new Vector(-u.Coord[1], u.Coord[0])
+//    return [u,v]
+//}
 
 /**
  * @method localize
@@ -234,19 +234,19 @@ Boid.prototype.localize = function(){
     return new Vector( l[0].dot(v), l[1].dot(v) )
 }
 
-/**
- * @method globalize
- *
- * Changes local coordinates into world (global) coordinates
- *
- * @return {Vector}
- */
-Boid.prototype.globalize = function(){
-    var v = new Vector(1,1,1)
-    Vector.apply(v, arguments) // Create a Vector with whatever arguments that have been passed.
-    var l = this.globale()
-    return new Vector( l[0].dot(v), l[1].dot(v) )
-}
+///**
+// * @method globalize
+// *
+// * Changes local coordinates into world (global) coordinates
+// *
+// * @return {Vector}
+// */
+//Boid.prototype.globalize = function(){
+//    var v = new Vector(1,1,1)
+//    Vector.apply(v, arguments) // Create a Vector with whatever arguments that have been passed.
+//    var l = this.globale()
+//    return new Vector( l[0].dot(v), l[1].dot(v) )
+//}
 
 /**
  * @method visible_objects
@@ -256,7 +256,8 @@ Boid.prototype.globalize = function(){
  * @return {}
  */
 Boid.prototype.visible_objects = function(){
-    return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
+    //return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
+    return this.my_world.visible_for(this.area, this.geo_data.position, this.vision)
 }
 
 /**

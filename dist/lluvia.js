@@ -4111,20 +4111,12 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         var view_angle = 45
         var near = 0.1
         var far = 1000000
-        that.add_camera(aspect, view_angle, near, far, 0, 0, 486)
+        that.add_camera(aspect, view_angle, near, far, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
         that.controls = new THREE.OrbitControls( that.cameras[0] )
         that.controls.addEventListener( 'change', that.render )
         that.controls.center.set(500, 200, 0)
         that.cameras[0].lookAt({x:500, y:200, z:0})
         that.context.setSize(that.screen.width, that.screen.height)
-        var sphere = new THREE.Mesh(
-            new THREE.SphereGeometry(5  , 60  , 24  ),
-            new THREE.MeshLambertMaterial({
-                color: 0xFFFF00
-            })
-        )
-        sphere.castShadow = true
-        that.scene.add(sphere);
         var ambientLight = new THREE.AmbientLight(0x000000);
         that.scene.add(ambientLight);
         var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
@@ -4137,7 +4129,7 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         directionalLight.shadowCameraBottom   = -1000;
         directionalLight.intensity = 2
         that.scene.add(directionalLight);
-        that.context.render(that.scene, that.camera);
+        that.context.render(that.scene, that.cameras[0]);
     }
     if (arguments.length) 
         initialize()
@@ -4183,7 +4175,7 @@ WebGl.prototype.change_camera = function(){
     else
        this.selected_camera ++
 }
-WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z){
+WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z, look_at){
     var camera = null
     var aspect = aspect
     var view_angle = angle
@@ -4198,6 +4190,7 @@ WebGl.prototype.add_camera = function(aspect, angle, near, far, x, y ,z){
     camera.position.z = z
     camera.position.x = x
     camera.position.y = y
+    camera.lookAt(look_at || {x:0, y:0, z:0})
 }
 WebGl.available$U = function() {
     var webgl = false
