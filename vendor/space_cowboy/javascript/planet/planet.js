@@ -27,7 +27,7 @@ Planet.prototype.initialize = function(planet_number){
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
     var planet_number = mssg.event.show_planet.data
-    alert(planet_number.toSource())
+    alert("Planet number: " + planet_number.toSource())
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
@@ -53,7 +53,8 @@ Planet.prototype.running_fight_playing_up = function(date) {
 
 Planet.prototype.running_fight_win = function() {
     alert("You won")
-    //next_level()
+    //level_up()
+    
 }
 
 Planet.prototype.running_fight_lose = function() {
@@ -115,11 +116,6 @@ function restart() {
         alert("See you space cowboy...")
 }
 
-/*
-function next_level() {
-    this.device.fire_event(this.device.new_message("sync", "next_level"))
-    this.device.hide()
-}
-*/
+
 
 

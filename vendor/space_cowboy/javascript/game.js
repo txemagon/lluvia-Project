@@ -39,13 +39,6 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
 
 }
 
-/*
-Game.prototype.attend_next_level = function(date, mssg) {
-    mssg.current++
-    this.fire_event(this.new_message("sync", "show_skills"))
-}
-*/
-
 //States
 Game.prototype.running_up = function(date){
 
