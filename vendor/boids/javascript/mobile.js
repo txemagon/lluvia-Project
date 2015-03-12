@@ -102,6 +102,7 @@ Mobile.prototype.acceleration = function(){
  * @param  {Date} date
  */
 Mobile.prototype.start = function(date){
+    this.start_zone()
     this.last_time = this.current_time = date
 }
 
@@ -144,7 +145,7 @@ Mobile.prototype.run = function(current_time){
         return
     current_time = current_time || new Date()
     this.update_physics(current_time)
-    this.update_area()
+    this.update_zone()
 }
 
 

@@ -257,7 +257,7 @@ Boid.prototype.localize = function(){
  */
 Boid.prototype.visible_objects = function(){
     //return this.my_world.visible_for(this.geo_data.position, this.heading(), this.vision)
-    return this.my_world.visible_for(this.area, this.geo_data.position, this.vision)
+    return this.my_world.visible_for(this.zone, this.geo_data.position, this.vision, this.being_id)
 }
 
 /**

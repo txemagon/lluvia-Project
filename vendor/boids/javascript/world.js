@@ -29,11 +29,11 @@ function World(screen, type, incarnation, width, height) {
     this.self_events = ["focus_boid", "new_boid", "new_immobile", "new_mobile"]
 
     this.screen = []
-    this.map_area = []
+    this.map_zone = []
     this.width = width || 100 //meters
     this.height = height || 100
     this.visibility = 100
-    this.inialize_map_area()
+    this.inialize_map_zone()
 
     this.start_time = null
     this.acceleration_max = 30
@@ -51,11 +51,11 @@ function World(screen, type, incarnation, width, height) {
     Device.call(that, null, null)
 }
 
-World.prototype.inialize_map_area = function(){
+World.prototype.inialize_map_zone = function(){
     for(var i = 0; i < this.height/this.visibility; i++){
-        this.map_area[i] = []
+        this.map_zone[i] = []
         for(var j = 0; j < this.width/this.visibility; j++){
-            this.map_area[i][j] = []
+            this.map_zone[i][j] = []
         }
     }
 }
@@ -63,9 +63,9 @@ World.prototype.inialize_map_area = function(){
 // World.prototype.update_cuadrant = function(){
 //     var that = this
 //     this.each_being(function(being){
-//         being.area.x = being.geo_data.position.get_coord(0)/this.visibility
-//         being.area.y = being.geo_data.position.get_coord(1)/this.visibility
-//         that.map_area[being.area.y][being.area.x].push(being)
+//         being.zone.x = being.geo_data.position.get_coord(0)/this.visibility
+//         being.zone.y = being.geo_data.position.get_coord(1)/this.visibility
+//         that.map_zone[being.zone.y][being.zone.x].push(being)
 //     })
 // }
 
@@ -487,18 +487,32 @@ World.prototype.show_boids = function() {
 //     })
 //     return visible
 // }
-World.prototype.visible_for = function(area, position, vision) {
+World.prototype.visible_for = function(zone, position, vision, id) {
     var that = this
     vision = vision.radius * vision.radius
     var visible = []
-    this.map_area[area.y][area.x].each(function(boid) {
-        var x1 = position.get_coord(0)
-        var y1 = position.get_coord(1)
-        var dx = boid.geo_data.position.get_coord(0) - x1
-        var dy = boid.geo_data.position.get_coord(1) - y1
-        if (dx * dx + dy * dy < vision)
-            visible.push(boid)
-    })
+    for(var y = -1; y < 2; y++){
+        if( !((zone.y+y) < 0) && !((zone.y+y) > (this.map_zone.length-1)))
+            for(var x = -1; x < 2; x++){
+                if( !((zone.x+x) < 0) && !((zone.x+x) > (this.map_zone[0].length-1)))
+                    this.map_zone[(zone.y+y)][(zone.x+x)].each(function(boid) {
+                    //this.get_beings().each(function(boid) {
+                    //this.map_zone[zone.y][zone.x].each(function(boid) {
+                        try{
+                            if(boid != undefined && boid instanceof Boid){
+                                var x1 = position.get_coord(0)
+                                var y1 = position.get_coord(1)
+                                var dx = boid.geo_data.position.get_coord(0) - x1
+                                var dy = boid.geo_data.position.get_coord(1) - y1
+                                if (dx * dx + dy * dy < vision)
+                                    visible.push(boid)
+                            }
+                        }catch(e){
+                            console.log(e)
+                        }
+                    })
+            }
+    }
     return visible
 }
 

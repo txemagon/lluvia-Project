@@ -15,7 +15,8 @@ function Being(config_object, block){
           var config = new Hash()
 
           that.my_world = null
-          that.area = {x:0, y:0}
+          that.being_id = Being.id ++
+          that.zone = {x:0, y:0} //Zone
           /* Overridable configuration */
 
           var default_config = {
@@ -46,17 +47,24 @@ function Being(config_object, block){
              initialize()
 }
 
+Being.id = 0
+
 Being.prototype.run = function(){
-   this.update_area()
+   this.update_zone()
 }
 
-Being.prototype.update_area = function(){
-  var last_area = {x: this.area.x, y:this.area.y}
-  this.area.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
-  this.area.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
-  if(this.area.x != last_area.x || this.area.y != last_area.y){
-    var index = this.my_world.map_area[last_area.y][last_area.x].indexOf(this)
-    this.my_world.map_area[last_area.y][last_area.x].splice(index, index+1)
-    this.my_world.map_area[this.area.y][this.area.x].push(this)
+Being.prototype.start_zone = function(){
+  this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
+  this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
+  this.my_world.map_zone[this.zone.y][this.zone.x].push(this)
+}
+
+Being.prototype.update_zone = function(){
+  var last_zone = {x: this.zone.x, y:this.zone.y}
+  this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
+  this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
+  if(this.zone.x != last_zone.x || this.zone.y != last_zone.y){
+    delete this.my_world.map_zone[last_zone.y][last_zone.x][this.being_id]
+    this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
   }
 }
