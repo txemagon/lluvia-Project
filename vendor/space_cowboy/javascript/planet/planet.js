@@ -2,12 +2,6 @@ Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
-//Numero de las teclas
-var KEY_ENTER=13;
-var KEY_SPACE=32;
-var KEY_LEFT=37;
-var KEY_RIGHT=39;
-
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
     var that = this
@@ -28,24 +22,23 @@ function Planet(view, screen, width, height) {
 
 Planet.prototype.initialize = function(planet_number){
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
-    //this.player = this.new_boid_of(Player) 
-
+    this.player = this.new_boid_of(Player, Player) 
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
     var planet_number = mssg.event.show_planet.data
-    alert(planet_number.toSource())
+    alert("Planet number: " + planet_number.toSource())
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
     this.switch("running.fight.playing")
-
 }
 
 //States
 Planet.prototype.running_up = function() {
     this.draw()
 }
+
 
 Planet.prototype.running_fight_playing_up = function(date) {
     alert("Start the battle ")
@@ -60,7 +53,8 @@ Planet.prototype.running_fight_playing_up = function(date) {
 
 Planet.prototype.running_fight_win = function() {
     alert("You won")
-    //next_level()
+    //level_up()
+    
 }
 
 Planet.prototype.running_fight_lose = function() {
@@ -122,11 +116,6 @@ function restart() {
         alert("See you space cowboy...")
 }
 
-/*
-function next_level() {
-    this.device.fire_event(this.device.new_message("sync", "next_level"))
-    this.device.hide()
-}
-*/
+
 
 
