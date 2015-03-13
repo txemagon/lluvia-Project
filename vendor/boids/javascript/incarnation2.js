@@ -8,6 +8,12 @@
 function Incarnation(graphic_type){
 	this.graphic_type = graphic_type
 	this.add_types(arguments)
+
+	// if(graphic_type == "CanvasDevice"){
+	//    var default_draw = eval(graphic_type)
+	//    this.add_types("default")
+	//    this["default"].draw = default_draw.draw
+ //    }
 }
 
 Incarnation.end_object  = {Object:"", Number:"", String:"", Array:""}

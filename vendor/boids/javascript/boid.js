@@ -34,6 +34,7 @@ function Boid(config_object, block){
         function initialize(){
             Mobile.call(that)	
             var config = new Hash()
+            that.boid_id = Boid.id ++
 
            // that.last_heading = new Vector(0, 1)
             //that.my_world = null
@@ -73,6 +74,8 @@ function Boid(config_object, block){
         if (arguments.length)
             initialize()
 }
+
+Boid.id = 0
 
 ///**
 // * @method  position

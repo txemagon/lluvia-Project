@@ -33,7 +33,9 @@ function World(screen, type, incarnation, width, height) {
     this.width = width || 100 //meters
     this.height = height || 100
     this.visibility = 100
+
     this.inialize_map_zone()
+    this.boid_distances = []
 
     this.start_time = null
     this.acceleration_max = 30
@@ -196,7 +198,8 @@ World.prototype.has_born = function() {
     for (var i = 0; i < arguments.length; i++) {
         arguments[i].my_world = this
         this.register(arguments[i])
-        for(var j = 0; j<this.screen.length; j++)
+        this.boid_distances[arguments[i].boid_id] = [] //Add the boid to the array boid_distances
+        for(var j = 0; j<this.screen.length; j++) //Add the drawable objects in the 3d views
            this.screen[j].add_drawable_obj(arguments[i])
         //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
         this.fire_event(this.new_message("sync", "new_boid", arguments[i]))
@@ -317,9 +320,6 @@ World.prototype.start = function() {
     this.get_mobiles().each(function(el) {
         el.start(that.start_time)
     })
-
-    //this.screen[0].merge_drawable_obj(this.get_boids())
-    //this.screen[0].create_3d_object()
 
     this.draw()
 }
@@ -487,7 +487,7 @@ World.prototype.show_boids = function() {
 //     })
 //     return visible
 // }
-World.prototype.visible_for = function(zone, position, vision, id) {
+World.prototype.visible_for = function(zone, position, vision) {
     var that = this
     vision = vision.radius * vision.radius
     var visible = []
@@ -499,13 +499,15 @@ World.prototype.visible_for = function(zone, position, vision, id) {
                     //this.get_beings().each(function(boid) {
                     //this.map_zone[zone.y][zone.x].each(function(boid) {
                         try{
-                            if(boid != undefined && boid instanceof Boid){
-                                var x1 = position.get_coord(0)
-                                var y1 = position.get_coord(1)
-                                var dx = boid.geo_data.position.get_coord(0) - x1
-                                var dy = boid.geo_data.position.get_coord(1) - y1
-                                if (dx * dx + dy * dy < vision)
-                                    visible.push(boid)
+                            if(boid != undefined && boid instanceof Boid)
+                                //if(World.prototype.visible_for.yield(boid)){
+                                if("wander" in boid.brain.active_behaviors){
+                                    var x1 = position.get_coord(0)
+                                    var y1 = position.get_coord(1)
+                                    var dx = boid.geo_data.position.get_coord(0) - x1
+                                    var dy = boid.geo_data.position.get_coord(1) - y1
+                                    if (dx * dx + dy * dy < vision)
+                                        visible.push(boid)
                             }
                         }catch(e){
                             console.log(e)

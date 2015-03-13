@@ -20,6 +20,9 @@ CanvasDevice.prototype.draw = function(){
 		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
 }
 
+//CanvasDevice.draw = function(){
+//    alert("a")
+//}
 
 CanvasDevice.prototype.add_drawable_obj = function(drawable_obj){
     this.drawable.push(drawable_obj)

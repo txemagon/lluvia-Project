@@ -64,7 +64,6 @@ function WebGl(screen, drawable_obj, incarnation, camera) {
         initialize()
 }
 
-
 /**
  * @method merge_drawable_obj
  * Merge the objects of the world, that we can draw.

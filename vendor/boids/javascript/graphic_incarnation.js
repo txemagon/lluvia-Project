@@ -121,34 +121,38 @@ cartoon_canvas.Immobile.draw = function(immobile, ctx){
     ctx.fill()
 }
 
-var cartoon2_canvas = new Incarnation("CanvasDevice", "Boid", "Object")
-
-cartoon2_canvas.Boid.draw = function(boid, context){
+var cartoon2_canvas = new Incarnation("CanvasDevice", "Mobile", "Immobile", "Object")
+var img = null
+img = new Image()
+img.src = "images/pixel.png"
+cartoon2_canvas.Mobile.draw = function(boid, context){
     var p = boid.geo_data.position;
     var v = boid.geo_data.velocity;
     var a = boid.geo_data.acceleration;
+    var width = 15
+    var height = 15
 
-
-    context.beginPath()
-    context.lineWidth="6"
-    context.strokeStyle=boid.colour
-    context.rect(p.get_coord(0), p.get_coord(1), 20, 20)
-    context.stroke()
+    //context.drawImage(img, p.get_coord(0), p.get_coord(1), 5, 5)
+    context.beginPath();
+    context.rect(p.get_coord(0), p.get_coord(1), width, height)
+    context.fillStyle = boid.colour;
+    context.fill();
+    
 
     /* Speed */
     context.strokeStyle = "black"
-    context.beginPath();
-    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.beginPath()
+    context.moveTo(p.get_coord(0)+width/2, p.get_coord(1)+height/2)
     context.lineTo(p.get_coord(0) + v.get_coord(0), p.get_coord(1) + v.get_coord(1))
-    context.closePath();
+    context.closePath()
     context.stroke()
 
     /* Acceleration */
     context.strokeStyle = "red"
-    context.beginPath();
-    context.moveTo(p.get_coord(0), p.get_coord(1))
+    context.beginPath()
+    context.moveTo(p.get_coord(0)+width/2, p.get_coord(1)+height/2)
     context.lineTo(p.get_coord(0) + a.get_coord(0), p.get_coord(1) + a.get_coord(1))
-    context.closePath();
+    context.closePath()
     context.stroke()
 
     //if (this.focused){
@@ -158,4 +162,14 @@ cartoon2_canvas.Boid.draw = function(boid, context){
        // ctx.closePath();
        // ctx.stroke()
    // }
+}
+
+cartoon2_canvas.Immobile.draw = function(immobile, context){
+    context.beginPath();
+    context.rect(immobile.geo_data.position.get_coord(0), immobile.geo_data.position.get_coord(1), immobile.width, immobile.height)
+    context.fillStyle = immobile.colour
+    context.fill();
+    //context.lineWidth = 7;
+    //context.strokeStyle = 'black';
+    //context.stroke();
 }
