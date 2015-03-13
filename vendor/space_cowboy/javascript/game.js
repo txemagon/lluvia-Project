@@ -36,7 +36,6 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
     this.switch("running.fight")
 
     this.planet.initialize(planet_number)
-
 }
 
 //States

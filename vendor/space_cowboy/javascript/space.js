@@ -26,7 +26,7 @@ Space.prototype.attend_show_space = function(date, mssg) {
 	this.appear()
 }
 
-//Funciones de movimiento del mapa
+//moving map
 function up() {
 	var inc = 10
 	var actual = parseInt(planets_map.style.top)

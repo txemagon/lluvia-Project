@@ -21,8 +21,9 @@ function Planet(view, screen, width, height) {
 }
 
 Planet.prototype.initialize = function(planet_number){
-    this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
     this.player = this.new_boid_of(Player, Player) 
+    this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
+    attack()
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
@@ -107,6 +108,19 @@ Planet.prototype.get_boids = function(){
   return this.get(Boid)
 }
 
+function repaint(ctx) {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+function attack() {
+    if (Player.shots.y == Enemy.y) 
+        Enemy.life -= Player.damage
+
+    if (Enemy.life == 0)
+        alert("You win!")
+}
+
 //when the player lose, restart the game
 function restart() {
     var answer = confirm("You lost.\n Do you want to fight again?")
@@ -114,8 +128,5 @@ function restart() {
         alert("Start again!")
     else
         alert("See you space cowboy...")
+    
 }
-
-
-
-

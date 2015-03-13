@@ -6,6 +6,13 @@ function Enemy(config) {
     var that = this
     this.shape = new Image()
     this.shape.src = config.img
+    this.x = 450
+    this.y = 50
+    this.width = 120
+    this.height = 90
+
+    canvas = document.getElementById("canvas_planet")
+    ctx = canvas.getContext("2d")
 }
 
 /*
@@ -181,9 +188,24 @@ Enemy.data = [
 ]
 
 
+function move_enemy() {
+  //enemy moving
+  if (Player.x < 450)
+    this.x -= this.speed
+  if (Player.x > 450)
+    this.x += this.speed
+
+  //enemy dont leave the canvas
+  if (this.x > canvas.width - this.width) 
+    this.x = canvas.width - this.width
+  if (this.x < 0)
+    this.x = 0
+}
+
+
 Enemy.prototype.draw = function(ctx) {
+    //move()
 
-    ctx.fillText("Enemy Life: " + this.life, 850, 20) 
-    ctx.drawImage(this.shape, 450, 50, 110, 80)
-
+    ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
+    ctx.fillText("Enemy Life: " + this.life, 850, 20)
 }

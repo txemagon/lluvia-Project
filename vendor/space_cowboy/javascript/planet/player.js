@@ -1,20 +1,21 @@
 Player.prototype = new Boid
 Player.prototype.constructor = Player
 
-/**
- * keys number
- */
+//keys 
 var KEY_ENTER=13;
 var KEY_SPACE=32;
 var KEY_LEFT=37;
 var KEY_RIGHT=39;
-
-var pressing = {}
+var pressing = []
 var lastPress = null
 
 function Player(config){
 	Boid.apply(this, arguments)
 	var that = this
+
+	canvas = document.getElementById("canvas_planet")
+    ctx = canvas.getContext("2d")
+
 	this.shape = new Image()
 	this.shape.src = "images/ships/player/player_sprite1.png"
 
@@ -24,42 +25,89 @@ function Player(config){
 	this.speed = game.points.speed
 	this.x = 450
 	this.y = 460
+	this.width = 90
+	this.height = 107
+	var shots
+	this.shots = []
 }
 
-Player.prototype.draw = function(ctx) {
+function move() {
+	//moving
+	if (pressing[KEY_RIGHT])
+		this.x += this.speed + 1
+	if (pressing[KEY_LEFT])
+		this.x -= this.speed + 1
 
-	ctx.drawImage(this.shape, 0, 0, 75, 107, this.x, this.y, 90, 107)
+	//do not leave the canvas
+	if (this.x > canvas.width - this.width) 
+		this.x = canvas.width - this.width
+	if (this.x < 0)
+		this.x = 0
+
+	//create the shots
+	if (lastPress == KEY_SPACE) {
+		shots.push(new Rectangle (this.x + 38, this.y + 10, 5, 10))
+		lastPress = null
+	}
+
+	//moving the shots
+	for (var i=0, l=shots.length; i<l; i++) {
+		shots[i].y -= 5  
+		if (shots[i].y < 0) {
+			shots.splice(i--, 1)
+			l--
+		}
+	}
+
+}
+
+function paint(ctx) {
+	//draw player
+    ctx.drawImage(this.shape, 0, 0, 75, 107, this.x, this.y, this.width, this.height)
+	//draw life, key and position
 	ctx.font = "20px Arial"
 	ctx.fillStyle = "#f00"
 	ctx.fillText("Player Life: " + this.life, 5, 20)
 	ctx.fillText("Last Press: " + lastPress, 5, 40)
 	ctx.fillText("Player Position: " + this.x, 5, 60)
+    ctx.fillText("Disparos: " + shots.length, 5, 80);
 
+	//draw shots
+	ctx.fillStyle="#f00";
+	 for (var i=0, l=shots.length; i<l; i++) {
+    	shots[i].fill(ctx);
+    }
 }
 
-function move() {
 
-	//Movimiento
-	if (pressing[KEY_RIGHT])
-		this.x += 10
-	if (pressing[KEY_LEFT])
-		this.x -= 10
-
-	if (this.x > canvas_planet.width)
-		this.x = 0
-	if (this.x < 0)
-		this.x = canvas_planet.width
+Player.prototype.draw = function(ctx) {
+	repaint(ctx)
+	move()
+	paint(ctx)
+	//attack()
 }
 
-document.addEventListener("keydown", function(evt) {
-	lastPress = evt.keyCode
-	pressing[evt.keyCode] = true
-}, false)
 
-document.addEventListener("keyup", function(evt) {
-	pressing[evt.keyCode] = false
-}, false)
+document.addEventListener("keydown", function(evt){
+	lastPress = evt.keyCode;
+	pressing[evt.keyCode] = true;
+}, false);
 
+document.addEventListener("keyup", function(evt){
+	pressing[evt.keyCode] = false;
+}, false);
+
+
+function Rectangle(x,y,width,height) {
+	this.x = (x == null)?0:x;
+	this.y = (y == null)?0:y;
+	this.width = (width == null)?0:width;
+	this.height = (height == null)?this.width:height;
+}
+
+Rectangle.prototype.fill = function() {
+	ctx.fillRect(this.x, this.y, this.width, this.height);
+}
 
 /*
 Player.prototype.level_up = function() {
