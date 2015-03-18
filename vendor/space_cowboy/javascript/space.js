@@ -13,7 +13,7 @@ function Space(view){
 
    	Device.call(this, view)
 
-    for (var i=0; i<19; i++)
+    for (var i=0; i<21; i++)
     this.new_gate("planet" + i, Gate, {
    		do_onclick: function(i){ return function(event, element) {
    			this.device.fire_event(this.device.new_message("sync", "go_to_planet", i))

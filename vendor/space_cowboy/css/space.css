@@ -41,7 +41,7 @@
 	top: -750px;
 }
 
-#planet0 {
+#planet1 {
 	position: relative;
 	width: 200px;
 	height: 100px;
@@ -49,7 +49,7 @@
 	bottom: -300px;
 }
 
-#planet1 {
+#planet2 {
 	position: relative;
 	width: 150px;
 	height: 100px;
@@ -57,7 +57,7 @@
 	bottom: -590px;
 }
 
-#planet2 {
+#planet3 {
 	position: relative;
 	width: 100px;
 	height: 100px;
@@ -66,7 +66,7 @@
 	right: 300px;
 }
 
-#planet3 {
+#planet4 {
 	position: relative;
 	width: 150px;
 	height: 100px;
@@ -74,7 +74,7 @@
 	bottom: -800px;
 }
 
-#planet4 {
+#planet5 {
 	position: relative;
 	width: 250px;
 	height: 150px;
@@ -82,7 +82,7 @@
 	bottom: -700px;
 }
 
-#planet5 {
+#planet6 {
 	position: relative;
 	width: 120px;
 	height: 120px;
@@ -90,7 +90,7 @@
 	bottom: -600px;
 }
 
-#planet6 {
+#planet7 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -98,7 +98,7 @@
 	bottom: -800px;
 }
 
-#planet7 {
+#planet8 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -106,7 +106,7 @@
 	bottom: 20px;
 }
 
-#planet8 {
+#planet9 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -114,7 +114,7 @@
 	bottom: -100px;
 }
 
-#planet9 {
+#planet10 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -122,7 +122,7 @@
 	bottom: -800px;
 }
 
-#planet10 {
+#planet11 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -130,7 +130,7 @@
 	bottom: -400px;
 }
 
-#planet11 {
+#planet12 {
 	position: relative;
 	width: 200px;
 	height: 120px;
@@ -139,7 +139,7 @@
 
 }
 
-#planet12 {
+#planet13 {
 	position: relative;
 	width: 200px;
 	height: 120px;
@@ -147,7 +147,7 @@
 	bottom: -400px;
 }
 
-#planet13 {
+#planet14 {
 	position: relative;
 	width: 170px;
 	height: 120px;
@@ -155,7 +155,7 @@
 	bottom: 100px;
 }
 
-#planet14 {
+#planet15 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -164,7 +164,7 @@
 	bottom: 60px;
 }
 
-#planet15 {
+#planet16 {
 	position: relative;
 	width: 200px;
 	height: 120px;
@@ -172,7 +172,7 @@
 	bottom: -300px;
 }
 
-#planet16 {
+#planet17 {
 	position: relative;
 	width: 120px;
 	height: 120px;
@@ -181,7 +181,7 @@
 	bottom: -700px;
 }
 
-#planet17 {
+#planet18 {
 	position: relative;
 	width: 160px;
 	height: 120px;
@@ -189,7 +189,7 @@
 	bottom: -20px;
 }
 
-#planet18 {
+#planet19 {
 	position: relative;
 	width: 120px;
 	height: 120px;
@@ -197,7 +197,7 @@
 	bottom: -200px;
 }
 
-#planet19 {
+#planet20 {
 	position: relative;
 	width: 120px;
 	height: 120px;
@@ -211,25 +211,25 @@
 	color: black;
 }
 
-#boton_arriba {
+#button_up {
 	position: relative;
 	top: -1400px;
 	left: 220px;
 }
 
-#boton_derecha {
+#button_right {
 	position: relative;
 	top: -1100px;
 	left: 800px;
 }
 
-#boton_abajo {
+#button_down {
 	position: relative;
 	top: -820px;
 	left: 220px;
 }
 
-#boton_izquierda {
+#button_left {
 	position: relative;
 	top: -1200px;
 	left: -400px;

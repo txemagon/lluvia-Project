@@ -4,15 +4,19 @@ Enemy.prototype.constructor = Enemy
 function Enemy(config) {
     Boid.apply(this, arguments)
     var that = this
-    this.shape = new Image()
-    this.shape.src = config.img
-    this.x = 450
-    this.y = 50
-    this.width = 120
-    this.height = 90
 
     canvas = document.getElementById("canvas_planet")
     ctx = canvas.getContext("2d")
+
+    this.shape = new Image()
+    this.shape.src = config.img
+
+    this.x = 460
+    this.y = 50
+    this.width = 120
+    this.height = 90
+    var shots
+    this.shots = []
 }
 
 /*
@@ -21,6 +25,15 @@ function Enemy(config) {
  */
 
 Enemy.data = [
+    /*Planeta vacio, posicion 0*/
+    {
+        life: 0,
+        damage: 0,
+        resistance: 0,
+        speed: 0,
+        img: "images/ships/ship5.png"
+    },
+
     /*Planetas amarillos 5-10*/
     {
         life: 10,
@@ -187,25 +200,20 @@ Enemy.data = [
     }
 ]
 
-
 function move_enemy() {
-  //enemy moving
-  if (Player.x < 450)
-    this.x -= this.speed
-  if (Player.x > 450)
-    this.x += this.speed
+    //enemy moving
 
-  //enemy dont leave the canvas
-  if (this.x > canvas.width - this.width) 
-    this.x = canvas.width - this.width
-  if (this.x < 0)
-    this.x = 0
+    //enemy dont leave the canvas
+    if (this.x > canvas.width - this.width) 
+        this.x = canvas.width - this.width
+    if (this.x < 0)
+        this.x = 0
 }
 
-
 Enemy.prototype.draw = function(ctx) {
-    //move()
-
+    move_enemy()
     ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
-    ctx.fillText("Enemy Life: " + this.life, 850, 20)
+    ctx.fillText("Enemy Life: " + this.life, 800, 20)
+    ctx.fillText("Enemy Position: " + this.x, 800, 40)
+    ctx.fillText("Enemy Damage: " + this.damage, 800, 60)
 }

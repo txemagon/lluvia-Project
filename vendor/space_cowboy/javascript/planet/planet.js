@@ -2,6 +2,14 @@ Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
+//keys 
+var KEY_ENTER=13;
+var KEY_SPACE=32;
+var KEY_LEFT=37;
+var KEY_RIGHT=39;
+var pressing = []
+var lastPress = null
+
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
     var that = this
@@ -23,7 +31,6 @@ function Planet(view, screen, width, height) {
 Planet.prototype.initialize = function(planet_number){
     this.player = this.new_boid_of(Player, Player) 
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
-    attack()
 }
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
@@ -40,9 +47,10 @@ Planet.prototype.running_up = function() {
     this.draw()
 }
 
-
 Planet.prototype.running_fight_playing_up = function(date) {
     alert("Start the battle ")
+    
+
 /*
     if (this.enemy.life == 0) 
         this.switch("running.fight.win")
@@ -108,18 +116,23 @@ Planet.prototype.get_boids = function(){
   return this.get(Boid)
 }
 
+//methods for define behavior
 function repaint(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
 function attack() {
-    if (Player.shots.y == Enemy.y) 
-        Enemy.life -= Player.damage
+    if (this.player.shots.y == this.enemy.y) {
+        this.enemy.life -= this.player.damage
+        if (this.enemy.life == 0)
+            alert("You win")
+    }
 
-    if (Enemy.life == 0)
-        alert("You win!")
+
+
 }
+
 
 //when the player lose, restart the game
 function restart() {

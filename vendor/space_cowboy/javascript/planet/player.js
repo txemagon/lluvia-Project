@@ -1,14 +1,6 @@
 Player.prototype = new Boid
 Player.prototype.constructor = Player
 
-//keys 
-var KEY_ENTER=13;
-var KEY_SPACE=32;
-var KEY_LEFT=37;
-var KEY_RIGHT=39;
-var pressing = []
-var lastPress = null
-
 function Player(config){
 	Boid.apply(this, arguments)
 	var that = this
@@ -27,12 +19,13 @@ function Player(config){
 	this.y = 460
 	this.width = 90
 	this.height = 107
-	var shots
+	var shots 
 	this.shots = []
 }
 
 function move() {
 	//moving
+	
 	if (pressing[KEY_RIGHT])
 		this.x += this.speed + 1
 	if (pressing[KEY_LEFT])
@@ -48,15 +41,17 @@ function move() {
 	if (lastPress == KEY_SPACE) {
 		shots.push(new Rectangle (this.x + 38, this.y + 10, 5, 10))
 		lastPress = null
+
 	}
 
 	//moving the shots
 	for (var i=0, l=shots.length; i<l; i++) {
-		shots[i].y -= 5  
+		shots[i].y -= 5 //shots speed  
 		if (shots[i].y < 0) {
 			shots.splice(i--, 1)
 			l--
 		}
+
 	}
 
 }
@@ -79,14 +74,13 @@ function paint(ctx) {
     }
 }
 
-
 Player.prototype.draw = function(ctx) {
 	repaint(ctx)
+	attack()
 	move()
 	paint(ctx)
-	//attack()
+	
 }
-
 
 document.addEventListener("keydown", function(evt){
 	lastPress = evt.keyCode;
@@ -97,7 +91,7 @@ document.addEventListener("keyup", function(evt){
 	pressing[evt.keyCode] = false;
 }, false);
 
-
+//paint shots
 function Rectangle(x,y,width,height) {
 	this.x = (x == null)?0:x;
 	this.y = (y == null)?0:y;

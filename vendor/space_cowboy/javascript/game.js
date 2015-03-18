@@ -11,7 +11,7 @@ function Game() {
     Device.call(this, "game")
     this.points = {
                 points: 5,
-                damage: 0,
+                damage: 2,
                 resistance: 0,
                 speed: 0
             }
