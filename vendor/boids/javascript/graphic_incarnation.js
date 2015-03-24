@@ -2,7 +2,7 @@ var cartoon = new Incarnation("WebGl", "Boid", "Immobile", "Mobile", "Object", "
 
 cartoon.Boid.mesh.body = function(boid){
     var geometry = new THREE.Mesh(
-       new THREE.SphereGeometry(10 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
+       new THREE.SphereGeometry(boid.dimensions/2 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
        new THREE.MeshLambertMaterial({
           color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
        })
@@ -32,7 +32,7 @@ cartoon.Boid.mesh.speed = function(){
 
 cartoon.Mobile.mesh.body = function(boid){
     var geometry = new THREE.Mesh(
-       new THREE.SphereGeometry(10 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
+       new THREE.SphereGeometry(boid.dimensions/2 /*radius*/ , 32 /*segments*/ , 32 /*rings*/ ),
        new THREE.MeshLambertMaterial({
           color: boid.colour//incarnation.list[incarnation.search_list_element(boid.colour)]()
        })
@@ -77,7 +77,7 @@ cartoon_canvas.Mobile.draw = function(boid, context){
     context.fillStyle = boid.colour
     context.strokeStyle = "black"
     context.beginPath();
-    context.arc(p.get_coord(0), p.get_coord(1), 10, 0, Math.PI*2, true);
+    context.arc(p.get_coord(0), p.get_coord(1), boid.dimensions/2, 0, Math.PI*2, true);
     context.closePath();
     context.fill();
 
@@ -85,6 +85,14 @@ cartoon_canvas.Mobile.draw = function(boid, context){
     context.arc(p.get_coord(0), p.get_coord(1), 12, 0, Math.PI*2, true);
     context.closePath();
     context.stroke()
+
+    if(boid.focused){
+       context.beginPath();
+       context.arc(p.get_coord(0), p.get_coord(1), boid.vision.radius, 0, Math.PI*2, true);
+       context.closePath();
+       context.stroke() 
+    }
+
 
     /* Speed */
     context.strokeStyle = "black"
@@ -134,7 +142,7 @@ cartoon2_canvas.Mobile.draw = function(boid, context){
 
     //context.drawImage(img, p.get_coord(0), p.get_coord(1), 5, 5)
     context.beginPath();
-    context.rect(p.get_coord(0), p.get_coord(1), width, height)
+    context.rect(p.get_coord(0), p.get_coord(1), boid.dimensions, boid.dimensions)
     context.fillStyle = boid.colour;
     context.fill();
     
