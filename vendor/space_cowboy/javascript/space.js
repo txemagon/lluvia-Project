@@ -3,13 +3,17 @@ Space.prototype.constructor = Space
 Space.prototype.super = Device
 
 var planets_map = null
+var space_stars = []
 
 function Space(view){
+	canvas_space = document.getElementById("canvas_space")
+	ctx_space = canvas_space.getContext("2d")
+
    	planets_map = document.getElementById("planetas")
    	planets_map.style.top = "-200px"
    	planets_map.style.left = "-500px"  
 
-   	this.self_events = ["go_to_planet"]
+   	this.self_events = ["go_to_planet", "up"]
 
    	Device.call(this, view)
 
@@ -20,10 +24,44 @@ function Space(view){
    			this.device.hide()
    		}}(i)
    	})
+
+	init()
 }
 
 Space.prototype.attend_show_space = function(date, mssg) {
 	this.appear()
+}
+
+function random(max){
+    return ~~(Math.random()*max)
+}
+
+function init() {
+	//create stars
+	for(var i=0; i<1; i++)
+        space_stars.push(new Star(random(canvas_space.width), random(canvas_space.height), random(10)))
+    repaint_space(ctx_space)
+    paint_stars(ctx_space)
+}
+
+function repaint_space(ctx_space) {
+    ctx_space.fillStyle = '#000';
+    ctx_space.fillRect(0,0,canvas_space.width, canvas_space.height);
+}
+
+function paint_stars(ctx_space) {
+	//draw stars
+    for(i=0, l=space_stars.length; i<l; i++){
+        var c = 255-Math.abs(100-space_stars[i].timer)
+        ctx_space.fillStyle = 'rgb(' +c+ ',' +c+ ',' +c+ ')'
+        ctx_space.fillRect(space_stars[i].x,space_stars[i].y, 1, 1)
+    }
+}
+
+function Star(x, y, timer) {
+    this.x = (x==null)?0:x
+    this.y = (y==null)?0:y
+    this.timer = (timer == null)?0:timer
 }
 
 //moving map

@@ -4,7 +4,6 @@
 	position: relative;
 	width: 1000px;
 	margin: 0 auto 0 auto;
-	font-family: arial;
 	color: white;
 	text-align: center;
 }
@@ -28,11 +27,5 @@
 }
 
 #button_play {
-	width: 200px;
-	height: 60px;
-	font-size: 20px;
-	top: 200px;
-	margin-left: 10px;
-	margin-top: 20px;
+	margin-left: 380px;
 }
-

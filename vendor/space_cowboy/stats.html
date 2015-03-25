@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/stats.css">
     <link rel="stylesheet" type="text/css" href="css/space.css">
     <link rel="stylesheet" type="text/css" href="css/planet.css">
+    <link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body onload="bring_lluvia();">
     <div id="game">
@@ -25,7 +26,10 @@
                 <br>
             </div>
             <div id="skill_interface"></div>
-            <button id="button_play" type="button">Start Playing</button>
+
+            <div class="button" id="button_play" type="button"> 
+            <p>Start</p>
+            </div>
         </div>
         <!-- Fin de estadísticas -->
 
@@ -73,11 +77,14 @@
             <div id="nave">
                 <img id="ship" src="images/ships/player/player.png">
             </div>
-            <div id="botones">
-                <button type="button" id="button_up" onclick="up()">^</button>
-                <button type="button" id="button_right" onclick="right();">></button>
-                <button type="button" id="button_down" onclick="down();">v</button>
-                <button type="button" id="button_left" onclick="left();"><</button>
+            <div id="botones" >
+                <div class="button" type="button" id="button_up" onclick="up()">^</div>
+
+                <div class="button" type="button" id="button_right" onclick="right();">></div>
+
+                <div class="button" type="button" id="button_down" onclick="down();">v</div>
+
+                <div class="button" type="button" id="button_left" onclick="left();"><</div>
             </div>
         </div>
         <!-- Fin de mapa -->
@@ -89,6 +96,12 @@
                 <br>
                 <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
                 <br>
+
+                <div class="button" type="button" id="button_screen" onclick="resize();">
+                <p>Full Screen</p>
+                </div>
+
+               
             </div>
             <canvas id="canvas_planet" width="1000" height="600" ></canvas>
         </div>
@@ -145,6 +158,8 @@
         </div>
     </div>
 -->
+
+
 
     </div>
 </body>

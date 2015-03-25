@@ -12,7 +12,6 @@
 #map {
 	position: relative;
 	margin: 0 auto 0 auto;
-	font-family: arial;
 	color: white;
 	text-align: center;
 }
@@ -213,24 +212,24 @@
 
 #button_up {
 	position: relative;
-	top: -1400px;
-	left: 220px;
+	top: -1415px;
+	left: 400px;
 }
 
 #button_right {
 	position: relative;
 	top: -1100px;
-	left: 800px;
+	left: 1020px;
 }
 
 #button_down {
 	position: relative;
-	top: -820px;
-	left: 220px;
+	top: -840px;
+	left: 400px;
 }
 
 #button_left {
 	position: relative;
-	top: -1200px;
-	left: -400px;
+	top: -1250px;
+	left: -230px;
 }

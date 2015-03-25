@@ -2,7 +2,7 @@ body {
 	width: 1000px;
 	margin: 0 auto 0 auto;
 	background-color: #1A1919;
-	font-family: arial;
+	font-family: 'Orbitron', sans-serif;
 }
 
 h1 {
@@ -29,4 +29,49 @@ button {
 	margin-left: 230px;
 }
 
+.button { 
+	/*basic styles*/ 
+	width: 200px; 
+	height: 70px; 
+	color: #fff; 
+	background-color: #000; 
+	text-align: center; 
+	font-size: 25px; 
+	line-height: 50px; 
+	/*gradient styles*/ 
+	background: -webkit-gradient(linear, 
+		left top, 
+		left bottom, 
+		color-stop(0, #2f2f2f), 
+		color-stop(.5, #1e1f1f), 
+		color-stop(.51, #0c0c0c), to(#000)); 
+	background: -moz-linear-gradient(top, #B91111, #57100D 50%, #570A0A 51%, #000); 
+	/*border styles*/ 
+	border: 4px;
+	border-style: solid;
+	border-color: #000;
+	border-radius: 10px;
+	
+} 
 
+.button p { 
+	font-size: 25px; 
+	line-height: 15px; 
+	font-weight: 200; 
+	text-shadow: 0px 0px 3px #888; 
+}
+
+a { 
+	text-decoration: none; 
+	color: #fff; 
+}
+
+.button:hover { 
+	-moz-box-shadow: inset 0 0 50px #000000; 	
+	-webkit-box-shadow: inset 0 0 50px #000000; 
+	box-shadow: inset 0 0 50px #000000; 
+} 
+
+.button p:hover { 
+	text-shadow: 0px 0px 3px #444; 
+}

@@ -202,7 +202,7 @@ Enemy.data = [
 
 function move_enemy() {
     //enemy moving
-
+    ctx.moveTo(400, 50)
     //enemy dont leave the canvas
     if (this.x > canvas.width - this.width) 
         this.x = canvas.width - this.width
@@ -213,7 +213,7 @@ function move_enemy() {
 Enemy.prototype.draw = function(ctx) {
     move_enemy()
     ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
-    ctx.fillText("Enemy Life: " + this.life, 800, 20)
-    ctx.fillText("Enemy Position: " + this.x, 800, 40)
-    ctx.fillText("Enemy Damage: " + this.damage, 800, 60)
+    ctx.fillText("Enemy Life: " + this.life, 790, 20)
+    ctx.fillText("Enemy Position: " + this.x, 790, 40)
+    ctx.fillText("Enemy Damage: " + this.damage, 790, 60)
 }

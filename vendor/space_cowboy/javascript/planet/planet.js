@@ -3,11 +3,12 @@ Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
 //keys 
-var KEY_ENTER=13;
-var KEY_SPACE=32;
-var KEY_LEFT=37;
-var KEY_RIGHT=39;
-var pressing = []
+var KEY_ENTER = 13
+var KEY_SPACE = 32
+var KEY_LEFT  = 37
+var KEY_RIGHT = 39
+var KEY_SHOT  = 87 //w
+var pressing  = []
 var lastPress = null
 
 function Planet(view, screen, width, height) {
@@ -60,13 +61,12 @@ Planet.prototype.running_fight_playing_up = function(date) {
 */
 }
 
-Planet.prototype.running_fight_win = function() {
+Planet.prototype.running_fight_win = function(date) {
     alert("You won")
     //level_up()
-    
 }
 
-Planet.prototype.running_fight_lose = function() {
+Planet.prototype.running_fight_lose = function(date) {
     restart()
 }
 
@@ -122,24 +122,35 @@ function repaint(ctx) {
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }
 
-function attack() {
-    if (this.player.shots.y == this.enemy.y) {
-        this.enemy.life -= this.player.damage
-        if (this.enemy.life == 0)
-            alert("You win")
-    }
-
-
-
-}
-
-
 //when the player lose, restart the game
 function restart() {
     var answer = confirm("You lost.\n Do you want to fight again?")
     if (answer == true) 
         alert("Start again!")
     else
-        alert("See you space cowboy...")
+        alert("See you space cowboy...") 
+}
+
+//change the screen to full mode
+function resize() {
+    if ((document.fullScreenElement && document.fullScreenElement !== null) ||    // metodo alternativo
+      (!document.mozFullScreen && !document.webkitIsFullScreen)) {               // metodos actuales
+    if (document.documentElement.requestFullScreen) {
+      document.documentElement.requestFullScreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullScreen) {
+      document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+
+  }
     
 }
