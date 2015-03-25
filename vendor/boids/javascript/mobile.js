@@ -20,6 +20,7 @@ function Mobile(config_object, block){
             that.last_heading = new Vector(0, 1)
             //that.my_world = null
             that.last_time = that.current_time = null
+            that.focused = false
             /* Overridable configuration */
 
             var default_config = {
@@ -30,6 +31,7 @@ function Mobile(config_object, block){
 
                 vel_max: 50,
                 vision: {radius: 100, angle: 130 * Math.PI / 180},
+                dimensions: 20,
 
                 force_limits: {
                     thrust: 20,
@@ -146,6 +148,8 @@ Mobile.prototype.run = function(current_time){
     current_time = current_time || new Date()
     this.update_physics(current_time)
     this.update_zone()
+    if(this.focused)
+        this.my_world.show_boids(this)
 }
 
 

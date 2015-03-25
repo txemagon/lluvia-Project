@@ -37,6 +37,8 @@ function World(screen, type, incarnation, width, height) {
     this.inialize_map_zone()
     this.boid_distances = []
 
+    this.current_boid_focused = null
+
     this.start_time = null
     this.acceleration_max = 30
     this.velocity_max = 200
@@ -92,7 +94,28 @@ World.prototype.new_screen = function(id, Type, incarnation){
         gd = new Type(id, boids, incarnation)
     else
         gd = GraphicDevice.get_best_device_for(id, boids, cartoon)
-    this.screen.push(gd)	
+    this.screen.push(gd)
+    var world = this
+
+    gd.screen.addEventListener('mousedown',function(evt){
+        evt.preventDefault()
+        var x = evt.pageX-this.offsetLeft
+        var y = evt.pageY-this.offsetTop
+        world.map_zone[parseInt(y/world.visibility)][parseInt(x/world.visibility)].each(function(boid) {
+            if(!boid)
+               return
+            var boid_x_dimension = boid.geo_data.position.get_coord(0)+boid.dimensions
+            var boid_y_dimension = boid.geo_data.position.get_coord(1)+boid.dimensions
+            if( (x <= boid_x_dimension && x >= boid_x_dimension - boid.dimensions) 
+                && (y <= boid_y_dimension && y >= boid_y_dimension - boid.dimensions)){
+                boid.focused = true
+                if(world.current_boid_focused)
+                   world.current_boid_focused.focused = false
+                world.current_boid_focused = boid
+            }
+        })
+
+    },false)
 }
 
 
@@ -420,19 +443,19 @@ World.prototype.is_one_second_from_begining = function() {
  *
  *
  */
-World.prototype.show_boids = function() {
+World.prototype.show_boids = function(boid) {
 
     var logger = document.getElementById("logger")
     logger.innerHTML = ""
     var boids = 0
-    this.each_boid(function(boid) {
-        boids++
-        logger.innerHTML += "<h3>Boid " + boids + "</h3>"
+    //this.each_boid(function(boid) {
+        //boids++
+        logger.innerHTML += "<h3>Boid " + boid.being_id + "</h3>"
         logger.innerHTML += "Pos: " + boid.position() + "<br/>"
         logger.innerHTML += "Vel: " + boid.velocity() + "<br/>"
         logger.innerHTML += "Acc: " + boid.acceleration() + "<br/>"
         logger.innerHTML += "<br/>"
-    })
+    //})
 }
 
 /**
