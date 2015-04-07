@@ -36,7 +36,7 @@ Planet.prototype.initialize = function(planet_number){
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
     var planet_number = mssg.event.show_planet.data
-    alert("Planet number: " + planet_number.toSource())
+    sweetAlert("Traveling...", "to planet: " + planet_number.toSource())
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
@@ -49,9 +49,8 @@ Planet.prototype.running_up = function() {
 }
 
 Planet.prototype.running_fight_playing_up = function(date) {
-    alert("Start the battle ")
-    
-
+    //sweetAlert("Start the battle", "Attack!")
+   
 /*
     if (this.enemy.life == 0) 
         this.switch("running.fight.win")
@@ -62,12 +61,47 @@ Planet.prototype.running_fight_playing_up = function(date) {
 }
 
 Planet.prototype.running_fight_win = function(date) {
-    alert("You won")
-    //level_up()
+    sweetAlert({
+    title: "You won!",
+    text: "Level up! Go to upload your skills",
+    type: "success",
+    showCancelButton: true,
+    confirmButtonText: "Go",
+    cancelButtonText: "No",
+    closeOnConfirm: false,
+    closeOnCancel: false
+},
+    function(isConfirm) {
+        if (isConfirm) {
+            swal("You have " + (game.points.points.toSource()) + " skill points.", "Spend all your skill points!");
+           //level_up() 
+        }
+        else {
+            swal("Traveling...", "Choose a planet");
+        }
+    });
 }
 
 Planet.prototype.running_fight_lose = function(date) {
-    restart()
+    //when the player lose, restart the game
+sweetAlert({
+  title: "You lost!",
+  text: "Do you want to play again?",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "Yes",
+  cancelButtonText: "No",
+  closeOnConfirm: false,
+  closeOnCancel: false
+},
+function(isConfirm){
+  if (isConfirm) {
+    swal("Figth!", "The battle start again", "success");
+  } else {
+    swal("Surrender", "See you space cowboy...", "error");
+  }
+});
 }
 
 
@@ -120,15 +154,6 @@ Planet.prototype.get_boids = function(){
 function repaint(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
-}
-
-//when the player lose, restart the game
-function restart() {
-    var answer = confirm("You lost.\n Do you want to fight again?")
-    if (answer == true) 
-        alert("Start again!")
-    else
-        alert("See you space cowboy...") 
 }
 
 //change the screen to full mode

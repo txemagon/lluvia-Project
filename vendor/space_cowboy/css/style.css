@@ -54,6 +54,8 @@ button {
 	
 } 
 
+/*Buttons class*/
+
 .button p { 
 	font-size: 25px; 
 	line-height: 15px; 
@@ -75,3 +77,4 @@ a {
 .button p:hover { 
 	text-shadow: 0px 0px 3px #444; 
 }
+

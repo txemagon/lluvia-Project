@@ -24,7 +24,7 @@ function Game() {
 Game.prototype.attend_chosen_finished = function(date, mssg) {
     var points = mssg.event.chosen_finished.data
     this.points = points
-    alert(points.toSource())
+    sweetAlert("Your stats: ", points.toSource(), "success");
     this.fire_event(this.new_message("sync", "show_space"))
     mssg.current++
 }
@@ -57,3 +57,4 @@ Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
 
 }
+
