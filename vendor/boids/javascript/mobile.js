@@ -147,7 +147,11 @@ Mobile.prototype.run = function(current_time){
         return
     current_time = current_time || new Date()
     this.update_physics(current_time)
+    
+    //Being.prototype.run.call(this)
+    this.zone_changed = false
     this.update_zone()
+
     if(this.focused)
         this.my_world.show_boids(this)
 }

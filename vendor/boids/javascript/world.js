@@ -32,7 +32,7 @@ function World(screen, type, incarnation, width, height) {
     this.map_zone = []
     this.width = width || 100 //meters
     this.height = height || 100
-    this.visibility = 100
+    this.visibility = 50
 
     this.inialize_map_zone()
     this.boid_distances = []
@@ -450,7 +450,7 @@ World.prototype.show_boids = function(boid) {
     var boids = 0
     //this.each_boid(function(boid) {
         //boids++
-        logger.innerHTML += "<h3>Boid " + boid.being_id + "</h3>"
+        logger.innerHTML += "<h3>Being " + boid.being_id + "</h3>"
         logger.innerHTML += "Pos: " + boid.position() + "<br/>"
         logger.innerHTML += "Vel: " + boid.velocity() + "<br/>"
         logger.innerHTML += "Acc: " + boid.acceleration() + "<br/>"
@@ -519,18 +519,14 @@ World.prototype.visible_for = function(zone, position, vision) {
             for(var x = -1; x < 2; x++){
                 if( !((zone.x+x) < 0) && !((zone.x+x) > (this.map_zone[0].length-1)))
                     this.map_zone[(zone.y+y)][(zone.x+x)].each(function(boid) {
-                    //this.get_beings().each(function(boid) {
-                    //this.map_zone[zone.y][zone.x].each(function(boid) {
                         try{
-                            if(boid != undefined && boid instanceof Boid)
-                                //if(World.prototype.visible_for.yield(boid)){
-                                if("wander" in boid.brain.active_behaviors){
-                                    var x1 = position.get_coord(0)
-                                    var y1 = position.get_coord(1)
-                                    var dx = boid.geo_data.position.get_coord(0) - x1
-                                    var dy = boid.geo_data.position.get_coord(1) - y1
-                                    if (dx * dx + dy * dy < vision)
-                                        visible.push(boid)
+                            if(boid != undefined && boid instanceof Boid /*&& "wander" in boid.brain.active_behaviors*/){
+                                var x1 = position.get_coord(0)
+                                var y1 = position.get_coord(1)
+                                var dx = boid.geo_data.position.get_coord(0) - x1
+                                var dy = boid.geo_data.position.get_coord(1) - y1
+                                if (dx * dx + dy * dy < vision)
+                                    visible.push(boid)
                             }
                         }catch(e){
                             console.log(e)
@@ -539,6 +535,19 @@ World.prototype.visible_for = function(zone, position, vision) {
             }
     }
     return visible
+}
+
+World.prototype.boids_near = function(zone) {
+    var that = this
+    var near = []
+    for(var y = -1; y < 2; y++){
+        if( !((zone.y+y) < 0) && !((zone.y+y) > (this.map_zone.length-1)))
+            for(var x = -1; x < 2; x++){
+                if( !((zone.x+x) < 0) && !((zone.x+x) > (this.map_zone[0].length-1)))
+                    near.push(this.map_zone[(zone.y+y)][(zone.x+x)])
+            }
+    }
+    return near
 }
 
 /**

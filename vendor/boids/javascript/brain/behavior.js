@@ -21,6 +21,8 @@ function Behavior( brain, body, before_modifier, after_modifier,target ){
     before_modifier = before_modifier || false
     after_modifier  = after_modifier  || false
 
+    this.targets = []
+
 
     function initialize(){
         that.brain = brain || null
@@ -317,4 +319,13 @@ Behavior.prototype.deactivate_modifier = function(mod_name, scope){
     })
 }
 
+/**
+ * Función virtual que usarán algunos comportamientos.
+ */
+Behavior.prototype.add_target = function(){
+    return
+}
 
+Behavior.prototype.clean_targets = function(){
+    this.targets.splice(0,this.targets.length)
+}

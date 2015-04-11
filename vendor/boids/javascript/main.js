@@ -5,7 +5,7 @@ function main() {
 
 
     //w = new World('screener', WebGl, cartoon, 1000, 400)
-    w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+    w = new World('screener', CanvasDevice, cartoon2_canvas, 1000, 400)
     //w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
     //w.new_screen('screener2', CanvasDevice, cartoon_canvas)
    
@@ -115,7 +115,7 @@ function main() {
     var first = t
     seeker.push(t)
 
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 0; i++)
         seeker.push(t = w.new_boid(function(config) {
             config.brain.activate('seek', t)
         }))
@@ -166,7 +166,7 @@ function main() {
 
     /* Example: Class as target */
     var yeoman = []
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 20; i++)
         yeoman.push(w.new_boid(function(config) {
             config.colour = "brown"
             config.brain.activate("wander")
@@ -174,7 +174,7 @@ function main() {
         }))
 
     var sheeps = []
-    for (var i = 0; i < 10; i++)
+    for (var i = 0; i < 50; i++)
         sheeps.push(w.new_boid(function(config) {
             config.colour = "lemonchiffon"
             config.brain.activate("flee", WanderBehavior)

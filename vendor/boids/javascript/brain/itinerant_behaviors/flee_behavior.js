@@ -64,7 +64,8 @@ FleeBehavior.prototype.target_data = function(){
  * @return {Object} this.target_data() Position information of boid
  */
 FleeBehavior.prototype.get_target = function(){
-  return this.target_data()
+  //return this.target_data()
+  return this.targets
 }
 
 /**
@@ -120,3 +121,10 @@ FleeBehavior.prototype.desired_acceleration = function(){
   return this.desired_velocity(target.geo_data).subs(this.me.velocity())
 }
 
+FleeBehavior.prototype.add_target = function(someone){
+  var that = this
+  someone.brain.active_behaviors.keys().each(function(b){
+          if ( b != "undefined" && Behavior.type_of(b) == that.target)
+            that.targets.push(someone)
+          })
+}

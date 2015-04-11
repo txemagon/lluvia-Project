@@ -17,6 +17,7 @@ function Being(config_object, block){
           that.my_world = null
           that.being_id = Being.id ++
           that.zone = {x:0, y:0} //Zone
+          that.zone_changed = false
           /* Overridable configuration */
 
           var default_config = {
@@ -50,12 +51,16 @@ function Being(config_object, block){
 Being.id = 0
 
 Being.prototype.run = function(){
+   this.zone_changed = false
    this.update_zone()
 }
 
 Being.prototype.start_zone = function(){
   this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
   this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
+  //this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
+  this.zone_changed = true
+
   this.my_world.map_zone[this.zone.y][this.zone.x].push(this)
 }
 
@@ -64,7 +69,13 @@ Being.prototype.update_zone = function(){
   this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
   this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
   if(this.zone.x != last_zone.x || this.zone.y != last_zone.y){
-    delete this.my_world.map_zone[last_zone.y][last_zone.x][this.being_id]
-    this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
+    
+    //delete this.my_world.map_zone[last_zone.y][last_zone.x][this.being_id]
+    //this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
+    this.zone_changed = true
+
+    var index = this.my_world.map_zone[last_zone.y][last_zone.x].indexOf(this)
+    this.my_world.map_zone[last_zone.y][last_zone.x].splice(index,1)
+    this.my_world.map_zone[this.zone.y][this.zone.x].push(this)
   }
 }

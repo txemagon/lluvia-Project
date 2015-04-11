@@ -210,6 +210,30 @@ Brain.prototype.desired_acceleration = function(){ // This is the place for a ne
    return result || new Vector(0,0)
 }
 
+Brain.prototype.clean_behavior_targets = function(){
+   this.active_behaviors.each( function(name, behaviour){
+      behaviour.each( function(target) {
+         if (target && target.behavior)
+            target.behavior.clean_targets()
+      })
+   })
+}
+
+Brain.prototype.interested_in_this = function(someone){
+   if(!(someone instanceof Boid))
+      return
+      try {
+      this.active_behaviors.each( function(name, behaviour){
+         behaviour.each( function(target) {
+            if (target && target.behavior)
+               target.behavior.add_target(someone)
+         })
+      })
+   } catch(err) {
+      throw "Error in Brain#interested_in_this"
+   }
+}
+
 /*
    Behaviors Wish List
    ===================

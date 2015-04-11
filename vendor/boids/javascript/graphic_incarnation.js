@@ -129,7 +129,7 @@ cartoon_canvas.Immobile.draw = function(immobile, ctx){
     ctx.fill()
 }
 
-var cartoon2_canvas = new Incarnation("CanvasDevice", "Mobile", "Immobile", "Object")
+var cartoon2_canvas = new Incarnation("CanvasDevice", "Mobile", "Boid", "Immobile", "Object")
 var img = null
 img = new Image()
 img.src = "images/pixel.png"
@@ -163,13 +163,22 @@ cartoon2_canvas.Mobile.draw = function(boid, context){
     context.closePath()
     context.stroke()
 
-    //if (this.focused){
-      //  ctx.strokeStyle = "red"
-       // ctx.beginPath();
-       // ctx.arc(p.get_coord(0), p.get_coord(1), 18, 0, Math.PI*2, true);
-       // ctx.closePath();
-       // ctx.stroke()
-   // }
+if(boid.focused){
+       context.beginPath();
+       context.arc(p.get_coord(0)+width/2, p.get_coord(1)+height/2, boid.vision.radius, 0, Math.PI*2, true);
+       context.closePath();
+       context.stroke() 
+    }
+}
+
+cartoon2_canvas.Boid.draw = function(boid, context){
+    var p = boid.geo_data.position;
+    var v = boid.geo_data.velocity;
+    var a = boid.geo_data.acceleration;
+    cartoon2_canvas.Mobile.draw(boid, context)
+    //context.font = "10px Georgia"
+    //context.fillStyle = 'black'
+    //context.fillText(boid.boid_id + "", p.get_coord(0), p.get_coord(1))
 }
 
 cartoon2_canvas.Immobile.draw = function(immobile, context){
