@@ -1,6 +1,7 @@
 PointDealer.prototype = new Device
 PointDealer.prototype.constructor = PointDealer
 PointDealer.prototype.super = Device
+
 /**
  * @method  PointDealer
  * @constructor

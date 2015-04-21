@@ -4,7 +4,7 @@ body.stop-scrolling{
 }
 
 .sweet-overlay{
-	background-color:#000;
+	background-color:#696969;
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
 	background-color:rgba(0,0,0,.4);
 	position:fixed;
@@ -18,7 +18,7 @@ body.stop-scrolling{
 }
 
 .sweet-alert{
-	background-color:#fff;
+	background-color:#696969; /*Color fondo alert*/
 	width:478px;
 	padding:17px;
 	border-radius:5px;
@@ -106,8 +106,8 @@ body.stop-scrolling{
 	.sweet-alert.show-input input{display:block}
 	
 	.sweet-alert button{
-		background-color:#800000;
-		color:#000;
+		background-color:#000;
+		color:#fff;
 		border:none;
 		box-shadow:none;
 		font-size:17px;
@@ -118,8 +118,8 @@ body.stop-scrolling{
 		margin:26px 5px 0;
 		cursor:pointer
 	}
-	.sweet-alert button:focus{outline:0;box-shadow:0 0 2px rgba(128,179,235,.5),inset 0 0 0 1px rgba(0,0,0,.05)}
-	.sweet-alert button:hover{ background-color: #000;/*background-color:#a1d9f2*/}
+	.sweet-alert button:focus{background-color:#800000;}
+	.sweet-alert button:hover{ background-color:#800000;/*background-color:#a1d9f2*/}
 	.sweet-alert button:active{background-color:#800000}
 	.sweet-alert button.cancel{background-color:#800000}
 	.sweet-alert button.cancel:hover{background-color:#800000}

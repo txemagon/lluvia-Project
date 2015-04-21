@@ -1,6 +1,11 @@
 Enemy.prototype = new Boid
 Enemy.prototype.constructor = Enemy
 
+/**
+ * @method  Enemy
+ * @param {[type]} config      [description]
+ */
+
 function Enemy(config) {
     Boid.apply(this, arguments)
     var that = this
@@ -17,6 +22,8 @@ function Enemy(config) {
     this.height = 90
     var shots
     this.shots = []
+
+
 }
 
 /*

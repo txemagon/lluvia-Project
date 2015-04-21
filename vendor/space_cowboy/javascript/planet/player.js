@@ -3,6 +3,11 @@ Player.prototype.constructor = Player
 
 var stars = []
 
+/**
+ * @method  Player
+ * @param {[type]} config      [description]
+ */
+
 function Player(config){
 	Boid.apply(this, arguments)
 	var that = this
@@ -23,10 +28,22 @@ function Player(config){
 	this.height = 107
 	var shots 
 	this.shots = []
+	this.colision = Enemy.y + Enemy.height
 
 	var f = document.querySelector("#fps");
 	
 }
+
+
+//Algoritmo de colisiones de shots y enemy
+Player.prototype.colision = function(enemy, shots) {
+  if (this.shots.x < enemy.x + enemy.width &&
+      this.shots.x + this.shots.width > enemy.x &&
+      this.shots.y == enemy.y + enemy.height &&
+      this.shots.y + this.shots.height > enemy.y)
+    Enemy.life -= this.damage
+}
+
 
 function random(max){
     return ~~(Math.random()*max)
@@ -47,7 +64,7 @@ function move() {
 
 	//create shots
 	if (lastPress == KEY_SHOT) {
-		shots.push(new Rectangle (this.x + 38, this.y + 10, 5, 10))
+		shots.push(new Rectangle (this.x +38, this.y, 5, 10)) //x, y, width, height
 		lastPress = null
 	}
 
@@ -74,8 +91,9 @@ function move() {
         if(stars[i].timer > 10)
         	stars[i].timer -= 10
     }
-  
 }
+    
+  
 
 function paint(ctx) {
 	//draw stars
@@ -96,27 +114,21 @@ function paint(ctx) {
 	ctx.fillText("Player Life: " + this.life, 5, 20)
 	ctx.fillText("Player Position: " + this.x, 5, 40)
     ctx.fillText("Estrellas: " + stars.length, 5, 60)
-    ctx.fillText("Disparo Y: " + this.shots.y, 5, 80)
+    
     ctx.fillText("FPS: " + fps.getFPS(), 5, 100)
 
 	//draw shots
 	ctx.fillStyle="#f00"
 	 for (var i=0, l=shots.length; i<l; i++) {
     	shots[i].fill(ctx);
+    	ctx.fillText("Disparo Y: " + shots[i].y, 5, 80)
     }
 }
 
-function attack() {
-    if (this.shots.y == Enemy.y) {
-        Enemy.life -= this.damage
-        if (Enemy.life < 1)
-            alert("You win")
-    }
-}
 
 Player.prototype.draw = function(ctx) {
 	repaint(ctx)
-	attack()
+	//attack()
 	move()
 	paint(ctx)
 }
@@ -142,14 +154,8 @@ Rectangle.prototype.fill = function() {
 	ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
-//prototipo para las intersecciones de los disparos.
-Rectangle.prototype.intersects = function(rect) {
-	if (rect != null) {
-		return (this.x < rect.x + rect.width &&
-				this.y + this.width > rect.x &&
-				this.y < rect.y + rect.height &&
-				this.y + this.height > rect.y)
-	}
+Rectangle.prototype.fill = function(ctx) {
+	ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
 //Star object

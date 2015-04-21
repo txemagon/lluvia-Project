@@ -2,7 +2,9 @@ Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
-//keys 
+/*
+ * Global Variables
+ */
 var KEY_ENTER = 13
 var KEY_SPACE = 32
 var KEY_LEFT  = 37
@@ -10,6 +12,16 @@ var KEY_RIGHT = 39
 var KEY_SHOT  = 87 //w
 var pressing  = []
 var lastPress = null
+
+/**
+ * @method  Planet
+ * @constructor
+ * Creates
+ * @param {[type]} view      [description]
+ * @param {[type]} screen    [description]
+ * @param {[type]} width     [description]
+ * @param {[type]} height    [description]
+ */
 
 function Planet(view, screen, width, height) {
     planet = document.getElementById("planet")
@@ -36,7 +48,7 @@ Planet.prototype.initialize = function(planet_number){
 
 Planet.prototype.attend_show_planet = function(date, mssg) {
     var planet_number = mssg.event.show_planet.data
-    sweetAlert("Traveling...", "to planet: " + planet_number.toSource())
+    sweetAlert("Traveling...", "to planet: " + planet_number)
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
@@ -155,6 +167,7 @@ function repaint(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }
+
 
 //change the screen to full mode
 function resize() {

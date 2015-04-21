@@ -5,6 +5,13 @@ Space.prototype.super = Device
 var planets_map = null
 var space_stars = []
 
+/**
+ * @method  Space
+ * @constructor
+ * Creates
+ * @param {[type]} view      [description]
+ */
+
 function Space(view){
 	canvas_space = document.getElementById("canvas_space")
 	ctx_space = canvas_space.getContext("2d")
