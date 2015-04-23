@@ -1,5 +1,0 @@
-Brain#activate
-Brain#is_in$U
-Brain#active_behaviors
-Brain#all_behaviors
-Brain#get_behaviors
