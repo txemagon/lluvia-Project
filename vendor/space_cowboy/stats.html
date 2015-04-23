@@ -29,7 +29,7 @@
             </div>
             <div id="skill_interface"></div>
 
-            <div class="button" id="button_play" type="button"> 
+            <div class="Button" id="button_play" type="button"> 
             <p>Start</p>
             </div>
         </div>
@@ -80,13 +80,13 @@
                 <img id="ship" src="images/ships/player/player.png">
             </div>
             <div id="botones" >
-                <div class="button" type="button" id="button_up" onclick="up()">^</div>
+                <div class="Button" type="button" id="button_up" onclick="up()">^</div>
 
-                <div class="button" type="button" id="button_right" onclick="right();">></div>
+                <div class="Button" type="button" id="button_right" onclick="right();">></div>
 
-                <div class="button" type="button" id="button_down" onclick="down();">v</div>
+                <div class="Button" type="button" id="button_down" onclick="down();">v</div>
 
-                <div class="button" type="button" id="button_left" onclick="left();"><</div>
+                <div class="Button" type="button" id="button_left" onclick="left();"><</div>
             </div>
         </div>
         <!-- Fin de mapa -->
@@ -99,7 +99,7 @@
                 <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
                 <br>
 
-                <div class="button" type="button" id="button_screen" onclick="resize();">
+                <div class="Button" type="button" id="button_screen" onclick="resize();">
                 <p>Full Screen</p>
                 </div>
 
@@ -107,29 +107,7 @@
             </div>
             <canvas id="canvas_planet" width="1000" height="600" ></canvas>
         </div>
-        <!-- Fin de combate-->
-        
-        <!--Pop-Up
-        <script>$(document).ready(function(){
-            pop=$("div#pop-up");
-            if($('#abrirPopup').length==0)abrir();
-            //funciones abrir
-            function abrir(){     
-                pop.stop().css( 'display','block' ).animate({'left':'40%','opacity':1} ,900);                      }
-            function cerrar(){    
-                pop.stop().animate({'left':'-50%','opacity':0},900,function(){pop.css('display','none');});     }
-            $("div#cerrar").click(function(){cerrar();});
-            $('#abrirPopup').click(function(e){e.preventDefault();abrir();
-            });
-        });
-        </script>
-
-        <div class="pop-up" id="pop-up" >
-            <p>Welcome to Space Attack!</p>
-            <p>Let's play!</p>
-            <button type="button" id="button_ok" class="button" onclick="restart();">Ok</button>
-        </div>
--->
+        <!-- Fin de combate--> 
 
     </div>
 </body>

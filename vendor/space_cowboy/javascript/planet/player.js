@@ -28,22 +28,9 @@ function Player(config){
 	this.height = 107
 	var shots 
 	this.shots = []
-	this.colision = Enemy.y + Enemy.height
 
 	var f = document.querySelector("#fps");
-	
 }
-
-
-//Algoritmo de colisiones de shots y enemy
-Player.prototype.colision = function(enemy, shots) {
-  if (this.shots.x < enemy.x + enemy.width &&
-      this.shots.x + this.shots.width > enemy.x &&
-      this.shots.y == enemy.y + enemy.height &&
-      this.shots.y + this.shots.height > enemy.y)
-    Enemy.life -= this.damage
-}
-
 
 function random(max){
     return ~~(Math.random()*max)

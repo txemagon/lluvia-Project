@@ -62,7 +62,35 @@ Planet.prototype.running_up = function() {
 
 Planet.prototype.running_fight_playing_up = function(date) {
     //sweetAlert("Start the battle", "Attack!")
-   
+   /*
+    //enemy shots
+    while (this.player.life != 0){
+        this.enemy.shots.push (new Rectangle (this.enemy.x, this.enemy.y, 5, 10))
+        for (var i=0, l=this.enemy.shots.length; i<l; i++) {
+            this.enemy.shots[i].y -= 5 //shots speed
+            if (this.enemy.shots[i].y < 0){
+                this.enemy.shots.splice(i--, 1)
+                l--
+            }
+        }
+    }
+*/
+    //Algoritmo de colisiones de player.shots y enemy
+    //Cuando el disparo del jugador da al enemigo
+    if (this.player.shots.x < this.enemy.x + this.enemy.width &&
+        this.player.shots.x + this.player.shots.width > this.enemy.x &&
+        this.player.shots.y == this.enemy.y + this.enemy.height &&
+        this.player.shots.y + this.player.shots.height > this.enemy.y)
+      this.enemy.life -= this.player.damage
+
+    //Algoritmo de colisiones de enemy.shots y player
+    //Cuando el disparo del enemigo da al jugador
+    if (this.enemy.shots.x < this.player.x + this.player.width &&
+        this.enemy.shots.x + this.enemy.shots.width > this.player.x &&
+        this.enemy.shots.y < this.player.y + this.player.height &&
+        this.enemy.shots.y + this.enemy.shots.height > this.player.y)
+      this.player.life -= this.enemy.damage
+}
 /*
     if (this.enemy.life == 0) 
         this.switch("running.fight.win")
@@ -70,7 +98,7 @@ Planet.prototype.running_fight_playing_up = function(date) {
         if(this.player.life == 0)
             this.switch("running.fight.lose")
 */
-}
+
 
 Planet.prototype.running_fight_win = function(date) {
     sweetAlert({

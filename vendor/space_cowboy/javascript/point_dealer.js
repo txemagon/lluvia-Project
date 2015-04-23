@@ -25,25 +25,22 @@ function PointDealer(view_name, interface) {
         null, //Element 1. Substitute title. Damage, ie.
         "</p>" +
         "</span>" +
-
         "<span class='BarraPuntos'>" +
         "<img id='image_",
         null, // Element 3. Substitute category name.
         "' src='images/bar/bar_0.png'>" +
         "</span>" +
-
         "<span id='buttons_skills_",
         null, // Element 5. Substitute category name.
         "'>" +
         "<span id='button_minus_",
         null, // Element 7. Substitute category name.
-        "' class='Button'>" +
+        "' class='AddLess'>" +
         "    <img src='images/bar/minus.png'>" +
         "</span>" +
-
         "<span id='button_plus_",
         null, // Element 9. Substitute category name.
-        "' class='Button' >" +
+        "' class='AddLess' >" +
         "<img src='images/bar/plus.png' />" +
         "</span> </span ></div><br/>"
     ]

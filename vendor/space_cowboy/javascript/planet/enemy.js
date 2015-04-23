@@ -22,8 +22,6 @@ function Enemy(config) {
     this.height = 90
     var shots
     this.shots = []
-
-
 }
 
 /*
@@ -215,6 +213,7 @@ function move_enemy() {
         this.x = canvas.width - this.width
     if (this.x < 0)
         this.x = 0
+
 }
 
 Enemy.prototype.draw = function(ctx) {
