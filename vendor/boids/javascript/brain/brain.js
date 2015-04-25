@@ -59,11 +59,18 @@ Brain.prototype.activate = function(behavior, target_after){
    var behavior_class = verbose_behavior[1]
 
    this.active_behaviors[behavior_class] = this.active_behaviors[behavior_class] || []
-   if (this.possible_behaviors[behavior_class])
+   if (this.possible_behaviors[behavior_class]){
       this.active_behaviors[behavior_class].push( {
 	 target: target_after,
 	 behavior: Behavior.new(this, behavior, target_after)
       })
+      if(target_after instanceof Boid)
+         this.body.target.push(target_after)
+      else
+         if(typeof(target_after) == "function")
+            this.body.target.push(target_after.name.split(/Behavior/i)[0].toLocaleLowerCase())
+      this.body.behavior.push(behavior.toLocaleLowerCase())
+   }
 }
 
 /**
@@ -210,29 +217,31 @@ Brain.prototype.desired_acceleration = function(){ // This is the place for a ne
    return result || new Vector(0,0)
 }
 
-Brain.prototype.clean_behavior_targets = function(){
-   this.active_behaviors.each( function(name, behaviour){
-      behaviour.each( function(target) {
-         if (target && target.behavior)
-            target.behavior.clean_targets()
-      })
-   })
-}
 
-Brain.prototype.interested_in_this = function(someone){
-   if(!(someone instanceof Boid))
-      return
-      try {
-      this.active_behaviors.each( function(name, behaviour){
-         behaviour.each( function(target) {
-            if (target && target.behavior)
-               target.behavior.add_target(someone)
-         })
-      })
-   } catch(err) {
-      throw "Error in Brain#interested_in_this"
-   }
-}
+/*ESTO CREO QUESOBRARA*/
+// Brain.prototype.clean_behavior_targets = function(){
+//    this.active_behaviors.each( function(name, behaviour){
+//       behaviour.each( function(target) {
+//          if (target && target.behavior)
+//             target.behavior.clean_targets()
+//       })
+//    })
+// }
+
+// Brain.prototype.interested_in_this = function(someone){
+//    if(!(someone instanceof Boid))
+//       return
+//       try {
+//       this.active_behaviors.each( function(name, behaviour){
+//          behaviour.each( function(target) {
+//             if (target && target.behavior)
+//                target.behavior.add_target(someone)
+//          })
+//       })
+//    } catch(err) {
+//       throw "Error in Brain#interested_in_this"
+//    }
+// }
 
 /*
    Behaviors Wish List
