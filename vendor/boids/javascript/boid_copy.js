@@ -35,10 +35,6 @@ function Boid(config_object, block){
             Mobile.call(that)	
             var config = new Hash()
             that.boid_id = Boid.id ++
-            
-            that.target = []
-            that.behavior = []
-            that.posible_target = []
 
            // that.last_heading = new Vector(0, 1)
             //that.my_world = null
@@ -156,76 +152,24 @@ Boid.prototype.update_physics = function(current_time){
     this.geo_data.velocity = (integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )).subs(this.geo_data.velocity.scale(0.1))
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
 }
-
-
-/**
- * @method run
- *
- * Updates the time in the boid's variables
- *
- * @param {Date}   current_time Current time of the boid
- *
- */
-Boid.prototype.run = function(current_time){
-    var that = this
-    Mobile.prototype.run.call(this, current_time)
-    
-     //this.brain.clean_behavior_targets()
-     this.posible_target.splice(0,this.posible_target.length)
-
-     var near = this.my_world.boids_near(this.zone)
-      for(var i = 0; i < near.length; i++)
-       for(var j = 0;  j < near[i].length; j ++)
-        if(near[i][j] != undefined && near[i][j] instanceof Boid && near[i][j] != this){
-            var target_find = false
-            for (var n=0; n < this.target.length && !target_find; n++)
-                for(var m=0; m < near[i][j].behavior.length && !target_find; m++)
-                    if(this.target[n] == near[i][j].behavior[m]){
-                        this.posible_target.push(near[i][j])
-                        target_find = true
-                    }
-        }
-
-
-
-     //for(var i = 0; i < 10; i++)
-        //this.brain.interested_in_this(this)
-       // for(var j = 0; j < 100; j++)
-        //var a = 0
-      //for(var i = 0; i < near.length; i++)
-        // for(var j = 0;  j < near[i].length; j ++)
-          //  this.brain.interested_in_this(this)
-            //this.brain.interested_in_this(near[i][j])
-    // this.delete_obsolete_distances(near)
-    // //delete this.my_world.boid_distances[this.boid_id]
-    // this.targets.splice(0,this.targets.length)
-    // for(var i = 0; i < near.length; i++)
-    //   for(var j = 0;  j < near[i].length; j ++){
-    //       if(near[i][j] != undefined && near[i][j] instanceof Boid && near[i][j] != this)
-    //         if(this.boid_id < near[i][j].boid_id){
-    //              var distance = 7//near[i][j].geo_data.position.subs(this.geo_data.position).module()
-    //              this.my_world.boid_distances[this.boid_id][near[i][j].boid_id] = {boid: near[i][j],
-    //                distance: distance}
-    //               near[i][j].my_world.boid_distances[near[i][j].boid_id][this.boid_id] = {boid: this,
-    //                 distance: distance}
-    //         }
-    //   }
-}
-
-Boid.prototype.delete_obsolete_distances = function(other){
-   var length = this.my_world.boid_distances[this.boid_id].length
-   for(var i = 0; i < length; i++){
-        var dont_math = true
-        if(this.my_world.boid_distances[this.boid_id][i] != undefined){
-            for(var j = 0; j < other.length && dont_math; j++)
-               if(other[j].indexOf(this.my_world.boid_distances[this.boid_id][i].boid) != null)
-                dont_math = false
-            if(dont_math)
-                delete this.my_world.boid_distances[this.boid_id][i]
-        }
-   }
-}
-
+//
+//
+///**
+// * @method run
+// *
+// * Updates the time in the boid's variables
+// *
+// * @param {Date}   current_time Current time of the boid
+// *
+// */
+//Boid.prototype.run = function(current_time){
+//    if (!(current_time instanceof Date))
+//        return
+//    current_time = current_time || new Date()
+//    this.update_physics(current_time)
+//}
+//
+//
 ///**
 // * @method heading
 // *

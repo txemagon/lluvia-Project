@@ -110,9 +110,9 @@ cartoon_canvas.Mobile.draw = function(boid, context){
     context.closePath();
     context.stroke()
 
-    context.font = "10px Georgia"
-    context.fillStyle = 'black'
-    context.fillText(boid.being_id + "", p.get_coord(0), p.get_coord(1))
+    // context.font = "10px Georgia"
+    // context.fillStyle = 'black'
+    // context.fillText(boid.being_id + "", p.get_coord(0), p.get_coord(1))
 
     //if (this.focused){
       //  ctx.strokeStyle = "red"
