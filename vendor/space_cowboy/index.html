@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Space Attack</title>
+    <script type="text/javascript" src="../../dist/lluvia.js" ></script>
+    <script type="text/javascript" src="javascript/dependencies.js" ></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/application.css">
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+    <link rel="stylesheet" type="text/css" href="css/stats.css">
+    <link rel="stylesheet" type="text/css" href="css/space.css">
+    <link rel="stylesheet" type="text/css" href="css/planet.css">
+    <link href='http://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'> <!-- Fuente de letra -->
+    <script src="javascript/sweetalert/lib/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="javascript/sweetalert/lib/sweet-alert.css"> <!-- SweetAlert -->
+</head>
+<body onload="bring_lluvia();">
+    <div id="game">
+
+        <!-- Estadisticas -->
+        <div id="skill" class="Device">
+            <h1>Space Attack</h1>
+            <div id="title_stats">
+                <br>
+                <h2>Choose your character statistics.</h2>
+                <h3>You currently got <p id="points">5</p> extra skill points</h3>
+                <br>
+            </div>
+            <div id="skill_interface"></div>
+
+            <div class="Button" id="button_play" type="button"> 
+            <p>Start</p>
+            </div>
+        </div>
+        <!-- Fin de estadísticas -->
+
+        <!-- Mapa -->
+        <div id="map" class="Device">
+            <h1>Space Attack</h1>
+            <div id="title_planets">
+                <br>
+                <h2>Choose a planet to begin to invade.</h2>
+                <br>
+                </br>
+                <br></br>
+            </div>
+            <br>
+            <div id="ventana">
+                <div id="planetas">
+                    <!-- Planetas de 5-10 (amarillos)-->
+                    <input type="image" id="planet1" src="images/planets/planetas5-10/blanco.png" >
+                    <input type="image" id="planet2" src="images/planets/planetas5-10/amarillo.png" >
+                    <input type="image" id="planet3" src="images/planets/planetas5-10/amarillo1.png">
+                    <input type="image" id="planet4" src="images/planets/planetas5-10/amarillo2.png">
+                    <input type="image" id="planet5" src="images/planets/planetas5-10/amarillo3.png">
+                    <!-- Planetas de 10-15 (naranjas y rojos) -->
+                    <input type="image" id="planet6" src="images/planets/planetas5-10/amarillo4.png">
+                    <input type="image" id="planet7" src="images/planets/planetas10-15/naranja1.png">
+                    <input type="image" id="planet8" src="images/planets/planetas10-15/naranja2.png">
+                    <input type="image" id="planet9" src="images/planets/planetas10-15/rojo1.png">
+                    <input type="image" id="planet10" src="images/planets/planetas10-15/rojo2.png">
+                    <!-- Planetas de 15-19 (morados)-->
+                    <input type="image" id="planet11" src="images/planets/planetas15-20/morado1.png">
+                    <input type="image" id="planet12" src="images/planets/planetas15-20/morado2.png">
+                    <input type="image" id="planet13" src="images/planets/planetas15-20/morado3.png">
+                    <input type="image" id="planet14" src="images/planets/planetas15-20/morado4.png">
+                    <!-- Planetas de 20-25 (azules y verdes) -->
+                    <input type="image" id="planet15" src="images/planets/planetas20-25/azul1.png">
+                    <input type="image" id="planet16" src="images/planets/planetas20-25/azul2.png">
+                    <input type="image" id="planet17" src="images/planets/planetas20-25/azul3.png">
+                    <input type="image" id="planet18" src="images/planets/planetas20-25/verde1.png">
+                    <input type="image" id="planet19" src="images/planets/planetas20-25/verde2.png">
+                    <!-- Planetas FINAL -->
+                    <input type="image" id="planet20" src="images/planets/final_planet.png">
+                </div> <!-- Se cierra planetas -->
+            </div> <!-- Se cierra ventana -->
+            <canvas id="canvas_space" width="1000" height="600" ></canvas>
+            <div id="nave">
+                <img id="ship" src="images/ships/player/player.png">
+            </div>
+            <div id="botones" >
+                <div class="Button" type="button" id="button_up" onclick="up()">^</div>
+
+                <div class="Button" type="button" id="button_right" onclick="right();">></div>
+
+                <div class="Button" type="button" id="button_down" onclick="down();">v</div>
+
+                <div class="Button" type="button" id="button_left" onclick="left();"><</div>
+            </div>
+        </div>
+        <!-- Fin de mapa -->
+
+        <!-- Combate -->
+        <div id="planet" class="Device">
+            <h1>Space Attack</h1>
+            <div id="title_combat">
+                <br>
+                <h2>Scroll with the direction keys from keyboard and use the spacebar to shoot the enemy.</h2>
+                <br>
+
+                <div class="Button" type="button" id="button_screen" onclick="resize();">
+                <p>Full Screen</p>
+                </div>
+
+               
+            </div>
+            <canvas id="canvas_planet" width="1000" height="600" ></canvas>
+        </div>
+        <!-- Fin de combate--> 
+
+    </div>
+</body>
+</html>
+
