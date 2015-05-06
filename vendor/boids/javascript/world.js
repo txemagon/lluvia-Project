@@ -29,15 +29,15 @@ function World(screen, type, incarnation, width, height) {
     this.self_events = ["focus_boid", "new_boid", "new_immobile", "new_mobile"]
 
     this.screen = []
-    this.map_zone = []
+    this.map_zone = [] //Store the beings in zones
     this.width = width || 100 //meters
     this.height = height || 100
     this.visibility = 50
 
-    this.inialize_map_zone()
-    this.boid_distances = []
+    this.inialize_map_zone() 
+    this.being_distances = [] //Save the distances between beings
 
-    this.current_boid_focused = null
+    this.current_boid_focused = null //Save the boid focused
 
     this.start_time = null
     this.acceleration_max = 30
@@ -55,6 +55,12 @@ function World(screen, type, incarnation, width, height) {
     Device.call(that, null, null)
 }
 
+/**
+ * @method initialize_map_zone
+ *
+ * Initialize the 3D array, that contains the beings.
+ *
+ */
 World.prototype.inialize_map_zone = function(){
     for(var i = 0; i < this.height/this.visibility; i++){
         this.map_zone[i] = []
@@ -63,15 +69,6 @@ World.prototype.inialize_map_zone = function(){
         }
     }
 }
-
-// World.prototype.update_cuadrant = function(){
-//     var that = this
-//     this.each_being(function(being){
-//         being.zone.x = being.geo_data.position.get_coord(0)/this.visibility
-//         being.zone.y = being.geo_data.position.get_coord(1)/this.visibility
-//         that.map_zone[being.zone.y][being.zone.x].push(being)
-//     })
-// }
 
 /**
  * @method new_screen
@@ -221,7 +218,7 @@ World.prototype.has_born = function() {
     for (var i = 0; i < arguments.length; i++) {
         arguments[i].my_world = this
         this.register(arguments[i])
-        this.boid_distances[arguments[i].boid_id] = [] //Add the boid to the array boid_distances
+        this.being_distances[arguments[i].being_id] = [] //Add the boid to the array being_distances
         for(var j = 0; j<this.screen.length; j++) //Add the drawable objects in the 3d views
            this.screen[j].add_drawable_obj(arguments[i])
         //logger.innerHTML += this.newMessage("sync", "new_boid", arguments[i]).event.toSource() + "<br/>"
@@ -229,34 +226,25 @@ World.prototype.has_born = function() {
     }
 }
 
+/**
+ * @method has_created
+ *
+ * Brings a new Being into the world
+ *
+ * See Device#newMessage
+ *
+ *
+ * @param  {Object} creation Being that is going to be created.
+ * @param  {String} created_event Event to fires.
+ *
+ */
 World.prototype.has_created = function(creation, created_event){
    creation.my_world = this
    this.register(creation)
+   this.being_distances[creation.being_id] = [] //Add the creation to the array being_distances
    for(var j = 0; j<this.screen.length; j++)
       this.screen[j].add_drawable_obj(creation)
    this.fire_event(this.new_message("sync", created_event, creation))
-}
-
-World.prototype.new_immobile = function(config, block) {
-
-    var b = typeof(block) === "undefined" ? new Immobile(config) : new Immobile(config, block)
-
-    this.immobile ++
-    b.id = this.immobile
-    this.has_created(b, "new_immobile")
-
-    return b
-}
-
-World.prototype.new_mobile = function(config, block) {
-
-    var b = typeof(block) === "undefined" ? new Mobile(config) : new Mobile(config, block)
-
-    this.mobile ++
-    b.id = this.mobile
-    this.has_created(b, "new_mobile")
-
-    return b
 }
 
 /**
@@ -277,10 +265,24 @@ World.prototype.get_boids = function() {
     return this.get(Boid)
 }
 
+/**
+ * @method get_mobiles
+ *
+ * Creates an array with all the Mobiles
+ *
+ * @param  {}
+ */
 World.prototype.get_mobiles = function(){
    return this.get(Mobile)
 }
 
+/**
+ * @method get_beings
+ *
+ * Creates an array with all the Beings
+ *
+ * @param  {}
+ */
 World.prototype.get_beings = function(){
    return this.get(Being)
 }
@@ -307,6 +309,13 @@ World.prototype.each_boid = function() {
     })
 }
 
+/**
+ * @method each_mobile
+ *
+ * Sets a new World interface into the dashboard.
+ *
+ * @param  {(String | String[])...} name Name of the view to create a WorldInterface.
+ */
 World.prototype.each_mobile = function() {
     var that = this
 
@@ -315,6 +324,13 @@ World.prototype.each_mobile = function() {
     })
 }
 
+/**
+ * @method each_being
+ *
+ * Sets a new World interface into the dashboard.
+ *
+ * @param  {(String | String[])...} name Name of the view to create a WorldInterface.
+ */
 World.prototype.each_being = function() {
     var that = this
 
@@ -366,17 +382,11 @@ World.prototype.draw = function() {
     for(var i = 0; i < this.screen.length; i++){
         var ctx = this.screen[i].context
 
+        //Test the graphic_device type and execute its draw function
         if(ctx.constructor != THREE.WebGLRenderer){
            this.screen[i].draw()
-            //ctx.clearRect(0, 0, 1000, 400)
-            //this.get_boids().each(function(el) {
-             //el.draw(ctx)
-            //})
         }
        else{
-           // this.get_boids().each(function(el) {
-             //  el.draw(ctx, that.screen[i].scene)
-            //})
             this.screen[i].render()
        }
     }
@@ -520,7 +530,7 @@ World.prototype.visible_for = function(zone, position, vision) {
                 if( !((zone.x+x) < 0) && !((zone.x+x) > (this.map_zone[0].length-1)))
                     this.map_zone[(zone.y+y)][(zone.x+x)].each(function(boid) {
                         try{
-                            if(boid != undefined && boid instanceof Boid /*&& "wander" in boid.brain.active_behaviors*/){
+                            if(boid != undefined && boid instanceof Boid){
                                 var x1 = position.get_coord(0)
                                 var y1 = position.get_coord(1)
                                 var dx = boid.geo_data.position.get_coord(0) - x1
@@ -537,7 +547,15 @@ World.prototype.visible_for = function(zone, position, vision) {
     return visible
 }
 
-World.prototype.boids_near = function(zone) {
+/**
+ * @method beings_near
+ * Get the beings in the near zones
+ *
+ * @param {Number} zone The zone that the being is.
+ *
+ * @return {Array} near An array thata nother arrays with all the beings near.
+ */
+World.prototype.beings_near = function(zone) {
     var that = this
     var near = []
     for(var y = -1; y < 2; y++){
@@ -548,6 +566,43 @@ World.prototype.boids_near = function(zone) {
             }
     }
     return near
+}
+
+/**
+ * @method start_zone
+ *
+ * Start the being zone in the world
+ *  
+ * @param  {Object} being Being that is going to initialize it's zone.
+ *
+ */
+World.prototype.start_zone = function(being){
+  being.zone.x = parseInt(being.geo_data.position.get_coord(0)/this.visibility)
+  being.zone.y = parseInt(being.geo_data.position.get_coord(1)/this.visibility)
+  being.zone_changed = true
+
+  this.map_zone[being.zone.y][being.zone.x].push(being)
+}
+
+/**
+ * @method update_zone
+ *
+ * Test if the being chage the zone and if it change the zone update this in the world
+ *
+ * @param  {Object} being Being that is going to update it's zone.
+ *
+ */
+World.prototype.update_zone = function(being){
+  var last_zone = {x: being.zone.x, y:being.zone.y}
+  being.zone.x = parseInt(being.geo_data.position.get_coord(0)/this.visibility)
+  being.zone.y = parseInt(being.geo_data.position.get_coord(1)/this.visibility)
+
+  if(being.zone.x != last_zone.x || being.zone.y != last_zone.y){
+    this.zone_changed = true
+    var index = this.map_zone[last_zone.y][last_zone.x].indexOf(being)
+    this.map_zone[last_zone.y][last_zone.x].splice(index,1)
+    this.map_zone[being.zone.y][being.zone.x].push(being)
+  }
 }
 
 /**
@@ -572,6 +627,40 @@ World.prototype.new_boid = function(config, block) {
     this.boids++
     b.id = this.boids
     this.has_born(b)
+
+    return b
+}
+
+/**
+ * @method new_immobile
+ *
+ * Creates a new immobile
+ *
+ */
+World.prototype.new_immobile = function(config, block) {
+
+    var b = typeof(block) === "undefined" ? new Immobile(config) : new Immobile(config, block)
+
+    this.immobile ++
+    b.id = this.immobile
+    this.has_created(b, "new_immobile")
+
+    return b
+}
+
+/**
+ * @method new_mobile
+ *
+ * Creates a new mobile
+ *
+ */
+World.prototype.new_mobile = function(config, block) {
+
+    var b = typeof(block) === "undefined" ? new Mobile(config) : new Mobile(config, block)
+
+    this.mobile ++
+    b.id = this.mobile
+    this.has_created(b, "new_mobile")
 
     return b
 }

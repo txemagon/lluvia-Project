@@ -1,3 +1,13 @@
+ /**
+ * @class Mobile
+ *
+ * Creates a Mobile
+ *
+ * @constructor Mobile
+ *
+ * @return {Mobile}
+ */
+
 Mobile.prototype = new Being
 Mobile.prototype.constructor = Mobile
 
@@ -104,7 +114,8 @@ Mobile.prototype.acceleration = function(){
  * @param  {Date} date
  */
 Mobile.prototype.start = function(date){
-    this.start_zone()
+    Being.prototype.start.call(this)
+    //this.start_zone()
     this.last_time = this.current_time = date
 }
 
@@ -142,15 +153,13 @@ Mobile.prototype.update_physics = function(current_time){
  * @param {Date}   current_time Current time of the boid
  *
  */
-Mobile.prototype.run = function(current_time){
+Mobile.prototype.run = function(current_time, near){
     if (!(current_time instanceof Date))
         return
     current_time = current_time || new Date()
     this.update_physics(current_time)
     
-    //Being.prototype.run.call(this)
-    this.zone_changed = false
-    this.update_zone()
+    Being.prototype.run.call(this, near)
 
     if(this.focused)
         this.my_world.show_boids(this)
