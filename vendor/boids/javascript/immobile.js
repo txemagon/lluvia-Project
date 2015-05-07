@@ -1,3 +1,13 @@
+ /**
+ * @class Immobile
+ *
+ * Creates a Immobile
+ *
+ * @constructor Immobile
+ *
+ * @return {Immobile}
+ */
+
 Immobile.prototype = new Being
 Immobile.prototype.constructor = Immobile
 
@@ -15,7 +25,7 @@ function Immobile(config_object, block){
         var config = new Hash()
 
         that.last_heading = new Vector(0, 1)
-        //that.my_world = null
+
         that.last_time = that.current_time = null
         /* Overridable configuration */
 

@@ -1,3 +1,13 @@
+ /**
+ * @class Being
+ *
+ * Creates a Being
+ *
+ * @constructor Being
+ *
+ * @return {Being}
+ */
+
 Being.prototype.constructor = Being
 
 function Being(config_object, block){
@@ -50,32 +60,52 @@ function Being(config_object, block){
 
 Being.id = 0
 
-Being.prototype.run = function(){
-   this.zone_changed = false
-   this.update_zone()
+/**
+ * @method  start
+ *
+ * Starts the zone in the world.
+ *
+ */
+Being.prototype.start = function(){
+    this.my_world.start_zone(this)
 }
 
-Being.prototype.start_zone = function(){
-  this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
-  this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
-  //this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
-  this.zone_changed = true
 
-  this.my_world.map_zone[this.zone.y][this.zone.x].push(this)
-}
+/**
+ * @method run
+ *
+ * Updates the world zone and the distances
+ *
+ * @param {Array}   near All the beings near.
+ *
+ */
+Being.prototype.run = function(near){
+  this.zone_changed = false
+  this.my_world.update_zone(this)
+  if(!near)
+     near = this.my_world.beings_near(this.zone)
 
-Being.prototype.update_zone = function(){
-  var last_zone = {x: this.zone.x, y:this.zone.y}
-  this.zone.x = parseInt(this.geo_data.position.get_coord(0)/this.my_world.visibility)
-  this.zone.y = parseInt(this.geo_data.position.get_coord(1)/this.my_world.visibility)
-  if(this.zone.x != last_zone.x || this.zone.y != last_zone.y){
-    
-    //delete this.my_world.map_zone[last_zone.y][last_zone.x][this.being_id]
-    //this.my_world.map_zone[this.zone.y][this.zone.x][this.being_id] = this
-    this.zone_changed = true
 
-    var index = this.my_world.map_zone[last_zone.y][last_zone.x].indexOf(this)
-    this.my_world.map_zone[last_zone.y][last_zone.x].splice(index,1)
-    this.my_world.map_zone[this.zone.y][this.zone.x].push(this)
-  }
+     //for(var i = 0; i < 10; i++)
+        //this.brain.interested_in_this(this)
+       // for(var j = 0; j < 100; j++)
+        //var a = 0
+      //for(var i = 0; i < near.length; i++)
+        // for(var j = 0;  j < near[i].length; j ++)
+          //  this.brain.interested_in_this(this)
+            //this.brain.interested_in_this(near[i][j])
+    // this.delete_obsolete_distances(near)
+    // //delete this.my_world.boid_distances[this.boid_id]
+    // this.targets.splice(0,this.targets.length)
+    // for(var i = 0; i < near.length; i++)
+    //   for(var j = 0;  j < near[i].length; j ++){
+    //       if(near[i][j] != undefined && near[i][j] instanceof Boid && near[i][j] != this)
+    //         if(this.boid_id < near[i][j].boid_id){
+    //              var distance = 7//near[i][j].geo_data.position.subs(this.geo_data.position).module()
+    //              this.my_world.boid_distances[this.boid_id][near[i][j].boid_id] = {boid: near[i][j],
+    //                distance: distance}
+    //               near[i][j].my_world.boid_distances[near[i][j].boid_id][this.boid_id] = {boid: this,
+    //                 distance: distance}
+    //         }
+    //   }
 }
