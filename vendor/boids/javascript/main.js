@@ -1,12 +1,16 @@
-var w = null
+
+var Type_stage = {one_canvas:"one canvas", two_canvas:"two canvas", one_webgl:"one webGl",
+                   webgl_canvas:"webGl and canvas", previous_search_algorithm:"previous search algorithm",
+                   current_search_algorithm:"current search algorithm", webcl:"webCl"
+                 }
 
 function main() {
 
 
-
+    var w = null
     //w = new World('screener', WebGl, cartoon, 1000, 400)
-    w = new World('screener', CanvasDevice, cartoon2_canvas, 1000, 400)
-    //w.new_screen('screener2', CanvasDevice, cartoon2_canvas)
+    //w = new World('screener', CanvasDevice, cartoon2_canvas, 1000, 400)
+    //w.new_screen('screener', CanvasDevice, cartoon2_canvas)
     //w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
     
    
@@ -57,6 +61,35 @@ function main() {
   }))
 */
 
+
+    switch(stage){
+        case Type_stage.one_canvas:
+            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            boids_generator(w)
+            w.start()
+            break;
+        case Type_stage.two_canvas:
+            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            w.new_screen('screener2', CanvasDevice, cartoon2_canvas)
+            boids_generator(w)
+            w.start()
+            break;
+        case Type_stage.one_webgl:
+            w = new World('screener', WebGl, cartoon, 1000, 400)
+            boids_generator(w)
+            w.start()
+            break;
+        case Type_stage.webgl_canvas:
+            w = new World('screener', WebGl, cartoon, 1000, 400)
+            w.new_screen('screener2', CanvasDevice, cartoon_canvas)
+            boids_generator(w)
+            w.start()
+            break;
+
+    }
+}
+
+function boids_generator(w){
     var imm = w.new_immobile(function(config) {
         /* Here you can interact with the outer scope */
         config.colour = "lightskyblue"
@@ -126,16 +159,16 @@ function main() {
 
     /*  Example: flee behavior */
     /*  var fleer = []
-  for (var i=0; i<8; i++) {
+    for (var i=0; i<8; i++) {
     var f
     fleer.push( f = w.new_boid( function(config) {
       config.color = "silver"
       config.vel_max = 10
       config.brain.activate("flee", wanderer[i % wanderer.length] )
     } ))
-  }
+    }
 
-  /*  Example: pursue behaviour*/
+    /*  Example: pursue behaviour*/
     var b2 = w.new_boid(function(config) {
         config.colour = "lime"
         config.vel_max = 80
@@ -167,7 +200,7 @@ function main() {
 
     /* Example: Class as target */
     var yeoman = []
-    for (var i = 0; i < 30; i++)
+    for (var i = 0; i < 3; i++)
         yeoman.push(w.new_boid(function(config) {
             config.colour = "brown"
             config.brain.activate("wander")
@@ -175,15 +208,14 @@ function main() {
         }))
 
     var sheeps = []
-    for (var i = 0; i < 30; i++)
+    for (var i = 0; i < 3; i++)
         sheeps.push(w.new_boid(function(config) {
             config.colour = "lemonchiffon"
             config.brain.activate("flee", WanderBehavior)
             config.geo_data.velocity = new Vector(1, 1)
         }))
-    w.start()
-    //w.new_screen('screener2', CanvasDevice, cartoon2_canvas)
 }
+
 
 var KEY = {C:67}
 addEventListener("keydown", function(e){
