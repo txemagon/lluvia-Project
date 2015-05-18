@@ -1,0 +1,22 @@
+.ll-Window {
+	border: 1px solid black;
+	padding: 0ex;
+	width: 600px;
+	height: 700px;
+	display: inline-block;
+	/*
+	color: #00FE00;
+	background-color: #002F05;
+	*/
+}
+
+.ll-Window h3 {
+	padding: 0.5ex;
+	margin-top: 0ex;
+	color: yellow;
+	background-color: blue;
+	margin-bottom: 2ex;
+}
+.ll-Window div{
+	padding: 1ex;
+}
