@@ -5,21 +5,15 @@ function Window(view, title) {
     var that = this
 
     function initialize() {
+        that.self_events = ["inspect"]
         Device.call(that, view)
-        that.global_space = []
         that.title = title
         
         that.view.innerHTML = "<h3>" + title + "</h3>" + that.view.innerHTML
         that.content = document.createElement("div")
         that.view.appendChild(that.content)
-        that.global_space.push({name: title, obj: that})
+        that.plug(that)
 
-        that.state.running.run.steady = function(date) {
-        }
-
-        that.state.running.run.up = function(date) {
-            this.render()
-        }
     }
 
     if (arguments.length)
@@ -27,14 +21,27 @@ function Window(view, title) {
 
 }
 
-Window.prototype.render = function() {
+
+Window.prototype.plug = function(social_object) {
     var that = this
-    var text = "<ul>\n"
-    text += this.global_space.collect(function(element) {
-        return "<li>" + element.name + "::" + element.obj.constructor.name + "</li>"
-    }).join("\n")
-    text += "</ul>\n"
-    this.content.innerHTML = text
+    //todo: develop lookup's
+    /* 
+    social_object.look_up(this).each( function(element) {
+        this.global_space.push( 
+          { 
+            name: element.name, 
+            obj: element.component
+          })
+    })
+    */
+   var gate = this.new_gate(null, Gate, 
+    { doonclick: function(event, element){
+        this.device.fire_event( 
+            this.device.new_message("sync", "inspect", social_object) 
+        )
+    }})
+
+   gate.panel.innerHTML = social_object.constructor.name.humanize()
 }
 
 Window.prototype.attend_create_object = function(event) {

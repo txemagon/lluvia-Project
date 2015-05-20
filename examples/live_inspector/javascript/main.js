@@ -8,10 +8,7 @@ function main() {
     var b = new Builder("ll_")
     b.build()
 
-    ll_object_window.global_space.push( {name:"Tangled Device", obj: new TangledDevice(null)} )
+    ll_object_window.plug( new TangledDevice(null) )
     
-    //$Processor.register(ll_object_window)
-    
-  
-    
+    //$Processor.register(ll_object_window) 
 }

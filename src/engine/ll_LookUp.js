@@ -1,25 +1,41 @@
 /**
- * @author txema
+ * @class Engine.LookUp
+ *
+ * Provides to {@link Engine.Device Devices} a mechanism for exporting levers
+ * to actuate on the Device.
+ *
+ * ### Example
+ *
+ *     var t = new TreePanel()
+ *
+ *     var d = new Device()
+ *
+ *     // Consider d.look_up(t) usable too.
+ *     d.look_up(TreePanel).each( function (element) {
+ *          t.append_node(element.name, element.component)
+ *     })
+ *
+ * Where element would be a {@link Engine.LookUp.Card LookUp Card}
+ *     
  */
-Lookup.prototype.constructor = Lookup
+LookUp.prototype.constructor = LookUp
 
-function Lookup(){
+function LookUp(){
     this.levers = []
     this.ports = []
     this.applications = []
     this.eventDispatcher = null
     this.global = []
-    this.view = null
 }
 
-Lookup.prototype.add = function(obj){
+LookUp.prototype.add = function(obj){
     if (obj.isPrototypeOf(EventDispatcher)) 
         this.eventDispatcher = obj
 	else this.global.push(obj)
 }
 
 // Returns all the object/proxies with a given interface
-Lookup.prototype.get = function(interfc){
+LookUp.prototype.get = function(interfc){
 	var objects = []
 	for (var i=0; i<this.global.length; i++)
 		if (interfc.isPrototypeOf(this.global[i]))
@@ -30,7 +46,7 @@ Lookup.prototype.get = function(interfc){
 }
 
 // Return and eliminate an object
-Lookup.prototype.off = function(object){
+LookUp.prototype.off = function(object){
 	for (var i=0; i<this.global.length; i++)
 		if (this.global[i] == object)
 			this.global.splice(i,1);

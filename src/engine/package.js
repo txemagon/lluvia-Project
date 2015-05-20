@@ -30,7 +30,7 @@ $K_dependencies = [{
         name: "ll_Gate.js",
         description: "HTML mapping in lluvia."
     }, {
-        name: "ll_Lookup.js",
+        name: "ll_LookUp.js",
         description: ""
     }, {
         name: "ll_MessageEvent.js",
