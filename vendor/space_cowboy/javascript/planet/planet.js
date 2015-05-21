@@ -52,7 +52,7 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
     mssg.current++
     this.appear()
     this.initialize(mssg.event.show_planet.data)
-    this.switch("running.fight.playing")
+    this.switch("running.fight")
 }
 
 //States
@@ -61,7 +61,7 @@ Planet.prototype.running_up = function() {
     
 }
 
-Planet.prototype.running_fight_playing_up = function(date) {
+Planet.prototype.running_fight_up = function(date) {
     alert("fighting")
     //sweetAlert("Start the battle", "Attack!")
    /*
@@ -82,9 +82,11 @@ Planet.prototype.running_fight_playing_up = function(date) {
     if (this.player.shots.x < this.enemy.x + this.enemy.width &&
         this.player.shots.x + this.player.shots.width > this.enemy.x &&
         this.player.shots.y == this.enemy.y + this.enemy.height &&
-        this.player.shots.y + this.player.shots.height > this.enemy.y)
-        alert("atacado")
-      this.enemy.life -= this.player.damage
+        this.player.shots.y + this.player.shots.height > this.enemy.y) 
+            alert("atacado")
+            this.enemy.life -= this.player.damage
+    
+       
 
     //Algoritmo de colisiones de enemy.shots y player
     //Cuando el disparo del enemigo da al jugador
@@ -94,6 +96,7 @@ Planet.prototype.running_fight_playing_up = function(date) {
         this.enemy.shots.y + this.enemy.shots.height > this.player.y)
       this.player.life -= this.enemy.damage
 }
+
 /*
     if (this.enemy.life == 0) 
         this.switch("running.fight.win")
@@ -101,7 +104,6 @@ Planet.prototype.running_fight_playing_up = function(date) {
         if(this.player.life == 0)
             this.switch("running.fight.lose")
 */
-
 
 Planet.prototype.running_fight_win = function(date) {
     sweetAlert({
