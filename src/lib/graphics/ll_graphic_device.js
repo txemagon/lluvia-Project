@@ -29,3 +29,13 @@ GraphicDevice.get_best_device_for = function(screen, drawable_obj, incarnation) 
         return new WebGl(screen, drawable_obj, incarnation)
     return new CanvasDevice(screen, drawable_obj, incarnation)
 }
+
+/**
+ * @method add_drawable_obj
+ * Virtual method
+ * 
+ * @param {Object} drawable_obj The new drawabla object.
+ */
+ GraphicDevice.prototype.add_drawable_obj = function(drawable_obj){
+    return
+}

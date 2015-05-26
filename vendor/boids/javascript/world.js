@@ -27,7 +27,7 @@ function World(screen, type, incarnation, width, height) {
 
     var that = this
     this.self_events = ["focus_boid", "new_boid", "new_immobile", "new_mobile"]
-
+    this.stop = false
     this.screen = []
     this.map_zone = [] //Store the beings in zones
     this.width = width || 100 //meters
@@ -82,7 +82,7 @@ World.prototype.inialize_map_zone = function(){
  * 
  * @param  {String | HtmlElement} [id]
  * @param  {Function} [Type=GraphicDevice] If no Type given then GraphicDevice.get_best_device_for is used.
- * @param  {Array} [incarnation] Contains two incarnations, one for create 3D objects, other to update the 3D objects.
+ * @param  {Array} [incarnation] contains two incarnations, one for create 3D objects, other to update the 3D objects.
  */
 World.prototype.new_screen = function(id, Type, incarnation){
     var gd
@@ -288,6 +288,17 @@ World.prototype.get_beings = function(){
 }
 
 /**
+ * @method get_immobiles
+ *
+ * Creates an array with all the Immobiles
+ *
+ * @param  {}
+ */
+World.prototype.get_immobiles = function(){
+   return this.get(Immobile)
+}
+
+/**
  * @method each_boid
  *
  * Sets a new World interface into the dashboard.
@@ -336,6 +347,21 @@ World.prototype.each_being = function() {
 
     this.get_beings().each(function(el) {
         World.prototype.each_being.yield(el)
+    })
+}
+
+/**
+ * @method each_immobile
+ *
+ * Sets a new World interface into the dashboard.
+ *
+ * @param  {(String | String[])...} name Name of the view to create a WorldInterface.
+ */
+World.prototype.each_immobile = function() {
+    var that = this
+
+    this.get_immobiles().each(function(el) {
+        World.prototype.each_immobile.yield(el)
     })
 }
 
@@ -390,7 +416,6 @@ World.prototype.draw = function() {
             this.screen[i].render()
        }
     }
-    
     requestAnimationFrame(this.draw_bound)
 }
 
@@ -626,7 +651,8 @@ World.prototype.new_boid = function(config, block) {
 
     this.boids++
     b.id = this.boids
-    this.has_born(b)
+    //this.has_born(b)
+    this.has_created(b, "new_boid")
 
     return b
 }

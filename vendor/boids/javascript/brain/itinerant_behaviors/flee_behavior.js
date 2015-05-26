@@ -64,8 +64,12 @@ FleeBehavior.prototype.target_data = function(){
  * @return {Object} this.target_data() Position information of boid
  */
 FleeBehavior.prototype.get_target = function(){
+  // var now = Date.now()
   //return this.target_data()
   return this.me.posible_target
+  // if(this.me.being_id == 200)
+  //   console.log("Time" + (Date.now() - now))
+  // return res
 }
 
 /**

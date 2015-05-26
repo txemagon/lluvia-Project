@@ -1,13 +1,13 @@
 
 var Type_stage = {one_canvas:"one canvas", two_canvas:"two canvas", one_webgl:"one webGl",
                    webgl_canvas:"webGl and canvas", previous_search_algorithm:"previous search algorithm",
-                   current_search_algorithm:"current search algorithm", webcl:"webCl"
+                   current_search_algorithm:"current search algorithm"
                  }
-
+var w = null
 function main() {
 
 
-    var w = null
+    
     //w = new World('screener', WebGl, cartoon, 1000, 400)
     //w = new World('screener', CanvasDevice, cartoon2_canvas, 1000, 400)
     //w.new_screen('screener', CanvasDevice, cartoon2_canvas)
@@ -64,7 +64,7 @@ function main() {
 
     switch(stage){
         case Type_stage.one_canvas:
-            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            w = new World('screener', CanvasDevice, cartoon2_canvas, 1000, 400)
             boids_generator(w)
             w.start()
             break;
@@ -81,6 +81,7 @@ function main() {
             break;
         case Type_stage.webgl_canvas:
             w = new World('screener', WebGl, cartoon, 1000, 400)
+            w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
             w.new_screen('screener2', CanvasDevice, cartoon_canvas)
             boids_generator(w)
             w.start()
@@ -90,117 +91,117 @@ function main() {
 }
 
 function boids_generator(w){
-    var imm = w.new_immobile(function(config) {
-        /* Here you can interact with the outer scope */
-        config.colour = "lightskyblue"
-        config.geo_data = {
-            position: new Vector(-10000, 0)
-        }
-        config.width = 100000
-        config.height = 400000
-        return config
-    })
+    // var imm = w.new_immobile(function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     config.colour = "lightskyblue"
+    //     config.geo_data = {
+    //         position: new Vector(-10000, 0)
+    //     }
+    //     config.width = 100000
+    //     config.height = 400000
+    //     return config
+    // })
 
-    var mov = w.new_mobile(function(config) {
-        /* Here you can interact with the outer scope */
-        config.colour = "magenta"
-        config.geo_data = {
-            position: new Vector(100, 100),
-            velocity: new Vector(100, 1),
-            acceleration: new Vector(0, 0)
-        }
-        return config
-    })
+    // var mov = w.new_mobile(function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     config.colour = "magenta"
+    //     config.geo_data = {
+    //         position: new Vector(100, 100),
+    //         velocity: new Vector(100, 1),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    //     return config
+    // })
 
-    var mov = w.new_mobile(function(config) {
-        /* Here you can interact with the outer scope */
-        config.colour = "lime"
-        config.geo_data = {
-            position: new Vector(100, 100),
-            velocity: new Vector(0, 0),
-            acceleration: new Vector(0, 0)
-        }
-        return config
-    })
-    var mov = w.new_mobile(function(config) {
-        /* Here you can interact with the outer scope */
-        config.colour = "lime"
-        config.geo_data = {
-            position: new Vector(150, 150),
-            velocity: new Vector(0, 0),
-            acceleration: new Vector(0, 0)
-        }
-        return config
-    })
+    // var mov = w.new_mobile(function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     config.colour = "lime"
+    //     config.geo_data = {
+    //         position: new Vector(100, 100),
+    //         velocity: new Vector(0, 0),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    //     return config
+    // })
+    // var mov = w.new_mobile(function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     config.colour = "lime"
+    //     config.geo_data = {
+    //         position: new Vector(150, 150),
+    //         velocity: new Vector(0, 0),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    //     return config
+    // })
 
-    /* Example: seek behavior */
-    var seeker = []
-    var t = w.new_boid(function(config) {
-        /* Here you can interact with the outer scope */
-        config.colour = "red"
-        config.geo_data = {
-            position: new Vector(200, 200),
-            velocity: new Vector(1, 1),
-            acceleration: new Vector(0, 0)
-        }
-        return config
-    })
+    // /* Example: seek behavior */
+    // var seeker = []
+    // var t = w.new_boid(function(config) {
+    //     /* Here you can interact with the outer scope */
+    //     config.colour = "red"
+    //     config.geo_data = {
+    //         position: new Vector(200, 200),
+    //         velocity: new Vector(1, 1),
+    //         acceleration: new Vector(0, 0)
+    //     }
+    //     return config
+    // })
 
-    var first = t
-    seeker.push(t)
+    // var first = t
+    // seeker.push(t)
 
-    for (var i = 0; i < 100; i++)
-        seeker.push(t = w.new_boid(function(config) {
-            config.brain.activate('seek', t)
-        }))
+    // for (var i = 0; i < 10; i++)
+    //     seeker.push(t = w.new_boid(function(config) {
+    //         config.brain.activate('seek', t)
+    //     }))
 
-    first.brain.activate('seek', t)
+    // first.brain.activate('seek', t)
 
 
-    /*  Example: flee behavior */
-    /*  var fleer = []
-    for (var i=0; i<8; i++) {
-    var f
-    fleer.push( f = w.new_boid( function(config) {
-      config.color = "silver"
-      config.vel_max = 10
-      config.brain.activate("flee", wanderer[i % wanderer.length] )
-    } ))
-    }
+    // /*  Example: flee behavior */
+    // /*  var fleer = []
+    // for (var i=0; i<8; i++) {
+    // var f
+    // fleer.push( f = w.new_boid( function(config) {
+    //   config.color = "silver"
+    //   config.vel_max = 10
+    //   config.brain.activate("flee", wanderer[i % wanderer.length] )
+    // } ))
+    // }
 
-    /*  Example: pursue behaviour*/
-    var b2 = w.new_boid(function(config) {
-        config.colour = "lime"
-        config.vel_max = 80
-        config.force_limits.thrust = 40
-        config.force_limits.steering = 80
-        config.geo_data.position = new Vector(0, 0)
-        config.brain.activate("pursue", first)
-    })
+    // /*  Example: pursue behaviour*/
+    // var b2 = w.new_boid(function(config) {
+    //     config.colour = "lime"
+    //     config.vel_max = 80
+    //     config.force_limits.thrust = 40
+    //     config.force_limits.steering = 80
+    //     config.geo_data.position = new Vector(0, 0)
+    //     config.brain.activate("pursue", first)
+    // })
 
-    /*  Example: foresee < seek == pursue behaviour*/
-    var b3 = w.new_boid(function(config) {
-        config.colour = "fuchsia"
-        config.vel_max = 80
-        config.force_limits.thrust = 40
-        config.force_limits.steering = 80
-        config.geo_data.position = new Vector(200, 0)
-        config.brain.activate("foresee<seek", first)
-    })  
+    // /*  Example: foresee < seek == pursue behaviour*/
+    // var b3 = w.new_boid(function(config) {
+    //     config.colour = "fuchsia"
+    //     config.vel_max = 80
+    //     config.force_limits.thrust = 40
+    //     config.force_limits.steering = 80
+    //     config.geo_data.position = new Vector(200, 0)
+    //     config.brain.activate("foresee<seek", first)
+    // })  
 
-    /*  Example: foresee < seek > arrival */
-    var b4 = w.new_boid(function(config) {
-        config.colour = "maroon"
-        config.vel_max = 180
-        config.force_limits.thrust = 40
-        config.force_limits.steering = 80
-        config.geo_data.position = new Vector(200, 0)
-        config.brain.activate("foresee<seek>arrival", first)
-    })
+    // /*  Example: foresee < seek > arrival */
+    // var b4 = w.new_boid(function(config) {
+    //     config.colour = "maroon"
+    //     config.vel_max = 180
+    //     config.force_limits.thrust = 40
+    //     config.force_limits.steering = 80
+    //     config.geo_data.position = new Vector(200, 0)
+    //     config.brain.activate("foresee<seek>arrival", first)
+    // })
 
     /* Example: Class as target */
     var yeoman = []
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 100; i++)
         yeoman.push(w.new_boid(function(config) {
             config.colour = "brown"
             config.brain.activate("wander")
@@ -208,7 +209,7 @@ function boids_generator(w){
         }))
 
     var sheeps = []
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 100; i++)
         sheeps.push(w.new_boid(function(config) {
             config.colour = "lemonchiffon"
             config.brain.activate("flee", WanderBehavior)

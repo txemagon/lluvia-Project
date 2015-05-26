@@ -1,5 +1,3 @@
-<!doctype html>
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -12,36 +10,37 @@
     <script type="text/javascript" src="javascript/incarnation2.js" ></script>
     <script type="text/javascript" src="javascript/graphic_unit.js" ></script>
     <script type="text/javascript" src="javascript/graphic_incarnation.js" ></script>
-
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
+    <link rel="stylesheet" href="presentation/css/impress-demo.css"/>
     <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
   </head>
-  <body onload="bring_lluvia(), stage = 'one webGl';">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index2.html">Menu 1</a></li>
-        <li  class="active"><a href="#">Menu 2</a></li>
-        <li><a href="index4.html">Menu 3</a></li>
-      </ul>
-        <h1>BOIDS</h1>
-        <div id="application">
-          <div id="canvas">
-            <canvas id="screener" width="1000" height="400"> </canvas>
-          </div>
-          <div id="panels">
-            <div id="boid_list">
-              <h2>Current Boids</h2>
-              <div id="boid_list_content" class="Panel">
-              </div>
-              <div id="boid_properties" class="Panel">
-              </div>
-            </div>
+  <body>
+    <div id="impress">
+    <div class="step slide" data-x="-1000" data-y="-1500">
+      <q>Second presenttation <b>bored</b> with all those slides-based presentations?</q>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="-1500">
+      <q>Don't you think that presentations given <strong>in modern browsers</strong> shouldn't <strong>copy the limits</strong> of 'classic' slide decks?</q>
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="-1500">
+      <q>Would you like to <strong>impress your audience</strong> with <strong>stunning visualization</strong> of your talk?</q>
+    </div>
+        <div class="step slide CanvasContainer" data-x="0" data-y="0">
+          <h1>BOIDS</h1>
+          <div class="">
+            <canvas id="screener" width="800" height="400"> </canvas>
+            <button onclick= "bring_lluvia(), stage = 'one webGl';">Start</button>
           </div>
         </div>
-      <div id="logger"></div>
+    <div class="step slide" data-x="-1000" data-y="+1500">
+      <a href="index4.html">Continue</a>
     </div>
+ 
+    </div>
+  <script src="presentation/javascript/impress.js"></script>
+  <script>impress().init();</script>
   </body>
 </html>
+

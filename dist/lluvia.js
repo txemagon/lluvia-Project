@@ -4056,6 +4056,8 @@ function CanvasDevice(screen, drawable_obj, incarnation) {
 }
 CanvasDevice.prototype.draw = function(){
 	this.screen.width = this.screen.width
+    this.context.translate(0, this.screen.height)
+    this.context.scale(1, -1)
 	for(var i = 0; i < this.drawable.length; i++)
 		if("draw" in this.incarnation[this.incarnation.search_element(this.drawable[i])] && typeof(this.incarnation[this.incarnation.search_element(this.drawable[i])].draw) == "function")
 		   this.incarnation[this.incarnation.search_element(this.drawable[i])].draw(this.drawable[i], this.context)
@@ -4087,6 +4089,9 @@ GraphicDevice.get_best_device_for = function(screen, drawable_obj, incarnation) 
     if (WebGl.available$U())
         return new WebGl(screen, drawable_obj, incarnation)
     return new CanvasDevice(screen, drawable_obj, incarnation)
+}
+ GraphicDevice.prototype.add_drawable_obj = function(drawable_obj){
+    return
 }
 WebGl.prototype = new GraphicDevice
 WebGl.prototype.constructor = WebGl
@@ -5304,7 +5309,7 @@ function bring_lluvia() {
         }
     }
     function load_packages() {
-        var p = new PackageManager('/home/txema/work/lluvia-Project/util/compress-core/../..')
+        var p = new PackageManager('/home/daniel/proyectos/lluvia-Project/util/compress-core/../..')
         p.create_catalog($K_script_response, load_dependencies)
     }
     PackageManager.include_script('../../dist/catalog.js', load_packages)

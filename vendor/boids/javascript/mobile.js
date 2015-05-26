@@ -40,7 +40,6 @@ function Mobile(config_object, block){
                 },
 
                 vel_max: 50,
-                vision: {radius: 100, angle: 130 * Math.PI / 180},
                 dimensions: 20,
 
                 force_limits: {
