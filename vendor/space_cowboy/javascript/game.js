@@ -40,21 +40,19 @@ Game.prototype.attend_go_to_planet = function(date, mssg) {
 
 //States
 Game.prototype.running_up = function(date){
+    //Methods
+    this.skill_menu.add_port("chosen_finished", this)
+    this.space.add_port("go_to_planet", this)
+    this.add_port("show_space", this.space)
+    this.add_port("show_planet", this.planet)
 
-        //Methods
-        this.skill_menu.add_port("chosen_finished", this)
-        this.space.add_port("go_to_planet", this)
-        this.add_port("show_space", this.space)
-        this.add_port("show_planet", this.planet)
+    //States
+    this.add_port("show_skills", this.skill_menu)
 
-        //States
-        this.add_port("show_skills", this.skill_menu)
-
-        this.switch("running.choosing")
-    }
+    this.switch("running.choosing")
+}
 
 Game.prototype.running_choosing_up = function() {
     this.fire_event(this.new_message("sync", "show_skills"))
-
 }
 

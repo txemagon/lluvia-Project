@@ -41,7 +41,7 @@ function Planet(view, screen, width, height) {
     Device.call(this, view)
 }
 
-Planet.prototype.initialize = function(planet_number){
+Planet.prototype.initialize = function(planet_number) {
     this.player = this.new_boid_of(Player, Player) 
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
 }
@@ -56,15 +56,16 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
 }
 
 //States
-Planet.prototype.running_up = function() {
-    this.draw()
-    
+Planet.prototype.running_up = function(date) {
+    this.draw()  
+    colision()
 }
 
-Planet.prototype.running_fight_up = function(date) {
-    alert("fighting")
-    //sweetAlert("Start the battle", "Attack!")
-   /*
+
+Planet.prototype.running_fight_up = function() {
+    sweetAlert("Start the battle", "Attack!")
+
+/*
     //enemy shots
     while (this.player.life != 0){
         this.enemy.shots.push (new Rectangle (this.enemy.x, this.enemy.y, 5, 10))
@@ -77,13 +78,16 @@ Planet.prototype.running_fight_up = function(date) {
         }
     }
 */
+}
+
+Planet.prototype.colision = function() {
+
     //Algoritmo de colisiones de player.shots y enemy
     //Cuando el disparo del jugador da al enemigo
     if (this.player.shots.x < this.enemy.x + this.enemy.width &&
         this.player.shots.x + this.player.shots.width > this.enemy.x &&
         this.player.shots.y == this.enemy.y + this.enemy.height &&
         this.player.shots.y + this.player.shots.height > this.enemy.y) 
-            alert("atacado")
             this.enemy.life -= this.player.damage
     
        
@@ -94,8 +98,12 @@ Planet.prototype.running_fight_up = function(date) {
         this.enemy.shots.x + this.enemy.shots.width > this.player.x &&
         this.enemy.shots.y < this.player.y + this.player.height &&
         this.enemy.shots.y + this.enemy.shots.height > this.player.y)
-      this.player.life -= this.enemy.damage
+            this.player.life -= this.enemy.damage
 }
+
+    
+
+  
 
 /*
     if (this.enemy.life == 0) 
@@ -105,7 +113,7 @@ Planet.prototype.running_fight_up = function(date) {
             this.switch("running.fight.lose")
 */
 
-Planet.prototype.running_fight_win = function(date) {
+Planet.prototype.running_fight_win_up = function(date) {
     sweetAlert({
     title: "You won!",
     text: "Level up! Go to upload your skills",
@@ -127,7 +135,7 @@ Planet.prototype.running_fight_win = function(date) {
     });
 }
 
-Planet.prototype.running_fight_lose = function(date) {
+Planet.prototype.running_fight_lose_up = function(date) {
     //when the player lose, restart the game
 sweetAlert({
   title: "You lost!",
