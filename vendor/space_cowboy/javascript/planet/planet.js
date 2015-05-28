@@ -58,7 +58,6 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
 //States
 Planet.prototype.running_up = function(date) {
     this.draw()  
-    colision()
 }
 
 
@@ -80,6 +79,7 @@ Planet.prototype.running_fight_up = function() {
 */
 }
 
+/*
 Planet.prototype.colision = function() {
 
     //Algoritmo de colisiones de player.shots y enemy
@@ -88,9 +88,7 @@ Planet.prototype.colision = function() {
         this.player.shots.x + this.player.shots.width > this.enemy.x &&
         this.player.shots.y == this.enemy.y + this.enemy.height &&
         this.player.shots.y + this.player.shots.height > this.enemy.y) 
-            this.enemy.life -= this.player.damage
-    
-       
+            this.enemy.life -= this.player.damage       
 
     //Algoritmo de colisiones de enemy.shots y player
     //Cuando el disparo del enemigo da al jugador
@@ -100,7 +98,7 @@ Planet.prototype.colision = function() {
         this.enemy.shots.y + this.enemy.shots.height > this.player.y)
             this.player.life -= this.enemy.damage
 }
-
+*/
     
 
   
@@ -111,7 +109,7 @@ Planet.prototype.colision = function() {
     else 
         if(this.player.life == 0)
             this.switch("running.fight.lose")
-*/
+
 
 Planet.prototype.running_fight_win_up = function(date) {
     sweetAlert({
@@ -156,7 +154,7 @@ function(isConfirm){
   }
 });
 }
-
+*/
 
 //Methods for create the world
 Planet.prototype.has_born = function (){
@@ -203,10 +201,132 @@ Planet.prototype.get_boids = function(){
   return this.get(Boid)
 }
 
+
+/*
+ * moves the things
+ */
+Planet.prototype.move = function() {
+    //moving
+    if (pressing[KEY_RIGHT])
+        this.player.x += this.player.speed + 1
+    if (pressing[KEY_LEFT])
+        this.player.x -= this.player.speed + 1
+
+    //do not leave the canvas
+    if (this.player.x > canvas.width - this.player.width) 
+        this.player.x = canvas.width - this.player.width
+    if (this.player.x < 0)
+        this.player.x = 0
+
+    //create shots
+    if (lastPress == KEY_SHOT) {
+        shots.push(new Rectangle (this.player.x +38, this.player.y, 5, 10)) //x, y, width, height
+        lastPress = null
+    }
+
+    //move shots
+    for (var i=0, l=this.player.shots.length; i<l; i++) {
+        this.player.shots[i].y -= 5 //shots speed  
+        if (this.player.shots[i].y < 0) {
+            this.player.shots.splice(i--, 1)
+            l--
+        }
+    }
+
+    //shots intersects enemy
+    for (var j=0, ll=this.player.shots.length; j<ll; j++) {
+        if (this.player.shots[j].intersects(enemy[i])) {
+            this.player.shots.splice(j--, 1)
+            this.enemy.life -= this.player.damage
+        }
+    }
+
+    //create stars
+    for(var i=0; i<1; i++)
+        if (stars.length <= 300)
+            stars.push(new Star(random(canvas.width), random(canvas.height), random(10)))
+
+    //move stars
+    for(var i=0, l=stars.length; i<l; i++){
+        stars[i].y++
+        if(stars[i].y > canvas.height)
+            stars[i].y=0
+        stars[i].timer += 5
+        if(stars[i].timer > 10)
+            stars[i].timer -= 10
+    }
+}
+    
+
+//Star object
+function Star(x, y, timer) {
+    this.x = (x==null)?0:x
+    this.y = (y==null)?0:y
+    this.timer = (timer == null)?0:timer
+}
+/*
+ * paint the things
+ */
+function paint(ctx) {
+    //draw stars
+    for(i=0, l=stars.length; i<l; i++){
+        var c = 255-Math.abs(100-stars[i].timer)
+        ctx.fillStyle = 'rgb(' +c+ ',' +c+ ',' +c+ ')'
+        ctx.fillRect(stars[i].x,stars[i].y, 1, 1)
+    }
+
+    //draw player
+    ctx.drawImage(this.shape, 0, 0, 75, 107, this.x, this.y, this.width, this.height)
+    
+    //draw life, key and position
+    ctx.font = "20px Orbitron"
+    ctx.fillStyle = "#f00"
+    //ctx.fillText("Last Press: " + lastPress, 5, 40)
+    //ctx.fillText("Disparos: " + shots.length, 5, 80)
+    ctx.fillText("Player Life: " + this.life, 5, 20)
+    ctx.fillText("Player Position: " + this.x, 5, 40)
+    ctx.fillText("Estrellas: " + stars.length, 5, 60)
+    
+    ctx.fillText("FPS: " + fps.getFPS(), 5, 100)
+
+    //draw shots
+    ctx.fillStyle="#f00"
+     for (var i=0, l=shots.length; i<l; i++) {
+        shots[i].fill(ctx);
+        ctx.fillText("Disparo Y: " + shots[i].y, 5, 80)
+    }
+}
+
+
 //methods for define behavior
 function repaint(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+//paint shots
+function Rectangle(x,y,width,height) {
+    this.x = (x == null)?0:x
+    this.y = (y == null)?0:y
+    this.width = (width == null)?0:width
+    this.height = (height == null)?this.width:height
+}
+
+Rectangle.prototype.intersects = function() {
+    if (rect != null) {
+        return (this.player.shots.x < this.enemy.x + this.enemy.width &&
+                this.player.shots.x + this.player.shots.width > this.enemy.x &&
+                this.player.shots.y == this.enemy.y + this.enemy.height &&
+                this.player.shots.y + this.player.shots.height > this.enemy.y) 
+    }
+}
+
+Rectangle.prototype.fill = function() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
+
+Rectangle.prototype.fill = function(ctx) {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 
 
