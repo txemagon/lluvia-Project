@@ -1,5 +1,6 @@
 Enemy.prototype = new Boid
 Enemy.prototype.constructor = Enemy
+Enemy.prototype.super = Boid
 
 /**
  * @method  Enemy
@@ -20,8 +21,11 @@ function Enemy(config) {
     this.y = 50
     this.width = 120
     this.height = 90
-    var shots
     this.shots = []
+
+    this.player = new Player()
+    
+    //this.enemy = new Enemy()
 }
 
 /*
@@ -205,21 +209,60 @@ Enemy.data = [
     }
 ]
 
-function move_enemy() {
-    //enemy moving
-    ctx.moveTo(400, 50)
-    //enemy dont leave the canvas
-    if (this.x > canvas.width - this.width) 
-        this.x = canvas.width - this.width
-    if (this.x < 0)
-        this.x = 0
-
-}
 
 Enemy.prototype.draw = function(ctx) {
-    move_enemy()
     ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
     ctx.fillText("Enemy Life: " + this.life, 790, 20)
     ctx.fillText("Enemy Position: " + this.x, 790, 40)
     ctx.fillText("Enemy Damage: " + this.damage, 790, 60)
+    enemy_move()
 }
+
+
+function enemy_move() {
+    //do not leave the canvas
+    if (this.x > canvas.width - this.width) 
+        this.x = canvas.width - this.width
+    if (this.x < 0)
+        this.x = 0
+    
+/*
+     while (Player.life != 0){
+        this.shots.push (new Rectangle (this.x, this.y, 5, 10))
+        for (var i=0, l=this.shots.length; i<l; i++) {
+            this.shots[i].y -= 5 //shots speed
+            if (this.shots[i].y < 0){
+                this.shots.splice(i--, 1)
+                l--
+            }
+        }
+    }
+
+*/
+}
+
+/*
+function Rectangle(x,y,width,height) {
+    this.x = (x == null)?0:x
+    this.y = (y == null)?0:y
+    this.width = (width == null)?0:width
+    this.height = (height == null)?this.width:height
+}
+
+Rectangle.prototype.intersects = function() {
+    if (rect != null) {
+        return (this.player.shots.x < this.Enemy.x + this.Enemy.width &&
+                this.player.shots.x + this.player.shots.width > this.Enemy.x &&
+                this.player.shots.y == this.Enemy.y + this.Enemy.height &&
+                this.player.shots.y + this.player.shots.height > this.Enemy.y) 
+    }
+}
+
+Rectangle.prototype.fill = function() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
+
+Rectangle.prototype.fill = function(ctx) {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
+*/

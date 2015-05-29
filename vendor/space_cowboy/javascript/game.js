@@ -18,6 +18,10 @@ function Game() {
     this.skill_menu = new PointDealer("skill", this.points)
     this.space = new Space("map")
     this.planet = new Planet("planet")
+/*
+    this.player = new Player()
+    this.enemy = new Enemy()
+    */
 }
 
 //Methods
