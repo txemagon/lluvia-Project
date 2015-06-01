@@ -31,8 +31,6 @@ function Player(config){
 	this.height = 107
 	this.shots = []
 
-	this.enemy = new Enemy()
-
 	//this.enemy = new Enemy()
 
 	var f = document.querySelector("#fps");
@@ -90,7 +88,7 @@ function move(enemy) {
             l--
         }
     }
-
+/*
     //shots intersects enemy
     for (var j=0, ll=this.shots.length; j<ll; j++) {
         if (this.shots[j].intersects(this.enemy[i])) {
@@ -100,7 +98,7 @@ function move(enemy) {
             this.enemy.life -= this.damage
         }
     }
-    
+   */ 
 }
 
 

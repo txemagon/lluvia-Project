@@ -23,9 +23,8 @@ function Enemy(config) {
     this.height = 90
     this.shots = []
 
-    this.player = new Player()
+    //this.player = new Player()
     
-    //this.enemy = new Enemy()
 }
 
 /*
