@@ -145,7 +145,6 @@ Boid.prototype.update_physics = function(current_time){
     this.geo_data.acceleration = this.requested_acceleration()
     this.geo_data.velocity = integrate(this.geo_data.velocity, this.geo_data.acceleration, this.delta_t() )
     this.geo_data.position = integrate(this.geo_data.position, this.geo_data.velocity, this.delta_t() )
-    velocity.y = 0;
 }
 
 

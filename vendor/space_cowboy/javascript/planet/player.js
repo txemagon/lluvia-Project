@@ -30,11 +30,9 @@ function Player(config){
 	this.width = 90
 	this.height = 107
 	this.shots = []
-
-	//this.enemy = new Enemy()
+	this.firing = []
 
 	var f = document.querySelector("#fps");
-
 }
 
 function random(max){
@@ -59,7 +57,9 @@ document.addEventListener("keyup", function(evt){
 }, false)
 
 
-
+/*
+ * Move form player
+ */
 
 function move(enemy) {
     //moving the player
@@ -88,19 +88,8 @@ function move(enemy) {
             l--
         }
     }
-/*
-    //shots intersects enemy
-    for (var j=0, ll=this.shots.length; j<ll; j++) {
-        if (this.shots[j].intersects(this.enemy[i])) {
-            this.shots.splice(j--, 1)
-            ll--
-            alert("tocado")
-            this.enemy.life -= this.damage
-        }
-    }
-   */ 
-}
 
+}
 
 
 
@@ -163,43 +152,10 @@ function Star(x,y,timer){
     this.timer = (timer == null)?0:timer
 }
 
+
 /*
- * Rectangle for shots
+ * FPS
  */
-function Rectangle(x,y,width,height) {
-    this.x = (x == null)?0:x
-    this.y = (y == null)?0:y
-    this.width = (width == null)?0:width
-    this.height = (height == null)?this.width:height
-}
-
-Rectangle.prototype.intersects = function(rect) {
-    if (rect != null) {
-    	alert("intersect")
-    	return(this.shots.x<rect.x+rect.width&&
-                this.shots.x+this.shots.width>rect.x&&
-                this.shots.y<rect.y+rect.height&&
-                this.shots.y+this.shots.height>rect.y);
-/*
-        return (this.shots.x < this.Enemy.x + this.Enemy.width &&
-                this.shots.x + this.shots.width > this.Enemy.x &&
-                this.shots.y == this.Enemy.y + this.Enemy.height &&
-                this.shots.y + this.shots.height > this.Enemy.y) 
-*/
-    }
-}
-
-Rectangle.prototype.fill = function() {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-
-Rectangle.prototype.fill = function(ctx) {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-
-
-
-//function that measures fps
 var fps = {
 	startTime : 0,
 	frameNumber : 0,
@@ -217,6 +173,7 @@ var fps = {
 
 	}	
 };
+
 
 /*
 Player.prototype.level_up = function() {

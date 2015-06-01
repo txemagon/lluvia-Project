@@ -21,10 +21,6 @@ function Enemy(config) {
     this.y = 50
     this.width = 120
     this.height = 90
-    this.shots = []
-
-    //this.player = new Player()
-    
 }
 
 /*
@@ -209,59 +205,44 @@ Enemy.data = [
 ]
 
 
+
 Enemy.prototype.draw = function(ctx) {
+    
     ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
     ctx.fillText("Enemy Life: " + this.life, 790, 20)
     ctx.fillText("Enemy Position: " + this.x, 790, 40)
     ctx.fillText("Enemy Damage: " + this.damage, 790, 60)
-    enemy_move()
+    ctx.fillText("lastPress: " + lastPress, 790, 80)
+
+    shot()
+
+    ctx.fillStyle="#40FF00"
+    for (var i=0, l=firing.length; i<l; i++) {
+        firing[i].fill(ctx);
+        ctx.fillText("Disparo Y: " + firing[i].y, 790, 100)
+    }
+    
 }
 
 
-function enemy_move() {
-    //do not leave the canvas
-    if (this.x > canvas.width - this.width) 
-        this.x = canvas.width - this.width
-    if (this.x < 0)
-        this.x = 0
-    
-/*
-     while (Player.life != 0){
-        this.shots.push (new Rectangle (this.x, this.y, 5, 10))
-        for (var i=0, l=this.shots.length; i<l; i++) {
-            this.shots[i].y -= 5 //shots speed
-            if (this.shots[i].y < 0){
-                this.shots.splice(i--, 1)
+function shot() {
+
+    var contador = 5
+
+    if (this.life != 0){
+        var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 10))', 2000)
+
+        //clearInterval(intervalo)
+
+    }
+
+    for (var i=0, l=this.firing.length; i<l; i++) {
+            this.firing[i].y += 5 //firing speed
+            if (this.firing[i].y == 600){
+                this.firing.splice(i--, 1)
                 l--
             }
-        }
     }
-
-*/
+      
 }
 
-/*
-function Rectangle(x,y,width,height) {
-    this.x = (x == null)?0:x
-    this.y = (y == null)?0:y
-    this.width = (width == null)?0:width
-    this.height = (height == null)?this.width:height
-}
-
-Rectangle.prototype.intersects = function() {
-    if (rect != null) {
-        return (this.player.shots.x < this.Enemy.x + this.Enemy.width &&
-                this.player.shots.x + this.player.shots.width > this.Enemy.x &&
-                this.player.shots.y == this.Enemy.y + this.Enemy.height &&
-                this.player.shots.y + this.player.shots.height > this.Enemy.y) 
-    }
-}
-
-Rectangle.prototype.fill = function() {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-
-Rectangle.prototype.fill = function(ctx) {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-*/
