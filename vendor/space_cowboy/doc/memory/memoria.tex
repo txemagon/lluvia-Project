@@ -1,0 +1,335 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc} % acentos sin codigo
+\usepackage{verbatim} % comentarios
+%opening
+
+\title{Diseño de nivel en videojuegos cargados en web}
+\author{Leticia López Ortega}
+\date{09 de Junio de 2015}
+
+
+\begin{document}
+\maketitle
+
+\cleardoublepage
+\tableofcontents 
+\cleardoublepage
+
+\addcontentsline{toc}{section}{Lista de figuras}
+\listoffigures
+\cleardoublepage
+
+\addcontentsline{toc}{section}{Lista de tablas}
+\listoftables
+\cleardoublepage
+
+
+
+\section{Introducción}
+
+\subsection{Introducción}
+En el presente proyecto se demuestra la efectividad de máquina de estados orientadas a videojuegos,
+mostrando la amplia funcionalidad de esta técnica y sus mejoras en cuanto a refactorización
+de código. El juego tiene un modelo de comportamiento en el que pasa por diferentes estados
+en los que se determinara funcionalidades propias de cada uno.
+
+\subsection{¿En qu consiste el juego?}
+Es un videojuego 2D de naves tipo arcade, en el que se proporciona al jugador la opción de
+elegir sus habilidades principales, contando inicialmente con solo cinco puntos de habilidad,
+tras elegir el jugador se encuentra en un mundo abierto en el que puede viajar con su nave
+espacial a diferentes planetas, en dichos planetas habrá un enemigo al cual habrá que
+derrotar, una vez derrotado se recompensa al jugador con un punto de habilidad que podrá
+gastar en la habilidad que desee, y seguir así invadiendo planetas, hasta acabar con todos los
+enemigos, aparte de la recompensa de un punto de habilidad por haber derrotado a un
+enemigo cada 5 enemigos derrotados la nave del jugador se actualizara, haciendo notar al
+jugador un avance en el juego y una recompensa por sus habilidades.
+
+\cleardoublepage
+
+\section{Estado del arte}
+\subsection{HTML5}
+Es la versión 5 de HTML (HyperText Markup Language). Es un lenguaje basado en etiquetas,
+que permite la elaboración de páginas web, definiendo su contenido (imágenes, texto,
+videos...) en la versión 5 se incluyen nuevas mejoras.
+
+\subsubsection{Canvas}
+Es un elemento de HTML5 que permite generar gráficos estáticos o dinámicos, accediendo a él
+mediante código en JavaScript.
+
+\subsection{CSS3}
+Es la versión 3 de CSS (Cascading Style Sheets) es un lenguaje que sirve para crear el diseño de
+un código HTML, sosteniendo la idea de separar el diseño de una página web de su estructura. 
+
+\subsection{JavaScript}
+Es un lenguaje de programación interpretado (quiere decir que no necesita compilación) Es un
+lenguaje orientado a objetos, que se basa en prototipos, es débilmente tipado y dinámico.
+Normalmente se usa para programar del lado cliente, pero también puede usarse para
+programar del lado servidor, gracias a Node.js. Comúnmente se usa para añadir funcionalidad
+a las páginas web, dicho código se escribe en un archivo independiente y se enlaza con la
+página web definiendo en el código HTML las etiquetas <script></script> y entre medias la
+ruta del fichero.
+
+\subsection{lluviaProject}
+Lluvia es un DSL (Domain Specific Language) que se refiere a una especificación de un
+lenguaje de programación, en este caso JavaScript, proveyendo al lenguaje de más
+funcionalidades de las que posee el lenguaje nativo. Ha sido utilizado para desarrollar la
+mayor parte del software de este proyecto.
+
+\subsubsection{Device}
+Los Device son objetos independientes capaces de comunicarse entre ellos mediante eventos.
+
+\subsubsection{States}
+Los States son automatas que proporcionan determinadas funcionalidades en cada instante
+
+\subsubsection{Gates}
+Son puertas de entrada/salida por las que pasan los eventos con los cuales se comunican los
+Device.
+
+\subsubsection{Boids}
+Son una inteligencia artificial, en la que cada boid es programado con un comportamiento
+independiente del resto de boids, creando de esta forma una inteligencia artificial de un
+conjunto de comportamientos definidos.
+
+\cleardoublepage
+
+\section{Arquitectura de la aplicación}
+\subsection{Clases}
+Una clase es un modelo o plantilla diseñado para crear objetos, las clases poseen atributos y
+métodos y los objetos los heredan. Cuando un objeto se crea a partir de una clase se llama
+instanciación de la clase.
+\subsubsection{PointDealer}
+Es una clase que hereda de la clase Device, cuya funcionalidad 
+es repartir puntos de habilidad al jugador, con un máximo determinado. 
+Las habilidades en las que puede repartir los puntos son “damage”, 
+“resistance” y “speed”. Esta clase tiene una interfaz con la que se 
+comunica en todo momento el jugador. Esta provista de 2 botones (button\_plus
+y button\_minus) con los que el jugador puede aumentar o diminuir los 
+puntos de cada habilidad, esto se comunica al Device con el uso de Gates. 
+Posee otro botón (button\_play) el cual tiene la funcionalidad de enviar al 
+jugador al siguiente Device, únicamente si el jugador ha gastado todos los 
+puntos de habilidad.
+
+\subsubsection{Space}
+Es una clase que hereda de la clase Device, 
+en Space se crean veinte Gates siendo cada uno de ellos un planeta
+diferente al que el jugador podrá viajar, pero no todos ellos se muestran 
+en el canvas, Space posee cuatro botones cada uno en un margen del canvas, 
+sirviendo al jugador la funcionalidad de desplazarse por el universo en 
+busca de diferentes planetas, siendo elección libre para el jugador cual 
+escoger. 
+
+\subsubsection{Planet}
+Es una clase que hereda de la clase Device, en el que se desarrolla 
+la pelea contra el jugador, aquí se crean dos boids (Player y Enemy).
+En Planet tambien se define el comportamiento de ataque y movimiento de 
+los bois, ya que Planet es el creador de los boids y el mundo en el 
+que existen.
+
+\subsubsection{Player}
+Es una clase que hereda de la clase Boid. Este boid esta totalmente 
+controlado por el jugador mediante el teclado, no tiene ningun comportamiento 
+programado, pero si algunos de los atributos, como la vida, la posicion y
+el sprite. Los atributos no programados que podra escoger el jugador son, 
+damage, resistance y speed, se eligen al inicio del juego en el Device 
+pointDealer.
+
+\subsubsection{Enemy}
+Es una clase que hereda de la clase Boid, creando un array de Boids 
+que tienen comportamientos definidos, los cuales son, moverse y atacar.
+Cada enemigo es diferente dependiendo del planeta al que viaje el jugador, 
+los atributos que cambian son, la vida, el sprite, damage, resistance y speed. El unico atributo no variable que posee Enemy es la posición.
+
+\cleardoublepage
+
+\section{Desarrollo de la aplicación}
+\subsection{Entorno utilizado}
+Un entorno de desarrollo puede ser una o varia aplicaciones, 
+que se compone de un editor de texto, un depurador y un compilador, 
+en este caso como el lenguaje utilizado ha sido JavaScript no ha sido 
+necesaria la utilización de un compilador.
+
+\subsubsection{SublimeText 3}
+Es un editor de texto o editor de código fuente y 
+ha sido utilizado para crear todo el código fuente de la aplicación.
+
+\subsubsection{Mozilla Firefox}
+Es un navegador web libre y de código abierto. 
+Su consola JavaScript ha sido utilizada para comprobar los 
+errores en el código fuente y su herramienta de depuración 
+incorporada ha sido de gran ayuda a la hora de realizar las tareas de 
+testing y debug.
+
+\subsubsection{PhotoShop CS6}
+Es un editor de gráficos, con el cual se ha desarrollado 
+gran parte de los diseños del videojuego.
+
+\subsubsection{GitHub}
+Es un control de versiones on-line, basado en Git, 
+desde el cual se descarga lluviaProject y ha sido muy útil 
+para ordenar el código y poder portarlo de un ordenador a otro.
+\cleardoublepage
+
+\section{Diseño}
+\subsection{Diseño de interfaz}
+La interface está diseñada con HTML y CSS siendo esta una interfaz 
+sencilla e intuitiva para el jugador.
+La primera pantalla se compone de 3 y barras y 3 botones, de 
+los cuales la funcionalidad está hecha con JavaScript.
+La siguiente pantalla se denominaría como el entorno abierto y 
+de libre elección del videojuego, que consiste en una simulación del 
+espacio exterior con diversos planetas a los que el jugador puede viajar.
+
+\subsection{Diseño de mundo}
+Es un diseño de mundo abierto, lo cual quiere decir que el 
+juego ofrece al jugador la posibilidad de moverse libremente por 
+este y de elegir a donde ir.
+
+\subsection{Diseño de Enemy y Player}
+Estos diseños están basados en naves espaciales, pintadas en 2D.
+
+\subsection{Diseño de nivel}
+Es el diseño de escenario o misiones del videojuego, 
+lo cual se basa no solo en el aspecto grafico sino también 
+en la dificultad. Se dice que un juego tiene un buen diseño de nivel 
+cuando el jugador nota que el juego avanza y la dificultad cada vez es 
+más elevada.
+En el presente proyecto el aspecto gráfico no se ha desarrollado mucho, 
+queriendo darle un aspecto simple y minimalista, sin embargo el desarrollo 
+del diseño de nivel en cuanto al aumento de dificultad en cada etapa 
+del juego ha sido programado meticulosamente.
+
+\subsubsection{Objetivo y recompensa}
+El objetivo del juego es destruir a todos los alienígenas invasores 
+de los planetas.
+La recompensa es proporcionada al jugador cada vez que este
+consigue derrotar a un enemigo, dandole un punto de habilidad 
+mas para aumentar sus estadisticas y haciendole posible la victoria 
+en la siguiente batalla.
+
+\subsubsection{Dificultad}
+El orden de dificultad es el orden numérico de los planetas, 
+siendo el planeta 1 el que posee al enemigo más débil y 
+el planeta 20 el que posee el enemigo más poderoso.
+Al ser un mundo abierto y el jugador no tener consciencia 
+sobre el orden de los planetas, hace que la dificultad del 
+juego aumente y posiblemente también la curiosidad de saber que 
+pasara en el siguiente planeta al que viaje.
+\cleardoublepage
+
+\section{Conclusiones}
+El objetivo de este proyecto ha sido crear una pequeña muestra de lo que se puede hacer usando las máquinas de estados para desarrollar videojuegos.
+
+Las conclusiones obtenidas han sido:
+
+\begin{itemize}
+ \item La eficacia de las máquinas de estados para videojuegos, 
+ es muy potente y recomendable, aun siendo más dificultosa que un método
+ basado en condiciones, se consigue optimizar el código y el tiempo dedicado.
+ \item La clase pointDealer puede usarse para muchas más 
+ aplicaciones orientadas a videojuegos, ya que es un repartidor, 
+ podría distribuir no solo puntos, sino comida, oro, etc.
+ \item El uso de la clase boids en la programación de la 
+ inteligencia artificial de los enemigos 
+ en videojuegos evita la duplicidad de código.
+ \item El desarrollo de autómatas requiere de una programación delicada 
+ y el uso de constantes pruebas para comprobar errores.
+\end{itemize}
+
+Optimizaciones del proyecto:
+\begin{itemize}
+ \item Implementar un nuevo modo de juego, en el que puedan jugar dos jugadores, en un 1 vs 1, haciendo uso de Node.js.
+ \item Mejorar el diseño gráfico haciéndolo más apetecible para el público.
+ \item Implementar sonidos y músicas dotando al videojuego de realismo.
+ \item Crear un apartado de personalización, para que el jugador pueda 
+ customizar su avatar como desee.
+\end{itemize}
+
+Posibles aplicaciones.
+Podrían usarse algunas de las clases para la creación 
+de nuevos videojuegos, por ejemplo Player, Enemy o PointDealer.
+\cleardoublepage
+
+\section{Bibliografía}
+La información obtenida para el desarrollo de este proyecto ha sido:
+\begin{itemize}
+ \item lluviaProject Wiki
+ \item “Proyecto de Simulación Comportamental en Entornos con Tasas de Estrés Variable”. 
+ José Moreno Casero e Iván Bravo del Valle.
+ \item Proyecto
+\end{itemize}
+
+\cleardoublepage
+
+
+
+\appendix
+\section{Apendice A}
+\subsection{Métodos de PointDealer}
+\begin{itemize}
+ \item get\_back\_from: Permite disminuir los puntos de habilidad, 
+ de la habilidad en la cual se esté pulsando el “button\_minus”.
+ \item transfer\_to: Realiza la tarea opuesta a get\_back\_from, pues si este quita puntos, transfer\_to los suma hasta llegar al máximo de puntos permitido.
+ \item render: Cambia las imágenes de la barra de puntos de cada habilidad dependiendo del botón que pulse el jugador. Dando a conocer al usuario los puntos que esta agregando o quitando en cada momentos y en cada habilidad.
+ \item attend\_show\_skills: Permite que Point Dealer se muestre al iniciar el juego.
+\end{itemize}
+
+
+\subsection{Métodos de Space}
+\begin{itemize}
+ \item attend\_show\_space: Permite que Space se muestre cuando el jugador a pulsado el botónbutton\_play  de Point Dealer.
+ \item up: Proporciona la funcionalidad del botón situado encima del canvas para mover el mapa de los planetas hacia arriba.
+ \item right: Proporciona la funcionalidad del botón situado a la derecha del canvas para mover el mapa de los planetas hacia la derecha.
+ \item down: Proporciona la funcionalidad del botón situado debajo del canvas para mover el mapa de los planetas hacia abajo.
+ \item left: Proporciona la funcionalidad del botón situado a la izquierda del canvas para mover el mapa de los planetas hacia la izquierda.
+\end{itemize}
+
+
+\subsection{Métodos de Planet}
+\begin{itemize}
+ \item initialize: Inicializa a Player y a Enemy para que se creen en Planet.
+\item attend\_show\_planet: Hace que el planeta se muestre, con una alerta que indica el número del planeta que es.
+\item has\_born: Permite que el boid se cree.
+\item draw: Permite dibujar el boid.
+\item new\_boid: Crea una nuevo boid.
+\item new\_boid\_of: Crea un boid a partir de una clase, previamente definida.
+\item get\_boids: 
+\item repaint(ctx): Pinta el canvas de negro.
+\item resize: Permite que el jugador pueda poner el juego en apantalla completa usando el botón “button\_screen”
+
+\end{itemize}
+
+
+\subsection{Métodos de Player}
+\begin{itemize}
+ \item random(max): Escoge un numero aleatorio para empezar a pinta esrellas en el canvas de Planet.
+\item move: Hace que se mueva Player, los disparos que lanza y las estrellas del canvas.
+\item paint(ctx): Pinta a Player, a los disparos, a las estrellas y los FPS.
+\item draw: Ejecuta el método repaint(ctx), declarado en Planet, después el método move y después el método paint.
+
+\end{itemize}
+
+
+\subsection{Métodos de Enemy}
+\begin{itemize}
+ \item move\_enemy
+ \item draw
+\end{itemize}
+
+
+\cleardoublepage
+
+\section{Apendice B}
+\subsection{Diagramas de clases}
+\subsubsection{Diagrama de clases de Devices}
+\subsubsection{Diagrama de clases de Boids}
+\cleardoublepage
+
+\section{Apendice C}
+\subsection{Interfaz de los Devices}
+
+\subsection{Boids}
+\subsubsection{Sprites de Player}
+\subsubsection{Sprites de Enemy}
+\cleardoublepage
+
+\end{document}
