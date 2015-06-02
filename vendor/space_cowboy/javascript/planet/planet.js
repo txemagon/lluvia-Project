@@ -46,7 +46,7 @@ function Planet(view, screen, width, height) {
 Planet.prototype.initialize = function(planet_number) {
     this.player = this.new_boid_of(Player, Player) 
     this.enemy = this.new_boid_of(Enemy, Enemy.data[planet_number])
-    this.enemy.brain.activate('seek', this.player)
+    //this.enemy.brain.activate('seek', this.player)
     /*
     this.enemy.brain.activate('seek')
     this.enemy.brain.get_behavior('seek').set_target(this.player)
@@ -213,6 +213,7 @@ Planet.prototype.draw = function(){
     this.get_boids().each( function(el) {
       el.draw(ctx)
     })
+    this.enemy.move(this.player.x)
     requestAnimationFrame(this.draw_bound)
 }
 

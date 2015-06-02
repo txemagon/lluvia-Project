@@ -205,6 +205,10 @@ Enemy.data = [
 ]
 
 
+Enemy.prototype.move = function(player) {
+    if (this.x < player.x)
+    this.x ++
+}
 
 Enemy.prototype.draw = function(ctx) {
     
@@ -227,13 +231,11 @@ Enemy.prototype.draw = function(ctx) {
 
 function shot() {
 
-    var contador = 5
 
-    if (this.life != 0){
-        var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 10))', 2000)
 
-        //clearInterval(intervalo)
 
+        if (this.life != 0){ //vida de player
+            var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 5))', 4000)
     }
 
     for (var i=0, l=this.firing.length; i<l; i++) {
