@@ -42,8 +42,9 @@ function random(max){
 Player.prototype.draw = function(ctx) {
 	repaint(ctx)
 	star()
-	move()
-	paint(ctx)
+	this.move()
+	this.paint(ctx)
+    ctx.drawImage(this.shape, 0, 0, 75, 107, this.x, this.y, this.width, this.height)
 }
 
 
@@ -61,7 +62,7 @@ document.addEventListener("keyup", function(evt){
  * Move form player
  */
 
-function move(enemy) {
+Player.prototype.move = function () {
     //moving the player
     if (pressing[KEY_RIGHT])
         this.x += this.speed + 1
@@ -96,7 +97,7 @@ function move(enemy) {
 /*
  * paint the things
  */
-function paint(ctx) {
+Player.prototype.paint = function(ctx) {
     //draw stars
     for(i=0, l=stars.length; i<l; i++){
         var c = 255-Math.abs(100-stars[i].timer)
@@ -120,9 +121,9 @@ function paint(ctx) {
 
     //draw shots
     ctx.fillStyle="#f00"
-     for (var i=0, l=shots.length; i<l; i++) {
-        shots[i].fill(ctx);
-        ctx.fillText("Disparo Y: " + shots[i].y, 5, 80)
+     for (var i=0, l=this.shots.length; i<l; i++) {
+        this.shots[i].fill(ctx);
+        ctx.fillText("Disparo Y: " + this.shots[i].y, 5, 80)
     }
 }
 

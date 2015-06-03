@@ -1,4 +1,4 @@
-Planet.prototype = new Device
+   Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
@@ -12,7 +12,7 @@ var KEY_RIGHT = 39
 var KEY_SHOT  = 87 //w
 var pressing  = []
 var lastPress = null
-var KEY_ENEMY = 65
+
 
 /**
  * @method  Planet
@@ -66,22 +66,6 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
 Planet.prototype.running_up = function(date) {
     this.draw()  
 }
-
-
-
-/*
-    //enemy shots
-    while (this.player.life != 0){
-        this.enemy.shots.push (new Rectangle (this.enemy.x, this.enemy.y, 5, 10))
-        for (var i=0, l=this.enemy.shots.length; i<l; i++) {
-            this.enemy.shots[i].y -= 5 //shots speed
-            if (this.enemy.shots[i].y < 0){
-                this.enemy.shots.splice(i--, 1)
-                l--
-            }
-        }
-    }
-*/
 
 
 /*
@@ -213,7 +197,7 @@ Planet.prototype.draw = function(){
     this.get_boids().each( function(el) {
       el.draw(ctx)
     })
-    this.enemy.move(this.player.x)
+    this.enemy.move(this.player.x, this.player.life)
     requestAnimationFrame(this.draw_bound)
 }
 

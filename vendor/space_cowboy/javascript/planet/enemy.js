@@ -21,6 +21,9 @@ function Enemy(config) {
     this.y = 50
     this.width = 120
     this.height = 90
+
+
+    //this.player = new Player()
 }
 
 /*
@@ -205,44 +208,44 @@ Enemy.data = [
 ]
 
 
-Enemy.prototype.move = function(player) {
-    if (this.x < player.x)
-    this.x ++
+Enemy.prototype.move = function(player ) {
+
+    if (this.x < player.x) 
+        this.x ++
+    else
+        this.x --
+
 }
 
 Enemy.prototype.draw = function(ctx) {
     
     ctx.drawImage(this.shape, this.x, this.y, this.width, this.height)
-    ctx.fillText("Enemy Life: " + this.life, 790, 20)
-    ctx.fillText("Enemy Position: " + this.x, 790, 40)
-    ctx.fillText("Enemy Damage: " + this.damage, 790, 60)
-    ctx.fillText("lastPress: " + lastPress, 790, 80)
-
-    shot()
-
+    ctx.fillText("Enemy Life: " + this.life, 780, 20)
+    ctx.fillText("Enemy Position: " + this.x, 780, 40)
+    ctx.fillText("Enemy Damage: " + this.damage, 780, 60)
+    ctx.fillText("lastPress: " + lastPress, 780, 80)
+    
+    //shot()
+    
     ctx.fillStyle="#40FF00"
     for (var i=0, l=firing.length; i<l; i++) {
         firing[i].fill(ctx);
         ctx.fillText("Disparo Y: " + firing[i].y, 790, 100)
-    }
-    
+    }  
 }
 
 
 function shot() {
 
-
-
-
-        if (this.life != 0){ //vida de player
-            var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 5))', 4000)
+    if (this.life != 0){ //vida de player
+        var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 5))', 5000)
     }
 
     for (var i=0, l=this.firing.length; i<l; i++) {
-            this.firing[i].y += 5 //firing speed
-            if (this.firing[i].y == 600){
+            this.firing[i].y += 10 //firing speed
+            if (this.firing[i].y == 590){
                 this.firing.splice(i--, 1)
-                l--
+                l-- 
             }
     }
       
