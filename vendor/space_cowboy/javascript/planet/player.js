@@ -185,7 +185,6 @@ var fps = {
  * @param {[type]} width     [description]
  * @param {[type]} height    [description]
  */
-
 function Rectangle_Player(x,y,width,height) {
     this.x = (x == null)?0:x
     this.y = (y == null)?0:y

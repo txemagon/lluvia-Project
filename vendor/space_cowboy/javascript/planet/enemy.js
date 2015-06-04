@@ -208,13 +208,13 @@ Enemy.data = [
 
 Enemy.prototype.move = function(player) {
 
-        alert(player.x)
-    if (this.x < player.x) {
+
+    if (this.x < player.x) { //player.x -> undefined
         this.x ++
     }
-        
-    else
+    else {
         this.x --
+    }
 
     if (this.x > canvas.width - this.width) 
         this.x = canvas.width - this.width
@@ -267,6 +267,8 @@ Enemy.prototype.draw = function(ctx) {
  * @param {[type]} height    [description]
  */
 function Rectangle_Enemy(enemy_x,y,width,height) {
+
+    //coje la pos de player no de enemy
     this.x = (x == null)?0:x
     this.y = (y == null)?0:y
     this.width = (width == null)?0:width
