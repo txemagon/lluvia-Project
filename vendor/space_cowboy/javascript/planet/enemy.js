@@ -21,9 +21,7 @@ function Enemy(config) {
     this.y = 50
     this.width = 120
     this.height = 90
-
-
-    //this.player = new Player()
+    this.firing = []
 }
 
 /*
@@ -208,12 +206,35 @@ Enemy.data = [
 ]
 
 
-Enemy.prototype.move = function(player ) {
+Enemy.prototype.move = function(player) {
 
-    if (this.x < player.x) 
+        alert(player.x)
+    if (this.x < player.x) {
         this.x ++
+    }
+        
     else
         this.x --
+
+    if (this.x > canvas.width - this.width) 
+        this.x = canvas.width - this.width
+    if (this.x < 0)
+        this.x = 0
+
+    //Creates firing
+    if (player.life != 0){ //vida de player
+        var intervalo = setInterval('this.firing.push(new Rectangle_Enemy (this.x, this.y, 5, 5))', 2000)
+    }
+
+    //Move firing
+    for (var i=0, l=this.firing.length; i<l; i++) {
+         this.firing[i].y += 5 //firing speed
+         if (this.firing[i].y == 590){
+            this.firing.splice(i--, 1)
+            l-- 
+            }
+            
+    }
 
 }
 
@@ -225,7 +246,8 @@ Enemy.prototype.draw = function(ctx) {
     ctx.fillText("Enemy Damage: " + this.damage, 780, 60)
     ctx.fillText("lastPress: " + lastPress, 780, 80)
     
-    //shot()
+    //this.move(this.player.x)
+    //this.shot()
     
     ctx.fillStyle="#40FF00"
     for (var i=0, l=firing.length; i<l; i++) {
@@ -235,19 +257,27 @@ Enemy.prototype.draw = function(ctx) {
 }
 
 
-function shot() {
+/**
+ * @method  Rectangle_Enemy
+ * @constructor
+ * Creates
+ * @param {[type]} x         [description]
+ * @param {[type]} y         [description]
+ * @param {[type]} width     [description]
+ * @param {[type]} height    [description]
+ */
+function Rectangle_Enemy(enemy_x,y,width,height) {
+    this.x = (x == null)?0:x
+    this.y = (y == null)?0:y
+    this.width = (width == null)?0:width
+    this.height = (height == null)?this.width:height
+}
 
-    if (this.life != 0){ //vida de player
-        var intervalo = setInterval('this.firing.push(new Rectangle (520, 120, 5, 5))', 5000)
-    }
+Rectangle_Enemy.prototype.fill = function() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
 
-    for (var i=0, l=this.firing.length; i<l; i++) {
-            this.firing[i].y += 10 //firing speed
-            if (this.firing[i].y == 590){
-                this.firing.splice(i--, 1)
-                l-- 
-            }
-    }
-      
+Rectangle_Enemy.prototype.fill = function(ctx) {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
 }
 

@@ -5,8 +5,6 @@ Planet.prototype.super = Device
 /*
  * Global Variables
  */
-var KEY_ENTER = 13
-var KEY_SPACE = 32
 var KEY_LEFT  = 37
 var KEY_RIGHT = 39
 var KEY_SHOT  = 87 //w
@@ -40,7 +38,6 @@ function Planet(view, screen, width, height) {
     this.draw_bound = Planet.prototype.draw.bind(this)
 
     Device.call(this, view)
-
 }
 
 Planet.prototype.initialize = function(planet_number) {
@@ -121,6 +118,7 @@ function(isConfirm){
 }
 */
 
+/*
 Planet.prototype.colison = function() {
     //Enemy shots
     while (this.player.life != 0){
@@ -144,39 +142,8 @@ Planet.prototype.colison = function() {
         }
     }
 }
+*/
 
-/**
- * @method  Rectangle
- * @constructor
- * Creates
- * @param {[type]} x      [description]
- * @param {[type]} y    [description]
- * @param {[type]} width     [description]
- * @param {[type]} height    [description]
- */
-function Rectangle(x,y,width,height) {
-    this.x = (x == null)?0:x
-    this.y = (y == null)?0:y
-    this.width = (width == null)?0:width
-    this.height = (height == null)?this.width:height
-}
-
-Rectangle.prototype.intersects = function(rect) {
-    if (rect != null) {
-        return (this.player.shots.x < this.enemy.x + this.enemy.width &&
-                this.player.shots.x + this.player.shots.width > this.Enemy.x &&
-                this.player.shots.y > this.enemy.y + this.enemy.height &&
-                this.player.shots.y + this.player.shots.height > this.enemy.y) 
-    }
-}
-
-Rectangle.prototype.fill = function() {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-
-Rectangle.prototype.fill = function(ctx) {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
 
 /*
  * Methods for create the world
@@ -255,3 +222,5 @@ function resize() {
   }
     
 }
+
+
