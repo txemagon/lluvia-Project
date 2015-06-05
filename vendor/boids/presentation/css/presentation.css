@@ -5,4 +5,60 @@
 .diagrama_mvc{
    position: absolute;
    top:0px;
-}       
+}
+
+.boid_explicacion{
+   width :300px;
+   height:300px;
+}
+
+.boid_explicacion_flecha{
+	position: absolute;
+    top:130px;
+    left:350px;
+}
+
+.flecha{
+   width :150px;
+   height:150px;	
+}
+
+.boid_explicacion_boid2{
+	position: absolute;
+    top:0px;
+    left:550px;
+}
+
+.tick{
+   width :80px;
+   height:80px;	
+}
+.little_image{
+   width :80px;
+   height:80px;	
+}
+.img_scene{
+   width :800px;
+   height:600px;	
+}
+
+.title{
+  display:table-cell; 
+  vertical-align:middle;
+  color:black;
+  font-size: 3rem;
+}
+
+.title_container{
+text-align:center; 
+display:table;
+}
+
+.diagram_container{
+    margin-left:20px;
+}
+
+.diagram_img{
+width:700px;
+height:500px;
+}

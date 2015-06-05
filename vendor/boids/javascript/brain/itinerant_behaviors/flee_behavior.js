@@ -65,8 +65,10 @@ FleeBehavior.prototype.target_data = function(){
  */
 FleeBehavior.prototype.get_target = function(){
   // var now = Date.now()
-  //return this.target_data()
-  return this.me.posible_target
+  if(!old_scan)
+    return this.me.posible_target
+  else
+    return this.target_data()
   // if(this.me.being_id == 200)
   //   console.log("Time" + (Date.now() - now))
   // return res

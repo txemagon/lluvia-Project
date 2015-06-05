@@ -1,9 +1,10 @@
 
 var Type_stage = {one_canvas:"one canvas", two_canvas:"two canvas", one_webgl:"one webGl",
                    webgl_canvas:"webGl and canvas", previous_search_algorithm:"previous search algorithm",
-                   current_search_algorithm:"current search algorithm"
+                   current_search_algorithm:"current search algorithm", max_boids:"max boids"
                  }
 var w = null
+var old_scan = false
 function main() {
 
 
@@ -66,17 +67,20 @@ function main() {
         case Type_stage.one_canvas:
             w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
             boids_generator(w)
+            boid_target_creator(w,30)
             w.start()
             break;
         case Type_stage.two_canvas:
             w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
             w.new_screen('screener2', CanvasDevice, cartoon2_canvas)
             boids_generator(w)
+            boid_target_creator(w,30)
             w.start()
             break;
         case Type_stage.one_webgl:
             w = new World('screener', WebGl, cartoon, 1000, 400)
             boids_generator(w)
+            boid_target_creator(w,30)
             w.start()
             break;
         case Type_stage.webgl_canvas:
@@ -84,8 +88,28 @@ function main() {
             w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
             w.new_screen('screener2', CanvasDevice, cartoon_canvas)
             boids_generator(w)
+            boid_target_creator(w,30)
             w.start()
             break;
+        case Type_stage.previous_search_algorithm:
+            old_scan = true
+            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            boid_target_creator(w,200)
+            w.start()
+            break;
+        case Type_stage.current_search_algorithm:
+            old_scan = false
+            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            boid_target_creator(w,200)
+            w.start()
+            break;
+        case Type_stage.max_boids:
+            old_scan = false
+            w = new World('screener', CanvasDevice, cartoon_canvas, 1000, 400)
+            boid_target_creator(w,300)
+            w.start()
+            break;
+            
 
     }
 }
@@ -199,9 +223,13 @@ function boids_generator(w){
         config.brain.activate("foresee<seek>arrival", first)
     })
 
+    
+}
+
+function boid_target_creator(w, number){
     /* Example: Class as target */
     var yeoman = []
-    for (var i = 0; i < 50; i++)
+    for (var i = 0; i < number; i++)
         yeoman.push(w.new_boid(function(config) {
             config.colour = "brown"
             config.brain.activate("wander")
@@ -209,7 +237,7 @@ function boids_generator(w){
         }))
 
     var sheeps = []
-    for (var i = 0; i < 50; i++)
+    for (var i = 0; i < number; i++)
         sheeps.push(w.new_boid(function(config) {
             config.colour = "lemonchiffon"
             config.brain.activate("flee", WanderBehavior)
