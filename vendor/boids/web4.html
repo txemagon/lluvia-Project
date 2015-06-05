@@ -1,0 +1,73 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Boids</title>
+    
+    
+    <script type="text/javascript" src="../../dist/lluvia.js" ></script>
+    <script type="text/javascript" src="javascript/dependencies.js" ></script>
+    <link rel="stylesheet" href="presentation/css/impress-demo.css"/>
+    <link rel="stylesheet" href="presentation/css/substep.css"/>
+    <link rel="stylesheet" href="presentation/css/presentation.css"/>
+    <link type="text/css" rel="stylesheet" href="css/boids.css" ></link>
+  </head>
+  <body>
+    <div id="impress">
+      
+	<!--	<div class="step slide" data-x="-1000" data-y="-1500">
+			<div class="substep">ESto  </div>
+      <div class="substep">Va </div>
+      <div class="substep">De </div>
+      <div class="substep"><img src="images/cpu_vs_gpu.jpg"></div>
+		</div>-->
+		
+      <div class="step slide" data-x="-1000" data-y="-1500">
+         <h1>Implementación de la arquitectura de software modelo-vista-controlador(MVC) en lluvia</h1>
+      </div>
+
+      <div class="step slide" data-x="0" data-y="-1500">
+         <h1>¿Qué es el MVC?</h1>
+	 <div class="contenedor_diagrama_mvc">
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc/controlador.png"></div>
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc/modelo.png"></div>
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc/vista.png"></div>
+	 </div>
+      </div>
+
+
+     <div class="step slide" data-x="1000" data-y="-1500">
+        <h1>¿Cómo se ha implementado el MVC en lluvia?</h1>
+	<div class="substep"><h3>> World</h3> </div>
+        <div class="substep"><h3>> GraphicUnit</h3></div>
+        <div class="substep"><h3>> Incarnation</h3></div>
+     </div>
+
+    <div class="step slide" data-x="2000" data-y="-1500">
+        <h1>¿Como es el MVC en lluvia?</h1>
+	<div class="contenedor_diagrama_mvc">
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc_lluvia/controlador_world.png"></div>
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc_lluvia/modelo_being.png"></div>
+            <div class="substep diagrama_mvc"><img src="presentation/images/mvc_lluvia/vista_incarnation.png"></div>
+	 </div>
+     </div>
+
+     <div class="step slide CanvasContainer" data-x="0" data-y="0">
+        <h1></h1>
+        <div class="">
+          <canvas id="screener" width="400" height="400"> </canvas>
+	  <canvas id="screener2" width="400" height="400"> </canvas>
+          <button onclick="bring_lluvia(), stage = 'two canvas';">Start</button>
+        </div>
+     </div>
+
+     <div class="step slide" data-x="-1000" data-y="+1500">
+        <a href="web5.html">Continue</a>
+     </div>
+ 
+    </div>
+	<script src="presentation/javascript/impress.js"></script>
+	<script>impress().init();</script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+.contenedor_diagrama_mvc{
+   position: relative;
+}
+
+.diagrama_mvc{
+   position: absolute;
+   top:0px;
+}       
