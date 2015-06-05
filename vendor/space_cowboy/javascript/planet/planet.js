@@ -1,18 +1,16 @@
-Planet.prototype = new Device
+   Planet.prototype = new Device
 Planet.prototype.constructor = Planet
 Planet.prototype.super = Device
 
 /*
  * Global Variables
  */
-var KEY_ENTER = 13
-var KEY_SPACE = 32
 var KEY_LEFT  = 37
 var KEY_RIGHT = 39
 var KEY_SHOT  = 87 //w
 var pressing  = []
 var lastPress = null
-var KEY_ENEMY = 65
+
 
 /**
  * @method  Planet
@@ -40,7 +38,6 @@ function Planet(view, screen, width, height) {
     this.draw_bound = Planet.prototype.draw.bind(this)
 
     Device.call(this, view)
-
 }
 
 Planet.prototype.initialize = function(planet_number) {
@@ -66,22 +63,6 @@ Planet.prototype.attend_show_planet = function(date, mssg) {
 Planet.prototype.running_up = function(date) {
     this.draw()  
 }
-
-
-
-/*
-    //enemy shots
-    while (this.player.life != 0){
-        this.enemy.shots.push (new Rectangle (this.enemy.x, this.enemy.y, 5, 10))
-        for (var i=0, l=this.enemy.shots.length; i<l; i++) {
-            this.enemy.shots[i].y -= 5 //shots speed
-            if (this.enemy.shots[i].y < 0){
-                this.enemy.shots.splice(i--, 1)
-                l--
-            }
-        }
-    }
-*/
 
 
 /*
@@ -137,6 +118,7 @@ function(isConfirm){
 }
 */
 
+/*
 Planet.prototype.colison = function() {
     //Enemy shots
     while (this.player.life != 0){
@@ -160,39 +142,8 @@ Planet.prototype.colison = function() {
         }
     }
 }
+*/
 
-/**
- * @method  Rectangle
- * @constructor
- * Creates
- * @param {[type]} x      [description]
- * @param {[type]} y    [description]
- * @param {[type]} width     [description]
- * @param {[type]} height    [description]
- */
-function Rectangle(x,y,width,height) {
-    this.x = (x == null)?0:x
-    this.y = (y == null)?0:y
-    this.width = (width == null)?0:width
-    this.height = (height == null)?this.width:height
-}
-
-Rectangle.prototype.intersects = function(rect) {
-    if (rect != null) {
-        return (this.player.shots.x < this.enemy.x + this.enemy.width &&
-                this.player.shots.x + this.player.shots.width > this.Enemy.x &&
-                this.player.shots.y > this.enemy.y + this.enemy.height &&
-                this.player.shots.y + this.player.shots.height > this.enemy.y) 
-    }
-}
-
-Rectangle.prototype.fill = function() {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
-
-Rectangle.prototype.fill = function(ctx) {
-    ctx.fillRect(this.x, this.y, this.width, this.height)
-}
 
 /*
  * Methods for create the world
@@ -213,7 +164,7 @@ Planet.prototype.draw = function(){
     this.get_boids().each( function(el) {
       el.draw(ctx)
     })
-    this.enemy.move(this.player.x)
+    this.enemy.move(this.player.x, this.player.life)
     requestAnimationFrame(this.draw_bound)
 }
 
@@ -271,3 +222,5 @@ function resize() {
   }
     
 }
+
+

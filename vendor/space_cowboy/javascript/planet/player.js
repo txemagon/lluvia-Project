@@ -30,7 +30,9 @@ function Player(config){
 	this.width = 90
 	this.height = 107
 	this.shots = []
-	this.firing = []
+    this.lastPress = null
+    this.pressing = []
+    this.firing = []
 
 	var f = document.querySelector("#fps");
 }
@@ -42,8 +44,9 @@ function random(max){
 Player.prototype.draw = function(ctx) {
 	repaint(ctx)
 	star()
-	move()
-	paint(ctx)
+	this.move()
+	this.paint(ctx)
+    ctx.drawImage(this.shape, 0, 0, 75, 107, this.x, this.y, this.width, this.height)
 }
 
 
@@ -61,7 +64,7 @@ document.addEventListener("keyup", function(evt){
  * Move form player
  */
 
-function move(enemy) {
+Player.prototype.move = function () {
     //moving the player
     if (pressing[KEY_RIGHT])
         this.x += this.speed + 1
@@ -75,8 +78,8 @@ function move(enemy) {
         this.x = 0
 
     //create shots
-    if (lastPress == KEY_SHOT) {
-        this.shots.push(new Rectangle (this.x +38, this.y, 5, 10)) //x, y, width, height
+    if (pressing[KEY_SHOT]) {
+        this.shots.push(new Rectangle_Player(this.x +38, this.y, 5, 5)) //x, y, width, height
         lastPress = null
     }
 
@@ -92,11 +95,10 @@ function move(enemy) {
 }
 
 
-
 /*
  * paint the things
  */
-function paint(ctx) {
+Player.prototype.paint = function(ctx) {
     //draw stars
     for(i=0, l=stars.length; i<l; i++){
         var c = 255-Math.abs(100-stars[i].timer)
@@ -120,9 +122,9 @@ function paint(ctx) {
 
     //draw shots
     ctx.fillStyle="#f00"
-     for (var i=0, l=shots.length; i<l; i++) {
-        shots[i].fill(ctx);
-        ctx.fillText("Disparo Y: " + shots[i].y, 5, 80)
+     for (var i=0, l=this.shots.length; i<l; i++) {
+        this.shots[i].fill(ctx);
+        ctx.fillText("Disparo Y: " + this.shots[i].y, 5, 80)
     }
 }
 
@@ -174,6 +176,38 @@ var fps = {
 	}	
 };
 
+/**
+ * @method  Rectangle_Player
+ * @constructor
+ * Creates
+ * @param {[type]} x         [description]
+ * @param {[type]} y         [description]
+ * @param {[type]} width     [description]
+ * @param {[type]} height    [description]
+ */
+function Rectangle_Player(x,y,width,height) {
+    this.x = (x == null)?0:x
+    this.y = (y == null)?0:y
+    this.width = (width == null)?0:width
+    this.height = (height == null)?this.width:height
+}
+
+Rectangle_Player.prototype.fill = function() {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
+
+Rectangle_Player.prototype.fill = function(ctx) {
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+}
+
+Rectangle_Player.prototype.intersects = function(rect) {
+    if (rect != null) {
+        return (this.player.shots.x < this.enemy.x + this.enemy.width &&
+                this.player.shots.x + this.player.shots.width > this.Enemy.x &&
+                this.player.shots.y > this.enemy.y + this.enemy.height &&
+                this.player.shots.y + this.player.shots.height > this.enemy.y) 
+    }
+}
 
 /*
 Player.prototype.level_up = function() {
