@@ -47,6 +47,7 @@
   vertical-align:middle;
   color:black;
   font-size: 3rem;
+border:none;
 }
 
 .title_container{
@@ -129,7 +130,7 @@ height:250px;
    top:50px;
 }
 
-.wm_img{
+.wm_img, .graphic_pattern{
    width:820px;
    height:500px;
 }
@@ -144,4 +145,25 @@ width:500px;
 height:500px;
 margin-top:100px;
 margin-left:150px;
+}
+.graphic_pattern{
+   margin-left:50px;
+}
+
+.conclusiones{
+    margin-top:50px;
+    font-size: 3rem;
+}
+
+.boid_antiguo_img{
+width:280px;
+height:300px;
+}
+#b_a_ultimo{
+    width:340px;
+    margin-left:-50px;
+position:absolute;
+}
+#boid_antiguo_container{
+    margin-top:160px;
 }
