@@ -14,8 +14,8 @@
   <body>
     <div id="impress">
 		
-      <div class="step slide" data-x="-1000" data-y="-1500">
-         <h1>Mejora del rendimiento en los patrones de búsqueda de los boids.</h1>
+      <div class="step slide title_container" data-x="-1000" data-y="-1500">
+         <h1 class="title">Mejora del rendimiento en los patrones de búsqueda de los boids.</h1>
       </div>
 
       <div class="step slide" data-x="0" data-y="-1500">
@@ -26,13 +26,13 @@
      <div class="step slide" data-x="1000" data-y="-1500">
         <h1>Solución</h1>
 	<div class="contenedor_diagrama_mvc">
-            <div class="substep diagrama_mvc"><img src="presentation/images/explicacion_malla_mundo/world_mesh.png"></div>
-            <div class="substep diagrama_mvc"><img src="presentation/images/explicacion_malla_mundo/world_mesh_2.png"></div>
+            <div class="substep world_mesh"><img src="presentation/images/explicacion_malla_mundo/world_mesh.png" class="wm_img"></div>
+            <div class="substep world_mesh"><img src="presentation/images/explicacion_malla_mundo/world_mesh_2.png"class="wm_img"></div>
 	</div>
      </div>
 
     <div class="step slide" data-x="2000" data-y="-1500">
-	<div class="contenedor_diagrama_mvc">
+	<div class="contenedor_boid_explicacion">
             <div class="substep diagrama_mvc"><img src="presentation/images/explicacion_boid/boid_explicacion_1.png" class="boid_explicacion"></div>
             <div class="substep diagrama_mvc"><img src="presentation/images/explicacion_boid/boid_explicacion_2.png" class="boid_explicacion"></div>
             <div class="substep diagrama_mvc"><img src="presentation/images/explicacion_boid/boid_explicacion_3.png" class="boid_explicacion"></div>
@@ -46,16 +46,14 @@
      <div class="step slide CanvasContainer" data-x="0" data-y="0">
         <h1></h1>
         <div class="">
-          <canvas id="screener" width="900" height="500"> </canvas>
-          <button onclick="bring_lluvia(), stage = 'previous search algorithm';">Start</button>
-          <a href="web6-2.html">Continue</a>
+          <canvas id="screener" width="900" height="400"> </canvas>
+	  <button onclick="bring_lluvia(), stage = 'previous search algorithm';">
+	          <img src="presentation/images/play.png" class="play_image">
+	  </button>
+	  <div class="continue_example substep"><a href="web6-2.html"><img src="presentation/images/flecha-avanzar.png" class="arrow"></a>
         </div>
      </div>
 
-     <!--<div class="step slide" data-x="-1000" data-y="+1500">
-        <a href="web6.html">Continue</a>
-     </div>-->
- 
     </div>
 	<script src="presentation/javascript/impress.js"></script>
 	<script>impress().init();</script>
