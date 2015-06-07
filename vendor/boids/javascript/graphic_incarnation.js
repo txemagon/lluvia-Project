@@ -16,19 +16,19 @@ cartoon.Boid.mesh.body = function(boid){
     return geometry
 }
 
-cartoon.Boid.mesh.speed = function(){
-	var geometry = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshLambertMaterial());
-    geometry.castShadow = false;
-    geometry.receiveShadow = false;
-    geometry.overdraw = true;
-    geometry.rotation.z = 90* Math.PI / 180;
-    geometry.update = function(boid){
-       this.position.set(boid.geo_data.position.get_coord(0)+10, boid.geo_data.position.get_coord(1), -7)
-       this.rotation.x = boid.heading().Coord[0]
-       this.rotation.y = boid.heading().Coord[1]
-    }
-    return geometry
-}
+//cartoon.Boid.mesh.speed = function(){
+//	var geometry = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 10, 10, 10, false), new THREE.MeshLambertMaterial());
+//    geometry.castShadow = false;
+//    geometry.receiveShadow = false;
+//    geometry.overdraw = true;
+//    geometry.rotation.z = 90* Math.PI / 180;
+//    geometry.update = function(boid){
+//       this.position.set(boid.geo_data.position.get_coord(0)+10, boid.geo_data.position.get_coord(1), -7)
+//       this.rotation.x = boid.heading().Coord[0]
+//       this.rotation.y = boid.heading().Coord[1]
+//    }
+//    return geometry
+//}
 
 cartoon.Mobile.mesh.body = function(boid){
     var geometry = new THREE.Mesh(

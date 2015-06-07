@@ -85,7 +85,7 @@ function main() {
             break;
         case Type_stage.webgl_canvas:
             w = new World('screener', WebGl, cartoon, 1000, 400)
-            w.screen[0].add_camera(500/200, 45, 0.1, 1000000, 469.73015451325904, 198.40596475899403, 505.6617632533937, {x:500, y:200, z:0})
+            w.screen[0].add_camera(400/400, 45, 0.1, 1000000, 200, 200, 505.6617632533937, {x:200, y:200, z:0})
             w.new_screen('screener2', CanvasDevice, cartoon_canvas)
             boids_generator(w)
             boid_target_creator(w,30)
