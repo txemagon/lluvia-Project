@@ -50,6 +50,10 @@
 border:none;
 }
 
+#first_title{
+  vertical-align:top;
+}
+
 .title_container{
 text-align:center; 
 display:table;
@@ -166,4 +170,9 @@ position:absolute;
 }
 #boid_antiguo_container{
     margin-top:160px;
+}
+
+#Video{
+  width: 1500px;
+  height:800px;
 }
